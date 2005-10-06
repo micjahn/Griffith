@@ -1,0 +1,65 @@
+Griffith 0.4cvs README
+======================
+
+This document was last updated on Tue Aug 16 22:20:00 2005.
+Please see the file COPYING for licensing and warranty information.
+The latest version of this software is available at the following URL:
+http://griffith.vasconunes.net/
+
+Table of Contents
+=================
+* Introduction
+* System Requirements
+* Installation
+* Reporting Bugs
+* TODO list
+* About the Authors
+
+
+Introduction
+============
+
+Griffith is a film collection manager, released under the GNU/GPL License.
+
+System Requirements
+===================
+
+  Name            Min Version        URL
+  ----            -----------        ---
+  Python          2.3 or higher
+  GTK+            tested on 2.6.4
+  pyGTK           tested on 2.6.1
+  Python-glade2
+  Python-SQLite
+  ReportLab       1.19 or higher     http://www.reportlab.org
+	
+  Other dependencies (optional):
+  - Gtkspell (included in python-gnome-extras)
+  - A PDF reader for covers and reports support
+
+
+Installation
+============
+
+See INSTALL file
+
+
+Reporting Bugs                                        
+==============
+	
+If you want to help or report any bugs founded please visit:
+  http://griffith.vasconunes.net/
+or
+  http://forge.novell.com/modules/xfmod/tracker/?group_id=1689&atid=2757
+
+
+TODO
+====
+
+See TODO file
+
+
+About the Authors
+=================
+
+See AUTHORS file

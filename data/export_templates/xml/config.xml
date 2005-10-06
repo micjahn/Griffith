@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE template SYSTEM "../template.dtd">
+<template>
+	<name>XML</name>
+	<author>Piotr Ozarowski</author>
+	<email>ozarow@gmail.com</email>
+	<version>0.1</version>
+	<extension>xml</extension>
+	<description>Generates simple XML document</description>
+	<description xml:lang="pl">Generuje prosty dokument XML</description>
+</template>

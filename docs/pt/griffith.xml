@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-15" ?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
+	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+	[
+	<!ENTITY program   "griffith">
+	<!ENTITY command   "<command>&program;</command>">
+	<!ENTITY homepage  "http://griffith.vasconunes.net/">
+	]>
+<refentry>
+	<refentryinfo>
+		<!-- Informations about the author of the document -->		
+		<author>
+			<firstname>Piotr</firstname>
+			<surname>Ozarowski</surname>
+		</author>
+		<address>ozarow@gmail.com</address>
+		<copyright>
+			<year>2005</year>
+			<holder>Piotr Ozarowski</holder>
+		</copyright>
+		<date>Aug 28, 2005</date>
+	</refentryinfo>
+	<refmeta>
+		<refentrytitle>&program;</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+	<refnamediv>
+		<refname>&program;</refname>
+		<refpurpose>gestor de colecções de filmes</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+		<cmdsynopsis>&command; [OPTIONS]</cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+		<title>DESCRIÇÃO</title>
+		<para>Griffith é um gestor de colecções de filmes.
+			Adicionar novos filmes à colecção é tão simples como escrever o nome ou parte
+            do nome do título do filme e seleccionar a origem dos dados. Griffith irá tentar
+            obter os dados acerca do filme a partir da internet.</para>
+	</refsect1>
+	<refsect1>
+		<title>OPÇÕES</title>
+		<variablelist>
+			<varlistentry>
+				<term>
+					<option>-h</option></term><term><option>--help</option>
+				</term>
+				<listitem>
+					<para>Mostra instruções de utilização.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-d</option></term><term><option>--debug</option>
+				</term>
+				<listitem>
+					<para>Corre em modo de depuração.</para> 
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+	<refsect1>
+		<title>VEJA TAMBÉM</title>
+
+		<para>Homepage: <ulink url="&homepage;">&homepage;</ulink></para>
+
+		<para>
+			<citerefentry><refentrytitle>griffith-export-template</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>BUGS</title>
+		<para>Se desejar ajudar ou comunicar quaisquer erros ou bug por favor visite a página oficial do projecto em
+			<ulink url="&homepage;">homepage</ulink> ou
+			<ulink url="http://forge.novell.com/modules/xfmod/tracker/?group_id=1689&amp;atid=2757">
+				http://forge.novell.com/modules/xfmod/tracker/?group_id=1689&amp;atid=2757
+			</ulink>
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>AUTORES</title>
+		<para>&command; foi inicialmente escrito por Vasco Nunes. Veja o ficheiro AUTHORS para uma listagem completa de outros colaboradores do projecto.</para>
+		<para>Copyright (C) 2005 Vasco Nunes <email>vasco.m.nunes@gmail.com</email></para>
+		<para>Esta página do manual foi escrita por Piotr Ozarowski</para>
+	</refsect1>
+</refentry>

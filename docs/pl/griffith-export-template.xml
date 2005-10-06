@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
+	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+	[
+	<!ENTITY program   "griffith">
+	<!ENTITY command   "<command>&program;</command>">
+	<!ENTITY homepage  "http://griffith.vasconunes.net/">
+	]>
+<refentry>
+	<refentryinfo>
+		<!-- Informations about author of the document -->		
+		<author>
+			<firstname>Piotr</firstname>
+			<surname>Ozarowski</surname>
+		</author>
+		<address>ozarow@gmail.com</address>
+		<copyright>
+			<year>2005</year>
+			<holder>Piotr Ozarowski</holder>
+		</copyright>
+		<date>Sep 09, 2005</date>
+	</refentryinfo>
+	<refmeta>
+		<refentrytitle>griffith-export-template</refentrytitle>
+		<manvolnum>5</manvolnum>
+	</refmeta>
+	<refnamediv>
+		<refname>Szablon eksportu dla Griffith'a</refname>
+	</refnamediv>
+	<refsynopsisdiv>
+		<cmdsynopsis>Wtyczka do eksportu danych UseTemplate (wcze¶niej HTML) od wersji 3.0
+		u¿ywa wpe³ni konfigurowalnych szablonów</cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+		<title>OPIS</title>
+		<para>Tworzenie nowego szablonu:</para>
+		<para>Stwórz nowy katalog o krótkiej nazwie dla szablonu/rodziny szablonów
+			(ka¿dy katalog mo¿e zawieraæ wiêcej ni¿ jednen szablon, zobacz opis pliku config.xml)</para>
+		<para>Przygotuj plik page.tpl. Plik ten powinien sk³adaæ siê z trzech czê¶ci:</para>
+		<para>* nag³ówka - bêdzie pojawia³ siê na pocz±tku ka¿dego wygenerowanego pliku</para>
+		<para>* elementów - ta czê¶æ bêdzie wype³niana danymi exportowanych filmów</para>
+		<para>* ogona - który pojawi siê na koñcu pliku(-ów)</para>
+		<para>Aby rozdzieliæ powy¿sze czê¶ci, dodaj ³añcuch<quote>&lt;!-- ITEMS --&gt;</quote> przed, oraz: <quote>&lt;!-- /ITEMS --&gt;</quote> po czê¶ci dla elementów.</para>
+		<para>Stwórz plik config.xml (zobacz te¿ sekcjê CONFIG)</para>
+		<para>Opcjonalnie: stwórz obrazy podgl±du (parez sekcja CONFIG). Najlepsz± rozdzielczo¶ci± dla tych plików bêdzie 200x150px</para>
+	</refsect1>
+	<refsect1>
+		<title>TAGI</title>
+		<para>Poni¿ej s± wylistowane tagi, których mo¿esz u¿ywaæ w pliku page.tpl.
+			Ka¿dy tag zaczyba siê od znaku "@".
+			Pomiêdzy tagi mo¿esz umie¶ciæ ³añcuchy specjalne: <quote>@TITLE@</quote> oraz <quote>@DATA@</quote>, które bêd± zast±pione
+			odpowiednio nazw± pola oraz danymi filmu.
+		</para>
+		<para>
+			Przyk³ad:
+			<quote>Pole &lt;@runtime&gt;@TITLE@ zawiera dane: "@DATA@" &lt;/@runtime&gt;</quote>
+			bêdzie zast±pione przez:
+			<quote>Pole Czas trwania zawiera dane: "120 min."</quote>
+		</para>
+		<para>Lista dozwolonych tagów:</para>
+		<variablelist>
+			<para>Tagi dozwolone w ca³ym dokumencie:</para>
+			<varlistentry>
+				<term><option>header</option></term>
+				<listitem>
+					<para>³añcuch zdefiniowany w zak³adce "Szablon", @TITLE@ nie jest u¿ywany</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>navigarion</option></term>
+				<listitem>
+					<para>generuje panel nawigacyjny (je¿eli jest potrzebny)</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>copyright</option></term>
+				<listitem>
+					<para>wy¶wietla prawa autorskie dokumentu</para> 
+				</listitem>
+			</varlistentry>
+			<para>Tags allowed only in "items" part:</para>
+			<varlistentry>
+				<term><option>image</option></term>
+				<listitem>nazwa pliku z plakatem (bez ¶cie¿ki i rozszerzenia)</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>number</option></term>
+				<listitem>identyfikator filmu w bazie danych</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>title</option></term>
+				<listitem>tytu³ filmu</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>original_title</option></term>
+				<listitem>oryginalny tytu³ filmu</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>year</option></term>
+				<listitem>data premiry filmu</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>director</option></term>
+				<listitem>re¿yser filmu</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>rating</option></term>
+				<listitem>ocena (0-9)</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>runtime</option></term>
+				<listitem>czas trwania filmu w minutach</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>country</option></term>
+				<listitem>pañstwo, w którym wyprodukowano film</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>genre</option></term>
+				<listitem>rodzaj filmu</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>imdb</option></term>
+				<listitem>z tego URLa by³y pobierane dane filmu</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>site</option></term>
+				<listitem>oficjalna strona filmu (URL)</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>trailer</option></term>
+				<listitem>URL do zwiastunu filmu</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>media</option></term>
+				<listitem>liczba dysków i typ dysku, np. "2xDVD"</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>seen</option></term>
+				<listitem>czy film zosta³ obejrzany: "Tak" lub "Nie"</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>loaned</option></term>
+				<listitem>czy film jest wypo¿yczony: "Tak" lub "Nie"</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>classification</option></term>
+				<listitem>klasyfikacja filmu (od ilu lat)</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>studio</option></term>
+				<listitem></listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>actors</option></term>
+				<listitem>obsada filmu</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>plot</option></term>
+				<listitem>opis/streszczenie filmu</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+	<refsect1>
+		<title>PLIK CONFIG</title>
+		<para>Najprostszym sposobem na stworzenie pliku config.xml jest skopiowanie go z innego szablonu i wyedytowanie kopii.
+			Ka¿dy plik musi zawieraæ autora szablonu, wersjê oraz emial autora. Opcjonalnie mo¿na dodaæ
+			opis i listê styli. Ka¿dy styl musi zawieraæ nazwê stylu i nazwê pliku ze stylem.
+			Szczegó³y s± w pliku template.dtd.
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>PRZYK£AD</title>
+		<para>Przyk³adowy szablon mo¿esz znale¼æ w katalogu
+			<quote>/usr/share/griffith/export_templates/html_tables</quote>
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>ZOBACZ TAK¯E</title>
+		<para>
+			<citerefentry>
+				<refentrytitle>griffith</refentrytitle>
+				<manvolnum>1</manvolnum>
+			</citerefentry>
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>AUTORZY</title>
+		<para>&command; zosta³ napisany przez Vasco Nunesa. Zobacz plik AUTHORS z list± wspó³pracowników</para>
+		<para>Copyright (C) 2005 Vasco Nunes <email>vasco.m.nunes@gmail.com</email></para>
+		<para>Ta strona podrêcznika zosta³a napisana przez Piotra O¿arowskiego</para>
+	</refsect1>
+</refentry>

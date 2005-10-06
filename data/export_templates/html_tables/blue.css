@@ -1,0 +1,64 @@
+body {
+	color: white;
+	background-color: #1f3048;
+	font-family: "Gill Sans MT", "Gill Sans", GillSans, sans-serif, Verdana, Arial, Helvetica;
+	text-align: left;
+	font-size: 12px;
+}
+
+a:link, a:visited {
+	color: yellow;
+	text-decoration: none;
+}
+
+tr.title td {
+	font-weight: bold;
+	font-size: 2em;
+}
+
+tr.otitle td { font-size: 1.5em; }
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #1f4060;
+	margin: 2em;
+	padding: 1em;
+	border: 1px solid black;
+}
+
+th { color: #ffa500; }
+
+td {
+	padding: 0px 10px;
+	border-bottom: 1px dashed #1f3048;
+}
+
+tr.plot td, tr.actors td {
+	white-space: pre-wrap;
+	font-size: 0.9em;
+	overflow: auto;
+}
+
+img { border: 1px solid black; }
+
+/* Navigation bar */
+.navi, .copyright {
+	text-align: center;
+	color: #1f4060;
+	font-size: 0.8em;
+}
+.navi p { display: inline; }
+.navi p:before { content: "["; }
+.navi p:after { content: "]"; }
+.navi p#prev:before, .navi p#next:before { content: ""; }
+.navi p#prev:after, .navi p#next:after { content: ""; }
+.navi p#current {
+	font-size: 1.1em;
+	color: white;
+}
+
+.copyright {
+	font-size: 0.7em;
+	margin-top: 5px;
+}

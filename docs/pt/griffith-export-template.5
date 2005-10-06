@@ -1,0 +1,126 @@
+.TH griffith\-export\-template 5 "Sep 09, 2005"  
+.SH NAME
+Griffith \- Exportar utilizando modelos
+.SH SYNOPSIS
+Export Using Templates \- A Griffith's export plugin
+making use of fully customizable templates
+.SH DESCRIPTION
+Creating a new template:
+.PP
+Make a new directory with the short name 'template/template' family
+(each dir can contain more then one template, see config.xml description)
+.PP
+Prepare page.tpl file. Page.tpl file should contain three parts:
+.PP
+* header \- will appear on top of every generated file
+.PP
+* items \- will be filled with data from every exported movie
+.PP
+* tail \- will appear at the bottom of files
+.PP
+To split them, add <!\-\- ITEMS \-\-> string before and <!\-\- /ITEMS \-\-> string after items part.
+.PP
+Make config.xml file (see CONFIG section)
+.PP
+Optionaly: make preview images (see CONFIG file section). Best resolution for preview images is 200x150px
+.SH "TEMPLATE TAGS"
+Bellow are listed the allowed tags in page.tpl files.
+Every tag name starts with "@" character.
+Between tags you can put two special strings: @TITLE@ and @DATA@ wich will be replaced with
+fields (translated if needed) title and movie data.
+.PP
+Example:
+<@runtime>@TITLE@ field contains "@DATA@" data</@runtime>
+will be transformed into:
+Runtime field contains "120 min." data
+.PP
+List of allowed tags:
+.PP
+Tags allowed everywhere:
+.TP 
+\fBheader\fR
+string defined in "Template" tab, @TITLE@ not used 
+.TP 
+\fBnavigation\fR
+generates navigation bar (if required)
+.TP 
+\fBcopyright\fR
+prints document's copyright
+.PP
+Tags allowed only in "items" part:
+.TP 
+\fBimage\fR
+name of the poster image file (without path and extension)
+.TP 
+\fBnumber\fR
+movie's ID in database
+.TP 
+\fBtitle\fR
+movie's title
+.TP 
+\fBoriginal_title\fR
+movie's original title
+.TP 
+\fByear\fR
+movie's premiere
+.TP 
+\fBdirector\fR
+movie's director
+.TP 
+\fBrating\fR
+number (0\-9) 
+.TP 
+\fBruntime\fR
+movie's runtime in minutes 
+.TP 
+\fBcountry\fR
+name of country, where movie was produced
+.TP 
+\fBgenre\fR
+movies's genre
+.TP 
+\fBimdb\fR
+from this URL was fetched movie's data
+.TP 
+\fBsite\fR
+official site's URL
+.TP 
+\fBtrailer\fR
+URL where movie's trailer can be found
+.TP 
+\fBmedia\fR
+number of discs and disc type, f.e. "2xDVD"
+.TP 
+\fBseen\fR
+"Yes" or "No"
+.TP 
+\fBloaned\fR
+"Yes" or "No"
+.TP 
+\fBclassification\fR
+movie's classification
+.TP 
+\fBstudio\fR
+.TP 
+\fBactors\fR
+movie's coast
+.TP 
+\fBplot\fR
+movie's summary
+.SH "CONFIG FILE"
+The easiest way to create config.xml file is copying it from another template and just editing it.
+Every file must contain template's author, version and author's email. Optionally you can add
+description and list of styles. Every style item must contain name and file name.
+See template.dtd for more details.
+.SH EXAMPLE
+Example template can be found at
+/usr/share/griffith/export_templates/html_tables dir
+.SH "SEE ALSO"
+\fBgriffith\fR(1)
+.SH AUTHORS
+griffith was initially written by Vasco Nunes. See the AUTHORS file
+for a list of other contributors.
+.PP
+Copyright (C) 2005 Vasco Nunes vasco.m.nunes@gmail.com
+.PP
+This man page was written by Piotr Ozarowski

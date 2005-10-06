@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
+	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+	[
+	<!ENTITY program   "griffith">
+	<!ENTITY command   "<command>&program;</command>">
+	<!ENTITY homepage  "http://griffith.vasconunes.net/">
+	]>
+<refentry>
+	<refentryinfo>
+		<!-- Informations about the author of the document -->		
+		<author>
+			<firstname>Piotr</firstname>
+			<surname>Ozarowski</surname>
+		</author>
+		<address>ozarow@gmail.com</address>
+		<copyright>
+			<year>2005</year>
+			<holder>Piotr Ozarowski</holder>
+		</copyright>
+		<date>Aug 28, 2005</date>
+	</refentryinfo>
+	<refmeta>
+		<refentrytitle>&program;</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+	<refnamediv>
+		<refname>&program;</refname>
+		<refpurpose>film collection manager</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+		<cmdsynopsis>&command; [OPTIONS]</cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+		<title>DESCRIPTION</title>
+		<para>Griffith is a film collection manager.
+			Adding items to the movie collection is as quick and easy as typing the film
+			title and selecting a supported source. Griffith will then try to fetch all
+			the related information from the Web.</para>
+	</refsect1>
+	<refsect1>
+		<title>OPTIONS</title>
+		<variablelist>
+			<varlistentry>
+				<term>
+					<option>-h</option></term><term><option>--help</option>
+				</term>
+				<listitem>
+					<para>Show usage information.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-d</option></term><term><option>--debug</option>
+				</term>
+				<listitem>
+					<para>Run in debug mode.</para> 
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+	<refsect1>
+		<title>SEE ALSO</title>
+
+		<para>Homepage: <ulink url="&homepage;">&homepage;</ulink></para>
+
+		<para>
+			<citerefentry><refentrytitle>griffith-export-template</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>BUGS</title>
+		<para>If you want to help or report any bugs founded please visit
+			<ulink url="&homepage;">homepage</ulink> or
+			<ulink url="http://forge.novell.com/modules/xfmod/tracker/?group_id=1689&amp;atid=2757">
+				http://forge.novell.com/modules/xfmod/tracker/?group_id=1689&amp;atid=2757
+			</ulink>
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>AUTHORS</title>
+		<para>&command; was initially written by Vasco Nunes. See the AUTHORS file
+			for a list of other contributors.</para>
+		<para>Copyright (C) 2005 Vasco Nunes <email>vasco.m.nunes@gmail.com</email></para>
+		<para>This man page was written by Piotr Ozarowski</para>
+	</refsect1>
+</refentry>

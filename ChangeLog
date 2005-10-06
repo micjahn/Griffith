@@ -1,0 +1,387 @@
+# $Id: ChangeLog,v 1.156 2005/10/05 09:58:35 pox Exp $
+
+Griffith ChangeLog
+------------------
+(c) 2005 Vasco Nunes
+
+2005-10-05  Piotr Ozarowski <ozarow@gmail.com>
+	* Polish translation updated
+
+2005-10-05  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Poster viewer events changed to only show full poster when entering/leaving zoom button
+	* Delete/Zoom poster buttons are now sensitive to poster existence
+	* Portuguese translation updated
+
+2005-10-04  Piotr Ozarowski <ozarow@gmail.com>
+	* Griffith now asks if you want to loan whole collection
+
+2005-10-01  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Moved all movie plugins logos to a new optional package (griffith_extra_artwork module on cvs)
+	* Added some tooltips to preferences widgets
+	* Added some new tools to operate with posters (initial support)
+
+2005-09-30  Piotr Ozarowski <ozarow@gmail.com>
+	* Volumes / Collections feature now in beta2 version (loaning is
+	  working, some bugfixes)
+	* Some cleanups in Debian files
+
+2005-09-26  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added bulgarian translation (thanks to Luchezar P. Petkov)
+
+2005-09-27  Piotr Ozarowski <ozarow@gmail.com>
+	* Volumes / Collections feature now in beta version (filtering is
+	  working, minor bugfixes)
+
+2005-09-26  Piotr Ozarowski <ozarow@gmail.com>
+	* Volumes / Collections feature added (alpha version)
+
+2005-09-26  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added a debug method to urlretrieve calls 
+	* Added new XML export plugin
+	* Renamed Export With Templates plugin to HTML export plugin
+	* Fixed bug with tabs not being striped on director data on ClubeMyDVD movie plugin
+
+2005-09-23  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* DVDZone2 plugin renamed to Mediadis according to new company service and website. Some enhancement to this plugin implemented.
+
+2005-09-21  Piotr Ozarowski <ozarow@gmail.com>
+	* Added Tanuki-Anime movie plugin.
+	* Minor changes in add and main window.
+	* Makefile update. Closes: #1324
+
+2005-09-21  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added experimental support for Microsoft Windows 2000, Millenium and Windows 98 systems
+	* [Bug #1313] Film fields with & or < break the PDF export plugin
+
+2005-09-20  Piotr Ozarowski <ozarow@gmail.com>
+	* Some fixes in Makefile (for MacOSX users)
+
+2005-09-19  Piotr Ozarowski <ozarow@gmail.com>
+	* UseTemplates export plugin update:
+	* [Bug #1314] LANG environment variable no longer required
+	* [Bug #1315] Added extra warning dialog when deleting directry
+
+2005-09-18  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added Moviefone (America online) movie plugin.
+	* [Bug #1312] notes not empty after adding a movie
+
+2005-09-14  Piotr Ozarowski <ozarow@gmail.com>
+	* Small main window changes
+
+2005-09-13  Piotr Ozarowski <ozarow@gmail.com>
+	* Movie plugins update ("with" entry updated to use multiline, minor bugs fixed)
+	* Gery movie plugin removed - webpage is not working
+	* movie.py: capwords() should be used only if needed
+
+2005-09-12  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #1302] Searching movies with non-english characters gives null results
+	* Merged two patches contributed by Arjen Schwarz, addressing one problem with email notification
+	  that was using an incorrect date/time format and another fixing some english spell errors found in language file.
+	* Color, condition, layers info and region defaults now to 'n/a' when adding a new movie.
+
+2005-09-12  Piotr Ozarowski <ozarow@gmail.com>
+	* UseTemplates export plugin update
+
+2005-09-11  Piotr Ozarowski <ozarow@gmail.com>
+	* Updated Anime Database and Filmweb movie plugins
+	* Add movie window reorganization
+
+---- 0.4.2 ----
+
+2005-09-10  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Updated portuguese language
+	* Added portuguese griffith-export-template manpage
+	* Fixed a bug with malformed urls
+	* Moved some old orphan debugging lines to use new debug method
+	* Fixed encoding bug in built in debug method
+
+2005-09-09  Piotr Ozarowski <ozarow@gmail.com>
+	* Added english and polish griffith-export-template manpage
+
+2005-09-08  Piotr Ozarowski <ozarow@gmail.com>
+	* HTML export plugin renamed to "Use Templates" and updated to version 3.2
+	  (now uses non-english language data from config files)
+	* Polish translation updated
+
+2005-09-07  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #1295] The 'How To Irritate People' bug :D
+
+2005-09-05  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Some minor changes to griffith.desktop file
+
+2005-09-02  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added double click events to lists where needed
+	* Added a new button to add movie window: 'add movie and close'
+	* Added a popup menu to main treeview when left button is clicked over an entry to perform common tasks
+
+2005-08-31  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added portuguese manpages
+
+2005-08-29  Piotr Ozarowski <ozarow@gmail.com>
+	* Some Makefiles changed/added
+
+2005-08-28  Piotr Ozarowski <ozarow@gmail.com>
+	* Added english and polish manpages
+	* Added debug and usage command line options
+
+2005-08-27  Piotr Ozarowski <ozarow@gmail.com>
+	* HTML export plugin updated to v3.1 - templates have now XML config
+	  files, styles can have preview images
+
+2005-08-24  Piotr Ozarowski <ozarow@gmail.com>
+	* HTML export plugin updated to v3.1-beta
+
+2005-08-23  Piotr Ozarowski <ozarow@gmail.com>
+	* Updated HTML export plugin (v3.0)
+	* Updated polish translation
+	* Minor changes in Debian package generation files
+
+2005-08-22  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #1261] number disk is 0.
+
+2005-08-21  Piotr Ozarowski <ozarow@gmail.com>
+	* HTML export plugin now uses templates! (version 3.0-rc1)
+
+2005-08-20  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Merged a couple of patches contributed by Arjen Schwarz, addressing the following issues:
+	  [Bug #1260] data for the color, region, condition and layers not being stored in database; Some spelling mistakes fixed on english language file.
+
+---- 0.4.1 ----
+
+2005-08-20  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* After adding a new movie, the original title widget has now the focus
+
+2005-08-18  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed some minor encoding problems with 7arte.net and ClubeMyDVD movie Plugins
+	* [Bug #1258] wrong movie fetching.
+	* Some UI changes on main window and add dialog
+	* When quick filter is changed movie details should be blank because no movie is selected. Fixed.
+	* Password characters in email reminder preferences are now hidden
+
+2005-08-18  Piotr Ozarowski <ozarow@gmail.com>
+	* Navigation bar update (HTML export plugin)
+
+2005-08-17  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #1253] gtkspell module not found.
+
+---- 0.4 ----
+
+2005-08-16  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Loans history implemented
+	* Fixed bug when updating a person data. Treeview was not refreshing.
+	* Fixed bug when deleting a person. Should not delete entries in use.
+	* Fixed bugs with some movie plugins.
+	* Added email reminder preferences (smtp server, auth, username, password, email address sender)
+	* Minor UI adjustment. Moved some fields from movie details tab to technical information.
+	* Fixed bug with sugest not seen movie not working when a filter is activated.
+	* Fix bug with random crashes when saving preferences caused by gtkspell
+
+2005-08-15  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added some artwork contributed by Peek
+
+2005-08-14  Piotr Ozarowski <ozarow@gmail.com>
+	* Debian package generation files - initial import
+
+2005-08-14  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #1250] Random Crashes. Fixed.
+
+2005-08-13  Piotr Ozarowski <ozarow@gmail.com>
+	* Fixed bug #1246 (database upgrade when needed) 
+	* HTML export plugin update (added header entry)
+
+2005-08-13  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed a bug in movie data updating
+	* Fixed some bugs in e-mail loan reminder feature.
+	* Some more code cleaning
+
+2005-08-12  Piotr Ozarowski <ozarow@gmail.com>
+	* Some fixes in HTML export plugin and polish movie plugins
+	* Fixed problems with AniDB movie plugin (changed gdecode method in gutils)
+
+2005-08-11  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #1244] Missing poster images. Fixed.
+	* Added four new fields: color, media condition, dvd region and dvd layers information
+	* Merged some duplicated language strings.
+	* Added favorite movie plugin to preferences to be used by default when fetching web data 
+
+2005-08-11  Piotr Ozarowski <ozarow@gmail.com>
+	* HTML export plugin updated to 2.3beta1
+	* Some new arguments added to get_all_data() function in sql.py
+
+2005-08-10  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added an email reminder option to loaned movies. Still todo: preferences (smtp server,port,auth...)
+	* Fixed a bug with progressbar when fetching movie posters
+	* Fixed bug with wrong filter behaviour when no data is entered on it
+	* Implemented some generic toolbar buttons
+
+2005-08-09  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed a couple of bugs when adding/cloning movies in empty movie positions. Now the main treeview is always sorted.
+	* Updated polish translation
+	* Updated all polish movie plugins
+	* Added AniDB (english) movie plugin (contributed by Piotr Ozarowski)
+	* Added ClubeMyDVD (portuguese) movie plugin
+	* New method for movie plugins available - movie notes (optional). This field could be used to fetch and store misc information/details about the entry.
+	* Fixed bug in movie entry clone feature. Some fields were not being escaped as expected.
+
+2005-08-08  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added picture preview and filter to file choose dialog
+	* Makefile fixed. Make action shouldn't perform a make install.
+
+2005-08-07  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed some minor problems with IMDB plugin
+	* Fixed bug with non unique filenames being produced for movie posters
+	* Replaced old rating spin control by an horizontal slider
+	* Rating and 'seen it' values are automatically saved when changed now
+
+2005-08-05  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added a new 'seen movie' field to db
+	* View menu reworked. Added a 'view not seen movies' filter to it.
+	* Added a 'Suggest a movie' feature picked from not seen list.
+	* Portuguese translation updated
+
+2005-08-04  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Images are now scaled down to a new file on disk when needed and are not scaled on the fly anymore. This should result in some better performance results with larger collections. 
+	* Some minor cosmethic changes on default images
+	* Added spellchecker options to preferences dialog to choose fields and default language to be used within (unix only)
+
+2005-08-01  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added a very basic debug module
+
+2005-07-29  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Some API plugins changes for easier third-party development
+
+2005-07-28  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added OFDb (german) movie plugin contributed by Christian Sagmueller
+	* Some code cleanup
+	* Added german language translation contributed by Christian Sagmueller
+
+2005-07-23  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed some windows related import paths for easier packaging
+	* Fixed some HTML export plugin bugs when used on windows systems
+
+---- 0.3 ----
+
+2005-07-21  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Updated polish and portuguese language translations
+	* HTML export plugin updated to v2.0RC1
+
+2005-07-19  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added a free unicode truetype font (Lucida) to distribution
+	* Some minor PDF export plugin related fixes
+	* [Bug #1190] Encoding problems with polish when exporting to PDF. Fixed.
+	* HTML export plugin updated to v2.0beta3
+	* Updated polish and portuguese language translations
+	* Added E-Pipoca (brasilian) movie plugin
+
+2005-07-16  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* HTML export plugin updated to v2.0beta2
+	* Updated polish and portuguese language translations
+	* Added Cinematografo (Italian) plugin
+	* Fixed bug. Problem with some characters not escaped as should be when inserting in db.
+
+2005-07-15  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Old export filters changed to plugins
+	* Included Piotr Ozarowski's HTML export plugin v2.0beta
+
+2005-07-14  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Created a 'plugins' directory. Moved all movie plugins to this new 
+	  directory for better organization, inside own subdirectory 'movie'
+	* Initial export plugins support
+
+2005-07-12  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #1193] Add new. Cancel not working. Fixed.
+
+2005-07-07  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Config module rewritten. Now config uses pickle for better cross platform handling.
+	* Griffith now stores window size and position on exit.
+
+2005-07-06  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added simple html list exporting. (thanks to Piotr Ozarowski)
+
+2005-07-05  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #1194] Filter drop menu not working. Fixed.
+	* [Bug #1195] Loans not working. Fixed.
+	* [Bug #1196] Can't delete people on the friends list. Fixed.
+	* Now is not possible to delete a person with loaned films.
+	* Some minor UI changes
+	* [Bug #1191] Main window needs to me smaller. Fixed.
+	* Added .ico for windows version
+	* [Bug #1192] New database not working under windows. Fixed.
+	* Added delete key event support on main viewlist to delete rows
+
+2005-07-03  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added CineMovie (french) plugin
+
+---- 0.2 ----
+
+2005-07-02  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug] Sorting by film number don't work as expected. Fixed.
+	* Added toggle toolbar view functionality
+	* [Bug #1176] Last item not selected. Closed.
+
+2005-07-01  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added some menu shortcuts
+	* Added view menu
+	* Another portuguese/polish translation update
+	* All polish plugins now include rating capability (thanks to Piotr Ozarowski)
+
+2005-06-30  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Changed plugin detection function to use glob module instead
+	* all file operations changed to use shutil module instead
+	* General code cleaning
+	* [Bug] Before function in gutils returning incorrect string. Fixed. (thanks to Piotr Ozarowski)
+	* added Onnet Film (polish) plugin (thanks to Piotr Ozarowski).
+	* polish translation updated
+	* portuguese translation updated
+	* Added film ratings
+	* Added ratings to quick filter
+	* [Bug] Clearing filter with some criterias were not refreshing main treeview. Fixed.
+
+2005-06-29  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Moved all glade widgets/event handlers definitions for a new module
+	* Moved editing functions to a new module
+	* [Bug] Changed all file selection dialogs to modal
+
+2005-06-28  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added year to search results on imdb plugin
+
+2005-06-26  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug] Problem with null searches fixed 
+	* [Bug] Fixed bug on imdb plugin. exact matches were not returning any results.
+	* When an exact match is founded griffith tries to use it automatically
+
+2005-06-23  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* new update to polish translation.
+	* added FilmWeb (polish) plugin (thanks to Piotr Ozarowski).
+	* added WP (polish) plugin (thanks to Piotr Ozarowski).
+	* added csv export filter
+	* added initial support for gtkspell under *nix systems. new dependency: python-gnome-extras (optional).
+	  will not be used if not available
+	* main poster changed to a button widget allowing now to select a custom poster image.
+
+2005-06-22  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* added Gery Film (polish) plugin (thanks to Piotr Ozarowski).
+	* [Bug] Fixed bug with null year and runtime display
+	* [Bug] Fixed some bugs related with single quote problems
+	* Implemented a new field to write custom notes
+
+2005-06-21  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* updated polish translation. fixed encoding problems.
+	* added PTGate.pt (portuguese) plugin.
+	* hardcoded library locations fixed.
+	* added main treeview flag on loaned films.
+	* [Bug #] After droping old database and creating a new one, new movie don't get ID=1 but incremented old highest value. Fixed.    
+
+2005-06-20  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* true plugin system implemented.
+	* included stopklatka.pl (polish) plugin (thanks to Piotr Ozarowski).
+	* [Bug #] bug with year and running time not filled when image is not available. Fixed.
+	* updated polish translation.
+
+2005-06-19  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* added polish translation (thanks to Piotr Ozarowski).
+
+---- 0.1 ----
+
+2005-06-18  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* public release - version 0.1

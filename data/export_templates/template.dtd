@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!ELEMENT template (name, author, email, version, extension, description*, styles?)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT author (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT version (#PCDATA)>
+<!ELEMENT extension (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT styles (name+, style+)>
+<!ELEMENT style (name, file, preview?)>
+<!ELEMENT file (#PCDATA)>
+<!ELEMENT preview (#PCDATA)>
+<!ATTLIST name xml:lang NMTOKEN #IMPLIED>
+<!ATTLIST description xml:lang NMTOKEN #IMPLIED>

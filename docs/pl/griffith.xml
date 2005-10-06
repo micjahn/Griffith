@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
+	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+	[
+	<!ENTITY program   "griffith">
+	<!ENTITY command   "<command>&program;</command>">
+	<!ENTITY homepage  "http://griffith.vasconunes.net/">
+	]>
+<refentry>
+	<refentryinfo>
+		<!-- Informations about the author of the document -->		
+		<author>
+			<firstname>Piotr</firstname>
+			<surname>O¿arowski</surname>
+		</author>
+		<address>ozarow@gmail.com</address>
+		<copyright>
+			<year>2005</year>
+			<holder>Piotr O¿arowski</holder>
+		</copyright>
+		<date>Aug 28, 2005</date>
+	</refentryinfo>
+	<refmeta>
+		<refentrytitle>&program;</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+	<refnamediv>
+		<refname>&program;</refname>
+		<refpurpose>zarz±dca kolekcji filmów</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+		<cmdsynopsis>&command; [OPCJE]</cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+		<title>OPIS</title>
+		<para>Griffith zarz±dza kolekcj± filmów.
+			Dodawanie kolejnych pozycji jest tak ³atwe i szybkie, jak wpisanie tytu³u filmu i wybranie
+			odpowiedniego ¼ród³a. Griffith nastêpnie sam pobierze z internetu potrzebne informacje.</para>
+	</refsect1>
+	<refsect1>
+		<title>OPCJE</title>
+		<variablelist>
+			<varlistentry>
+				<term>
+					<option>-h</option></term><term><option>--help</option>
+				</term>
+				<listitem>
+					<para>Pokazuje informacje o sposobie u¿ycia.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-d</option></term><term><option>--debug</option>
+				</term>
+				<listitem>
+					<para>Uruchamia program w trybie debugowania.</para> 
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+	<refsect1>
+		<title>ZOBACZ TAK¯E</title>
+
+		<para>Strona domowa: <ulink url="&homepage;">&homepage;</ulink></para>
+
+		<para>
+			<citerefentry><refentrytitle>griffith-export-template</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>B£ÊDY</title>
+		<para>Je¿eli szukasz pomocy lub chcesz zg³osiæ b³±d, odwied¼
+			<ulink url="&homepage;">stronê domow±</ulink> lub
+			<ulink url="http://forge.novell.com/modules/xfmod/tracker/?group_id=1689&amp;atid=2757">
+				http://forge.novell.com/modules/xfmod/tracker/?group_id=1689&amp;atid=2757
+			</ulink>
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>AUTORZY</title>
+		<para>&command; zosta³ napisany przez Vasco Nunesa. Zobacz plik AUTHORS z list± wspó³pracowników</para>
+		<para>Copyright (C) 2005 Vasco Nunes <email>vasco.m.nunes@gmail.com</email></para>
+		<para>Ta strona podrêcznika zosta³a napisana przez Piotra O¿arowskiego</para>
+	</refsect1>
+</refentry>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE template SYSTEM "../template.dtd">
+<template>
+	<name>HTML Table</name>
+	<name xml:lang="pl">Tabela HTML</name>
+	<author>Piotr Ozarowski</author>
+	<email>ozarow@gmail.com</email>
+	<version>1.0</version>
+	<extension>htm</extension>
+	<description>Generates HTML with one table</description>
+	<description xml:lang="pl">Generuje HTML z jedna tabela</description>
+	<styles>
+		<name>Cascade Style Sheet</name>
+		<name xml:lang="pl">Styl kaskadowy</name>
+		<style>
+			<name>Gray</name>
+			<name xml:lang="pl">Szary</name>
+			<file>gray.css</file>
+			<preview>gray.jpg</preview>
+		</style>
+		<style>
+			<name>Blue</name>
+			<name xml:lang="pl">Niebieski</name>
+			<file>blue.css</file>
+			<preview>blue.jpg</preview>
+		</style>
+	</styles>
+</template>

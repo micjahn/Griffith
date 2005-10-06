@@ -1,0 +1,19 @@
+[Desktop Entry]
+Name=Griffith
+GenericName=Griffith - A Movie Collection Manager
+Comment=Movie Collection Manager
+Version=0.4.2
+Encoding=UTF-8
+Exec=griffith
+Icon=griffith.png
+MimeType=application/x-executable
+Terminal=false
+Type=Application
+StartupNotify=true
+StartupWMClass=Griffith
+Categories=GNOME;GTK;Application;Other;
+
+GenericName[en_PT]=Griffith - Um gestor de colecções de filmes
+
+Comment[pt_PT]=Gerir uma colecção de filmes.
+Comment[pt]=Gerir uma colecção de filmes.

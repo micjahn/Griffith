@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo Making all .mo files...
+echo
+
+for FILE in *.po; do
+	msgconv -t UTF-8 $FILE -o $FILE.utf8
+	msgfmt $FILE.utf8 -o ../i18n/${FILE%.po}/LC_MESSAGES/griffith.mo && echo Created file $OUT OK
+	rm $FILE.utf8
+done

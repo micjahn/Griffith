@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo Extracting messages from source files...
+echo
+
+intltool-extract --type="gettext/glade" ../glade/griffith.glade
+intltool-extract --type="gettext/glade" ../glade/exporthtml.glade
+xgettext -k_ -kN_ --language=Python -o messages.pot ../griffith ../lib/*.py ../glade/exporthtml.glade.h ../glade/griffith.glade.h ../lib/plugins/movie/*.py ../lib/plugins/export/*.py --from-code=utf-8
+
+echo
+echo Updating all .po files...
+echo
+
+for FILE in *.po; do
+	echo -n "Updating '$FILE' translation"
+	mv $FILE $FILE.old
+	msgmerge $FILE.old messages.pot > $FILE
+	rm $FILE.old
+done

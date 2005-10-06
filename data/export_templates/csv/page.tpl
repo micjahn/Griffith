@@ -1,0 +1,3 @@
+<!-- ITEMS -->
+<@item>@DATA@</@item><@image>,"@DATA@"</@image><@title>,"@DATA@"</@title>,<@original_title>,<original_title>@DATA@</@original_title><@number>,"@DATA@"</@number><@year>,"@DATA@"</@year><@director>,"@DATA@"</@director><@rating>,"@DATA@"</@rating><@runtime>,"@DATA@"</@runtime><@country>,"@DATA@"</@country><@genre>,"@DATA@"</@genre><@imdb>,"@DATA@"</@imdb><@site>,"@DATA@"</@site><@trailer>,"@DATA@"</@trailer><@media>,"@DATA@"</@media><@seen>,"@DATA@"</@seen><@loaned>,"@DATA@"</@loaned><@classification>,"@DATA@"</@classification><@studio>,"@DATA@"</@studio><@actors>,"@DATA@"</@actors><@plot>,"@DATA@"</@plot>
+<!-- /ITEMS -->

@@ -1,0 +1,11 @@
+USAGE:
+=====
+* To update language files, type:
+	`make update`
+
+* To generate griffith.mo files from *.po, type:
+	`make dist`
+
+* To create a new translation, type:
+	`cp messages.pot XX.po`
+  where the XX is your country/language code
