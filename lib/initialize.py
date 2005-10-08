@@ -157,7 +157,6 @@ def treeview(self):
 	# add data to treeview
 	self.total = int(self.db.count_records('movies'))
 	self.populate_treeview(self.db.get_all_data())
-	self.select_last_row(self.total)
 	self.main_treeview.show()
 	
 def loans_treeview(self):

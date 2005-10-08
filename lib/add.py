@@ -106,6 +106,7 @@ def add_movie_db(self, close):
 		self.treemodel.set_value(myiter, 5, str(self.am_director.get_text()))
 		#update statusbar
 		self.total += 1
+		self.total_filter = self.total
 		self.count_statusbar()
 		#select new entry from main treelist
 		treeselection = self.main_treeview.get_selection()
@@ -322,6 +323,7 @@ def clone_movie(self):
 		
 	#update statusbar
 	self.total = self.total + 1
+	self.total_filter = self.total
 	self.clear_details()
 	self.main_treeview.set_cursor(next_number-1)
 	self.treeview_clicked()
