@@ -109,7 +109,7 @@ gnomefiles:
 	firefox http://www.gnomefiles.org/devs/newversion.php?soft_id=965 &
 	
 dist:
-	@tar --exclude=*CVS* --exclude=*.tar* -cf griffith.tar ./
+	@tar --exclude=*.svn* --exclude=*.tar* -cf griffith.tar ./
 	@mkdir $(PACKAGE)-$(VERSION)
 	@tar -xf griffith.tar -C $(PACKAGE)-$(VERSION)
 	@${RM} griffith.tar
