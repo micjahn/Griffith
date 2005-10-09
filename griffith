@@ -386,6 +386,13 @@ class Griffith:
 		self.add_movie_window.hide()
 		return True
    
+	def filter_collection(self, *args):
+		collection_id = self.f_col.get_active()
+		if collection_id == 0:
+			view.filter_all(self)
+		else:
+			view.filter_by_collection(self, collection_id)
+   
 	# windows/dialogs   
    
 	def save_state(self):

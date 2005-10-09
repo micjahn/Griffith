@@ -705,11 +705,13 @@ Year</property>
 	  </child>
 
 	  <child>
-	    <widget class="GtkComboBoxEntry" id="filter_collections">
+	    <widget class="GtkComboBoxEntry" id="f_col">
 	      <property name="visible">True</property>
+	      <property name="items" translatable="yes"></property>
 	      <property name="add_tearoffs">False</property>
 	      <property name="has_frame">True</property>
 	      <property name="focus_on_click">True</property>
+	      <signal name="changed" handler="on_f_col_changed" last_modification_time="Sun, 09 Oct 2005 01:50:49 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>

@@ -249,6 +249,12 @@ def people_treeview(self):
 	self.p_treeview.show() 
 	
 def combos(self):
+
+	# collections filter
+	
+	for collection in self.db.get_all_collections_data():
+		self.f_col.insert_text(int(collection['id']), collection['name'])
+		
 	self.e_condition.insert_text(0, _("Damaged")) 
 	self.e_condition.insert_text(1, _("Poor")) 
 	self.e_condition.insert_text(2, _("Fair")) 

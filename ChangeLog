@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2005-10-09  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* [Bug #5306] Last toolbar button not working as expected
+	* Added a 'by collection' quick filter
 
 2005-10-05  Piotr Ozarowski <ozarow@gmail.com>
 	* Polish translation updated

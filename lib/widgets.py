@@ -197,6 +197,8 @@ def define_widgets(self, gladefile):
 	self.popup_return = gladefile.get_widget('popup_return')
 	self.popup_email = gladefile.get_widget('popup_email')
 	
+	self.f_col = gladefile.get_widget('f_col')
+	
 	#add some tooltips
 	self.tooltips = gtk.Tooltips()
 	self.tooltips.set_tip(self.epdf_reader, _('Define here the PDF reader you want to use within Griffith. Popular choices are xpdf, gpdf, evince or kpdf. Make sure you have this program installed and working first.'))
@@ -305,6 +307,7 @@ def define_widgets(self, gladefile):
 		"on_e_remove_volume_button_clicked": self.e_remove_volume,
 		"on_e_remove_collection_button_clicked": self.e_remove_collection,
 		"on_e_show_volume_button_clicked": self.e_show_volume,
-		"on_e_show_collection_button_clicked": self.e_show_collection
+		"on_e_show_collection_button_clicked": self.e_show_collection,
+		"on_f_col_changed": self.filter_collection
 	}
 	gladefile.signal_autoconnect(dic)
