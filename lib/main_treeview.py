@@ -120,10 +120,10 @@ def treeview_clicked(self):
 					pixbuf = self.Image.get_pixbuf() 
 					pixbuf = pixbuf.scale_simple(100, 140, 'bilinear')
 					gutils.save_pixmap(self, pixbuf, image_path)
+					self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 				else:
-					self.Image.set_from_file(self.locations['images'] + "/default.png")
+					self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
 					pixbuf = self.Image.get_pixbuf() 
-			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 
 			if row['loaned']:
 				if row['collection_id'] > 0:
@@ -192,7 +192,7 @@ def populate(self, data):
 			self.image_column.set_visible(True)
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
 			tmp_img = os.path.join(tmp_dest, "t_"+row['image']+".jpg")
-			if len(row['image']):
+			if len(row['image']) and os.path.isfile(tmp_img):
 				image_path = tmp_img
 			else:
 				image_path = self.locations['images'] + "/default_thumbnail.png"
