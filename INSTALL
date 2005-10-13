@@ -41,6 +41,12 @@ UNIX systems
 	or
 		`apt-get update && apt-get install griffith`
 
+	All packages are signed with Piotr Ozarowski's GPG key.
+	You can import it with the following command (as root):
+		
+		`gpg --keyserver subkeys.pgp.net --recv-keys ED75F599`
+		`gpg --armor --export ED75F599 | apt-key add -`
+
 1.4 Making Debian package
 
 	If you want to make your own Debian package, follow these steps:
