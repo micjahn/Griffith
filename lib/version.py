@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: version.py,v 1.20 2005/09/11 21:20:14 pox Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -22,9 +22,9 @@ __revision__ = '$Id: version.py,v 1.20 2005/09/11 21:20:14 pox Exp $'
 # GNU General Public License, version 2 or later
 
 from gettext import gettext as _
-pname = "Griffith"
-pversion = "0.4.2+cvs"
-pauthor = "Vasco Nunes <vasco.m.nunes@gmail.com>"
-pyear = "2005"
-pwebsite = "http://griffith.vasconunes.net/"
+pname        = "Griffith"
+pversion     = "0.4.2+svn"
+pauthor      = "Vasco Nunes <vasco.m.nunes@gmail.com>"
+pyear        = "2005"
+pwebsite     = "http://griffith.vasconunes.net/"
 pdescription = _("Griffith is a film collection manager.")

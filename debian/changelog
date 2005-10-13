@@ -1,8 +1,8 @@
-griffith (0.4.2+cvs-1) unstable; urgency=low
+griffith (0.4.2+svn-1) unstable; urgency=low
 
-  * CVS update
+  * SVN update
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Fri, 30 Sep 2005 01:18:00 +0200
+ -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 13 Oct 2005 18:02:00 +0200
 
 griffith (0.4.2+cvs20050923-1) unstable; urgency=low
 
