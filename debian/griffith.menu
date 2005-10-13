@@ -4,5 +4,5 @@
 	title="Griffith" \
 	longtitle="A film collection manager" \
 	command="/usr/bin/griffith" \
-	icon="/usr/share/pixmaps/griffith.png"
+	icon="/usr/share/pixmaps/griffith.xpm"
 

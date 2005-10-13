@@ -48,6 +48,7 @@ install: uninstall
 	$(INSTALL) -m 644 glade/*.glade $(DATADIR)
 	$(INSTALL) -m 644 images/*.png $(DATADIR)
 	$(INSTALL) -m 644 images/griffith.png $(ICONDIR)
+	$(INSTALL) -m 644 images/griffith.xpm $(ICONDIR)
 	$(INSTALL) -m 644 data/griffith.desktop $(APPLICATIONSDIR)
 	$(INSTALL) -m 644 fonts/*.* $(FONTSDIR)
 	$(INSTALL) -m 755 -d $(LOCALEDIR)/pt/LC_MESSAGES
