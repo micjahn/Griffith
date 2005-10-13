@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: main_treeview.py,v 1.11 2005/10/05 00:27:15 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 # This program is free software; you can redistribute it and/or modify
@@ -100,8 +100,9 @@ def treeview_clicked(self):
 			# poster
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
 			tmp_img = os.path.join(tmp_dest, "m_"+row['image']+".jpg")
+			tmp_img2 = os.path.join(tmp_dest, row['image']+".jpg")
 
-			if len(row['image']) and os.path.isfile(tmp_img):
+			if len(row['image']) and os.path.isfile(tmp_img2):
 				image_path = tmp_img
 				self.delete_poster.set_sensitive(True)
 				self.zoom_poster.set_sensitive(True)
