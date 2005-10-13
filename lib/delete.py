@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: delete.py,v 1.11 2005/08/13 09:59:58 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -23,25 +23,42 @@ __revision__ = '$Id: delete.py,v 1.11 2005/08/13 09:59:58 iznogoud Exp $'
 
 from gettext import gettext as _
 import gutils
+import os
 
 def delete_movie(self):
-    m_id = None
-    try:
-        m_id, m_iter = self.get_maintree_selection()
-        response = gutils.question(self,_("Are you sure you want to delete this movie?"), \
-            1, self.main_window)
-        if response == -8:
-            delete_movie_from_db(self, m_id, m_iter)
-        else:
-            pass
-    except:
-        pass
-        
+	m_id = None
+	try:
+		m_id, m_iter = self.get_maintree_selection()
+		response = gutils.question(self,_("Are you sure you want to delete this movie?"), \
+			1, self.main_window)
+		if response == -8:	# gtk.RESPONSE_YES == -8
+			# try to delete poster image as well
+			poster = self.db.select_movie_by_num(m_id)[0]['image']
+			posters_dir = os.path.join(self.griffith_dir, "posters")
+			image_mini = os.path.join(posters_dir, "m_" + poster + ".jpg")
+			image_full = os.path.join(posters_dir, poster + ".jpg")
+
+			if os.path.isfile(image_mini):
+				try:
+					os.remove(image_mini)
+				except:
+					gdebug.debug("Can't remove %s file"%image_mini)
+			if os.path.isfile(image_full):
+				try:
+					os.remove(image_full)
+				except:
+					gdebug.debug("Can't remove %s file"%image_full)
+			delete_movie_from_db(self, m_id, m_iter)
+		else:
+			pass
+	except:
+		pass
+		
 def delete_movie_from_db(self, m_id, m_iter):
-    self.total -= 1
-    self.db.remove_movie_by_num(m_id)
-    self.treemodel.remove(m_iter)
-    self.clear_details()
-    self.select_last_row(self.total)
-    #update statusbar
-    self.count_statusbar()
+	self.total -= 1
+	self.db.remove_movie_by_num(m_id)
+	self.treemodel.remove(m_iter)
+	self.clear_details()
+	self.select_last_row(self.total)
+	#update statusbar
+	self.count_statusbar()

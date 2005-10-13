@@ -1,4 +1,4 @@
-# $Id: ChangeLog,v 1.156 2005/10/05 09:58:35 pox Exp $
+# $Id$
 
 Griffith ChangeLog
 ------------------
@@ -7,6 +7,7 @@ Griffith ChangeLog
 2005-10-13  Piotr Ozarowski <ozarow@gmail.com>
 	* Updated WP movie plugin (webpage was changed)
 	* Debian menu icon was in wrong format
+	* Removing poster images when deleting movie feature added
 
 2005-10-10  Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed crash when poster file is not present
