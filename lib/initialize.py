@@ -262,10 +262,22 @@ def combos(self):
 	self.e_condition.insert_text(4, _("Excellent")) 
 	self.e_condition.insert_text(5, _("N/A"))
 	
+	self.p_condition.insert_text(0, _("Damaged")) 
+	self.p_condition.insert_text(1, _("Poor")) 
+	self.p_condition.insert_text(2, _("Fair")) 
+	self.p_condition.insert_text(3, _("Good")) 
+	self.p_condition.insert_text(4, _("Excellent")) 
+	self.p_condition.insert_text(5, _("N/A"))
+	
 	self.e_color.insert_text(0, _("Color")) 
 	self.e_color.insert_text(1, _("Black and White")) 
 	self.e_color.insert_text(2, _("Mixed")) 
 	self.e_color.insert_text(3, _("N/A")) 
+	
+	self.p_color.insert_text(0, _("Color")) 
+	self.p_color.insert_text(1, _("Black and White")) 
+	self.p_color.insert_text(2, _("Mixed")) 
+	self.p_color.insert_text(3, _("N/A")) 
 	
 	self.e_region.insert_text(0, _("Region 0 (No Region Coding)")) 
 	self.e_region.insert_text(1, _("Region 1 (United States of America, Canada)")) 
@@ -278,13 +290,32 @@ def combos(self):
 	self.e_region.insert_text(6, _("Region 6 (Popular Republic of China)")) 
 	self.e_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)")) 
 	self.e_region.insert_text(8, _("Region 9 (Often used as region free)")) 
-	self.e_region.insert_text(9, _("N/A")) 
+	self.e_region.insert_text(9, _("N/A"))
+	
+	self.p_region.insert_text(0, _("Region 0 (No Region Coding)")) 
+	self.p_region.insert_text(1, _("Region 1 (United States of America, Canada)")) 
+	self.p_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
+"South Africa)")) 
+	self.p_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
+	self.p_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
+"America)")) 
+	self.p_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)")) 
+	self.p_region.insert_text(6, _("Region 6 (Popular Republic of China)")) 
+	self.p_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)")) 
+	self.p_region.insert_text(8, _("Region 9 (Often used as region free)")) 
+	self.p_region.insert_text(9, _("N/A")) 
 	
 	self.e_layers.insert_text(0, _("Single Side, Single Layer")) 
 	self.e_layers.insert_text(1, _("Single Side, Dual Layer")) 
 	self.e_layers.insert_text(2, _("Dual Side, Dual Layer")) 
 	self.e_layers.insert_text(3, _("Dual Side, Dual Layer")) 
 	self.e_layers.insert_text(4, _("N/A")) 
+	
+	self.p_layers.insert_text(0, _("Single Side, Single Layer")) 
+	self.p_layers.insert_text(1, _("Single Side, Dual Layer")) 
+	self.p_layers.insert_text(2, _("Dual Side, Dual Layer")) 
+	self.p_layers.insert_text(3, _("Dual Side, Dual Layer")) 
+	self.p_layers.insert_text(4, _("N/A")) 
 	
 	self.am_condition.insert_text(0, _("Damaged")) 
 	self.am_condition.insert_text(1, _("Poor")) 
@@ -330,6 +361,20 @@ def combos(self):
 	self.e_media.insert_text(10, _("XVID")) 
 	self.e_media.insert_text(11, _("VCD")) 
 	self.e_media.insert_text(12, _("SVCD")) 
+	
+	self.p_media.insert_text(0, _("DVD")) 
+	self.p_media.insert_text(1, _("DVD-R")) 
+	self.p_media.insert_text(2, _("DVD-RW")) 
+	self.p_media.insert_text(3, _("DVD+R")) 
+	self.p_media.insert_text(4, _("DVD+RW")) 
+	self.p_media.insert_text(5, _("DVD-RAM")) 
+	self.p_media.insert_text(6, _("VHS")) 
+	self.p_media.insert_text(7, _("BETACAM")) 
+	self.p_media.insert_text(8, _("WMV")) 
+	self.p_media.insert_text(9, _("DIVX")) 
+	self.p_media.insert_text(10, _("XVID")) 
+	self.p_media.insert_text(11, _("VCD")) 
+	self.p_media.insert_text(12, _("SVCD")) 
 
 	self.am_media.insert_text(0, _("DVD")) 
 	self.am_media.insert_text(1, _("DVD-R")) 

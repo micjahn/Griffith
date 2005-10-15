@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: add.py,v 1.89 2005/10/01 12:11:58 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -35,7 +35,6 @@ def add_movie(self):
 	next_number=gutils.find_next_available(self)
 	initialize_add_dialog(self)
 	self.am_number.set_text(str(next_number))
-	self.am_media.set_active(0)
 	self.add_movie_window.show()
 	self.active_plugin = ""
 
@@ -62,12 +61,17 @@ def initialize_add_dialog(self):
 	self.am_discs.set_text("1")
 	# define defaults
 	self.rating_slider_add.set_value(0)
-	self.am_media.set_active(0)
 	self.am_seen.set_active(False)
-	self.am_color.set_active(3)
-	self.am_layers.set_active(4)
-	self.am_region.set_active(9)
-	self.am_condition.set_active(5)
+	if self.config.get('media'):
+		self.am_media.set_active(int(self.config.get('media')))
+	if self.config.get('color'):
+		self.am_color.set_active(int(self.config.get('color')))
+	if self.config.get('layers'):
+		self.am_layers.set_active(int(self.config.get('layers')))
+	if self.config.get('region'):
+		self.am_region.set_active(int(self.config.get('region')))
+	if self.config.get('condition'):
+		self.am_condition.set_active(int(self.config.get('condition')))
 	plot_buffer = self.am_plot.get_buffer()
 	plot_buffer.set_text("")
 	self.am_original_title.grab_focus()

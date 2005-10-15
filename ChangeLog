@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-10-15  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added preferences defaults to media, layers, condition, color and region
+
 2005-10-14  Piotr Ozarowski <ozarow@gmail.com>
 	* [Bug #5344] fixed wrong encoding in IMDb movie plugin (thanks to dieterv)
 

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: widgets.py,v 1.35 2005/10/04 23:53:11 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -131,6 +131,11 @@ def define_widgets(self, gladefile):
 	self.view_otitle = gladefile.get_widget('view_otitle')
 	self.view_title = gladefile.get_widget('view_title')
 	self.view_director = gladefile.get_widget('view_director')
+	self.p_media = gladefile.get_widget('p_media')
+	self.p_color = gladefile.get_widget('p_color')
+	self.p_condition = gladefile.get_widget('p_condition')
+	self.p_region = gladefile.get_widget('p_region')
+	self.p_layers = gladefile.get_widget('p_layers')
 	#buttons
 	self.go_site = gladefile.get_widget('go_site')
 	self.go_imdb = gladefile.get_widget('go_imdb')
