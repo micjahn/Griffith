@@ -198,7 +198,7 @@ def populate(self, data):
 			else:
 				image_path = self.locations['images'] + "/default_thumbnail.png"
 			# lets see if we have a scaled down thumbnail already created
-			if os.path.isfile(image_path):
+			if os.path.isfile(os.path.join(tmp_dest, "t_"+row['image']+".jpg")):
 				pass
 			else:
 				# if not, lets make one for future use :D 
@@ -207,7 +207,9 @@ def populate(self, data):
 					self.Image.set_from_file(original_image)
 					pixbuf = self.Image.get_pixbuf() 
 					pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
-					gutils.save_pixmap(self, pixbuf, image_path)
+					#gutils.save_pixmap(self, pixbuf, image_path)
+					gutils.save_pixmap(self, pixbuf, os.path.join(tmp_dest, "t_"+row['image']+".jpg"))
+					
 				else:
 					self.Image.set_from_file(self.locations['images'] + "/default_thumbnail.png")
 					pixbuf = self.Image.get_pixbuf() 

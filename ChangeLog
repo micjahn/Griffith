@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-10-16  Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed bug with posters thumbnail generation
+
 2005-10-15  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added preferences defaults to media, layers, condition, color and region
 
