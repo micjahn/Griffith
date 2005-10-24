@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: sql.py,v 1.50 2005/10/04 19:43:24 pox Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -437,6 +437,14 @@ class GriffithSQL:
 		self.cursor.execute("SELECT * FROM movies WHERE collection_id = '%s' ORDER BY number ASC" % collection)
 		return self.cursor.fetchall()
 	
+	def is_volume_loaned(self,volume):
+		self.cursor.execute("SELECT loaned FROM volumes WHERE id = '%s'" % volume)
+		return self.cursor.fetchone()[0]
+
+	def is_collection_loaned(self,collection):
+		self.cursor.execute("SELECT loaned FROM collections WHERE id = '%s'" % collection)
+		return self.cursor.fetchone()[0]
+
 	def add_volume(self, name):
 		# check if volume already exists
 		for volume in self.get_all_volumes_data():

@@ -89,6 +89,10 @@ def treeview_clicked(self):
 				self.loan_button.set_sensitive(False)
 				self.b_email_reminder.set_sensitive(True)
 				self.return_button.set_sensitive(True)
+				# loaned icon
+				self.Image.set_from_file(self.locations['images']  + "/loaned.png")
+				Pixbuf = self.Image.get_pixbuf()
+				self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 			else:
 				self.popup_loan.set_sensitive(True)
 				self.popup_email.set_sensitive(False)
@@ -96,6 +100,10 @@ def treeview_clicked(self):
 				self.return_button.set_sensitive(False)
 				self.b_email_reminder.set_sensitive(False)
 				self.loan_button.set_sensitive(True)
+				# not loaned icon
+				self.Image.set_from_file(self.locations['images']  + "/not_loaned.png")		
+				Pixbuf = self.Image.get_pixbuf()
+				self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 				
 			# poster
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
@@ -127,9 +135,9 @@ def treeview_clicked(self):
 			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 
 			if row['loaned']:
-				if row['collection_id'] > 0:
+				if row['collection_id'] > 0 and self.db.is_collection_loaned(row['collection_id']) == 1:
 					data_loan = self.db.get_loan_info(collection_id=row['collection_id'])
-				elif row['volume_id'] > 0:
+				elif row['volume_id'] > 0 and self.db.is_volume_loaned(row['volume_id']) == 1:
 					data_loan = self.db.get_loan_info(volume_id=row['volume_id'])
 				else:
 					data_loan = self.db.get_loan_info(movie_id=row['number'])

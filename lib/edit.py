@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: edit.py,v 1.18 2005/10/05 00:27:15 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 # This program is free software; you can redistribute it and/or modify
@@ -147,6 +147,6 @@ def fill_collections_combo(self):
 	self.e_collection_combo.get_model().clear()
 	for collection in self.db.get_all_collections_data():
 		self.e_collection_combo.insert_text(int(collection['id']), collection['name'])
-	self.e_volume_combo.set_active(0)
-	self.e_volume_combo.show_all()
+	self.e_collection_combo.set_active(0)
+	self.e_collection_combo.show_all()
 

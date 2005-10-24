@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-10-24 Piotr Ozarowski <ozarow@gmail.com>
+	* Loans are finally working correctly
+
 2005-10-20 Piotr Ozarowski <ozarow@gmail.com>
 	* WP movie plugin updated
 	* Onet movie plugin updated

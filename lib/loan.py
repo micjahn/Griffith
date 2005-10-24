@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: loan.py,v 1.21 2005/10/04 19:43:24 pox Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -52,9 +52,9 @@ def commit_loan(self):
 	# add a flag on the list
 	treeselection = self.main_treeview.get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
-	self.Image.set_from_file(self.locations['images']  + "/loaned.png")
-	Pixbuf = self.Image.get_pixbuf()
-	self.treemodel.set_value(tmp_iter, 0, Pixbuf)
+	#self.Image.set_from_file(self.locations['images']  + "/loaned.png")
+	#Pixbuf = self.Image.get_pixbuf()
+	#self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 	
 	# movie is now loaned. change db
 	movie_id = self.e_number.get_text()
@@ -72,7 +72,7 @@ def commit_loan(self):
 			return False
 
 	if volume_id>0 and collection_id>0:
-		if loan_whole_collection:
+		if loan_whole_collection == True:
 			update.update_collection(self, id=collection_id, volume_id=volume_id, loaned=1)
 		else:
 			update.update_volume(self, id=volume_id, loaned=1)
@@ -90,14 +90,14 @@ def commit_loan(self):
 	# next, we insert a new row on the loans table
 	data_movie=self.db.select_movie_by_num(movie_id)
 	query = "INSERT INTO 'loans'('id', 'person_id','"
-	if collection_id>0:
+	if collection_id>0 and loan_whole_collection == True:
 		query +="collection_id"
 	elif volume_id>0:
 		query +="volume_id"
 	else:
 		query +="movie_id"
 	query += "', 'date', 'return_date') VALUES (Null, '" + str(data_person[0]['id']) + "', '"
-	if collection_id>0:
+	if collection_id>0 and loan_whole_collection == True:
 		query += str(collection_id)
 	elif volume_id>0:
 		query += str(volume_id)
@@ -136,12 +136,12 @@ def return_loan(self):
 		data_movie=self.db.select_movie_by_num(movie_id)
 		# fill return information on loans table
 		query = "UPDATE loans SET return_date='%s' WHERE " % str(datetime.date.today())
-		if collection_id>0:
+		if collection_id>0 and collection_is_loaned == True:
 			query +="collection_id='%s'" % collection_id
 		elif volume_id>0:
-			query +="volume_id"
+			query +="volume_id='%s'" % volume_id
 		else:
-			query +="movie_id"
+			query +="movie_id='%s'" % movie_id
 		query += " AND return_date = ''"
 		self.db.cursor.execute(query)
 		self.db.con.commit()			
@@ -149,8 +149,8 @@ def return_loan(self):
 		# remove the flag on the list
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
-		self.Image.set_from_file(self.locations['images']  + "/not_loaned.png")		
-		Pixbuf = self.Image.get_pixbuf()
-		self.treemodel.set_value(tmp_iter, 0, Pixbuf)
+#		self.Image.set_from_file(self.locations['images']  + "/not_loaned.png")		
+#		Pixbuf = self.Image.get_pixbuf()
+#		self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 		self.treeview_clicked()
 		self.main_treeview.set_cursor(int(movie_id)-1, None, False)
