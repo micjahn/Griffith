@@ -327,42 +327,36 @@ class GriffithSQL:
 		plot_buffer = data.am_plot.get_buffer()
 		with_buffer = data.am_with.get_buffer()
 		obs_buffer = data.am_obs.get_buffer()
-		self.cursor.execute(
-			"""INSERT INTO 'movies'
-			('id', 'original_title', 'title', 'director', 'plot', 'image', 'year',
-			'runtime', 'actors', 'country', 'genre', 'media', 'classification',
-			'studio', 'site', 'color', 'region', 'layers', 'condition', 'imdb',
-			'trailer', 'obs', 'num_media', 'loaned', 'rating', 'seen','number')
-			VALUES (Null,'"""
-			+gutils.gescape(data.am_original_title.get_text())+"','"
-			+gutils.gescape(data.am_title.get_text())+"','"
-			+gutils.gescape(data.am_director.get_text())+"','"
-			+gutils.gescape(plot_buffer.get_text(plot_buffer.get_start_iter(),
-			plot_buffer.get_end_iter()))+"','"
-			+data.am_picture_name.get_text()+"','"
-			+data.am_year.get_text()+"','"
-			+data.am_runtime.get_text()+"','"
-			+gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(),
-			with_buffer.get_end_iter()))+"','"
-			+gutils.gescape(data.am_country.get_text())+"','"
-			+gutils.gescape(data.am_genre.get_text())+"','"
-			+media+"','"
-			+gutils.gescape(data.am_classification.get_text())+"','"
-			+gutils.gescape(data.am_studio.get_text())+"','"
-			+data.am_site.get_text()+"','"
-			+str(int(data.am_color.get_active()))+"','"
-			+str(int(data.am_region.get_active()))+"','"
-			+str(int(data.am_layers.get_active()))+"','"
-			+str(int(data.am_condition.get_active()))+"','"
-			+data.am_imdb.get_text()+"','"
-			+data.am_trailer.get_text()+"','"
-			+gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(),
-			obs_buffer.get_end_iter()))+"','"
-			+data.am_discs.get_text()+"','"
-			+"0','"
-			+str(int(data.rating_slider_add.get_value()))+"','"
-			+str(int(data.am_seen.get_active()))+"','"
-			+data.am_number.get_text()+"')")
+		query = """
+			INSERT INTO 'movies' ('id', 'original_title', 'title', 'director', 'plot', 'image', 'year',
+			'runtime', 'actors', 'country', 'genre', 'media', 'classification', 'studio', 'site', 'color',
+			'region', 'layers', 'condition', 'imdb', 'trailer', 'obs', 'num_media', 'loaned', 'rating', 'seen','number')
+			VALUES (Null,'""" + gutils.gescape(data.am_original_title.get_text()) + "','" +\
+			gutils.gescape(data.am_title.get_text())+"','" +\
+			gutils.gescape(data.am_director.get_text())+"','" +\
+			gutils.gescape(plot_buffer.get_text(plot_buffer.get_start_iter(), plot_buffer.get_end_iter()))+"','" +\
+			data.am_picture_name.get_text()+"','" +\
+			data.am_year.get_text()+"','" +\
+			data.am_runtime.get_text()+"','" +\
+			gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter()))+"','" +\
+			gutils.gescape(data.am_country.get_text())+"','" +\
+			gutils.gescape(data.am_genre.get_text())+"','" +\
+			str(media)+"','" +\
+			gutils.gescape(data.am_classification.get_text())+"','" +\
+			gutils.gescape(data.am_studio.get_text())+"','" +\
+			data.am_site.get_text()+"','" +\
+			str(int(data.am_color.get_active()))+"','" +\
+			str(int(data.am_region.get_active()))+"','" +\
+			str(int(data.am_layers.get_active()))+"','" +\
+			str(int(data.am_condition.get_active()))+"','" +\
+			data.am_imdb.get_text()+"','" +\
+			data.am_trailer.get_text()+"','" +\
+			gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(), obs_buffer.get_end_iter()))+"','" +\
+			data.am_discs.get_text()+"','0','" +\
+			str(int(data.rating_slider_add.get_value()))+"','" +\
+			str(int(data.am_seen.get_active()))+"','" +\
+			data.am_number.get_text()+"')"
+		self.cursor.execute(query)
 				
 	def new_db(self, parent):
 		"""initializes a new griffith database file"""
