@@ -122,16 +122,16 @@ def treeview_clicked(self):
 			if os.path.isfile(image_path):
 				pass
 			else:
-				# if not, lets make one for future use :D 
+				# if not, lets make one for future use :D
 				original_image = os.path.join(tmp_dest, row['image']+".jpg")
 				if os.path.isfile(original_image):
 					self.Image.set_from_file(original_image)
-					pixbuf = self.Image.get_pixbuf() 
+					pixbuf = self.Image.get_pixbuf()
 					pixbuf = pixbuf.scale_simple(100, 140, 'bilinear')
 					gutils.save_pixmap(self, pixbuf, image_path)
 				else:
 					self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
-					pixbuf = self.Image.get_pixbuf() 
+					pixbuf = self.Image.get_pixbuf()
 			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 
 			if row['loaned']:
@@ -147,16 +147,11 @@ def treeview_clicked(self):
 				self.loan_date = str(data_loan[0]['date'])
 				self.loan_info.set_label(self._("This movie has been loaned to ") + self.person_name + self._(" on ") + self.loan_date[:10])
 			else:
-				self.loan_info.set_label(self._("Movie not loaned"))  
-		   
-			#loan history	 
-			self.loans_treemodel.clear()						  
-			if row['collection_id'] > 0 and self.db.is_collection_loaned(row['collection_id']) == 1:
-				loans = self.db.get_all_data('loans', 'date DESC', "collection_id='%s' AND return_date <>''"%row['collection_id'])
-			elif row['volume_id'] > 0:
-				loans = self.db.get_all_data('loans', 'date DESC', "volume_id='%s' AND return_date <>''"%row['volume_id'])
-			else:
-				loans = self.db.get_all_data('loans', 'date DESC', "movie_id='%s' AND return_date <>''"%row['number'])
+				self.loan_info.set_label(self._("Movie not loaned"))
+		
+			#loan history	
+			self.loans_treemodel.clear()						
+			loans = self.db.get_loan_history(collection_id=row['collection_id'], volume_id=row['volume_id'], movie_id=row['number'])
 			for loan_row in loans:
 				myiter = self.loans_treemodel.append(None)
 				self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan_row['date'])[:10])
@@ -170,7 +165,7 @@ def treeview_clicked(self):
 			#volumes/collections
 			self.e_volume_combo.set_active(int(row['volume_id']))
 			self.e_collection_combo.set_active(int(row['collection_id']))
-		 
+		
 				
 def populate(self, data):
 	self.treemodel.clear()
@@ -209,18 +204,18 @@ def populate(self, data):
 			if os.path.isfile(os.path.join(tmp_dest, "t_"+row['image']+".jpg")):
 				pass
 			else:
-				# if not, lets make one for future use :D 
+				# if not, lets make one for future use :D
 				original_image = os.path.join(tmp_dest, row['image']+".jpg")
 				if os.path.isfile(original_image):
 					self.Image.set_from_file(original_image)
-					pixbuf = self.Image.get_pixbuf() 
+					pixbuf = self.Image.get_pixbuf()
 					pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
 					#gutils.save_pixmap(self, pixbuf, image_path)
 					gutils.save_pixmap(self, pixbuf, os.path.join(tmp_dest, "t_"+row['image']+".jpg"))
 					
 				else:
 					self.Image.set_from_file(self.locations['images'] + "/default_thumbnail.png")
-					pixbuf = self.Image.get_pixbuf() 
+					pixbuf = self.Image.get_pixbuf()
 
 			self.Image.set_from_file(image_path)
 			pixbuf = self.Image.get_pixbuf()

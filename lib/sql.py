@@ -258,7 +258,7 @@ class GriffithSQL:
 	def get_not_seen_movies(self):
 		self.cursor.execute("SELECT * FROM movies WHERE seen='0' ORDER BY number")
 		return self.cursor.fetchall()
-		
+
 	def get_loan_info(self, movie_id=None, volume_id=None, collection_id=None):
 		query = "SELECT * FROM loans WHERE "
 		if collection_id>0:
@@ -270,7 +270,23 @@ class GriffithSQL:
 		query +=  " AND return_date = ''"
 		self.cursor.execute(query)
 		return self.cursor.fetchall()
-	
+
+	def get_loan_history(self, movie_id=None, volume_id=None, collection_id=None):
+		query = "SELECT * FROM loans WHERE return_date <> '' AND ("
+		if collection_id>0:
+			query += "collection_id='%s'" % str(collection_id)
+		if volume_id>0:
+			if collection_id>0:
+				query += " OR "
+			query += "volume_id='%s'" % str(volume_id)
+		if movie_id>0:
+			if collection_id>0 or volume_id>0:
+				query += " OR "
+			query += " movie_id='%s'" % str(movie_id)
+		query +=  ")"
+		self.cursor.execute(query)
+		return self.cursor.fetchall()
+
 	def count_records(self,table_name, where='1'):
 		self.cursor.execute("SELECT COUNT(id) FROM %s" % (table_name) + " WHERE %s" % (where))
 		return int(self.cursor.fetchone()[0])
