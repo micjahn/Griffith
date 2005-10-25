@@ -4,7 +4,7 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
-2005-10-26 Piotr Ozarowski <ozarow@gmail.com>
+2005-10-26 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added a winsetup.py file to be used by py2exe
 
 2005-10-25 Piotr Ozarowski <ozarow@gmail.com>
