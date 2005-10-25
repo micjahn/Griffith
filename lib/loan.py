@@ -49,12 +49,6 @@ def commit_loan(self):
 	if person == '' or person == None:
 		return
 	self.w_loan_to.hide()
-	# add a flag on the list
-	treeselection = self.main_treeview.get_selection()
-	(tmp_model, tmp_iter) = treeselection.get_selected()
-	#self.Image.set_from_file(self.locations['images']  + "/loaned.png")
-	#Pixbuf = self.Image.get_pixbuf()
-	#self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 	
 	# movie is now loaned. change db
 	movie_id = self.e_number.get_text()
@@ -146,11 +140,6 @@ def return_loan(self):
 		self.db.cursor.execute(query)
 		self.db.con.commit()			
 		
-		# remove the flag on the list
-		treeselection = self.main_treeview.get_selection()
-		(tmp_model, tmp_iter) = treeselection.get_selected()
-#		self.Image.set_from_file(self.locations['images']  + "/not_loaned.png")		
-#		Pixbuf = self.Image.get_pixbuf()
-#		self.treemodel.set_value(tmp_iter, 0, Pixbuf)
+		# force a refresh
 		self.treeview_clicked()
 		self.main_treeview.set_cursor(int(movie_id)-1, None, False)

@@ -151,7 +151,7 @@ def treeview_clicked(self):
 		   
 			#loan history	 
 			self.loans_treemodel.clear()						  
-			if row['collection_id'] > 0:
+			if row['collection_id'] > 0 and self.db.is_collection_loaned(row['collection_id']) == 1:
 				loans = self.db.get_all_data('loans', 'date DESC', "collection_id='%s' AND return_date <>''"%row['collection_id'])
 			elif row['volume_id'] > 0:
 				loans = self.db.get_all_data('loans', 'date DESC', "volume_id='%s' AND return_date <>''"%row['volume_id'])

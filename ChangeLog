@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-10-25 Piotr Ozarowski <ozarow@gmail.com>
+	* Correct loans history is now displayed if movie belongs to
+	collection
+
 2005-10-24 Piotr Ozarowski <ozarow@gmail.com>
 	* Loans are finally working correctly
 	* Crush when no media is selected in add movie function - fixed
