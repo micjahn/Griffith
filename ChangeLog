@@ -9,7 +9,9 @@ Griffith ChangeLog
 	* Now Griffith's dir defaults to localized 'My Documents' dir on win32 environments
 
 2005-10-27 Piotr Ozarowski <ozarow@gmail.com>
-	* Renaming of volumes and collection is now possible
+	* Volume/collection renaming is now possible
+	* Volume/collection can now be selected in "add movie" window
+	* Minor changes in volume/collection related code
 
 2005-10-26 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added a winsetup.py file to be used by py2exe

@@ -136,17 +136,27 @@ def clear_details(self):
 	image = self.locations['images'] + "/%s00.png"%prefix
 	self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
 
-def fill_volumes_combo(self):
-	self.e_volume_combo.get_model().clear()
-	for volume in self.db.get_all_volumes_data():
-		self.e_volume_combo.insert_text(int(volume['id']), volume['name'])
-	self.e_volume_combo.set_active(0)
-	self.e_volume_combo.show_all()
+def fill_volumes_combo(self, prefix='e', default=0):
+	for tmp in 'e', "am":
+		eval("self.%s_volume_combo.get_model().clear()"%tmp)
+		for volume in self.db.get_all_volumes_data():
+			eval("self.%s_volume_combo.insert_text(int(volume['id']), volume['name'])"%tmp)
+		eval("self.%s_volume_combo.show_all()"%tmp)
+	if prefix == 'e':
+		self.e_volume_combo.set_active(int(default))
+		self.am_volume_combo.set_active(0)
+	else:
+		self.am_volume_combo.set_active(int(default))
 
-def fill_collections_combo(self):
-	self.e_collection_combo.get_model().clear()
-	for collection in self.db.get_all_collections_data():
-		self.e_collection_combo.insert_text(int(collection['id']), collection['name'])
-	self.e_collection_combo.set_active(0)
-	self.e_collection_combo.show_all()
+def fill_collections_combo(self, prefix='e', default=0):
+	for tmp in 'e', "am":
+		eval("self.%s_collection_combo.get_model().clear()"%tmp)
+		for collection in self.db.get_all_collections_data():
+			eval("self.%s_collection_combo.insert_text(int(collection['id']), collection['name'])"%tmp)
+		eval("self.%s_collection_combo.show_all()"%tmp)
+	if prefix == 'e':
+		self.e_collection_combo.set_active(int(default))
+		self.am_collection_combo.set_active(0)
+	else:
+		self.am_collection_combo.set_active(int(default))
 

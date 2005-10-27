@@ -86,6 +86,8 @@ def define_widgets(self, gladefile):
 	self.e_collection_id = gladefile.get_widget('e_collection_id')
 	self.show_volume_entries_button = gladefile.get_widget('show_volume_entries_button')
 	self.show_collection_entries_button = gladefile.get_widget('show_collection_entries_button')
+	self.am_volume_combo = gladefile.get_widget('am_volume_combo')
+	self.am_collection_combo = gladefile.get_widget('am_collection_combo')
 	# get from web
 	self.b_get_from_web = gladefile.get_widget('get_from_web')
 	self.c_web_source = gladefile.get_widget('combo_source')
@@ -309,14 +311,18 @@ def define_widgets(self, gladefile):
 		"on_popup_loan_activate"                : self.loan_movie,
 		"on_popup_return_activate"              : self.return_loan,
 		"on_popup_email_activate"               : self.email_reminder,
-		"on_e_add_volume_button_clicked"        : self.e_add_volume,
-		"on_e_add_collection_button_clicked"    : self.e_add_collection,
-		"on_e_remove_volume_button_clicked"     : self.e_remove_volume,
-		"on_e_remove_collection_button_clicked" : self.e_remove_collection,
+		"on_e_add_volume_button_clicked"        : self.add_volume,
+		"on_e_add_collection_button_clicked"    : self.add_collection,
+		"on_e_remove_volume_button_clicked"     : self.remove_volume,
+		"on_e_remove_collection_button_clicked" : self.remove_collection,
 		"on_e_rename_volume_button_clicked"     : self.e_rename_volume,
 		"on_e_rename_collection_button_clicked" : self.e_rename_collection,
 		"on_e_show_volume_button_clicked"       : self.e_show_volume,
 		"on_e_show_collection_button_clicked"   : self.e_show_collection,
+		"on_am_add_volume_button_clicked"       : self.add_volume,
+		"on_am_add_collection_button_clicked"   : self.add_collection,
+		"on_am_remove_volume_button_clicked"    : self.remove_volume,
+		"on_am_remove_collection_button_clicked": self.remove_collection,
 		"on_f_col_changed"                      : self.filter_collection
 	}
 	gladefile.signal_autoconnect(dic)

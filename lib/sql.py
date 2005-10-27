@@ -346,7 +346,8 @@ class GriffithSQL:
 		query = """
 			INSERT INTO 'movies' ('id', 'original_title', 'title', 'director', 'plot', 'image', 'year',
 			'runtime', 'actors', 'country', 'genre', 'media', 'classification', 'studio', 'site', 'color',
-			'region', 'layers', 'condition', 'imdb', 'trailer', 'obs', 'num_media', 'loaned', 'rating', 'seen','number')
+			'region', 'layers', 'condition', 'imdb', 'trailer', 'obs', 'num_media', 'loaned', 'rating', 'seen',
+			'number', 'volume_id', 'collection_id')
 			VALUES (Null,'""" + gutils.gescape(data.am_original_title.get_text()) + "','" +\
 			gutils.gescape(data.am_title.get_text())+"','" +\
 			gutils.gescape(data.am_director.get_text())+"','" +\
@@ -371,7 +372,9 @@ class GriffithSQL:
 			data.am_discs.get_text()+"','0','" +\
 			str(int(data.rating_slider_add.get_value()))+"','" +\
 			str(int(data.am_seen.get_active()))+"','" +\
-			data.am_number.get_text()+"')"
+			data.am_number.get_text()+"', '" +\
+			str(data.am_volume_combo.get_active()) + "', '"+\
+			str(data.am_collection_combo.get_active()) + "')"
 		self.cursor.execute(query)
 				
 	def new_db(self, parent):
@@ -459,6 +462,7 @@ class GriffithSQL:
 		# check if volume already exists
 		for volume in self.get_all_volumes_data():
 			if name == volume['name']:
+				gdebug.debug("Volume '%s' already exists"%name)
 				return False
 		gdebug.debug("Adding '%s' volume to database..."%name)
 		try:
@@ -472,6 +476,7 @@ class GriffithSQL:
 		# check if volume already exists
 		for collection in self.get_all_collections_data():
 			if name == collection['name']:
+				gdebug.debug("Collection '%s' already exists"%name)
 				return False
 		gdebug.debug("Adding '%s' collection to database..."%name)
 		try:
@@ -486,12 +491,12 @@ class GriffithSQL:
 			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM volumes WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
-		elif name != None:
+		elif name != None and id == None:
 			name =	gutils.gescape(name)
 			self.cursor.execute("SELECT id FROM volumes WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
-		if id == "0":
-			# "None" value can't be removed!
+		if str(id) == '0':
+			gdebug.debug("You have to select volume first")
 			return False
 		self.cursor.execute("SELECT count(id) FROM movies WHERE volume_id = '%s'" % id)
 		movies = int(self.cursor.fetchone()[0])
@@ -510,12 +515,12 @@ class GriffithSQL:
 			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM collections WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
-		elif name != None:
+		elif name != None and id == None:
 			name =	gutils.gescape(name)
 			self.cursor.execute("SELECT id FROM collections WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
-		if id == "0":
-			# "None" value can't be removed!
+		if str(id) == '0':
+			gdebug.debug("You have to select collection first")
 			return False
 		self.cursor.execute("SELECT count(id) FROM movies WHERE collection_id = '%s'" % id)
 		movies = int(self.cursor.fetchone()[0])

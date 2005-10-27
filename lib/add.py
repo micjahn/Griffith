@@ -78,7 +78,7 @@ def initialize_add_dialog(self):
 	# ensure we are at the first page of the notebook
 	self.nb_add.set_current_page(0)
 	self.am_source.set_active(self.d_plugin)
-	image = self.locations['images'] + "/default.png"
+	image = os.path.join(self.locations['images'], "default.png")
 	self.Image.set_from_file(image)
 	Pixbuf = self.Image.get_pixbuf()
 	self.am_picture.set_from_pixbuf(Pixbuf)
@@ -98,7 +98,7 @@ def add_movie_db(self, close):
 				os.path.join(tmp_dest, \
 				str(self.am_picture_name.get_text())+".jpg")
 		else:
-			image_path = self.locations['images'] + "/default.png"
+			image_path = os.path.join(self.locations['images'], "/default.png")
 		self.Image.set_from_file(image_path)
 		pixbuf = self.Image.get_pixbuf()
 		self.treemodel.set_value(myiter, 1, \
@@ -275,33 +275,33 @@ def clone_movie(self):
 	next_number=gutils.find_next_available(self)
 	for row in data:
 		self.db.cursor.execute(
-				"INSERT INTO 'movies'('id','original_title','title','director', 'plot', 'image', 'year', 'runtime','actors','country','genre','media','classification','studio','site', 'color','region','layers','condition','imdb','trailer','obs','num_media','rating','loaned','seen','number') VALUES (Null,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0','%s','%s')"% \
-				(gutils.gescape(str(row['original_title'])), \
-				gutils.gescape(str(row['title'])), \
-				gutils.gescape(str(row['director'])), \
-				gutils.gescape(str(row['plot'])), \
-				gutils.gescape(str(row['image'])), \
-				gutils.gescape(str(row['year'])), \
-				gutils.gescape(str(row['runtime'])), \
-				gutils.gescape(str(row['actors'])), \
-				gutils.gescape(str(row['country'])), \
-				gutils.gescape(str(row['genre'])), \
-				gutils.gescape(str(row['media'])), \
-				gutils.gescape(str(row['classification'])), \
-				gutils.gescape(str(row['studio'])), \
-				gutils.gescape(str(row['site'])), \
-				gutils.gescape(str(row['color'])), \
-				gutils.gescape(str(row['region'])), \
-				gutils.gescape(str(row['layers'])), \
-				gutils.gescape(str(row['condition'])), \
-				gutils.gescape(str(row['imdb'])), \
-				gutils.gescape(str(row['trailer'])), \
-				gutils.gescape(str(row['obs'])), \
-				str(row['num_media']), \
-				str(row['rating']), \
-				str(row['seen']), \
-				str(next_number) \
-				))
+			"INSERT INTO 'movies'('id','original_title','title','director', 'plot', 'image', 'year', 'runtime','actors','country','genre','media','classification','studio','site', 'color','region','layers','condition','imdb','trailer','obs','num_media','rating','loaned','seen','number') VALUES (Null,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0','%s','%s')"% \
+			(gutils.gescape(str(row['original_title'])), \
+			gutils.gescape(str(row['title'])), \
+			gutils.gescape(str(row['director'])), \
+			gutils.gescape(str(row['plot'])), \
+			gutils.gescape(str(row['image'])), \
+			gutils.gescape(str(row['year'])), \
+			gutils.gescape(str(row['runtime'])), \
+			gutils.gescape(str(row['actors'])), \
+			gutils.gescape(str(row['country'])), \
+			gutils.gescape(str(row['genre'])), \
+			gutils.gescape(str(row['media'])), \
+			gutils.gescape(str(row['classification'])), \
+			gutils.gescape(str(row['studio'])), \
+			gutils.gescape(str(row['site'])), \
+			gutils.gescape(str(row['color'])), \
+			gutils.gescape(str(row['region'])), \
+			gutils.gescape(str(row['layers'])), \
+			gutils.gescape(str(row['condition'])), \
+			gutils.gescape(str(row['imdb'])), \
+			gutils.gescape(str(row['trailer'])), \
+			gutils.gescape(str(row['obs'])), \
+			str(row['num_media']), \
+			str(row['rating']), \
+			str(row['seen']), \
+			str(next_number) \
+			))
 
 		myiter = self.treemodel.insert_after(None, self.treemodel.get_iter(next_number-2))
 		tmp_dest = os.path.join(self.griffith_dir,"posters")

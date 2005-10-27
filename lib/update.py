@@ -85,6 +85,14 @@ def update(self):
 		tmp_model.set_value(tmp_iter,3,self.e_original_title.get_text())
 		tmp_model.set_value(tmp_iter,4,self.e_title.get_text())
 		tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
+		
+		# update volume/collection combo
+		self.e_volume_combo.set_active(int(new_volume_id))
+		self.e_collection_combo.set_active(int(new_collection_id))
+		self.e_volume_id.set_text(str(new_volume_id))
+		self.e_collection_id.set_text(str(new_collection_id))
+		self.e_volume_id.hide()
+		self.e_collection_id.hide()
 	else:
 		gutils.error(self.w_results,_("You should fill the original title"))
 
@@ -102,7 +110,10 @@ def clear_image(self,id):
 	self.update_statusbar(_("Image has been updated"))
 
 def update_collection(self, id, name=None, volume_id=None, loaned=None):
-	if name!=None and name!='0':
+	if str(id) == '0':
+		gdebug.debug("You have to select collection first")
+		return False
+	if name!=None:
 		try:
 			self.db.cursor.execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
 		except:
@@ -144,7 +155,10 @@ def update_collection(self, id, name=None, volume_id=None, loaned=None):
 	return False
 
 def update_volume(self, id, name=None, loaned=None):
-	if name!=None and name!='0':
+	if str(id) == '0':
+		gdebug.debug("You have to select volume first")
+		return False
+	if name!=None:
 		try:
 			self.db.cursor.execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
 		except:

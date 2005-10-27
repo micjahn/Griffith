@@ -213,48 +213,66 @@ class Griffith:
 				self.main_window)
 
 	# volumes/collections			
-	def e_add_volume(self, *args):
-		if self.db.add_volume(self.e_volume_combo.get_active_text()):
-			gutils.info(self, msg=_("New volume added to database"))
-			edit.fill_volumes_combo(self)
+	def add_volume(self, widget):
+		prefix = gutils.before(widget.get_name(), "_")
+		try:
+			id = int(eval("self.%s_volume_id.get_text()"%prefix))
+		except:
+			id = 0
+		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
+		self.db.add_volume(name)
+		edit.fill_volumes_combo(self, prefix, id)
 
-	def e_add_collection(self, *args):
-		if self.db.add_collection(self.e_collection_combo.get_active_text()):
-			gutils.info(self, msg=_("New collection added to database"))
-			edit.fill_collections_combo(self)
+	def add_collection(self, widget):
+		prefix = gutils.before(widget.get_name(), "_")
+		try:
+			id = int(eval("self.%s_collection_id.get_text()"%prefix))
+		except:
+			id = 0
+		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
+		self.db.add_collection(name)
+		edit.fill_collections_combo(self, prefix, id)
 
-	def e_remove_volume(self, *args):
-		if self.db.remove_volume(name=self.e_volume_combo.get_active_text()):
-			gutils.info(self, msg=_("Volume successfully deleted"))
-			edit.fill_volumes_combo(self)
+	def remove_volume(self, widget):
+		prefix = gutils.before(widget.get_name(), "_")
+		try:
+			id = int(eval("self.%s_volume_id.get_text()"%prefix))
+		except:
+			id = 0
+		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
+		self.db.remove_volume(name=name)
+		edit.fill_volumes_combo(self, prefix, id)
 
-	def e_remove_collection(self, *args):
-		if self.db.remove_collection(name=self.e_collection_combo.get_active_text()):
-			gutils.info(self, msg=_("Collection successfully deleted"))
-			edit.fill_collections_combo(self)
+	def remove_collection(self, widget):
+		prefix = gutils.before(widget.get_name(), "_")
+		try:
+			id = int(eval("self.%s_collection_id.get_text()"%prefix))
+		except:
+			id = 0
+		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
+		self.db.remove_collection(name=name)
+		edit.fill_collections_combo(self, prefix, id)
 
-	def e_rename_volume(self, *args):
+	def e_rename_volume(self, widget):
 		id = self.e_volume_id.get_text()
 		new_name = self.e_volume_combo.get_active_text()
-		if update.update_volume(self, id, name=new_name):
-			gutils.info(self, msg=_("Volume successfully renamed"))
-			edit.fill_volumes_combo(self)
+		update.update_volume(self, id, name=new_name)
+		edit.fill_volumes_combo(self, prefix='e', default=id)
 
-	def e_rename_collection(self, *args):
+	def e_rename_collection(self, widget):
 		id = self.e_collection_id.get_text()
 		new_name = self.e_collection_combo.get_active_text()
-		if update.update_collection(self, id, name=new_name):
-			gutils.info(self, msg=_("Collection successfully renamed"))
-			edit.fill_collections_combo(self)
+		update.update_collection(self, id, name=new_name)
+		edit.fill_collections_combo(self, prefix='e', default=id)
 
-	def e_show_volume(self, *args):
+	def e_show_volume(self, widget):
 		volume_id = self.e_volume_combo.get_active()
 		if volume_id == 0:
 			view.filter_all(self)
 		else:
 			view.filter_by_volume(self, volume_id)
 
-	def e_show_collection(self, *args):
+	def e_show_collection(self, widget):
 		collection_id = self.e_collection_combo.get_active()
 		if collection_id == 0:
 			view.filter_all(self)
@@ -262,7 +280,6 @@ class Griffith:
 			view.filter_by_collection(self, collection_id)
 
 	# main treeview
-		
 	def treeview_clicked(self, *args):
 		main_treeview.treeview_clicked(self)				 
 					
