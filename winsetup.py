@@ -23,18 +23,41 @@ __revision__ = '$Id: $'
 
 # don't forget to copy lib and etc from gtk to dist dir
 
+import time
+import sys
+
+# ModuleFinder can't handle runtime changes to __path__, but win32com uses them
+
+try:
+    import modulefinder
+    import win32com
+    for p in win32com.__path__[1:]:
+        modulefinder.AddPackagePath("win32com", p)
+    for extra in ["win32com.shell"]: #,"win32com.mapi"
+        __import__(extra)
+        m = sys.modules[extra]
+        for p in m.__path__[1:]:
+            modulefinder.AddPackagePath(extra, p)
+except ImportError:
+    # no build path setup, no worries.
+    pass
+
 from distutils.core import setup
 import glob
 import py2exe
 
 opts = { 
     "py2exe": { 
-        "includes": " pango,atk,htmlentitydefs,zipfile,webbrowser,shutil,pysqlite2,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib", 
+        "includes": "pango,atk,gobject,threading,htmlentitydefs,sqlite,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
         "dist_dir": "dist", 
     } 
 } 
 
-setup(windows = [ 
+setup(
+    name = "Griffith",
+    description = "A movie collection manager.",
+    version = "0.4.3",
+    console = [ 
         { 
             "script": "griffith", 
             "icon_resources": [(1, "images\griffith.ico")] 
@@ -66,9 +89,9 @@ setup(windows = [
 		("i18n/de/LC_MESSAGES",
 		glob.glob("i18n\\de\\LC_MESSAGES\\*.mo")),
 		("lib/plugins/export",
-		glob.glob("lib\\plugins\\export*.*")),
+		glob.glob("lib\\plugins\\export\\*.*")),
 		("lib/plugins/movie",
-		glob.glob("lib\\plugins\\movie*.*")),
+		glob.glob("lib\\plugins\\movie\\*.*")),
 		("images",
 		glob.glob("images\\*.png")),
 		("",

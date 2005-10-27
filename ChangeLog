@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-10-27 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added some minor changes for win32 compatibility
+	* Now Griffith's dir defaults to localized 'My Documents' dir on win32 environments
+
 2005-10-27 Piotr Ozarowski <ozarow@gmail.com>
 	* Renaming of volumes and collection is now possible
 

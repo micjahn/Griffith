@@ -22,10 +22,7 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from gettext import gettext as _
-try:
-	import sqlite
-except:
-	import pysqlite2
+import sqlite
 import os.path
 import gdebug
 import gutils
