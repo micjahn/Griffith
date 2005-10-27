@@ -98,7 +98,7 @@ def add_movie_db(self, close):
 				os.path.join(tmp_dest, \
 				str(self.am_picture_name.get_text())+".jpg")
 		else:
-			image_path = os.path.join(self.locations['images'], "/default.png")
+			image_path = os.path.join(self.locations['images'], "default.png")
 		self.Image.set_from_file(image_path)
 		pixbuf = self.Image.get_pixbuf()
 		self.treemodel.set_value(myiter, 1, \
@@ -190,12 +190,12 @@ def populate_with_results(self):
 			self.am_picture.set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
 			self.am_picture_name.set_text(string.replace(self.movie.picture, ".jpg",""))
 		except:
-			image = self.locations['images'] + "/default.png"
+			image = os.path.join(self.locations['images'], "default.png")
 			self.Image.set_from_file(image)
 			Pixbuf = self.Image.get_pixbuf()
 			self.am_picture.set_from_pixbuf(Pixbuf)
 	else:
-		image = self.locations['images'] + "/default.png"
+		image = os.path.join(self.locations['images'], "default.png")
 		self.Image.set_from_file(image)
 		Pixbuf = self.Image.get_pixbuf()
 		self.am_picture.set_from_pixbuf(Pixbuf)
@@ -262,7 +262,7 @@ def source_changed(self):
 	self.am_plugin_desc.set_text(plugin.plugin_name+"\n" \
 		+plugin.plugin_description+"\n"+_("Url: ") \
 		+plugin.plugin_url+"\n"+_("Language: ")+plugin.plugin_language)
-	image = self.locations['images'] + "/" + plugin_name + ".png"
+	image = os.path.join(self.locations['images'], plugin_name + ".png")
 	# if movie plugin logo exists lets use it
 	if os.path.exists(image):
 		self.am_plugin_image.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
@@ -315,7 +315,7 @@ def clone_movie(self):
 			if os.name == 'nt':
 				image_path = "images/default.png"
 			else:
-				image_path = self.locations['images'] + "/default.png"
+				image_path = os.path.join(self.locations['images'], "default.png")
 		self.Image.set_from_file(image_path)
 		self.treemodel.set_value(myiter, 1, '%004d' % int(next_number))
 		pixbuf = self.Image.get_pixbuf() 
