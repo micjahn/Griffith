@@ -170,4 +170,5 @@ def update_volume(self, id, name=None, loaned=None):
 		except:
 			gdebug.debug("ERROR during updating volume's loan data!")
 			return False
+		return True
 	return False
