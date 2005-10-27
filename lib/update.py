@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: update.py,v 1.19 2005/10/01 15:46:14 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -102,12 +102,13 @@ def clear_image(self,id):
 	self.update_statusbar(_("Image has been updated"))
 
 def update_collection(self, id, name=None, volume_id=None, loaned=None):
-	if name!=None:
+	if name!=None and name!='0':
 		try:
 			self.db.cursor.execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
 		except:
 			gdebug.debug("ERROR during updating collection's name!")
 			return False
+		return True
 	if loaned==1:
 		try:
 			self.db.cursor.execute("""
@@ -123,6 +124,7 @@ def update_collection(self, id, name=None, volume_id=None, loaned=None):
 			except:
 				gdebug.debug("ERROR during updating volume's loan data!")
 				return False
+		return True
 	elif loaned==0:
 		try:
 			self.db.cursor.execute("""
@@ -138,14 +140,17 @@ def update_collection(self, id, name=None, volume_id=None, loaned=None):
 			except:
 				gdebug.debug("ERROR during updating volume's loan data!")
 				return False
+		return True
+	return False
 
 def update_volume(self, id, name=None, loaned=None):
-	if name!=None:
+	if name!=None and name!='0':
 		try:
 			self.db.cursor.execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
 		except:
 			gdebug.debug("ERROR during updating volume's name!")
 			return False
+		return True
 	if loaned==1:
 		try:
 			self.db.cursor.execute("""
@@ -155,6 +160,7 @@ def update_volume(self, id, name=None, loaned=None):
 		except:
 			gdebug.debug("ERROR during updating volume's loan data!")
 			return False
+		return True
 	elif loaned==0:
 		try:
 			self.db.cursor.execute("""
@@ -164,3 +170,4 @@ def update_volume(self, id, name=None, loaned=None):
 		except:
 			gdebug.debug("ERROR during updating volume's loan data!")
 			return False
+	return False

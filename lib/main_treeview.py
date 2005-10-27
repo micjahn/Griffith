@@ -165,6 +165,10 @@ def treeview_clicked(self):
 			#volumes/collections
 			self.e_volume_combo.set_active(int(row['volume_id']))
 			self.e_collection_combo.set_active(int(row['collection_id']))
+			self.e_volume_id.set_text(str(row['volume_id']))
+			self.e_collection_id.set_text(str(row['collection_id']))
+			self.e_volume_id.hide()
+			self.e_collection_id.hide()
 		
 				
 def populate(self, data):
