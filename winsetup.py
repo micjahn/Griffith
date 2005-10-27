@@ -21,15 +21,26 @@ __revision__ = '$Id: $'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-# c:\Python24\python.exe winsetup.py py2exe --include pango,atk,htmlentitydefs,zipfile,webbrowser,shutil,pysqlite2,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib
-# copy lib and etc from gtk to dist dir
+# don't forget to copy lib and etc from gtk to dist dir
 
 from distutils.core import setup
 import glob
 import py2exe
 
-setup(console=["griffith"],
-	data_files=[
+opts = { 
+    "py2exe": { 
+        "includes": " pango,atk,htmlentitydefs,zipfile,webbrowser,shutil,pysqlite2,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib", 
+        "dist_dir": "dist", 
+    } 
+} 
+
+setup(windows = [ 
+        { 
+            "script": "griffith", 
+            "icon_resources": [(1, "images\griffith.ico")] 
+        }],
+		options = opts,
+		data_files=[
 		("data",
 		glob.glob("data\\*.png")),
 		("data/export_templates",
