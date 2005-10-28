@@ -4,6 +4,11 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-10-29 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added some HTML export plugin fixes for win32 compatibility
+	* Added a minor change to sql module for win32 poster paths compatibility. Needs to be tested under *nix to see if nothing is broken.
+	* win32 build should use now the libwimp widget engine for better windows visual integration
+
 2005-10-27 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added some minor changes for win32 compatibility
 	* Now Griffith's dir defaults to localized 'My Documents' dir on win32 environments
