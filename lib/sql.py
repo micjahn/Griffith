@@ -343,6 +343,7 @@ class GriffithSQL:
 		plot_buffer = data.am_plot.get_buffer()
 		with_buffer = data.am_with.get_buffer()
 		obs_buffer = data.am_obs.get_buffer()
+		(filepath, filename) = os.path.split(data.am_picture_name.get_text())
 		query = """
 			INSERT INTO 'movies' ('id', 'original_title', 'title', 'director', 'plot', 'image', 'year',
 			'runtime', 'actors', 'country', 'genre', 'media', 'classification', 'studio', 'site', 'color',
@@ -352,7 +353,7 @@ class GriffithSQL:
 			gutils.gescape(data.am_title.get_text())+"','" +\
 			gutils.gescape(data.am_director.get_text())+"','" +\
 			gutils.gescape(plot_buffer.get_text(plot_buffer.get_start_iter(), plot_buffer.get_end_iter()))+"','" +\
-			data.am_picture_name.get_text()+"','" +\
+			filename+"','" +\
 			data.am_year.get_text()+"','" +\
 			data.am_runtime.get_text()+"','" +\
 			gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter()))+"','" +\
