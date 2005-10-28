@@ -35,6 +35,7 @@ import gutils
 import gobject
 import gettext
 import gdebug
+import gtk
 
 try:
 	import gtkspell
@@ -59,8 +60,9 @@ def locations(self):
 	if self.windows:
 		#win32 platform, add the "lib" folder to the system path
 		os.environ['PATH'] += ";lib;"
-		self.locations['lib'] = "%s/lib"%self.locations['exec']
-		self.DIR = "i18n"
+		self.locations['lib'] = "%s\lib"%self.locations['exec']
+		self.DIR = "%s\i18n"%self.locations['exec']
+		gtk.rc_parse('%s\gtkrc'%self.locations['exec'])
 		#some locations
 		self.locations['movie_plugins'] = "%s/lib/plugins/movie"%self.locations['exec']
 		self.locations['export_plugins'] = "%s/lib/plugins/export"%self.locations['exec']

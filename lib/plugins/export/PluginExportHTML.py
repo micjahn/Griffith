@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
 
-__revision__ = '$Id: PluginExportHTML.py,v 1.35 2005/10/05 09:58:35 pox Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -108,8 +108,8 @@ class ExportPlugin(gtk.Window):
 		self.style_list = {}
 		self.templates = self.make_template_list()
 		# glade
-		if os.name == 'nt':
-			gf = 'exporthtml.glade'
+		if os.name == 'nt' or os.name == 'win32':
+			gf = 'glade\exporthtml.glade'
 		else:
 			gf = self.share_dir + "/exporthtml.glade"
 		self.define_widgets(gtk.glade.XML(gf))

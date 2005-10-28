@@ -5,7 +5,10 @@
 @rd /S /Q dist 
  
 @rem ***** create the exe 
-@c:\Python24\python.exe -OO winsetup.py py2exe 
+@python.exe -OO winsetup.py py2exe 
+@mkdir dist\etc
 
+@xcopy c:\gtk\etc c:\griffith\dist\etc /s /e
+@xcopy c:\gtk\lib c:\griffith\dist\lib /s /e
+@copy c:\gtk\share\themes\MS-Windows\gtk-2.0\*.* c:\griffith\dist\
 @rem **** pause so we can see the exit codes 
-@pause "done...hit a key to exit"

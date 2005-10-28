@@ -26,7 +26,6 @@ __revision__ = '$Id: $'
 # a base python 2.4 for 2in32 instalation must be present
 # along with gtk+ development libraries
 # pywin32com extensions, reportlab module, pygtk for win32 and pysqlite 1.0.1.win32-py2.4
-# don't forget to copy lib and etc from gtk to dist dir after building
 
 import time
 import sys
@@ -69,17 +68,17 @@ setup(
         }],
 		options = opts,
 		data_files=[
-		("data",
+		("images",
 		glob.glob("data\\*.png")),
-		("data/export_templates",
+		("images/export_templates",
 		glob.glob("data\\export_templates\\*.dtd")),
-		("data/export_templates/csv",
+		("images/export_templates/csv",
 		glob.glob("data\\export_templates\\csv\\*.*")),
-		("data/export_templates/xml",
+		("images/export_templates/xml",
 		glob.glob("data\\export_templates\\xml\\*.*")),
-		("data/export_templates/html_table",
+		("images/export_templates/html_table",
 		glob.glob("data\\export_templates\\html_table\\*.*")),
-		("data/export_templates/html_tables",
+		("images/export_templates/html_tables",
 		glob.glob("data\\export_templates\\html_tables\\*.*")),
 		("fonts",
 		glob.glob("fonts\\*.TTF")),
