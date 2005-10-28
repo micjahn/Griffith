@@ -48,7 +48,7 @@ import py2exe
 
 opts = { 
     "py2exe": { 
-        "includes": "pango,atk,gobject,threading,htmlentitydefs,sqlite,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
+        "includes": "pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlite,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
         "dist_dir": "dist", 
     } 
 } 
