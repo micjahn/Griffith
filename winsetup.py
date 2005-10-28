@@ -21,7 +21,12 @@ __revision__ = '$Id: $'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-# don't forget to copy lib and etc from gtk to dist dir
+
+# for build this on a win32 environment and becames with a standalone distribution 
+# a base python 2.4 for 2in32 instalation must be present
+# along with gtk+ development libraries
+# pywin32com extensions, reportlab module, pygtk for win32 and pysqlite 1.0.1.win32-py2.4
+# don't forget to copy lib and etc from gtk to dist dir after building
 
 import time
 import sys
