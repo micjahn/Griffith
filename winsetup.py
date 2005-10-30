@@ -61,7 +61,7 @@ setup(
     name = "Griffith",
     description = "A movie collection manager.",
     version = "0.4.3",
-    console = [ 
+    windows = [ 
         { 
             "script": "griffith", 
             "icon_resources": [(1, "images\griffith.ico")] 
