@@ -22,7 +22,8 @@
 		<classification>@DATA@</classification></@classification><@studio>
 		<studio>@DATA@</studio></@studio><@actors>
 		<actors>@DATA@</actors></@actors><@plot>
-		<plot>@DATA@</plot></@plot>
+		<plot>@DATA@</plot></@plot><@obs>
+		<notes>@DATA@</notes></@obs>
 	</movie>
 <!-- /ITEMS -->
 </movies>

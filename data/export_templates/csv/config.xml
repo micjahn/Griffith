@@ -4,7 +4,7 @@
 	<name>CSV</name>
 	<author>Piotr Ozarowski</author>
 	<email>ozarow@gmail.com</email>
-	<version>0.1-beta</version>
+	<version>0.1-beta2</version>
 	<extension>csv</extension>
 	<description>Generates simple CSV document</description>
 	<description xml:lang="pl">Generuje prosty dokument CSV</description>

@@ -32,7 +32,8 @@
 			<th>@TITLE@</th></@classification><@studio>
 			<th>@TITLE@</th></@studio><@actors>
 			<th>@TITLE@</th></@actors><@plot>
-			<th>@TITLE@</th></@plot>
+			<th>@TITLE@</th></@plot><@obs>
+			<th>@TITLE@</th></@obs>
 		</tr>
 	</thead>
 
@@ -57,7 +58,8 @@
 		<td class="classification">@DATA@</td></@classification><@studio>
 		<td class="studio">@DATA@</td></@studio><@actors>
 		<td class="actors">@DATA@</td></@actors><@plot>
-		<td class="plot">@DATA@</td></@plot>
+		<td class="plot">@DATA@</td></@plot><@obs>
+		<td class="notes">@DATA@</td></@obs>
 	</tr>
 <!-- /ITEMS -->
 

@@ -35,69 +35,82 @@ plugin_name = "HTML"
 plugin_description = _("Plugin exports data using templates")
 plugin_author = "Piotr Ozarowski"
 plugin_author_email = "ozarow@gmail.com"
-plugin_version = "3.2.2"
+plugin_version = "3.2.3"
 
 class ExportPlugin(gtk.Window):
 	#==[ configuration - default values ]==========={{{
 	config = {
-		'sorting'           : 'title',
-		'sorting2'          : 'ASC',
-		'exported_dir'      : 'griffith_movies',
-		#'theme'             : 'html_table',
-		'template'          : 0,
-		'title'             : _("Griffith's movies list"),
-		'style'             : 0,
-		'custom_style'      : False,
-		'custom_style_file' : None,
-		'split_num'         : 50,		# split into x files/pages
-		'split_by'          : 1,		# 0==files, 1==movies
-		'seen_only'         : 0,		# 0==all movies; 1== seen only; 2==unseen only
-		'loaned_only'       : 0,		# 0==all movies; 1== loaned only; 2==not loaned only
+		"sorting"           : "title",
+		"sorting2"          : "ASC",
+		"exported_dir"      : "griffith_movies",
+		"template"          : 0,
+		"title"             : _("Griffith's movies list"),
+		"style"             : 0,
+		"custom_style"      : False,
+		"custom_style_file" : None,
+		"split_num"         : 50,		# split into x files/pages
+		"split_by"          : 1,		# 0==files, 1==movies
+		"seen_only"         : 0,		# 0==all movies; 1==seen only;   2==unseen only
+		"loaned_only"       : 0,		# 0==all movies; 1==loaned only; 2==not loaned only
 	}
 	fields = {
-		'actors'         : False,
-		'classification' : False,
-		'country'        : True,
-		'genre'          : True,
-		'director'       : True,
-		'image'          : True,
-		'site'           : True,
-		'imdb'           : True,
-		'trailer'        : True,
-		'loaned'         : False,
-		'media'          : True,
-		'number'         : True,
-		'original_title' : True,
-		'plot'           : False,
-		'rating'         : True,
-		'runtime'        : True,
-		'studio'         : False,
-		'seen'           : True,
-		'title'          : True,
-		'year'           : True,
+		"actors"         : False,
+		"classification" : False,
+		"country"        : True,
+		"genre"          : True,
+		"director"       : True,
+		"image"          : True,
+		"site"           : True,
+		"imdb"           : True,
+		"trailer"        : True,
+		"loaned"         : False,
+		"media"          : True,
+		"number"         : True,
+		"original_title" : True,
+		"plot"           : False,
+		"rating"         : True,
+		"runtime"        : True,
+		"studio"         : False,
+		"seen"           : True,
+		"title"          : True,
+		"year"           : True,
+		"obs"            : False,
+#		"region"         : False,
+#		"layers"         : False,
+#		"condition"      : False,
+#		"color"          : False,
+#		"volume_id"      : False,
+#		"collection_id"  : False,
 	}
 	
 	names = {
-		_("Actors")         : 'actors',
-		_("Classification") : 'classification',
-		_("Country")        : 'country',
-		_("Director")       : 'director',
-		_("Genre")          : 'genre',
-		_("Image")          : 'image',
-		_("Official Site")  : 'site',
-		_("IMDB page")      : 'imdb',
-		_("Trailer")        : 'trailer',
-		_("Loaned")         : 'loaned',
-		_("Media")          : 'media',
-		_("Number")         : 'number',
-		_("Original Title") : 'original_title',
-		_("Plot")           : 'plot',
-		_("Rating")         : 'rating',
-		_("Runtime")        : 'runtime',
-		_("Studio")         : 'studio',
-		_("Seen it")        : 'seen',
-		_("Title")          : 'title',
-		_("Year")           : 'year',
+		_("Actors")         : "actors",
+		_("Classification") : "classification",
+		_("Country")        : "country",
+		_("Director")       : "director",
+		_("Genre")          : "genre",
+		_("Image")          : "image",
+		_("Official Site")  : "site",
+		_("IMDB page")      : "imdb",
+		_("Trailer")        : "trailer",
+		_("Loaned")         : "loaned",
+		_("Media")          : "media",
+		_("Number")         : "number",
+		_("Original Title") : "original_title",
+		_("Plot")           : "plot",
+		_("Rating")         : "rating",
+		_("Runtime")        : "runtime",
+		_("Studio")         : "studio",
+		_("Seen it")        : "seen",
+		_("Title")          : "title",
+		_("Year")           : "year",
+		_("Notes")          : "obs",
+#		_("Region")         : "region",
+#		_("Layers")         : "layers",
+#		_("Condition")      : "condition",
+#		_("Color")          : "color",
+#		_("Volume")         : "volume_id",
+#		_("Collection")     : "collection_id",
 	}
 	#}}}
 
@@ -108,7 +121,7 @@ class ExportPlugin(gtk.Window):
 		self.style_list = {}
 		self.templates = self.make_template_list()
 		# glade
-		if os.name == 'nt' or os.name == 'win32':
+		if os.name == 'nt' or os.name == 'win32':	
 			gf = 'glade\exporthtml.glade'
 		else:
 			gf = self.share_dir + "/exporthtml.glade"
@@ -466,7 +479,6 @@ class ExportPlugin(gtk.Window):
 					tmp = self.fill_template(tmp, field, data, title, remove)
 				return tmp
 		else:
-			#print "fill_template: field %s not found!"%field
 			return template
 	#}}}
 
@@ -644,15 +656,13 @@ class ExportPlugin(gtk.Window):
 
 		# prepare SQL query
 		select = ''
-		query = ''
-		if self.fields['loaned'] == True or self.fields['seen'] == True:
-			query = """
-				CREATE TEMPORARY TABLE answer
-				(
-					id INT(1) DEFAULT 0,
-					name VARCHAR(16) DEFAULT "No"
-				);
-			"""
+		query = """
+			CREATE TEMPORARY TABLE answer
+			(
+				id INT(1) DEFAULT 0,
+				name VARCHAR(16) DEFAULT "No"
+			);
+		"""
 		for i in self.fields:
 			if self.fields[i] == True:
 				select += "movies."+i+" AS "+i+', '
@@ -706,10 +716,13 @@ class ExportPlugin(gtk.Window):
 				if self.fields[self.names[j]] == True:
 					try:
 						tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]).encode('utf-8'), j)
-					except:
+					except UnicodeDecodeError:
 						tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]), j)
+					except Exception, ex:
+						gdebug.debug("Error occurred while decoding %s (movie number %s)" % (self.names[j], row["number"]))
 				else:
 					tmp = self.fill_template(tmp, self.names[j], remove=True)
+				tmp = gutils.convert_entities(tmp)
 			exported_file.write(tmp)
 			tmp = None
 			# ---------------------------------------------

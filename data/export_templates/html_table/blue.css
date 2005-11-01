@@ -27,7 +27,7 @@ td {
 	border-bottom: 1px dashed #1f3048;
 }
 
-td.plot, td.actors {
+td.plot, td.actors, td.notes {
 	white-space: pre-wrap;
 	font-size: 0.9em;
 	text-align: left;

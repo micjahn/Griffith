@@ -92,7 +92,11 @@
 	<tr class="plot">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@plot>
+	</tr></@plot><@obs>
+	<tr class="notes">
+		<th>@TITLE@</th>
+		<td>@DATA@</td>
+	</tr></@obs>
 </table>
 <!-- /ITEMS -->
 

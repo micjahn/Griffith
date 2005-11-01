@@ -5,7 +5,7 @@
 	<name xml:lang="pl">Tabele HTML</name>
 	<author>Piotr Ozarowski</author>
 	<email>ozarow@gmail.com</email>
-	<version>1.0</version>
+	<version>1.1</version>
 	<extension>htm</extension>
 	<description>Generates HTML with multiple tables:
 each movie gets its own table
