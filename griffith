@@ -48,6 +48,10 @@ import main_treeview
 import quick_filter
 from gettext import gettext as _
 
+import amazon
+from urllib import urlretrieve
+import tempfile
+
 class Griffith:
 	"""The main application class"""
    
@@ -185,7 +189,19 @@ class Griffith:
 		self.poster_window.hide()
 			
 	def get_poster(self, *args):
-		print "fetching poster todo"
+		"""tries to fetch a new big poster from amazon"""
+		gdebug.debug("fetching poster from amazon")
+		amazon.setLicense("0RKH4ZH1JCFZHMND91G2")
+		result = amazon.searchByKeyword(self.e_original_title.get_text(), \
+			type="lite", product_line="dvd")
+		#sock = urllib.urlopen(result[0].ImageUrlLarge)
+		file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
+			dir=os.path.join(self.griffith_dir, "posters"))
+		file_to_copy += ".jpg"
+		sock = urlretrieve(result[0].ImageUrlLarge, file_to_copy)
+		self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+		#update.update_image(self, file_to_copy, self.get_maintree_selection())
+		#edit.update_tree_thumbnail(self, '%s/posters/t_%s.jpg' % (self.griffith_dir,  os.path.basename(file_to_copy)))
 		
 	# rating
 		

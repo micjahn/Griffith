@@ -19,6 +19,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <signal name="destroy" handler="gtk_main_quit" last_modification_time="Fri, 15 Apr 2005 23:05:37 GMT"/>
 
   <child>
@@ -30,6 +31,8 @@
       <child>
 	<widget class="GtkMenuBar" id="menubar1">
 	  <property name="visible">True</property>
+	  <property name="pack_direction">GTK_PACK_DIRECTION_LTR</property>
+	  <property name="child_pack_direction">GTK_PACK_DIRECTION_LTR</property>
 
 	  <child>
 	    <widget class="GtkMenuItem" id="menuitem1">
@@ -846,6 +849,8 @@ Year</property>
 
 			  <child>
 			    <widget class="GtkToolButton" id="fetch_poster">
+			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Try to fetch a big poster from Amazon services website</property>
 			      <property name="stock_id">gtk-network</property>
 			      <property name="visible_horizontal">True</property>
 			      <property name="visible_vertical">True</property>
@@ -3548,6 +3553,7 @@ Year</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox13">
@@ -5891,6 +5897,7 @@ Year</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox6">
@@ -5974,6 +5981,7 @@ Year</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox7">
@@ -6199,6 +6207,7 @@ Year</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox8">
@@ -7745,6 +7754,7 @@ Stars</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_UTILITY</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox9">
@@ -7926,6 +7936,7 @@ Double Slim</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_UTILITY</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox10">
@@ -8074,6 +8085,7 @@ Double Slim</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox11">
@@ -8441,6 +8453,7 @@ Double Slim</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox12">
@@ -8829,6 +8842,7 @@ Double Slim</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox17">
@@ -9093,6 +9107,7 @@ Double Slim</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_UTILITY</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkVBox" id="vbox19">
@@ -9389,6 +9404,7 @@ Double Slim</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
 
   <child>
     <widget class="GtkImage" id="big_poster">
