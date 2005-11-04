@@ -176,7 +176,7 @@ def fetch_bigger_poster(self):
 						type="lite", product_line="dvd")
 		match = 0
 		for f in range(len(result)):
-			if result[f].ProductName == self.e_original_title.get_text():
+			if self.e_original_title.get_text() == result[f].ProductName:
 				match = 1
 				break;
 		if match > 0:
