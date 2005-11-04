@@ -174,43 +174,49 @@ def fetch_bigger_poster(self):
 	try:
 		result = amazon.searchByKeyword(self.e_original_title.get_text(), \
 						type="lite", product_line="dvd")
-		#for f in range(len(result)):
-			#print result[f].ProductName
-		file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
-			dir=os.path.join(self.griffith_dir, "posters"))
-		file_to_copy += ".jpg"
-		gdebug.debug("Posters found on amazon: %s -  TODO: a select poster popup window. For now, we get the first one." % len(result))
-		progress = movie.Progress(self.main_window,_("Fetching poster"),_("Wait a moment"))
-		retriever = movie.Retriever(result[0].ImageUrlLarge, self.main_window, progress, file_to_copy)
-		retriever.start()
-		while retriever.isAlive():
-			progress.pulse()
-			if progress.status:
-				retriever.suspend()
-			while gtk.events_pending():
-						gtk.main_iteration()
-		progress.close()
-		urlcleanup()
-		
-		self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
-		response = \
-				gutils.question(self, \
-				_("Do you want to use this poster instead?"), \
-				1, self.main_window)
-		if response == -8:
-			gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
-			update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
-			update_tree_thumbnail(self, file_to_copy)
-			try:
-				os.remove("%s/%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
-				os.remove("%s/t_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
-				os.remove("%s/m_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
-			except:
-				pass
+		match = 0
+		for f in range(len(result)):
+			if result[f].ProductName == self.e_original_title.get_text():
+				match = 1
+				break;
+		if match > 0:
+			file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
+				dir=os.path.join(self.griffith_dir, "posters"))
+			file_to_copy += ".jpg"
+			gdebug.debug("Posters found on amazon: %s -  TODO: a select poster popup window. For now, we get the exact match." % len(result))
+			progress = movie.Progress(self.main_window,_("Fetching poster"),_("Wait a moment"))
+			retriever = movie.Retriever(result[f].ImageUrlLarge, self.main_window, progress, file_to_copy)
+			retriever.start()
+			while retriever.isAlive():
+				progress.pulse()
+				if progress.status:
+					retriever.suspend()
+				while gtk.events_pending():
+							gtk.main_iteration()
+			progress.close()
+			urlcleanup()
+			
+			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+			response = \
+					gutils.question(self, \
+					_("Do you want to use this poster instead?"), \
+					1, self.main_window)
+			if response == -8:
+				gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
+				update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
+				update_tree_thumbnail(self, file_to_copy)
+				try:
+					os.remove("%s/%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
+					os.remove("%s/t_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
+					os.remove("%s/m_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
+				except:
+					pass
+			else:
+				gdebug.debug("Reverting to previous poster and deleting new one from disk.")
+				self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file("%s/%s.jpg" % (os.path.join(self.griffith_dir, \
+					"posters"), current_poster)).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+				os.remove(file_to_copy)
 		else:
-			gdebug.debug("Reverting to previous poster and deleting new one from disk.")
-			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file("%s/%s.jpg" % (os.path.join(self.griffith_dir, \
-				"posters"), current_poster)).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
-			os.remove(file_to_copy)
+			gutils.warning(self, _("No posters found for this movie."))	
 	except:
 		gutils.warning(self, _("No posters found for this movie."))
