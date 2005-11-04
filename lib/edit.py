@@ -197,7 +197,7 @@ def fetch_bigger_poster(self):
 	if response == -8:
 		gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
 		update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
-		edit.update_tree_thumbnail(self, file_to_copy)
+		update_tree_thumbnail(self, file_to_copy)
 		try:
 			os.remove("%s/%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
 			os.remove("%s/t_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
