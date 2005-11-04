@@ -160,3 +160,52 @@ def fill_collections_combo(self, prefix='e', default=0):
 	else:
 		self.am_collection_combo.set_active(int(default))
 
+def fetch_bigger_poster(self):
+	import amazon
+	from urllib import *
+	import tempfile
+	import movie
+	import gdebug
+	
+	gdebug.debug("fetching poster from amazon")
+	this_movie = self.db.select_movie_by_num(self.e_number.get_text())
+	current_poster = this_movie[0]['image']
+	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
+	result = amazon.searchByKeyword(self.e_original_title.get_text(), \
+		type="lite", product_line="video")
+	file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
+		dir=os.path.join(self.griffith_dir, "posters"))
+	file_to_copy += ".jpg"
+	gdebug.debug("Posters found on amazon: %s -  TODO: a select poster popup window. For now, we get the first one." % len(result))
+	progress = movie.Progress(self.main_window,_("Fetching poster"),_("Wait a moment"))
+	retriever = movie.Retriever(result[0].ImageUrlLarge, self.main_window, progress, file_to_copy)
+	retriever.start()
+	while retriever.isAlive():
+		progress.pulse()
+		if progress.status:
+			retriever.suspend()
+		while gtk.events_pending():
+					gtk.main_iteration()
+	progress.close()
+	urlcleanup()
+	
+	self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+	response = \
+			gutils.question(self, \
+			_("Do you want to use this poster instead?"), \
+			1, self.main_window)
+	if response == -8:
+		gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
+		update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
+		edit.update_tree_thumbnail(self, file_to_copy)
+		try:
+			os.remove("%s/%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
+			os.remove("%s/t_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
+			os.remove("%s/m_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
+		except:
+			pass
+	else:
+		gdebug.debug("Reverting to previous poster and deleting new one from disk.")
+		self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file("%s/%s.jpg" % (os.path.join(self.griffith_dir, \
+			"posters"), current_poster)).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+		os.remove(file_to_copy)
