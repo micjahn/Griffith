@@ -24,7 +24,6 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import gutils
 import gtk
-import os.path
 import datetime
 import update
 
@@ -66,7 +65,7 @@ def commit_loan(self):
 			return False
 
 	if volume_id>0 and collection_id>0:
-		if loan_whole_collection == True:
+		if loan_whole_collection:
 			update.update_collection(self, id=collection_id, volume_id=volume_id, loaned=1)
 		else:
 			update.update_volume(self, id=volume_id, loaned=1)
@@ -84,14 +83,14 @@ def commit_loan(self):
 	# next, we insert a new row on the loans table
 	data_movie=self.db.select_movie_by_num(movie_id)
 	query = "INSERT INTO 'loans'('id', 'person_id','"
-	if collection_id>0 and loan_whole_collection == True:
+	if collection_id > 0 and loan_whole_collection:
 		query +="collection_id"
-	elif volume_id>0:
+	elif volume_id > 0:
 		query +="volume_id"
 	else:
 		query +="movie_id"
 	query += "', 'date', 'return_date') VALUES (Null, '" + str(data_person[0]['id']) + "', '"
-	if collection_id>0 and loan_whole_collection == True:
+	if collection_id > 0 and loan_whole_collection:
 		query += str(collection_id)
 	elif volume_id>0:
 		query += str(volume_id)
@@ -116,11 +115,11 @@ def return_loan(self):
 			self.db.cursor.execute("SELECT loaned FROM collections WHERE id='%s'"%collection_id)
 			collection_is_loaned = self.db.cursor.fetchall()[0][0]
 		
-		if volume_id>0 and collection_is_loaned == True:
+		if volume_id > 0 and collection_is_loaned:
 			update.update_collection(self, id=collection_id, volume_id=volume_id, loaned=0)
-		elif collection_is_loaned == True:
+		elif collection_is_loaned:
 			update.update_collection(self, id=collection_id, loaned=0)
-		elif volume_id>0:
+		elif volume_id > 0:
 			update.update_volume(self, id=volume_id, loaned=0)
 		else:
 			self.db.cursor.execute("UPDATE movies SET loaned='0' WHERE number='%s';" % movie_id)
@@ -130,7 +129,7 @@ def return_loan(self):
 		data_movie=self.db.select_movie_by_num(movie_id)
 		# fill return information on loans table
 		query = "UPDATE loans SET return_date='%s' WHERE " % str(datetime.date.today())
-		if collection_id>0 and collection_is_loaned == True:
+		if collection_id > 0 and collection_is_loaned:
 			query +="collection_id='%s'" % collection_id
 		elif volume_id>0:
 			query +="volume_id='%s'" % volume_id
