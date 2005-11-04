@@ -41,14 +41,14 @@ try:
 	else:
 		gdebug.debug('Using Griffith directory: %s'%griffith_dir)
 except OSError:
-		gdebug.debug("Unable to create griffith directory.")
-		raise
-		sys.exit()
+	gdebug.debug("Unable to create griffith directory.")
+	raise
+	sys.exit()
 
 if not os.access(griffith_dir, os.W_OK):
 	gdebug.debug('Cannot write to griffith directory, %s' % griffith_dir)
 	sys.exit()
 	
 if not os.path.exists(os.path.join(griffith_dir, "posters")):
-		gdebug.debug("Creating poster directory")
-		os.makedirs(os.path.join(griffith_dir, "posters"))
+	gdebug.debug("Creating poster directory")
+	os.makedirs(os.path.join(griffith_dir, "posters"))

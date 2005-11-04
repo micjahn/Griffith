@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: gdebug.py,v 1.7 2005/09/13 13:50:43 pox Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -24,7 +24,7 @@ __revision__ = '$Id: gdebug.py,v 1.7 2005/09/13 13:50:43 pox Exp $'
 import getopt, sys
 
 def usage():
-    print "USAGE:", sys.argv[0], "[-h|d]"
+	print "USAGE:", sys.argv[0], "[-h|d]"
 
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "hd", ["help", "debug"])
@@ -42,5 +42,5 @@ for o, a in opts:
 		sys.exit()
 
 def debug(txt):
-    if debug_mode:
-        print txt.encode('utf8')
+	if debug_mode:
+		print txt.encode('utf8')

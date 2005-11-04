@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: quick_filter.py,v 1.2 2005/08/18 21:32:29 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 # This program is free software; you can redistribute it and/or modify
@@ -24,36 +24,36 @@ from gettext import gettext as _
 import gutils
 
 def change_filter(self):
-    x = 0
-    criteria = gutils.on_combo_box_entry_changed(self.filter_criteria)
-    text = gutils.gescape(self.e_filter.get_text())
-    self.treemodel.clear()
-    self.clear_details()
-    if criteria == self._("Original Title") and text:
-        data = self.db.select_movie_by_original_title(text)
-    elif criteria == self._("Title")  and text:
-        data = self.db.select_movie_by_title(text)
-    elif criteria == self._("Director")  and text:
-        data = self.db.select_movie_by_director(text)
-    elif criteria == self._("Year")  and text:
-        data = self.db.select_movie_by_year(text)
-    elif criteria == self._("Number")  and text:
-        data = self.db.select_movie_by_num(text)
-    elif criteria == self._("Rating")  and text:
-        data = self.db.select_movie_by_rating(text)
-    elif criteria == self._("Genre")  and text:
-        data = self.db.select_movie_by_genre(text)
-    elif criteria == self._("With")  and text:
-        data = self.db.select_movie_by_actors(text)
-    else:
-        data = self.db.get_all_data()
-    for row in data:
-        x = x + 1    
-    self.total_filter = x
-    self.populate_treeview(data)
-        
+	x = 0
+	criteria = gutils.on_combo_box_entry_changed(self.filter_criteria)
+	text = gutils.gescape(self.e_filter.get_text())
+	self.treemodel.clear()
+	self.clear_details()
+	if criteria == self._("Original Title") and text:
+		data = self.db.select_movie_by_original_title(text)
+	elif criteria == self._("Title")  and text:
+		data = self.db.select_movie_by_title(text)
+	elif criteria == self._("Director")  and text:
+		data = self.db.select_movie_by_director(text)
+	elif criteria == self._("Year")  and text:
+		data = self.db.select_movie_by_year(text)
+	elif criteria == self._("Number")  and text:
+		data = self.db.select_movie_by_num(text)
+	elif criteria == self._("Rating")  and text:
+		data = self.db.select_movie_by_rating(text)
+	elif criteria == self._("Genre")  and text:
+		data = self.db.select_movie_by_genre(text)
+	elif criteria == self._("With")  and text:
+		data = self.db.select_movie_by_actors(text)
+	else:
+		data = self.db.get_all_data()
+	for row in data:
+		x = x + 1	
+	self.total_filter = x
+	self.populate_treeview(data)
+		
 def clear_filter(self):
-    self.e_filter.set_text("")
-    self.filter_criteria.set_active(1)
-    self.select_last_row(self.total)
-    self.total_filter = self.total
+	self.e_filter.set_text("")
+	self.filter_criteria.set_active(1)
+	self.select_last_row(self.total)
+	self.total_filter = self.total

@@ -49,6 +49,7 @@ import quick_filter
 from gettext import gettext as _
 
 class Griffith:
+	"""The main application class"""
    
 	Image = gtk.Image()
 	founded_results_id = None
@@ -203,7 +204,7 @@ class Griffith:
 		self.clear_filter()
 		self.all_movies.set_active(1)
 		self.count_statusbar()
-		if subtotal>0:
+		if subtotal > 0:
 			data = self.db.get_not_seen_movies()
 			sugested_movie = data[random.randrange(subtotal)]
 			gdebug.debug("suggested movie: %s"%sugested_movie['title'])			
@@ -343,7 +344,6 @@ class Griffith:
 	# loans management		
 		
 	def show_people_window(self, *args):
-		import people
 		people.show_people_window(self)
 		
 	def hide_people_window(self, *args):
@@ -579,9 +579,12 @@ class Griffith:
 		initialize.initialize_gtkspell(self)
 		
 		self.main_window.connect('key_press_event', self.on_key_press_event)
-		self.main_treeview.connect('button_press_event', self.on_maintree_button_press_event)
-		self.p_treeview.connect('button_press_event', self.on_p_tree_button_press_event)
-		self.results_treeview.connect('button_press_event', self.on_results_button_press_event)
+		self.main_treeview.connect('button_press_event', \
+			self.on_maintree_button_press_event)
+		self.p_treeview.connect('button_press_event', \
+			self.on_p_tree_button_press_event)
+		self.results_treeview.connect('button_press_event', \
+			self.on_results_button_press_event)
 		
 	def main(self):
 		gtk.threads_init()

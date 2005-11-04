@@ -32,7 +32,7 @@ import gdebug
 
 def add_movie(self):
 	quick_filter.clear_filter(self)
-	next_number=gutils.find_next_available(self)
+	next_number = gutils.find_next_available(self)
 	initialize_add_dialog(self)
 	self.am_number.set_text(str(next_number))
 	self.add_movie_window.show()
@@ -80,22 +80,20 @@ def initialize_add_dialog(self):
 	self.am_source.set_active(self.d_plugin)
 	image = os.path.join(self.locations['images'], "default.png")
 	self.Image.set_from_file(image)
-	Pixbuf = self.Image.get_pixbuf()
-	self.am_picture.set_from_pixbuf(Pixbuf)
+	self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
 	self.am_original_title.grab_focus()
 
 def add_movie_db(self, close):
 	if  len(self.am_original_title.get_text()) or len(self.am_title.get_text()):
 		self.db.add_movie(self)
-		if int(self.am_number.get_text())>=2:
+		if int(self.am_number.get_text()) >= 2:
 			insert_after = self.treemodel.get_iter(int(self.am_number.get_text())-2)
 		else:
 			insert_after = None
 		myiter = self.treemodel.insert_after(None, insert_after)
-		tmp_dest = os.path.join(self.griffith_dir,"posters")
+		tmp_dest = os.path.join(self.griffith_dir, "posters")
 		if len(self.am_picture_name.get_text()):
-			image_path = \
-				os.path.join(tmp_dest, \
+			image_path = os.path.join(tmp_dest, \
 				str(self.am_picture_name.get_text())+".jpg")
 		else:
 			image_path = os.path.join(self.locations['images'], "default.png")
@@ -143,7 +141,7 @@ def change_rating_from_slider(self):
 def populate_with_results(self):
 	m_id = None
 	if self.founded_results_id:
-		gdebug.debug("self.founded:results_id: %s"%self.founded_results_id)
+		gdebug.debug("self.founded:results_id: %s" % self.founded_results_id)
 		m_id = self.founded_results_id
 	else:
 		self.founded_results_id = 0
@@ -152,7 +150,7 @@ def populate_with_results(self):
 		m_id = tmp_model.get_value(tmp_iter, 0)
 	self.hide_results()
 	
-	gdebug.debug("m_id: %s"%m_id)
+	gdebug.debug("m_id: %s" % m_id)
 	
 	plugin_name = 'PluginMovie' + self.active_plugin
 	plugin = __import__(plugin_name)
@@ -192,8 +190,7 @@ def populate_with_results(self):
 		except:
 			image = os.path.join(self.locations['images'], "default.png")
 			self.Image.set_from_file(image)
-			Pixbuf = self.Image.get_pixbuf()
-			self.am_picture.set_from_pixbuf(Pixbuf)
+			self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
 	else:
 		image = os.path.join(self.locations['images'], "default.png")
 		self.Image.set_from_file(image)
@@ -205,7 +202,7 @@ def show_websearch_results(self):
 	for g in self.search_movie.ids:
 		if ( str(g) != '' ):
 			total += 1
-	if total>1:
+	if total > 1:
 		self.w_results.show()
 		self.w_results.set_keep_above(True)
 		row = None	
@@ -226,7 +223,7 @@ def show_websearch_results(self):
 				self.founded_results_id = str(row)
 				populate_with_results(self)
 	else:
-		gutils.error(self.w_results,_("No results"), self.add_movie_window)
+		gutils.error(self.w_results, _("No results"), self.add_movie_window)
 	
 def get_from_web(self):
 	"""search the movie in web using the active plugin"""
@@ -234,14 +231,13 @@ def get_from_web(self):
 		or len(self.am_title.get_text()):
 		option = gutils.on_combo_box_entry_changed_name(self.am_source)
 		self.active_plugin = option
-		plugin_name = 'PluginMovie%s'%option
+		plugin_name = 'PluginMovie%s' % option
 		plugin = __import__(plugin_name)
 		self.search_movie = plugin.SearchPlugin()
 		if len(self.am_original_title.get_text()):
 			self.search_movie.url = self.search_movie.original_url_search
 			self.search_movie.title = \
-				gutils.remove_accents(self.am_original_title.get_text(), \
-				'utf-8')
+				gutils.remove_accents(self.am_original_title.get_text(), 'utf-8')
 		elif len(self.am_title.get_text()) \
 			and not len(self.am_original_title.get_text()):
 			self.search_movie.url = self.search_movie.translated_url_search
@@ -272,7 +268,7 @@ def clone_movie(self):
 	(tmp_model, tmp_iter) = treeselection.get_selected()	
 	m_id = tmp_model.get_value(tmp_iter, 1)
 	data = self.db.select_movie_by_num(m_id)
-	next_number=gutils.find_next_available(self)
+	next_number = gutils.find_next_available(self)
 	for row in data:
 		self.db.cursor.execute(
 			"INSERT INTO 'movies'('id','original_title','title','director', 'plot', 'image', 'year', 'runtime','actors','country','genre','media','classification','studio','site', 'color','region','layers','condition','imdb','trailer','obs','num_media','rating','loaned','seen','number') VALUES (Null,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0','%s','%s')"% \
@@ -304,12 +300,12 @@ def clone_movie(self):
 			))
 
 		myiter = self.treemodel.insert_after(None, self.treemodel.get_iter(next_number-2))
-		tmp_dest = os.path.join(self.griffith_dir,"posters")
+		tmp_dest = os.path.join(self.griffith_dir, "posters")
 		if str(str(row['image'])) != '':
-			image_path = os.path.join(tmp_dest,str(row['image'])+".jpg")
-			clone_path = os.path.join(tmp_dest,str(next_number)+".jpg")
+			image_path = os.path.join(tmp_dest, str(row['image'])+".jpg")
+			clone_path = os.path.join(tmp_dest, str(next_number)+".jpg")
 			# clone image
-			shutil.copyfile(image_path,clone_path)
+			shutil.copyfile(image_path, clone_path)
 			image_path = clone_path
 		else:
 			if os.name == 'nt':

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: gutils.py,v 1.45 2005/09/27 13:46:52 pox Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -128,11 +128,11 @@ def set_model_from_list (cb, items):
 		cb.add_attribute(cell, 'text', 0)
 		
 def on_combo_box_entry_changed(widget):
-	 model = widget.get_model()
-	 m_iter = widget.get_active_iter()
-	 if m_iter:
-		 return model.get_value(m_iter, 0)
-	 else:
+	model = widget.get_model()
+	m_iter = widget.get_active_iter()
+	if m_iter:
+		return model.get_value(m_iter, 0)
+	else:
 		return 0
  
 def on_combo_box_entry_changed_name(widget):
@@ -330,11 +330,11 @@ def file_chooser(title, action=None, buttons=None, name="", folder=os.path.expan
 def update_preview_cb(file_chooser, preview):
 	filename = file_chooser.get_preview_filename()
 	try:
-	  pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(filename, 128, 128)
-	  preview.set_from_pixbuf(pixbuf)
-	  have_preview = True
+		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(filename, 128, 128)
+		preview.set_from_pixbuf(pixbuf)
+		have_preview = True
 	except:
-	  have_preview = False
+		have_preview = False
 	file_chooser.set_preview_widget_active(have_preview)
 	return
    

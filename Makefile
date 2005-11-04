@@ -3,7 +3,7 @@
 # (c) 2005 Vasco Nunes
 #
 
-# $Id: Makefile,v 1.49 2005/10/01 12:11:53 iznogoud Exp $
+# $Id$
 
 
 PACKAGE=griffith
@@ -122,4 +122,4 @@ package:
 	dpkg-buildpackage -rfakeroot
 
 lint:
-	pylint griffith lib/*.py
+	pylint --enable-basic=n --indent-string='\t' griffith lib/*.py

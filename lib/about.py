@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: about.py,v 1.24 2005/10/01 15:46:14 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -28,41 +28,42 @@ import os
 import sys
 
 class AboutDialog:
-    "Shows a gtk about dialog"
-    def __init__(self):
-        dialog = gtk.AboutDialog()
-        dialog.set_name(version.pname)
-        dialog.set_version(version.pversion)
-        dialog.set_copyright("Copyright © 2005 Vasco Nunes")
-        dialog.set_website(version.pwebsite)
-        dialog.set_authors([_("Main Author") + ", " + _("Programmer")+":\n"+ \
-            version.pauthor + "\n",
-            '%s:\nPiotr Ozarowski <ozarow@gmail.com>\n'%_("Programmer") +"\n"+ \
-             _('Contributors:'),
-            'Christian Sagmueller <christian@sagmueller.net>\n' \
-            'Arjen Schwarz <arjen.schwarz@gmail.com>' \
-            ])
-        dialog.set_artists([_("Logo, icon and general artwork by Peek <peekpt@gmail.com>." + \
-            "\nPlease visit http://www.peekmambo.com/")])
-        dialog.set_translator_credits( \
-            _("Bulgarian") + _(" by ") + \
-            "Luchezar P. Petkov <luchezar.petkov@gmail.com>" + \
-            "\n" + _("German") + _(" by ") + \
-            "Christian Sagmueller <christian@sagmueller.net>" + \
-            "\n" + _("Polish") + _(" by ") + \
-            "Piotr Ozarowski <ozarow@gmail.com>" + \
-            "\n" + _("Portuguese") + _(" by ") + \
-            "Vasco Nunes <vasco.m.nunes@gmail.com>")
-        if os.name == 'nt':
-            logo = gtk.gdk.pixbuf_new_from_file("images/griffith.png")
-        else:
-            logo_file = os.path.abspath(os.path.dirname(sys.argv[0]))
-            logo = gtk.gdk.pixbuf_new_from_file(logo_file.replace \
-                ("/bin", "/share/griffith") + "/griffith.png")
-        dialog.set_logo(logo)
-        dialog.set_license(_("This program is released under the GNU" + \
-            "General Public License.\n" + \
-            "Please visit http://www.gnu.org/copyleft/gpl.html for details."))
-        dialog.set_comments(version.pdescription)
-        dialog.run()
-        dialog.destroy()
+	"""Shows a gtk about dialog"""
+	def __init__(self):
+		dialog = gtk.AboutDialog()
+		dialog.set_name(version.pname)
+		dialog.set_version(version.pversion)
+		dialog.set_copyright("Copyright © 2005 Vasco Nunes")
+		dialog.set_website(version.pwebsite)
+		dialog.set_authors([_("Main Author") + ", " + _("Programmer")+":\n"+ \
+			version.pauthor + "\n",
+			'%s:\nPiotr Ozarowski <ozarow@gmail.com>\n'%_("Programmer") +"\n"+ \
+			 _('Contributors:'),
+			'Christian Sagmueller <christian@sagmueller.net>\n' \
+			'Arjen Schwarz <arjen.schwarz@gmail.com>' \
+			])
+		dialog.set_artists([_("Logo, icon and general artwork " + \
+			"by Peek <peekpt@gmail.com>." + \
+			"\nPlease visit http://www.peekmambo.com/")])
+		dialog.set_translator_credits( \
+			_("Bulgarian") + _(" by ") + \
+			"Luchezar P. Petkov <luchezar.petkov@gmail.com>" + \
+			"\n" + _("German") + _(" by ") + \
+			"Christian Sagmueller <christian@sagmueller.net>" + \
+			"\n" + _("Polish") + _(" by ") + \
+			"Piotr Ozarowski <ozarow@gmail.com>" + \
+			"\n" + _("Portuguese") + _(" by ") + \
+			"Vasco Nunes <vasco.m.nunes@gmail.com>")
+		if os.name == 'nt':
+			logo = gtk.gdk.pixbuf_new_from_file("images/griffith.png")
+		else:
+			logo_file = os.path.abspath(os.path.dirname(sys.argv[0]))
+			logo = gtk.gdk.pixbuf_new_from_file(logo_file.replace \
+				("/bin", "/share/griffith") + "/griffith.png")
+		dialog.set_logo(logo)
+		dialog.set_license(_("This program is released under the GNU" + \
+			"General Public License.\n" + \
+			"Please visit http://www.gnu.org/copyleft/gpl.html for details."))
+		dialog.set_comments(version.pdescription)
+		dialog.run()
+		dialog.destroy()

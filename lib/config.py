@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: config.py,v 1.8 2005/08/16 14:11:38 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -27,68 +27,73 @@ import pickle
 import gglobals
 
 class Config:
-    def __init__ (self, file=os.path.join(gglobals.griffith_dir, 'griffith.conf')):
-        """A basic class for handling preferences with pickle"""
-        self.file=file
-        self.config = {}
-        if not self.load():
-            self.make_defaults()
-        self.set_hooks = []
+	def __init__ (self, file=os.path.join(gglobals.griffith_dir, 'griffith.conf')):
+		"""A basic class for handling preferences with pickle"""
+		self.file = file
+		self.config = {}
+		if not self.load():
+			self.make_defaults()
+		self.set_hooks = []
 
-    def get (self, key, default=None):
-        """Return a key's value, or default if the key isn't set."""
-        if not self.config.has_key(key): return default
-        else: return self.config[key]
+	def get (self, key, default=None):
+		"""Return a key's value, or default if the key isn't set."""
+		if not self.config.has_key(key):
+			return default
+		else:
+			return self.config[key]
 
-    def has_key (self, k):
-        return self.config.has_key(k)
+	def has_key (self, k):
+		return self.config.has_key(k)
 
-    def __setitem__ (self, k, v):
-        self.config[k]=v
-        for hook in self.set_hooks: hook(k,v)
+	def __setitem__ (self, k, v):
+		self.config[k] = v
+		for hook in self.set_hooks: hook(k, v)
 
-    def __getitem__ (self, k):
-        return self.config[k]
+	def __getitem__ (self, k):
+		return self.config[k]
 
-    def keys (self): return self.config.keys()
-    def values (self): return self.config.values()
-    def items (self): return self.config.items()
+	def keys (self):
+		return self.config.keys()
+	def values (self):
+		return self.config.values()
+	def items (self):
+		return self.config.items()
 
-    def save (self):
-        if not os.path.exists(os.path.split(self.file)[0]):
-            os.makedirs(os.path.split(self.file)[0])
-        ofi=open(self.file,'w')
-        pickle.dump(self.config,ofi)
+	def save (self):
+		if not os.path.exists(os.path.split(self.file)[0]):
+			os.makedirs(os.path.split(self.file)[0])
+		ofi=open(self.file, 'w')
+		pickle.dump(self.config, ofi)
 
-    def load (self):
-        if os.path.isfile(self.file):
-            ifi=open(self.file,'r')
-            self.config=pickle.load(ifi)
-            return True
-        else:
-            return False
-            
-    def make_defaults(self):
-        self.config['pdf_reader']="xpdf"
-        self.config['default_db']="griffith.gri"
-        self.config['height']="None"
-        self.config['width']="None"
-        self.config['top']="None"
-        self.config['left']="None"
-        self.config['view_director']="True"
-        self.config['view_otitle']="True"
-        self.config['view_title']="True"
-        self.config['view_image']="True"
-        self.config['view_toolbar']="True"
-        self.config['use_gtkspell']="True"
-        self.config['spell_plot']="True"
-        self.config['spell_notes']="True"
-        self.config['spell_lang']="en"
-        self.config['default_movie_plugin']="IMDB"
-        self.config['rating']="0" # 0 = meter; 1 = stars
-        self.config['mail_smtp_server']="localhost"
-        self.config['mail_use_auth']="False"
-        self.config['mail_username']=""
-        self.config['mail_password']=""
-        self.config['mail_email']="griffith"
-        self.save()
+	def load (self):
+		if os.path.isfile(self.file):
+			ifi=open(self.file, 'r')
+			self.config=pickle.load(ifi)
+			return True
+		else:
+			return False
+			
+	def make_defaults(self):
+		self.config['pdf_reader'] = "xpdf"
+		self.config['default_db'] = "griffith.gri"
+		self.config['height'] = "None"
+		self.config['width'] = "None"
+		self.config['top'] = "None"
+		self.config['left'] = "None"
+		self.config['view_director'] = "True"
+		self.config['view_otitle'] = "True"
+		self.config['view_title'] = "True"
+		self.config['view_image'] = "True"
+		self.config['view_toolbar'] = "True"
+		self.config['use_gtkspell'] = "True"
+		self.config['spell_plot'] = "True"
+		self.config['spell_notes'] = "True"
+		self.config['spell_lang'] = "en"
+		self.config['default_movie_plugin'] = "IMDB"
+		self.config['rating'] = "0" # 0 = meter; 1 = stars
+		self.config['mail_smtp_server'] = "localhost"
+		self.config['mail_use_auth'] = "False"
+		self.config['mail_username'] = ""
+		self.config['mail_password'] = ""
+		self.config['mail_email'] = "griffith"
+		self.save()
