@@ -101,7 +101,7 @@ class GriffithSQL:
 			except:
 				columns[column] = 0	# column is missing
 				need_upgrade = True
-		if need_upgrade == True:
+		if need_upgrade:
 			self.upgrade_table("movies", columns)
 
 		# a) loans table
@@ -121,7 +121,7 @@ class GriffithSQL:
 			except:
 				columns[column] = 0	# column is missing
 				need_upgrade = True
-		if need_upgrade == True:
+		if need_upgrade:
 			self.upgrade_table("loans", columns)
 			
 	def upgrade_table(self, table, columns):
@@ -164,7 +164,7 @@ class GriffithSQL:
 		self.create_table_people()
 
 	def create_table_movies(self, backup=False):
-		if backup == True:
+		if backup:
 			gdebug.debug("Creating 'movies' temporary table...")
 			query = "CREATE TEMPORARY TABLE movies_backup"
 		else:
@@ -206,7 +206,7 @@ class GriffithSQL:
 		self.cursor.execute(query)
 
 	def create_table_loans(self, backup=False):
-		if backup == True:
+		if backup:
 			gdebug.debug("Creating 'loans' temporary table...")
 			query = "CREATE TEMPORARY TABLE loans_backup"
 		else:
@@ -226,7 +226,7 @@ class GriffithSQL:
 		self.cursor.execute(query)
 			
 	def create_table_people(self, backup=False):
-		if backup == True:
+		if backup:
 			gdebug.debug("Creating 'people' temporary table...")
 			query = "CREATE TEMPORARY TABLE people_backup"
 		else:
@@ -394,10 +394,9 @@ class GriffithSQL:
 						os.remove(os.path.join(root, name))
 				# delete db
 				parent.db.con.close()
-				import sql
 				os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
 				# create/connect db
-				parent.db = sql.GriffithSQL(self.config, self.griffith_dir)
+				parent.db = GriffithSQL(self.config, self.griffith_dir)
 				parent.clear_details()
 				parent.total = 0
 				parent.count_statusbar()
