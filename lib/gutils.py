@@ -29,25 +29,23 @@ import htmlentitydefs
 import re
 import zipfile
 import webbrowser
-import pango
-import gdebug
 import gobject
 
 url_re = re.compile('^\w+://')
 entity = re.compile(r'\&.\w*?\;')
 html_tags = re.compile(r'\<.*?\>')
-	 
+		
 def remove_accents(txt, encoding='iso-8859-1'):
 	d = {192: u'A', 193: u'A', 194: u'A', 195: u'A', 196: u'A', 197: u'A',
-		 199: u'C', 200: u'E', 201: u'E', 202: u'E', 203: u'E', 204: u'I',
-		 205: u'I', 206: u'I', 207: u'I', 209: u'N', 210: u'O', 211: u'O',
-		 212: u'O', 213: u'O', 214: u'O', 216: u'O', 217: u'U', 218: u'U',
-		 219: u'U', 220: u'U', 221: u'Y', 224: u'a', 225: u'a', 226: u'a',
-		 227: u'a', 228: u'a', 229: u'a', 231: u'c', 232: u'e', 233: u'e',
-		 234: u'e', 235: u'e', 236: u'i', 237: u'i', 238: u'i', 239: u'i',
-		 241: u'n', 242: u'o', 243: u'o', 244: u'o', 245: u'o', 246: u'o',
-		 248: u'o', 249: u'u', 250: u'u', 251: u'u', 252: u'u', 253: u'y',
-		 255: u'y'}
+			199: u'C', 200: u'E', 201: u'E', 202: u'E', 203: u'E', 204: u'I',
+			205: u'I', 206: u'I', 207: u'I', 209: u'N', 210: u'O', 211: u'O',
+			212: u'O', 213: u'O', 214: u'O', 216: u'O', 217: u'U', 218: u'U',
+			219: u'U', 220: u'U', 221: u'Y', 224: u'a', 225: u'a', 226: u'a',
+			227: u'a', 228: u'a', 229: u'a', 231: u'c', 232: u'e', 233: u'e',
+			234: u'e', 235: u'e', 236: u'i', 237: u'i', 238: u'i', 239: u'i',
+			241: u'n', 242: u'o', 243: u'o', 244: u'o', 245: u'o', 246: u'o',
+			248: u'o', 249: u'u', 250: u'u', 251: u'u', 252: u'u', 253: u'y',
+			255: u'y'}
 	return unicode(txt, encoding).translate(d)
 
 def is_number(x):
@@ -134,10 +132,10 @@ def on_combo_box_entry_changed(widget):
 		return model.get_value(m_iter, 0)
 	else:
 		return 0
- 
+	
 def on_combo_box_entry_changed_name(widget):
-	 return widget.get_active_text()
-		 
+		return widget.get_active_text()
+			
 def convert_entities(text):
 	def conv(ents):
 		entities = htmlentitydefs.entitydefs
@@ -246,7 +244,7 @@ def restore(file, dir):
 	except:
 		return 0
 	zip.close()
-		 
+			
 # Messages
 
 def error(self, msg, parent=None):
@@ -337,7 +335,7 @@ def update_preview_cb(file_chooser, preview):
 		have_preview = False
 	file_chooser.set_preview_widget_active(have_preview)
 	return
-   
+	
 def run_browser(url):
 	webbrowser.open(url)
 	
