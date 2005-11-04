@@ -26,16 +26,14 @@ import sys
 import os
 import gglobals
 import string
-import socket
 import gtk
 import config
 import sql
 import widgets
 import gutils
 import gobject
-import gettext
 import gdebug
-import gtk
+import gettext
 
 try:
 	import gtkspell
@@ -82,7 +80,7 @@ def locations(self):
 	else:
 		print "Operating system not supported"
 		sys.exit()		
-			 
+				
 	# includes plugins in system path for easier impor		 
 	sys.path.append(self.locations['lib'])
 	sys.path.append(self.locations['movie_plugins'])
@@ -114,7 +112,7 @@ def locations(self):
 	
 def toolbar(self):
 	"""if toolbar is hide in config lets hide the widget"""
-	if self.config.get("view_toolbar") == False:
+	if not self.config.get("view_toolbar"):
 		self.toolbar.hide()
 		self.menu_toolbar.set_active(False)
 		
@@ -415,7 +413,7 @@ def web_results(self):
 def initialize_gtkspell(self):
 	global spell_support
 	if self.posix and spell_support:
-		 if self.config.get('use_gtkspell', False) == 'True':
+		if self.config.get('use_gtkspell', False) == 'True':
 			if self.config.get('spell_notes', True) == 'True':
 				self.obs_spell = gtkspell.Spell(self.e_obs)
 				try:
@@ -425,11 +423,11 @@ def initialize_gtkspell(self):
 					gutils.info(self, _("Language not available. Defaulting to english."), self.w_preferences)
 					self.config['spell_lang'] = 'en'
 					self.config.save()
-			if self.config.get('spell_plot', True)=='True':
-				self.plot_spell = gtkspell.Spell(self.e_plot)
-				try:
-					self.plot_spell.set_language(self.config.get('spell_lang', 'en'))
-				except:
-					self.plot_spell.set_language('en')				   
+		if self.config.get('spell_plot', True)=='True':
+			self.plot_spell = gtkspell.Spell(self.e_plot)
+			try:
+				self.plot_spell.set_language(self.config.get('spell_lang', 'en'))
+			except:
+				self.plot_spell.set_language('en')				   
 	else:
 		gdebug.debug("Spellchecker is not available")
