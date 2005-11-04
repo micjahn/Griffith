@@ -191,13 +191,14 @@ class Griffith:
 	def get_poster(self, *args):
 		"""tries to fetch a new big poster from amazon"""
 		gdebug.debug("fetching poster from amazon")
-		amazon.setLicense("0RKH4ZH1JCFZHMND91G2")
+		amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 		result = amazon.searchByKeyword(self.e_original_title.get_text(), \
-			type="lite", product_line="dvd")
-		#sock = urllib.urlopen(result[0].ImageUrlLarge)
+			type="lite", product_line="video")
+		#sock = urllib.urlopen(result[0].ImageUrlMedium)
 		file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
 			dir=os.path.join(self.griffith_dir, "posters"))
 		file_to_copy += ".jpg"
+		gdebug.debug("Posters found on amazon: %s -  TODO: a select poster popup window. For now, we get the first one." % len(result))
 		sock = urlretrieve(result[0].ImageUrlLarge, file_to_copy)
 		self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
 		#update.update_image(self, file_to_copy, self.get_maintree_selection())
@@ -435,7 +436,11 @@ class Griffith:
 	def on_delete_event_am(self, *args):
 		self.add_movie_window.hide()
 		return True
-   
+		
+	def on_delete_event_pw(self, *args):
+		self.poster_window.hide()
+		return True
+		
 	def filter_collection(self, *args):
 		collection_id = self.f_col.get_active()
 		if collection_id == 0:

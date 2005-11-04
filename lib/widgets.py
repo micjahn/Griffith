@@ -24,6 +24,7 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import edit
 import gtk
+import sys
 
 def define_widgets(self, gladefile):
 	#widgets
@@ -225,11 +226,16 @@ def define_widgets(self, gladefile):
 	self.w_loan_to.connect("delete_event", self.on_delete_event_lt)
 	self.w_print_cover_simple.connect("delete_event", self.on_delete_event_pcs)
 	self.w_print_cover_image.connect("delete_event", self.on_delete_event_pci)
+	self.poster_window.connect("delete_event", self.on_delete_event_pw)
 	self.w_preferences.connect("delete_event", self.on_delete_event_p)
 	
 	# poster events
-	self.zoom_poster.connect("enter", self.z_poster)
-	self.zoom_poster.connect("leave", self.z_poster_hide)
+	# we need to add a little hack here to exclude macintosh/win32 from enter/leave events because this seems buggy on these ones
+	if sys.platform != "darwin" and sys.platform != "win32":
+		self.zoom_poster.connect("enter", self.z_poster)
+		self.zoom_poster.connect("leave", self.z_poster_hide)
+	else:
+		self.zoom_poster.connect("clicked", self.z_poster)
 		 
 	# define handlers for general events
 		
@@ -288,7 +294,6 @@ def define_widgets(self, gladefile):
 		"on_e_picture_clicked"                  : self.change_poster,
 		"on_open_poster_clicked"                : self.change_poster,
 		"on_delete_poster_clicked"              : self.del_poster,
-		#"on_zoom_poster_clicked"               : self.z_poster,
 		"on_fetch_poster_clicked"               : self.get_poster,
 		"on_go_imdb_clicked"                    : self.go_imdb_site,
 		"on_go_trailer_clicked"                 : self.go_trailer_site,
