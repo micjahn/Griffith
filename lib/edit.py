@@ -162,7 +162,7 @@ def fill_collections_combo(self, prefix='e', default=0):
 
 def fetch_bigger_poster(self):
 	import amazon
-	from urllib import *
+	from urllib import urlcleanup
 	import tempfile
 	import movie
 	import gdebug
