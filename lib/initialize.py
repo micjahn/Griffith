@@ -48,7 +48,7 @@ def locations(self):
 	self.locations = {}
 	self._ = None
 	self.APP = "griffith"
-	gdebug.debug("running on "+os.name)
+	gdebug.debug("running on %s" % os.name)
 	if os.name == "win32" or os.name == "nt":
 		self.windows = True
 	else:
@@ -60,13 +60,13 @@ def locations(self):
 	if self.windows:
 		#win32 platform, add the "lib" folder to the system path
 		os.environ['PATH'] += ";lib;"
-		self.locations['lib'] = "%s\lib"%self.locations['exec']
-		self.DIR = "%s\i18n"%self.locations['exec']
-		gtk.rc_parse('%s\gtkrc'%self.locations['exec'])
+		self.locations['lib'] = "%s\lib" % self.locations['exec']
+		self.DIR = "%s\i18n" % self.locations['exec']
+		gtk.rc_parse('%s\gtkrc' % self.locations['exec'])
 		#some locations
-		self.locations['movie_plugins'] = "%s/lib/plugins/movie"%self.locations['exec']
-		self.locations['export_plugins'] = "%s/lib/plugins/export"%self.locations['exec']
-		self.locations['images'] = "%s/images"%self.locations['exec']
+		self.locations['movie_plugins'] = "%s/lib/plugins/movie" % self.locations['exec']
+		self.locations['export_plugins'] = "%s/lib/plugins/export" % self.locations['exec']
+		self.locations['images'] = "%s/images" % self.locations['exec']
 		self.locations['desktop'] = ""
 	elif self.posix:
 		self.locations['lib'] = string.replace(self.locations['exec'], "/bin","/lib/griffith")
@@ -88,9 +88,9 @@ def locations(self):
 	sys.path.append(self.locations['movie_plugins'])
 	sys.path.append(self.locations['export_plugins'])
 
-	socket.setdefaulttimeout(30) 
+	#socket.setdefaulttimeout(30) 
 
-	gettext.bindtextdomain(self.APP,self.DIR)
+	gettext.bindtextdomain(self.APP, self.DIR)
 	gettext.textdomain(self.APP)
 	self._ = gettext.gettext
 	gtk.glade.bindtextdomain(self.APP, self.DIR)
@@ -98,12 +98,12 @@ def locations(self):
 	
 	# glade
 	if self.windows:
-		gf = '%s/glade/griffith.glade'%self.locations['exec']
+		gf = '%s/glade/griffith.glade' % self.locations['exec']
 	else:
 		gf = self.locations['images'] + "/griffith.glade"
 	self.gladefile = gtk.glade.XML(gf)
 	
-	widgets.define_widgets(self,self.gladefile)
+	widgets.define_widgets(self, self.gladefile)
 	
 	# Configuration
 	self.config = config.Config()
@@ -124,7 +124,7 @@ def treeview(self):
 	self.main_treeview.set_headers_visible(True)
 	# loan flag column
 	renderer=gtk.CellRendererPixbuf()
-	self.flag_column=gtk.TreeViewColumn(13*" ", renderer,pixbuf=0)
+	self.flag_column=gtk.TreeViewColumn(13*" ", renderer, pixbuf=0)
 	self.flag_column.set_resizable(False)
 	self.main_treeview.append_column(self.flag_column)
 	# number column
@@ -135,24 +135,24 @@ def treeview(self):
 	self.main_treeview.append_column(column)
 	# pic column
 	renderer=gtk.CellRendererPixbuf()
-	self.image_column=gtk.TreeViewColumn(_("Image"),renderer,pixbuf=2)
+	self.image_column=gtk.TreeViewColumn(_("Image"), renderer, pixbuf=2)
 	self.image_column.set_resizable(False)
 	self.main_treeview.append_column(self.image_column)
 	# original title column
 	renderer=gtk.CellRendererText()
-	self.otitle_column=gtk.TreeViewColumn(_("Original Title"),renderer, text=3)
+	self.otitle_column=gtk.TreeViewColumn(_("Original Title"), renderer, text=3)
 	self.otitle_column.set_resizable(True)
 	self.otitle_column.set_sort_column_id(3)
 	self.main_treeview.append_column(self.otitle_column)
 	# title column
 	renderer=gtk.CellRendererText()
-	self.title_column=gtk.TreeViewColumn(_("Title"),renderer,text=4)
+	self.title_column=gtk.TreeViewColumn(_("Title"), renderer, text=4)
 	self.title_column.set_resizable(True)
 	self.title_column.set_sort_column_id(4)
 	self.main_treeview.append_column(self.title_column)
 	# director column
 	renderer=gtk.CellRendererText()
-	self.director_column=gtk.TreeViewColumn(_("Director"),renderer,text=5)
+	self.director_column=gtk.TreeViewColumn(_("Director"), renderer, text=5)
 	self.director_column.set_sort_column_id(5)
 	self.director_column.set_resizable(True)
 	self.main_treeview.append_column(self.director_column)
