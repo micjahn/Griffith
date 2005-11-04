@@ -186,6 +186,8 @@ class Griffith:
 	def get_poster(self, *args):
 		print "fetching poster todo"
 		
+	# rating
+		
 	def scale_rating_change(self, *args):
 		edit.change_rating_from_slider(self)
 
@@ -213,6 +215,7 @@ class Griffith:
 				self.main_window)
 
 	# volumes/collections			
+	
 	def add_volume(self, widget):
 		prefix = gutils.before(widget.get_name(), "_")
 		try:
@@ -437,7 +440,7 @@ class Griffith:
 		self.config.save()
 		
 	def restore_state(self):
-		"Restores main window state"
+		"""Restores main window state"""
 		if self.config.get("left") == "None":
 			pass
 		else:
