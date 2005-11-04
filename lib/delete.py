@@ -23,6 +23,7 @@ __revision__ = '$Id$'
 
 from gettext import gettext as _
 import gutils
+import gdebug
 import os
 
 def delete_movie(self):
