@@ -99,7 +99,7 @@ def update(self):
 def update_image(self,image,id):
 	self.db.cursor.execute(
 		"UPDATE movies SET image = '"
-		+"t_"+os.path.splitext(image)[0]+"' WHERE number = '"+id+"'")
+		+os.path.splitext(image)[0]+"' WHERE number = '"+id+"'")
 	self.db.con.commit()
 	self.update_statusbar(_("Image has been updated"))
 	

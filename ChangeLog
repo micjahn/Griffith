@@ -6,6 +6,8 @@ Griffith ChangeLog
 
 2005-11-04 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* On darwin and win32 platforms the poster viewer should not use enter/leave events anymore. Pygtk seems buggy when handling these.
+	* Added initial support to fetch bigger posters using Amazon Web Services. TODO: select poster to use when more than one found. Using the first one for now.
+	* Added original Mark Pilgrim's amazon python wrapper to core distribution
 
 2005-10-29 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added some HTML export plugin fixes for win32 compatibility
