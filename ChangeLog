@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2005-11-05 Piotr Ozarowski <ozarow@gmail.com>
 	* Media names are now stored in database
+	* Updated polish translation
 
 2005-11-04 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* On darwin and win32 platforms the poster viewer should not use enter/leave events anymore. Pygtk seems buggy when handling these.
