@@ -576,8 +576,12 @@ class GriffithSQL:
 			UPDATE movies SET media = '3' WHERE media = 'DVD+R'; 
 			UPDATE movies SET media = '4' WHERE media = 'DVD+RW'; 
 			UPDATE movies SET media = '5' WHERE media = 'DVD-RAM'; 
-			UPDATE movies SET media = '6' WHERE media = 'CD'; 
-			UPDATE movies SET media = '7' WHERE media = 'CD-RW'; 
+			UPDATE movies SET media = '6' WHERE media = 'DivX'; 
+			UPDATE movies SET media = '6' WHERE media = 'DIVX'; 
+			UPDATE movies SET media = '6' WHERE media = 'XviD'; 
+			UPDATE movies SET media = '6' WHERE media = 'XVID'; 
+			UPDATE movies SET media = '6' WHERE media = 'WMV'; 
+			UPDATE movies SET media = '6' WHERE media = 'WMV'; 
 			UPDATE movies SET media = '8' WHERE media = 'VCD'; 
 			UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	
 			UPDATE movies SET media = '10' WHERE media = 'VHS'; 
