@@ -60,6 +60,15 @@ class GriffithSQL:
 			self.cursor.execute("SELECT id FROM collections LIMIT 1")
 		except:
 			self.create_table_collections()
+		try:
+			self.cursor.execute("SELECT id FROM media LIMIT 1")
+		except:
+			self.create_table_media()
+			self.update_old_media()
+
+		# check old media
+		if self.count_records("movies", "media='DVD'") > 0:
+			self.update_old_media()
 			
 		# see if a db update is needed...
 		# a) movie table
@@ -104,7 +113,7 @@ class GriffithSQL:
 		if need_upgrade:
 			self.upgrade_table("movies", columns)
 
-		# a) loans table
+		# b) loans table
 		columns = {
 			'id'            : 1,
 			'movie_id'      : 1,
@@ -162,6 +171,7 @@ class GriffithSQL:
 		self.create_table_volumes()
 		self.create_table_loans()
 		self.create_table_people()
+		self.create_table_media()
 
 	def create_table_movies(self, backup=False):
 		if backup:
@@ -193,7 +203,7 @@ class GriffithSQL:
 				'trailer' VARCHAR(100),
 				'rating' VARCHAR(50),
 				'loaned' INT(1) NOT NULL DEFAULT '0',
-				'media' VARCHAR(10),
+				'media' INT(1) DEFAULT='0',
 				'num_media' INT(2),
 				'obs' TEXT,
 				'seen' INT(1) NOT NULL DEFAULT '0',
@@ -533,3 +543,44 @@ class GriffithSQL:
 		except:
 				return False
 		return True
+
+	# media
+	def create_table_media(self):
+		gdebug.debug("Creating 'media' table...")
+		self.cursor.execute ("""
+			CREATE TABLE media
+			(
+				'id' INTEGER PRIMARY KEY,
+				'name' STRING NOT NULL
+			);
+			INSERT INTO 'media' VALUES (0, "DVD"); 
+			INSERT INTO 'media' VALUES (1, "DVD-R"); 
+			INSERT INTO 'media' VALUES (2, "DVD-RW"); 
+			INSERT INTO 'media' VALUES (3, "DVD+R"); 
+			INSERT INTO 'media' VALUES (4, "DVD+RW"); 
+			INSERT INTO 'media' VALUES (5, "DVD-RAM"); 
+			INSERT INTO 'media' VALUES (6, "CD"); 
+			INSERT INTO 'media' VALUES (7, "CD-RW"); 
+			INSERT INTO 'media' VALUES (8, "VCD"); 
+			INSERT INTO 'media' VALUES (9, "SVCD"); 
+			INSERT INTO 'media' VALUES (10, "VHS"); 
+			INSERT INTO 'media' VALUES (11, "BETACAM"); 
+			""")
+
+	def update_old_media(self):
+		gdebug.debug("Upgrading old media values...")
+		self.cursor.execute("""
+			UPDATE movies SET media = '0' WHERE media = 'DVD'; 
+			UPDATE movies SET media = '1' WHERE media = 'DVD-R'; 
+			UPDATE movies SET media = '2' WHERE media = 'DVD-RW'; 
+			UPDATE movies SET media = '3' WHERE media = 'DVD+R'; 
+			UPDATE movies SET media = '4' WHERE media = 'DVD+RW'; 
+			UPDATE movies SET media = '5' WHERE media = 'DVD-RAM'; 
+			UPDATE movies SET media = '6' WHERE media = 'CD'; 
+			UPDATE movies SET media = '7' WHERE media = 'CD-RW'; 
+			UPDATE movies SET media = '8' WHERE media = 'VCD'; 
+			UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	
+			UPDATE movies SET media = '10' WHERE media = 'VHS'; 
+			UPDATE movies SET media = '11' WHERE media = 'BETACAM'; 
+		""")
+		self.con.commit()

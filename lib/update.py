@@ -70,8 +70,8 @@ def update(self):
 			+self.e_imdb.get_text()+"', seen ='"
 			+seen+"', obs ='"
 			+gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(),obs_buffer.get_end_iter()))+"', trailer='"
-			+self.e_trailer.get_text()+"', media ='"
-			+gutils.on_combo_box_entry_changed(self.e_media)
+			+self.e_trailer.get_text()
+			+"', media ='" + str(self.e_media.get_active())
 			+"', num_media ='" + self.e_discs.get_text()
 			+"', volume_id='" + str(new_volume_id)
 			+"', collection_id='" + str(new_collection_id)

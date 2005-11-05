@@ -62,7 +62,6 @@ def treeview_clicked(self):
 				self.e_layers.set_active(int(row['layers']))
 			if row['color'] != "":
 				self.e_color.set_active(int(row['color']))
-			media = row['media']
 			self.e_classification.set_text(str(row['classification']))
 			self.e_studio.set_text(str(row['studio']))
 			self.e_site.set_text(str(row['site']))
@@ -79,7 +78,7 @@ def treeview_clicked(self):
 			self.e_trailer.set_text(str(row['trailer']))
 			if row['obs']<>None:
 				obs_buffer.set_text(str(row['obs']))
-			self.e_media.set_active(gutils.get_media_list_index(media))
+			self.e_media.set_active(int(row['media']))
 			
 			# check loan status and adjust buttons and history box
 			if row['loaned']:
