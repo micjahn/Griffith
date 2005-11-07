@@ -165,10 +165,8 @@ def fill_collections_combo(self, prefix='e', default=0):
 	else:
 		self.am_collection_combo.set_active(int(default))
 
-def fetch_bigger_poster(self):
-	
-	match = 0
-	
+def fetch_bigger_poster(self):	
+	match = 0	
 	gdebug.debug("fetching poster from amazon")
 	this_movie = self.db.select_movie_by_num(self.e_number.get_text())
 	current_poster = this_movie[0]['image']
@@ -183,7 +181,7 @@ def fetch_bigger_poster(self):
 		
 	for f in range(len(result)):
 		if self.e_original_title.get_text() == result[f].ProductName:
-			get_poster(self, f, result)
+			get_poster(self, f, result, current_poster)
 			return
 		else:
 			#we dont have an exact match, let's show a list to select from
@@ -191,7 +189,7 @@ def fetch_bigger_poster(self):
 	
 	gutils.warning(self, _("No posters found for this movie."))	
 
-def get_poster(self, f, result):
+def get_poster(self, f, result, current_poster):
 	file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
 				dir=os.path.join(self.griffith_dir, "posters"))
 	file_to_copy += ".jpg"
@@ -209,6 +207,9 @@ def get_poster(self, f, result):
 	urlcleanup()
 	
 	self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+	self.big_poster.set_from_file(file_to_copy)
+	self.poster_window.show()
+	self.poster_window.move(0,0)
 	response = \
 			gutils.question(self, \
 			_("Do you want to use this poster instead?"), \
@@ -228,3 +229,5 @@ def get_poster(self, f, result):
 		self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file("%s/%s.jpg" % (os.path.join(self.griffith_dir, \
 			"posters"), current_poster)).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
 		os.remove(file_to_copy)
+		
+	self.poster_window.hide()
