@@ -203,7 +203,7 @@ class GriffithSQL:
 				'trailer' VARCHAR(100),
 				'rating' VARCHAR(50),
 				'loaned' INT(1) NOT NULL DEFAULT '0',
-				'media' INT(1) DEFAULT='0',
+				'media' INT(1) DEFAULT '0',
 				'num_media' INT(2),
 				'obs' TEXT,
 				'seen' INT(1) NOT NULL DEFAULT '0',
@@ -216,6 +216,7 @@ class GriffithSQL:
 		self.cursor.execute(query)
 
 	def create_table_loans(self, backup=False):
+		query = ''
 		if backup:
 			gdebug.debug("Creating 'loans' temporary table...")
 			query = "CREATE TEMPORARY TABLE loans_backup"
@@ -349,7 +350,6 @@ class GriffithSQL:
 		return self.cursor.fetchall()
 		
 	def add_movie(self, data):
-		media = gutils.on_combo_box_entry_changed(data.am_media)
 		plot_buffer = data.am_plot.get_buffer()
 		with_buffer = data.am_with.get_buffer()
 		obs_buffer = data.am_obs.get_buffer()
@@ -369,7 +369,7 @@ class GriffithSQL:
 			gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter()))+"','" +\
 			gutils.gescape(data.am_country.get_text())+"','" +\
 			gutils.gescape(data.am_genre.get_text())+"','" +\
-			str(media)+"','" +\
+			str(data.am_media.get_active())+"','" +\
 			gutils.gescape(data.am_classification.get_text())+"','" +\
 			gutils.gescape(data.am_studio.get_text())+"','" +\
 			data.am_site.get_text()+"','" +\
