@@ -30,6 +30,7 @@ from urllib import urlcleanup
 import tempfile
 import movie
 import gdebug
+import delete
 
 def change_poster(self):
 	"""
@@ -218,12 +219,7 @@ def get_poster(self, f, result, current_poster):
 		gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
 		update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
 		update_tree_thumbnail(self, file_to_copy)
-		try:
-			os.remove("%s/%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
-			os.remove("%s/t_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
-			os.remove("%s/m_%s.jpg" % (os.path.join(self.griffith_dir, "posters"), current_poster))
-		except:
-			pass
+		delete.delete_poster(self, current_poster)
 	else:
 		gdebug.debug("Reverting to previous poster and deleting new one from disk.")
 		self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file("%s/%s.jpg" % (os.path.join(self.griffith_dir, \

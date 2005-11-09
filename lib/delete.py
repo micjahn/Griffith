@@ -35,25 +35,33 @@ def delete_movie(self):
 		if response == -8:	# gtk.RESPONSE_YES == -8
 			# try to delete poster image as well
 			poster = self.db.select_movie_by_num(m_id)[0]['image']
-			posters_dir = os.path.join(self.griffith_dir, "posters")
-			image_mini = os.path.join(posters_dir, "m_" + poster + ".jpg")
-			image_full = os.path.join(posters_dir, poster + ".jpg")
-
-			if os.path.isfile(image_mini):
-				try:
-					os.remove(image_mini)
-				except:
-					gdebug.debug("Can't remove %s file"%image_mini)
-			if os.path.isfile(image_full):
-				try:
-					os.remove(image_full)
-				except:
-					gdebug.debug("Can't remove %s file"%image_full)
+			delete_poster(self, poster)
 			delete_movie_from_db(self, m_id, m_iter)
 		else:
 			pass
 	except:
 		pass
+		
+def delete_poster(self, poster):
+	posters_dir = os.path.join(self.griffith_dir, "posters")
+	image_thumbnail = os.path.join(posters_dir, "t_" + poster + ".jpg")
+	image_mini = os.path.join(posters_dir, "m_" + poster + ".jpg")
+	image_full = os.path.join(posters_dir, poster + ".jpg")
+	if os.path.isfile(image_mini):
+		try:
+			os.remove(image_mini)
+		except:
+			gdebug.debug("Can't remove %s file"%image_mini)
+	if os.path.isfile(image_full):
+		try:
+			os.remove(image_full)
+		except:
+			gdebug.debug("Can't remove %s file"%image_full)
+	if os.path.isfile(image_thumbnail):
+		try:
+			os.remove(image_thumbnail)
+		except:
+			gdebug.debug("Can't remove %s file"%image_thumbnail)
 		
 def delete_movie_from_db(self, m_id, m_iter):
 	self.total -= 1
