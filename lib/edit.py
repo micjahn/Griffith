@@ -31,6 +31,7 @@ import tempfile
 import movie
 import gdebug
 import delete
+import widgets
 
 def change_poster(self):
 	"""
@@ -172,7 +173,7 @@ def fetch_bigger_poster(self):
 	this_movie = self.db.select_movie_by_num(self.e_number.get_text())
 	current_poster = this_movie[0]['image']
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
-	
+		
 	try:
 		result = amazon.searchByKeyword(self.e_original_title.get_text(), \
 						type="lite", product_line="dvd")
@@ -180,6 +181,8 @@ def fetch_bigger_poster(self):
 	except:
 		gutils.warning(self, _("No posters found for this movie."))
 		return
+	
+	widgets.connect_poster_signals(self, get_poster_select_dc, result, current_poster)
 		
 	if not len(result):
 		gutils.warning(self, _("No posters found for this movie."))
@@ -188,32 +191,21 @@ def fetch_bigger_poster(self):
 	for f in range(len(result)):
 		if self.e_original_title.get_text() == result[f].ProductName:
 			get_poster(self, f, result, current_poster)
-		
-	if len(result) > 1:
-		self.treemodel_results.clear()
-		
-		for f in range(len(result)):
-			if (len(result[f].ImageUrlLarge)):
-				title = result[f].ProductName
-				gdebug.debug(title)
-				myiter = self.treemodel_results.insert_before(None, None)
-				self.treemodel_results.set_value(myiter, 0, str(f))
-				self.treemodel_results.set_value(myiter, 1, title)
-		try:
-			self.results_select.disconnect(self.results_signal)
-		except:
-			pass
-		self.poster_results_signal = \
-			self.results_select.connect("clicked", get_poster_select, \
-			self, result, current_poster)
-		try:
-			self.results_treeview.disconnect(self.treeview.connect)
-		except:
-			pass
-		self.results_poster_double_click = self.results_treeview.connect('button_press_event', \
-			get_poster_select_dc, self, result, current_poster)
-		self.w_results.show()
-		self.w_results.set_keep_above(True)
+			return
+
+	self.treemodel_results.clear()
+	
+	for f in range(len(result)):
+
+		if (len(result[f].ImageUrlLarge)):
+			title = result[f].ProductName
+			gdebug.debug(title)
+			myiter = self.treemodel_results.insert_before(None, None)
+			self.treemodel_results.set_value(myiter, 0, str(f))
+			self.treemodel_results.set_value(myiter, 1, title)
+	
+	self.w_results.show()
+	self.w_results.set_keep_above(True)
 	
 def get_poster_select_dc(self, event, mself, result, current_poster):
 	if event.type == gtk.gdk._2BUTTON_PRESS:
@@ -228,39 +220,46 @@ def get_poster(self, f, result, current_poster):
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		f = int(tmp_model.get_value(tmp_iter, 0))
 		self.w_results.hide()
-		 
+		
 	file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
 		dir=os.path.join(self.griffith_dir, "posters"))
 	file_to_copy += ".jpg"
-	progress = movie.Progress(self.main_window,_("Fetching poster"),_("Wait a moment"))
-	retriever = movie.Retriever(result[f].ImageUrlLarge, self.main_window, progress, file_to_copy)
-	retriever.start()
-	while retriever.isAlive():
-		progress.pulse()
-		if progress.status:
-			retriever.suspend()
-		while gtk.events_pending():
-			gtk.main_iteration()
-	progress.close()
-	urlcleanup()
+	try:
+		progress = movie.Progress(self.main_window,_("Fetching poster"),_("Wait a moment"))
+		retriever = movie.Retriever(result[f].ImageUrlLarge, self.main_window, progress, file_to_copy)
+		retriever.start()
+		while retriever.isAlive():
+			progress.pulse()
+			if progress.status:
+				retriever.suspend()
+			while gtk.events_pending():
+				gtk.main_iteration()
+		progress.close()
+		urlcleanup()
+	except:
+		gutils.warning(self, _("Sorry. A connection error was occurred."))
 	
-	self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
-	self.big_poster.set_from_file(file_to_copy)
-	self.poster_window.show()
-	self.poster_window.move(0,0)
-	response = \
-			gutils.question(self, \
-			_("Do you want to use this poster instead?"), \
-			1, self.main_window)
-	if response == -8:
-		gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
-		update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
-		update_tree_thumbnail(self, file_to_copy)
-		delete.delete_poster(self, current_poster)
+	print file_to_copy
+	if  os.path.isfile(file_to_copy):
+		self.big_poster.set_from_file(file_to_copy)
+		self.poster_window.show()
+		self.poster_window.move(0,0)
+		response = \
+				gutils.question(self, \
+				_("Do you want to use this poster instead?"), \
+				1, self.main_window)
+		if response == -8:
+			gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
+			update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
+			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))		
+			update_tree_thumbnail(self, file_to_copy)
+			delete.delete_poster(self, current_poster)
+		else:
+			gdebug.debug("Reverting to previous poster and deleting new one from disk.")
+			#self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file("%s/%s.jpg" % (os.path.join(self.griffith_dir, \
+				#"posters"), current_poster)).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+			os.remove(file_to_copy)
+			
+		self.poster_window.hide()
 	else:
-		gdebug.debug("Reverting to previous poster and deleting new one from disk.")
-		self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file("%s/%s.jpg" % (os.path.join(self.griffith_dir, \
-			"posters"), current_poster)).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
-		os.remove(file_to_copy)
-		
-	self.poster_window.hide()
+		gutils.warning(self, _("Sorry. This movie is listed but have no poster available at Amazon.com."))

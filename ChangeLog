@@ -4,6 +4,8 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-11-09 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added a list to choose from when fetching big posters from Amazon.com and an exact match is not found.
 
 2005-11-07 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Big posters fetched from Amazon are now previewed on built-in poster viewer.

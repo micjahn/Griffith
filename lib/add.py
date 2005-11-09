@@ -29,6 +29,7 @@ import string
 import shutil
 import quick_filter
 import gdebug
+import widgets
 
 def add_movie(self):
 	quick_filter.clear_filter(self)
@@ -82,21 +83,7 @@ def initialize_add_dialog(self):
 	self.Image.set_from_file(image)
 	self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
 	self.am_original_title.grab_focus()
-	
-	try:
-		self.results_select.disconnect(self.poster_results_signal)
-	except:
-		pass
-
-	try:
-		self.results_treeview.disconnect(self.results_poster_double_click)
-	except:
-		pass
-		
-	self.results_signal = self.results_select.connect("clicked", \
-			self.populate_dialog_with_results)
-	self.results_double_click = self.results_treeview.connect('button_press_event', \
-		self.on_results_button_press_event)
+	widgets.connect_add_signals(self)
 
 def add_movie_db(self, close):
 	if  len(self.am_original_title.get_text()) or len(self.am_title.get_text()):

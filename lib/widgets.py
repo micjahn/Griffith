@@ -339,3 +339,64 @@ def define_widgets(self, gladefile):
 		"on_f_col_changed"                      : self.filter_collection
 	}
 	gladefile.signal_autoconnect(dic)
+
+def connect_add_signals(self):
+	try:
+		self.results_select.disconnect(self.poster_results_signal)
+	except:
+		pass
+
+	try:
+		self.results_treeview.disconnect(self.results_poster_double_click)
+	except:
+		pass
+	
+	try:
+		self.results_select.disconnect(self.results_signal)
+	except:
+		pass
+
+	try:
+		self.results_treeview.disconnect(self.results_double_click)
+	except:
+		pass
+	
+	# connect signals
+	
+	self.results_signal = self.results_select.connect("clicked", \
+			self.populate_dialog_with_results)
+	self.results_double_click = self.results_treeview.connect('button_press_event', \
+		self.on_results_button_press_event)
+	
+def connect_poster_signals(self, event, result, current_poster):
+
+	import edit
+	
+	try:
+		self.results_select.disconnect(self.poster_results_signal)
+	except:
+		pass
+
+	try:
+		self.results_treeview.disconnect(self.results_poster_double_click)
+	except:
+		pass
+	
+	try:
+		self.results_select.disconnect(self.results_signal)
+	except:
+		pass
+
+	try:
+		self.results_treeview.disconnect(self.results_double_click)
+	except:
+		pass
+	
+	# connect signals
+	
+	self.results_poster_double_click = self.results_treeview.connect('button_press_event', \
+		edit.get_poster_select_dc, self, result, current_poster)
+	
+	self.poster_results_signal = \
+		self.results_select.connect("clicked", edit.get_poster_select, \
+		self, result, current_poster)
