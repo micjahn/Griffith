@@ -85,6 +85,10 @@ def initialize_add_dialog(self):
 	
 	try:
 		self.results_select.disconnect(self.poster_results_signal)
+	except:
+		pass
+
+	try:
 		self.results_treeview.disconnect(self.results_poster_double_click)
 	except:
 		pass
