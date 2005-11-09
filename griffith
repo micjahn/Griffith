@@ -102,8 +102,12 @@ class Griffith:
 		
 	def hide_results(self, *args):
 		self.treemodel_results.clear()
-		self.results_select.disconnect(self.poster_results_signal)
-		self.results_signal = self.results_select.connect("clicked", self.populate_dialog_with_results)
+		try:
+			self.results_select.disconnect(self.poster_results_signal)
+			self.results_signal = self.results_select.connect("clicked", \
+				self.populate_dialog_with_results)
+		except:
+			pass
 		self.w_results.hide()
 		
 	def populate_dialog_with_results(self, *args):
@@ -550,6 +554,11 @@ class Griffith:
 		"""add a double click event to add movie results"""
 		if event.type == gtk.gdk._2BUTTON_PRESS:
 			add.populate_with_results(self)
+			
+	def on_poster_results_button_press_event(self, widget, event):  
+		"""add a double click event to poster results"""
+		if event.type == gtk.gdk._2BUTTON_PRESS:
+			add.populate_with_results(self)
 							  
 	def __init__(self):
 		"""
@@ -584,14 +593,6 @@ class Griffith:
 		self.completion_t.set_text_column(4)
 				
 		initialize.initialize_gtkspell(self)
-		
-		self.main_window.connect('key_press_event', self.on_key_press_event)
-		self.main_treeview.connect('button_press_event', \
-			self.on_maintree_button_press_event)
-		self.p_treeview.connect('button_press_event', \
-			self.on_p_tree_button_press_event)
-		self.results_treeview.connect('button_press_event', \
-			self.on_results_button_press_event)
 		
 	def main(self):
 		gtk.threads_init()

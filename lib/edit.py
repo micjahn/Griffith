@@ -196,18 +196,31 @@ def fetch_bigger_poster(self):
 		myiter = self.treemodel_results.insert_before(None, None)
 		self.treemodel_results.set_value(myiter, 0, str(f))
 		self.treemodel_results.set_value(myiter, 1, title)
-	self.results_select.disconnect(self.results_signal)
+	try:
+		self.results_select.disconnect(self.results_signal)
+	except:
+		pass
 	self.poster_results_signal = \
 		self.results_select.connect("clicked", get_poster_select, \
 		self, result, current_poster)
+	try:
+		self.results_treeview.disconnect(self.treeview.connect)
+	except:
+		pass
+	self.results_poster_double_click = self.results_treeview.connect('button_press_event', \
+		get_poster_select, self, result, current_poster)
 	self.w_results.show()
 	self.w_results.set_keep_above(True)
+	
+def get_poster_select(self, widget, event, mself, result, current_psoter):
+	if event.type == gtk.gdk._2BUTTON_PRESS:
+		get_poster(mself, None, result, current_poster)
 
 def get_poster_select(self, mself, result, current_poster):
-	get_poster(mself, 0, result, current_poster)
+	get_poster(mself, None, result, current_poster)
 
 def get_poster(self, f, result, current_poster):
-	if not f:
+	if f == None:
 		treeselection = self.results_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		f = int(tmp_model.get_value(tmp_iter, 0))

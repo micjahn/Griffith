@@ -238,10 +238,14 @@ def define_widgets(self, gladefile):
 		self.zoom_poster.connect("enter", self.z_poster)
 		self.zoom_poster.connect("leave", self.z_poster_hide)
 	else:
-		self.zoom_poster.connect("clicked", self.z_poster)
-		 
-	self.results_signal = self.results_select.connect("clicked", self.populate_dialog_with_results)	 
-	self.results_cancel.connect("clicked", self.hide_results)	 
+		self.zoom_poster.connect("clicked", self.z_poster) 
+		
+	self.main_window.connect('key_press_event', self.on_key_press_event)
+	self.main_treeview.connect('button_press_event', \
+		self.on_maintree_button_press_event)
+	self.p_treeview.connect('button_press_event', \
+		self.on_p_tree_button_press_event)
+
 		 
 	# define handlers for general events
 		
