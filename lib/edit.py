@@ -177,7 +177,7 @@ def fetch_bigger_poster(self):
 		result = amazon.searchByKeyword(self.e_original_title.get_text(), \
 						type="lite", product_line="dvd")
 	except:
-		gutils.warning(self, _("Connection error."))
+		gutils.warning(self, _("No posters found for this movie."))
 		return
 		
 	if not len(result):
@@ -190,6 +190,7 @@ def fetch_bigger_poster(self):
 			return
 		
 	self.treemodel_results.clear()
+	
 	for f in range(len(result)):
 		title = result[f].ProductName
 		gdebug.debug(title)
@@ -208,11 +209,11 @@ def fetch_bigger_poster(self):
 	except:
 		pass
 	self.results_poster_double_click = self.results_treeview.connect('button_press_event', \
-		get_poster_select, self, result, current_poster)
+		get_poster_select_dc, self, result, current_poster)
 	self.w_results.show()
 	self.w_results.set_keep_above(True)
 	
-def get_poster_select(self, widget, event, mself, result, current_psoter):
+def get_poster_select_dc(self, event, mself, result, current_poster):
 	if event.type == gtk.gdk._2BUTTON_PRESS:
 		get_poster(mself, None, result, current_poster)
 
@@ -224,12 +225,10 @@ def get_poster(self, f, result, current_poster):
 		treeselection = self.results_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		f = int(tmp_model.get_value(tmp_iter, 0))
-		self.results_select.disconnect(self.poster_results_signal)
-		self.results_signal = self.results_select.connect("clicked", self.populate_dialog_with_results)
 		self.w_results.hide()
 		 
 	file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
-				dir=os.path.join(self.griffith_dir, "posters"))
+		dir=os.path.join(self.griffith_dir, "posters"))
 	file_to_copy += ".jpg"
 	gdebug.debug("Posters found on amazon: %s -  TODO: a select poster popup window. For now, we get the exact match." % len(result))
 	progress = movie.Progress(self.main_window,_("Fetching poster"),_("Wait a moment"))
