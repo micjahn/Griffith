@@ -191,6 +191,9 @@ def define_widgets(self, gladefile):
 	
 	self.all_movies = gladefile.get_widget('all_movies')
 	
+	self.results_select = gladefile.get_widget('results_select')
+	self.results_cancel = gladefile.get_widget('results_cancel')
+	
 	# poster button related
 	self.zoom_poster = gladefile.get_widget('zoom_poster')
 	self.open_poster = gladefile.get_widget('open_poster')
@@ -237,6 +240,9 @@ def define_widgets(self, gladefile):
 	else:
 		self.zoom_poster.connect("clicked", self.z_poster)
 		 
+	self.results_signal = self.results_select.connect("clicked", self.populate_dialog_with_results)	 
+	self.results_cancel.connect("clicked", self.hide_results)	 
+		 
 	# define handlers for general events
 		
 	dic = {
@@ -255,8 +261,6 @@ def define_widgets(self, gladefile):
 		"on_main_treeview_row_activated"        : self.treeview_clicked,
 		"on_row_activated"                      : self.treeview_clicked,
 		"on_get_from_web_clicked"               : self.get_from_web,
-		"on_results_cancel_clicked"             : self.hide_results,
-		"on_results_select_clicked"             : self.populate_dialog_with_results,
 		"on_update_button_clicked"              : self.update_movie,
 		"on_preferences1_activate"              : self.show_preferences,
 		"on_cancel_preferences_clicked"         : self.hide_preferences,

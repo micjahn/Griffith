@@ -177,20 +177,44 @@ def fetch_bigger_poster(self):
 		result = amazon.searchByKeyword(self.e_original_title.get_text(), \
 						type="lite", product_line="dvd")
 	except:
-		gutils.warning(self, _("No posters found for this movie."))
+		gutils.warning(self, _("Connection error."))
 		return
+		
+	if not len(result):
+		gutils.warning(self, _("No posters found for this movie."))
+		return	
 		
 	for f in range(len(result)):
 		if self.e_original_title.get_text() == result[f].ProductName:
 			get_poster(self, f, result, current_poster)
 			return
-		else:
-			#we dont have an exact match, let's show a list to select from
-			pass
-	
-	gutils.warning(self, _("No posters found for this movie."))	
+		
+	self.treemodel_results.clear()
+	for f in range(len(result)):
+		title = result[f].ProductName
+		gdebug.debug(title)
+		myiter = self.treemodel_results.insert_before(None, None)
+		self.treemodel_results.set_value(myiter, 0, str(f))
+		self.treemodel_results.set_value(myiter, 1, title)
+	self.results_select.disconnect(self.results_signal)
+	self.poster_results_signal = \
+		self.results_select.connect("clicked", get_poster_select, \
+		self, result, current_poster)
+	self.w_results.show()
+	self.w_results.set_keep_above(True)
+
+def get_poster_select(self, mself, result, current_poster):
+	get_poster(mself, 0, result, current_poster)
 
 def get_poster(self, f, result, current_poster):
+	if not f:
+		treeselection = self.results_treeview.get_selection()
+		(tmp_model, tmp_iter) = treeselection.get_selected()
+		f = int(tmp_model.get_value(tmp_iter, 0))
+		self.results_select.disconnect(self.poster_results_signal)
+		self.results_signal = self.results_select.connect("clicked", self.populate_dialog_with_results)
+		self.w_results.hide()
+		 
 	file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
 				dir=os.path.join(self.griffith_dir, "posters"))
 	file_to_copy += ".jpg"

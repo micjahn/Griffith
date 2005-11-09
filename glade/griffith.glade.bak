@@ -850,6 +850,7 @@ Year</property>
 			  <child>
 			    <widget class="GtkToolButton" id="fetch_poster">
 			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Try to fetch a big poster from Amazon services website</property>
 			      <property name="stock_id">gtk-network</property>
 			      <property name="visible_horizontal">True</property>
 			      <property name="visible_vertical">True</property>

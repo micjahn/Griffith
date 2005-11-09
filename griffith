@@ -102,6 +102,8 @@ class Griffith:
 		
 	def hide_results(self, *args):
 		self.treemodel_results.clear()
+		self.results_select.disconnect(self.poster_results_signal)
+		self.results_signal = self.results_select.connect("clicked", self.populate_dialog_with_results)
 		self.w_results.hide()
 		
 	def populate_dialog_with_results(self, *args):
