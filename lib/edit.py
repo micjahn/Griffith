@@ -56,7 +56,8 @@ def delete_poster(self):
 	response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.main_window)
 	if response==-8:
 		image_path = self.locations['images'] + "/default.png"
-		self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
+		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
+		gutils.garbage(handler)
 		update_tree_thumbnail(self, self.locations['images'] + "/default_thumbnail.png")
 		m_id = self.get_maintree_selection()
 		update.clear_image(self, m_id[0])
@@ -68,7 +69,8 @@ def delete_poster(self):
 def update_tree_thumbnail(self, t_image_path):
 	treeselection = self.main_treeview.get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
-	self.Image.set_from_file(t_image_path)
+	handler = self.Image.set_from_file(t_image_path)
+	gutils.garbage(handler)
 	pixbuf = self.Image.get_pixbuf()
 	pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
 	self.treemodel.set_value(tmp_iter, 2, pixbuf)
@@ -86,7 +88,8 @@ def change_rating_from_slider(self):
 		prefix = "meter"
 		
 	rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, rating)
-	self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
+	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
+	gutils.garbage(handler)
 	self.db.cursor.execute(
 			"UPDATE movies SET rating = '" 
 			+str(int(self.rating_slider.get_value()))+"' WHERE number = '" + self.e_number.get_text() +"'")
@@ -141,7 +144,8 @@ def clear_details(self):
 	else:
 		prefix = "meter"
 	image = self.locations['images'] + "/%s00.png"%prefix
-	self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
+	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
+	gutils.garbage(handler)
 
 def fill_volumes_combo(self, prefix='e', default=0):
 	for tmp in 'e', "am":
@@ -241,7 +245,8 @@ def get_poster(self, f, result, current_poster):
 	
 	print file_to_copy
 	if  os.path.isfile(file_to_copy):
-		self.big_poster.set_from_file(file_to_copy)
+		handler = self.big_poster.set_from_file(file_to_copy)
+		gutils.garbage(handler)
 		self.poster_window.show()
 		self.poster_window.move(0,0)
 		response = \
@@ -251,13 +256,12 @@ def get_poster(self, f, result, current_poster):
 		if response == -8:
 			gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
 			update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
-			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))		
+			handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+			gutils.garbage(handler)
 			update_tree_thumbnail(self, file_to_copy)
 			delete.delete_poster(self, current_poster)
 		else:
 			gdebug.debug("Reverting to previous poster and deleting new one from disk.")
-			#self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file("%s/%s.jpg" % (os.path.join(self.griffith_dir, \
-				#"posters"), current_poster)).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
 			os.remove(file_to_copy)
 			
 		self.poster_window.hide()

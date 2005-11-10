@@ -80,8 +80,10 @@ def initialize_add_dialog(self):
 	self.nb_add.set_current_page(0)
 	self.am_source.set_active(self.d_plugin)
 	image = os.path.join(self.locations['images'], "default.png")
-	self.Image.set_from_file(image)
-	self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
+	handler = self.Image.set_from_file(image)
+	gutils.garbage(handler)
+	handler = self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
+	gutils.garbage(handler)
 	self.am_original_title.grab_focus()
 	widgets.connect_add_signals(self)
 
@@ -99,7 +101,8 @@ def add_movie_db(self, close):
 				str(self.am_picture_name.get_text())+".jpg")
 		else:
 			image_path = os.path.join(self.locations['images'], "default.png")
-		self.Image.set_from_file(image_path)
+		handler = self.Image.set_from_file(image_path)
+		gutils.garbage(handler)
 		pixbuf = self.Image.get_pixbuf()
 		self.treemodel.set_value(myiter, 1, \
 			'%004d' % int(self.am_number.get_text()))
@@ -120,6 +123,7 @@ def add_movie_db(self, close):
 		next_number=gutils.find_next_available(self)
 		initialize_add_dialog(self)
 		self.am_number.set_text(str(next_number))
+		gutils.garbage(pixbuf)
 		if close:
 			self.hide_add_movie()
 	else:
@@ -138,7 +142,8 @@ def change_rating_from_slider(self):
 	else:
 		prefix = "meter"
 	rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, rating)
-	self.image_add_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
+	handler = self.image_add_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
+	gutils.garbage(handler)
 			
 def populate_with_results(self):
 	m_id = None
@@ -185,20 +190,24 @@ def populate_with_results(self):
 	if self.movie.picture != "":
 		image = os.path.join(tmp_dest, self.movie.picture)
 		try:
-			self.Image.set_from_file(image)
+			handler = self.Image.set_from_file(image)
+			gutils.garbage(handler)
 			pixbuf = self.Image.get_pixbuf()
 			self.am_picture.set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
 			self.am_picture_name.set_text(string.replace(self.movie.picture, ".jpg",""))
 		except:
 			image = os.path.join(self.locations['images'], "default.png")
-			self.Image.set_from_file(image)
+			handler = self.Image.set_from_file(image)
+			gutils.garbage(handler)
 			self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
 	else:
 		image = os.path.join(self.locations['images'], "default.png")
-		self.Image.set_from_file(image)
+		handler = self.Image.set_from_file(image)
+		gutils.garbage(handler)
 		Pixbuf = self.Image.get_pixbuf()
 		self.am_picture.set_from_pixbuf(Pixbuf)
-
+		gutils.garbage(Pixbuf)
+		
 def show_websearch_results(self):
 	total = self.founded_results_id = 0
 	for g in self.search_movie.ids:
@@ -263,7 +272,8 @@ def source_changed(self):
 	image = os.path.join(self.locations['images'], plugin_name + ".png")
 	# if movie plugin logo exists lets use it
 	if os.path.exists(image):
-		self.am_plugin_image.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
+		handler = self.am_plugin_image.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
+		gutils.garbage(handler)
 		
 def clone_movie(self):
 	treeselection = self.main_treeview.get_selection()
@@ -314,7 +324,8 @@ def clone_movie(self):
 				image_path = "images/default.png"
 			else:
 				image_path = os.path.join(self.locations['images'], "default.png")
-		self.Image.set_from_file(image_path)
+		handler = self.Image.set_from_file(image_path)
+		gutils.garbage(handler)
 		self.treemodel.set_value(myiter, 1, '%004d' % int(next_number))
 		pixbuf = self.Image.get_pixbuf() 
 		pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
@@ -322,6 +333,7 @@ def clone_movie(self):
 		self.treemodel.set_value(myiter, 3, str(row['original_title']))
 		self.treemodel.set_value(myiter, 4, str(row['title']))
 		self.treemodel.set_value(myiter, 5, str(row['director']))
+		gutils.garbage(pixbuf)
 		
 	#update statusbar
 	self.total = self.total + 1

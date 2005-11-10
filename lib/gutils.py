@@ -30,6 +30,8 @@ import re
 import zipfile
 import webbrowser
 import gobject
+import gdebug
+import gc
 
 url_re = re.compile('^\w+://')
 entity = re.compile(r'\&.\w*?\;')
@@ -357,3 +359,8 @@ def findKey(val, dict):
 	for key, value in dict.items():
 		if value == val: return key
 	return None
+
+def garbage(handler):
+	del handler
+	garbaged = gc.collect()
+	gdebug.debug ("%s objects destroyed by cyclic garbage collector... nice"%str(garbaged))

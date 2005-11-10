@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-11-10 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added some cyclic garbage collector calls that really should improve memory management when using large db collections
+
 2005-11-09 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added a list to choose from when fetching big posters from Amazon.com and an exact match is not found.
 
