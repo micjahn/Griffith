@@ -24,7 +24,6 @@ from gettext import gettext as _
 import gutils
 import os
 import gtk
-import gc
 import gdebug
 
 def treeview_clicked(self):
@@ -133,10 +132,8 @@ def treeview_clicked(self):
 				else:
 					self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
 					pixbuf = self.Image.get_pixbuf()
-			img_handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
-			del img_handler
-			garbaged = gc.collect()
-			gdebug.debug ("%s objects destroyed by cyclic garbage collector... nice"%str(garbaged))
+			handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
+			gutils.garbage(handler)
 			if row['loaned']:
 				if row['collection_id'] > 0 and self.db.is_collection_loaned(row['collection_id']) == 1:
 					data_loan = self.db.get_loan_info(collection_id=row['collection_id'])
@@ -223,13 +220,14 @@ def populate(self, data):
 				else:
 					self.Image.set_from_file(self.locations['images'] + "/default_thumbnail.png")
 					pixbuf = self.Image.get_pixbuf()
-
 			self.Image.set_from_file(image_path)
 			pixbuf = self.Image.get_pixbuf()
 			self.treemodel.set_value(myiter, 2, pixbuf)
+
 		else:
 			# let's hide image column from main treeview since we don't want it to be visible
 			self.image_column.set_visible(False)
 		self.treemodel.set_value(myiter,3,str(row['original_title']))
 		self.treemodel.set_value(myiter,4,str(row['title']))
 		self.treemodel.set_value(myiter,5,str(row['director']))
+	#gutils.garbage(pixbuf)
