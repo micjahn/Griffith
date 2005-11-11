@@ -208,7 +208,7 @@ def populate(self, data):
 				# if not, lets make one for future use :D
 				original_image = os.path.join(tmp_dest, row['image']+".jpg")
 				if os.path.isfile(original_image):
-					make_thumbnail(self, row['image']+".jpg")
+					gutils.make_thumbnail(self, row['image']+".jpg")
 				else:
 					self.Image.set_from_file(self.locations['images'] + "/default_thumbnail.png")
 					pixbuf = self.Image.get_pixbuf()

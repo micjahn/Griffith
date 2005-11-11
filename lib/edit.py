@@ -261,10 +261,13 @@ def get_poster(self, f, result, current_poster):
 		if response == -8:
 			gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
 			update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
-			handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(file_to_copy).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
-			gutils.garbage(handler)
-			update_tree_thumbnail(self, file_to_copy)
+			gutils.make_thumbnail(self, '%s' % os.path.basename(file_to_copy))
+			gutils.make_medium_image(self, '%s' % os.path.basename(file_to_copy))
+			update_tree_thumbnail(self, '%s/posters/t_%s' % (self.griffith_dir, \
+				os.path.basename(file_to_copy)))
+			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(self.griffith_dir, "posters/m_%s"%os.path.basename(file_to_copy))))
 			delete.delete_poster(self, current_poster)
+			
 		else:
 			gdebug.debug("Reverting to previous poster and deleting new one from disk.")
 			os.remove(file_to_copy)

@@ -4,6 +4,13 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+---- 0.5 ----
+
+2005-11-11 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed lots of poster operations bugs
+	* Added cgi module include on windows py2exe script (used by amazon.py module)
+	* Portuguese language file updated
+
 2005-11-10 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added some cyclic garbage collector calls that really should improve memory management when using large db collections
 
