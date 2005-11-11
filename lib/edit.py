@@ -32,6 +32,7 @@ import movie
 import gdebug
 import delete
 import widgets
+from PIL import Image
 
 def change_poster(self):
 	"""
@@ -252,6 +253,16 @@ def get_poster(self, f, result, current_poster):
 	if  os.path.isfile(file_to_copy):
 		handler = self.big_poster.set_from_file(file_to_copy)
 		gutils.garbage(handler)
+		
+		try:
+		    im = Image.open(file_to_copy)
+		except IOError:
+		    gdebug.debug("failed to identify", file_to_copy)
+		else:
+		    if im.format == "GIF":
+				gutils.warning(self, _("Sorry. This poster image format is not supported."))
+				os.remove(file_to_copy)
+				return
 		self.poster_window.show()
 		self.poster_window.move(0,0)
 		response = \

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-05 19:01+0100\n"
+"POT-Creation-Date: 2005-11-11 22:45+0000\n"
 "PO-Revision-Date: 2005-06-19 16:30+0200\n"
 "Last-Translator: Piotr Ozarowski <ozarow@gmail.com>\n"
 "Language-Team: Polski\n"
@@ -14,31 +14,31 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:216
+#: ../griffith:222
 msgid "You saw all movies in your collection!"
 msgstr "Obejrza³e¶ ju¿ wszystkie filmy z kolekcji!"
 
-#: ../griffith:311
+#: ../griffith:317
 msgid "Are you sure you want to restore?\n"
 msgstr "Jeste¶ pewien, ¿e chcesz skorzystaæ z opcji przywracania?\n"
 
-#: ../griffith:312
+#: ../griffith:318
 msgid "Your current movie collection will be replaced.\n"
 msgstr "Twoja aktualna baza filmów zostanie podmieniona.\n"
 
-#: ../griffith:313
+#: ../griffith:319
 msgid "You can't undo this operation."
 msgstr "Nie ma mo¿liwo¶ci cofniêcia zmian."
 
-#: ../griffith:392
+#: ../griffith:398
 msgid " movie(s) in collection. "
 msgstr " filmów w kolekcji. "
 
-#: ../griffith:393
+#: ../griffith:399
 msgid " movie(s) loaned. "
 msgstr " filmów wypo¿yczonych. "
 
-#: ../griffith:394
+#: ../griffith:400
 msgid "You haven't seen "
 msgstr "Nie obejrza³e¶ jeszcze "
 
@@ -108,7 +108,7 @@ msgstr "General Public License.\n"
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
 msgstr "Szczegó³y dostêpne s± na stronie http://www.gnu.org/copyleft/gpl.html"
 
-#: ../lib/add.py:125 ../lib/add.py:251
+#: ../lib/add.py:131 ../lib/add.py:262
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
@@ -116,15 +116,15 @@ msgstr ""
 "Powiniene¶ wype³niæ pole oryginalnego tytu³u\n"
 "lub pole tytu³u."
 
-#: ../lib/add.py:226
+#: ../lib/add.py:237
 msgid "No results"
 msgstr "Nie znaleziono pasuj±cych"
 
-#: ../lib/add.py:259
+#: ../lib/add.py:270
 msgid "Url: "
 msgstr "URL: "
 
-#: ../lib/add.py:260
+#: ../lib/add.py:271
 msgid "Language: "
 msgstr "Jêzyk: "
 
@@ -158,7 +158,7 @@ msgstr "Nie mogê odczytaæ kopii zapasowej"
 msgid "Backup restored"
 msgstr "Odzyskano dane z kopii zapasowej"
 
-#: ../lib/cover.py:50 ../lib/edit.py:42
+#: ../lib/cover.py:50 ../lib/edit.py:45
 msgid "Select image"
 msgstr "Wybierz plakat"
 
@@ -209,30 +209,42 @@ msgstr "Rodzaj"
 msgid "Are you sure you want to delete this movie?"
 msgstr "Czy na pewno chcesz skasowaæ ten film?"
 
-#: ../lib/edit.py:51
+#: ../lib/edit.py:56
 msgid "Image not valid."
 msgstr "Plik nie jest prawid³owy"
 
-#: ../lib/edit.py:54
+#: ../lib/edit.py:61
 msgid "Are you sure you want to delete this poster?"
 msgstr "Czy na pewno chcesz skasowaæ ten plakat?"
 
-#: ../lib/edit.py:181 ../lib/edit.py:192
+#: ../lib/edit.py:191 ../lib/edit.py:197
 msgid "No posters found for this movie."
 msgstr "Nie znaleziono plakatów dla tego filmu."
 
-#: ../lib/edit.py:199 ../lib/movie.py:95
+#: ../lib/edit.py:237 ../lib/movie.py:95
 msgid "Fetching poster"
 msgstr "Pobieram plakat"
 
-#: ../lib/edit.py:199 ../lib/movie.py:70 ../lib/movie.py:95
+#: ../lib/edit.py:237 ../lib/movie.py:70 ../lib/movie.py:95
 #: ../lib/movie.py:198
 msgid "Wait a moment"
 msgstr "Proszê czekaæ"
 
-#: ../lib/edit.py:214
+#: ../lib/edit.py:249
+msgid "Sorry. A connection error was occurred."
+msgstr ""
+
+#: ../lib/edit.py:263
+msgid "Sorry. This poster image format is not supported."
+msgstr ""
+
+#: ../lib/edit.py:270
 msgid "Do you want to use this poster instead?"
 msgstr "Czy chcesz podmieniæ plakat na aktualny?"
+
+#: ../lib/edit.py:288
+msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
+msgstr ""
 
 #: ../lib/gemail.py:37 ../lib/gemail.py:47
 #, python-format
@@ -280,11 +292,11 @@ msgstr ""
 msgid "This person has no e-mail address defined."
 msgstr "Ta osoba nie posiada zdefiniowano adresu e-mail."
 
-#: ../lib/gutils.py:303
+#: ../lib/gutils.py:305
 msgid "Images"
 msgstr "Pliki graficzne"
 
-#: ../lib/gutils.py:314
+#: ../lib/gutils.py:316
 msgid "All files"
 msgstr "Wszystkie pliki"
 
@@ -426,6 +438,11 @@ msgstr "Lokalizacja nie jest dostêpna. Ustawiam jezyk angielski jako domy¶lny."
 msgid "No person is defined yet."
 msgstr "Nie zdefiniowano jeszcze ¿adnej osoby"
 
+#: ../lib/loan.py:61
+#, fuzzy
+msgid "Do you want to loan whole collection?"
+msgstr "Czy chcesz podmieniæ plakat na aktualny?"
+
 #: ../lib/loan.py:81
 msgid "Movie loaned"
 msgstr "Film wypo¿yczono"
@@ -434,15 +451,15 @@ msgstr "Film wypo¿yczono"
 msgid "Movie returned"
 msgstr "Film zosta³ zwrócony"
 
-#: ../lib/main_treeview.py:147
+#: ../lib/main_treeview.py:145
 msgid "This movie has been loaned to "
 msgstr "Film zosta³ wypo¿yczony przez "
 
-#: ../lib/main_treeview.py:147
+#: ../lib/main_treeview.py:145
 msgid " on "
 msgstr " dnia "
 
-#: ../lib/main_treeview.py:149
+#: ../lib/main_treeview.py:147
 msgid "Movie not loaned"
 msgstr "Film dostêpny"
 
@@ -570,7 +587,7 @@ msgstr "Filtr aktywny. Pokazujê tylko filmy z woluminu: %s"
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr "Filtr aktywny. Pokazujê tylko filmy z kolekcji: %s"
 
-#: ../lib/widgets.py:214
+#: ../lib/widgets.py:217
 msgid ""
 "Define here the PDF reader you want to use within Griffith. Popular choices "
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
@@ -580,7 +597,7 @@ msgstr ""
 "generowanych ok³adek. Popularnymi wybiorami s±: xpdf, gpdf, evince oraz "
 "kpdf. Upewnij siê, ¿e wskazany program jest zainstalowany i dzia³a."
 
-#: ../lib/widgets.py:215
+#: ../lib/widgets.py:218
 msgid ""
 "Here you can define the desired language to use while spell checking some "
 "fields. Use you locale setting. For example, to use european portuguese "
@@ -589,7 +606,7 @@ msgstr ""
 "Tutaj mo¿esz wskazaæ jêzyki, w których ma byæ sprawdzana pisownia. U¿yj "
 "oznaczeñ UNIXowych, np. 'pl' aby pola sprawdzane by³y w jêzyku polskim."
 
-#: ../lib/widgets.py:216
+#: ../lib/widgets.py:219
 msgid ""
 "Use this entry to define the SMTP server you want to use to send e-mails. On "
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
@@ -600,7 +617,7 @@ msgstr ""
 "Wzglêdnie mo¿esz wpisaæ adres SMTP zdalnego serwera obs³uguj±cego wysy³anie "
 "poczty."
 
-#: ../lib/widgets.py:217
+#: ../lib/widgets.py:220
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
