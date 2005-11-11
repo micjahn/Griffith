@@ -2,19 +2,20 @@
 # Copyright (C) 2005 Vasco Nunes
 # This file is distributed under the same license as the Griffith package.
 # Vasco Nunes <vasco.m.nunes@gmail.com>, 2005.
+# Vasco Nunes <vasco.m.nunes@gmail.com>, 2005.
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.4.3\n"
+"Project-Id-Version: Griffith 0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-11-11 22:45+0000\n"
-"PO-Revision-Date: 2005-10-05 01:24+0100\n"
-"Last-Translator: Vasco Nunes <vasco.m.nunes@gmail.com>\n"
-"Language-Team: Portuguese\n"
+"PO-Revision-Date: 2005-11-11 23:00+0000\n"
+"Last-Translator: vasco <(null)>\n"
+"Language-Team: English <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../griffith:222
 msgid "You saw all movies in your collection!"
@@ -57,14 +58,12 @@ msgid "Contributors:"
 msgstr "Contribuições:"
 
 #: ../lib/about.py:45
-#, fuzzy
 msgid "Logo, icon and general artwork "
 msgstr "Logotipo, icone e gráficos por Peek."
 
 #: ../lib/about.py:46
-#, fuzzy
 msgid "by Peek <peekpt@gmail.com>."
-msgstr "Logotipo, icone e gráficos por Peek."
+msgstr "Logotipo, icone e gráficos por Peek "
 
 #: ../lib/about.py:47
 msgid ""
@@ -224,7 +223,7 @@ msgstr "Tem a certeza que deseja eliminar este cartaz?"
 
 #: ../lib/edit.py:191 ../lib/edit.py:197
 msgid "No posters found for this movie."
-msgstr ""
+msgstr "Não foram encontrados cartazes deste filme."
 
 #: ../lib/edit.py:237 ../lib/movie.py:95
 msgid "Fetching poster"
@@ -237,20 +236,19 @@ msgstr "Aguarde um momento"
 
 #: ../lib/edit.py:249
 msgid "Sorry. A connection error was occurred."
-msgstr ""
+msgstr "Ocorreu um erro de ligação."
 
 #: ../lib/edit.py:263
 msgid "Sorry. This poster image format is not supported."
-msgstr ""
+msgstr "Este formato de imagem não é suportado."
 
 #: ../lib/edit.py:270
-#, fuzzy
 msgid "Do you want to use this poster instead?"
-msgstr "Tem a certeza que deseja eliminar este cartaz?"
+msgstr "Tem a certeza que deseja utilizar antes este cartaz?"
 
 #: ../lib/edit.py:288
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
-msgstr ""
+msgstr "Este filme está listado na Amazon mas não tem um cartaz disponível."
 
 #: ../lib/gemail.py:37 ../lib/gemail.py:47
 #, python-format
@@ -271,20 +269,13 @@ msgid ""
 "Hi, %s!\n"
 "\n"
 "Just to reminder you "
-msgstr ""
+msgstr "Ola, %s!\n"
+"\n"
+"É só para recordar que"
 
 #: ../lib/gemail.py:60
-#, fuzzy
 msgid "that I'm really needing the following movie I have loaned you "
-msgstr ""
-"Olá, %s!\n"
-"\n"
-"Só para te recordar que estou mesmo a necessitar do filme que te emprestei "
-"recentemente:\n"
-"\n"
-"%s (%s)\n"
-"\n"
-"Emprestado em %s"
+msgstr "que estou mesmo a precisar do filme que lhe emprestei"
 
 #: ../lib/gemail.py:61
 #, python-format
@@ -294,7 +285,11 @@ msgid ""
 "%s (%s)\n"
 "\n"
 "Loaned on %s"
-msgstr ""
+msgstr "recentemente:\n"
+"\n"
+"%s (%s)\n"
+"\n"
+"Emprestado em %s"
 
 #: ../lib/gemail.py:65
 msgid "This person has no e-mail address defined."
@@ -448,7 +443,7 @@ msgstr "Não existem ainda pessoas definidas."
 
 #: ../lib/loan.py:61
 msgid "Do you want to loan whole collection?"
-msgstr ""
+msgstr "Deseja emprestar toda a colecção?"
 
 #: ../lib/loan.py:81
 msgid "Movie loaned"
@@ -610,7 +605,7 @@ msgid ""
 "Here you can define the desired language to use while spell checking some "
 "fields. Use you locale setting. For example, to use european portuguese "
 "spell checking enter 'pt'"
-msgstr ""
+msgstr "Aqui pode definir o idioma que deseja utilizar na verificação ortográfica. Utilize a definição local. Por exemplo, para utilizar português europeu na verificação ortográfica indique neste campo 'pt'"
 
 #: ../lib/widgets.py:219
 msgid ""
@@ -734,9 +729,8 @@ msgid "<b>Collection</b>"
 msgstr "<b>Colecção</b>"
 
 #: ../glade/griffith.glade.h:2
-#, fuzzy
 msgid "<b>Defaults</b>"
-msgstr "<b>Modelo</b>"
+msgstr "<b>Valores pré-definidos</b>"
 
 #: ../glade/griffith.glade.h:3
 msgid "<b>E-mail reminder</b>"
@@ -756,7 +750,7 @@ msgstr "<b>Usar verificação ortográfica nos seguintes campos:</b>"
 
 #: ../glade/griffith.glade.h:7
 msgid "<b>Volume</b>"
-msgstr ""
+msgstr "<b>Volume</b>"
 
 #: ../glade/griffith.glade.h:8
 msgid "Add"
@@ -791,9 +785,8 @@ msgid "Backup"
 msgstr "Cópia de segurança"
 
 #: ../glade/griffith.glade.h:16
-#, fuzzy
 msgid "By Collection"
-msgstr "<b>Colecção</b>"
+msgstr "Por colecção"
 
 #: ../glade/griffith.glade.h:18
 msgid "Choose Image"
@@ -808,9 +801,8 @@ msgid "Clone"
 msgstr "Duplicar"
 
 #: ../glade/griffith.glade.h:21
-#, fuzzy
 msgid "Collection"
-msgstr "<b>Colecção</b>"
+msgstr "Colecção"
 
 #: ../glade/griffith.glade.h:23
 msgid "Condition"
@@ -1097,12 +1089,10 @@ msgid "Sender E-mail address"
 msgstr "Endereço de E-mail do remetente"
 
 #: ../glade/griffith.glade.h:106
-#, fuzzy
 msgid "Show movies in selected collection"
-msgstr "exibir filmes da colecção seleccionada"
+msgstr "Exibir filmes da colecção seleccionada"
 
 #: ../glade/griffith.glade.h:107
-#, fuzzy
 msgid "Show movies in selected volume"
 msgstr "Exibir filmes do volume seleccionado"
 
@@ -1163,7 +1153,7 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:124
 msgid "Try to fetch a big poster from Amazon services website"
-msgstr ""
+msgstr "Tentar obter um cartaz utilizando os serviços web da Amazon"
 
 #: ../glade/griffith.glade.h:125
 msgid "Update"
@@ -1223,19 +1213,19 @@ msgstr "_Ver"
 
 #: ../glade/griffith.glade.h:141
 msgid "add entered name to collections list"
-msgstr ""
+msgstr "adicionar este nome à lista de colecções"
 
 #: ../glade/griffith.glade.h:142
 msgid "add entered name to volumes list"
-msgstr ""
+msgstr "adicionar este nome à lista de volumes"
 
 #: ../glade/griffith.glade.h:143
 msgid "click here if movie was returned"
-msgstr ""
+msgstr "clique aqui se o filme foi devolvido"
 
 #: ../glade/griffith.glade.h:144
 msgid "loans movie or volume"
-msgstr ""
+msgstr "empresta um filme ou um volume"
 
 #: ../glade/griffith.glade.h:145
 msgid "min."
@@ -1247,15 +1237,15 @@ msgstr "remover a colecção seleccionada"
 
 #: ../glade/griffith.glade.h:147
 msgid "remove selected volume"
-msgstr ""
+msgstr "remover o volume seleccionado"
 
 #: ../glade/griffith.glade.h:148
 msgid "rename collection assigned to movie"
-msgstr ""
+msgstr "alterar o nome da colecção atribuída a este filme"
 
 #: ../glade/griffith.glade.h:149
 msgid "rename volume assigned to movie"
-msgstr ""
+msgstr "mudar o nome do volume atribuído a este filme"
 
 #: ../lib/plugins/movie/PluginMovieAniDB.py:29
 #: ../lib/plugins/movie/PluginMovieIMDB.py:32
@@ -1315,7 +1305,6 @@ msgid "Actors"
 msgstr "Actores"
 
 #: ../lib/plugins/export/PluginExportHTML.py:93
-#, fuzzy
 msgid "Official Site"
 msgstr "Site oficial"
 
