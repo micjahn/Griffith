@@ -46,7 +46,8 @@ def change_poster(self):
 		try:
 			picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(filename[0]).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
 			file_to_copy = os.path.basename(filename[0])
-			shutil.copyfile(filename[0],'%s/posters/t_%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
+			shutil.copyfile(filename[0],'%s/posters/%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
+			gutils.make_thumbnail(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
 			update.update_image(self, os.path.splitext(file_to_copy)[0], m_id[0])
 			update_tree_thumbnail(self, '%s/posters/t_%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
 		except:
@@ -69,11 +70,10 @@ def delete_poster(self):
 def update_tree_thumbnail(self, t_image_path):
 	treeselection = self.main_treeview.get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
-	handler = self.Image.set_from_file(t_image_path)
-	gutils.garbage(handler)
+	self.Image.set_from_file(t_image_path)
 	pixbuf = self.Image.get_pixbuf()
-	pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
 	self.treemodel.set_value(tmp_iter, 2, pixbuf)
+	gutils.garbage(pixbuf)
 	
 def change_rating_from_slider(self):
 	rating = int(self.rating_slider.get_value())
@@ -243,7 +243,8 @@ def get_poster(self, f, result, current_poster):
 	except:
 		gutils.warning(self, _("Sorry. A connection error was occurred."))
 	
-	print file_to_copy
+	gdebug.debug(file_to_copy)
+	
 	if  os.path.isfile(file_to_copy):
 		handler = self.big_poster.set_from_file(file_to_copy)
 		gutils.garbage(handler)

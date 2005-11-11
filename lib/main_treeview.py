@@ -125,10 +125,7 @@ def treeview_clicked(self):
 				# if not, lets make one for future use :D
 				original_image = os.path.join(tmp_dest, row['image']+".jpg")
 				if os.path.isfile(original_image):
-					self.Image.set_from_file(original_image)
-					pixbuf = self.Image.get_pixbuf()
-					pixbuf = pixbuf.scale_simple(100, 140, 'bilinear')
-					gutils.save_pixmap(self, pixbuf, image_path)
+					gutils.make_medium_image(self, row['image']+".jpg")
 				else:
 					self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
 					pixbuf = self.Image.get_pixbuf()
@@ -211,12 +208,7 @@ def populate(self, data):
 				# if not, lets make one for future use :D
 				original_image = os.path.join(tmp_dest, row['image']+".jpg")
 				if os.path.isfile(original_image):
-					self.Image.set_from_file(original_image)
-					pixbuf = self.Image.get_pixbuf()
-					pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
-					#gutils.save_pixmap(self, pixbuf, image_path)
-					gutils.save_pixmap(self, pixbuf, os.path.join(tmp_dest, "t_"+row['image']+".jpg"))
-					
+					make_thumbnail(self, row['image']+".jpg")
 				else:
 					self.Image.set_from_file(self.locations['images'] + "/default_thumbnail.png")
 					pixbuf = self.Image.get_pixbuf()

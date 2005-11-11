@@ -58,7 +58,7 @@ def commit_loan(self):
 	# ask if user wants to loan whole collection
 	if collection_id>0:
 		loan_whole_collection = False
-		response = gutils.question(self, msg="Do you want to loan whole collection?", parent=self.main_window)
+		response = gutils.question(self, msg=_("Do you want to loan whole collection?"), parent=self.main_window)
 		if response == gtk.RESPONSE_YES:
 			loan_whole_collection = True
 		elif response == gtk.RESPONSE_CANCEL:

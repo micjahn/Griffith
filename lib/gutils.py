@@ -364,3 +364,23 @@ def garbage(handler):
 	del handler
 	garbaged = gc.collect()
 	gdebug.debug ("%s objects destroyed by cyclic garbage collector... nice"%str(garbaged))
+	
+def make_thumbnail(self, file_name):
+	source = os.path.join(self.griffith_dir, "posters/%s"%file_name)
+	if os.path.isfile(source):
+		self.Image.set_from_file(source)
+		pixbuf = self.Image.get_pixbuf()
+		pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
+		save_pixmap(self, pixbuf, os.path.join(self.griffith_dir, "posters/t_%s"%file_name))
+	else:
+		return 0
+		
+def make_medium_image(self, file_name):
+	source = os.path.join(self.griffith_dir, "posters/%s"%file_name)
+	if os.path.isfile(source):
+		self.Image.set_from_file(source)
+		pixbuf = self.Image.get_pixbuf()
+		pixbuf = pixbuf.scale_simple(100, 140, 'bilinear')
+		save_pixmap(self, pixbuf, os.path.join(self.griffith_dir, "posters/m_%s"%file_name))
+	else:
+		return 0
