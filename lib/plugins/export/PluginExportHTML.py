@@ -35,7 +35,7 @@ plugin_name = "HTML"
 plugin_description = _("Plugin exports data using templates")
 plugin_author = "Piotr Ozarowski"
 plugin_author_email = "ozarow@gmail.com"
-plugin_version = "3.2.3"
+plugin_version = "3.2.4"
 
 class ExportPlugin(gtk.Window):
 	#==[ configuration - default values ]==========={{{
@@ -733,7 +733,10 @@ class ExportPlugin(gtk.Window):
 				if image !='':
 					image_file = os.path.join(gglobals.griffith_dir,"posters")
 					image_file = os.path.join(image_file,image+".jpg")
-					shutil.copy(image_file, os.path.join(config['exported_dir'],'posters'))
+					try:
+						shutil.copy(image_file, os.path.join(config['exported_dir'],'posters'))
+					except:
+						gdebug.debug("Can't copy %s" % image_file)
 
 			# close file if last item
 			if ((page-1)*self.entries_per_page)+id == self.number_of_exported_movies:
