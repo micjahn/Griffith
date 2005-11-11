@@ -48,12 +48,15 @@ def change_poster(self):
 			file_to_copy = os.path.basename(filename[0])
 			shutil.copyfile(filename[0],'%s/posters/%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
 			gutils.make_thumbnail(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
+			gutils.make_medium_image(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
 			update.update_image(self, os.path.splitext(file_to_copy)[0], m_id[0])
 			update_tree_thumbnail(self, '%s/posters/t_%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
 		except:
 			gutils.error(self, _("Image not valid."), self.main_window)
 			
 def delete_poster(self):
+	m_id, m_iter = self.get_maintree_selection()
+	poster = self.db.select_movie_by_num(m_id)[0]['image']
 	response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.main_window)
 	if response==-8:
 		image_path = self.locations['images'] + "/default.png"
@@ -64,6 +67,7 @@ def delete_poster(self):
 		update.clear_image(self, m_id[0])
 		self.delete_poster.set_sensitive(False)
 		self.zoom_poster.set_sensitive(False)
+		delete.delete_poster(self, poster)
 	else:
 		pass
 		
