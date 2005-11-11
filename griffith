@@ -438,7 +438,10 @@ class Griffith:
 		else:
 			view.filter_by_collection(self, collection_id)
    
-	# windows/dialogs   
+	# windows/dialogs  
+	
+	def results_cancel_ck(self, *args):
+		self.w_results.hide() 
    
 	def save_state(self):
 		"""Saves main window state"""

@@ -336,7 +336,8 @@ def define_widgets(self, gladefile):
 		"on_am_add_collection_button_clicked"   : self.add_collection,
 		"on_am_remove_volume_button_clicked"    : self.remove_volume,
 		"on_am_remove_collection_button_clicked": self.remove_collection,
-		"on_f_col_changed"                      : self.filter_collection
+		"on_f_col_changed"                      : self.filter_collection,
+		"on_results_cancel_clicked"				: self.results_cancel_ck
 	}
 	gladefile.signal_autoconnect(dic)
 
