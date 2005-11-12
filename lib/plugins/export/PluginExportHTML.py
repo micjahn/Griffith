@@ -487,25 +487,30 @@ class ExportPlugin(gtk.Window):
 		if not config['exported_dir']:
 			gdebug.debug("Error: Folder name not set!")
 			return 1
-
-		posters_dir = os.path.join(config['exported_dir'], 'posters')
-		if os.path.isdir(posters_dir):
-			if gutils.question(self, _("Directory %s already exists.\nDo you want to overwrite it?") % posters_dir,1,self) == gtk.RESPONSE_YES:
-				try:
-					shutil.rmtree(posters_dir)
-				except:
-					gutils.error(self,_("Can't remove %s!")%config['exported_dir'])
-					return 2
-			else:
-				return 3
 		
+		if not os.path.isdir(config['exported_dir']):
+			try:
+				os.mkdir(config['exported_dir'])
+			except:
+				gutils.error(self,_("Can't create %s!") % config['exported_dir'])
+				return 2
+
 		if fields['image']:
 			import gglobals	# needed later
-			postersDir = os.path.join(config['exported_dir'],'posters')
+			posters_dir = os.path.join(config['exported_dir'], 'posters')
+			if os.path.isdir(posters_dir):
+				if gutils.question(self, _("Directory %s already exists.\nDo you want to overwrite it?") % posters_dir,1,self) == gtk.RESPONSE_YES:
+					try:
+						shutil.rmtree(posters_dir)
+					except:
+						gutils.error(self,_("Can't remove %s!")%config['exported_dir'])
+						return 3
+				else:
+					return 4
 			try:
-				os.mkdir(postersDir)
+				os.mkdir(posters_dir)
 			except:
-				gutils.error(self,_("Can't create %s!")%postersDir)
+				gutils.error(self,_("Can't create %s!")%posters_dir)
 				return 5
 
 		if config['custom_style']:
@@ -694,7 +699,7 @@ class ExportPlugin(gtk.Window):
 					image_file = os.path.join(gglobals.griffith_dir,"posters")
 					image_file = os.path.join(image_file,image+".jpg")
 					try:
-						shutil.copy(image_file, os.path.join(config['exported_dir'],'posters'))
+						shutil.copy(image_file,	posters_dir)
 					except:
 						gdebug.debug("Can't copy %s" % image_file)
 
