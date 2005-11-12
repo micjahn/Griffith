@@ -14,7 +14,7 @@
 <table<@id> id="i@DATA@"</@id>><@image>
 	<tr class="image">
 		<td<@rowspan> rowspan="@DATA@"</@rowspan>>
-			<img src="./posters/@DATA@.jpg" alt="@TITLE@" />
+			<img src="./posters/@DATA@" alt="@TITLE@" />
 		</td>
 	</tr></@image><@title>
 	<tr class="title">

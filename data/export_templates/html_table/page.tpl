@@ -39,7 +39,7 @@
 
 <!-- ITEMS -->
 	<tr<@id> id="i@DATA@"</@id>><@image>
-		<td class="image"><img src="./posters/@DATA@.jpg" alt="poster" /></td></@image><@number>
+		<td class="image"><img src="./posters/@DATA@" alt="poster" /></td></@image><@number>
 		<td class="number">@DATA@</td></@number><@title>
 		<td class="title">@DATA@</td></@title><@original_title>
 		<td class="otitle">@DATA@</td></@original_title><@year>

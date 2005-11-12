@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-11-12 Piotr Ozarowski <ozarow@gmail.com>
+	* HTML export plugin updated to v3.4 (added posters conversion)
+
 ---- 0.5 ----
 
 2005-11-11 Piotr Ozarowski <ozarow@gmail.com>
