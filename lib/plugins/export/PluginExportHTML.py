@@ -737,12 +737,12 @@ class ExportPlugin(gtk.Window):
 						except:
 							gdebug.debug("Can't copy %s" % image_file)
 					else:	# convert posters
-						#try:
-			    			im = Image.open(image_file, 'r').convert(config['poster_mode'])
-						im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
-						im.save(os.path.join(posters_dir, image) + '.' + config['poster_format'].lower(), config['poster_format'])
-						#except:
-						#	gdebug.debug("Can't convert %s" % image_file)
+						try:
+			    				im = Image.open(image_file, 'r').convert(config['poster_mode'])
+							im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
+							im.save(os.path.join(posters_dir, image) + '.' + config['poster_format'].lower(), config['poster_format'])
+						except:
+							gdebug.debug("Can't convert %s" % image_file)
 
 			# close file if last item
 			if ((page-1)*self.entries_per_page)+id == self.number_of_exported_movies:
