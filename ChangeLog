@@ -13,6 +13,7 @@ Griffith ChangeLog
 2005-11-11 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Fixed lots of poster operations bugs
 	* Added cgi module include on windows py2exe script (used by amazon.py module)
+	* Added PIL module include on windows py2exe script
 	* Portuguese language file updated
 
 2005-11-10 Vasco Nunes <vasco.m.nunes@gmail.com>

@@ -257,7 +257,7 @@ def get_poster(self, f, result, current_poster):
 		try:
 		    im = Image.open(file_to_copy)
 		except IOError:
-		    gdebug.debug("failed to identify", file_to_copy)
+		    gdebug.debug("failed to identify %s"%file_to_copy)
 		else:
 		    if im.format == "GIF":
 				gutils.warning(self, _("Sorry. This poster image format is not supported."))
@@ -281,7 +281,10 @@ def get_poster(self, f, result, current_poster):
 			
 		else:
 			gdebug.debug("Reverting to previous poster and deleting new one from disk.")
-			os.remove(file_to_copy)
+			try:
+                            os.remove(file_to_copy)
+                        except:
+                            gdebug.debug("no permission for %s"%file_to_copy)
 			
 		self.poster_window.hide()
 	else:
