@@ -58,6 +58,6 @@ UNIX systems
 Microsoft Windows systems
 =========================
 
-Just run the included installer on the package available for your system.
-Also, install a GTK+ Runtime Environment for Win32.
-For now, Griffith is only known to work under Microsoft Windows XP Professional Edition.
+Just run the griffith installer available for your system.
+A separated GTK+ Runtime Environment for Win32 is NOT necessary.
+For now, Griffith is only known to work under Microsoft Windows XP Professional Edition but should work on other windows flavours too.
