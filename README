@@ -1,7 +1,7 @@
 Griffith 0.4cvs README
 ======================
 
-This document was last updated on Tue Aug 16 22:20:00 2005.
+This document was last updated on Sat Nov 12 02:03:00 2005.
 Please see the file COPYING for licensing and warranty information.
 The latest version of this software is available at the following URL:
 http://griffith.vasconunes.net/
@@ -31,11 +31,14 @@ System Requirements
   pyGTK           tested on 2.6.1
   Python-glade2
   Python-SQLite
+  Python-Imaging
   ReportLab       1.19 or higher     http://www.reportlab.org
 	
   Other dependencies (optional):
   - Gtkspell (included in python-gnome-extras)
   - A PDF reader for covers and reports support
+  
+Windows installer includes all the needed requirements. A gtk+ runtime is not necessary when using this installer.
 
 
 Installation
