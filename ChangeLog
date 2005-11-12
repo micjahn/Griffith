@@ -6,6 +6,9 @@ Griffith ChangeLog
 
 ---- 0.5 ----
 
+2005-11-11 Piotr Ozarowski <ozarow@gmail.com>
+	* HTML export plugin updated to v3.3
+
 2005-11-11 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Fixed lots of poster operations bugs
 	* Added cgi module include on windows py2exe script (used by amazon.py module)

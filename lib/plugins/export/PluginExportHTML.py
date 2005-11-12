@@ -35,7 +35,7 @@ plugin_name = "HTML"
 plugin_description = _("Plugin exports data using templates")
 plugin_author = "Piotr Ozarowski"
 plugin_author_email = "ozarow@gmail.com"
-plugin_version = "3.2.4"
+plugin_version = "3.3"
 
 class ExportPlugin(gtk.Window):
 	#==[ configuration - default values ]==========={{{
@@ -205,7 +205,6 @@ class ExportPlugin(gtk.Window):
 	def define_widgets(self, glade_file):
 		# main window
 		self.widgets['w_eh']                  = glade_file.get_widget('w_eh')
-		self.widgets['entry_exported_dir']    = glade_file.get_widget('entry_exported_dir')
 		self.widgets['box_include_1']         = glade_file.get_widget('box_include_1')
 		self.widgets['box_include_2']         = glade_file.get_widget('box_include_2')
 		self.widgets['box_include_3']         = glade_file.get_widget('box_include_3')
@@ -234,7 +233,6 @@ class ExportPlugin(gtk.Window):
 		dic = {
 			"on_export_button_clicked"           : self.export_data,
 			"on_fcw_selection_changed"           : self.on_fcw_selection_changed,
-			"on_entry_exported_dir_changed"      : self.on_entry_exported_dir_changed,
 			"on_sb_split_num_value_changed"      : self.on_sb_split_num_value_changed,
 			"on_rb_split_files_toggled"          : self.on_rb_split_files_toggled,
 			"on_rb_split_movies_toggled"         : self.on_rb_split_movies_toggled,
@@ -288,7 +286,6 @@ class ExportPlugin(gtk.Window):
 		self.widgets['box_include_3'].show_all()
 
 		# set defaults --------------------------------
-		self.widgets['entry_exported_dir'].set_text(self.config['exported_dir'])
 		self.widgets['entry_header'].set_text(self.config['title'])
 		self.widgets['combo_theme'].set_active(2)	# html_tables
 		self.widgets['combo_sortby'].set_active(17)	# orginal title
@@ -320,11 +317,7 @@ class ExportPlugin(gtk.Window):
 
 	# destination tab ------------------------------#{{{
 	def on_fcw_selection_changed(self, widget):
-		self.config['exported_dir'] = widget.get_uri()[7:]
-		self.widgets['entry_exported_dir'].set_text(self.config['exported_dir'])
-
-	def on_entry_exported_dir_changed(self, widget):
-		self.config['exported_dir'] = widget.get_text()#}}}
+		self.config['exported_dir'] = widget.get_filename()
 
 	# data tab -------------------------------------#{{{
 	# sort by
@@ -495,50 +488,17 @@ class ExportPlugin(gtk.Window):
 			gdebug.debug("Error: Folder name not set!")
 			return 1
 
-		if os.path.isdir(config['exported_dir']):
-			dialog = gtk.MessageDialog(self,
-				gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-				gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE,
-				_("Directory %s already exists.\nDo you want to overwrite it or create a new one inside?"
-				)%config['exported_dir']
-			)
-			dialog.add_buttons(
-				gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-				_("Overwrite"), 1,
-				_("Create new inside"), 2)
-			dialog.set_default_response(0)
-			response = dialog.run()
-			dialog.destroy()
-			if response == 1:
-				if gutils.question(self,
-					_("%s\nAre you REALLY sure you want to delete this directory and all data inside?")
-					%config['exported_dir'],1,self) == gtk.RESPONSE_YES:
-					try:
-						shutil.rmtree(config['exported_dir'])
-					except:
-						gutils.error(self,_("Can't remove %s!")%config['exported_dir'])
-						return 2
-				else:
-					return 6
-			elif response == 2:
-				new_dir = os.path.join(config['exported_dir'], 'griffith_movies')
-				if not os.path.isdir(new_dir):
-					config['exported_dir'] = new_dir
-				else:
-					for i in range(1,1000):
-						new_dir = os.path.join(config['exported_dir'], 'griffith_movies_%s'%i)
-						if os.path.isdir(new_dir):
-							continue
-						else:
-							config['exported_dir'] = new_dir
-							break
+		posters_dir = os.path.join(config['exported_dir'], 'posters')
+		if os.path.isdir(posters_dir):
+			if gutils.question(self, _("Directory %s already exists.\nDo you want to overwrite it?") % posters_dir,1,self) == gtk.RESPONSE_YES:
+				try:
+					shutil.rmtree(posters_dir)
+				except:
+					gutils.error(self,_("Can't remove %s!")%config['exported_dir'])
+					return 2
 			else:
 				return 3
-		try: os.mkdir(config['exported_dir'])
-		except:
-			gutils.error(self,_("Can't create %s!")%config['exported_dir'])
-			return 4
-
+		
 		if fields['image']:
 			import gglobals	# needed later
 			postersDir = os.path.join(config['exported_dir'],'posters')
