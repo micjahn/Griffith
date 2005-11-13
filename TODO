@@ -1,3 +1,8 @@
 * Nice PDF tabular report
 * Export to SQL, text
+* Movie number edition
+* Possibility to search different fields from different sites (plugins)
+* Searching movies by director or another field
+* More powerfull command line interface
+* Possibility to use external database (PostgreSQL, MySQL, ...)
 * Probably much more than this :-D
