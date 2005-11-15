@@ -284,8 +284,7 @@ def question(self, msg, cancel=1, parent=None):
 			gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE, msg)
 	dialog.add_buttons(gtk.STOCK_YES, gtk.RESPONSE_YES,
 			gtk.STOCK_NO, gtk.RESPONSE_NO)
-	if cancel: dialog.add_buttons(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-	dialog.set_default_response(gtk.RESPONSE_CANCEL)
+	dialog.set_default_response(gtk.RESPONSE_NO)
 	response = dialog.run()
 	dialog.destroy()
 	return response

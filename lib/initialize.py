@@ -307,13 +307,13 @@ def combos(self):
 	
 	self.e_layers.insert_text(0, _("Single Side, Single Layer")) 
 	self.e_layers.insert_text(1, _("Single Side, Dual Layer")) 
-	self.e_layers.insert_text(2, _("Dual Side, Dual Layer")) 
+	self.e_layers.insert_text(2, _("Dual Side, Single Layer")) 
 	self.e_layers.insert_text(3, _("Dual Side, Dual Layer")) 
 	self.e_layers.insert_text(4, _("N/A")) 
 	
 	self.p_layers.insert_text(0, _("Single Side, Single Layer")) 
 	self.p_layers.insert_text(1, _("Single Side, Dual Layer")) 
-	self.p_layers.insert_text(2, _("Dual Side, Dual Layer")) 
+	self.p_layers.insert_text(2, _("Dual Side, Single Layer")) 
 	self.p_layers.insert_text(3, _("Dual Side, Dual Layer")) 
 	self.p_layers.insert_text(4, _("N/A")) 
 	
@@ -321,7 +321,7 @@ def combos(self):
 	self.am_condition.insert_text(1, _("Poor")) 
 	self.am_condition.insert_text(2, _("Fair")) 
 	self.am_condition.insert_text(3, _("Good")) 
-	self.am_condition.insert_text(4, _("Excelent")) 
+	self.am_condition.insert_text(4, _("Excellent")) 
 	self.am_condition.insert_text(5, _("N/A")) 
 	
 	self.am_color.insert_text(0, _("Color")) 
@@ -344,7 +344,7 @@ def combos(self):
 	
 	self.am_layers.insert_text(0, _("Single Side, Single Layer")) 
 	self.am_layers.insert_text(1, _("Single Side, Dual Layer")) 
-	self.am_layers.insert_text(2, _("Dual Side, Dual Layer")) 
+	self.am_layers.insert_text(2, _("Dual Side, Single Layer")) 
 	self.am_layers.insert_text(3, _("Dual Side, Dual Layer")) 
 	self.am_layers.insert_text(4, _("N/A"))
 	
