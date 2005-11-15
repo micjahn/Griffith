@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-11-15 Piotr Ozarowski <ozarow@gmail.com>
+	* Try to use Psyco if available
+
 2005-11-12 Piotr Ozarowski <ozarow@gmail.com>
 	* HTML export plugin updated to v3.4 (added posters conversion)
 
