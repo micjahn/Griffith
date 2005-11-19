@@ -388,10 +388,10 @@ def initialize_gtkspell(self):
 					self.config['spell_lang'] = 'en'
 					self.config.save()
 		if self.config.get('spell_plot', True)=='True':
-			self.plot_spell = gtkspell.Spell(self.e_plot)
+			self.plot_spell = gtkspell.Spell(self.e_plot)		   
 			try:
 				self.plot_spell.set_language(self.config.get('spell_lang', 'en'))
 			except:
-				self.plot_spell.set_language('en')				   
+				self.plot_spell.set_language('en')		
 	else:
 		gdebug.debug("Spellchecker is not available")
