@@ -24,5 +24,11 @@
 			<file>blue.css</file>
 			<preview>blue.jpg</preview>
 		</style>
+		<style>
+			<name>Simple</name>
+			<name xml:lang="pl">Prosty</name>
+			<file>simple.css</file>
+			<preview>simple.gif</preview>
+		</style>
 	</styles>
 </template>
