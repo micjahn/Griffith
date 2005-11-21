@@ -55,10 +55,12 @@ install: uninstall
 	$(INSTALL) -m 755 -d $(LOCALEDIR)/pl/LC_MESSAGES
 	$(INSTALL) -m 755 -d $(LOCALEDIR)/de/LC_MESSAGES
 	$(INSTALL) -m 755 -d $(LOCALEDIR)/bg/LC_MESSAGES
+	$(INSTALL) -m 755 -d $(LOCALEDIR)/cs/LC_MESSAGES
 	$(INSTALL) -m 644 i18n/pt/LC_MESSAGES/*.mo $(LOCALEDIR)/pt/LC_MESSAGES
 	$(INSTALL) -m 644 i18n/pl/LC_MESSAGES/*.mo $(LOCALEDIR)/pl/LC_MESSAGES
 	$(INSTALL) -m 644 i18n/de/LC_MESSAGES/*.mo $(LOCALEDIR)/de/LC_MESSAGES
 	$(INSTALL) -m 644 i18n/bg/LC_MESSAGES/*.mo $(LOCALEDIR)/de/LC_MESSAGES
+	$(INSTALL) -m 644 i18n/cs/LC_MESSAGES/*.mo $(LOCALEDIR)/cs/LC_MESSAGES
 	
 	# installing export templates:
 	for dir in $(TEMPLATES); do \
@@ -87,6 +89,7 @@ uninstall:
 	${RM} -rf $(LOCALEDIR)/pl/LC_MESSAGES/griffith.mo
 	${RM} -rf $(LOCALEDIR)/de/LC_MESSAGES/griffith.mo 	
 	${RM} -rf $(LOCALEDIR)/bg/LC_MESSAGES/griffith.mo
+	${RM} -rf $(LOCALEDIR)/cs/LC_MESSAGES/griffith.mo
 	${RM} -rf $(BINDIR)/griffith
 	
 clean:
