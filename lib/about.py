@@ -46,7 +46,9 @@ class AboutDialog:
 			"by Peek <peekpt@gmail.com>." + \
 			"\nPlease visit http://www.peekmambo.com/")])
 		dialog.set_translator_credits( \
-			_("Bulgarian") + _(" by ") + \
+			_("Czech") + _(" by ") + \
+			"Blondak <blondak@neser.cz>" + \
+			"\n" + _("Bulgarian") + _(" by ") + \
 			"Luchezar P. Petkov <luchezar.petkov@gmail.com>" + \
 			"\n" + _("German") + _(" by ") + \
 			"Christian Sagmueller <christian@sagmueller.net>" + \

@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-11-21 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added Czech translation (Thanks to Blondak <blondak@neser.cz>)
+
 2005-11-21 Piotr Ozarowski <ozarow@gmail.com>
 	* Added simple style to table template (HTML export plugin)
 	* [Bug #5686] Coll. & vol. remembers selection after adding a movie
