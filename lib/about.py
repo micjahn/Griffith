@@ -57,7 +57,7 @@ class AboutDialog:
 			"\n" + _("Portuguese") + _(" by ") + \
 			"Vasco Nunes <vasco.m.nunes@gmail.com>")
 		if os.name == 'nt':
-			logo = gtk.gdk.pixbuf_new_from_file("images/griffith.png")
+			logo = gtk.gdk.pixbuf_new_from_file(os.path.abspath(os.path.dirname(sys.argv[0]))+"/images/griffith.png")
 		else:
 			logo_file = os.path.abspath(os.path.dirname(sys.argv[0]))
 			logo = gtk.gdk.pixbuf_new_from_file(logo_file.replace \
