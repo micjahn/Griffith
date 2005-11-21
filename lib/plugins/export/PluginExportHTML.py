@@ -23,6 +23,7 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import os
+import sys
 import gtk, gtk.glade
 import gutils
 import glob, shutil
@@ -127,7 +128,7 @@ class ExportPlugin(gtk.Window):
 		self.templates = self.make_template_list()
 		# glade
 		if os.name == 'nt' or os.name == 'win32':	
-			gf = 'glade\exporthtml.glade'
+			gf = os.path.abspath(os.path.dirname(sys.argv[0]))+'\\glade\\exporthtml.glade'
 		else:
 			gf = self.share_dir + "/exporthtml.glade"
 		self.define_widgets(gtk.glade.XML(gf))
