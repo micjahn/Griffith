@@ -11,6 +11,7 @@ Griffith ChangeLog
 2005-11-21 Piotr Ozarowski <ozarow@gmail.com>
 	* Added simple style to table template (HTML export plugin)
 	* [Bug #5686] Coll. & vol. remembers selection after adding a movie
+	* [Bug #5631] wrong language/locale with 0.5
 
 2005-11-15 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Applied Arjen Schwarz's patches addressing following problems:
