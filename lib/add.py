@@ -73,6 +73,8 @@ def initialize_add_dialog(self):
 		self.am_region.set_active(int(self.config.get('region')))
 	if self.config.get('condition'):
 		self.am_condition.set_active(int(self.config.get('condition')))
+	self.am_volume_combo.set_active(0)
+	self.am_collection_combo.set_active(0)
 	plot_buffer = self.am_plot.get_buffer()
 	plot_buffer.set_text("")
 	self.am_original_title.grab_focus()
