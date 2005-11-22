@@ -8,6 +8,8 @@ Griffith ChangeLog
 	* Added Czech translation (Thanks to Blondak <blondak@neser.cz>)
 	* [Bug #5684] About window doesn't work on windows
 	* [Bug #5683] Two filters not working at all on windows
+	* Added a win32 installer custom image.
+	* Added portuguese, polish, german and czech translations to win32 installer.
 
 2005-11-21 Piotr Ozarowski <ozarow@gmail.com>
 	* Added simple style to table template (HTML export plugin)
