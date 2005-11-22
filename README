@@ -1,5 +1,5 @@
-Griffith 0.4cvs README
-======================
+Griffith 0.5.1 README
+=====================
 
 This document was last updated on Sat Nov 12 02:03:00 2005.
 Please see the file COPYING for licensing and warranty information.
@@ -14,7 +14,6 @@ Table of Contents
 * Reporting Bugs
 * TODO list
 * About the Authors
-
 
 Introduction
 ============
@@ -55,12 +54,10 @@ If you want to help or report any bugs founded please visit:
 or
   http://developer.berlios.de/bugs/?group_id=4891
 
-
 TODO
 ====
 
 See TODO file
-
 
 About the Authors
 =================
