@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Griffith-0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-21 17:30+0100\n"
+"POT-Creation-Date: 2005-11-22 18:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Blondak <blondak@neser.cz>\n"
 "Language-Team: CS <cs@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../griffith:222
 msgid "You saw all movies in your collection!"
-msgstr "Videli jste vöechny filmy v kolekci!"
+msgstr "Vidƒõli jste v≈°echny filmy v kolekci!"
 
 #: ../griffith:317
 msgid "Are you sure you want to restore?\n"
@@ -26,39 +26,39 @@ msgstr "Opravdu chcete obnovit?\n"
 
 #: ../griffith:318
 msgid "Your current movie collection will be replaced.\n"
-msgstr "Vaöe st·vajÌcÌ kolekce bude nahrazena.\n"
+msgstr "Va≈°e st√°vaj√≠c√≠ kolekce bude nahrazena.\n"
 
 #: ../griffith:319
 msgid "You can't undo this operation."
-msgstr "Tuto operaci nelze vzÌt zpet."
+msgstr "Tuto operaci nelze vz√≠t zpƒõt."
 
 #: ../griffith:398
 msgid " movie(s) in collection. "
-msgstr " film(u) v kolekci. "
+msgstr " film(≈Ø) v kolekci. "
 
 #: ../griffith:399
 msgid " movie(s) loaned. "
-msgstr " film(u) pujceno. "
+msgstr " film(≈Ø) p≈Øjƒçeno. "
 
 #: ../griffith:400
 msgid "You haven't seen "
-msgstr "Nevidel jste "
+msgstr "Nevidƒõl jste "
 
 #: ../lib/about.py:38
 msgid "Main Author"
-msgstr "HlavnÌ autor"
+msgstr "Hlavn√≠ autor"
 
 #: ../lib/about.py:38 ../lib/about.py:40
 msgid "Programmer"
-msgstr "Program·tor"
+msgstr "Program√°tor"
 
 #: ../lib/about.py:41
 msgid "Contributors:"
-msgstr "PrispevovateÈ"
+msgstr "P≈ôispƒõvovate√©"
 
 #: ../lib/about.py:45
 msgid "Logo, icon and general artwork "
-msgstr "Logo, icona a celkov˝ vzhled"
+msgstr "Logo, icona a celkov√Ω vzhled"
 
 #: ../lib/about.py:46
 msgid "by Peek <peekpt@gmail.com>."
@@ -70,21 +70,26 @@ msgid ""
 "Please visit http://www.peekmambo.com/"
 msgstr ""
 "\n"
-"ProsÌm navötivte http://peekmambo.com/"
+"Pros√≠m nav≈°tivte http://peekmambo.com/"
 
 #: ../lib/about.py:49
-msgid "Bulgarian"
-msgstr "Buhlarsky"
+msgid "Czech"
+msgstr ""
 
 #: ../lib/about.py:49 ../lib/about.py:51 ../lib/about.py:53 ../lib/about.py:55
+#: ../lib/about.py:57
 msgid " by "
 msgstr " od "
 
-#: ../lib/about.py:51 ../lib/plugins/movie/PluginMovieOFDb.py:13
-msgid "German"
-msgstr "Nemecky"
+#: ../lib/about.py:51
+msgid "Bulgarian"
+msgstr "Buhlarsky"
 
-#: ../lib/about.py:53 ../lib/plugins/movie/PluginMovieFilmweb.py:29
+#: ../lib/about.py:53 ../lib/plugins/movie/PluginMovieOFDb.py:13
+msgid "German"
+msgstr "Nƒõmecky"
+
+#: ../lib/about.py:55 ../lib/plugins/movie/PluginMovieFilmweb.py:29
 #: ../lib/plugins/movie/PluginMovieOnet.py:29
 #: ../lib/plugins/movie/PluginMovieStopklatka.py:29
 #: ../lib/plugins/movie/PluginMovieTanukiAnime.py:29
@@ -92,174 +97,174 @@ msgstr "Nemecky"
 msgid "Polish"
 msgstr "Polsky"
 
-#: ../lib/about.py:55 ../lib/plugins/movie/PluginMovieClubeMyDVD.py:32
+#: ../lib/about.py:57 ../lib/plugins/movie/PluginMovie7arte.py:32
+#: ../lib/plugins/movie/PluginMovieClubeMyDVD.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
-#: ../lib/plugins/movie/PluginMovie7arte.py:32
 msgid "Portuguese"
 msgstr "Portugalsky"
 
-#: ../lib/about.py:64
+#: ../lib/about.py:66
 msgid "This program is released under the GNU"
-msgstr "Program je uvolnen pod licencÌ GNU"
+msgstr "Program je uvolnƒõn pod licenc√≠ GNU"
 
-#: ../lib/about.py:65
+#: ../lib/about.py:67
 msgid "General Public License.\n"
 msgstr "General Public License.\n"
 
-#: ../lib/about.py:66
+#: ../lib/about.py:68
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-msgstr "Pro detaily navötivte http://www.gnu.org/copyleft/gpl.html ."
+msgstr "Pro detaily nav≈°tivte http://www.gnu.org/copyleft/gpl.html ."
 
-#: ../lib/add.py:131 ../lib/add.py:262
+#: ../lib/add.py:133 ../lib/add.py:264
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
 msgstr ""
-"MusÌte vyplnit origin·lnÌ n·zev\n"
-"nebo n·zev filmu."
+"Mus√≠te vyplnit origin√°ln√≠ n√°zev\n"
+"nebo n√°zev filmu."
 
-#: ../lib/add.py:237
+#: ../lib/add.py:239
 msgid "No results"
-msgstr "é·dnÈ v˝sledky"
+msgstr "≈Ω√°dn√© v√Ωsledky"
 
-#: ../lib/add.py:270
+#: ../lib/add.py:272
 msgid "Url: "
 msgstr "Url: "
 
-#: ../lib/add.py:271
+#: ../lib/add.py:273
 msgid "Language: "
 msgstr "Jazyk: "
 
 #: ../lib/backup.py:33
 msgid "Save Griffith backup"
-msgstr "Uloûit z·lohu Griffithu"
+msgstr "Ulo≈æit z√°lohu Griffithu"
 
 #: ../lib/backup.py:42 ../lib/plugins/export/PluginExportCSV.py:50
 #: ../lib/plugins/export/PluginExportPDF.py:71
 #: ../lib/plugins/export/PluginExportXML.py:51
 msgid "File exists. Do you want to overwrite it?"
-msgstr "Soubor existuje. Chtete jej prepsat?"
+msgstr "Soubor existuje. Chtete jej p≈ôepsat?"
 
 #: ../lib/backup.py:52
 msgid "Error creating backup"
-msgstr "Chyba pri vytv·renÌ z·lohy"
+msgstr "Chyba p≈ôi vytv√°≈ôen√≠ z√°lohy"
 
 #: ../lib/backup.py:54
 msgid "Backup has been created"
-msgstr "Z·loha byla vytvorena"
+msgstr "Z√°loha byla vytvo≈ôena"
 
 #: ../lib/backup.py:58
 msgid "Restore Griffith backup"
-msgstr "Obnovit Griffith ze z·lohy"
+msgstr "Obnovit Griffith ze z√°lohy"
 
 #: ../lib/backup.py:65
 msgid "Can't read backup file"
-msgstr "Nemohu precÌst z·loûnÌ soubor"
+msgstr "Nemohu p≈ôeƒç√≠st z√°lo≈æn√≠ soubor"
 
 #: ../lib/backup.py:69
 msgid "Backup restored"
-msgstr "Z·loha obnovena"
+msgstr "Z√°loha obnovena"
 
 #: ../lib/cover.py:50 ../lib/edit.py:45
 msgid "Select image"
-msgstr "Vyberte obr·zek"
+msgstr "Vyberte obr√°zek"
 
 #: ../lib/cover.py:88 ../lib/cover.py:146
 msgid "Cover generated by Griffith v"
-msgstr "Obal generov·n Griffithem v"
+msgstr "Obal generov√°n Griffithem v"
 
 #: ../lib/cover.py:90 ../lib/cover.py:148
-#: ../lib/plugins/export/PluginExportHTML.py:615
+#: ../lib/plugins/export/PluginExportHTML.py:616
 #: ../lib/plugins/export/PluginExportPDF.py:119
 msgid "Released Under the GNU/GPL License"
-msgstr "Uvolneno pod licencÌ GNU/GPL"
+msgstr "Uvolnƒõno pod licenc√≠ GNU/GPL"
 
 #: ../lib/cover.py:173 ../lib/initialize.py:141 ../lib/quick_filter.py:32
-#: ../glade/griffith.glade.h:79 ../lib/plugins/export/PluginExportHTML.py:104
+#: ../glade/griffith.glade.h:79 ../lib/plugins/export/PluginExportHTML.py:105
 msgid "Original Title"
-msgstr "Origin·lnÌ n·zev"
+msgstr "Origin√°ln√≠ n√°zev"
 
 #: ../lib/cover.py:174 ../lib/initialize.py:147 ../lib/quick_filter.py:34
-#: ../glade/griffith.glade.h:121 ../lib/plugins/export/PluginExportHTML.py:110
+#: ../glade/griffith.glade.h:121 ../lib/plugins/export/PluginExportHTML.py:111
 msgid "Title"
-msgstr "N·zev"
+msgstr "N√°zev"
 
 #: ../lib/cover.py:176 ../lib/initialize.py:153 ../lib/quick_filter.py:36
-#: ../glade/griffith.glade.h:30 ../lib/plugins/export/PluginExportHTML.py:95
+#: ../glade/griffith.glade.h:30 ../lib/plugins/export/PluginExportHTML.py:96
 msgid "Director"
-msgstr "ReûisÈr"
+msgstr "Re≈æis√©r"
 
 #: ../lib/cover.py:178
 msgid "Running Time"
-msgstr "DÈlka"
+msgstr "D√©lka"
 
 #: ../lib/cover.py:178
 msgid " min"
 msgstr " min"
 
 #: ../lib/cover.py:179 ../glade/griffith.glade.h:24
-#: ../lib/plugins/export/PluginExportHTML.py:94
+#: ../lib/plugins/export/PluginExportHTML.py:95
 msgid "Country"
-msgstr "Zeme"
+msgstr "Zemƒõ"
 
 #: ../lib/cover.py:180 ../lib/quick_filter.py:44 ../glade/griffith.glade.h:39
-#: ../lib/plugins/export/PluginExportHTML.py:96
+#: ../lib/plugins/export/PluginExportHTML.py:97
 msgid "Genre"
 msgstr "Styl"
 
 #: ../lib/delete.py:33
 msgid "Are you sure you want to delete this movie?"
-msgstr "Jste si jit, ûe chcete smazat tento film?"
+msgstr "Jste si jit, ≈æe chcete smazat tento film?"
 
 #: ../lib/edit.py:56
 msgid "Image not valid."
-msgstr "Chybn˝ obr·zek"
+msgstr "Chybn√Ω obr√°zek"
 
 #: ../lib/edit.py:61
 msgid "Are you sure you want to delete this poster?"
-msgstr "Jste ji jist, ûe chcete smazat tento plak·t?"
+msgstr "Jste ji jist, ≈æe chcete smazat tento plak√°t?"
 
 #: ../lib/edit.py:191 ../lib/edit.py:197
 msgid "No posters found for this movie."
-msgstr "é·dnÈ plak·ty pro tento film."
+msgstr "≈Ω√°dn√© plak√°ty pro tento film."
 
 #: ../lib/edit.py:237 ../lib/movie.py:95
 msgid "Fetching poster"
-msgstr "Stahuji plak·t"
+msgstr "Stahuji plak√°t"
 
 #: ../lib/edit.py:237 ../lib/movie.py:70 ../lib/movie.py:95
 #: ../lib/movie.py:198
 msgid "Wait a moment"
-msgstr "Moment prosÌm"
+msgstr "Moment pros√≠m"
 
 #: ../lib/edit.py:249
 msgid "Sorry. A connection error was occurred."
-msgstr "Je mi lÌto, ale nastala chyba spojenÌ. "
+msgstr "Je mi l√≠to, ale nastala chyba spojen√≠. "
 
 #: ../lib/edit.py:263
 msgid "Sorry. This poster image format is not supported."
-msgstr "Je mi lÌto, ale form·t obr·zku nenÌ podporov·n."
+msgstr "Je mi l√≠to, ale form√°t obr√°zku nen√≠ podporov√°n."
 
 #: ../lib/edit.py:270
 msgid "Do you want to use this poster instead?"
-msgstr "Chtete pouûÌt tento plak·t mÌsto st·vajÌcÌho?"
+msgstr "Chtete pou≈æ√≠t tento plak√°t m√≠sto st√°vaj√≠c√≠ho?"
 
 #: ../lib/edit.py:291
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
-msgstr "Je mi lÌto, ale na Amazon.com nenalezen û·dn˝ plak·t."
+msgstr "Je mi l√≠to, ale na Amazon.com nenalezen ≈æ√°dn√Ω plak√°t."
 
 #: ../lib/gemail.py:37 ../lib/gemail.py:47
 #, python-format
 msgid "Error sending e-mail: %s"
-msgstr "Chyba pri odesÌl·nÌ e-mailu: %s"
+msgstr "Chyba p≈ôi odes√≠l√°n√≠ e-mailu: %s"
 
 #: ../lib/gemail.py:44
 msgid "E-mail sent sucessuly"
-msgstr "E-mail odesl·n ˙speöne"
+msgstr "E-mail odesl√°n √∫spƒõ≈°nƒõ"
 
 #: ../lib/gemail.py:59
 msgid "Movie loan reminder"
-msgstr "UpozornenÌ pujcenÌ"
+msgstr "Upozornƒõn√≠ p≈Øjƒçen√≠"
 
 #: ../lib/gemail.py:59
 #, python-format
@@ -268,13 +273,13 @@ msgid ""
 "\n"
 "Just to reminder you "
 msgstr ""
-"Cau, %s!\n"
+"ƒåau, %s!\n"
 "\n"
-"Jen jsem te chtel upozornit "
+"Jen jsem tƒõ chtƒõl upozornit "
 
 #: ../lib/gemail.py:60
 msgid "that I'm really needing the following movie I have loaned you "
-msgstr ", ûe opravdu potrebuji film, kter˝ m·ö pujcen˝ "
+msgstr ", ≈æe opravdu pot≈ôebuji film, kter√Ω m√°≈° pujƒçen√Ω "
 
 #: ../lib/gemail.py:61
 #, python-format
@@ -285,48 +290,48 @@ msgid ""
 "\n"
 "Loaned on %s"
 msgstr ""
-"nove:\n"
+"novƒõ:\n"
 "\n"
 "%s (%s)\n"
 "\n"
-"Vypujceno %s"
+"Vyp≈Øjƒçeno %s"
 
 #: ../lib/gemail.py:65
 msgid "This person has no e-mail address defined."
-msgstr "Tato osoba nem· definovanou e-mailovou adresu."
+msgstr "Tato osoba nem√° definovanou e-mailovou adresu."
 
 #: ../lib/gutils.py:304
 msgid "Images"
-msgstr "Obr·zky"
+msgstr "Obr√°zky"
 
 #: ../lib/gutils.py:315
 msgid "All files"
-msgstr "Vöechny soubory"
+msgstr "V≈°echny soubory"
 
 #: ../lib/initialize.py:130
 msgid "N."
-msgstr "C."
+msgstr "ƒå."
 
 #: ../lib/initialize.py:136 ../glade/griffith.glade.h:45
-#: ../lib/plugins/export/PluginExportHTML.py:97
+#: ../lib/plugins/export/PluginExportHTML.py:98
 msgid "Image"
-msgstr "Obr·zek"
+msgstr "Obr√°zek"
 
 #: ../lib/initialize.py:168
 msgid "Loan Date"
-msgstr "Datum v˝pujcky"
+msgstr "Datum v√Ωp≈Øjƒçky"
 
 #: ../lib/initialize.py:174
 msgid "Return Date"
-msgstr "Datum vr·cenÌ"
+msgstr "Datum vr√°cen√≠"
 
 #: ../lib/initialize.py:179
 msgid "Loaned To"
-msgstr "Vypujceno"
+msgstr "Vyp≈Øjƒçeno"
 
 #: ../lib/initialize.py:231 ../glade/griffith.glade.h:63
 msgid "Name"
-msgstr "JmÈno"
+msgstr "Jm√©no"
 
 #: ../lib/initialize.py:237 ../glade/exporthtml.glade.h:17
 #: ../glade/griffith.glade.h:32
@@ -335,23 +340,23 @@ msgstr "E-mail"
 
 #: ../lib/initialize.py:258 ../lib/initialize.py:265 ../lib/initialize.py:320
 msgid "Damaged"
-msgstr "Poökozeno"
+msgstr "Po≈°kozeno"
 
 #: ../lib/initialize.py:259 ../lib/initialize.py:266 ../lib/initialize.py:321
 msgid "Poor"
-msgstr "UbohÈ"
+msgstr "Uboh√©"
 
 #: ../lib/initialize.py:260 ../lib/initialize.py:267 ../lib/initialize.py:322
 msgid "Fair"
-msgstr "PeknÈ"
+msgstr "Pƒõkn√©"
 
 #: ../lib/initialize.py:261 ../lib/initialize.py:268 ../lib/initialize.py:323
 msgid "Good"
-msgstr "DobrÈ"
+msgstr "Dobr√©"
 
 #: ../lib/initialize.py:262 ../lib/initialize.py:269 ../lib/initialize.py:324
 msgid "Excellent"
-msgstr "V˝bornÈ"
+msgstr "V√Ωborn√©"
 
 #: ../lib/initialize.py:263 ../lib/initialize.py:270 ../lib/initialize.py:275
 #: ../lib/initialize.py:280 ../lib/initialize.py:293 ../lib/initialize.py:306
@@ -367,93 +372,93 @@ msgstr "Barva"
 
 #: ../lib/initialize.py:273 ../lib/initialize.py:278 ../lib/initialize.py:328
 msgid "Black and White"
-msgstr "CernobÌlÈ"
+msgstr "ƒåernob√≠l√©"
 
 #: ../lib/initialize.py:274 ../lib/initialize.py:279 ../lib/initialize.py:329
 msgid "Mixed"
-msgstr "SmÌöenÈ"
+msgstr "Sm√≠≈°en√©"
 
 #: ../lib/initialize.py:282 ../lib/initialize.py:295 ../lib/initialize.py:332
 msgid "Region 0 (No Region Coding)"
-msgstr "Region 0 (nekÛdovanÈ)"
+msgstr "Region 0 (nek√≥dovan√©)"
 
 #: ../lib/initialize.py:283 ../lib/initialize.py:296 ../lib/initialize.py:333
 msgid "Region 1 (United States of America, Canada)"
-msgstr "Region 1 (SpojenÈ st·ty AmerickÈ, Kanada)"
+msgstr "Region 1 (Spojen√© st√°ty Americk√©, Kanada)"
 
 #: ../lib/initialize.py:284 ../lib/initialize.py:297 ../lib/initialize.py:334
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
 msgstr ""
-"Region 2 (Evropa, vcetne Francie, Recka, Turecka, Egyptu, Ar·bie, Japonska a "
-"JiûnÌ Afriky)"
+"Region 2 (Evropa, vƒçetnƒõ Francie, ≈òecka, Turecka, Egyptu, Ar√°bie, Japonska a "
+"Ji≈æn√≠ Afriky)"
 
 #: ../lib/initialize.py:286 ../lib/initialize.py:299 ../lib/initialize.py:336
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
-msgstr "Region 3 (Korea, Thaisko, Vietnam, Borneo a IndonÈsie)"
+msgstr "Region 3 (Korea, Thaisko, Vietnam, Borneo a Indon√©sie)"
 
 #: ../lib/initialize.py:287 ../lib/initialize.py:300 ../lib/initialize.py:337
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
-msgstr "Region 4 (Aust·lie a Nov˝ ZÈland, Mexiko, Karibik a JiûnÌ amerika)"
+msgstr "Region 4 (Aust√°lie a Nov√Ω Z√©land, Mexiko, Karibik a Ji≈æn√≠ amerika)"
 
 #: ../lib/initialize.py:289 ../lib/initialize.py:302 ../lib/initialize.py:339
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
-msgstr "Region 5 (Indie, Afrika, Rusko a b˝valÈ sovetskÈ zeme)"
+msgstr "Region 5 (Indie, Afrika, Rusko a b√Ωval√© sovƒõtsk√© zemƒõ)"
 
 #: ../lib/initialize.py:290 ../lib/initialize.py:303 ../lib/initialize.py:340
 msgid "Region 6 (Popular Republic of China)"
-msgstr "Region 6 (CÌna)"
+msgstr "Region 6 (ƒå√≠na)"
 
 #: ../lib/initialize.py:291 ../lib/initialize.py:304 ../lib/initialize.py:341
 msgid "Region 8 (Airlines/Cruise Ships)"
-msgstr "Region 8 (Aerolinky, vÌletnÌ lode)"
+msgstr "Region 8 (Aerolinky, v√≠letn√≠ lodƒõ)"
 
 #: ../lib/initialize.py:292 ../lib/initialize.py:305 ../lib/initialize.py:342
 msgid "Region 9 (Often used as region free)"
-msgstr "Region 9 (Casto pouûito jako bez omezenÌ)"
+msgstr "Region 9 (ƒåasto pou≈æito jako bez omezen√≠)"
 
 #: ../lib/initialize.py:308 ../lib/initialize.py:314 ../lib/initialize.py:345
 msgid "Single Side, Single Layer"
-msgstr "JednostrannÈ, jednovrstvÈ"
+msgstr "Jednostrann√©, jednovrstv√©"
 
 #: ../lib/initialize.py:309 ../lib/initialize.py:315 ../lib/initialize.py:346
 msgid "Single Side, Dual Layer"
-msgstr "JednostrannÈ, dvouvrstvÈ"
+msgstr "Jednostrann√©, dvouvrstv√©"
 
 #: ../lib/initialize.py:310 ../lib/initialize.py:316 ../lib/initialize.py:347
 msgid "Dual Side, Single Layer"
-msgstr "DvoustrannÈ, jendovrstvÈ"
+msgstr "Dvoustrann√©, jendovrstv√©"
 
 #: ../lib/initialize.py:311 ../lib/initialize.py:317 ../lib/initialize.py:348
 msgid "Dual Side, Dual Layer"
-msgstr "DvoustrannoÈ, dvouvrstvÈ"
+msgstr "Dvoustranno√©, dvouvrstv√©"
 
 #: ../lib/initialize.py:387
 msgid "Language not available. Defaulting to english."
-msgstr "Jazyk nenÌ dostupn˝. V˝chozÌ anglictina."
+msgstr "Jazyk nen√≠ dostupn√Ω. V√Ωchoz√≠ angliƒçtina."
 
 #: ../lib/loan.py:41
 msgid "No person is defined yet."
-msgstr "NenÌ definov·na û·dnÈ osoba."
+msgstr "Nen√≠ definov√°na ≈æ√°dn√© osoba."
 
 #: ../lib/loan.py:61
 msgid "Do you want to loan whole collection?"
-msgstr "Chcete pujcit celou kolekci?"
+msgstr "Chcete p≈Øjƒçit celou kolekci?"
 
 #: ../lib/loan.py:81
 msgid "Movie loaned"
-msgstr "Film pujcen"
+msgstr "Film p≈Øjƒçen"
 
 #: ../lib/loan.py:127
 msgid "Movie returned"
-msgstr "Film vr·cen"
+msgstr "Film vr√°cen"
 
 #: ../lib/main_treeview.py:145
 msgid "This movie has been loaned to "
-msgstr "Film byl pujcen "
+msgstr "Film byl p≈Øjƒçen "
 
 #: ../lib/main_treeview.py:145
 msgid " on "
@@ -461,7 +466,7 @@ msgstr " "
 
 #: ../lib/main_treeview.py:147
 msgid "Movie not loaned"
-msgstr "Filmy nebyl pujcen"
+msgstr "Filmy nebyl p≈Øjƒçen"
 
 #: ../lib/movie.py:70
 msgid "Fetching data"
@@ -469,11 +474,11 @@ msgstr "Stahuji data"
 
 #: ../lib/movie.py:198
 msgid "Searching"
-msgstr "Hled·m"
+msgstr "Hled√°m"
 
 #: ../lib/movie.py:231
 msgid "Connection error"
-msgstr "Chyba spojenÌ"
+msgstr "Chyba spojen√≠"
 
 #: ../lib/movie.py:258 ../glade/exporthtml.glade.h:11
 #: ../glade/griffith.glade.h:17
@@ -482,23 +487,23 @@ msgstr "Storno"
 
 #: ../lib/people.py:58
 msgid "You should fill the person name"
-msgstr "MusÌte vyplnit jmÈno osoby"
+msgstr "Mus√≠te vyplnit jm√©no osoby"
 
 #: ../lib/people.py:81
 msgid "Record updated"
-msgstr "Z·znam upraven"
+msgstr "Z√°znam upraven"
 
 #: ../lib/people.py:107
 msgid "This person has loaned films from you. First return them."
-msgstr "Tato osoba m· vypujceny filmy. NejdrÌv je musÌ vr·tit."
+msgstr "Tato osoba m√° vyp≈Øjƒçeny filmy. Nejd≈ô√≠v je mus√≠ vr√°tit."
 
 #: ../lib/people.py:114
 msgid ""
 "This person has data in the loan history. This data will be erased if you "
 "continue."
 msgstr ""
-"Tato osoba m· data ve v˝pujcnÌ historii. Pokud budete pokracovat, budou "
-"smaz·na."
+"Tato osoba m√° data ve v√Ωp≈Øjƒçn√≠ historii. Pokud budete pokraƒçovat, budou "
+"smaz√°na."
 
 #: ../lib/people.py:116
 #, python-format
@@ -507,34 +512,34 @@ msgid ""
 "Are you sure you want to delete this person?"
 msgstr ""
 "%s\n"
-"jste si jist, ûe chcete smazat tuto osobu?"
+"jste si jist, ≈æe chcete smazat tuto osobu?"
 
 #: ../lib/quick_filter.py:38 ../glade/griffith.glade.h:133
-#: ../lib/plugins/export/PluginExportHTML.py:111
+#: ../lib/plugins/export/PluginExportHTML.py:112
 msgid "Year"
 msgstr "Rok"
 
 #: ../lib/quick_filter.py:40 ../glade/griffith.glade.h:67
-#: ../lib/plugins/export/PluginExportHTML.py:103
+#: ../lib/plugins/export/PluginExportHTML.py:104
 msgid "Number"
-msgstr "CÌslo"
+msgstr "ƒå√≠slo"
 
 #: ../lib/quick_filter.py:42 ../glade/griffith.glade.h:93
-#: ../lib/plugins/export/PluginExportHTML.py:106
+#: ../lib/plugins/export/PluginExportHTML.py:107
 msgid "Rating"
-msgstr "HodnocenÌ"
+msgstr "Hodnocen√≠"
 
 #: ../lib/quick_filter.py:46 ../glade/griffith.glade.h:132
 msgid "With"
-msgstr "HrajÌ"
+msgstr "Hraj√≠"
 
 #: ../lib/sql.py:394
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
 msgstr ""
-"Jste si jist, ûe chcete vytvorit novou datab·zi?\n"
-"PrÌjdete o VäECHNA sv· data!"
+"Jste si jist, ≈æe chcete vytvo≈ôit novou datab√°zi?\n"
+"P≈ô√≠jdete o V≈†ECHNA sv√° data!"
 
 #: ../lib/sql.py:398
 msgid ""
@@ -542,16 +547,16 @@ msgid ""
 "Do you confirm that you want\n"
 "to lose your current data?"
 msgstr ""
-"PoslednÌ öance!\n"
-"PotvrdÌte, ûe chcete prijÌt o vöechna st·vajÌcÌ data?"
+"Posledn√≠ ≈°ance!\n"
+"Potvrd√≠te, ≈æe chcete p≈ôij√≠t o v≈°echna st√°vaj√≠c√≠ data?"
 
 #: ../lib/update.py:37
 msgid "You can't change collection while it is loaned!"
-msgstr "Nemuûete menit kolekci, pokud je vypujcena!"
+msgstr "Nem≈Ø≈æete mƒõnit kolekci, pokud je vyp≈Øjƒçena!"
 
 #: ../lib/update.py:40
 msgid "You can't change volume while it is loaned!"
-msgstr "Nemuûete menit svazek, pokud je vypujcen!"
+msgstr "Nem≈Ø≈æete mƒõnit svazek, pokud je vyp≈Øjƒçen!"
 
 #: ../lib/update.py:81
 msgid "Movie information has been updated"
@@ -559,33 +564,33 @@ msgstr "Informace o filmu byly upraveny"
 
 #: ../lib/update.py:97
 msgid "You should fill the original title"
-msgstr "MusÌte vyplnit origin·lnÌ n·zev"
+msgstr "Mus√≠te vyplnit origin√°ln√≠ n√°zev"
 
 #: ../lib/update.py:104 ../lib/update.py:110
 msgid "Image has been updated"
-msgstr "Obr·zek byl upraven"
+msgstr "Obr√°zek byl upraven"
 
 #: ../lib/version.py:30
 msgid "Griffith is a film collection manager."
-msgstr "Griffith je manager filmov˝ch sbÌrek"
+msgstr "Griffith je manager filmov√Ωch sb√≠rek"
 
 #: ../lib/view.py:29
 msgid "Filter activated. Showing only not seen movies."
-msgstr "Filtr aktivov·n. Zobrazuji pouze neshlÈdnutÈ filmy."
+msgstr "Filtr aktivov√°n. Zobrazuji pouze neshl√©dnut√© filmy."
 
 #: ../lib/view.py:37
 msgid "Filter activated. Showing only loaned movies."
-msgstr "Filtr aktivov·n, Zobrazuji pouze vypujcenÈ filmy."
+msgstr "Filtr aktivov√°n, Zobrazuji pouze vyp≈Øjƒçen√© filmy."
 
 #: ../lib/view.py:54
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
-msgstr "Filtr aktivov·n. Zobrazuji pouze filmy ze svazku: %s"
+msgstr "Filtr aktivov√°n. Zobrazuji pouze filmy ze svazku: %s"
 
 #: ../lib/view.py:64
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
-msgstr "Filtr aktivov·n. Zobrazuji pouze filmy z kolekce: %s"
+msgstr "Filtr aktivov√°n. Zobrazuji pouze filmy z kolekce: %s"
 
 #: ../lib/widgets.py:217
 msgid ""
@@ -620,7 +625,7 @@ msgstr "<b>Export</b>"
 
 #: ../glade/exporthtml.glade.h:2
 msgid "<b>Header</b>"
-msgstr "<b>Hlavicka</b>"
+msgstr "<b>Hlaviƒçka</b>"
 
 #: ../glade/exporthtml.glade.h:3
 msgid "<b>Limits</b>"
@@ -628,15 +633,15 @@ msgstr "<b>Limity</b>"
 
 #: ../glade/exporthtml.glade.h:4
 msgid "<b>Preview</b>"
-msgstr "<b>N·hled</b>"
+msgstr "<b>N√°hled</b>"
 
 #: ../glade/exporthtml.glade.h:5
 msgid "<b>Sort by</b>"
-msgstr "<b>SetrÌdit podle</b>"
+msgstr "<b>Set≈ô√≠dit podle</b>"
 
 #: ../glade/exporthtml.glade.h:6
 msgid "<b>Split into</b>"
-msgstr "<b>Rozdelit na</b>"
+msgstr "<b>Rozdƒõlit na</b>"
 
 #: ../glade/exporthtml.glade.h:7
 msgid "<b>Style</b>"
@@ -644,7 +649,7 @@ msgstr "<b>Styl</b>"
 
 #: ../glade/exporthtml.glade.h:8
 msgid "<b>Template</b>"
-msgstr "<b>äablona</b>"
+msgstr "<b>≈†ablona</b>"
 
 #: ../glade/exporthtml.glade.h:9
 msgid "Author"
@@ -652,7 +657,7 @@ msgstr "Autor"
 
 #: ../glade/exporthtml.glade.h:10
 msgid "Black and white"
-msgstr "CernobÌlÈ"
+msgstr "ƒåernob√≠l√©"
 
 #: ../glade/exporthtml.glade.h:12
 msgid "Choose style file"
@@ -660,7 +665,7 @@ msgstr "Vyberte soubor stylu"
 
 #: ../glade/exporthtml.glade.h:13
 msgid "Convert images"
-msgstr "PrevÈst obr·zky"
+msgstr "P≈ôev√©st obr√°zky"
 
 #: ../glade/exporthtml.glade.h:14
 msgid "Data"
@@ -672,7 +677,7 @@ msgstr "Popis"
 
 #: ../glade/exporthtml.glade.h:16
 msgid "Destination"
-msgstr "CÌl"
+msgstr "C√≠l"
 
 #: ../glade/exporthtml.glade.h:18
 msgid "Export"
@@ -680,35 +685,35 @@ msgstr "Export"
 
 #: ../glade/exporthtml.glade.h:19
 msgid "Export data"
-msgstr "ExportnÌ data"
+msgstr "Exportn√≠ data"
 
 #: ../glade/exporthtml.glade.h:20
 msgid "Format"
-msgstr "Form·t"
+msgstr "Form√°t"
 
 #: ../glade/exporthtml.glade.h:21
 msgid "Maximal height"
-msgstr "Maxim·lnÌ v˝öka"
+msgstr "Maxim√°ln√≠ v√Ω≈°ka"
 
 #: ../glade/exporthtml.glade.h:22
 msgid "Maximal width"
-msgstr "Maxim·lnÌ öÌrka"
+msgstr "Maxim√°ln√≠ ≈°√≠≈ôka"
 
 #: ../glade/exporthtml.glade.h:23
 msgid "Posters"
-msgstr "Plak·ty"
+msgstr "Plak√°ty"
 
 #: ../glade/exporthtml.glade.h:24
 msgid "Reverse"
-msgstr "Pozp·tku"
+msgstr "Pozp√°tku"
 
 #: ../glade/exporthtml.glade.h:25
 msgid "Template"
-msgstr "äablona"
+msgstr "≈†ablona"
 
 #: ../glade/exporthtml.glade.h:26
 msgid "Use custom file"
-msgstr "PouûÌt vlastnÌ soubor"
+msgstr "Pou≈æ√≠t vlastn√≠ soubor"
 
 #: ../glade/exporthtml.glade.h:27
 msgid "Version"
@@ -716,7 +721,7 @@ msgstr "Verze"
 
 #: ../glade/exporthtml.glade.h:28
 msgid "entries per page"
-msgstr "poloûek na str·nku"
+msgstr "polo≈æek na str√°nku"
 
 #: ../glade/exporthtml.glade.h:29
 msgid "files"
@@ -724,23 +729,23 @@ msgstr "soubory"
 
 #: ../glade/exporthtml.glade.h:30
 msgid "loaned only"
-msgstr "pouze vypujcenÈ"
+msgstr "pouze vyp≈Øjƒçen√©"
 
 #: ../glade/exporthtml.glade.h:31
 msgid "none"
-msgstr "û·dnÈ"
+msgstr "≈æ√°dn√©"
 
 #: ../glade/exporthtml.glade.h:32
 msgid "not loaned only"
-msgstr "pouze nevypujcenÈ"
+msgstr "pouze nevyp≈Øjƒçen√©"
 
 #: ../glade/exporthtml.glade.h:33
 msgid "seen only"
-msgstr "pouze shlÈdnutÈ"
+msgstr "pouze shl√©dnut√©"
 
 #: ../glade/exporthtml.glade.h:34
 msgid "unseen only"
-msgstr "pouze neshlÈdnutÈ"
+msgstr "pouze neshl√©dnut√©"
 
 #: ../glade/griffith.glade.h:1
 msgid "<b>Collection</b>"
@@ -748,19 +753,19 @@ msgstr "<b>Kolekce</b>"
 
 #: ../glade/griffith.glade.h:2
 msgid "<b>Defaults</b>"
-msgstr "<b>V˝chozÌ</b>"
+msgstr "<b>V√Ωchoz√≠</b>"
 
 #: ../glade/griffith.glade.h:3
 msgid "<b>E-mail reminder</b>"
-msgstr "<b>E-mailov˝ upozornovac</b>"
+msgstr "<b>E-mailov√Ω upozor≈àovaƒç</b>"
 
 #: ../glade/griffith.glade.h:4
 msgid "<b>Loan History</b>"
-msgstr "<b>Historie v˝pujcek</b>"
+msgstr "<b>Historie v√Ωp≈Øjƒçek</b>"
 
 #: ../glade/griffith.glade.h:5
 msgid "<b>Show only the following columns</b>"
-msgstr "<b>Zobrazit pouze n·sledujÌcÌ sloupce</b>"
+msgstr "<b>Zobrazit pouze n√°sleduj√≠c√≠ sloupce</b>"
 
 #: ../glade/griffith.glade.h:6
 msgid "<b>Use spell checking on the following fields:</b>"
@@ -772,35 +777,35 @@ msgstr "<b>Svazek</b>"
 
 #: ../glade/griffith.glade.h:8
 msgid "Add"
-msgstr "Pridat"
+msgstr "P≈ôidat"
 
 #: ../glade/griffith.glade.h:9
 msgid "Add a new movie"
-msgstr "Pridat nov˝ film"
+msgstr "P≈ôidat nov√Ω film"
 
 #: ../glade/griffith.glade.h:10
 msgid "Add a new person"
-msgstr "Pridat novou osobu"
+msgstr "P≈ôidat novou osobu"
 
 #: ../glade/griffith.glade.h:11
 msgid "Add movie"
-msgstr "Pridat film"
+msgstr "P≈ôidat film"
 
 #: ../glade/griffith.glade.h:12
 msgid "Add movie and close"
-msgstr "Pridat film a zavrÌt"
+msgstr "P≈ôidat film a zav≈ô√≠t"
 
 #: ../glade/griffith.glade.h:13
 msgid "Add person"
-msgstr "Pridat osobu"
+msgstr "P≈ôidat osobu"
 
 #: ../glade/griffith.glade.h:14
 msgid "All Movies"
-msgstr "Vöechny filmy"
+msgstr "V≈°echny filmy"
 
 #: ../glade/griffith.glade.h:15
 msgid "Backup"
-msgstr "Z·loha"
+msgstr "Z√°loha"
 
 #: ../glade/griffith.glade.h:16
 msgid "By Collection"
@@ -808,9 +813,9 @@ msgstr "podle kolekce"
 
 #: ../glade/griffith.glade.h:18
 msgid "Choose Image"
-msgstr "Zvolte obr·zek"
+msgstr "Zvolte obr√°zek"
 
-#: ../glade/griffith.glade.h:19 ../lib/plugins/export/PluginExportHTML.py:93
+#: ../glade/griffith.glade.h:19 ../lib/plugins/export/PluginExportHTML.py:94
 msgid "Classification"
 msgstr "Klasifikace"
 
@@ -828,7 +833,7 @@ msgstr "Stav"
 
 #: ../glade/griffith.glade.h:25
 msgid "Create a new Griffith document"
-msgstr "Vytvorit nov˝ dokument Griffith"
+msgstr "Vytvo≈ôit nov√Ω dokument Griffith"
 
 #: ../glade/griffith.glade.h:26
 msgid "DVD Layers"
@@ -848,11 +853,11 @@ msgstr "Detaily"
 
 #: ../glade/griffith.glade.h:31
 msgid "Discs"
-msgstr "Disku"
+msgstr "Disk≈Ø"
 
 #: ../glade/griffith.glade.h:33
 msgid "E-mail reminder"
-msgstr "E-mailov˝ upozornovac"
+msgstr "E-mailov√Ω upozor≈àovaƒç"
 
 #: ../glade/griffith.glade.h:34
 msgid "E_xport"
@@ -864,7 +869,7 @@ msgstr "Editovat osobu"
 
 #: ../glade/griffith.glade.h:36
 msgid "Favorite Movie Plugin"
-msgstr "OblÌben· filmov· plug-ina"
+msgstr "Obl√≠ben√° filmov√° plug-ina"
 
 #: ../glade/griffith.glade.h:37
 msgid "Filter "
@@ -872,15 +877,15 @@ msgstr "Filtr "
 
 #: ../glade/griffith.glade.h:38
 msgid "Found Results"
-msgstr "NalezenÈ v˝sledky"
+msgstr "Nalezen√© v√Ωsledky"
 
 #: ../glade/griffith.glade.h:40
 msgid "Get from web"
-msgstr "St·hnout z webu"
+msgstr "St√°hnout z webu"
 
 #: ../glade/griffith.glade.h:41
 msgid "Get movie data from:"
-msgstr "St·hnout data z:"
+msgstr "St√°hnout data z:"
 
 #: ../glade/griffith.glade.h:42
 msgid "Griffith"
@@ -888,19 +893,19 @@ msgstr "Griffith"
 
 #: ../glade/griffith.glade.h:43
 msgid "IMDB page"
-msgstr "Str·nka IMDB"
+msgstr "Str√°nka IMDB"
 
-#: ../glade/griffith.glade.h:44 ../lib/plugins/export/PluginExportHTML.py:99
+#: ../glade/griffith.glade.h:44 ../lib/plugins/export/PluginExportHTML.py:100
 msgid "IMDb page"
-msgstr "Str·nka IMDB"
+msgstr "Str√°nka IMDB"
 
 #: ../glade/griffith.glade.h:46
 msgid "Include Front Image"
-msgstr "Vcetne prednÌho obr·zku"
+msgstr "Vƒçetnƒõ p≈ôedn√≠ho obr√°zku"
 
 #: ../glade/griffith.glade.h:47
 msgid "Include movie number"
-msgstr "Vcetne cÌsla filmu"
+msgstr "Vƒçetnƒõ ƒç√≠sla filmu"
 
 #: ../glade/griffith.glade.h:48
 msgid "Internet"
@@ -912,39 +917,39 @@ msgstr "Vrstvy"
 
 #: ../glade/griffith.glade.h:50
 msgid "Loan"
-msgstr "Vypujcit"
+msgstr "Vyp≈Øjƒçit"
 
 #: ../glade/griffith.glade.h:51
 msgid "Loan Management"
-msgstr "Management v˝pujcek"
+msgstr "Management v√Ωp≈Øjƒçek"
 
 #: ../glade/griffith.glade.h:52
 msgid "Loan movie"
-msgstr "Vypujcit film"
+msgstr "Vyp≈Øjƒçit film"
 
 #: ../glade/griffith.glade.h:53
 msgid "Loan to"
-msgstr "Vypujceno "
+msgstr "Vyp≈Øjƒçeno "
 
 #: ../glade/griffith.glade.h:54
 msgid "Loaned Movies"
-msgstr "VypujcenÈ filmy"
+msgstr "Vyp≈Øjƒçen√© filmy"
 
 #: ../glade/griffith.glade.h:55
 msgid "Loans"
-msgstr "V˝pujcky"
+msgstr "V√Ωp≈Øjƒçky"
 
 #: ../glade/griffith.glade.h:56
 msgid "Main list"
-msgstr "HlavnÌ seznam"
+msgstr "Hlavn√≠ seznam"
 
 #: ../glade/griffith.glade.h:57
 msgid "Manage People"
-msgstr "Spr·vy lidÌ"
+msgstr "Spr√°vy lid√≠"
 
-#: ../glade/griffith.glade.h:58 ../lib/plugins/export/PluginExportHTML.py:102
+#: ../glade/griffith.glade.h:58 ../lib/plugins/export/PluginExportHTML.py:103
 msgid "Media"
-msgstr "MÈdium"
+msgstr "M√©dium"
 
 #: ../glade/griffith.glade.h:59
 msgid ""
@@ -952,7 +957,7 @@ msgid ""
 "Stars"
 msgstr ""
 "Metr\n"
-"Hvezdicky"
+"Hvƒõzdiƒçky"
 
 #: ../glade/griffith.glade.h:61
 msgid "Movie details"
@@ -964,15 +969,15 @@ msgstr "Informace o filmu"
 
 #: ../glade/griffith.glade.h:64
 msgid "Needs authentication"
-msgstr "Poûaduje autentifikaci"
+msgstr "Po≈æaduje autentifikaci"
 
 #: ../glade/griffith.glade.h:65
 msgid "Not Seen Movies"
-msgstr "NeshlÈdnutÈ filmy"
+msgstr "Neshl√©dnut√© filmy"
 
-#: ../glade/griffith.glade.h:66 ../lib/plugins/export/PluginExportHTML.py:112
+#: ../glade/griffith.glade.h:66 ../lib/plugins/export/PluginExportHTML.py:113
 msgid "Notes"
-msgstr "Pozn·mky"
+msgstr "Pozn√°mky"
 
 #: ../glade/griffith.glade.h:68
 msgid ""
@@ -992,15 +997,15 @@ msgstr "OK"
 
 #: ../glade/griffith.glade.h:77
 msgid "Official site"
-msgstr "Ofici·lnÌ str·nky"
+msgstr "Ofici√°ln√≠ str√°nky"
 
 #: ../glade/griffith.glade.h:78
 msgid "Oficial Site"
-msgstr "Ofici·lnÌ str·nky"
+msgstr "Ofici√°ln√≠ str√°nky"
 
 #: ../glade/griffith.glade.h:80
 msgid "Original title"
-msgstr "Origin·lnÌ n·zev"
+msgstr "Origin√°ln√≠ n√°zev"
 
 #: ../glade/griffith.glade.h:81
 msgid "PDF"
@@ -1008,7 +1013,7 @@ msgstr "PDF"
 
 #: ../glade/griffith.glade.h:82
 msgid "PDF reader"
-msgstr "PDF ctecka"
+msgstr "PDF ƒçteƒçka"
 
 #: ../glade/griffith.glade.h:83
 msgid "Password"
@@ -1016,7 +1021,7 @@ msgstr "Heslo"
 
 #: ../glade/griffith.glade.h:84
 msgid "People"
-msgstr "LidÈ"
+msgstr "Lid√©"
 
 #: ../glade/griffith.glade.h:85
 msgid "Phone"
@@ -1024,9 +1029,9 @@ msgstr "Telefon"
 
 #: ../glade/griffith.glade.h:86
 msgid "Please wait a moment..."
-msgstr "Cekejte prosÌm"
+msgstr "ƒåekejte pros√≠m"
 
-#: ../glade/griffith.glade.h:87 ../lib/plugins/export/PluginExportHTML.py:105
+#: ../glade/griffith.glade.h:87 ../lib/plugins/export/PluginExportHTML.py:106
 msgid "Plot"
 msgstr "Osnova"
 
@@ -1036,11 +1041,11 @@ msgstr "Plug-iny"
 
 #: ../glade/griffith.glade.h:89
 msgid "Poster viewer"
-msgstr "ProhlÌûec plak·tu"
+msgstr "Prohl√≠≈æeƒç plak√°t≈Ø"
 
 #: ../glade/griffith.glade.h:90
 msgid "Preferences"
-msgstr "Predvolby"
+msgstr "P≈ôedvolby"
 
 #: ../glade/griffith.glade.h:91
 msgid "Print Cover"
@@ -1052,7 +1057,7 @@ msgstr "Tisknout obal"
 
 #: ../glade/griffith.glade.h:94
 msgid "Rating image"
-msgstr "HodnotÌcÌ obr·zek"
+msgstr "Hodnot√≠c√≠ obr√°zek"
 
 #: ../glade/griffith.glade.h:95
 msgid "Region"
@@ -1064,11 +1069,11 @@ msgstr "Obnovit"
 
 #: ../glade/griffith.glade.h:97
 msgid "Return"
-msgstr "Vr·tit"
+msgstr "Vr√°tit"
 
-#: ../glade/griffith.glade.h:98 ../lib/plugins/export/PluginExportHTML.py:107
+#: ../glade/griffith.glade.h:98 ../lib/plugins/export/PluginExportHTML.py:108
 msgid "Runtime"
-msgstr "DÈlka"
+msgstr "D√©lka"
 
 #: ../glade/griffith.glade.h:99
 msgid "SMTP server"
@@ -1076,19 +1081,19 @@ msgstr "SMTP server"
 
 #: ../glade/griffith.glade.h:100
 msgid "Save preferences"
-msgstr "Uloûit predvolby"
+msgstr "Ulo≈æit p≈ôedvolby"
 
 #: ../glade/griffith.glade.h:101
 msgid "Searching on the web"
-msgstr "Hled·m na webu"
+msgstr "Hled√°m na webu"
 
 #: ../glade/griffith.glade.h:102
 msgid "Seen It"
-msgstr "Videno"
+msgstr "Vidƒõno"
 
-#: ../glade/griffith.glade.h:103 ../lib/plugins/export/PluginExportHTML.py:109
+#: ../glade/griffith.glade.h:103 ../lib/plugins/export/PluginExportHTML.py:110
 msgid "Seen it"
-msgstr "Videno"
+msgstr "Vidƒõno"
 
 #: ../glade/griffith.glade.h:104
 msgid "Select"
@@ -1100,15 +1105,15 @@ msgstr "Zvolte e-mailovou adresu"
 
 #: ../glade/griffith.glade.h:106
 msgid "Show movies in selected collection"
-msgstr "Zobrazit filmy ve zvolenÈ kolekci"
+msgstr "Zobrazit filmy ve zvolen√© kolekci"
 
 #: ../glade/griffith.glade.h:107
 msgid "Show movies in selected volume"
-msgstr "Zobrazit filmy ve vybranÈm svazku"
+msgstr "Zobrazit filmy ve vybran√©m svazku"
 
 #: ../glade/griffith.glade.h:108
 msgid "Simple"
-msgstr "Jednoduch˝"
+msgstr "Jednoduch√Ω"
 
 #: ../glade/griffith.glade.h:109
 msgid "Size"
@@ -1120,7 +1125,7 @@ msgstr "Kontrola pravopisu"
 
 #: ../glade/griffith.glade.h:111
 msgid "Spell check the following language"
-msgstr "Kontrola pravopisu n·sledujÌcÌho jazyku"
+msgstr "Kontrola pravopisu n√°sleduj√≠c√≠ho jazyku"
 
 #: ../glade/griffith.glade.h:112
 msgid ""
@@ -1128,17 +1133,17 @@ msgid ""
 "Slim\n"
 "Double Slim"
 msgstr ""
-"StandartnÌ\n"
-"Tenk˝\n"
-"Dvojit˝ tenk˝"
+"Standartn√≠\n"
+"Tenk√Ω\n"
+"Dvojit√Ω tenk√Ω"
 
-#: ../glade/griffith.glade.h:115 ../lib/plugins/export/PluginExportHTML.py:108
+#: ../glade/griffith.glade.h:115 ../lib/plugins/export/PluginExportHTML.py:109
 msgid "Studio"
 msgstr "Stadio"
 
 #: ../glade/griffith.glade.h:116
 msgid "Suggest an unseen movie"
-msgstr "Navrhnout neshlÈdnut˝ film"
+msgstr "Navrhnout neshl√©dnut√Ω film"
 
 #: ../glade/griffith.glade.h:117
 msgid "Summary"
@@ -1146,27 +1151,27 @@ msgstr "Souhrn"
 
 #: ../glade/griffith.glade.h:118
 msgid "Technical Information"
-msgstr "TechnickÈ informace"
+msgstr "Technick√© informace"
 
 #: ../glade/griffith.glade.h:119
 msgid "Technical info"
-msgstr "TechnickÈ info"
+msgstr "Technick√© info"
 
 #: ../glade/griffith.glade.h:120
 msgid "This movie is part of..."
-msgstr "Tento film je c·stÌ ..."
+msgstr "Tento film je ƒç√°st√≠ ..."
 
 #: ../glade/griffith.glade.h:122
 msgid "Toolbar"
-msgstr "N·strojov· liöta"
+msgstr "N√°strojov√° li≈°ta"
 
-#: ../glade/griffith.glade.h:123 ../lib/plugins/export/PluginExportHTML.py:100
+#: ../glade/griffith.glade.h:123 ../lib/plugins/export/PluginExportHTML.py:101
 msgid "Trailer"
 msgstr "Trailer"
 
 #: ../glade/griffith.glade.h:124
 msgid "Try to fetch a big poster from Amazon services website"
-msgstr "ZkouöÌm st·hnout velk˝ plak·t ze str·nek Amazon"
+msgstr "Zkou≈°√≠m st√°hnout velk√Ω plak√°t ze str√°nek Amazon"
 
 #: ../glade/griffith.glade.h:125
 msgid "Update"
@@ -1174,19 +1179,19 @@ msgstr "Upravit"
 
 #: ../glade/griffith.glade.h:126
 msgid "Use Spellchecker"
-msgstr "PouûÌvat Spellchecker"
+msgstr "Pou≈æ√≠vat Spellchecker"
 
 #: ../glade/griffith.glade.h:127
 msgid "Username"
-msgstr "UûivatelskÈ jmÈno"
+msgstr "U≈æivatelsk√© jm√©no"
 
 #: ../glade/griffith.glade.h:128
 msgid "Visit the Internet Movie Database (IMDB) related page"
-msgstr "NAvötÌvit str·nky IMDB"
+msgstr "NAv≈°t√≠vit str√°nky IMDB"
 
 #: ../glade/griffith.glade.h:129
 msgid "Visit the oficial web site"
-msgstr "NAvötÌvit ofici·lnÌ str·nky"
+msgstr "NAv≈°t√≠vit ofici√°ln√≠ str√°nky"
 
 #: ../glade/griffith.glade.h:130
 msgid "Volume"
@@ -1210,11 +1215,11 @@ msgstr "_Soubor"
 
 #: ../glade/griffith.glade.h:137
 msgid "_Help"
-msgstr "_N·poveda"
+msgstr "_N√°povƒõda"
 
 #: ../glade/griffith.glade.h:138
 msgid "_Loans"
-msgstr "_V˝pujcky"
+msgstr "_V√Ωp≈Øjƒçky"
 
 #: ../glade/griffith.glade.h:139
 msgid "_Movies"
@@ -1226,19 +1231,19 @@ msgstr "_Zobrazit"
 
 #: ../glade/griffith.glade.h:141
 msgid "add entered name to collections list"
-msgstr "pridat vloûen˝ n·zev do seznamu kolekcÌ"
+msgstr "p≈ôidat vlo≈æen√Ω n√°zev do seznamu kolekc√≠"
 
 #: ../glade/griffith.glade.h:142
 msgid "add entered name to volumes list"
-msgstr "pridat vloûen˝ n·zev do seznamu svazku"
+msgstr "p≈ôidat vlo≈æen√Ω n√°zev do seznamu svazk≈Ø"
 
 #: ../glade/griffith.glade.h:143
 msgid "click here if movie was returned"
-msgstr "kliknete zde, zda byl film vr·cen"
+msgstr "kliknƒõte zde, zda byl film vr√°cen"
 
 #: ../glade/griffith.glade.h:144
 msgid "loans movie or volume"
-msgstr "pujcit film nebo svazek"
+msgstr "p≈Øjƒçit film nebo svazek"
 
 #: ../glade/griffith.glade.h:145
 msgid "min."
@@ -1250,26 +1255,30 @@ msgstr "odstranit zvolenou kolekci"
 
 #: ../glade/griffith.glade.h:147
 msgid "remove selected volume"
-msgstr "odstranit zvolen˝ svazek"
+msgstr "odstranit zvolen√Ω svazek"
 
 #: ../glade/griffith.glade.h:148
 msgid "rename collection assigned to movie"
-msgstr "prejmenovat kolekci pripojenou k filmu"
+msgstr "p≈ôejmenovat kolekci p≈ôipojenou k filmu"
 
 #: ../glade/griffith.glade.h:149
 msgid "rename volume assigned to movie"
-msgstr "prejmenovat svazek pripojen˝ k filmu"
+msgstr "p≈ôejmenovat svazek p≈ôipojen√Ω k filmu"
 
 #: ../lib/plugins/movie/PluginMovieAniDB.py:29
 #: ../lib/plugins/movie/PluginMovieIMDB.py:32
 #: ../lib/plugins/movie/PluginMovieMediadis.py:16
 #: ../lib/plugins/movie/PluginMovieMoviefone.py:16
 msgid "English"
-msgstr "Anglictina"
+msgstr "Angliƒçtina"
+
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:31
+msgid "French"
+msgstr "Francouz≈°tina"
 
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
-msgstr "Italötina"
+msgstr "Ital≈°tina"
 
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:102
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:98
@@ -1281,17 +1290,13 @@ msgstr "Italötina"
 msgid " as "
 msgstr " jako "
 
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:31
-msgid "French"
-msgstr "Francouzötina"
-
 #: ../lib/plugins/movie/PluginMovieE-Pipoca.py:30
 msgid "Brazilian Portuguese"
-msgstr "Brazilsk· portugalötina"
+msgstr "Brazilsk√° portugal≈°tina"
 
 #: ../lib/plugins/export/PluginExportCSV.py:31
 msgid "Full CSV list export plugin"
-msgstr "Pln˝ CSV exportnÌ plug-in"
+msgstr "Pln√Ω CSV exportn√≠ plug-in"
 
 #: ../lib/plugins/export/PluginExportCSV.py:45
 #: ../lib/plugins/export/PluginExportXML.py:46
@@ -1303,90 +1308,90 @@ msgstr "Exportovat dokument %s"
 #: ../lib/plugins/export/PluginExportXML.py:78
 #, python-format
 msgid "%s file has been created."
-msgstr "Soubor %s byl vytvoren."
+msgstr "Soubor %s byl vytvo≈ôen."
 
-#: ../lib/plugins/export/PluginExportHTML.py:35
+#: ../lib/plugins/export/PluginExportHTML.py:36
 msgid "Plugin exports data using templates"
-msgstr "Plugin exportuje data pomocÌ öablon"
+msgstr "Plugin exportuje data pomoc√≠ ≈°ablon"
 
-#: ../lib/plugins/export/PluginExportHTML.py:47
+#: ../lib/plugins/export/PluginExportHTML.py:48
 msgid "Griffith's movies list"
-msgstr "Griffithuv seznam filmu"
+msgstr "Griffith≈Øv seznam film≈Ø"
 
-#: ../lib/plugins/export/PluginExportHTML.py:92
+#: ../lib/plugins/export/PluginExportHTML.py:93
 msgid "Actors"
 msgstr "Herci"
 
-#: ../lib/plugins/export/PluginExportHTML.py:98
+#: ../lib/plugins/export/PluginExportHTML.py:99
 msgid "Official Site"
-msgstr "Ofici·lnÌ str·nky"
+msgstr "Ofici√°ln√≠ str√°nky"
 
-#: ../lib/plugins/export/PluginExportHTML.py:101
+#: ../lib/plugins/export/PluginExportHTML.py:102
 msgid "Loaned"
-msgstr "Vypujceno"
+msgstr "Vyp≈Øjƒçeno"
 
-#: ../lib/plugins/export/PluginExportHTML.py:440
-#: ../lib/plugins/export/PluginExportHTML.py:442
+#: ../lib/plugins/export/PluginExportHTML.py:441
+#: ../lib/plugins/export/PluginExportHTML.py:443
 msgid "previous"
-msgstr "PredchozÌ"
+msgstr "P≈ôedchoz√≠"
 
-#: ../lib/plugins/export/PluginExportHTML.py:453
-#: ../lib/plugins/export/PluginExportHTML.py:455
+#: ../lib/plugins/export/PluginExportHTML.py:454
+#: ../lib/plugins/export/PluginExportHTML.py:456
 msgid "next"
-msgstr "N·sledujÌcÌ"
+msgstr "N√°sleduj√≠c√≠"
 
-#: ../lib/plugins/export/PluginExportHTML.py:514
-#: ../lib/plugins/export/PluginExportHTML.py:536
-#: ../lib/plugins/export/PluginExportHTML.py:703
+#: ../lib/plugins/export/PluginExportHTML.py:515
+#: ../lib/plugins/export/PluginExportHTML.py:537
+#: ../lib/plugins/export/PluginExportHTML.py:704
 #, python-format
 msgid "Can't create %s!"
-msgstr "Nemohu vytvorit %s!"
+msgstr "Nemohu vytvo≈ôit %s!"
 
-#: ../lib/plugins/export/PluginExportHTML.py:525
+#: ../lib/plugins/export/PluginExportHTML.py:526
 #, python-format
 msgid ""
 "Directory %s already exists.\n"
 "Do you want to overwrite it?"
 msgstr ""
-"Adres·r %s jiû existuje.\n"
-"Chtete jej prepsat?"
+"Adres√°≈ô %s ji≈æ existuje.\n"
+"Chtete jej p≈ôepsat?"
 
-#: ../lib/plugins/export/PluginExportHTML.py:529
+#: ../lib/plugins/export/PluginExportHTML.py:530
 #, python-format
 msgid "Can't remove %s!"
 msgstr "Nemohu smazat %s!"
 
-#: ../lib/plugins/export/PluginExportHTML.py:544
-#: ../lib/plugins/export/PluginExportHTML.py:557
+#: ../lib/plugins/export/PluginExportHTML.py:545
+#: ../lib/plugins/export/PluginExportHTML.py:558
 #, python-format
 msgid "Can't copy %s!"
-msgstr "Nemohu kopÌrovat %s!"
+msgstr "Nemohu kop√≠rovat %s!"
 
-#: ../lib/plugins/export/PluginExportHTML.py:605
+#: ../lib/plugins/export/PluginExportHTML.py:606
 #, python-format
 msgid "Can't open %s!"
-msgstr "Nemohu otevrÌt %s!"
+msgstr "Nemohu otev≈ô√≠t %s!"
 
-#: ../lib/plugins/export/PluginExportHTML.py:613
+#: ../lib/plugins/export/PluginExportHTML.py:614
 #: ../lib/plugins/export/PluginExportPDF.py:117
 msgid "Document generated by Griffith v"
-msgstr "Document generov·n Griggithem v"
+msgstr "Document generov√°n Griggithem v"
 
-#: ../lib/plugins/export/PluginExportHTML.py:673
+#: ../lib/plugins/export/PluginExportHTML.py:674
 msgid "No"
 msgstr "Ne"
 
-#: ../lib/plugins/export/PluginExportHTML.py:674
+#: ../lib/plugins/export/PluginExportHTML.py:675
 msgid "Yes"
 msgstr "Ano"
 
-#: ../lib/plugins/export/PluginExportHTML.py:767
+#: ../lib/plugins/export/PluginExportHTML.py:768
 msgid "Document has been generated."
-msgstr "Doument byl vytvoren."
+msgstr "Doument byl vytvo≈ôen."
 
 #: ../lib/plugins/export/PluginExportPDF.py:51
 msgid "PDF export plugin"
-msgstr "PDF exportnÌ plug-in"
+msgstr "PDF exportn√≠ plug-in"
 
 #: ../lib/plugins/export/PluginExportPDF.py:67
 msgid "Export a PDF"
@@ -1394,16 +1399,16 @@ msgstr "Exportovat PDF"
 
 #: ../lib/plugins/export/PluginExportPDF.py:83
 msgid "List of films"
-msgstr "Seznam filmu"
+msgstr "Seznam film≈Ø"
 
 #: ../lib/plugins/export/PluginExportPDF.py:86
 #, python-format
 msgid "Total Movies: %s"
-msgstr "Celkem filmu: %s"
+msgstr "Celkem film≈Ø: %s"
 
 #: ../lib/plugins/export/PluginExportPDF.py:110
 msgid "PDF has been created."
-msgstr "PDF bylo vytvoreno"
+msgstr "PDF bylo vytvo≈ôeno"
 
 #: ../lib/plugins/export/PluginExportPDF.py:115
 #, python-format
@@ -1412,4 +1417,4 @@ msgstr "Strana %d"
 
 #: ../lib/plugins/export/PluginExportXML.py:32
 msgid "Full XML list export plugin"
-msgstr "Pln˝ XML exportnÌ plug-in"
+msgstr "Pln√Ω XML exportn√≠ plug-in"
