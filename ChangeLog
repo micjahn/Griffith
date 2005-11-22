@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-11-22 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added a new czech movie plugin (CSFD - esko-Slovensk Filmov Databze) - Thanks to Blondak <blondak@neser.cz>
+
 2005-11-21 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added Czech translation (Thanks to Blondak <blondak@neser.cz>)
 	* [Bug #5684] About window doesn't work on windows
