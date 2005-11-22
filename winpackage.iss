@@ -18,9 +18,14 @@ OutputBaseFilename=griffith-0.5-win32
 SetupIconFile=C:\griffith\images\griffith.ico
 Compression=lzma
 SolidCompression=yes
+WizardImageFile=C:\griffith\images\griffith_win32_installer.bmp
 
 [Languages]
 Name: "eng"; MessagesFile: "compiler:Default.isl"
+Name: "por"; MessagesFile: "compiler:Portuguese.isl"
+Name: "pol"; MessagesFile: "compiler:Polish.isl"
+Name: "ger"; MessagesFile: "compiler:German.isl"
+Name: "cze"; MessagesFile: "compiler:Czech.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
