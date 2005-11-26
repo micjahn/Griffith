@@ -7,7 +7,7 @@ Build-Depends: debhelper (>>4), make, python (>= 2.3), gettext
 Package: griffith
 Architecture: all
 Depends: python (>=2.3), python-gtk2 (>= 2.6), python-glade2, python-sqlite, python-reportlab, python-imaging
-Recommends: python-gnome2-extras, griffith-extra-artwork, python-psyco
+Recommends: python-gnome2-extras, griffith-extra-artwork
 Description: A film collection manager
  Griffith is a film collection manager application.
  .

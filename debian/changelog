@@ -1,8 +1,8 @@
-griffith (0.5+svn-1) unstable; urgency=low
+griffith (0.5.1-1) stable; urgency=low
 
-  * SVN update
+  * New upstream
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Tue, 22 Nov 2005 00:53:00 +0200
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 26 Nov 2005 01:15:00 +0200
 
 griffith (0.5-2) stable; urgency=low
 
