@@ -4,7 +4,7 @@
 	<name>XML</name>
 	<author>Piotr Ozarowski</author>
 	<email>ozarow@gmail.com</email>
-	<version>0.2</version>
+	<version>1.0</version>
 	<extension>xml</extension>
 	<description>Generates simple XML document</description>
 	<description xml:lang="pl">Generuje prosty dokument XML</description>

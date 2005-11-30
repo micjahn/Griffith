@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-11-30 Piotr Ozarowski <ozarow@gmail.com>
+	* XML template updated (HTML export plugin)
+
 ---- 0.5.1 ----
 
 2005-11-26 Piotr Ozarowski <ozarow@gmail.com>

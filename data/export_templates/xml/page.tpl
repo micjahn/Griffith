@@ -5,7 +5,7 @@
 		<id>@DATA@</id></@id><@image>
 		<image>@DATA@</image></@image><@title>
 		<title>@DATA@</title></@title><@original_title>
-		<original_title>@DATA@</@original_title><@number>
+		<otitle>@DATA@</otitle></@original_title><@number>
 		<number>@DATA@</number></@number><@year>
 		<year>@DATA@</year></@year><@director>
 		<director>@DATA@</director></@director><@rating>
