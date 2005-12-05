@@ -606,11 +606,11 @@ class Griffith:
 		
 if __name__ == "__main__":
 	# Import Psyco if available
-	try:
+#	try:
 		#import psyco
 		#psyco.profile()
-		gdebug.debug("Psyco module detected and being used.")
-	except ImportError:
-		pass
+		#gdebug.debug("Psyco module detected and being used.")
+#	except ImportError:
+#		pass
 	griffith = Griffith()
 	griffith.main()

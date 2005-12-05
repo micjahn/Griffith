@@ -387,11 +387,14 @@ def initialize_gtkspell(self):
 					gutils.info(self, _("Language not available. Defaulting to english."), self.w_preferences)
 					self.config['spell_lang'] = 'en'
 					self.config.save()
-		if self.config.get('spell_plot', True)=='True':
-			self.plot_spell = gtkspell.Spell(self.e_plot)		   
-			try:
-				self.plot_spell.set_language(self.config.get('spell_lang', 'en'))
-			except:
-				self.plot_spell.set_language('en')		
+			if self.config.get('spell_plot', True)=='True':
+				self.plot_spell = gtkspell.Spell(self.e_plot)		   
+				try:
+					self.plot_spell.set_language(self.config.get('spell_lang', 'en'))
+				except:
+					self.plot_spell.set_language('en')		
+					gutils.info(self, _("Language not available. Defaulting to english."), self.w_preferences)
+					self.config['spell_lang'] = 'en'
+					self.config.save()
 	else:
 		gdebug.debug("Spellchecker is not available")
