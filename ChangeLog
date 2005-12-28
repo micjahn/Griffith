@@ -6,6 +6,8 @@ Griffith ChangeLog
 
 2005-12-28 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed crash when volume or collection name was't string
+	
+2005-12-28 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Proprietary unicode font used on PDF reports replaced with a free one (DejaVu)
 	* Some changes to simple list PDF export plugin
 
