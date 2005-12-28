@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005 Vasco Nunes
 
+2005-12-28 Piotr Ozarowski <ozarow@gmail.com>
+	* Fixed crash when volume or collection name was't string
+
 2005-12-27 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added spanish translation (thanks to Daniel Ucero)
 
