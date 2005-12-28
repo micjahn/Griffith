@@ -35,14 +35,14 @@ import os, gtk
 import version
 import gutils
 
-fontName = "Lucida"
+fontName = "DejaVuSans"
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
 if os.name=="nt":
-	font = "%s/fonts/Lucida.TTF"%exec_location
+	font = "%s/fonts/DejaVuSans.ttf"%exec_location
 else:
 	font = string.replace(exec_location, "/bin", \
-		"/share/griffith/fonts/Lucida.TTF")
+		"/share/griffith/fonts/DejaVuSans.ttf")
 	
 pdfmetrics.registerFont(TTFont(fontName, font))
 
