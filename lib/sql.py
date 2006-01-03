@@ -445,11 +445,11 @@ class GriffithSQL:
 			""")
 
 	def get_all_volumes_data(self):
-		self.cursor.execute("SELECT * FROM volumes ORDER BY name")
+		self.cursor.execute("SELECT * FROM volumes ORDER BY id")	# it has to be ordered by ID (see volume ComboBox positions)
 		return self.cursor.fetchall()
 		
 	def get_all_collections_data(self):
-		self.cursor.execute("SELECT * FROM collections ORDER BY name")
+		self.cursor.execute("SELECT * FROM collections ORDER BY id")	# it has to be ordered by ID (see collection ComboBox positions)
 		return self.cursor.fetchall()
 	
 	def select_movies_by_volume(self,volume_id):
