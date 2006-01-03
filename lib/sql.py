@@ -445,11 +445,11 @@ class GriffithSQL:
 			""")
 
 	def get_all_volumes_data(self):
-		self.cursor.execute("SELECT * FROM volumes ORDER BY id")	# it has to be ordered by ID (see volume ComboBox positions)
+		self.cursor.execute("SELECT * FROM volumes ORDER BY id")
 		return self.cursor.fetchall()
 		
 	def get_all_collections_data(self):
-		self.cursor.execute("SELECT * FROM collections ORDER BY id")	# it has to be ordered by ID (see collection ComboBox positions)
+		self.cursor.execute("SELECT * FROM collections ORDER BY id")
 		return self.cursor.fetchall()
 	
 	def select_movies_by_volume(self,volume_id):
@@ -477,7 +477,7 @@ class GriffithSQL:
 		gdebug.debug("Adding '%s' volume to database..."%name)
 		try:
 			self.cursor.execute("INSERT INTO 'volumes'('id', 'name', 'loaned') VALUES (Null,'"+
-			gutils.gescape(name)+"','0');")
+				gutils.gescape(name)+"','0');")
 		except:
 			return False
 		return True
@@ -491,7 +491,7 @@ class GriffithSQL:
 		gdebug.debug("Adding '%s' collection to database..."%name)
 		try:
 			self.cursor.execute("INSERT INTO 'collections'('id', 'name', 'loaned') VALUES (Null,'"+
-			gutils.gescape(name)+"','0');")
+				gutils.gescape(name)+"','0');")
 		except:
 			return False
 		return True

@@ -153,11 +153,18 @@ def clear_details(self):
 	gutils.garbage(handler)
 
 def fill_volumes_combo(self, prefix='e', default=0):
-	for tmp in 'e', "am":
-		eval("self.%s_volume_combo.get_model().clear()"%tmp)
-		for volume in self.db.get_all_volumes_data():
-			eval("self.%s_volume_combo.insert_text(int(volume['id']), str(volume['name']))"%tmp)
-		eval("self.%s_volume_combo.show_all()"%tmp)
+	self.am_volume_combo.get_model().clear()
+	self.e_volume_combo.get_model().clear()
+	i = 0
+	self.volume_combo_ids = {}
+	for volume in self.db.get_all_volumes_data():
+		self.volume_combo_ids[volume['id']] = i
+		self.am_volume_combo.insert_text(i, str(volume['name']))
+		self.e_volume_combo.insert_text(i, str(volume['name']))
+		i = i+1
+
+	self.am_volume_combo.show_all()
+	self.e_volume_combo.show_all()
 	if prefix == 'e':
 		self.e_volume_combo.set_active(int(default))
 		self.am_volume_combo.set_active(0)
@@ -165,11 +172,18 @@ def fill_volumes_combo(self, prefix='e', default=0):
 		self.am_volume_combo.set_active(int(default))
 
 def fill_collections_combo(self, prefix='e', default=0):
-	for tmp in 'e', "am":
-		eval("self.%s_collection_combo.get_model().clear()"%tmp)
-		for collection in self.db.get_all_collections_data():
-			eval("self.%s_collection_combo.insert_text(int(collection['id']), str(collection['name']))"%tmp)
-		eval("self.%s_collection_combo.show_all()"%tmp)
+	self.am_collection_combo.get_model().clear()
+	self.e_collection_combo.get_model().clear()
+	i = 0
+	self.collection_combo_ids = {}
+	for collection in self.db.get_all_collections_data():
+		self.collection_combo_ids[collection['id']] = i
+		self.am_collection_combo.insert_text(i, str(collection['name']))
+		self.e_collection_combo.insert_text(i, str(collection['name']))
+		i = i+1
+
+	self.am_collection_combo.show_all()
+	self.e_collection_combo.show_all()
 	if prefix == 'e':
 		self.e_collection_combo.set_active(int(default))
 		self.am_collection_combo.set_active(0)

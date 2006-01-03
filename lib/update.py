@@ -30,8 +30,8 @@ def update(self):
 	movie_id = self.e_number.get_text()
 	self.db.cursor.execute("SELECT loaned, volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
 	loaned, volume_id, collection_id = self.db.cursor.fetchall()[0]
-	new_volume_id = self.e_volume_combo.get_active()
-	new_collection_id = self.e_collection_combo.get_active()
+	new_volume_id = gutils.findKey(self.e_volume_combo.get_active(), self.volume_combo_ids)
+	new_collection_id = gutils.findKey(self.e_collection_combo.get_active(), self.collection_combo_ids)
 	if loaned:
 		if collection_id>0 and collection_id != new_collection_id:
 			gutils.error(self, msg=_("You can't change collection while it is loaned!"))
