@@ -222,4 +222,5 @@ def populate(self, data):
 		self.treemodel.set_value(myiter,3,str(row['original_title']))
 		self.treemodel.set_value(myiter,4,str(row['title']))
 		self.treemodel.set_value(myiter,5,str(row['director']))
+	print ">>populate "
 	#gutils.garbage(pixbuf)

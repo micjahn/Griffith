@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = ''
+__revision__ = '$Id $'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -156,7 +156,6 @@ def treeview(self):
 	self.main_treeview.append_column(self.director_column)
 	# add data to treeview
 	self.total = int(self.db.count_records('movies'))
-	self.populate_treeview(self.db.get_all_data())
 	self.main_treeview.show()
 	
 def loans_treeview(self):

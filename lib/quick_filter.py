@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -27,8 +27,6 @@ def change_filter(self):
 	x = 0
 	criteria = gutils.on_combo_box_entry_changed(self.filter_criteria)
 	text = gutils.gescape(self.e_filter.get_text())
-	self.treemodel.clear()
-	self.clear_details()
 	if criteria == self._("Original Title") and text:
 		data = self.db.select_movie_by_original_title(text)
 	elif criteria == self._("Title")  and text:
@@ -50,10 +48,11 @@ def change_filter(self):
 	for row in data:
 		x = x + 1	
 	self.total_filter = x
+	self.treemodel.clear()
+	self.clear_details()
 	self.populate_treeview(data)
 		
 def clear_filter(self):
 	self.e_filter.set_text("")
 	self.filter_criteria.set_active(1)
-	self.select_last_row(self.total)
 	self.total_filter = self.total
