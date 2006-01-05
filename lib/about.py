@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class AboutDialog:
 		dialog = gtk.AboutDialog()
 		dialog.set_name(version.pname)
 		dialog.set_version(version.pversion)
-		dialog.set_copyright("Copyright © 2005 Vasco Nunes")
+		dialog.set_copyright("Copyright © 2005-2006 Vasco Nunes")
 		dialog.set_website(version.pwebsite)
 		dialog.set_authors([_("Main Author") + ", " + _("Programmer")+":\n"+ \
 			version.pauthor + "\n",
@@ -60,7 +60,9 @@ class AboutDialog:
 			"Daniel Ucero <escaranbujo@gmail.com>" \
 			)
 		if os.name == 'nt':
-			logo = gtk.gdk.pixbuf_new_from_file(os.path.abspath(os.path.dirname(sys.argv[0]))+"/images/griffith.png")
+			logo = gtk.gdk.pixbuf_new_from_file \
+				("%s/images/griffith.png"%os.path.abspath \
+				(os.path.dirname(sys.argv[0])))
 		else:
 			logo_file = os.path.abspath(os.path.dirname(sys.argv[0]))
 			logo = gtk.gdk.pixbuf_new_from_file(logo_file.replace \

@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -176,21 +176,16 @@ def define_widgets(self, gladefile):
 	
 	self.e_seen = gladefile.get_widget('e_seen')
 	self.am_seen = gladefile.get_widget('am_seen')
-	
 	self.b_email_reminder = gladefile.get_widget('b_email_reminder')
 	self.loan_history = gladefile.get_widget('loan_history')	
 	self.default_plugin = gladefile.get_widget('default_plugin')
-	
 	self.rating_image = gladefile.get_widget('rating_image')
-	
 	self.mail_smtp_server = gladefile.get_widget('mail_smtp_server')
 	self.mail_use_auth = gladefile.get_widget('mail_use_auth')
 	self.mail_username = gladefile.get_widget('mail_username')
 	self.mail_password = gladefile.get_widget('mail_password')
 	self.mail_email = gladefile.get_widget('mail_email')
-	
 	self.all_movies = gladefile.get_widget('all_movies')
-	
 	self.results_select = gladefile.get_widget('results_select')
 	self.results_cancel = gladefile.get_widget('results_cancel')
 	
@@ -205,11 +200,9 @@ def define_widgets(self, gladefile):
 	
 	#main popup menu
 	self.popup = gladefile.get_widget('popup')
-	
 	self.popup_loan = gladefile.get_widget('popup_loan')
 	self.popup_return = gladefile.get_widget('popup_return')
 	self.popup_email = gladefile.get_widget('popup_email')
-	
 	self.f_col = gladefile.get_widget('f_col')
 	
 	#add some tooltips
@@ -245,7 +238,6 @@ def define_widgets(self, gladefile):
 		self.on_maintree_button_press_event)
 	self.p_treeview.connect('button_press_event', \
 		self.on_p_tree_button_press_event)
-
 		 
 	# define handlers for general events
 		
@@ -337,7 +329,7 @@ def define_widgets(self, gladefile):
 		"on_am_remove_volume_button_clicked"    : self.remove_volume,
 		"on_am_remove_collection_button_clicked": self.remove_collection,
 		"on_f_col_changed"                      : self.filter_collection,
-		"on_results_cancel_clicked"				: self.results_cancel_ck
+		"on_results_cancel_clicked"		: self.results_cancel_ck
 	}
 	gladefile.signal_autoconnect(dic)
 

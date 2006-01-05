@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-01-05 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* [Bug #5627] 7arte.net plugin with weird characters on actors field
+
 2006-01-04 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Main treeview being populated twice on startup. Fixed.
 
