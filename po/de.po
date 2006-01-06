@@ -15,36 +15,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit"
 
 #: ../griffith:222
-#, fuzzy
 msgid "You saw all movies in your collection!"
-msgstr "Film verliehen"
+msgstr "Sie haben alle Filme Ihrer Sammlung gesehen!"
 
 #: ../griffith:317
-#, fuzzy
 msgid "Are you sure you want to restore?\n"
-msgstr "Sind Sie sicher, dass Sie diesen Film löschen wollen?"
+msgstr "Sind Sie sicher, dass Sie wiederherstellen wollen?\n"
 
 #: ../griffith:318
-#, fuzzy
 msgid "Your current movie collection will be replaced.\n"
-msgstr ""
-"Sind Sie sicher, dass sie wiederherstellen möchten?\n"
-"Ihre aktuelle Filmkollektion wird ersetzt.\n"
-"Diese Operation kann nicht rückgängig gemacht werden."
+msgstr "Ihre aktuelle Filmkollektion wird ersetzt.\n"
+
 
 #: ../griffith:319
 msgid "You can't undo this operation."
-msgstr ""
+msgstr "Diese Operation kann nicht rückgängig gemacht werden."
 
 #: ../griffith:398
-#, fuzzy
 msgid " movie(s) in collection. "
-msgstr "Film verliehen"
+msgstr " Film(e) in der Sammlung. "
 
 #: ../griffith:399
-#, fuzzy
 msgid " movie(s) loaned. "
-msgstr "Film verliehen"
+msgstr " Film(e) verliehen. "
 
 #: ../griffith:400
 msgid "You haven't seen "
@@ -53,12 +46,11 @@ msgstr ""
 #: ../lib/about.py:38
 #, fuzzy
 msgid "Main Author"
-msgstr "Darsteller"
+msgstr "Hauptautor"
 
 #: ../lib/about.py:38 ../lib/about.py:40
-#, fuzzy
 msgid "Programmer"
-msgstr "Programmierung:"
+msgstr "Programmierer"
 
 #: ../lib/about.py:41
 msgid "Contributors:"
@@ -67,12 +59,11 @@ msgstr "Beitragende:"
 #: ../lib/about.py:45
 #, fuzzy
 msgid "Logo, icon and general artwork "
-msgstr "Logo und Icon von Peek <peekpt@gmail.com>."
+msgstr "Logo und Icon "
 
 #: ../lib/about.py:46
-#, fuzzy
 msgid "by Peek <peekpt@gmail.com>."
-msgstr "Logo und Icon von Peek <peekpt@gmail.com>."
+msgstr "von Peek <peekpt@gmail.com>."
 
 #: ../lib/about.py:47
 msgid ""
@@ -84,7 +75,7 @@ msgstr ""
 
 #: ../lib/about.py:49
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgarisch"
 
 #: ../lib/about.py:49 ../lib/about.py:51 ../lib/about.py:53 ../lib/about.py:55
 msgid " by "
@@ -92,7 +83,7 @@ msgstr " von "
 
 #: ../lib/about.py:51 ../lib/plugins/movie/PluginMovieOFDb.py:13
 msgid "German"
-msgstr ""
+msgstr "Deutsch"
 
 #: ../lib/about.py:53 ../lib/plugins/movie/PluginMovieFilmweb.py:29
 #: ../lib/plugins/movie/PluginMovieOnet.py:29
@@ -255,7 +246,7 @@ msgstr ""
 #: ../lib/edit.py:270
 #, fuzzy
 msgid "Do you want to use this poster instead?"
-msgstr "Sind Sie sicher, dass Sie diesen Film löschen wollen?"
+msgstr "Wollen Sie stattdessen dieses Plakat verwenden?"
 
 #: ../lib/edit.py:291
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
@@ -264,16 +255,16 @@ msgstr ""
 #: ../lib/gemail.py:37 ../lib/gemail.py:47
 #, python-format
 msgid "Error sending e-mail: %s"
-msgstr ""
+msgstr "Fehler beim Versenden der E-Mail: %s"
 
 #: ../lib/gemail.py:44
 msgid "E-mail sent sucessuly"
-msgstr ""
+msgstr "E-Mail erfolgreich versendet"
 
 #: ../lib/gemail.py:59
 #, fuzzy
 msgid "Movie loan reminder"
-msgstr "Film nicht verliehen"
+msgstr "Film ausleih Erinnerung"
 
 #: ../lib/gemail.py:59
 #, python-format
@@ -282,10 +273,13 @@ msgid ""
 "\n"
 "Just to reminder you "
 msgstr ""
+"Hallo, %s!\n"
+"\n"
+"Nur zur Erinnerung, "
 
 #: ../lib/gemail.py:60
 msgid "that I'm really needing the following movie I have loaned you "
-msgstr ""
+msgstr "dass ich den folgenden, an dich verliehenen Film wirklich benötige "
 
 #: ../lib/gemail.py:61
 #, python-format
@@ -299,12 +293,11 @@ msgstr ""
 
 #: ../lib/gemail.py:65
 msgid "This person has no e-mail address defined."
-msgstr ""
+msgstr "Diese Person hat keine E-Mail Adresse angegeben"
 
 #: ../lib/gutils.py:304
-#, fuzzy
 msgid "Images"
-msgstr "Bild"
+msgstr "Bilder"
 
 #: ../lib/gutils.py:315
 msgid "All files"
@@ -320,19 +313,16 @@ msgid "Image"
 msgstr "Bild"
 
 #: ../lib/initialize.py:168
-#, fuzzy
 msgid "Loan Date"
-msgstr "Verleihe an"
+msgstr "Verliehem am"
 
 #: ../lib/initialize.py:174
-#, fuzzy
 msgid "Return Date"
-msgstr "Zurückerhalten"
+msgstr "Zurückerhalten am"
 
 #: ../lib/initialize.py:179
-#, fuzzy
 msgid "Loaned To"
-msgstr "Verliehen"
+msgstr "Verliehen an"
 
 #: ../lib/initialize.py:231 ../glade/griffith.glade.h:63
 msgid "Name"
@@ -344,61 +334,60 @@ msgid "E-mail"
 msgstr "E-Mail"
 
 #: ../lib/initialize.py:258 ../lib/initialize.py:265 ../lib/initialize.py:320
-#, fuzzy
 msgid "Damaged"
-msgstr "Bild"
+msgstr "Beschädigt"
 
 #: ../lib/initialize.py:259 ../lib/initialize.py:266 ../lib/initialize.py:321
-#, fuzzy
 msgid "Poor"
-msgstr "Kopieren"
+msgstr "schlecht"
 
 #: ../lib/initialize.py:260 ../lib/initialize.py:267 ../lib/initialize.py:322
 msgid "Fair"
-msgstr ""
+msgstr "mittelmäßig"
 
 #: ../lib/initialize.py:261 ../lib/initialize.py:268 ../lib/initialize.py:323
 msgid "Good"
-msgstr ""
+msgstr "gut"
 
 #: ../lib/initialize.py:262 ../lib/initialize.py:269 ../lib/initialize.py:324
 msgid "Excellent"
-msgstr ""
+msgstr "exzellent"
 
 #: ../lib/initialize.py:263 ../lib/initialize.py:270 ../lib/initialize.py:275
 #: ../lib/initialize.py:280 ../lib/initialize.py:293 ../lib/initialize.py:306
 #: ../lib/initialize.py:312 ../lib/initialize.py:318 ../lib/initialize.py:325
 #: ../lib/initialize.py:330 ../lib/initialize.py:343 ../lib/initialize.py:349
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: ../lib/initialize.py:272 ../lib/initialize.py:277 ../lib/initialize.py:327
 #: ../glade/griffith.glade.h:22
-#, fuzzy
 msgid "Color"
-msgstr "Kopieren"
+msgstr "Farbe"
 
 #: ../lib/initialize.py:273 ../lib/initialize.py:278 ../lib/initialize.py:328
 msgid "Black and White"
-msgstr ""
+msgstr "Schwarz/Weiss"
 
 #: ../lib/initialize.py:274 ../lib/initialize.py:279 ../lib/initialize.py:329
 msgid "Mixed"
-msgstr ""
+msgstr "Gemischt"
 
 #: ../lib/initialize.py:282 ../lib/initialize.py:295 ../lib/initialize.py:332
 msgid "Region 0 (No Region Coding)"
-msgstr ""
+msgstr "Region 0 (keine Regions-Kodierung)"
 
 #: ../lib/initialize.py:283 ../lib/initialize.py:296 ../lib/initialize.py:333
 msgid "Region 1 (United States of America, Canada)"
-msgstr ""
+msgstr "Region 1 (USA, Kanada)"
 
 #: ../lib/initialize.py:284 ../lib/initialize.py:297 ../lib/initialize.py:334
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
 msgstr ""
+"Region 2 (Europa, Türkei, Ägypten, Japan und "
+"Südafrika)"
 
 #: ../lib/initialize.py:286 ../lib/initialize.py:299 ../lib/initialize.py:336
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
@@ -455,9 +444,8 @@ msgid "Do you want to loan whole collection?"
 msgstr ""
 
 #: ../lib/loan.py:81
-#, fuzzy
 msgid "Movie loaned"
-msgstr "Film nicht verliehen"
+msgstr "Film verliehen"
 
 #: ../lib/loan.py:127
 msgid "Movie returned"
@@ -477,7 +465,7 @@ msgstr "Film nicht verliehen"
 
 #: ../lib/movie.py:70
 msgid "Fetching data"
-msgstr ""
+msgstr "Daten abrufen"
 
 #: ../lib/movie.py:198
 msgid "Searching"
@@ -511,11 +499,12 @@ msgid ""
 msgstr ""
 
 #: ../lib/people.py:116
-#, fuzzy, python-format
 msgid ""
 "%s\n"
 "Are you sure you want to delete this person?"
-msgstr "Sind Sie sicher, dass Sie diese Person löschen wollen?"
+msgstr ""
+"%s\n"
+"Sind Sie sicher, dass Sie diese Person löschen wollen?"
 
 #: ../lib/quick_filter.py:38 ../glade/griffith.glade.h:133
 #: ../lib/plugins/export/PluginExportHTML.py:111
@@ -537,16 +526,14 @@ msgid "With"
 msgstr "Mit"
 
 #: ../lib/sql.py:394
-#, fuzzy
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
 msgstr ""
 "Sind Sie sicher, dass Sie eine neue Datenbank erstellen wollen?\n"
-"Sie werden ALLE vorhandenen Daten verlieren"
+"Sie werden ALLE vorhandenen Daten verlieren!"
 
 #: ../lib/sql.py:398
-#, fuzzy
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -554,15 +541,11 @@ msgid ""
 msgstr ""
 "Letzte Chance!\n"
 "sind Sie damit einverstanden\n"
-"alle Daten zu verlieren?"
+"die aktuellen Daten zu verlieren?"
 
 #: ../lib/update.py:37
-#, fuzzy
 msgid "You can't change collection while it is loaned!"
 msgstr ""
-"Sind Sie sicher, dass sie wiederherstellen möchten?\n"
-"Ihre aktuelle Filmkollektion wird ersetzt.\n"
-"Diese Operation kann nicht rückgängig gemacht werden."
 
 #: ../lib/update.py:40
 msgid "You can't change volume while it is loaned!"
@@ -585,12 +568,10 @@ msgid "Griffith is a film collection manager."
 msgstr "Griffith ist ein Filmsammlungs-Manager"
 
 #: ../lib/view.py:29
-#, fuzzy
 msgid "Filter activated. Showing only not seen movies."
-msgstr "Filter aktiviert. Zeige nur verliehene Filme"
+msgstr "Filter aktiviert. Zeige nur ungesehene Filme"
 
 #: ../lib/view.py:37
-#, fuzzy
 msgid "Filter activated. Showing only loaned movies."
 msgstr "Filter aktiviert. Zeige nur verliehene Filme"
 
@@ -600,9 +581,9 @@ msgid "Filter activated. Showing only movies from volume: %s"
 msgstr "Filter aktiviert. Zeige nur verliehene Filme"
 
 #: ../lib/view.py:64
-#, fuzzy, python-format
+#, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
-msgstr "Filter aktiviert. Zeige nur verliehene Filme"
+msgstr "Filter aktiviert. Zeige nur aus der Sammlung: %s"
 
 #: ../lib/widgets.py:217
 msgid ""
@@ -632,9 +613,8 @@ msgid ""
 msgstr ""
 
 #: ../glade/exporthtml.glade.h:1
-#, fuzzy
 msgid "<b>Export</b>"
-msgstr "Exportieren"
+msgstr "<b>Export</b>"
 
 #: ../glade/exporthtml.glade.h:2
 #, fuzzy
@@ -649,7 +629,7 @@ msgstr "Exportieren"
 #: ../glade/exporthtml.glade.h:4
 #, fuzzy
 msgid "<b>Preview</b>"
-msgstr "Exportieren"
+msgstr "<b>Vorschau</b>"
 
 #: ../glade/exporthtml.glade.h:5
 #, fuzzy
@@ -671,32 +651,28 @@ msgid "<b>Template</b>"
 msgstr "Exportieren"
 
 #: ../glade/exporthtml.glade.h:9
-#, fuzzy
 msgid "Author"
-msgstr "Darsteller"
+msgstr "Author"
 
 #: ../glade/exporthtml.glade.h:10
 msgid "Black and white"
-msgstr ""
+msgstr "Schwarz/Weiss"
 
 #: ../glade/exporthtml.glade.h:12
-#, fuzzy
 msgid "Choose style file"
 msgstr "Wähle css Datei"
 
 #: ../glade/exporthtml.glade.h:13
-#, fuzzy
 msgid "Convert images"
-msgstr "Wähle Bild"
+msgstr "Konvertiere Bilder"
 
 #: ../glade/exporthtml.glade.h:14
 msgid "Data"
 msgstr "Daten"
 
 #: ../glade/exporthtml.glade.h:15
-#, fuzzy
 msgid "Description"
-msgstr "Ziel"
+msgstr "Beschreibung"
 
 #: ../glade/exporthtml.glade.h:16
 msgid "Destination"
@@ -707,93 +683,80 @@ msgid "Export"
 msgstr "Exportieren"
 
 #: ../glade/exporthtml.glade.h:19
-#, fuzzy
 msgid "Export data"
-msgstr "Exportieren"
+msgstr "Daten Exportieren"
 
 #: ../glade/exporthtml.glade.h:20
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: ../glade/exporthtml.glade.h:21
 msgid "Maximal height"
-msgstr ""
+msgstr "Maximale Höhe"
 
 #: ../glade/exporthtml.glade.h:22
 msgid "Maximal width"
-msgstr ""
+msgstr "Maximale Breite"
 
 #: ../glade/exporthtml.glade.h:23
-#, fuzzy
 msgid "Posters"
-msgstr "Notizen"
+msgstr "Poster"
 
 #: ../glade/exporthtml.glade.h:24
 msgid "Reverse"
 msgstr "Rückwärts"
 
 #: ../glade/exporthtml.glade.h:25
-#, fuzzy
 msgid "Template"
-msgstr "Thema"
+msgstr "Vorlage"
 
 #: ../glade/exporthtml.glade.h:26
-#, fuzzy
 msgid "Use custom file"
-msgstr "Verwende eigenes CSS"
+msgstr "Verwende eigene Datei"
 
 #: ../glade/exporthtml.glade.h:27
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: ../glade/exporthtml.glade.h:28
 msgid "entries per page"
-msgstr ""
+msgstr "Enträge pro Seite"
 
 #: ../glade/exporthtml.glade.h:29
-#, fuzzy
 msgid "files"
-msgstr "Alle Dateien"
+msgstr "Dateien"
 
 #: ../glade/exporthtml.glade.h:30
-#, fuzzy
 msgid "loaned only"
-msgstr "Verliehen"
+msgstr "Nur Verliehene"
 
 #: ../glade/exporthtml.glade.h:31
-#, fuzzy
 msgid "none"
-msgstr "Kopieren"
+msgstr "keine"
 
 #: ../glade/exporthtml.glade.h:32
-#, fuzzy
 msgid "not loaned only"
-msgstr "Zeige nur verliehene Filme"
+msgstr "nur nicht verliehene"
 
 #: ../glade/exporthtml.glade.h:33
-#, fuzzy
 msgid "seen only"
-msgstr "Auswählen"
+msgstr "nur gesehene"
 
 #: ../glade/exporthtml.glade.h:34
-#, fuzzy
 msgid "unseen only"
-msgstr "Auswählen"
+msgstr "nur ungesehene"
 
 #: ../glade/griffith.glade.h:1
-#, fuzzy
 msgid "<b>Collection</b>"
-msgstr "Sortiren nach"
+msgstr "<b>Sammlung</b>"
 
 #: ../glade/griffith.glade.h:2
-#, fuzzy
 msgid "<b>Defaults</b>"
-msgstr "Exportieren"
+msgstr "<b>Voreinstellungen</b>"
 
 #: ../glade/griffith.glade.h:3
-#, fuzzy
 msgid "<b>E-mail reminder</b>"
-msgstr "Exportieren"
+msgstr "<b>E-Mail Erinnerung</b>"
 
 #: ../glade/griffith.glade.h:4
 msgid "<b>Loan History</b>"
@@ -830,27 +793,24 @@ msgid "Add movie"
 msgstr "Film hinzufügen"
 
 #: ../glade/griffith.glade.h:12
-#, fuzzy
 msgid "Add movie and close"
-msgstr "Film hinzufügen"
+msgstr "Film hinzufügen und schliessen"
 
 #: ../glade/griffith.glade.h:13
 msgid "Add person"
 msgstr "Person hinzufügen"
 
 #: ../glade/griffith.glade.h:14
-#, fuzzy
 msgid "All Movies"
-msgstr "Alle Dateien"
+msgstr "Alle Filme"
 
 #: ../glade/griffith.glade.h:15
 msgid "Backup"
 msgstr "Backup"
 
 #: ../glade/griffith.glade.h:16
-#, fuzzy
 msgid "By Collection"
-msgstr "Sortiren nach"
+msgstr "Nach Sammlung"
 
 #: ../glade/griffith.glade.h:18
 msgid "Choose Image"
@@ -865,13 +825,12 @@ msgid "Clone"
 msgstr "Kopieren"
 
 #: ../glade/griffith.glade.h:21
-#, fuzzy
 msgid "Collection"
-msgstr "Sortiren nach"
+msgstr "Sammlung"
 
 #: ../glade/griffith.glade.h:23
 msgid "Condition"
-msgstr ""
+msgstr "Bedingung"
 
 #: ../glade/griffith.glade.h:25
 msgid "Create a new Griffith document"
@@ -879,11 +838,11 @@ msgstr "Erstelle ein neues Griffith Dokument"
 
 #: ../glade/griffith.glade.h:26
 msgid "DVD Layers"
-msgstr ""
+msgstr "DVD Layer"
 
 #: ../glade/griffith.glade.h:27
 msgid "DVD Region"
-msgstr ""
+msgstr "DVD Region"
 
 #: ../glade/griffith.glade.h:28
 msgid "Delete"
@@ -899,7 +858,7 @@ msgstr "Discs"
 
 #: ../glade/griffith.glade.h:33
 msgid "E-mail reminder"
-msgstr ""
+msgstr "E-Mail Erinnerung"
 
 #: ../glade/griffith.glade.h:34
 msgid "E_xport"
@@ -911,14 +870,13 @@ msgstr "Eine Person bearbeiten"
 
 #: ../glade/griffith.glade.h:36
 msgid "Favorite Movie Plugin"
-msgstr ""
+msgstr "Bevorzugtes Film Plugin"
 
 #: ../glade/griffith.glade.h:37
 msgid "Filter "
 msgstr "Filter "
 
 #: ../glade/griffith.glade.h:38
-#, fuzzy
 msgid "Found Results"
 msgstr "Gefundene Ergebnisse"
 
@@ -928,7 +886,7 @@ msgstr "Aus dem Web laden"
 
 #: ../glade/griffith.glade.h:41
 msgid "Get movie data from:"
-msgstr ""
+msgstr "Lade Film Daten von:"
 
 #: ../glade/griffith.glade.h:42
 msgid "Griffith"
@@ -939,9 +897,8 @@ msgid "IMDB page"
 msgstr "IMDB Seite"
 
 #: ../glade/griffith.glade.h:44 ../lib/plugins/export/PluginExportHTML.py:99
-#, fuzzy
 msgid "IMDb page"
-msgstr "IMDB Seite"
+msgstr "IMDb Seite"
 
 #: ../glade/griffith.glade.h:46
 msgid "Include Front Image"
@@ -953,11 +910,11 @@ msgstr "Inkludiere Filmnummer"
 
 #: ../glade/griffith.glade.h:48
 msgid "Internet"
-msgstr ""
+msgstr "Internet"
 
 #: ../glade/griffith.glade.h:49
 msgid "Layers"
-msgstr ""
+msgstr "Layer"
 
 #: ../glade/griffith.glade.h:50
 msgid "Loan"
@@ -976,9 +933,8 @@ msgid "Loan to"
 msgstr "Verleihe an"
 
 #: ../glade/griffith.glade.h:54
-#, fuzzy
 msgid "Loaned Movies"
-msgstr "Verleihe Film"
+msgstr "Verliehene Filme"
 
 #: ../glade/griffith.glade.h:55
 #, fuzzy
@@ -1004,9 +960,8 @@ msgid ""
 msgstr ""
 
 #: ../glade/griffith.glade.h:61
-#, fuzzy
 msgid "Movie details"
-msgstr "_Filme"
+msgstr "Film Details"
 
 #: ../glade/griffith.glade.h:62
 msgid "Movie information"
@@ -1014,12 +969,11 @@ msgstr "Film Information"
 
 #: ../glade/griffith.glade.h:64
 msgid "Needs authentication"
-msgstr ""
+msgstr "Benötigt Authentifizierung"
 
 #: ../glade/griffith.glade.h:65
-#, fuzzy
 msgid "Not Seen Movies"
-msgstr "Verleihe Film"
+msgstr "Ungesehene Filme"
 
 #: ../glade/griffith.glade.h:66 ../lib/plugins/export/PluginExportHTML.py:112
 msgid "Notes"
@@ -1050,7 +1004,6 @@ msgid "OK"
 msgstr "OK"
 
 #: ../glade/griffith.glade.h:77
-#, fuzzy
 msgid "Official site"
 msgstr "Offizielle Seite"
 
@@ -1067,15 +1020,12 @@ msgid "PDF"
 msgstr "PDF"
 
 #: ../glade/griffith.glade.h:82
-#, fuzzy
 msgid "PDF reader"
-msgstr ""
-"PDF Betrachter\n"
-"(nur Unix)"
+msgstr "PDF Betrachter"
 
 #: ../glade/griffith.glade.h:83
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #: ../glade/griffith.glade.h:84
 msgid "People"
@@ -1094,13 +1044,12 @@ msgid "Plot"
 msgstr "Handlung"
 
 #: ../glade/griffith.glade.h:88
-#, fuzzy
 msgid "Plugins"
-msgstr "Polnisch"
+msgstr "Plugins"
 
 #: ../glade/griffith.glade.h:89
 msgid "Poster viewer"
-msgstr ""
+msgstr "Poster Betrachter"
 
 #: ../glade/griffith.glade.h:90
 msgid "Preferences"
@@ -1115,13 +1064,12 @@ msgid "Print cover"
 msgstr "Drucke Cover"
 
 #: ../glade/griffith.glade.h:94
-#, fuzzy
 msgid "Rating image"
-msgstr "Bewertung"
+msgstr "Bewerte Bild"
 
 #: ../glade/griffith.glade.h:95
 msgid "Region"
-msgstr ""
+msgstr "Region"
 
 #: ../glade/griffith.glade.h:96
 msgid "Restore"
@@ -1137,7 +1085,7 @@ msgstr "Laufzeit"
 
 #: ../glade/griffith.glade.h:99
 msgid "SMTP server"
-msgstr ""
+msgstr "SMTP Server"
 
 #: ../glade/griffith.glade.h:100
 msgid "Save preferences"
@@ -1148,14 +1096,12 @@ msgid "Searching on the web"
 msgstr "Suche im Web"
 
 #: ../glade/griffith.glade.h:102
-#, fuzzy
 msgid "Seen It"
-msgstr "Auswählen"
+msgstr "gesehen"
 
 #: ../glade/griffith.glade.h:103 ../lib/plugins/export/PluginExportHTML.py:109
-#, fuzzy
 msgid "Seen it"
-msgstr "Auswählen"
+msgstr "gesehen"
 
 #: ../glade/griffith.glade.h:104
 msgid "Select"
@@ -1163,12 +1109,11 @@ msgstr "Auswählen"
 
 #: ../glade/griffith.glade.h:105
 msgid "Sender E-mail address"
-msgstr ""
+msgstr "Absender E-Mail Adresse"
 
 #: ../glade/griffith.glade.h:106
-#, fuzzy
 msgid "Show movies in selected collection"
-msgstr "Film verliehen"
+msgstr "Zeige Filme in ausgewählter Sammlung"
 
 #: ../glade/griffith.glade.h:107
 #, fuzzy
@@ -1208,23 +1153,23 @@ msgstr "Studio"
 
 #: ../glade/griffith.glade.h:116
 msgid "Suggest an unseen movie"
-msgstr ""
+msgstr "Schlage einen ungesehenen Film vor"
 
 #: ../glade/griffith.glade.h:117
 msgid "Summary"
-msgstr ""
+msgstr "Zusammenfassung"
 
 #: ../glade/griffith.glade.h:118
 msgid "Technical Information"
-msgstr ""
+msgstr "Technische Information"
 
 #: ../glade/griffith.glade.h:119
 msgid "Technical info"
-msgstr ""
+msgstr "Technische Information"
 
 #: ../glade/griffith.glade.h:120
 msgid "This movie is part of..."
-msgstr ""
+msgstr "Dieser Film ist Teil von..."
 
 #: ../glade/griffith.glade.h:122
 msgid "Toolbar"
@@ -1244,11 +1189,11 @@ msgstr "Aktualisieren"
 
 #: ../glade/griffith.glade.h:126
 msgid "Use Spellchecker"
-msgstr ""
+msgstr "Verwende Rechtschreibprüfung"
 
 #: ../glade/griffith.glade.h:127
 msgid "Username"
-msgstr ""
+msgstr "Benutzername"
 
 #: ../glade/griffith.glade.h:128
 msgid "Visit the Internet Movie Database (IMDB) related page"
