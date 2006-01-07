@@ -4,6 +4,8 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-01-07 Piotr Ozarowski <ozarow@gmail.com>
+	* [Bug #5685] AnimeDB plugin really works again
 
 2006-01-06 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* German OFDB (Online-Filmdatenbank) movie plugin updated. (Christian Sagmueller)
@@ -27,7 +29,7 @@ Griffith ChangeLog
 
 2005-12-28 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed crash when volume or collection name wasn't string
-	
+
 2005-12-28 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Proprietary unicode font used on PDF reports replaced with a free one (DejaVu)
 	* Some changes to simple list PDF export plugin
