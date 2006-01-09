@@ -5,4 +5,6 @@
 * Searching movies by director or another field
 * More powerfull command line interface
 * Possibility to use external database (PostgreSQL, MySQL, ...)
+* Advanced sort/filter criteria
+* Customising main list view
 * Probably much more than this :-D
