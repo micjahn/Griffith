@@ -34,17 +34,8 @@ import string
 import os, gtk
 import version
 import gutils
-
-fontName = "DejaVuSans"
-exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
-
-if os.name=="nt":
-	font = "%s/fonts/DejaVuSans.ttf"%exec_location
-else:
-	font = string.replace(exec_location, "/bin", \
-		"/share/griffith/fonts/DejaVuSans.ttf")
 	
-pdfmetrics.registerFont(TTFont(fontName, font))
+exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
 def cover_image(self,id):
 	filename = gutils.file_chooser(_("Select image"), \
@@ -57,6 +48,12 @@ def cover_image(self,id):
 def cover_image_process(self, filename, id):
 	size = self.cover_image_size.get_active()
 	number = self.cover_image_number.get_active()
+	
+	if self.config.get('font', '')!='':
+		fontName = self.config.get('font', '')
+		#pdfmetrics.registerFont(TTFont(fontName, font))
+	else:
+		fontName = "Helvetica"
 
 	if size == 0:
 		#standard
@@ -117,6 +114,12 @@ def cover_simple(self, id):
 	size = self.cover_simple_size.get_active()
 	number = self.cover_simple_include_movie_number.get_active()
 	poster = self.cover_simple_include_poster.get_active()
+	
+	if self.config.get('font', '')!='':
+		fontName = self.config.get('font', '')
+		#pdfmetrics.registerFont(TTFont(fontName, font))
+	else:
+		fontName = "Helvetica"
 	
 	if size == 0:
 		#standard

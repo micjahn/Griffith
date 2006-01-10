@@ -37,29 +37,13 @@ import gutils
 import string
 import sys
 
-fontName = "DejaVuSans"
-fontNameBold = "DejaVuSans-Bold"
-fontNameItalic = "DejaVuSans-Oblique"
-fontNameBoldItalic = "DejaVuSans-BoldOblique"
+if self.config.get('font', '')!='':
+	fontName = self.config.get('font', '')
+	#pdfmetrics.registerFont(TTFont(fontName, font))
+else:
+	fontName = "Helvetica"
 
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
-
-if os.name=="nt":
-    font = "%s/fonts/DejaVuSans.ttf"%exec_location
-    fontBold = "%s/fonts/DejaVuSans-Bold.ttf"%exec_location
-    fontItalic = "%s/fonts/DejaVuSans-Oblique.ttf"%exec_location
-    fontBoldItalic = "%s/fonts/DejaVuSans-BoldOblique.ttf"%exec_location
-else:
-    font = string.replace(exec_location, "/bin","/share/griffith/fonts/DejaVuSans.ttf")
-    fontBold = string.replace(exec_location, "/bin","/share/griffith/fonts/DejaVuSans-Bold.ttf")
-    fontItalic = string.replace(exec_location, "/bin","/share/griffith/fonts/DejaVuSans-Oblique.ttf")
-    fontBoldItalic = string.replace(exec_location, "/bin","/share/griffith/fonts/DejaVuSans-BoldOblique.ttf")
-    
-pdfmetrics.registerFont(TTFont(fontName, font))
-pdfmetrics.registerFont(TTFont(fontNameBold, fontBold))
-pdfmetrics.registerFont(TTFont(fontNameItalic, fontItalic))
-pdfmetrics.registerFont(TTFont(fontNameBoldItalic, fontBoldItalic))
-
 
 plugin_name = "PDF"
 plugin_description = _("PDF export plugin")
@@ -94,7 +78,7 @@ class ExportPlugin:
                 Story = [Spacer(1,2*inch)]
                 # define some custom stylesheet
                 total = self.db.count_records('movies')
-                p = Paragraph("<font name='" + fontNameBold +"' size=\"18\">" + saxutils.escape((_("List of films")).encode('utf-8')) + '</font>', self.styles["Heading1"] )
+                p = Paragraph("<font name='" + fontName +"' size=\"18\">" + saxutils.escape((_("List of films")).encode('utf-8')) + '</font>', self.styles["Heading1"] )
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
                 p = Paragraph("<font name='" + fontName +"' size=\"10\">" + saxutils.escape((_("Total Movies: %s") % str(total)).encode('utf-8'))  + '</font>', self.styles["Heading3"])
@@ -118,9 +102,9 @@ class ExportPlugin:
                     else:
                         director = ""
                     director = director.encode('utf-8')
-                    p = Paragraph("<font name=" + fontNameBold + " size=\"7\">" + \
+                    p = Paragraph("<font name=" + fontName + " size=\"7\">" + \
                         saxutils.escape(number + " | " + original_title) + \
-                        "</font><font name=" + fontNameItalic + " size=\"7\">" + \
+                        "</font><font name=" + fontName + " size=\"7\">" + \
                         saxutils.escape(" (" + title + ")" + year + director) + \
                         "</font>", self.styles["Normal"])
                     Story.append(p)

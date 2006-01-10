@@ -99,4 +99,5 @@ class Config:
 		self.config['mail_password']        = ""
 		self.config['mail_email']           = "griffith"
 		self.config['media']                = "0"
+		self.config['font']                 = ""
 		self.save()
