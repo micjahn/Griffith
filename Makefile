@@ -28,7 +28,7 @@ EXPORTPLUGINSDIR = $(PREFIX)/lib/griffith/plugins/export
 BINDIR = $(PREFIX)/bin
 DATADIR = $(PREFIX)/share/griffith
 TPLDIR = $(PREFIX)/share/griffith/export_templates
-FONTSDIR = $(PREFIX)/share/griffith/fonts
+#FONTSDIR = $(PREFIX)/share/griffith/fonts
 APPLICATIONSDIR = $(PREFIX)/share/applications
 ICONDIR = $(PREFIX)/share/pixmaps
 LOCALEDIR = $(PREFIX)/share/locale
@@ -50,7 +50,7 @@ install: uninstall
 	$(INSTALL) -m 644 images/griffith.png $(ICONDIR)
 	$(INSTALL) -m 644 images/griffith.xpm $(ICONDIR)
 	$(INSTALL) -m 644 data/griffith.desktop $(APPLICATIONSDIR)
-	$(INSTALL) -m 644 fonts/*.* $(FONTSDIR)
+	#$(INSTALL) -m 644 fonts/*.* $(FONTSDIR)
 	$(INSTALL) -m 755 -d $(LOCALEDIR)/pt/LC_MESSAGES
 	$(INSTALL) -m 755 -d $(LOCALEDIR)/pl/LC_MESSAGES
 	$(INSTALL) -m 755 -d $(LOCALEDIR)/de/LC_MESSAGES
@@ -83,7 +83,7 @@ uninstall:
 	${RM} -rf $(PLUGINSDIR)
 	${RM} -rf $(LIBDIR)
 	${RM} -rf $(CSSDIR)
-	${RM} -rf $(FONTSDIR)
+	#${RM} -rf $(FONTSDIR)
 	${RM} -rf $(DATADIR)
 	${RM} -rf $(ICONDIR)/griffith.ong
 	${RM} -rf $(APPLICATIONSDIR)/griffith.desktop

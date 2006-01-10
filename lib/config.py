@@ -64,11 +64,13 @@ class Config:
 			os.makedirs(os.path.split(self.file)[0])
 		ofi=open(self.file, 'w')
 		pickle.dump(self.config, ofi)
+		ofi.close()
 
 	def load (self):
 		if os.path.isfile(self.file):
 			ifi=open(self.file, 'r')
 			self.config=pickle.load(ifi)
+			ifi.close()
 			return True
 		else:
 			return False
