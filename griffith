@@ -566,7 +566,7 @@ class Griffith:
 		"""
 		main griffith application constructor
 		"""
-		self.args = map(lambda i: i.replace('--', '').replace('-',''), sys.argv)		
+		self.args = map(lambda i: i.replace('--', '').replace('-',''), sys.argv)			
 			
 		gtk.window_set_auto_startup_notification(True)
 		self.Image = gtk.Image()

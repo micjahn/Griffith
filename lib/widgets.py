@@ -141,6 +141,7 @@ def define_widgets(self, gladefile):
 	self.p_condition = gladefile.get_widget('p_condition')
 	self.p_region = gladefile.get_widget('p_region')
 	self.p_layers = gladefile.get_widget('p_layers')
+	self.p_font = gladefile.get_widget('p_font')
 	#buttons
 	self.go_site = gladefile.get_widget('go_site')
 	self.go_imdb = gladefile.get_widget('go_imdb')

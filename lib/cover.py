@@ -49,8 +49,8 @@ def cover_image_process(self, filename, id):
 	size = self.cover_image_size.get_active()
 	number = self.cover_image_number.get_active()
 	
-	if self.config.get('font', '')!='':
-		fontName = self.config.get('font', '')
+	if self.config.get('font')!='':
+		fontName = self.config.get('font')
 		#pdfmetrics.registerFont(TTFont(fontName, font))
 	else:
 		fontName = "Helvetica"
