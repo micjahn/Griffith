@@ -70,8 +70,8 @@ def show_preferences(self):
 	self.epdf_reader.set_text(self.pdf_reader)  
 	
 	#font
-	if self.config.get('font'):
-		self.p_font.set_font_name(self.config.get('font'))
+	#if self.config.get('font'):
+		#self.p_font.set_font_name(self.config.get('font'))
 	
 	# defaults
 	if self.config.get('media'):
@@ -163,8 +163,8 @@ def save_preferences(self):
 		self.config['view_director'] = 'False'
 		
 	# font
-	if self.p_font.get_font_name():
-		self.config['font'] = self.p_font.get_font_name()
+	#if self.p_font.get_font_name():
+		#self.config['font'] = self.p_font.get_font_name()
 	
 	# spellchecker
 	if self.spellchecker.get_active():
