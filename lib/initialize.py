@@ -375,25 +375,24 @@ def web_results(self):
 	
 def initialize_gtkspell(self):
 	global spell_support
+	spell_error = False
 	if self.posix and spell_support:
 		if self.config.get('use_gtkspell', False) == 'True':
-			if self.config.get('spell_notes', True) == 'True':
-				self.obs_spell = gtkspell.Spell(self.e_obs)
+			if self.config.get('spell_notes', True) == 'True' and \
+				self.config.get('spell_lang')!='':
 				try:
-					self.obs_spell.set_language(self.config.get('spell_lang', 'en'))
+					self.obs_spell = gtkspell.Spell(self.e_obs, self.config.get('spell_lang'))
 				except:
-					self.obs_spell.set_language('en')
-					gutils.info(self, _("Language not available. Defaulting to english."), self.w_preferences)
-					self.config['spell_lang'] = 'en'
-					self.config.save()
-			if self.config.get('spell_plot', True)=='True':
-				self.plot_spell = gtkspell.Spell(self.e_plot)		   
+					spell_error = True
+			if self.config.get('spell_plot', True)=='True' and \
+				self.config.get('spell_lang')!='':		   
 				try:
-					self.plot_spell.set_language(self.config.get('spell_lang', 'en'))
+					self.plot_spell = gtkspell.Spell(self.e_plot, self.config.get('spell_lang'))
 				except:
-					self.plot_spell.set_language('en')		
-					gutils.info(self, _("Language not available. Defaulting to english."), self.w_preferences)
-					self.config['spell_lang'] = 'en'
-					self.config.save()
+					spell_error = True
+			if spell_error:
+				gutils.info(self, _("Dictionary not available. Spellcheck will be disabled. \n" + \
+					"Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('spell_lang'), \
+					self.w_preferences)
 	else:
 		gdebug.debug("Spellchecker is not available")
