@@ -40,6 +40,7 @@ def treeview_clicked(self):
 		with_iter = with_buffer.get_start_iter()
 		
 		for row in data:
+			self.e_movie_id.set_text(str(row['id']))
 			self.e_number.set_text(str(row['number']))
 			self.e_original_title.set_text(str(row['original_title']))
 			self.e_title.set_text(str(row['title']))
@@ -166,8 +167,19 @@ def treeview_clicked(self):
 			self.e_collection_id.set_text(str(row['collection_id']))
 			self.e_volume_id.hide()
 			self.e_collection_id.hide()
-		
-				
+
+			#languages
+			languages = self.db.get_all_data(table_name="movie_lang", order_by="lang_id",
+					where="movie_id='%s'"%self.e_movie_id.get_text())
+			for i in self.e_lang_vbox.get_children():	# remove old widgets
+				i.destroy()
+			self.e_languages = []
+			from edit import create_language_hbox
+			if len(languages) > 0:
+				for i in languages:
+					create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, lang=i['lang_id'])
+
+
 def populate(self, data):
 	self.treemodel.clear()
 	for row in data:

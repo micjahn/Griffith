@@ -27,6 +27,7 @@ import gtk
 import sys
 
 def define_widgets(self, gladefile):
+	self.e_movie_id = gladefile.get_widget('e_movie_id')
 	#widgets
 	self.main_window = gladefile.get_widget('main_window')
 	self.toolbar = gladefile.get_widget('toolbar1')
@@ -225,7 +226,17 @@ def define_widgets(self, gladefile):
 	self.w_print_cover_image.connect("delete_event", self.on_delete_event_pci)
 	self.poster_window.connect("delete_event", self.on_delete_event_pw)
 	self.w_preferences.connect("delete_event", self.on_delete_event_p)
-	
+
+
+	# languages
+	self.lang_name = gladefile.get_widget('lang_name')	# preferences window
+	#self.e_lang_1_id = gladefile.get_widget('e_lang_1_id')		# rest is added dynamically
+	#self.e_lang_1_type = gladefile.get_widget('e_lang_1_type')	# rest is added dynamically
+	#self.e_sub_1_id = gladefile.get_widget('e_sub_1_id')	# rest is added dynamically
+	self.e_lang_vbox = gladefile.get_widget('e_lang_vbox')
+	self.e_sub_vbox = gladefile.get_widget('e_sub_vbox')
+
+
 	# poster events
 	# we need to add a little hack here to exclude macintosh/win32 from enter/leave events because this seems buggy on these ones
 	if sys.platform != "darwin" and sys.platform != "win32":
@@ -330,7 +341,15 @@ def define_widgets(self, gladefile):
 		"on_am_remove_volume_button_clicked"    : self.remove_volume,
 		"on_am_remove_collection_button_clicked": self.remove_collection,
 		"on_f_col_changed"                      : self.filter_collection,
-		"on_results_cancel_clicked"		: self.results_cancel_ck
+		"on_results_cancel_clicked"		: self.results_cancel_ck,
+		# languages
+		"on_lang_add_clicked"			: self.on_lang_add_clicked,
+		"on_lang_remove_clicked"		: self.on_lang_remove_clicked,
+		"on_lang_rename_clicked"		: self.on_lang_rename_clicked,
+		"on_e_lang_add_clicked"			: self.on_e_lang_add_clicked,
+		"on_e_lang_remove_clicked"		: self.on_e_lang_remove_clicked,
+		"on_e_sub_add_clicked"			: self.on_e_sub_add_clicked,
+		"on_e_sub_remove_clicked"		: self.on_e_sub_remove_clicked
 	}
 	gladefile.signal_autoconnect(dic)
 

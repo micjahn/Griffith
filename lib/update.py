@@ -186,3 +186,16 @@ def update_volume(self, id, name=None, loaned=None):
 			return False
 		return True
 	return False
+
+def update_language(self, id, name):
+	if str(id) == '0':
+		gdebug.debug("You have to select language first")
+		return False
+	try:
+		self.db.cursor.execute("""
+			UPDATE languages SET name ='%s' WHERE id='%s';
+		"""%(id, name))
+	except:
+		gdebug.debug("ERROR during updating volume's loan data!")
+		return False
+	return True

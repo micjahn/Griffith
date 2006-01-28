@@ -190,6 +190,42 @@ def fill_collections_combo(self, prefix='e', default=0):
 	else:
 		self.am_collection_combo.set_active(int(default))
 
+def fill_language_combo(self, widget, default=None):
+	try:
+		widget.get_model().clear()
+	except:
+		pass
+	for i in self.db.get_all_data(table_name="languages", order_by="id"):
+		widget.insert_text(int(i['id']), str(i['name']))
+	if default != None:
+		widget.set_active(int(default))
+
+def create_language_hbox(self, widget, tab, lang=None, type=None):
+	from edit import fill_language_combo
+	number = len(widget.get_children())	# new box number
+	tab.append({})				# creates new tab[number][]
+	box = gtk.HBox(spacing=2)
+	tab[number]['id'] = gtk.combo_box_new_text()
+	fill_language_combo(self, widget=tab[number]['id'], default=lang)
+	tab[number]['type'] = gtk.combo_box_new_text()
+	tab[number]['type'].insert_text(0, '')
+	tab[number]['type'].insert_text(1, _("lector"))
+	tab[number]['type'].insert_text(2, _("dubbing"))
+	tab[number]['type'].set_active(0)
+	box.add(tab[number]['id'])
+	box.add(tab[number]['type'])
+	widget.pack_start(box, expand=False, fill=False, padding=1)
+	widget.show_all()
+
+def remove_language_hbox(self, widget, tab):
+	number = len(widget.get_children())-1	# last box number
+	try:
+		tab.pop()
+		widget.remove(widget.get_children().pop())
+	except:
+		gdebug.debug("List is empty")
+	widget.show_all()
+
 def fetch_bigger_poster(self):	
 	match = 0	
 	gdebug.debug("fetching poster from amazon")

@@ -65,6 +65,26 @@ class GriffithSQL:
 		except:
 			self.create_table_media()
 			self.update_old_media()
+		try:
+			self.cursor.execute("SELECT id FROM languages LIMIT 1")
+		except:
+			self.create_table_languages()
+		try:
+			self.cursor.execute("SELECT movie_id FROM movie_lang LIMIT 1")
+		except:
+			self.create_table_movie_lang()
+		try:
+			self.cursor.execute("SELECT movie_id FROM movie_sub LIMIT 1")
+		except:
+			self.create_table_movie_sub()
+		try:
+			self.cursor.execute("SELECT id FROM tags LIMIT 1")
+		except:
+			self.create_table_tags()
+		try:
+			self.cursor.execute("SELECT movie_id FROM movie_tag LIMIT 1")
+		except:
+			self.create_table_movie_tag()
 
 		# check old media
 		if self.count_records("movies", "media='DVD'") > 0:
@@ -254,8 +274,10 @@ class GriffithSQL:
 		self.cursor.execute(query)
 
 
-	def get_all_data(self, table_name="movies", order_by="number ASC",where=None):
-		sql="SELECT * FROM %s" % table_name
+	def get_all_data(self, table_name="movies", order_by="number ASC",where=None, what=None):
+		if what == None:
+			what = "*"
+		sql="SELECT %s FROM %s" %(what, table_name)
 		if where:
 			sql = sql + " WHERE %s" % where
 		sql = sql + " ORDER BY %s" % order_by
@@ -419,7 +441,7 @@ class GriffithSQL:
 		else:
 			pass
 
-	# volumes/collections
+	# volumes/collections ----------------------------------------------{{{
 	def create_table_volumes(self):
 		gdebug.debug("Creating 'volumes' table...")
 		self.cursor.execute ("""
@@ -543,8 +565,9 @@ class GriffithSQL:
 		except:
 				return False
 		return True
+	# }}}
 
-	# media
+	# media ------------------------------------------------------------{{{
 	def create_table_media(self):
 		gdebug.debug("Creating 'media' table...")
 		self.cursor.execute ("""
@@ -565,7 +588,7 @@ class GriffithSQL:
 			INSERT INTO 'media' VALUES (9, "SVCD"); 
 			INSERT INTO 'media' VALUES (10, "VHS"); 
 			INSERT INTO 'media' VALUES (11, "BETACAM"); 
-			""")
+		""")
 
 	def update_old_media(self):
 		gdebug.debug("Upgrading old media values...")
@@ -588,3 +611,148 @@ class GriffithSQL:
 			UPDATE movies SET media = '11' WHERE media = 'BETACAM'; 
 		""")
 		self.con.commit()
+	#}}}
+
+	# languages --------------------------------------------------------{{{
+	def create_table_languages(self):
+		gdebug.debug("Creating 'languages' table...")
+		self.cursor.execute ("""
+			CREATE TABLE languages
+			(
+				'id' INTEGER PRIMARY KEY,
+				'name' STRING NOT NULL
+			);
+			INSERT INTO 'languages' VALUES (0, ""); 
+		""")
+
+	def create_table_movie_lang(self):
+		gdebug.debug("Creating 'movie_lang' table...")
+		self.cursor.execute ("""
+			CREATE TABLE movie_lang
+			(
+				'movie_id' INTEGER NOT NULL,
+				'lang_id' INTEGER NOT NULL,
+				'type' INTEGER
+			);
+		""")
+
+	def create_table_movie_sub(self):
+		gdebug.debug("Creating 'movie_sub' table...")
+		self.cursor.execute ("""
+			CREATE TABLE movie_sub
+			(
+				'movie_id' INTEGER NOT NULL,
+				'lang_id' INTEGER NOT NULL
+			);
+		""")
+
+	def add_language(self, name):
+		# check if language already exists
+		for language in self.get_all_data(table_name="languages", order_by="id"):
+			if name == language['name']:
+				gdebug.debug("Language '%s' already exists"%name)
+				return False
+		gdebug.debug("Adding '%s' language to database..."%name)
+		try:
+			self.cursor.execute("INSERT INTO 'languages'('id', 'name') VALUES (Null,'"+
+				gutils.gescape(name)+"');")
+		except:
+			return False
+		return True
+	
+	def remove_language(self, id=None, name=None):
+		if id != None:
+			id = gutils.gescape(id)
+			self.cursor.execute("SELECT name FROM languages WHERE id = '%s'" % id)
+			name = self.cursor.fetchone()[0]
+		elif name != None and id == None:
+			name =	gutils.gescape(name)
+			self.cursor.execute("SELECT id FROM languages WHERE name = '%s'" % name)
+			id = str(int(self.cursor.fetchone()[0]))
+		if str(id) == '0':
+			gdebug.debug("You have to select language first")
+			return False
+
+		self.cursor.execute("SELECT count(movie_id) FROM movie_lang WHERE lang_id = '%s'" % id)
+		movies = int(self.cursor.fetchone()[0])
+		if movies > 0:
+			gutils.warning(self, msg="%s movie(s) are assigned to this language.\nChange movie details first!"%str(movies))
+			return False
+		
+		self.cursor.execute("SELECT count(movie_id) FROM movie_sub WHERE lang_id = '%s'" % id)
+		movies = int(self.cursor.fetchone()[0])
+		if movies > 0:
+			gutils.warning(self, msg="%s movie(s) are assigned to this language.\nChange movie details first!"%str(movies))
+			return False
+		
+		gdebug.debug("Removing '%s' language (id=%s) from database..."%(name, id))
+		try:
+			self.cursor.execute("DELETE FROM languages WHERE id = '%s'" % id)
+		except:
+				return False
+		return True
+	# }}}
+
+	# tags -------------------------------------------------------------{{{
+	def create_table_tags(self):
+		gdebug.debug("Creating 'tags' table...")
+		self.cursor.execute ("""
+			CREATE TABLE tags
+			(
+				'id' INTEGER PRIMARY KEY,
+				'name' STRING NOT NULL
+			);
+		""")
+
+	def create_table_movie_tag(self):
+		gdebug.debug("Creating 'movie_tag' table...")
+		self.cursor.execute ("""
+			CREATE TABLE movie_tag
+			(
+				'movie_id' INTEGER NOT NULL,
+				'tag_id' INTEGER NOT NULL
+			);
+		""")
+	
+	def add_tag(self, name):
+		# check if tag already exists
+		for tag in self.get_all_data(table_name="tags", order_by="id"):
+			if name == tag['name']:
+				gdebug.debug("Tag '%s' already exists"%name)
+				return False
+		gdebug.debug("Adding '%s' tag to database..."%name)
+		try:
+			self.cursor.execute("INSERT INTO 'tags'('id', 'name') VALUES (Null,'"+
+				gutils.gescape(name)+"');")
+		except:
+			return False
+		return True
+
+	def remove_tag(self, id=None, name=None):
+		if id != None:
+			id = gutils.gescape(id)
+			self.cursor.execute("SELECT name FROM tags WHERE id = '%s'" % id)
+			name = self.cursor.fetchone()[0]
+		elif name != None and id == None:
+			name =	gutils.gescape(name)
+			self.cursor.execute("SELECT id FROM tags WHERE name = '%s'" % name)
+			id = str(int(self.cursor.fetchone()[0]))
+		if str(id) == '0':
+			gdebug.debug("You have to select language first")
+			return False
+
+		self.cursor.execute("SELECT count(movie_id) FROM movie_tag WHERE lang_id = '%s'" % id)
+		movies = int(self.cursor.fetchone()[0])
+		if movies > 0:
+			gutils.warning(self, msg="%s movie(s) are assigned to this tag.\nChange movie details first!"%str(movies))
+			return False
+		
+		gdebug.debug("Removing '%s' language (id=%s) from database..."%(name, id))
+		try:
+			self.cursor.execute("DELETE FROM languages WHERE id = '%s'" % id)
+		except:
+				return False
+		return True
+	# }}}
+
+# vim: fdm=marker

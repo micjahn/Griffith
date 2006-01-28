@@ -357,6 +357,9 @@ def combos(self):
 	edit.fill_volumes_combo(self)
 	edit.fill_collections_combo(self)
 	
+	for i in self.db.get_all_data(table_name="languages", order_by="id"):
+		self.lang_name.insert_text(i['id'], i['name'])
+	
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
 	self.results_treeview.set_model(self.treemodel_results)
