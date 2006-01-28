@@ -222,8 +222,7 @@ class Griffith:
 				self._("You saw all movies in your collection!"), \
 				self.main_window)
 
-	# volumes/collections			
-	
+	# volumes/collections ----------------------------------------------{{{
 	def add_volume(self, widget):
 		prefix = gutils.before(widget.get_name(), "_")
 		try:
@@ -289,6 +288,41 @@ class Griffith:
 			view.filter_all(self)
 		else:
 			view.filter_by_collection(self, collection_id)
+	#}}}
+	
+	# languages -------------------------------------------------------{{{
+	def on_lang_add_clicked(self, widget):
+		name = self.lang_name.get_active_text()
+		self.db.add_language(name)
+		# rebuild combo:
+		self.lang_name.get_model().clear()
+		for i in self.db.get_all_data(table_name="languages", order_by="id"):
+			self.lang_name.insert_text(i['id'], i['name']) 
+
+	def on_lang_remove_clicked(self, widget):
+		name = self.lang_name.get_active_text()
+		self.db.remove_language(name=name)
+		# rebuild combo:
+		self.lang_name.get_model().clear()
+		for i in self.db.get_all_data(table_name="languages", order_by="id"):
+			self.lang_name.insert_text(i['id'], i['name']) 
+
+	def on_lang_rename_clicked(self, widget):
+		new_name = self.lang_name.get_active_text()
+		#update.update_language(self, id, name=new_name)	# TODO
+		gdebug.debug("RENAME LANGUAGE: Not implemmented yet... (%s)"%new_name)
+
+	def on_e_lang_add_clicked(self, widget):
+		from edit import create_language_hbox
+		create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
+	def on_e_lang_remove_clicked(self, widget):
+		from edit import remove_language_hbox
+		remove_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
+	def on_e_sub_add_clicked(self, widget):
+		pass	# TODO
+	def on_e_sub_remove_clicked(self, widget):
+		pass	# TODO
+	#}}}
 
 	# main treeview
 	def treeview_clicked(self, *args):
@@ -602,3 +636,5 @@ class Griffith:
 if __name__ == "__main__":
 	griffith = Griffith()
 	griffith.main()
+
+#vim: fdm=marker
