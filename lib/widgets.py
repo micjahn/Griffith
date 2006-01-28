@@ -232,6 +232,8 @@ def define_widgets(self, gladefile):
 	self.lang_name = gladefile.get_widget('lang_name')	# preferences window
 	self.e_lang_vbox = gladefile.get_widget('e_lang_vbox')
 	self.e_sub_vbox = gladefile.get_widget('e_sub_vbox')
+	self.am_lang_vbox = gladefile.get_widget('am_lang_vbox')
+	self.am_sub_vbox = gladefile.get_widget('am_sub_vbox')
 
 
 	# poster events
@@ -346,7 +348,11 @@ def define_widgets(self, gladefile):
 		"on_e_lang_add_clicked"			: self.on_e_lang_add_clicked,
 		"on_e_lang_remove_clicked"		: self.on_e_lang_remove_clicked,
 		"on_e_sub_add_clicked"			: self.on_e_sub_add_clicked,
-		"on_e_sub_remove_clicked"		: self.on_e_sub_remove_clicked
+		"on_e_sub_remove_clicked"		: self.on_e_sub_remove_clicked,
+		"on_am_lang_add_clicked"		: self.on_am_lang_add_clicked,
+		"on_am_lang_remove_clicked"		: self.on_am_lang_remove_clicked,
+		"on_am_sub_add_clicked"			: self.on_am_sub_add_clicked,
+		"on_am_sub_remove_clicked"		: self.on_am_sub_remove_clicked
 	}
 	gladefile.signal_autoconnect(dic)
 

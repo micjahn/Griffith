@@ -82,6 +82,14 @@ def initialize_add_dialog(self):
 	self.nb_add.set_current_page(0)
 	self.am_source.set_active(self.d_plugin)
 	image = os.path.join(self.locations['images'], "default.png")
+	# languages - remove old widgets
+	for i in self.am_lang_vbox.get_children():
+		i.destroy()
+	for i in self.am_sub_vbox.get_children():
+		i.destroy()
+	self.am_languages = []
+	self.am_subtitles = []
+
 	handler = self.Image.set_from_file(image)
 	gutils.garbage(handler)
 	handler = self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
