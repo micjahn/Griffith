@@ -140,6 +140,12 @@ def clear_details(self):
 	self.e_picture.hide()
 	self.e_picture.show()
 	self.rating_slider.set_value(0)
+	# languages - remove old widgets
+	for i in self.e_lang_vbox.get_children():
+		i.destroy()
+	for i in self.e_sub_vbox.get_children():
+		i.destroy()
+	
 	try:
 		rimage = int(str(self.config.get('rating_image')))
 	except:
@@ -211,7 +217,10 @@ def create_language_hbox(self, widget, tab, lang=None, type=None):
 	tab[number]['type'].insert_text(0, '')
 	tab[number]['type'].insert_text(1, _("lector"))
 	tab[number]['type'].insert_text(2, _("dubbing"))
-	tab[number]['type'].set_active(0)
+	if type != None:
+		tab[number]['type'].set_active(type)
+	else:
+		tab[number]['type'].set_active(0)
 	box.add(tab[number]['id'])
 	box.add(tab[number]['type'])
 	widget.pack_start(box, expand=False, fill=False, padding=1)
@@ -224,6 +233,15 @@ def remove_language_hbox(self, widget, tab):
 		widget.remove(widget.get_children().pop())
 	except:
 		gdebug.debug("List is empty")
+	widget.show_all()
+
+def create_subtitle_hbox(self, widget, tab, lang=None, type=None):
+	from edit import fill_language_combo
+	number = len(widget.get_children())	# new box number
+	tab.append({})				# creates new tab[number][]
+	tab[number]['id'] = gtk.combo_box_new_text()
+	fill_language_combo(self, widget=tab[number]['id'], default=lang)
+	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
 	widget.show_all()
 
 def fetch_bigger_poster(self):	

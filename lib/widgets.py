@@ -230,9 +230,6 @@ def define_widgets(self, gladefile):
 
 	# languages
 	self.lang_name = gladefile.get_widget('lang_name')	# preferences window
-	#self.e_lang_1_id = gladefile.get_widget('e_lang_1_id')		# rest is added dynamically
-	#self.e_lang_1_type = gladefile.get_widget('e_lang_1_type')	# rest is added dynamically
-	#self.e_sub_1_id = gladefile.get_widget('e_sub_1_id')	# rest is added dynamically
 	self.e_lang_vbox = gladefile.get_widget('e_lang_vbox')
 	self.e_sub_vbox = gladefile.get_widget('e_sub_vbox')
 

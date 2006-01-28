@@ -319,9 +319,11 @@ class Griffith:
 		from edit import remove_language_hbox
 		remove_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
 	def on_e_sub_add_clicked(self, widget):
-		pass	# TODO
+		from edit import create_subtitle_hbox
+		create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
 	def on_e_sub_remove_clicked(self, widget):
-		pass	# TODO
+		from edit import remove_language_hbox
+		remove_language_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
 	#}}}
 
 	# main treeview

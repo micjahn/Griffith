@@ -171,13 +171,18 @@ def treeview_clicked(self):
 			#languages
 			languages = self.db.get_all_data(table_name="movie_lang", order_by="lang_id",
 					where="movie_id='%s'"%self.e_movie_id.get_text())
-			for i in self.e_lang_vbox.get_children():	# remove old widgets
-				i.destroy()
+			subtitles = self.db.get_all_data(table_name="movie_sub", order_by="lang_id",
+					where="movie_id='%s'"%self.e_movie_id.get_text())
 			self.e_languages = []
-			from edit import create_language_hbox
+			self.e_subtitles = []
 			if len(languages) > 0:
+				from edit import create_language_hbox
 				for i in languages:
-					create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, lang=i['lang_id'])
+					create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, lang=i['lang_id'], type=i['type'])
+			if len(subtitles) > 0:
+				from edit import create_subtitle_hbox
+				for i in subtitles:
+					create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles, lang=i['lang_id'])
 
 
 def populate(self, data):

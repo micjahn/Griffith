@@ -27,6 +27,7 @@ import os
 import gdebug
 
 def update(self):
+	id = self.e_movie_id.get_text()
 	movie_id = self.e_number.get_text()
 	self.db.cursor.execute("SELECT loaned, volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
 	loaned, volume_id, collection_id = self.db.cursor.fetchall()[0]
@@ -78,6 +79,34 @@ def update(self):
 		
 			+"' WHERE number = '" + self.e_number.get_text() +"'"
 		)
+		# languages
+		languages = {}
+		for i in self.db.get_all_data(table_name="languages", order_by="id"):
+			languages[i['name']] = i['id']
+		
+		self.db.cursor.execute("""
+				DELETE FROM movie_lang WHERE movie_id = '%s';
+				DELETE FROM movie_sub WHERE movie_id = '%s';""" % (id, id)
+		)
+		
+		selected = {}	# tuple prevents duplicates
+		for i in self.e_languages:
+			name = i['id'].get_active_text()
+			if name != None:
+				selected[languages[i['id'].get_active_text()]] =  i['type'].get_active()
+		for i in selected.keys():
+			self.db.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');"
+				% (id, i, selected[i] ) )
+
+		selected = {}	# tuple prevents duplicates
+		for i in self.e_subtitles:
+			name = i['id'].get_active_text()
+			if name != None:
+				selected[languages[i['id'].get_active_text()]] = 1
+		for i in selected.keys():
+			self.db.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
+
+
 		self.update_statusbar(_("Movie information has been updated"))
 		# update main treelist
 		treeselection = self.main_treeview.get_selection()
