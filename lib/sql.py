@@ -29,7 +29,6 @@ import gutils
 import gtk
 
 class GriffithSQL:
-
 	con = None
 	cursor = None
 	
@@ -46,7 +45,227 @@ class GriffithSQL:
 			sys.exit()
 			
 		self.check_if_table_exists()
+
+	def new_db(self, parent):
+		"""initializes a new griffith database file"""
+		response = gutils.question(self, \
+			_("Are you sure you want to create a new database?\nYou will lose ALL your current data!"), \
+			1, parent.main_window)
+		if response == gtk.RESPONSE_YES:
+			response_sec = gutils.question(self, \
+				_("Last chance!\nDo you confirm that you want\nto lose your current data?"), \
+				1, parent.main_window)
+			if response_sec == gtk.RESPONSE_YES:
+				# delete images
+				for root, dirs, files in os.walk(os.path.join(self.griffith_dir,"posters"), topdown=False):
+					for name in files:
+						os.remove(os.path.join(root, name))
+				# delete db
+				parent.db.con.close()
+				os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
+				# create/connect db
+				parent.db = GriffithSQL(self.config, self.griffith_dir)
+				parent.clear_details()
+				parent.total = 0
+				parent.count_statusbar()
+				parent.treemodel.clear()
+				import edit
+				edit.fill_volumes_combo(parent)
+				edit.fill_collections_combo(parent)
+			else:
+				pass
+		else:
+			pass
+	
+	# create tables ----------------------------------------------------{{{
+	def create_db(self):
+		self.create_table_movies()
+		self.create_table_volumes()
+		self.create_table_loans()
+		self.create_table_people()
+		self.create_table_media()
+
+	def create_table_movies(self, backup=False):
+		if backup:
+			gdebug.debug("Creating 'movies' temporary table...")
+			query = "CREATE TEMPORARY TABLE movies_backup"
+		else:
+			gdebug.debug("Creating 'movies' table...")
+			query = "CREATE TABLE movies"
+		query += """
+			(
+				'id' INTEGER PRIMARY KEY,
+				'volume_id' INT NOT NULL DEFAULT '0',
+				'collection_id' INT NOT NULL DEFAULT '0',
+				'original_title' VARCHAR(255) NOT NULL,
+				'title' VARCHAR(255),
+				'director' VARCHAR(100),
+				'number' INT(11) NOT NULL,
+				'image' TEXT,
+				'plot' TEXT,
+				'country' VARCHAR(100),
+				'year' INT(4),
+				'runtime' INT(4),
+				'classification' VARCHAR(50),
+				'genre' VARCHAR(100),
+				'studio' VARCHAR(50),
+				'site' VARCHAR(100),
+				'imdb' VARCHAR(100),
+				'actors' TEXT,
+				'trailer' VARCHAR(100),
+				'rating' VARCHAR(50),
+				'loaned' INT(1) NOT NULL DEFAULT '0',
+				'media' INT(1) DEFAULT '0',
+				'num_media' INT(2),
+				'obs' TEXT,
+				'seen' INT(1) NOT NULL DEFAULT '0',
+				'region' INT DEFAULT 2,
+				'condition' INT DEFAULT 3,
+				'color' INT DEFAULT 0,
+				'layers' INT DEFAULT 4
+			)
+		"""
+		self.cursor.execute(query)
+
+	def create_table_loans(self, backup=False):
+		query = ''
+		if backup:
+			gdebug.debug("Creating 'loans' temporary table...")
+			query = "CREATE TEMPORARY TABLE loans_backup"
+		else:
+			gdebug.debug("Creating 'loans' table...")
+			query = "CREATE TABLE loans"
+		query += """
+			(
+				id INTEGER PRIMARY KEY,
+				person_id INT(11) NOT NULL default '0',
+				movie_id INTEGER default '0',
+				volume_id INTEGER default '0',
+				collection_id INTEGER default '0',
+				date DATE NOT NULL default '0000-00-00',
+				return_date DATE
+			)
+		"""
+		self.cursor.execute(query)
 			
+	def create_table_people(self, backup=False):
+		if backup:
+			gdebug.debug("Creating 'people' temporary table...")
+			query = "CREATE TEMPORARY TABLE people_backup"
+		else:
+			gdebug.debug("Creating 'people' table...")
+			query = "CREATE TABLE people"
+		query += """
+			(
+				id INTEGER PRIMARY KEY,
+				name VARCHAR(200) NOT NULL,
+				email VARCHAR(150),
+				phone VARCHAR(50)
+			)
+		"""
+		self.cursor.execute(query)
+	
+	def create_table_volumes(self):
+		gdebug.debug("Creating 'volumes' table...")
+		self.cursor.execute ("""
+			CREATE TABLE volumes
+			(
+				'id' INTEGER PRIMARY KEY,
+				'name' STRING NOT NULL,
+				'loaned' INT(1) NOT NULL default '0'
+			);
+			INSERT INTO 'volumes' VALUES (0,'','0');
+			""")
+			
+	def create_table_collections(self):
+		gdebug.debug("Creating 'collections' table...")
+		self.cursor.execute ("""
+			CREATE TABLE collections
+			(
+				'id' INTEGER PRIMARY KEY,
+				'name' STRING NOT NULL,
+				'loaned' INT(1) NOT NULL default '0'
+			);
+			INSERT INTO 'collections' VALUES (0,'','0');
+			""")
+	
+	def create_table_media(self):
+		gdebug.debug("Creating 'media' table...")
+		self.cursor.execute ("""
+			CREATE TABLE media
+			(
+				'id' INTEGER PRIMARY KEY,
+				'name' STRING NOT NULL
+			);
+			INSERT INTO 'media' VALUES (0, "DVD");
+			INSERT INTO 'media' VALUES (1, "DVD-R");
+			INSERT INTO 'media' VALUES (2, "DVD-RW");
+			INSERT INTO 'media' VALUES (3, "DVD+R");
+			INSERT INTO 'media' VALUES (4, "DVD+RW");
+			INSERT INTO 'media' VALUES (5, "DVD-RAM");
+			INSERT INTO 'media' VALUES (6, "CD");
+			INSERT INTO 'media' VALUES (7, "CD-RW");
+			INSERT INTO 'media' VALUES (8, "VCD");
+			INSERT INTO 'media' VALUES (9, "SVCD");
+			INSERT INTO 'media' VALUES (10, "VHS");
+			INSERT INTO 'media' VALUES (11, "BETACAM");
+		""")
+
+	def create_table_languages(self):
+		gdebug.debug("Creating 'languages' table...")
+		self.cursor.execute ("""
+			CREATE TABLE languages
+			(
+				'id' INTEGER PRIMARY KEY,
+				'name' STRING NOT NULL
+			);
+			INSERT INTO 'languages' VALUES (0, "");
+		""")
+
+	def create_table_movie_lang(self):
+		gdebug.debug("Creating 'movie_lang' table...")
+		self.cursor.execute ("""
+			CREATE TABLE movie_lang
+			(
+				'movie_id' INTEGER NOT NULL,
+				'lang_id' INTEGER NOT NULL,
+				'type' INTEGER
+			);
+		""")
+
+	def create_table_movie_sub(self):
+		gdebug.debug("Creating 'movie_sub' table...")
+		self.cursor.execute ("""
+			CREATE TABLE movie_sub
+			(
+				'movie_id' INTEGER NOT NULL,
+				'lang_id' INTEGER NOT NULL
+			);
+		""")
+
+	def create_table_tags(self):
+		gdebug.debug("Creating 'tags' table...")
+		self.cursor.execute ("""
+			CREATE TABLE tags
+			(
+				'id' INTEGER PRIMARY KEY,
+				'name' STRING NOT NULL
+			);
+		""")
+
+	def create_table_movie_tag(self):
+		gdebug.debug("Creating 'movie_tag' table...")
+		self.cursor.execute ("""
+			CREATE TABLE movie_tag
+			(
+				'movie_id' INTEGER NOT NULL,
+				'tag_id' INTEGER NOT NULL
+			);
+		""")
+	
+	# }}}
+
+	# upgrade tables ---------------------------------------------------{{{
 	def check_if_table_exists(self):
 		try:
 			self.cursor.execute("SELECT id FROM movies LIMIT 1")
@@ -141,7 +360,7 @@ class GriffithSQL:
 			'collection_id' : 1,
 			'person_id'     : 1,
 			'date'          : 1,
-			'return_date'   : 1 
+			'return_date'   : 1
 		}
 		need_upgrade = False
 		for column in columns:
@@ -185,192 +404,32 @@ class GriffithSQL:
 		self.cursor.execute ("INSERT INTO %s SELECT * FROM %s_backup" % (table, table))
 		self.cursor.execute ("DROP TABLE %s_backup"%table)
 		self.con.commit()
-		
-	def create_db(self):
-		self.create_table_movies()
-		self.create_table_volumes()
-		self.create_table_loans()
-		self.create_table_people()
-		self.create_table_media()
-
-	def create_table_movies(self, backup=False):
-		if backup:
-			gdebug.debug("Creating 'movies' temporary table...")
-			query = "CREATE TEMPORARY TABLE movies_backup"
-		else:
-			gdebug.debug("Creating 'movies' table...")
-			query = "CREATE TABLE movies"
-		query += """
-			(
-				'id' INTEGER PRIMARY KEY,
-				'volume_id' INT NOT NULL DEFAULT '0',
-				'collection_id' INT NOT NULL DEFAULT '0',
-				'original_title' VARCHAR(255) NOT NULL,
-				'title' VARCHAR(255),
-				'director' VARCHAR(100),
-				'number' INT(11) NOT NULL,
-				'image' TEXT,
-				'plot' TEXT,
-				'country' VARCHAR(100),
-				'year' INT(4),
-				'runtime' INT(4),
-				'classification' VARCHAR(50),
-				'genre' VARCHAR(100),
-				'studio' VARCHAR(50),
-				'site' VARCHAR(100),
-				'imdb' VARCHAR(100),
-				'actors' TEXT,
-				'trailer' VARCHAR(100),
-				'rating' VARCHAR(50),
-				'loaned' INT(1) NOT NULL DEFAULT '0',
-				'media' INT(1) DEFAULT '0',
-				'num_media' INT(2),
-				'obs' TEXT,
-				'seen' INT(1) NOT NULL DEFAULT '0',
-				'region' INT DEFAULT 2,
-				'condition' INT DEFAULT 3,
-				'color' INT DEFAULT 0,
-				'layers' INT DEFAULT 4
-			)
-		"""
-		self.cursor.execute(query)
-
-	def create_table_loans(self, backup=False):
-		query = ''
-		if backup:
-			gdebug.debug("Creating 'loans' temporary table...")
-			query = "CREATE TEMPORARY TABLE loans_backup"
-		else:
-			gdebug.debug("Creating 'loans' table...")
-			query = "CREATE TABLE loans"
-		query += """
-			(
-				id INTEGER PRIMARY KEY,
-				person_id INT(11) NOT NULL default '0',
-				movie_id INTEGER default '0',
-				volume_id INTEGER default '0',
-				collection_id INTEGER default '0',
-				date DATE NOT NULL default '0000-00-00',
-				return_date DATE
-			)
-		"""
-		self.cursor.execute(query)
-			
-	def create_table_people(self, backup=False):
-		if backup:
-			gdebug.debug("Creating 'people' temporary table...")
-			query = "CREATE TEMPORARY TABLE people_backup"
-		else:
-			gdebug.debug("Creating 'people' table...")
-			query = "CREATE TABLE people"
-		query += """
-			(
-				id INTEGER PRIMARY KEY,
-				name VARCHAR(200) NOT NULL,
-				email VARCHAR(150),
-				phone VARCHAR(50)
-			)
-		"""
-		self.cursor.execute(query)
-
-
-	def get_all_data(self, table_name="movies", order_by="number ASC",where=None, what=None):
-		if what == None:
-			what = "*"
-		sql="SELECT %s FROM %s" %(what, table_name)
-		if where:
-			sql = sql + " WHERE %s" % where
-		sql = sql + " ORDER BY %s" % order_by
-		self.cursor.execute(sql)
-		return self.cursor.fetchall()
 	
-	def get_loaned_movies(self):
-		self.cursor.execute("SELECT * FROM movies WHERE loaned='1' ORDER BY number")
-		return self.cursor.fetchall()
-		
-	def get_not_seen_movies(self):
-		self.cursor.execute("SELECT * FROM movies WHERE seen='0' ORDER BY number")
-		return self.cursor.fetchall()
-
-	def get_loan_info(self, movie_id=None, volume_id=None, collection_id=None):
-		query = "SELECT * FROM loans WHERE "
-		if collection_id>0:
-			query += "collection_id='%s'" % str(collection_id)
-		elif volume_id>0:
-			query += "volume_id='%s'" % str(volume_id)
-		else:
-			query += "movie_id='%s'" % str(movie_id)
-		query +=  " AND return_date = ''"
-		self.cursor.execute(query)
-		return self.cursor.fetchall()
-
-	def get_loan_history(self, movie_id=None, volume_id=None, collection_id=None):
-		query = "SELECT * FROM loans WHERE return_date <> '' AND ("
-		if collection_id>0:
-			query += "collection_id='%s'" % str(collection_id)
-		if volume_id>0:
-			if collection_id>0:
-				query += " OR "
-			query += "volume_id='%s'" % str(volume_id)
-		if movie_id>0:
-			if collection_id>0 or volume_id>0:
-				query += " OR "
-			query += " movie_id='%s'" % str(movie_id)
-		query +=  ")"
-		self.cursor.execute(query)
-		return self.cursor.fetchall()
-
-	def count_records(self,table_name, where='1'):
-		self.cursor.execute("SELECT COUNT(id) FROM %s" % (table_name) + " WHERE %s" % (where))
-		return int(self.cursor.fetchone()[0])
-		
-	def remove_movie_by_num(self,number):
-		self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
+	def update_old_media(self):
+		gdebug.debug("Upgrading old media values...")
+		self.cursor.execute("""
+			UPDATE movies SET media = '0' WHERE media = 'DVD';
+			UPDATE movies SET media = '1' WHERE media = 'DVD-R';
+			UPDATE movies SET media = '2' WHERE media = 'DVD-RW';
+			UPDATE movies SET media = '3' WHERE media = 'DVD+R';
+			UPDATE movies SET media = '4' WHERE media = 'DVD+RW';
+			UPDATE movies SET media = '5' WHERE media = 'DVD-RAM';
+			UPDATE movies SET media = '6' WHERE media = 'DivX';
+			UPDATE movies SET media = '6' WHERE media = 'DIVX';
+			UPDATE movies SET media = '6' WHERE media = 'XviD';
+			UPDATE movies SET media = '6' WHERE media = 'XVID';
+			UPDATE movies SET media = '6' WHERE media = 'WMV';
+			UPDATE movies SET media = '6' WHERE media = 'WMV';
+			UPDATE movies SET media = '8' WHERE media = 'VCD';
+			UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	
+			UPDATE movies SET media = '10' WHERE media = 'VHS';
+			UPDATE movies SET media = '11' WHERE media = 'BETACAM';
+		""")
 		self.con.commit()
-		
-	def select_movie_by_num(self,number):
-		self.cursor.execute("SELECT * FROM movies WHERE number = '"+number+"' ORDER BY number ASC")
-		return self.cursor.fetchall()
-	
-	def select_movie_by_original_title(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE original_title LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
-		
-	def select_movie_by_title(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE title LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
-		
-	def select_movie_by_director(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE director LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
 
-	def select_movie_by_rating(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE rating LIKE '"+txt+"' ORDER BY number ASC")
-		return self.cursor.fetchall()
-		
-	def select_movie_by_year(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE year = '"+txt+"' ORDER BY number ASC")
-		return self.cursor.fetchall()
+	# }}}
 
-	def select_movie_by_genre(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE genre LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
-		
-	def select_movie_by_actors(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE actors LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
-
-	def remove_person_by_name(self, number):
-		self.cursor.execute("DELETE FROM people WHERE name = '"+number+"'")
-		
-	def select_person_by_name(self, name):
-		self.cursor.execute("SELECT * FROM people WHERE name = '"+name+"'")
-		return self.cursor.fetchall()
-		
-	def select_person_by_id(self, p_id):
-		self.cursor.execute("SELECT * FROM people WHERE id = '"+str(p_id)+"'")
-		return self.cursor.fetchall()
-		
+	# add data ---------------------------------------------------------{{{
 	def add_movie(self, data):
 		plot_buffer = data.am_plot.get_buffer()
 		with_buffer = data.am_with.get_buffer()
@@ -434,86 +493,6 @@ class GriffithSQL:
 				selected[languages[i['id'].get_active_text()]] = 1
 		for i in selected.keys():
 			self.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
-				
-	def new_db(self, parent):
-		"""initializes a new griffith database file"""
-		response = gutils.question(self, \
-			_("Are you sure you want to create a new database?\nYou will lose ALL your current data!"), \
-			1, parent.main_window)
-		if response == gtk.RESPONSE_YES:
-			response_sec = gutils.question(self, \
-				_("Last chance!\nDo you confirm that you want\nto lose your current data?"), \
-				1, parent.main_window)
-			if response_sec == gtk.RESPONSE_YES:
-				# delete images
-				for root, dirs, files in os.walk(os.path.join(self.griffith_dir,"posters"), topdown=False):
-					for name in files:
-						os.remove(os.path.join(root, name))
-				# delete db
-				parent.db.con.close()
-				os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
-				# create/connect db
-				parent.db = GriffithSQL(self.config, self.griffith_dir)
-				parent.clear_details()
-				parent.total = 0
-				parent.count_statusbar()
-				parent.treemodel.clear()
-				import edit
-				edit.fill_volumes_combo(parent)
-				edit.fill_collections_combo(parent)
-			else:
-				pass
-		else:
-			pass
-
-	# volumes/collections ----------------------------------------------{{{
-	def create_table_volumes(self):
-		gdebug.debug("Creating 'volumes' table...")
-		self.cursor.execute ("""
-			CREATE TABLE volumes
-			(
-				'id' INTEGER PRIMARY KEY,
-				'name' STRING NOT NULL,
-				'loaned' INT(1) NOT NULL default '0'
-			);
-			INSERT INTO 'volumes' VALUES (0,'None','0');
-			""")
-			
-	def create_table_collections(self):
-		gdebug.debug("Creating 'collections' table...")
-		self.cursor.execute ("""
-			CREATE TABLE collections
-			(
-				'id' INTEGER PRIMARY KEY,
-				'name' STRING NOT NULL,
-				'loaned' INT(1) NOT NULL default '0'
-			);
-			INSERT INTO 'collections' VALUES (0,'None','0');
-			""")
-
-	def get_all_volumes_data(self):
-		self.cursor.execute("SELECT * FROM volumes ORDER BY id")
-		return self.cursor.fetchall()
-		
-	def get_all_collections_data(self):
-		self.cursor.execute("SELECT * FROM collections ORDER BY id")
-		return self.cursor.fetchall()
-	
-	def select_movies_by_volume(self,volume_id):
-		self.cursor.execute("SELECT * FROM movies WHERE volume_id = '%s' ORDER BY number ASC" % volume_id)
-		return self.cursor.fetchall()
-
-	def select_movies_by_collection(self,collection):
-		self.cursor.execute("SELECT * FROM movies WHERE collection_id = '%s' ORDER BY number ASC" % collection)
-		return self.cursor.fetchall()
-	
-	def is_volume_loaned(self,volume):
-		self.cursor.execute("SELECT loaned FROM volumes WHERE id = '%s'" % volume)
-		return self.cursor.fetchone()[0]
-
-	def is_collection_loaned(self,collection):
-		self.cursor.execute("SELECT loaned FROM collections WHERE id = '%s'" % collection)
-		return self.cursor.fetchone()[0]
 
 	def add_volume(self, name):
 		# check if volume already exists
@@ -543,6 +522,146 @@ class GriffithSQL:
 			return False
 		return True
 
+	def add_language(self, name):
+		name = gutils.gescape(name)
+		# check if language already exists
+		for language in self.get_all_data(table_name="languages", order_by="id"):
+			if name == language['name']:
+				gdebug.debug("Language '%s' already exists"%name)
+				return False
+		gdebug.debug("Adding '%s' language to database..."%name)
+		try:
+			self.cursor.execute("INSERT INTO 'languages'('id', 'name') VALUES (Null,'"+
+				gutils.gescape(name)+"');")
+		except:
+			return False
+		return True
+	
+	def add_tag(self, name):
+		# check if tag already exists
+		for tag in self.get_all_data(table_name="tags", order_by="id"):
+			if name == tag['name']:
+				gdebug.debug("Tag '%s' already exists"%name)
+				return False
+		gdebug.debug("Adding '%s' tag to database..."%name)
+		try:
+			self.cursor.execute("INSERT INTO 'tags'('id', 'name') VALUES (Null,'"+
+				gutils.gescape(name)+"');")
+		except:
+			return False
+		return True
+
+	# }}}
+
+	# select data ------------------------------------------------------{{{
+	def get_all_data(self, table_name="movies", order_by="number ASC",where=None, what=None):
+		if what == None:
+			what = "*"
+		sql="SELECT %s FROM %s" %(what, table_name)
+		if where:
+			sql = sql + " WHERE %s" % where
+		sql = sql + " ORDER BY %s" % order_by
+		self.cursor.execute(sql)
+		return self.cursor.fetchall()
+	
+	def get_all_volumes_data(self):		# TODO: rewrite all code to use get_all_data()
+		self.cursor.execute("SELECT * FROM volumes ORDER BY id")
+		return self.cursor.fetchall()
+		
+	def get_all_collections_data(self):	# TODO: rewrite all code to use get_all_data()
+		self.cursor.execute("SELECT * FROM collections ORDER BY id")
+		return self.cursor.fetchall()
+	
+	def select_movie_by_num(self,number):
+		self.cursor.execute("SELECT * FROM movies WHERE number = '"+number+"' ORDER BY number ASC")
+		return self.cursor.fetchall()
+	
+	def select_movie_by_original_title(self,txt):
+		self.cursor.execute("SELECT * FROM movies WHERE original_title LIKE '%"+txt+"%' ORDER BY number ASC")
+		return self.cursor.fetchall()
+		
+	def select_movie_by_title(self,txt):
+		self.cursor.execute("SELECT * FROM movies WHERE title LIKE '%"+txt+"%' ORDER BY number ASC")
+		return self.cursor.fetchall()
+		
+	def select_movie_by_director(self,txt):
+		self.cursor.execute("SELECT * FROM movies WHERE director LIKE '%"+txt+"%' ORDER BY number ASC")
+		return self.cursor.fetchall()
+
+	def select_movie_by_rating(self,txt):
+		self.cursor.execute("SELECT * FROM movies WHERE rating LIKE '"+txt+"' ORDER BY number ASC")
+		return self.cursor.fetchall()
+		
+	def select_movie_by_year(self,txt):
+		self.cursor.execute("SELECT * FROM movies WHERE year = '"+txt+"' ORDER BY number ASC")
+		return self.cursor.fetchall()
+
+	def select_movie_by_genre(self,txt):
+		self.cursor.execute("SELECT * FROM movies WHERE genre LIKE '%"+txt+"%' ORDER BY number ASC")
+		return self.cursor.fetchall()
+		
+	def select_movie_by_actors(self,txt):
+		self.cursor.execute("SELECT * FROM movies WHERE actors LIKE '%"+txt+"%' ORDER BY number ASC")
+		return self.cursor.fetchall()
+	
+	def select_movies_by_volume(self,volume_id):
+		self.cursor.execute("SELECT * FROM movies WHERE volume_id = '%s' ORDER BY number ASC" % volume_id)
+		return self.cursor.fetchall()
+
+	def select_movies_by_collection(self,collection):
+		self.cursor.execute("SELECT * FROM movies WHERE collection_id = '%s' ORDER BY number ASC" % collection)
+		return self.cursor.fetchall()
+	
+	def select_person_by_name(self, name):
+		self.cursor.execute("SELECT * FROM people WHERE name = '"+name+"'")
+		return self.cursor.fetchall()
+		
+	def select_person_by_id(self, p_id):
+		self.cursor.execute("SELECT * FROM people WHERE id = '"+str(p_id)+"'")
+		return self.cursor.fetchall()
+		
+	def get_loaned_movies(self):
+		self.cursor.execute("SELECT * FROM movies WHERE loaned='1' ORDER BY number")
+		return self.cursor.fetchall()
+		
+	def get_not_seen_movies(self):
+		self.cursor.execute("SELECT * FROM movies WHERE seen='0' ORDER BY number")
+		return self.cursor.fetchall()
+
+	def get_loan_info(self, movie_id=None, volume_id=None, collection_id=None):
+		query = "SELECT * FROM loans WHERE "
+		if collection_id>0:
+			query += "collection_id='%s'" % str(collection_id)
+		elif volume_id>0:
+			query += "volume_id='%s'" % str(volume_id)
+		else:
+			query += "movie_id='%s'" % str(movie_id)
+		query +=  " AND return_date = ''"
+		self.cursor.execute(query)
+		return self.cursor.fetchall()
+
+	def get_loan_history(self, movie_id=None, volume_id=None, collection_id=None):
+		query = "SELECT * FROM loans WHERE return_date <> '' AND ("
+		if collection_id>0:
+			query += "collection_id='%s'" % str(collection_id)
+		if volume_id>0:
+			if collection_id>0:
+				query += " OR "
+			query += "volume_id='%s'" % str(volume_id)
+		if movie_id>0:
+			if collection_id>0 or volume_id>0:
+				query += " OR "
+			query += " movie_id='%s'" % str(movie_id)
+		query +=  ")"
+		self.cursor.execute(query)
+		return self.cursor.fetchall()
+	# }}}
+
+	# remove data ------------------------------------------------------{{{
+	def remove_movie_by_num(self,number):
+		self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
+		self.con.commit()
+	
 	def remove_volume(self, id=None, name=None):
 		if id != None:
 			id = gutils.gescape(id)
@@ -590,101 +709,6 @@ class GriffithSQL:
 		except:
 				return False
 		return True
-	# }}}
-
-	# media ------------------------------------------------------------{{{
-	def create_table_media(self):
-		gdebug.debug("Creating 'media' table...")
-		self.cursor.execute ("""
-			CREATE TABLE media
-			(
-				'id' INTEGER PRIMARY KEY,
-				'name' STRING NOT NULL
-			);
-			INSERT INTO 'media' VALUES (0, "DVD"); 
-			INSERT INTO 'media' VALUES (1, "DVD-R"); 
-			INSERT INTO 'media' VALUES (2, "DVD-RW"); 
-			INSERT INTO 'media' VALUES (3, "DVD+R"); 
-			INSERT INTO 'media' VALUES (4, "DVD+RW"); 
-			INSERT INTO 'media' VALUES (5, "DVD-RAM"); 
-			INSERT INTO 'media' VALUES (6, "CD"); 
-			INSERT INTO 'media' VALUES (7, "CD-RW"); 
-			INSERT INTO 'media' VALUES (8, "VCD"); 
-			INSERT INTO 'media' VALUES (9, "SVCD"); 
-			INSERT INTO 'media' VALUES (10, "VHS"); 
-			INSERT INTO 'media' VALUES (11, "BETACAM"); 
-		""")
-
-	def update_old_media(self):
-		gdebug.debug("Upgrading old media values...")
-		self.cursor.execute("""
-			UPDATE movies SET media = '0' WHERE media = 'DVD'; 
-			UPDATE movies SET media = '1' WHERE media = 'DVD-R'; 
-			UPDATE movies SET media = '2' WHERE media = 'DVD-RW'; 
-			UPDATE movies SET media = '3' WHERE media = 'DVD+R'; 
-			UPDATE movies SET media = '4' WHERE media = 'DVD+RW'; 
-			UPDATE movies SET media = '5' WHERE media = 'DVD-RAM'; 
-			UPDATE movies SET media = '6' WHERE media = 'DivX'; 
-			UPDATE movies SET media = '6' WHERE media = 'DIVX'; 
-			UPDATE movies SET media = '6' WHERE media = 'XviD'; 
-			UPDATE movies SET media = '6' WHERE media = 'XVID'; 
-			UPDATE movies SET media = '6' WHERE media = 'WMV'; 
-			UPDATE movies SET media = '6' WHERE media = 'WMV'; 
-			UPDATE movies SET media = '8' WHERE media = 'VCD'; 
-			UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	
-			UPDATE movies SET media = '10' WHERE media = 'VHS'; 
-			UPDATE movies SET media = '11' WHERE media = 'BETACAM'; 
-		""")
-		self.con.commit()
-	#}}}
-
-	# languages --------------------------------------------------------{{{
-	def create_table_languages(self):
-		gdebug.debug("Creating 'languages' table...")
-		self.cursor.execute ("""
-			CREATE TABLE languages
-			(
-				'id' INTEGER PRIMARY KEY,
-				'name' STRING NOT NULL
-			);
-			INSERT INTO 'languages' VALUES (0, ""); 
-		""")
-
-	def create_table_movie_lang(self):
-		gdebug.debug("Creating 'movie_lang' table...")
-		self.cursor.execute ("""
-			CREATE TABLE movie_lang
-			(
-				'movie_id' INTEGER NOT NULL,
-				'lang_id' INTEGER NOT NULL,
-				'type' INTEGER
-			);
-		""")
-
-	def create_table_movie_sub(self):
-		gdebug.debug("Creating 'movie_sub' table...")
-		self.cursor.execute ("""
-			CREATE TABLE movie_sub
-			(
-				'movie_id' INTEGER NOT NULL,
-				'lang_id' INTEGER NOT NULL
-			);
-		""")
-
-	def add_language(self, name):
-		name = gutils.gescape(name)
-		# check if language already exists
-		for language in self.get_all_data(table_name="languages", order_by="id"):
-			if name == language['name']:
-				gdebug.debug("Language '%s' already exists"%name)
-				return False
-		gdebug.debug("Adding '%s' language to database..."%name)
-		try:
-			self.cursor.execute("INSERT INTO 'languages'('id', 'name') VALUES (Null,'"+
-				gutils.gescape(name)+"');")
-		except:
-			return False
-		return True
 	
 	def remove_language(self, id=None, name=None):
 		if id != None:
@@ -717,43 +741,7 @@ class GriffithSQL:
 		except:
 				return False
 		return True
-	# }}}
-
-	# tags -------------------------------------------------------------{{{
-	def create_table_tags(self):
-		gdebug.debug("Creating 'tags' table...")
-		self.cursor.execute ("""
-			CREATE TABLE tags
-			(
-				'id' INTEGER PRIMARY KEY,
-				'name' STRING NOT NULL
-			);
-		""")
-
-	def create_table_movie_tag(self):
-		gdebug.debug("Creating 'movie_tag' table...")
-		self.cursor.execute ("""
-			CREATE TABLE movie_tag
-			(
-				'movie_id' INTEGER NOT NULL,
-				'tag_id' INTEGER NOT NULL
-			);
-		""")
 	
-	def add_tag(self, name):
-		# check if tag already exists
-		for tag in self.get_all_data(table_name="tags", order_by="id"):
-			if name == tag['name']:
-				gdebug.debug("Tag '%s' already exists"%name)
-				return False
-		gdebug.debug("Adding '%s' tag to database..."%name)
-		try:
-			self.cursor.execute("INSERT INTO 'tags'('id', 'name') VALUES (Null,'"+
-				gutils.gescape(name)+"');")
-		except:
-			return False
-		return True
-
 	def remove_tag(self, id=None, name=None):
 		if id != None:
 			id = gutils.gescape(id)
@@ -779,6 +767,22 @@ class GriffithSQL:
 		except:
 				return False
 		return True
+	
+	def remove_person_by_name(self, number):
+		self.cursor.execute("DELETE FROM people WHERE name = '"+number+"'")
 	# }}}
+		
+	def count_records(self,table_name, where='1'):
+		self.cursor.execute("SELECT COUNT(id) FROM %s" % (table_name) + " WHERE %s" % (where))
+		return int(self.cursor.fetchone()[0])
+		
+	
+	def is_volume_loaned(self,volume):
+		self.cursor.execute("SELECT loaned FROM volumes WHERE id = '%s'" % volume)
+		return self.cursor.fetchone()[0]
+
+	def is_collection_loaned(self,collection):
+		self.cursor.execute("SELECT loaned FROM collections WHERE id = '%s'" % collection)
+		return self.cursor.fetchone()[0]
 
 # vim: fdm=marker
