@@ -375,6 +375,7 @@ class GriffithSQL:
 		plot_buffer = data.am_plot.get_buffer()
 		with_buffer = data.am_with.get_buffer()
 		obs_buffer = data.am_obs.get_buffer()
+		number = data.am_number.get_text()
 		(filepath, filename) = os.path.split(data.am_picture_name.get_text())
 		query = """
 			INSERT INTO 'movies' ('id', 'original_title', 'title', 'director', 'plot', 'image', 'year',
@@ -405,20 +406,18 @@ class GriffithSQL:
 			data.am_discs.get_text()+"','0','" +\
 			str(int(data.rating_slider_add.get_value()))+"','" +\
 			str(int(data.am_seen.get_active()))+"','" +\
-			data.am_number.get_text()+"', '" +\
+			number+"', '" +\
 			str(data.am_volume_combo.get_active()) + "', '"+\
 			str(data.am_collection_combo.get_active()) + "')"
 		self.cursor.execute(query)
 		
+		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
+		id = self.cursor.fetchone()[0]
 		# languages
 		languages = {}
 		for i in self.get_all_data(table_name="languages", order_by="id"):
 			languages[i['name']] = i['id']
 		
-		self.cursor.execute("""
-				DELETE FROM movie_lang WHERE movie_id = '%s';
-				DELETE FROM movie_sub WHERE movie_id = '%s';""" % (id, id) # TODO: bad id
-		)
 		selected = {}	# tuple prevents duplicates
 		for i in data.am_languages:
 			name = i['id'].get_active_text()
