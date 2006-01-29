@@ -145,6 +145,9 @@ def clear_details(self):
 		i.destroy()
 	for i in self.e_sub_vbox.get_children():
 		i.destroy()
+	# tags - remove old widgets
+	for i in self.e_tag_hbox.get_children():
+		i.destroy()
 	
 	try:
 		rimage = int(str(self.config.get('rating_image')))
@@ -206,6 +209,16 @@ def fill_language_combo(self, widget, default=None):
 	if default != None:
 		widget.set_active(int(default))
 
+def fill_tag_combo(self, widget, default=None):
+	try:
+		widget.get_model().clear()
+	except:
+		pass
+	for i in self.db.get_all_data(table_name="tags", order_by="id"):
+		widget.insert_text(int(i['id']), str(i['name']))
+	if default != None:
+		widget.set_active(int(default))
+
 def create_language_hbox(self, widget, tab, lang=None, type=None):
 	from edit import fill_language_combo
 	number = len(widget.get_children())	# new box number
@@ -226,7 +239,7 @@ def create_language_hbox(self, widget, tab, lang=None, type=None):
 	widget.pack_start(box, expand=False, fill=False, padding=1)
 	widget.show_all()
 
-def remove_language_hbox(self, widget, tab):
+def remove_hbox(self, widget, tab):
 	number = len(widget.get_children())-1	# last box number
 	try:
 		tab.pop()
@@ -235,12 +248,21 @@ def remove_language_hbox(self, widget, tab):
 		gdebug.debug("List is empty")
 	widget.show_all()
 
-def create_subtitle_hbox(self, widget, tab, lang=None, type=None):
+def create_subtitle_hbox(self, widget, tab, default=None):
 	from edit import fill_language_combo
 	number = len(widget.get_children())	# new box number
 	tab.append({})				# creates new tab[number][]
 	tab[number]['id'] = gtk.combo_box_new_text()
-	fill_language_combo(self, widget=tab[number]['id'], default=lang)
+	fill_language_combo(self, widget=tab[number]['id'], default=default)
+	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
+	widget.show_all()
+
+def create_tag_hbox(self, widget, tab, default=None):
+	from edit import fill_tag_combo
+	number = len(widget.get_children())	# new box number
+	tab.append({})				# creates new tab[number][]
+	tab[number]['id'] = gtk.combo_box_new_text()
+	fill_language_combo(self, widget=tab[number]['id'], default=default)
 	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
 	widget.show_all()
 

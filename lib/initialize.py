@@ -359,6 +359,8 @@ def combos(self):
 	
 	for i in self.db.get_all_data(table_name="languages", order_by="id"):
 		self.lang_name.insert_text(i['id'], i['name'])
+	for i in self.db.get_all_data(table_name="tags", order_by="id"):
+		self.tag_name.insert_text(i['id'], i['name'])
 	
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)

@@ -79,6 +79,7 @@ def update(self):
 		
 			+"' WHERE number = '" + self.e_number.get_text() +"'"
 		)
+		
 		# languages
 		languages = {}
 		for i in self.db.get_all_data(table_name="languages", order_by="id"):
@@ -106,6 +107,21 @@ def update(self):
 		for i in selected.keys():
 			self.db.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
 
+		# tags
+		tags = {}
+		for i in self.db.get_all_data(table_name="tags", order_by="id"):
+			tags[i['name']] = i['id']
+		
+		self.db.cursor.execute("""
+				DELETE FROM movie_tag WHERE movie_id = '%s';
+				DELETE FROM movie_sub WHERE movie_id = '%s';""" % (id, id)
+		)
+		
+		# TODO: read selected tags
+		selected = {}
+		for i in selected:
+			self.db.cursor.execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');"
+				% (id, i) )
 
 		self.update_statusbar(_("Movie information has been updated"))
 		# update main treelist

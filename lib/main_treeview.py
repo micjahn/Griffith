@@ -182,7 +182,7 @@ def treeview_clicked(self):
 			if len(subtitles) > 0:
 				from edit import create_subtitle_hbox
 				for i in subtitles:
-					create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles, lang=i['lang_id'])
+					create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles, default=i['lang_id'])
 
 
 def populate(self, data):

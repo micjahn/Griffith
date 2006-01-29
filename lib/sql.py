@@ -659,7 +659,12 @@ class GriffithSQL:
 
 	# remove data ------------------------------------------------------{{{
 	def remove_movie_by_num(self,number):
+		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
+		id = self.cursor.fetchone()[0]
 		self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
+		self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
+		self.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s'" % id)
+		self.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
 		self.con.commit()
 	
 	def remove_volume(self, id=None, name=None):
@@ -752,18 +757,18 @@ class GriffithSQL:
 			self.cursor.execute("SELECT id FROM tags WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
 		if str(id) == '0':
-			gdebug.debug("You have to select language first")
+			gdebug.debug("You have to select tag first")
 			return False
 
-		self.cursor.execute("SELECT count(movie_id) FROM movie_tag WHERE lang_id = '%s'" % id)
+		self.cursor.execute("SELECT count(movie_id) FROM movie_tag WHERE tag_id = '%s'" % id)
 		movies = int(self.cursor.fetchone()[0])
 		if movies > 0:
 			gutils.warning(self, msg="%s movie(s) are assigned to this tag.\nChange movie details first!"%str(movies))
 			return False
 		
-		gdebug.debug("Removing '%s' language (id=%s) from database..."%(name, id))
+		gdebug.debug("Removing '%s' tag (id=%s) from database..."%(name, id))
 		try:
-			self.cursor.execute("DELETE FROM languages WHERE id = '%s'" % id)
+			self.cursor.execute("DELETE FROM tags WHERE id = '%s'" % id)
 		except:
 				return False
 		return True

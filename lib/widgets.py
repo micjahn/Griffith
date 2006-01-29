@@ -234,6 +234,9 @@ def define_widgets(self, gladefile):
 	self.e_sub_vbox = gladefile.get_widget('e_sub_vbox')
 	self.am_lang_vbox = gladefile.get_widget('am_lang_vbox')
 	self.am_sub_vbox = gladefile.get_widget('am_sub_vbox')
+	
+	self.tag_name = gladefile.get_widget('tag_name')	# preferences window
+	self.e_tag_hbox = gladefile.get_widget('e_tag_hbox')
 
 
 	# poster events
@@ -352,7 +355,11 @@ def define_widgets(self, gladefile):
 		"on_am_lang_add_clicked"		: self.on_am_lang_add_clicked,
 		"on_am_lang_remove_clicked"		: self.on_am_lang_remove_clicked,
 		"on_am_sub_add_clicked"			: self.on_am_sub_add_clicked,
-		"on_am_sub_remove_clicked"		: self.on_am_sub_remove_clicked
+		"on_am_sub_remove_clicked"		: self.on_am_sub_remove_clicked,
+		# tags
+		"on_tag_add_clicked"			: self.on_tag_add_clicked,
+		"on_tag_remove_clicked"			: self.on_tag_remove_clicked,
+		"on_tag_rename_clicked"			: self.on_tag_rename_clicked
 	}
 	gladefile.signal_autoconnect(dic)
 

@@ -316,27 +316,49 @@ class Griffith:
 		from edit import create_language_hbox
 		create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
 	def on_e_lang_remove_clicked(self, widget):
-		from edit import remove_language_hbox
-		remove_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
+		from edit import remove_hbox
+		remove_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
 	def on_e_sub_add_clicked(self, widget):
 		from edit import create_subtitle_hbox
 		create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
 	def on_e_sub_remove_clicked(self, widget):
-		from edit import remove_language_hbox
-		remove_language_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
+		from edit import remove_hbox
+		remove_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
 	def on_am_lang_add_clicked(self, widget):
 		from edit import create_language_hbox
 		create_language_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
 	def on_am_lang_remove_clicked(self, widget):
-		from edit import remove_language_hbox
-		remove_language_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
+		from edit import remove_hbox
+		remove_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
 	def on_am_sub_add_clicked(self, widget):
 		from edit import create_subtitle_hbox
 		create_subtitle_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
 	def on_am_sub_remove_clicked(self, widget):
-		from edit import remove_language_hbox
-		remove_language_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
+		from edit import remove_hbox
+		remove_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
 	#}}}
+	
+	# tags -------------------------------------------------------------{{{
+	def on_tag_add_clicked(self, widget):
+		name = self.tag_name.get_active_text()
+		print name
+		self.db.add_tag(name)
+		# rebuild combo:
+		self.tag_name.get_model().clear()
+		for i in self.db.get_all_data(table_name="tags", order_by="id"):
+			self.tag_name.insert_text(i['id'], i['name']) 
+
+	def on_tag_remove_clicked(self, widget):
+		name = self.tag_name.get_active_text()
+		self.db.remove_tag(name=name)
+		# rebuild combo:
+		self.tag_name.get_model().clear()
+		for i in self.db.get_all_data(table_name="tags", order_by="id"):
+			self.tag_name.insert_text(i['id'], i['name']) 
+
+	def on_tag_rename_clicked(self, widget):
+		pass
+	# }}}
 
 	# main treeview
 	def treeview_clicked(self, *args):
