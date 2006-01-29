@@ -106,17 +106,14 @@ def update(self):
 				selected[languages[i['id'].get_active_text()]] = 1
 		for i in selected.keys():
 			self.db.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
+			print ("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
 
 		# tags
 		tags = {}
 		for i in self.db.get_all_data(table_name="tags", order_by="id"):
 			tags[i['name']] = i['id']
 		
-		self.db.cursor.execute("""
-				DELETE FROM movie_tag WHERE movie_id = '%s';
-				DELETE FROM movie_sub WHERE movie_id = '%s';""" % (id, id)
-		)
-		
+		self.db.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % id)
 		# TODO: read selected tags
 		selected = {}
 		for i in selected:
