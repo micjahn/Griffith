@@ -219,7 +219,6 @@ class GriffithSQL:
 				'id' INTEGER PRIMARY KEY,
 				'name' STRING NOT NULL
 			);
-			INSERT INTO 'languages' VALUES (0, "");
 		""")
 
 	def create_table_movie_lang(self):
