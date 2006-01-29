@@ -28,8 +28,16 @@ import gdebug
 
 def update(self):
 	id = self.e_movie_id.get_text()
-	movie_id = self.e_number.get_text()
-	self.db.cursor.execute("SELECT loaned, volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
+
+	number = self.e_number.get_text()
+	self.db.cursor.execute("SELECT id, title FROM movies WHERE number='%s'" % number)
+	tmp = self.db.cursor.fetchall()
+	if len(tmp) > 0:
+		if (int(tmp[0]['id']) != int(id)):
+			gutils.error(self, msg=_("This number is already assigned to:\n %s!") % tmp[0]['title'])
+			return False
+	
+	self.db.cursor.execute("SELECT loaned, volume_id, collection_id FROM movies WHERE id='%s'" % id)
 	loaned, volume_id, collection_id = self.db.cursor.fetchall()[0]
 	new_volume_id = gutils.findKey(self.e_volume_combo.get_active(), self.volume_combo_ids)
 	new_collection_id = gutils.findKey(self.e_collection_combo.get_active(), self.collection_combo_ids)
@@ -76,8 +84,9 @@ def update(self):
 			+"', num_media ='" + self.e_discs.get_text()
 			+"', volume_id='" + str(new_volume_id)
 			+"', collection_id='" + str(new_collection_id)
+			+"', number = '" + number
 		
-			+"' WHERE number = '" + self.e_number.get_text() +"'"
+			+"' WHERE id = '" + id +"'"
 		)
 		
 		# languages
@@ -106,7 +115,6 @@ def update(self):
 				selected[languages[i['id'].get_active_text()]] = 1
 		for i in selected.keys():
 			self.db.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
-			print ("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
 
 		# tags
 		tags = {}
@@ -127,6 +135,8 @@ def update(self):
 		tmp_model.set_value(tmp_iter,3,self.e_original_title.get_text())
 		tmp_model.set_value(tmp_iter,4,self.e_title.get_text())
 		tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
+		tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
+		tmp_model.set_value(tmp_iter,1,'%004d' % int(number))
 		
 		# update volume/collection combo
 		self.e_volume_combo.set_active(int(new_volume_id))
@@ -135,6 +145,9 @@ def update(self):
 		self.e_collection_id.set_text(str(new_collection_id))
 		self.e_volume_id.hide()
 		self.e_collection_id.hide()
+
+		# refresh winbdow
+		self.treeview_clicked() 
 	else:
 		gutils.error(self.w_results,_("You should fill the original title"))
 
@@ -238,6 +251,6 @@ def update_language(self, id, name):
 			UPDATE languages SET name ='%s' WHERE id='%s';
 		"""%(id, name))
 	except:
-		gdebug.debug("ERROR during updating volume's loan data!")
+		gdebug.debug("ERROR during updating language!")
 		return False
 	return True
