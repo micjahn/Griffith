@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: backup.py,v 1.14 2005/09/29 23:12:47 pox Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -75,3 +75,13 @@ def restore(self):
 		self.count_statusbar()
 		edit.fill_volumes_combo(self)
 		edit.fill_collections_combo(self)
+		# delete old widgets
+		self.lang_name.get_model().clear()
+		self.lang_name.set_text('')
+		self.tag_name.get_model().clear()
+		self.tag_name.set_text('')
+		for i in self.db.get_all_data(table_name="languages", order_by="id"):
+			self.lang_name.insert_text(i['id'], i['name'])
+		for i in self.db.get_all_data(table_name="tags", order_by="id"):
+			self.tag_name.insert_text(i['id'], i['name'])
+
