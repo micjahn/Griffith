@@ -68,6 +68,4 @@ def delete_movie_from_db(self, m_id, m_iter):
 	self.db.remove_movie_by_num(m_id)
 	self.treemodel.remove(m_iter)
 	self.clear_details()
-	self.select_last_row(self.total)
-	#update statusbar
 	self.count_statusbar()

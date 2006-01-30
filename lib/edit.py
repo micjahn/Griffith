@@ -137,8 +137,6 @@ def clear_details(self):
 	self.e_volume_combo.set_active(0)
 	self.e_collection_combo.set_active(0)
 	#self.e_picture.clear()
-	self.e_picture.hide()
-	self.e_picture.show()
 	self.rating_slider.set_value(0)
 	# languages - remove old widgets
 	for i in self.e_lang_vbox.get_children():
