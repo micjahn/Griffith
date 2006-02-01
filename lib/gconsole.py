@@ -46,7 +46,11 @@ def check_args(self):
 				con_search_movie(self, a)
 
 def con_search_movie(self, arg):
-	movie = self.db.select_movie_by_original_title(arg)
+	data = self.db.select_movie_by_original_title(arg)
+	for row in data:
+		print 5*"-"
+		print "[%s] %s (%s), %s - %s"%(row['number'],row['title'], \
+			row['original_title'], row['year'], row['director'])
 	sys.exit()
 
 def con_usage():

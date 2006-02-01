@@ -10,6 +10,7 @@ Griffith ChangeLog
 	* '"' char is now stripped from titles in all movie plugins.
 	* Added initial support for console arguments
 	* Debug functions moved to own class
+	* Added basic searching by original title on the console (griffith -s movie_title)
 
 2006-01-28 Piotr Ozarowski <ozarow@gmail.com>
 	* Movie number is now editable
