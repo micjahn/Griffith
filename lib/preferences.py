@@ -86,7 +86,7 @@ def show_preferences(self):
 		self.p_color.set_active(int(self.config.get('color')))  
 		
 	# default movie plugin
-	self.debug("Default movie plugin: %s" % self.config.get('default_movie_plugin'))
+	self.debug.show("Default movie plugin: %s" % self.config.get('default_movie_plugin'))
 	plugins = gutils.read_plugins('PluginMovie', \
 		self.locations['movie_plugins'])
 	plugins.sort()
