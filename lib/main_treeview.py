@@ -91,7 +91,7 @@ def treeview_clicked(self):
 				self.b_email_reminder.set_sensitive(True)
 				self.return_button.set_sensitive(True)
 				# loaned icon
-				self.Image.set_from_file(self.locations['images']  + "/loaned.png")
+				self.Image.set_from_file("%s/loaned.png"%self.locations['images'])
 				Pixbuf = self.Image.get_pixbuf()
 				self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 			else:
@@ -102,14 +102,14 @@ def treeview_clicked(self):
 				self.b_email_reminder.set_sensitive(False)
 				self.loan_button.set_sensitive(True)
 				# not loaned icon
-				self.Image.set_from_file(self.locations['images']  + "/not_loaned.png")		
+				self.Image.set_from_file("%s/not_loaned.png"%self.locations['images'])		
 				Pixbuf = self.Image.get_pixbuf()
 				self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 				
 			# poster
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
-			tmp_img = os.path.join(tmp_dest, "m_"+row['image']+".jpg")
-			tmp_img2 = os.path.join(tmp_dest, row['image']+".jpg")
+			tmp_img = os.path.join(tmp_dest, "m_%s.jpg"%row['image'])
+			tmp_img2 = os.path.join(tmp_dest, "%s.jpg"%row['image'])
 
 			if len(row['image']) and os.path.isfile(tmp_img2):
 				image_path = tmp_img
@@ -124,9 +124,9 @@ def treeview_clicked(self):
 				pass
 			else:
 				# if not, lets make one for future use :D
-				original_image = os.path.join(tmp_dest, row['image']+".jpg")
+				original_image = os.path.join(tmp_dest, "%s.jpg"%row['image'])
 				if os.path.isfile(original_image):
-					gutils.make_medium_image(self, row['image']+".jpg")
+					gutils.make_medium_image(self, "%s.jpg"%row['image'])
 				else:
 					self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
 					pixbuf = self.Image.get_pixbuf()
@@ -223,11 +223,11 @@ def populate(self, data):
 				pass
 			else:
 				# if not, lets make one for future use :D
-				original_image = os.path.join(tmp_dest, row['image']+".jpg")
+				original_image = os.path.join(tmp_dest, "%s.jpg"%row['image'])
 				if os.path.isfile(original_image):
-					gutils.make_thumbnail(self, row['image']+".jpg")
+					gutils.make_thumbnail(self, "%s.jpg"%row['image'])
 				else:
-					self.Image.set_from_file(self.locations['images'] + "/default_thumbnail.png")
+					self.Image.set_from_file("%s/default_thumbnail.png"%self.locations['images'])
 					pixbuf = self.Image.get_pixbuf()
 			self.Image.set_from_file(image_path)
 			pixbuf = self.Image.get_pixbuf()

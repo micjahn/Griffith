@@ -23,23 +23,21 @@ __revision__ = '$Id$'
 
 import getopt, sys
 
-def usage():
-	print "USAGE:", sys.argv[0], "[-h|d]"
+debug_mode = False
 
 try:
-	opts, args = getopt.getopt(sys.argv[1:], "hd", ["help", "debug"])
+	opts, args = getopt.getopt(sys.argv[1:], "hds:", ["help", "debug", "search="])
 except getopt.GetoptError:
 	# print help information and exit:
 	usage()
 	sys.exit(2)
 
-debug_mode = False
 for o, a in opts:
 	if o in ("-d", "--debug"):
 		debug_mode = True
-	if o in ("-h", "--help"):
-		usage()
-		sys.exit()
+
+def usage():
+	print "USAGE:", sys.argv[0], "[-h|d|s]"
 
 def debug(txt):
 	if debug_mode:
