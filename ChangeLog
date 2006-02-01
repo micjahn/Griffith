@@ -6,6 +6,8 @@ Griffith ChangeLog
 
 2006-02-01 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Fixed a problem with IMDB movie plugin not fetching casts for some movies
+	* Fixed a bug on IMDB movie plugin. Some movies were giving weird results on director's field.
+	* '"' char is now stripped from titles in all movie plugins.
 
 2006-01-28 Piotr Ozarowski <ozarow@gmail.com>
 	* Movie number is now editable

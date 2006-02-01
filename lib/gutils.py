@@ -192,6 +192,7 @@ def save_pixmap(self, pixmap, filename):
 def clean(text):
 	t = strip_tags(text)
 	t = string.replace(t, "&nbsp;", " ")
+	t = string.replace(t,'&#34;',"")
 	return string.strip(t)
 	
 def gdecode(txt, encode):
