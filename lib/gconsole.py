@@ -21,6 +21,7 @@ __revision__ = '$Id: $'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
+from gettext import gettext as _
 import getopt
 import sys
 
@@ -47,10 +48,13 @@ def check_args(self):
 
 def con_search_movie(self, arg):
 	data = self.db.select_movie_by_original_title(arg)
-	for row in data:
-		print 5*"-"
-		print "[%s] %s (%s), %s - %s"%(row['number'],row['title'], \
-			row['original_title'], row['year'], row['director'])
+	if data:
+		for row in data:
+			print 5*"-"
+			print "[%s] %s (%s), %s - %s"%(row['number'],row['title'], \
+				row['original_title'], row['year'], row['director'])
+	else:
+		print _("No movie found")
 	sys.exit()
 
 def con_usage():
