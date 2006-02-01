@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-02-01 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed a problem with IMDB movie plugin not fetching casts for some movies
+
 2006-01-28 Piotr Ozarowski <ozarow@gmail.com>
 	* Movie number is now editable
 	* Some language feature fixes
