@@ -50,8 +50,7 @@ def con_search_movie(self, arg):
 	data = self.db.select_movie_by_original_title(arg)
 	if data:
 		for row in data:
-			print 5*"-"
-			print "\033[35;1m[%s]\033[0m %s (%s), %s - %s"%(row['number'],row['title'], \
+			print "\033[35;1m[%s]\033[0m\t\033[34m%s\033[0m (%s), %s - \033[32m%s\033[0m"%(row['number'],row['title'], \
 				row['original_title'], row['year'], row['director'])
 	else:
 		print _("No movie found")
