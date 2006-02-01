@@ -24,7 +24,6 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import gutils
 import os
-import gdebug
 
 def update(self):
 	id = self.e_movie_id.get_text()
@@ -166,13 +165,13 @@ def clear_image(self,id):
 
 def update_collection(self, id, name=None, volume_id=None, loaned=None):
 	if str(id) == '0':
-		gdebug.debug("You have to select collection first")
+		self.debug.show("You have to select collection first")
 		return False
 	if name!=None:
 		try:
 			self.db.cursor.execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
 		except:
-			gdebug.debug("ERROR during updating collection's name!")
+			self.debug.show("ERROR during updating collection's name!")
 			return False
 		return True
 	if loaned==1:
@@ -182,13 +181,13 @@ def update_collection(self, id, name=None, volume_id=None, loaned=None):
 				UPDATE movies SET loaned='1' WHERE collection_id='%s';
 			""" % (id, id))
 		except:
-			gdebug.debug("ERROR during updating collection's loan data!")
+			self.debug.show("ERROR during updating collection's loan data!")
 			return False
 		if volume_id:
 			try:
 				self.db.cursor.execute("UPDATE volumes SET loaned='1' WHERE id='%s';"%volume_id)
 			except:
-				gdebug.debug("ERROR during updating volume's loan data!")
+				self.debug.show("ERROR during updating volume's loan data!")
 				return False
 		return True
 	elif loaned==0:
@@ -198,26 +197,26 @@ def update_collection(self, id, name=None, volume_id=None, loaned=None):
 				UPDATE movies SET loaned='0' WHERE collection_id='%s';
 			""" %( id, id))
 		except:
-			gdebug.debug("ERROR during updating collection's loan data!")
+			self.debug.show("ERROR during updating collection's loan data!")
 			return False
 		if volume_id:
 			try:
 				self.db.cursor.execute("UPDATE volumes SET loaned='0' WHERE id='%s';"%volume_id)
 			except:
-				gdebug.debug("ERROR during updating volume's loan data!")
+				self.debug.show("ERROR during updating volume's loan data!")
 				return False
 		return True
 	return False
 
 def update_volume(self, id, name=None, loaned=None):
 	if str(id) == '0':
-		gdebug.debug("You have to select volume first")
+		self.debug.show("You have to select volume first")
 		return False
 	if name!=None:
 		try:
 			self.db.cursor.execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
 		except:
-			gdebug.debug("ERROR during updating volume's name!")
+			self.debug.show("ERROR during updating volume's name!")
 			return False
 		return True
 	if loaned==1:
@@ -227,7 +226,7 @@ def update_volume(self, id, name=None, loaned=None):
 				UPDATE movies SET loaned=1 WHERE volume_id='%s';
 			"""%(id, id))
 		except:
-			gdebug.debug("ERROR during updating volume's loan data!")
+			self.debug.show("ERROR during updating volume's loan data!")
 			return False
 		return True
 	elif loaned==0:
@@ -237,20 +236,20 @@ def update_volume(self, id, name=None, loaned=None):
 				UPDATE movies SET loaned=0 WHERE volume_id='%s';
 			"""%(id, id))
 		except:
-			gdebug.debug("ERROR during updating volume's loan data!")
+			self.debug.show("ERROR during updating volume's loan data!")
 			return False
 		return True
 	return False
 
 def update_language(self, id, name):
 	if str(id) == '0':
-		gdebug.debug("You have to select language first")
+		self.debug.show("You have to select language first")
 		return False
 	try:
 		self.db.cursor.execute("""
 			UPDATE languages SET name ='%s' WHERE id='%s';
 		"""%(id, name))
 	except:
-		gdebug.debug("ERROR during updating language!")
+		self.debug.show("ERROR during updating language!")
 		return False
 	return True

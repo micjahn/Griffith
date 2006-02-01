@@ -24,36 +24,62 @@ __revision__ = '$Id $'
 from gettext import gettext as _
 import sys
 import os
-import gglobals
 import string
 import gtk
-import config
-import sql
 import widgets
 import gutils
 import gobject
-import gdebug
 import gettext
 
 try:
 	import gtkspell
 	spell_support = 1
 except:
-	gdebug.debug("gtkspell support not available - please install python-gnome-extras") 
+	print "gtkspell support not available - please install python-gnome-extras"
 	spell_support = 0
 
 def locations(self):
+
 	self.locations = {}
 	self._ = None
 	self.APP = "griffith"
-	gdebug.debug("running on %s" % os.name)
+	self.debug.show("running on %s" % os.name)
 	if os.name == "win32" or os.name == "nt":
 		self.windows = True
 	else:
 		self.windows = False
 	self.posix = (os.name == "posix")
 	self.locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0]))
-	self.griffith_dir = gglobals.griffith_dir   
+
+	if os.name == 'nt' or os.name == 'win32':
+		# default to My Documents
+		import winshell
+		mydocs = winshell.my_documents()
+		griffith_dir = os.path.join(mydocs, 'griffith')
+		
+	else:
+		griffith_dir = os.path.join(os.path.expanduser('~'), \
+			'.griffith')
+	try:
+		if not os.path.exists(griffith_dir):
+			self.debug.show('Creating %s' % griffith_dir)
+			os.makedirs(griffith_dir)
+		else:
+			self.debug.show('Using Griffith directory: %s'%griffith_dir)
+	except OSError:
+		self.debug.show("Unable to create griffith directory.")
+		raise
+		sys.exit()
+
+	if not os.access(griffith_dir, os.W_OK):
+		self.debug.show('Cannot write to griffith directory, %s' % griffith_dir)
+		sys.exit()
+		
+	if not os.path.exists(os.path.join(griffith_dir, "posters")):
+		self.debug.show("Creating poster directory")
+		os.makedirs(os.path.join(griffith_dir, "posters"))
+
+	self.griffith_dir = griffith_dir   
 
 	if self.windows:
 		#win32 platform, add the "lib" folder to the system path
@@ -102,12 +128,6 @@ def locations(self):
 	self.gladefile = gtk.glade.XML(gf)
 	
 	widgets.define_widgets(self, self.gladefile)
-	
-	# Configuration
-	self.config = config.Config()
-	
-	# create/connect db
-	self.db = sql.GriffithSQL(self.config, self.griffith_dir)
 	self.pdf_reader = self.config.get('pdf_reader')
 	
 def toolbar(self):
@@ -400,4 +420,4 @@ def initialize_gtkspell(self):
 					"Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('spell_lang'), \
 					self.w_preferences)
 	else:
-		gdebug.debug("Spellchecker is not available")
+		self.debug.show("Spellchecker is not available")

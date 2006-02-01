@@ -21,24 +21,15 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import getopt, sys
+class GriffithDebug:
+	debug_mode = None
+	
+	def __init__(self):
+		self.debug_mode = False
 
-debug_mode = False
+	def set_debug(self):
+		self.debug_mode = True
 
-try:
-	opts, args = getopt.getopt(sys.argv[1:], "hds:", ["help", "debug", "search="])
-except getopt.GetoptError:
-	# print help information and exit:
-	usage()
-	sys.exit(2)
-
-for o, a in opts:
-	if o in ("-d", "--debug"):
-		debug_mode = True
-
-def usage():
-	print "USAGE:", sys.argv[0], "[-h|d|s]"
-
-def debug(txt):
-	if debug_mode:
-		print txt.encode('utf8')
+	def show(self, txt):
+		if self.debug_mode:
+			print txt.encode('utf8')

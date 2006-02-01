@@ -30,7 +30,6 @@ import re
 import zipfile
 import webbrowser
 import gobject
-import gdebug
 
 url_re = re.compile('^\w+://')
 entity = re.compile(r'\&.\w*?\;')
@@ -148,7 +147,7 @@ def convert_entities(text):
 			except UnicodeDecodeError:
 				ents = unicode(ent_code, 'latin-1')
 			except Exception, ex:
-				gdebug.debug("error occurred while converting entity %s: %s" % (ents, ex))
+				print("error occurred while converting entity %s: %s" % (ents, ex))
 
 			# check if it still needs conversion
 			if not entity.search(ents):

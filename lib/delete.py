@@ -23,7 +23,6 @@ __revision__ = '$Id$'
 
 from gettext import gettext as _
 import gutils
-import gdebug
 import os
 
 def delete_movie(self):
@@ -51,17 +50,17 @@ def delete_poster(self, poster):
 		try:
 			os.remove(image_mini)
 		except:
-			gdebug.debug("Can't remove %s file"%image_mini)
+			self.debug.show("Can't remove %s file"%image_mini)
 	if os.path.isfile(image_full):
 		try:
 			os.remove(image_full)
 		except:
-			gdebug.debug("Can't remove %s file"%image_full)
+			self.debug.show("Can't remove %s file"%image_full)
 	if os.path.isfile(image_thumbnail):
 		try:
 			os.remove(image_thumbnail)
 		except:
-			gdebug.debug("Can't remove %s file"%image_thumbnail)
+			self.debug.show("Can't remove %s file"%image_thumbnail)
 		
 def delete_movie_from_db(self, m_id, m_iter):
 	self.total -= 1

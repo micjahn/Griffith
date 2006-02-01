@@ -21,6 +21,8 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
+# this only for backward compatibility
+
 import os
 import sys
 import gdebug
@@ -34,21 +36,3 @@ if os.name == 'nt' or os.name == 'win32':
 else:
 	griffith_dir = os.path.join(os.path.expanduser('~'), \
 		'.griffith')
-try:
-	if not os.path.exists(griffith_dir):
-		gdebug.debug('Creating %s' % griffith_dir)
-		os.makedirs(griffith_dir)
-	else:
-		gdebug.debug('Using Griffith directory: %s'%griffith_dir)
-except OSError:
-	gdebug.debug("Unable to create griffith directory.")
-	raise
-	sys.exit()
-
-if not os.access(griffith_dir, os.W_OK):
-	gdebug.debug('Cannot write to griffith directory, %s' % griffith_dir)
-	sys.exit()
-	
-if not os.path.exists(os.path.join(griffith_dir, "posters")):
-	gdebug.debug("Creating poster directory")
-	os.makedirs(os.path.join(griffith_dir, "posters"))

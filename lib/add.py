@@ -28,7 +28,6 @@ import gtk
 import string
 import shutil
 import quick_filter
-import gdebug
 import widgets
 
 def add_movie(self):
@@ -158,7 +157,7 @@ def change_rating_from_slider(self):
 def populate_with_results(self):
 	m_id = None
 	if self.founded_results_id:
-		gdebug.debug("self.founded:results_id: %s" % self.founded_results_id)
+		self.debug.show("self.founded:results_id: %s" % self.founded_results_id)
 		m_id = self.founded_results_id
 	else:
 		self.founded_results_id = 0
@@ -167,7 +166,7 @@ def populate_with_results(self):
 		m_id = tmp_model.get_value(tmp_iter, 0)
 	self.hide_results()
 	
-	gdebug.debug("m_id: %s" % m_id)
+	self.debug.show("m_id: %s" % m_id)
 	
 	plugin_name = 'PluginMovie' + self.active_plugin
 	plugin = __import__(plugin_name)

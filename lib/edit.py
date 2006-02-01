@@ -29,7 +29,6 @@ import amazon
 from urllib import urlcleanup
 import tempfile
 import movie
-import gdebug
 import delete
 import widgets
 from PIL import Image
@@ -243,7 +242,7 @@ def remove_hbox(self, widget, tab):
 		tab.pop()
 		widget.remove(widget.get_children().pop())
 	except:
-		gdebug.debug("List is empty")
+		self.debug.show("List is empty")
 	widget.show_all()
 
 def create_subtitle_hbox(self, widget, tab, default=None):
@@ -266,7 +265,7 @@ def create_tag_hbox(self, widget, tab, default=None):
 
 def fetch_bigger_poster(self):	
 	match = 0	
-	gdebug.debug("fetching poster from amazon")
+	self.debug.show("fetching poster from amazon")
 	this_movie = self.db.select_movie_by_num(self.e_number.get_text())
 	current_poster = this_movie[0]['image']
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
@@ -274,7 +273,7 @@ def fetch_bigger_poster(self):
 	try:
 		result = amazon.searchByKeyword(self.e_original_title.get_text(), \
 						type="lite", product_line="dvd")
-		gdebug.debug("Posters found on amazon: %s posters" % len(result))
+		self.debug.show("Posters found on amazon: %s posters" % len(result))
 	except:
 		gutils.warning(self, _("No posters found for this movie."))
 		return
@@ -296,7 +295,7 @@ def fetch_bigger_poster(self):
 
 		if (len(result[f].ImageUrlLarge)):
 			title = result[f].ProductName
-			gdebug.debug(title)
+			self.debug.show(title)
 			myiter = self.treemodel_results.insert_before(None, None)
 			self.treemodel_results.set_value(myiter, 0, str(f))
 			self.treemodel_results.set_value(myiter, 1, title)
@@ -336,7 +335,7 @@ def get_poster(self, f, result, current_poster):
 	except:
 		gutils.warning(self, _("Sorry. A connection error was occurred."))
 	
-	gdebug.debug(file_to_copy)
+	self.debug.show(file_to_copy)
 	
 	if  os.path.isfile(file_to_copy):
 		handler = self.big_poster.set_from_file(file_to_copy)
@@ -345,7 +344,7 @@ def get_poster(self, f, result, current_poster):
 		try:
 		    im = Image.open(file_to_copy)
 		except IOError:
-		    gdebug.debug("failed to identify %s"%file_to_copy)
+		    self.debug.show("failed to identify %s"%file_to_copy)
 		else:
 		    if im.format == "GIF":
 				gutils.warning(self, _("Sorry. This poster image format is not supported."))
@@ -358,7 +357,7 @@ def get_poster(self, f, result, current_poster):
 				_("Do you want to use this poster instead?"), \
 				1, self.main_window)
 		if response == -8:
-			gdebug.debug("Using new fetched poster, updating and removing old one from disk.")
+			self.debug.show("Using new fetched poster, updating and removing old one from disk.")
 			update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
 			gutils.make_thumbnail(self, '%s' % os.path.basename(file_to_copy))
 			gutils.make_medium_image(self, '%s' % os.path.basename(file_to_copy))
@@ -368,11 +367,11 @@ def get_poster(self, f, result, current_poster):
 			delete.delete_poster(self, current_poster)
 			
 		else:
-			gdebug.debug("Reverting to previous poster and deleting new one from disk.")
+			self.debug.show("Reverting to previous poster and deleting new one from disk.")
 			try:
                             os.remove(file_to_copy)
                         except:
-                            gdebug.debug("no permission for %s"%file_to_copy)
+                            self.debug.show("no permission for %s"%file_to_copy)
 			
 		self.poster_window.hide()
 	else:

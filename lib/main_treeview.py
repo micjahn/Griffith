@@ -24,7 +24,6 @@ from gettext import gettext as _
 import gutils
 import os
 import gtk
-import gdebug
 
 def treeview_clicked(self):
 	if self.total:

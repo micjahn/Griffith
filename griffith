@@ -46,7 +46,10 @@ import gdebug
 import gemail
 import main_treeview
 import quick_filter
-import getopt
+import gconsole
+import sql
+import config
+import gglobals
 from gettext import gettext as _
 
 class Griffith:
@@ -636,25 +639,18 @@ class Griffith:
 	def __init__(self):
 		"""
 		main griffith application constructor
-		"""
-		self.args = map(lambda i: i.replace('--', '').replace('-',''), sys.argv)			
-	
-		try:
-			opts, args = getopt.getopt(sys.argv[1:], "hds:", ["help", "debug", "search="])
-		except getopt.GetoptError:
-			# print help information and exit:
-			gdebug.usage()
-			sys.exit(2)
+		"""	
 		
-		for o, a in opts:
-			if o in ("-h", "--help"):
-				gdebug.usage()
-				sys.exit()
-			if o in ("-s"):
-				#movie = self.db.select_movie_by_original_title(a)
-				print a
-				sys.exit()		
-		
+		# debug object
+		self.debug = gdebug.GriffithDebug()
+		# Configuration
+		self.config = config.Config()
+		# create/connect db
+		self.db = sql.GriffithSQL(self.config, gglobals.griffith_dir)
+
+		# let's check any console arguments to parse
+		gconsole.check_args(self)
+
 		gtk.window_set_auto_startup_notification(True)
 		self.Image = gtk.Image()
 		self.filter_l = False
