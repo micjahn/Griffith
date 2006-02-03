@@ -24,7 +24,6 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import sqlite
 import os.path
-import gdebug
 import gutils
 import gtk
 
@@ -32,15 +31,17 @@ class GriffithSQL:
 	con = None
 	cursor = None
 	
-	def __init__(self, config, griffith_dir):
+	
+	def __init__(self, config, debug, griffith_dir):
 		self.griffith_dir = griffith_dir
 		self.config = config
+		self.debug = debug
 		try:
 			self.con = sqlite.connect(os.path.join(griffith_dir, \
 				config.get('default_db')), autocommit=1)
 			self.cursor = self.con.cursor()
 		except:
-			gdebug.debug("Error reading database file")
+			self.debug.show("Error reading database file")
 			import sys
 			sys.exit()
 			
@@ -87,10 +88,10 @@ class GriffithSQL:
 
 	def create_table_movies(self, backup=False):
 		if backup:
-			gdebug.debug("Creating 'movies' temporary table...")
+			self.debug.show("Creating 'movies' temporary table...")
 			query = "CREATE TEMPORARY TABLE movies_backup"
 		else:
-			gdebug.debug("Creating 'movies' table...")
+			self.debug.show("Creating 'movies' table...")
 			query = "CREATE TABLE movies"
 		query += """
 			(
@@ -130,10 +131,10 @@ class GriffithSQL:
 	def create_table_loans(self, backup=False):
 		query = ''
 		if backup:
-			gdebug.debug("Creating 'loans' temporary table...")
+			self.debug.show("Creating 'loans' temporary table...")
 			query = "CREATE TEMPORARY TABLE loans_backup"
 		else:
-			gdebug.debug("Creating 'loans' table...")
+			self.debug.show("Creating 'loans' table...")
 			query = "CREATE TABLE loans"
 		query += """
 			(
@@ -150,10 +151,10 @@ class GriffithSQL:
 			
 	def create_table_people(self, backup=False):
 		if backup:
-			gdebug.debug("Creating 'people' temporary table...")
+			self.debug.show("Creating 'people' temporary table...")
 			query = "CREATE TEMPORARY TABLE people_backup"
 		else:
-			gdebug.debug("Creating 'people' table...")
+			self.debug.show("Creating 'people' table...")
 			query = "CREATE TABLE people"
 		query += """
 			(
@@ -166,7 +167,7 @@ class GriffithSQL:
 		self.cursor.execute(query)
 	
 	def create_table_volumes(self):
-		gdebug.debug("Creating 'volumes' table...")
+		self.debug.show("Creating 'volumes' table...")
 		self.cursor.execute ("""
 			CREATE TABLE volumes
 			(
@@ -178,7 +179,7 @@ class GriffithSQL:
 			""")
 			
 	def create_table_collections(self):
-		gdebug.debug("Creating 'collections' table...")
+		self.debug.show("Creating 'collections' table...")
 		self.cursor.execute ("""
 			CREATE TABLE collections
 			(
@@ -190,7 +191,7 @@ class GriffithSQL:
 			""")
 	
 	def create_table_media(self):
-		gdebug.debug("Creating 'media' table...")
+		self.debug.show("Creating 'media' table...")
 		self.cursor.execute ("""
 			CREATE TABLE media
 			(
@@ -212,7 +213,7 @@ class GriffithSQL:
 		""")
 
 	def create_table_languages(self):
-		gdebug.debug("Creating 'languages' table...")
+		self.debug.show("Creating 'languages' table...")
 		self.cursor.execute ("""
 			CREATE TABLE languages
 			(
@@ -222,7 +223,7 @@ class GriffithSQL:
 		""")
 
 	def create_table_movie_lang(self):
-		gdebug.debug("Creating 'movie_lang' table...")
+		self.debug.show("Creating 'movie_lang' table...")
 		self.cursor.execute ("""
 			CREATE TABLE movie_lang
 			(
@@ -233,7 +234,7 @@ class GriffithSQL:
 		""")
 
 	def create_table_movie_sub(self):
-		gdebug.debug("Creating 'movie_sub' table...")
+		self.debug.show("Creating 'movie_sub' table...")
 		self.cursor.execute ("""
 			CREATE TABLE movie_sub
 			(
@@ -243,7 +244,7 @@ class GriffithSQL:
 		""")
 
 	def create_table_tags(self):
-		gdebug.debug("Creating 'tags' table...")
+		self.debug.show("Creating 'tags' table...")
 		self.cursor.execute ("""
 			CREATE TABLE tags
 			(
@@ -253,7 +254,7 @@ class GriffithSQL:
 		""")
 
 	def create_table_movie_tag(self):
-		gdebug.debug("Creating 'movie_tag' table...")
+		self.debug.show("Creating 'movie_tag' table...")
 		self.cursor.execute ("""
 			CREATE TABLE movie_tag
 			(
@@ -372,7 +373,7 @@ class GriffithSQL:
 			self.upgrade_table("loans", columns)
 			
 	def upgrade_table(self, table, columns):
-		gdebug.debug("Upgrading database: processing %s table..." % table)
+		self.debug.show("Upgrading database: processing %s table..." % table)
 		eval("self.create_table_%s(backup=True)"%table)
 		sql_query = "INSERT INTO %s_backup ("%table
 		i = 0
@@ -405,7 +406,7 @@ class GriffithSQL:
 		self.con.commit()
 	
 	def update_old_media(self):
-		gdebug.debug("Upgrading old media values...")
+		self.debug.show("Upgrading old media values...")
 		self.cursor.execute("""
 			UPDATE movies SET media = '0' WHERE media = 'DVD';
 			UPDATE movies SET media = '1' WHERE media = 'DVD-R';
@@ -497,9 +498,9 @@ class GriffithSQL:
 		# check if volume already exists
 		for volume in self.get_all_volumes_data():
 			if name == volume['name']:
-				gdebug.debug("Volume '%s' already exists"%name)
+				self.debug.show("Volume '%s' already exists"%name)
 				return False
-		gdebug.debug("Adding '%s' volume to database..."%name)
+		self.debug.show("Adding '%s' volume to database..."%name)
 		try:
 			self.cursor.execute("INSERT INTO 'volumes'('id', 'name', 'loaned') VALUES (Null,'"+
 				gutils.gescape(name)+"','0');")
@@ -511,9 +512,9 @@ class GriffithSQL:
 		# check if volume already exists
 		for collection in self.get_all_collections_data():
 			if name == collection['name']:
-				gdebug.debug("Collection '%s' already exists"%name)
+				self.debug.show("Collection '%s' already exists"%name)
 				return False
-		gdebug.debug("Adding '%s' collection to database..."%name)
+		self.debug.show("Adding '%s' collection to database..."%name)
 		try:
 			self.cursor.execute("INSERT INTO 'collections'('id', 'name', 'loaned') VALUES (Null,'"+
 				gutils.gescape(name)+"','0');")
@@ -526,9 +527,9 @@ class GriffithSQL:
 		# check if language already exists
 		for language in self.get_all_data(table_name="languages", order_by="id"):
 			if name == language['name']:
-				gdebug.debug("Language '%s' already exists"%name)
+				self.debug.show("Language '%s' already exists"%name)
 				return False
-		gdebug.debug("Adding '%s' language to database..."%name)
+		self.debug.show("Adding '%s' language to database..."%name)
 		try:
 			self.cursor.execute("INSERT INTO 'languages'('id', 'name') VALUES (Null,'"+
 				gutils.gescape(name)+"');")
@@ -540,9 +541,9 @@ class GriffithSQL:
 		# check if tag already exists
 		for tag in self.get_all_data(table_name="tags", order_by="id"):
 			if name == tag['name']:
-				gdebug.debug("Tag '%s' already exists"%name)
+				self.debug.show("Tag '%s' already exists"%name)
 				return False
-		gdebug.debug("Adding '%s' tag to database..."%name)
+		self.debug.show("Adding '%s' tag to database..."%name)
 		try:
 			self.cursor.execute("INSERT INTO 'tags'('id', 'name') VALUES (Null,'"+
 				gutils.gescape(name)+"');")
@@ -676,14 +677,14 @@ class GriffithSQL:
 			self.cursor.execute("SELECT id FROM volumes WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
 		if str(id) == '0':
-			gdebug.debug("You have to select volume first")
+			self.debug.show("You have to select volume first")
 			return False
 		self.cursor.execute("SELECT count(id) FROM movies WHERE volume_id = '%s'" % id)
 		movies = int(self.cursor.fetchone()[0])
 		if movies > 0:
 			gutils.warning(self, msg="%s movie(s) in this volume.\nRemoval is possible only if there is no movie assigned to volume"%str(movies))
 			return False
-		gdebug.debug("Removing '%s' volume (id=%s) from database..."%(name, id))
+		self.debug.show("Removing '%s' volume (id=%s) from database..."%(name, id))
 		try:
 			self.cursor.execute("DELETE FROM volumes WHERE id = '%s'" % id)
 		except:
@@ -700,14 +701,14 @@ class GriffithSQL:
 			self.cursor.execute("SELECT id FROM collections WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
 		if str(id) == '0':
-			gdebug.debug("You have to select collection first")
+			self.debug.show("You have to select collection first")
 			return False
 		self.cursor.execute("SELECT count(id) FROM movies WHERE collection_id = '%s'" % id)
 		movies = int(self.cursor.fetchone()[0])
 		if movies > 0:
 			gutils.warning(self, msg="%s movie(s) in this collection.\nRemoval is possible only if there is no movie assigned to collection"%str(movies))
 			return False
-		gdebug.debug("Removing '%s' collection (id=%s) from database..."%(name, id))
+		self.debug.show("Removing '%s' collection (id=%s) from database..."%(name, id))
 		try:
 			self.cursor.execute("DELETE FROM collections WHERE id = '%s'" % id)
 		except:
@@ -724,7 +725,7 @@ class GriffithSQL:
 			self.cursor.execute("SELECT id FROM languages WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
 		if str(id) == '0':
-			gdebug.debug("You have to select language first")
+			self.debug.show("You have to select language first")
 			return False
 
 		self.cursor.execute("SELECT count(movie_id) FROM movie_lang WHERE lang_id = '%s'" % id)
@@ -739,7 +740,7 @@ class GriffithSQL:
 			gutils.warning(self, msg="%s movie(s) are assigned to this language.\nChange movie details first!"%str(movies))
 			return False
 		
-		gdebug.debug("Removing '%s' language (id=%s) from database..."%(name, id))
+		self.debug.show("Removing '%s' language (id=%s) from database..."%(name, id))
 		try:
 			self.cursor.execute("DELETE FROM languages WHERE id = '%s'" % id)
 		except:
@@ -756,7 +757,7 @@ class GriffithSQL:
 			self.cursor.execute("SELECT id FROM tags WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
 		if str(id) == '0':
-			gdebug.debug("You have to select tag first")
+			self.debug.show("You have to select tag first")
 			return False
 
 		self.cursor.execute("SELECT count(movie_id) FROM movie_tag WHERE tag_id = '%s'" % id)
@@ -765,7 +766,7 @@ class GriffithSQL:
 			gutils.warning(self, msg="%s movie(s) are assigned to this tag.\nChange movie details first!"%str(movies))
 			return False
 		
-		gdebug.debug("Removing '%s' tag (id=%s) from database..."%(name, id))
+		self.debug.show("Removing '%s' tag (id=%s) from database..."%(name, id))
 		try:
 			self.cursor.execute("DELETE FROM tags WHERE id = '%s'" % id)
 		except:

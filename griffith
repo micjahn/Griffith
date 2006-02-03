@@ -646,7 +646,7 @@ class Griffith:
 		# Configuration
 		self.config = config.Config()
 		# create/connect db
-		self.db = sql.GriffithSQL(self.config, gglobals.griffith_dir)
+		self.db = sql.GriffithSQL(self.config, self.debug, gglobals.griffith_dir)
 
 		# let's check any console arguments to parse
 		gconsole.check_args(self)
