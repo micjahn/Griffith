@@ -31,7 +31,7 @@ def check_args(self):
 	
 	if self.args:	
 		try:
-			opts, args = getopt.getopt(sys.argv[1:], "hds:", ["help", "debug", "search"])
+			opts, args = getopt.getopt(sys.argv[1:], "hDo:s:d:w:y:", ["help", "debug", "search_original=", "search_title=", "director=", "with=", "year="])
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
@@ -41,13 +41,31 @@ def check_args(self):
 			if o in ("-h", "--help"):
 				con_usage()
 				sys.exit()
-			if o in ("-d"):
+			if o in ("-D"):
 				self.debug.set_debug()
-			if o in ("-s"):
-				con_search_movie(self, a)
+			if o in ("-o", "--search_original"):
+				con_search_movie(self, a, 1)
+			if o in ("-s", "--search_title"):
+				con_search_movie(self, a, 2)
+			if o in ("-d", "--director"):
+				con_search_movie(self, a, 3)
+			if o in ("-w", "--with"):
+				con_search_movie(self, a, 4)
+			if o in ("-y", "--year"):
+				con_search_movie(self, a, 5)
 
-def con_search_movie(self, arg):
-	data = self.db.select_movie_by_original_title(arg)
+def con_search_movie(self, arg, search_type):
+	if search_type==1:
+		data = self.db.select_movie_by_original_title(arg)
+	elif search_type==2:
+		data = self.db.select_movie_by_title(arg)
+	elif search_type==3:
+		data = self.db.select_movie_by_director(arg)
+	elif search_type==4:
+		data = self.db.select_movie_by_actors(arg)
+	elif search_type==5:
+		data = self.db.select_movie_by_year(arg)
+
 	if data:
 		for row in data:
 			print "\033[35;1m[%s]\033[0m\t\033[34m%s\033[0m (%s), %s - \033[32m%s\033[0m"%(row['number'],row['title'], \
@@ -57,4 +75,4 @@ def con_search_movie(self, arg):
 	sys.exit()
 
 def con_usage():
-	print "USAGE:", sys.argv[0], "[-h|d|s]"
+	print "USAGE:", sys.argv[0], "[-h|D|s|d|w|y]"

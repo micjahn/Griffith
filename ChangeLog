@@ -4,11 +4,20 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-02-04 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* New console arguments: 
+      -s, --search_title (search by title)
+      -o, --search_original (search by original title)
+      -d, --director (search by director)
+      -w, --with (search by actor)
+      -y, --year (search by year)
+    * Debug console argument changed to -D, --debug
+
 2006-02-01 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Fixed a problem with IMDB movie plugin not fetching casts for some movies
 	* Fixed a bug on IMDB movie plugin. Some movies were giving weird results on director's field.
 	* '"' char is now stripped from titles in all movie plugins.
-	* Added initial support for console arguments
+	* Added initial support for console arguments. No multi argument support yet.
 	* Debug functions moved to own class
 	* Added basic searching by original title on the console (griffith -s movie_title)
 
