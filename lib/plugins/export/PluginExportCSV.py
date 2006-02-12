@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: PluginExportCSV.py,v 1.6 2005/09/26 22:49:57 iznogoud Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -35,7 +35,7 @@ plugin_version = "0.1"
 
 class ExportPlugin:
 
-    def __init__(self, database, locations, parent):
+    def __init__(self, database, locations, parent, debug):
         self.db = database
         self.locations = locations
         self.parent = parent

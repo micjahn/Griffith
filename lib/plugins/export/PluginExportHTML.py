@@ -27,7 +27,7 @@ import sys
 import gtk, gtk.glade
 import gutils
 import glob, shutil
-import gdebug, version
+import version
 import math
 from xml.dom import minidom
 from gettext import gettext as _
@@ -120,8 +120,9 @@ class ExportPlugin(gtk.Window):
 	}
 	#}}}
 
-	def __init__(self, database, locations, parent=None):#{{{
+	def __init__(self, database, locations, parent, debug):#{{{
 		self.db = database
+		self.debug = debug
 		self.share_dir = locations['images']
 		self.widgets = {}
 		self.style_list = {}
@@ -163,7 +164,7 @@ class ExportPlugin(gtk.Window):
 				try:
 					doc = minidom.parse(os.path.join(fileName, 'config.xml'))
 				except:
-					gdebug.debug("Can't parse configuration file for template: %s"%fileName)
+					self.debug.show("Can't parse configuration file for template: %s"%fileName)
 					continue
 				for template in doc.getElementsByTagName('template'):
 					tpl_name        = self.get_node_value_by_language( template, 'name', language )
@@ -505,7 +506,7 @@ class ExportPlugin(gtk.Window):
 
 		# create directories
 		if not config['exported_dir']:
-			gdebug.debug("Error: Folder name not set!")
+			self.debug.show("Error: Folder name not set!")
 			return 1
 		
 		if not os.path.isdir(config['exported_dir']):
@@ -718,7 +719,7 @@ class ExportPlugin(gtk.Window):
 					except UnicodeDecodeError:
 						tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]), j)
 					except Exception, ex:
-						gdebug.debug("Error occurred while decoding %s (movie number %s)" % (self.names[j], row["number"]))
+						self.debug.show("Error occurred while decoding %s (movie number %s)" % (self.names[j], row["number"]))
 				else:
 					tmp = self.fill_template(tmp, self.names[j], remove=True)
 				tmp = gutils.convert_entities(tmp)
@@ -736,14 +737,14 @@ class ExportPlugin(gtk.Window):
 						try:
 							shutil.copy(image_file,	posters_dir)
 						except:
-							gdebug.debug("Can't copy %s" % image_file)
+							self.debug.show("Can't copy %s" % image_file)
 					else:	# convert posters
 						try:
 			    				im = Image.open(image_file, 'r').convert(config['poster_mode'])
 							im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
 							im.save(os.path.join(posters_dir, image) + '.' + config['poster_format'].lower(), config['poster_format'])
 						except:
-							gdebug.debug("Can't convert %s" % image_file)
+							self.debug.show("Can't convert %s" % image_file)
 
 			# close file if last item
 			if ((page-1)*self.entries_per_page)+id == self.number_of_exported_movies:

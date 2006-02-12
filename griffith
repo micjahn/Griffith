@@ -75,7 +75,7 @@ class Griffith:
 			
 	def on_export_activate(self, menu_iter, plugin_name):
 		export_plugin = __import__('PluginExport%s' % plugin_name)
-		export_plugin.ExportPlugin(self.db, self.locations, self.main_window)
+		export_plugin.ExportPlugin(self.db, self.locations, self.main_window, self.debug)
 
 	def destroy(self, widget, data=None):
 		self.save_state()

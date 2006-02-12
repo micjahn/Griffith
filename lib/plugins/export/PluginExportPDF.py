@@ -46,7 +46,7 @@ plugin_author_email = "<vasco.m.nunes@gmail.com>"
 plugin_version = "0.1"
 
 class ExportPlugin:
-    def __init__(self, database, locations, parent):
+    def __init__(self, database, locations, parent, debug):
         self.db = database
         self.locations = locations
         self.parent = parent
