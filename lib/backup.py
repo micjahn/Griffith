@@ -65,7 +65,7 @@ def restore(self):
 			gutils.error(self, _("Can't read backup file"), self.main_window)
 			return
 		self.db.con.close()
-		self.db = sql.GriffithSQL(self.config, self.griffith_dir)
+		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
 		gutils.info(self, _("Backup restored"), self.main_window)
 		# let's refresh the treeview
 		self.populate_treeview(self.db.get_all_data())
