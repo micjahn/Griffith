@@ -297,7 +297,7 @@ class ExportPlugin(gtk.Window):
 
 		# set defaults --------------------------------
 		self.widgets['entry_header'].set_text(self.config['title'])
-		self.widgets['combo_theme'].set_active(2)	# html_tables
+		self.widgets['combo_theme'].set_active(3)	# html_tables
 		self.widgets['combo_sortby'].set_active(17)	# orginal title
 		# spliting
 		self.widgets['sb_split_num'].set_value(self.config['split_num'])
@@ -717,9 +717,10 @@ class ExportPlugin(gtk.Window):
 					try:
 						tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]).encode('utf-8'), j)
 					except UnicodeDecodeError:
+						self.debug.show("Unicode Decode Error occurred while decoding %s (movie number: %s)" % (self.names[j], row["number"]))
 						tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]), j)
 					except Exception, ex:
-						self.debug.show("Error occurred while decoding %s (movie number %s)" % (self.names[j], row["number"]))
+						self.debug.show("Error occurred while decoding %s (movie number: %s)" % (self.names[j], row["number"]))
 				else:
 					tmp = self.fill_template(tmp, self.names[j], remove=True)
 				tmp = gutils.convert_entities(tmp)
@@ -737,7 +738,8 @@ class ExportPlugin(gtk.Window):
 						try:
 							shutil.copy(image_file,	posters_dir)
 						except:
-							self.debug.show("Can't copy %s" % image_file)
+							pass
+							#self.debug.show("Can't copy %s" % image_file)
 					else:	# convert posters
 						try:
 			    				im = Image.open(image_file, 'r').convert(config['poster_mode'])
