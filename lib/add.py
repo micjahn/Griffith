@@ -166,7 +166,10 @@ def populate_with_results(self):
 		m_id = tmp_model.get_value(tmp_iter, 0)
 	self.hide_results()
 	
-	self.debug.show("m_id: %s" % m_id)
+	try:
+		self.debug.show("m_id: %s" % m_id)
+	except:
+		self.debug.show("m_id: Bad UNICODE character")
 	
 	plugin_name = 'PluginMovie' + self.active_plugin
 	plugin = __import__(plugin_name)

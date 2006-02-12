@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-02-12 Piotr Ozarowski <ozarow@gmail.com>
+	* Onet movie plugin updated
+	* Some crashes while showing debug info fixed
+
 2006-02-04 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* New console arguments: 
       -s, --search_title (search by title)
