@@ -738,8 +738,7 @@ class ExportPlugin(gtk.Window):
 						try:
 							shutil.copy(image_file,	posters_dir)
 						except:
-							pass
-							#self.debug.show("Can't copy %s" % image_file)
+							self.debug.show("Can't copy %s" % image_file)
 					else:	# convert posters
 						try:
 			    				im = Image.open(image_file, 'r').convert(config['poster_mode'])
