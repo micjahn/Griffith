@@ -65,7 +65,7 @@ class GriffithSQL:
 				parent.db.con.close()
 				os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
 				# create/connect db
-				parent.db = GriffithSQL(self.config, self.griffith_dir)
+				parent.db = GriffithSQL(self.config, self.debug, self.griffith_dir)
 				parent.clear_details()
 				parent.total = 0
 				parent.count_statusbar()
