@@ -5,6 +5,10 @@ GladeFiles = ../glade/griffith.glade ../glade/exporthtml.glade
 
 all: update dist
 
+help:
+	@echo "make update - updates .po files"
+	@echo "make dist   - compiles .po files"
+
 dist:
 	@echo
 	@echo Making all .mo files...
