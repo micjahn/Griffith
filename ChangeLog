@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-02-17 Piotr Ozarowski <ozarow@gmail.com>
+	* Fixed saving languages
+
 2006-02-12 Piotr Ozarowski <ozarow@gmail.com>
 	* Onet movie plugin updated
 	* Some crashes while showing debug info fixed

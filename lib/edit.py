@@ -172,10 +172,10 @@ def fill_volumes_combo(self, prefix='e', default=0):
 	self.am_volume_combo.show_all()
 	self.e_volume_combo.show_all()
 	if prefix == 'e':
-		self.e_volume_combo.set_active(int(default))
+		self.e_volume_combo.set_active(int(self.volume_combo_ids[default]))
 		self.am_volume_combo.set_active(0)
 	else:
-		self.am_volume_combo.set_active(int(default))
+		self.am_volume_combo.set_active(int(self.volume_combo_ids[default]))
 
 def fill_collections_combo(self, prefix='e', default=0):
 	self.am_collection_combo.get_model().clear()
@@ -191,30 +191,38 @@ def fill_collections_combo(self, prefix='e', default=0):
 	self.am_collection_combo.show_all()
 	self.e_collection_combo.show_all()
 	if prefix == 'e':
-		self.e_collection_combo.set_active(int(default))
+		self.e_collection_combo.set_active(int(self.collection_combo_ids[default]))
 		self.am_collection_combo.set_active(0)
 	else:
-		self.am_collection_combo.set_active(int(default))
+		self.am_collection_combo.set_active(int(self.collection_combo_ids[default]))
 
 def fill_language_combo(self, widget, default=None):
 	try:
 		widget.get_model().clear()
 	except:
 		pass
-	for i in self.db.get_all_data(table_name="languages", order_by="id"):
-		widget.insert_text(int(i['id']), str(i['name']))
+	self.languages_ids = {}
+	i = 0
+	for lang in self.db.get_all_data(table_name="languages", order_by=None):
+		self.languages_ids[lang['id']] = i
+		widget.insert_text(i, str(lang['name']))
+		i = i+1
 	if default != None:
-		widget.set_active(int(default))
+		widget.set_active(int(self.languages_ids[default]))
 
 def fill_tag_combo(self, widget, default=None):
 	try:
 		widget.get_model().clear()
 	except:
 		pass
-	for i in self.db.get_all_data(table_name="tags", order_by="id"):
-		widget.insert_text(int(i['id']), str(i['name']))
+	self.tags_ids = {}
+	i = 0
+	for tag in self.db.get_all_data(table_name="tags", order_by=None):
+		self.tags_ids[lang['id']] = i
+		widget.insert_text(i, str(tag['name']))
+		i = i+1
 	if default != None:
-		widget.set_active(int(default))
+		widget.set_active(int(self.tags_ids[default]))
 
 def create_language_hbox(self, widget, tab, lang=None, type=None):
 	from edit import fill_language_combo

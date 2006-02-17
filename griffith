@@ -218,7 +218,7 @@ class Griffith:
 		if subtotal > 0:
 			data = self.db.get_not_seen_movies()
 			sugested_movie = data[random.randrange(subtotal)]
-			gdebug.debug("suggested movie: %s"%sugested_movie['title'])			
+			self.debug.show("suggested movie: %s"%sugested_movie['title'])			
 			self.main_treeview.set_cursor_on_cell(sugested_movie['number']-1)	
 			self.treeview_clicked()
 		else:
@@ -314,7 +314,7 @@ class Griffith:
 	def on_lang_rename_clicked(self, widget):
 		new_name = self.lang_name.get_active_text()
 		#update.update_language(self, id, name=new_name)	# TODO
-		gdebug.debug("RENAME LANGUAGE: Not implemmented yet... (%s)"%new_name)
+		self.debug.show("RENAME LANGUAGE: Not implemmented yet... (%s)"%new_name)
 
 	def on_e_lang_add_clicked(self, widget):
 		from edit import create_language_hbox
@@ -345,7 +345,6 @@ class Griffith:
 	# tags -------------------------------------------------------------{{{
 	def on_tag_add_clicked(self, widget):
 		name = self.tag_name.get_active_text()
-		print name
 		self.db.add_tag(name)
 		# rebuild combo:
 		self.tag_name.get_model().clear()

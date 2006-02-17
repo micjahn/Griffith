@@ -168,12 +168,12 @@ def treeview_clicked(self):
 			self.e_collection_id.hide()
 
 			#languages
-			languages = self.db.get_all_data(table_name="movie_lang", order_by="lang_id",
+			languages = self.db.get_all_data(table_name="movie_lang", order_by=None,
 					where="movie_id='%s'"%self.e_movie_id.get_text())
-			subtitles = self.db.get_all_data(table_name="movie_sub", order_by="lang_id",
+			subtitles = self.db.get_all_data(table_name="movie_sub", order_by=None,
 					where="movie_id='%s'"%self.e_movie_id.get_text())
-			self.e_languages = []
-			self.e_subtitles = []
+			self.e_languages = []	# language widgets
+			self.e_subtitles = []	# subtile widgets
 			if len(languages) > 0:
 				from edit import create_language_hbox
 				for i in languages:

@@ -268,12 +268,10 @@ def people_treeview(self):
 	self.p_treeview.show() 
 	
 def combos(self):
-
 	# collections filter
-	
 	for collection in self.db.get_all_collections_data():
 		self.f_col.insert_text(int(collection['id']), collection['name'])
-		
+
 	self.e_condition.insert_text(0, _("Damaged")) 
 	self.e_condition.insert_text(1, _("Poor")) 
 	self.e_condition.insert_text(2, _("Fair")) 
@@ -300,11 +298,9 @@ def combos(self):
 	
 	self.e_region.insert_text(0, _("Region 0 (No Region Coding)")) 
 	self.e_region.insert_text(1, _("Region 1 (United States of America, Canada)")) 
-	self.e_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
-"South Africa)")) 
+	self.e_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)")) 
 	self.e_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
-	self.e_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
-"America)")) 
+	self.e_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)")) 
 	self.e_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)")) 
 	self.e_region.insert_text(6, _("Region 6 (Popular Republic of China)")) 
 	self.e_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)")) 
@@ -313,11 +309,9 @@ def combos(self):
 	
 	self.p_region.insert_text(0, _("Region 0 (No Region Coding)")) 
 	self.p_region.insert_text(1, _("Region 1 (United States of America, Canada)")) 
-	self.p_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
-"South Africa)")) 
+	self.p_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)")) 
 	self.p_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
-	self.p_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
-"America)")) 
+	self.p_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)")) 
 	self.p_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)")) 
 	self.p_region.insert_text(6, _("Region 6 (Popular Republic of China)")) 
 	self.p_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)")) 
@@ -350,11 +344,9 @@ def combos(self):
 	
 	self.am_region.insert_text(0, _("Region 0 (No Region Coding)")) 
 	self.am_region.insert_text(1, _("Region 1 (United States of America, Canada)")) 
-	self.am_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
-"South Africa)")) 
+	self.am_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)")) 
 	self.am_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
-	self.am_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
-"America)")) 
+	self.am_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)")) 
 	self.am_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)")) 
 	self.am_region.insert_text(6, _("Region 6 (Popular Republic of China)")) 
 	self.am_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)")) 
@@ -377,9 +369,9 @@ def combos(self):
 	edit.fill_volumes_combo(self)
 	edit.fill_collections_combo(self)
 	
-	for i in self.db.get_all_data(table_name="languages", order_by="id"):
+	for i in self.db.get_all_data(table_name="languages", order_by=None):
 		self.lang_name.insert_text(i['id'], i['name'])
-	for i in self.db.get_all_data(table_name="tags", order_by="id"):
+	for i in self.db.get_all_data(table_name="tags", order_by=None):
 		self.tag_name.insert_text(i['id'], i['name'])
 	
 def web_results(self):

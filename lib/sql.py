@@ -474,7 +474,7 @@ class GriffithSQL:
 		id = self.cursor.fetchone()[0]
 		# languages
 		languages = {}
-		for i in self.get_all_data(table_name="languages", order_by="id"):
+		for i in self.get_all_data(table_name="languages", order_by=None):
 			languages[i['name']] = i['id']
 		
 		selected = {}	# tuple prevents duplicates
@@ -525,7 +525,7 @@ class GriffithSQL:
 	def add_language(self, name):
 		name = gutils.gescape(name)
 		# check if language already exists
-		for language in self.get_all_data(table_name="languages", order_by="id"):
+		for language in self.get_all_data(table_name="languages", order_by=None):
 			if name == language['name']:
 				self.debug.show("Language '%s' already exists"%name)
 				return False
@@ -539,7 +539,7 @@ class GriffithSQL:
 	
 	def add_tag(self, name):
 		# check if tag already exists
-		for tag in self.get_all_data(table_name="tags", order_by="id"):
+		for tag in self.get_all_data(table_name="tags", order_by=None):
 			if name == tag['name']:
 				self.debug.show("Tag '%s' already exists"%name)
 				return False
@@ -560,7 +560,8 @@ class GriffithSQL:
 		sql="SELECT %s FROM %s" %(what, table_name)
 		if where:
 			sql = sql + " WHERE %s" % where
-		sql = sql + " ORDER BY %s" % order_by
+		if order_by != None:
+			sql = sql + " ORDER BY %s" % order_by
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()
 	
@@ -672,11 +673,11 @@ class GriffithSQL:
 			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM volumes WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
-		elif name != None and id == None:
+		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
 			self.cursor.execute("SELECT id FROM volumes WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
-		if str(id) == '0':
+		if str(id) == '0' or id == None:
 			self.debug.show("You have to select volume first")
 			return False
 		self.cursor.execute("SELECT count(id) FROM movies WHERE volume_id = '%s'" % id)
@@ -696,11 +697,11 @@ class GriffithSQL:
 			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM collections WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
-		elif name != None and id == None:
+		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
 			self.cursor.execute("SELECT id FROM collections WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
-		if str(id) == '0':
+		if str(id) == '0' or id == None:
 			self.debug.show("You have to select collection first")
 			return False
 		self.cursor.execute("SELECT count(id) FROM movies WHERE collection_id = '%s'" % id)
@@ -720,11 +721,11 @@ class GriffithSQL:
 			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM languages WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
-		elif name != None and id == None:
+		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
 			self.cursor.execute("SELECT id FROM languages WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
-		if str(id) == '0':
+		if str(id) == '0' or id == None:
 			self.debug.show("You have to select language first")
 			return False
 
@@ -752,11 +753,11 @@ class GriffithSQL:
 			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM tags WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
-		elif name != None and id == None:
+		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
 			self.cursor.execute("SELECT id FROM tags WHERE name = '%s'" % name)
 			id = str(int(self.cursor.fetchone()[0]))
-		if str(id) == '0':
+		if str(id) == '0' or id == None:
 			self.debug.show("You have to select tag first")
 			return False
 
