@@ -201,6 +201,7 @@ def fill_language_combo(self, widget, default=None):
 		widget.get_model().clear()
 	except:
 		pass
+	# TODO: fill languages_ids only if nessesary 
 	self.languages_ids = {}
 	i = 0
 	for lang in self.db.get_all_data(table_name="languages", order_by=None):
@@ -215,6 +216,7 @@ def fill_tag_combo(self, widget, default=None):
 		widget.get_model().clear()
 	except:
 		pass
+	# TODO: fill tags_ids only if nessesary 
 	self.tags_ids = {}
 	i = 0
 	for tag in self.db.get_all_data(table_name="tags", order_by=None):

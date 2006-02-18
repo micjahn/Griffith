@@ -89,24 +89,22 @@ def update(self):
 		)
 		
 		# languages
-		languages = {}
-		for i in self.db.get_all_data(table_name="languages", order_by=None):
-			languages[i['name']] = i['id']
-		
-		self.db.cursor.execute("""
-			DELETE FROM movie_lang WHERE movie_id = '%s';
-			DELETE FROM movie_sub WHERE movie_id = '%s';""" % (id, id)
-		)
-		#lang
-		selected = {}	# tuple prevents duplicates
+		selected = {}
+		self.db.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % id)	# remove old data
 		for i in self.e_languages:
 			if i['id'].get_active() != None:
 				lang_id = gutils.findKey(i['id'].get_active(), self.languages_ids)
-				selected[lang_id] =  i['type'].get_active()
-		for i in selected.keys():
-			self.db.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, i, selected[i] ) )
-		#sub
-		selected = {}	# tuple prevents duplicates
+				type = i['type'].get_active()
+				if not selected.has_key(lang_id):
+					selected[lang_id] = {}
+				selected[lang_id][type] = True
+		for lang in selected.keys():
+			for type in selected[lang].keys():
+				self.db.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
+
+		# subtitles
+		selected = {}
+		self.db.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s';" % id)	# remove old data
 		for i in self.e_subtitles:
 			if i['id'].get_active() != None:
 				lang_id = gutils.findKey(i['id'].get_active(), self.languages_ids)
@@ -115,16 +113,11 @@ def update(self):
 			self.db.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
 
 		# tags
-		tags = {}
-		for i in self.db.get_all_data(table_name="tags", order_by=None):
-			tags[i['name']] = i['id']
-		
-		self.db.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % id)
 		selected = {}
+		self.db.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % id)
 		# TODO: read selected tags
 		for i in selected:
-			self.db.cursor.execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');"
-				% (id, i) )
+			self.db.cursor.execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
 
 		self.update_statusbar(_("Movie information has been updated"))
 		# update main treelist
@@ -245,9 +238,7 @@ def update_language(self, id, name):
 		self.debug.show("You have to select language first")
 		return False
 	try:
-		self.db.cursor.execute("""
-			UPDATE languages SET name ='%s' WHERE id='%s';
-		"""%(id, name))
+		self.db.cursor.execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (id, name))
 	except:
 		self.debug.show("ERROR during updating language!")
 		return False

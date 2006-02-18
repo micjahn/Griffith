@@ -472,27 +472,38 @@ class GriffithSQL:
 		
 		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
 		id = self.cursor.fetchone()[0]
-		# languages
-		languages = {}
-		for i in self.get_all_data(table_name="languages", order_by=None):
-			languages[i['name']] = i['id']
-		
-		selected = {}	# tuple prevents duplicates
-		for i in data.am_languages:
-			name = i['id'].get_active_text()
-			if name != None:
-				selected[languages[i['id'].get_active_text()]] =  i['type'].get_active()
-		for i in selected.keys():
-			self.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');"
-				% (id, i, selected[i] ) )
 
-		selected = {}	# tuple prevents duplicates
+		# TODO: make use of parent.languages_ids
+		languages_ids = {}
+		i = 0
+		for lang in self.get_all_data(table_name="languages", order_by=None):
+			languages_ids[lang['id']] = i
+			i = i+1
+		
+		# languages
+		selected = {}
+		self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % id)	# remove old data
+		for i in data.am_languages:
+			if i['id'].get_active() != None:
+				lang_id = gutils.findKey(i['id'].get_active(), languages_ids)
+				type = i['type'].get_active()
+				if not selected.has_key(lang_id):
+					selected[lang_id] = {}
+				selected[lang_id][type] = True
+		for lang in selected.keys():
+			for type in selected[lang].keys():
+				self.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
+		# subtitles
+		selected = {}
+		self.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s';" % id)	# remove old data
 		for i in data.am_subtitles:
-			name = i['id'].get_active_text()
-			if name != None:
-				selected[languages[i['id'].get_active_text()]] = 1
+			if i['id'].get_active() != None:
+				lang_id = gutils.findKey(i['id'].get_active(), languages_ids)
+				selected[lang_id] = 1
 		for i in selected.keys():
 			self.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
+
+		# TODO: tags 
 
 	def add_volume(self, name):
 		# check if volume already exists
@@ -668,10 +679,10 @@ class GriffithSQL:
 	def remove_movie_by_num(self,number):
 		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
 		id = self.cursor.fetchone()[0]
-		self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
 		self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
 		self.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s'" % id)
 		self.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
+		self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
 		self.con.commit()
 	
 	def remove_volume(self, id=None, name=None):
