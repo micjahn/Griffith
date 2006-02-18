@@ -523,6 +523,9 @@ class GriffithSQL:
 		return True
 
 	def add_language(self, name):
+		if name == None or name == '':
+			self.debug.show("You didn't write name for new language")
+			return False
 		name = gutils.gescape(name)
 		# check if language already exists
 		for language in self.get_all_data(table_name="languages", order_by=None):
@@ -538,6 +541,9 @@ class GriffithSQL:
 		return True
 	
 	def add_tag(self, name):
+		if name == None or name == '':
+			self.debug.show("You didn't write name for new tag")
+			return False
 		# check if tag already exists
 		for tag in self.get_all_data(table_name="tags", order_by=None):
 			if name == tag['name']:
