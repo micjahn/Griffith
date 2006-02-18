@@ -278,7 +278,7 @@ msgstr "E-mail zosta³ pomy¶lnie wys³any"
 
 #: ../lib/gemail.py:59
 msgid "Movie loan reminder"
-msgstr "Wy¶lij maila z przypomnienie o wypo¿yczeniu"
+msgstr "Przypomnienie o wypozyczonym filmie"
 
 #: ../lib/gemail.py:59
 #, python-format
