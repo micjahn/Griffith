@@ -794,7 +794,98 @@ class GriffithSQL:
 	def remove_person_by_name(self, number):
 		self.cursor.execute("DELETE FROM people WHERE name = '"+number+"'")
 	# }}}
-		
+
+	# update data ------------------------------------------------------{{{
+	def update_collection(self, id, name=None, volume_id=None, loaned=None):
+		if str(id) == '0':
+			self.debug.show("You have to select collection first")
+			return False
+		if name!=None:
+			try:
+				self.cursor.execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
+			except:
+				self.debug.show("ERROR during updating collection's name!")
+				return False
+			return True
+		if loaned==1:
+			try:
+				self.cursor.execute("""
+					UPDATE collections SET loaned='1' WHERE id='%s';
+					UPDATE movies SET loaned='1' WHERE collection_id='%s';
+				""" % (id, id))
+			except:
+				self.debug.show("ERROR during updating collection's loan data!")
+				return False
+			if volume_id:
+				try:
+					self.cursor.execute("UPDATE volumes SET loaned='1' WHERE id='%s';"%volume_id)
+				except:
+					self.debug.show("ERROR during updating volume's loan data!")
+					return False
+			return True
+		elif loaned==0:
+			try:
+				self.cursor.execute("""
+					UPDATE collections SET loaned='0' WHERE id='%s';
+					UPDATE movies SET loaned='0' WHERE collection_id='%s';
+				""" %( id, id))
+			except:
+				self.debug.show("ERROR during updating collection's loan data!")
+				return False
+			if volume_id:
+				try:
+					self.cursor.execute("UPDATE volumes SET loaned='0' WHERE id='%s';"%volume_id)
+				except:
+					self.debug.show("ERROR during updating volume's loan data!")
+					return False
+			return True
+		return False
+
+	def update_volume(self, id, name=None, loaned=None):
+		if str(id) == '0':
+			self.debug.show("You have to select volume first")
+			return False
+		if name!=None:
+			try:
+				self.cursor.execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
+			except:
+				self.debug.show("ERROR during updating volume's name!")
+				return False
+			return True
+		if loaned==1:
+			try:
+				self.cursor.execute("""
+					UPDATE volumes SET loaned=1 WHERE id='%s';
+					UPDATE movies SET loaned=1 WHERE volume_id='%s';
+				"""%(id, id))
+			except:
+				self.debug.show("ERROR during updating volume's loan data!")
+				return False
+			return True
+		elif loaned==0:
+			try:
+				self.cursor.execute("""
+					UPDATE volumes SET loaned=0 WHERE id='%s';
+					UPDATE movies SET loaned=0 WHERE volume_id='%s';
+				"""%(id, id))
+			except:
+				self.debug.show("ERROR during updating volume's loan data!")
+				return False
+			return True
+		return False
+
+	def update_language(self, id, name):
+		if str(id) == '0':
+			self.debug.show("You have to select language first")
+			return False
+		try:
+			self.cursor.execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (id, name))
+		except:
+			self.debug.show("ERROR during updating language!")
+			return False
+		return True
+	#}}}
+
 	def count_records(self,table_name, where='1'):
 		self.cursor.execute("SELECT COUNT(id) FROM %s" % (table_name) + " WHERE %s" % (where))
 		return int(self.cursor.fetchone()[0])

@@ -25,7 +25,6 @@ from gettext import gettext as _
 import gutils
 import gtk
 import datetime
-import update
 
 def loan_movie(self):
 	data = self.db.get_all_data("people","name ASC")
@@ -66,16 +65,16 @@ def commit_loan(self):
 
 	if volume_id>0 and collection_id>0:
 		if loan_whole_collection:
-			update.update_collection(self, id=collection_id, volume_id=volume_id, loaned=1)
+			self.db.update_collection(id=collection_id, volume_id=volume_id, loaned=1)
 		else:
-			update.update_volume(self, id=volume_id, loaned=1)
+			self.db.update_volume(id=volume_id, loaned=1)
 	elif collection_id>0:
 		if loan_whole_collection:
-			update.update_collection(self, id=collection_id, loaned=1)
+			self.db.update_collection(id=collection_id, loaned=1)
 		else:
 			self.db.cursor.execute("UPDATE movies SET loaned='1' WHERE number='%s';" % movie_id)
 	elif volume_id>0:
-		update.update_volume(self, id=volume_id, loaned=1)
+		self.db.update_volume(id=volume_id, loaned=1)
 	else:
 		self.db.cursor.execute("UPDATE movies SET loaned='1' WHERE number='%s';" % movie_id)
 	self.update_statusbar(_("Movie loaned"))
@@ -116,11 +115,11 @@ def return_loan(self):
 			collection_is_loaned = self.db.cursor.fetchall()[0][0]
 		
 		if volume_id > 0 and collection_is_loaned:
-			update.update_collection(self, id=collection_id, volume_id=volume_id, loaned=0)
+			self.db.update_collection(id=collection_id, volume_id=volume_id, loaned=0)
 		elif collection_is_loaned:
-			update.update_collection(self, id=collection_id, loaned=0)
+			self.db.update_collection(id=collection_id, loaned=0)
 		elif volume_id > 0:
-			update.update_volume(self, id=volume_id, loaned=0)
+			self.db.update_volume(id=volume_id, loaned=0)
 		else:
 			self.db.cursor.execute("UPDATE movies SET loaned='0' WHERE number='%s';" % movie_id)
 		
