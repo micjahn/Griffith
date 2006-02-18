@@ -58,9 +58,9 @@ def send_email(self):
 			self.config.get('mail_email', "griffith"), self.person_email, \
 			_("Movie loan reminder"), _("Hi, %s!\n\nJust to reminder you " + \
 			"that I'm really needing the following movie I have loaned you " + \
-			"recently:\n\n%s (%s)\n\nLoaned on %s" \
+			"recently:\n\n%s (%s)\n\nLoaned on %s") \
 			%(self.person_name, self.e_original_title.get_text(), \
-			self.e_title.get_text(), self.loan_date[:10])))
+			self.e_title.get_text(), self.loan_date[:10]))
 	else:
 		gutils.info(self, _("This person has no e-mail address defined."), \
 			self.main_window)
