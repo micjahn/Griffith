@@ -70,9 +70,9 @@ class GriffithSQL:
 				parent.total = 0
 				parent.count_statusbar()
 				parent.treemodel.clear()
-				import edit
-				edit.fill_volumes_combo(parent)
-				edit.fill_collections_combo(parent)
+				import initialize
+				initialize.fill_volumes_combo(parent)
+				initialize.fill_collections_combo(parent)
 			else:
 				pass
 		else:
@@ -477,7 +477,7 @@ class GriffithSQL:
 		languages_ids = {}
 		i = 0
 		for lang in self.get_all_data(table_name="languages", order_by=None):
-			languages_ids[lang['id']] = i
+			languages_ids[i] = lang['id']
 			i = i+1
 		
 		# languages
@@ -485,7 +485,7 @@ class GriffithSQL:
 		self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % id)	# remove old data
 		for i in data.am_languages:
 			if i['id'].get_active() != None:
-				lang_id = gutils.findKey(i['id'].get_active(), languages_ids)
+				lang_id = languages_ids[i['id'].get_active()]
 				type = i['type'].get_active()
 				if not selected.has_key(lang_id):
 					selected[lang_id] = {}
@@ -498,7 +498,7 @@ class GriffithSQL:
 		self.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s';" % id)	# remove old data
 		for i in data.am_subtitles:
 			if i['id'].get_active() != None:
-				lang_id = gutils.findKey(i['id'].get_active(), languages_ids)
+				lang_id = languages_ids[i['id'].get_active()]
 				selected[lang_id] = 1
 		for i in selected.keys():
 			self.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
@@ -581,6 +581,10 @@ class GriffithSQL:
 			sql = sql + " ORDER BY %s" % order_by
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()
+
+	def get_value(self, field, table_name, where):
+		self.cursor.execute("SELECT %s FROM %s WHERE %s"%(field, table_name, where))
+		return self.cursor.fetchone()[0]
 	
 	def get_all_volumes_data(self):		# TODO: rewrite all code to use get_all_data()
 		self.cursor.execute("SELECT * FROM volumes ORDER BY id")
@@ -687,7 +691,6 @@ class GriffithSQL:
 	
 	def remove_volume(self, id=None, name=None):
 		if id != None:
-			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM volumes WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
 		elif name != None and name != '' and id == None:
@@ -711,7 +714,6 @@ class GriffithSQL:
 	
 	def remove_collection(self, id=None, name=None):
 		if id != None:
-			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM collections WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
 		elif name != None and name != '' and id == None:
@@ -735,7 +737,6 @@ class GriffithSQL:
 	
 	def remove_language(self, id=None, name=None):
 		if id != None:
-			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM languages WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
 		elif name != None and name != '' and id == None:
@@ -767,7 +768,6 @@ class GriffithSQL:
 	
 	def remove_tag(self, id=None, name=None):
 		if id != None:
-			id = gutils.gescape(id)
 			self.cursor.execute("SELECT name FROM tags WHERE id = '%s'" % id)
 			name = self.cursor.fetchone()[0]
 		elif name != None and name != '' and id == None:
@@ -881,7 +881,18 @@ class GriffithSQL:
 		try:
 			self.cursor.execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (id, name))
 		except:
-			self.debug.show("ERROR during updating language!")
+			self.debug.show("ERROR during updating language name!")
+			return False
+		return True
+	
+	def update_tag(self, id, name):
+		if str(id) == '0':
+			self.debug.show("You have to select tag first")
+			return False
+		try:
+			self.cursor.execute("UPDATE tags SET name ='%s' WHERE id='%s';" % (id, name))
+		except:
+			self.debug.show("ERROR during updating tag name!")
 			return False
 		return True
 	#}}}

@@ -73,13 +73,9 @@ def restore(self):
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()
-		edit.fill_volumes_combo(self)
-		edit.fill_collections_combo(self)
-		# delete old widgets
-		self.lang_name.get_model().clear()
-		self.tag_name.get_model().clear()
-		for i in self.db.get_all_data(table_name="languages", order_by="id"):
-			self.lang_name.insert_text(i['id'], i['name'])
-		for i in self.db.get_all_data(table_name="tags", order_by="id"):
-			self.tag_name.insert_text(i['id'], i['name'])
+		import initialize
+		initialize.fill_volumes_combo(self)
+		initialize.fill_collections_combo(self)
+		initialize.fill_preferences_languages_combo(self)
+		initialize.fill_preferences_tags_combo(self)
 

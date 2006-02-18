@@ -229,13 +229,13 @@ def define_widgets(self, gladefile):
 
 
 	# languages
-	self.lang_name = gladefile.get_widget('lang_name')	# preferences window
+	self.lang_name_combo = gladefile.get_widget('lang_name')	# preferences window
 	self.e_lang_vbox = gladefile.get_widget('e_lang_vbox')
 	self.e_sub_vbox = gladefile.get_widget('e_sub_vbox')
 	self.am_lang_vbox = gladefile.get_widget('am_lang_vbox')
 	self.am_sub_vbox = gladefile.get_widget('am_sub_vbox')
 	
-	self.tag_name = gladefile.get_widget('tag_name')	# preferences window
+	self.tag_name_combo = gladefile.get_widget('tag_name')	# preferences window
 	self.e_tag_hbox = gladefile.get_widget('e_tag_hbox')
 
 

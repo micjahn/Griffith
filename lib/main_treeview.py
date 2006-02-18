@@ -175,11 +175,11 @@ def treeview_clicked(self):
 			self.e_languages = []	# language widgets
 			self.e_subtitles = []	# subtile widgets
 			if len(languages) > 0:
-				from edit import create_language_hbox
+				from initialize import create_language_hbox
 				for i in languages:
-					create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, lang=i['lang_id'], type=i['type'])
+					create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, default=i['lang_id'], type=i['type'])
 			if len(subtitles) > 0:
-				from edit import create_subtitle_hbox
+				from initialize import create_subtitle_hbox
 				for i in subtitles:
 					create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles, default=i['lang_id'])
 

@@ -103,8 +103,8 @@ def toggle_seen(self):
 	if self.e_seen.get_active():
 		seen = '1'
 	self.db.cursor.execute(
-			"UPDATE movies SET seen = '" 
-			+seen+"' WHERE number = '" + self.e_number.get_text() +"'")
+		"UPDATE movies SET seen = '" 
+		+seen+"' WHERE number = '" + self.e_number.get_text() +"'")
 	self.count_statusbar()
 			
 def clear_details(self):
@@ -157,121 +157,6 @@ def clear_details(self):
 	image = self.locations['images'] + "/%s00.png"%prefix
 	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
 	gutils.garbage(handler)
-
-def fill_volumes_combo(self, prefix='e', default=0):
-	self.am_volume_combo.get_model().clear()
-	self.e_volume_combo.get_model().clear()
-	i = 0
-	self.volume_combo_ids = {}
-	for volume in self.db.get_all_volumes_data():
-		self.volume_combo_ids[volume['id']] = i
-		self.am_volume_combo.insert_text(i, str(volume['name']))
-		self.e_volume_combo.insert_text(i, str(volume['name']))
-		i = i+1
-
-	self.am_volume_combo.show_all()
-	self.e_volume_combo.show_all()
-	if prefix == 'e':
-		self.e_volume_combo.set_active(int(self.volume_combo_ids[default]))
-		self.am_volume_combo.set_active(0)
-	else:
-		self.am_volume_combo.set_active(int(self.volume_combo_ids[default]))
-
-def fill_collections_combo(self, prefix='e', default=0):
-	self.am_collection_combo.get_model().clear()
-	self.e_collection_combo.get_model().clear()
-	i = 0
-	self.collection_combo_ids = {}
-	for collection in self.db.get_all_collections_data():
-		self.collection_combo_ids[collection['id']] = i
-		self.am_collection_combo.insert_text(i, str(collection['name']))
-		self.e_collection_combo.insert_text(i, str(collection['name']))
-		i = i+1
-
-	self.am_collection_combo.show_all()
-	self.e_collection_combo.show_all()
-	if prefix == 'e':
-		self.e_collection_combo.set_active(int(self.collection_combo_ids[default]))
-		self.am_collection_combo.set_active(0)
-	else:
-		self.am_collection_combo.set_active(int(self.collection_combo_ids[default]))
-
-def fill_language_combo(self, widget, default=None):
-	try:
-		widget.get_model().clear()
-	except:
-		pass
-	# TODO: fill languages_ids only if nessesary 
-	self.languages_ids = {}
-	i = 0
-	for lang in self.db.get_all_data(table_name="languages", order_by=None):
-		self.languages_ids[lang['id']] = i
-		widget.insert_text(i, str(lang['name']))
-		i = i+1
-	if default != None:
-		widget.set_active(int(self.languages_ids[default]))
-
-def fill_tag_combo(self, widget, default=None):
-	try:
-		widget.get_model().clear()
-	except:
-		pass
-	# TODO: fill tags_ids only if nessesary 
-	self.tags_ids = {}
-	i = 0
-	for tag in self.db.get_all_data(table_name="tags", order_by=None):
-		self.tags_ids[lang['id']] = i
-		widget.insert_text(i, str(tag['name']))
-		i = i+1
-	if default != None:
-		widget.set_active(int(self.tags_ids[default]))
-
-def create_language_hbox(self, widget, tab, lang=None, type=None):
-	from edit import fill_language_combo
-	number = len(widget.get_children())	# new box number
-	tab.append({})				# creates new tab[number][]
-	box = gtk.HBox(spacing=2)
-	tab[number]['id'] = gtk.combo_box_new_text()
-	fill_language_combo(self, widget=tab[number]['id'], default=lang)
-	tab[number]['type'] = gtk.combo_box_new_text()
-	tab[number]['type'].insert_text(0, '')
-	tab[number]['type'].insert_text(1, _("lector"))
-	tab[number]['type'].insert_text(2, _("dubbing"))
-	if type != None:
-		tab[number]['type'].set_active(type)
-	else:
-		tab[number]['type'].set_active(0)
-	box.add(tab[number]['id'])
-	box.add(tab[number]['type'])
-	widget.pack_start(box, expand=False, fill=False, padding=1)
-	widget.show_all()
-
-def remove_hbox(self, widget, tab):
-	number = len(widget.get_children())-1	# last box number
-	try:
-		tab.pop()
-		widget.remove(widget.get_children().pop())
-	except:
-		self.debug.show("List is empty")
-	widget.show_all()
-
-def create_subtitle_hbox(self, widget, tab, default=None):
-	from edit import fill_language_combo
-	number = len(widget.get_children())	# new box number
-	tab.append({})				# creates new tab[number][]
-	tab[number]['id'] = gtk.combo_box_new_text()
-	fill_language_combo(self, widget=tab[number]['id'], default=default)
-	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
-	widget.show_all()
-
-def create_tag_hbox(self, widget, tab, default=None):
-	from edit import fill_tag_combo
-	number = len(widget.get_children())	# new box number
-	tab.append({})				# creates new tab[number][]
-	tab[number]['id'] = gtk.combo_box_new_text()
-	fill_language_combo(self, widget=tab[number]['id'], default=default)
-	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
-	widget.show_all()
 
 def fetch_bigger_poster(self):	
 	match = 0	
@@ -386,3 +271,4 @@ def get_poster(self, f, result, current_poster):
 		self.poster_window.hide()
 	else:
 		gutils.warning(self, _("Sorry. This movie is listed but have no poster available at Amazon.com."))
+

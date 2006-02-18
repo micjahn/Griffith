@@ -235,7 +235,7 @@ class Griffith:
 			id = 0
 		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
 		self.db.add_volume(name)
-		edit.fill_volumes_combo(self, prefix, id)
+		initialize.fill_volumes_combo(self, prefix, id)
 
 	def add_collection(self, widget):
 		prefix = gutils.before(widget.get_name(), "_")
@@ -245,7 +245,7 @@ class Griffith:
 			id = 0
 		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
 		self.db.add_collection(name)
-		edit.fill_collections_combo(self, prefix, id)
+		initialize.fill_collections_combo(self, prefix, id)
 
 	def remove_volume(self, widget):
 		prefix = gutils.before(widget.get_name(), "_")
@@ -255,7 +255,7 @@ class Griffith:
 			id = 0
 		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
 		self.db.remove_volume(name=name)
-		edit.fill_volumes_combo(self, prefix, id)
+		initialize.fill_volumes_combo(self, prefix, id)
 
 	def remove_collection(self, widget):
 		prefix = gutils.before(widget.get_name(), "_")
@@ -265,19 +265,19 @@ class Griffith:
 			id = 0
 		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
 		self.db.remove_collection(name=name)
-		edit.fill_collections_combo(self, prefix, id)
+		initialize.fill_collections_combo(self, prefix, id)
 
 	def e_rename_volume(self, widget):
 		id = self.e_volume_id.get_text()
 		new_name = self.e_volume_combo.get_active_text()
-		update.update_volume(self, id, name=new_name)
-		edit.fill_volumes_combo(self, prefix='e', default=id)
+		self.db.update_volume(id, name=new_name)
+		initialize.fill_volumes_combo(self, prefix='e', default=id)
 
 	def e_rename_collection(self, widget):
 		id = self.e_collection_id.get_text()
 		new_name = self.e_collection_combo.get_active_text()
-		update.update_collection(self, id, name=new_name)
-		edit.fill_collections_combo(self, prefix='e', default=id)
+		self.db.update_collection(id, name=new_name)
+		initialize.fill_collections_combo(self, prefix='e', default=id)
 
 	def e_show_volume(self, widget):
 		volume_id = self.e_volume_combo.get_active()
@@ -296,71 +296,77 @@ class Griffith:
 	
 	# languages -------------------------------------------------------{{{
 	def on_lang_add_clicked(self, widget):
-		name = self.lang_name.get_active_text()
+		name = self.lang_name_combo.get_active_text()
 		self.db.add_language(name)
-		# rebuild combo:
-		self.lang_name.get_model().clear()
-		for i in self.db.get_all_data(table_name="languages", order_by="id"):
-			self.lang_name.insert_text(i['id'], i['name']) 
+		update.update_language_ids(self)
+		initialize.fill_preferences_languages_combo(self)
 
 	def on_lang_remove_clicked(self, widget):
-		name = self.lang_name.get_active_text()
-		self.db.remove_language(name=name)
-		# rebuild combo:
-		self.lang_name.get_model().clear()
-		for i in self.db.get_all_data(table_name="languages", order_by="id"):
-			self.lang_name.insert_text(i['id'], i['name']) 
+		active = self.lang_name_combo.get_active()
+		if active>-1:
+			id = self.languages_ids[active]
+			self.db.remove_language(id=id)
+			update.update_language_ids(self)
+			initialize.fill_preferences_languages_combo(self)
+		else:
+			self.debug.show("You have to select language first")
 
 	def on_lang_rename_clicked(self, widget):
-		new_name = self.lang_name.get_active_text()
-		#update.update_language(self, id, name=new_name)	# TODO
-		self.debug.show("RENAME LANGUAGE: Not implemmented yet... (%s)"%new_name)
+		# TODO: get active
+		active = self.lang_name_combo.get_active()
+		if active>-1:
+			id = self.languages_ids[active]
+			new_name = self.lang_name_combo.get_active_text()
+			self.db.update_language(id=id, name=new_name)
+			initialize.fill_preferences_languages_combo(self)
+		else:
+			self.debug.show("You have to select language first")
 
 	def on_e_lang_add_clicked(self, widget):
-		from edit import create_language_hbox
-		create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
+		initialize.create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
 	def on_e_lang_remove_clicked(self, widget):
-		from edit import remove_hbox
-		remove_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
+		initialize.remove_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
 	def on_e_sub_add_clicked(self, widget):
-		from edit import create_subtitle_hbox
-		create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
+		initialize.create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
 	def on_e_sub_remove_clicked(self, widget):
-		from edit import remove_hbox
-		remove_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
+		initialize.remove_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
 	def on_am_lang_add_clicked(self, widget):
-		from edit import create_language_hbox
-		create_language_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
+		initialize.create_language_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
 	def on_am_lang_remove_clicked(self, widget):
-		from edit import remove_hbox
-		remove_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
+		initialize.remove_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
 	def on_am_sub_add_clicked(self, widget):
-		from edit import create_subtitle_hbox
-		create_subtitle_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
+		initialize.create_subtitle_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
 	def on_am_sub_remove_clicked(self, widget):
-		from edit import remove_hbox
-		remove_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
+		initialize.remove_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
 	#}}}
-	
+
 	# tags -------------------------------------------------------------{{{
 	def on_tag_add_clicked(self, widget):
-		name = self.tag_name.get_active_text()
+		name = self.tag_name_combo.get_active_text()
 		self.db.add_tag(name)
-		# rebuild combo:
-		self.tag_name.get_model().clear()
-		for i in self.db.get_all_data(table_name="tags", order_by="id"):
-			self.tag_name.insert_text(i['id'], i['name']) 
+		update.update_tag_ids(self)
+		initialize.fill_preferences_tags_combo(self)
 
 	def on_tag_remove_clicked(self, widget):
-		name = self.tag_name.get_active_text()
-		self.db.remove_tag(name=name)
-		# rebuild combo:
-		self.tag_name.get_model().clear()
-		for i in self.db.get_all_data(table_name="tags", order_by="id"):
-			self.tag_name.insert_text(i['id'], i['name']) 
+		active = self.tag_name_combo.get_active()
+		if active>-1:
+			id = self.tags_ids[active]
+			self.db.remove_tag(id=id)
+			update.update_tag_ids(self)
+			initialize.fill_preferences_tags_combo(self)
+		else:
+			self.debug.show("You have to select tag first")
 
 	def on_tag_rename_clicked(self, widget):
-		pass
+		# TODO: get active
+		active = self.tag_name_combo.get_active()
+		if active>-1:
+			id = self.tags_ids[active]
+			new_name = self.tag_name_combo.get_active_text()
+			self.db.update_tag(id=id, name=new_name)
+			initialize.fill_preferences_tags_combo(self)
+		else:
+			self.debug.show("You have to select tag first")
 	# }}}
 
 	# main treeview

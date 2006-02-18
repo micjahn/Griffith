@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2006-02-18 Piotr Ozarowski <ozarow@gmail.com>
 	* All language types are now saved
+	* Code cleanups
 
 2006-02-17 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed saving languages

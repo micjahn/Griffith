@@ -93,7 +93,7 @@ def update(self):
 		self.db.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % id)	# remove old data
 		for i in self.e_languages:
 			if i['id'].get_active() != None:
-				lang_id = gutils.findKey(i['id'].get_active(), self.languages_ids)
+				lang_id = self.languages_ids[i['id'].get_active()]
 				type = i['type'].get_active()
 				if not selected.has_key(lang_id):
 					selected[lang_id] = {}
@@ -107,7 +107,7 @@ def update(self):
 		self.db.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s';" % id)	# remove old data
 		for i in self.e_subtitles:
 			if i['id'].get_active() != None:
-				lang_id = gutils.findKey(i['id'].get_active(), self.languages_ids)
+				lang_id = self.languages_ids[i['id'].get_active()]
 				selected[lang_id] = 1
 		for i in selected.keys():
 			self.db.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
@@ -155,3 +155,15 @@ def clear_image(self,id):
 	self.db.con.commit()
 	self.update_statusbar(_("Image has been updated"))
 
+def update_language_ids(self):
+	self.languages_ids = {}
+	i = 0
+	for lang in self.db.get_all_data(table_name="languages", order_by=None):
+		self.languages_ids[i] = lang['id']
+		i += 1
+def update_tag_ids(self):
+	self.tags_ids = {}
+	i = 0
+	for tag in self.db.get_all_data(table_name="tags", order_by=None):
+		self.tags_ids[i] = tag['id']
+		i += 1

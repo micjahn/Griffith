@@ -39,7 +39,6 @@ except:
 	spell_support = 0
 
 def locations(self):
-
 	self.locations = {}
 	self._ = None
 	self.APP = "griffith"
@@ -272,6 +271,11 @@ def combos(self):
 	for collection in self.db.get_all_collections_data():
 		self.f_col.insert_text(int(collection['id']), collection['name'])
 
+	# dictionary for language/subtitle combos
+	from update import update_language_ids, update_tag_ids
+	update_language_ids(self)
+	update_tag_ids(self)
+
 	self.e_condition.insert_text(0, _("Damaged")) 
 	self.e_condition.insert_text(1, _("Poor")) 
 	self.e_condition.insert_text(2, _("Fair")) 
@@ -365,14 +369,11 @@ def combos(self):
 		self.p_media.insert_text(i['id'], i['name']) 
 		self.am_media.insert_text(i['id'], i['name']) 
 			
-	import edit
-	edit.fill_volumes_combo(self)
-	edit.fill_collections_combo(self)
-	
-	for i in self.db.get_all_data(table_name="languages", order_by=None):
-		self.lang_name.insert_text(i['id'], i['name'])
-	for i in self.db.get_all_data(table_name="tags", order_by=None):
-		self.tag_name.insert_text(i['id'], i['name'])
+	import initialize
+	initialize.fill_volumes_combo(self)
+	initialize.fill_collections_combo(self)
+	initialize.fill_preferences_languages_combo(self)
+	initialize.fill_preferences_tags_combo(self)
 	
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
@@ -413,3 +414,131 @@ def initialize_gtkspell(self):
 					self.w_preferences)
 	else:
 		self.debug.show("Spellchecker is not available")
+
+
+def fill_volumes_combo(self, prefix='e', default=0):
+	self.am_volume_combo.get_model().clear()
+	self.e_volume_combo.get_model().clear()
+	i = 0
+	self.volume_combo_ids = {}
+	for volume in self.db.get_all_volumes_data():
+		self.volume_combo_ids[volume['id']] = i
+		self.am_volume_combo.insert_text(i, str(volume['name']))
+		self.e_volume_combo.insert_text(i, str(volume['name']))
+		i = i+1
+
+	self.am_volume_combo.show_all()
+	self.e_volume_combo.show_all()
+	if prefix == 'e':
+		self.e_volume_combo.set_active(int(self.volume_combo_ids[default]))
+		self.am_volume_combo.set_active(0)
+	else:
+		self.am_volume_combo.set_active(int(self.volume_combo_ids[default]))
+
+def fill_collections_combo(self, prefix='e', default=0):
+	self.am_collection_combo.get_model().clear()
+	self.e_collection_combo.get_model().clear()
+	i = 0
+	self.collection_combo_ids = {}
+	for collection in self.db.get_all_collections_data():
+		self.collection_combo_ids[collection['id']] = i
+		self.am_collection_combo.insert_text(i, str(collection['name']))
+		self.e_collection_combo.insert_text(i, str(collection['name']))
+		i = i+1
+	
+	self.am_collection_combo.show_all()
+	self.e_collection_combo.show_all()
+	if prefix == 'e':
+		self.e_collection_combo.set_active(int(self.collection_combo_ids[default]))
+		self.am_collection_combo.set_active(0)
+	else:
+		self.am_collection_combo.set_active(int(self.collection_combo_ids[default]))
+
+def fill_preferences_languages_combo(self):
+	self.lang_name_combo.get_model().clear()
+	for i in self.languages_ids.keys():
+		id = self.languages_ids[i]
+		name = self.db.get_value(field='name', table_name="languages", where="id='%s'"%id)
+		self.lang_name_combo.insert_text(int(i), str(name)) 
+	self.lang_name_combo.show_all()
+
+def fill_preferences_tags_combo(self):
+	self.tag_name_combo.get_model().clear()
+	for i in self.tags_ids.keys():
+		id = self.tags_ids[i]
+		name = self.db.get_value(field='name', table_name="tags", where="id='%s'"%id)
+		self.tag_name_combo.insert_text(int(i), str(name)) 
+	self.tag_name_combo.show_all()
+
+def fill_language_combo(self, widget, default=None):
+	try:
+		widget.get_model().clear()
+	except:
+		pass
+	for i in self.languages_ids:
+		id = self.languages_ids[i]
+		name = self.db.get_value(field='name', table_name="languages", where="id='%s'"%id)
+		widget.insert_text(int(i), str(name))
+	if default != None and default!=0:
+		i = gutils.findKey(default, self.languages_ids)
+		widget.set_active(int(i))
+
+def fill_tag_combo(self, widget, default=None):
+	try:
+		widget.get_model().clear()
+	except:
+		pass
+	for i in self.tags_ids:
+		id = self.tags_ids[i]
+		name = self.db.get_value(field='name', table_name="tags", where="id='%s'"%id)
+		widget.insert_text(int(i), str(name))
+	if default != None:
+		widget.set_active(int(self.tags_ids[default]))
+
+def create_language_hbox(self, widget, tab, default=None, type=None):
+	from initialize import fill_language_combo
+	number = len(widget.get_children())	# new box number
+	tab.append({})				# creates new tab[number][]
+	box = gtk.HBox(spacing=2)
+	tab[number]['id'] = gtk.combo_box_new_text()
+	fill_language_combo(self, widget=tab[number]['id'], default=default)
+	tab[number]['type'] = gtk.combo_box_new_text()
+	tab[number]['type'].insert_text(0, '')
+	tab[number]['type'].insert_text(1, _("lector"))
+	tab[number]['type'].insert_text(2, _("dubbing"))
+	if type != None:
+		tab[number]['type'].set_active(type)
+	else:
+		tab[number]['type'].set_active(0)
+	box.add(tab[number]['id'])
+	box.add(tab[number]['type'])
+	widget.pack_start(box, expand=False, fill=False, padding=1)
+	widget.show_all()
+
+def remove_hbox(self, widget, tab):
+	number = len(widget.get_children())-1	# last box number
+	try:
+		tab.pop()
+		widget.remove(widget.get_children().pop())
+	except:
+		self.debug.show("List is empty")
+	widget.show_all()
+
+def create_subtitle_hbox(self, widget, tab, default=None):
+	from initialize import fill_language_combo
+	number = len(widget.get_children())	# new box number
+	tab.append({})				# creates new tab[number][]
+	tab[number]['id'] = gtk.combo_box_new_text()
+	fill_language_combo(self, widget=tab[number]['id'], default=default)
+	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
+	widget.show_all()
+
+def create_tag_hbox(self, widget, tab, default=None):
+	from initialize import fill_tag_combo
+	number = len(widget.get_children())	# new box number
+	tab.append({})				# creates new tab[number][]
+	tab[number]['id'] = gtk.combo_box_new_text()
+	fill_language_combo(self, widget=tab[number]['id'], default=default)
+	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
+	widget.show_all()
+
