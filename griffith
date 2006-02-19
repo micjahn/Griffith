@@ -312,15 +312,15 @@ class Griffith:
 			self.debug.show("You have to select language first")
 
 	def on_lang_rename_clicked(self, widget):
-		# TODO: get active
+		id = self.languages_ids[self.lang_name_active]
+		new_name = self.lang_name_combo.get_active_text()
+		self.db.update_language(id=id, name=new_name)
+		initialize.fill_preferences_languages_combo(self)
+	
+	def on_lang_name_combo_changed(self, widget):
 		active = self.lang_name_combo.get_active()
 		if active>-1:
-			id = self.languages_ids[active]
-			new_name = self.lang_name_combo.get_active_text()
-			self.db.update_language(id=id, name=new_name)
-			initialize.fill_preferences_languages_combo(self)
-		else:
-			self.debug.show("You have to select language first")
+			self.lang_name_active = active		
 
 	def on_e_lang_add_clicked(self, widget):
 		initialize.create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
@@ -358,15 +358,15 @@ class Griffith:
 			self.debug.show("You have to select tag first")
 
 	def on_tag_rename_clicked(self, widget):
-		# TODO: get active
+		id = self.tags_ids[self.tag_name_active]
+		new_name = self.tag_name_combo.get_active_text()
+		self.db.update_tag(id=id, name=new_name)
+		initialize.fill_preferences_tags_combo(self)
+	
+	def on_tag_name_combo_changed(self, widget):
 		active = self.tag_name_combo.get_active()
 		if active>-1:
-			id = self.tags_ids[active]
-			new_name = self.tag_name_combo.get_active_text()
-			self.db.update_tag(id=id, name=new_name)
-			initialize.fill_preferences_tags_combo(self)
-		else:
-			self.debug.show("You have to select tag first")
+			self.tag_name_active = active		
 	# }}}
 
 	# main treeview

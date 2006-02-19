@@ -8768,12 +8768,13 @@ Stars</property>
 			  <property name="spacing">2</property>
 
 			  <child>
-			    <widget class="GtkComboBoxEntry" id="lang_name">
+			    <widget class="GtkComboBoxEntry" id="lang_name_combo">
 			      <property name="visible">True</property>
 			      <property name="items" translatable="yes"></property>
 			      <property name="add_tearoffs">False</property>
 			      <property name="has_frame">True</property>
 			      <property name="focus_on_click">True</property>
+			      <signal name="changed" handler="on_lang_name_combo_changed" last_modification_time="Sun, 19 Feb 2006 17:57:17 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -9097,12 +9098,13 @@ Stars</property>
 			  <property name="spacing">2</property>
 
 			  <child>
-			    <widget class="GtkComboBoxEntry" id="tag_name">
+			    <widget class="GtkComboBoxEntry" id="tag_name_combo">
 			      <property name="visible">True</property>
 			      <property name="items" translatable="yes"></property>
 			      <property name="add_tearoffs">False</property>
 			      <property name="has_frame">True</property>
 			      <property name="focus_on_click">True</property>
+			      <signal name="changed" handler="on_tag_name_combo_changed" last_modification_time="Sun, 19 Feb 2006 17:57:23 GMT"/>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>

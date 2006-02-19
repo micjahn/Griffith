@@ -31,7 +31,6 @@ class GriffithSQL:
 	con = None
 	cursor = None
 	
-	
 	def __init__(self, config, debug, griffith_dir):
 		self.griffith_dir = griffith_dir
 		self.config = config
@@ -879,7 +878,7 @@ class GriffithSQL:
 			self.debug.show("You have to select language first")
 			return False
 		try:
-			self.cursor.execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (id, name))
+			self.cursor.execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (name, id))
 		except:
 			self.debug.show("ERROR during updating language name!")
 			return False
@@ -890,7 +889,7 @@ class GriffithSQL:
 			self.debug.show("You have to select tag first")
 			return False
 		try:
-			self.cursor.execute("UPDATE tags SET name ='%s' WHERE id='%s';" % (id, name))
+			self.cursor.execute("UPDATE tags SET name ='%s' WHERE id='%s';" % (name,id))
 		except:
 			self.debug.show("ERROR during updating tag name!")
 			return False
