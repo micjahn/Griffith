@@ -168,10 +168,8 @@ def treeview_clicked(self):
 			self.e_collection_id.hide()
 
 			#languages
-			languages = self.db.get_all_data(table_name="movie_lang", order_by=None,
-					where="movie_id='%s'"%self.e_movie_id.get_text())
-			subtitles = self.db.get_all_data(table_name="movie_sub", order_by=None,
-					where="movie_id='%s'"%self.e_movie_id.get_text())
+			languages = self.db.get_all_data(table_name="movie_lang", order_by=None, where="movie_id='%s'" % row['id'])
+			subtitles = self.db.get_all_data(table_name="movie_sub", order_by=None, where="movie_id='%s'" % row['id'])
 			self.e_languages = []	# language widgets
 			self.e_subtitles = []	# subtile widgets
 			if len(languages) > 0:
@@ -183,6 +181,33 @@ def treeview_clicked(self):
 				for i in subtitles:
 					create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles, default=i['lang_id'])
 
+			#tags
+			from math import ceil
+			tags = self.db.get_all_data(table_name="tags", order_by=None)
+			k = ceil( len(tags) / float(3) )
+			self.e_tags = {}
+			for i in self.tags_ids:
+				tag_id = self.tags_ids[i]
+				tag_name = self.db.get_value(field='name', table_name="tags", where="id='%s'"%tag_id)
+				self.e_tags[i] = gtk.CheckButton(tag_name)
+				self.e_tags[i].set_name('e_tag_'+str(i))
+				tag_active = self.db.get_value(field='1', table_name="movie_tag", where="movie_id='%s'" % row['id'])
+				if tag_active == '1':
+					tag_active = True
+				else:
+					tag_active = False
+				self.e_tags[i].set_active(tag_active)
+				# split into 3 boxes
+				if i <= k:
+					self.e_tag_vbox_1.add(self.e_tags[i])
+				elif i<= 2*k:
+					self.e_tag_vbox_2.add(self.e_tags[i])
+				else:
+					self.e_tag_vbox_3.add(self.e_tags[i])
+			self.e_tag_vbox_1.show_all()
+			self.e_tag_vbox_2.show_all()
+			self.e_tag_vbox_3.show_all()
+			self.e_tag_hbox.show_all()
 
 def populate(self, data):
 	self.treemodel.clear()

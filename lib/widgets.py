@@ -237,6 +237,9 @@ def define_widgets(self, gladefile):
 	
 	self.tag_name_combo = gladefile.get_widget('tag_name_combo')	# preferences window
 	self.e_tag_hbox = gladefile.get_widget('e_tag_hbox')
+	self.e_tag_vbox_1 = gladefile.get_widget('e_tag_vbox_1')
+	self.e_tag_vbox_2 = gladefile.get_widget('e_tag_vbox_2')
+	self.e_tag_vbox_3 = gladefile.get_widget('e_tag_vbox_3')
 
 
 	# poster events

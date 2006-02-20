@@ -583,7 +583,11 @@ class GriffithSQL:
 
 	def get_value(self, field, table_name, where):
 		self.cursor.execute("SELECT %s FROM %s WHERE %s"%(field, table_name, where))
-		return self.cursor.fetchone()[0]
+		try: 
+			value = self.cursor.fetchone()[0]
+		except:
+			value = None
+		return value
 	
 	def get_all_volumes_data(self):		# TODO: rewrite all code to use get_all_data()
 		self.cursor.execute("SELECT * FROM volumes ORDER BY id")
