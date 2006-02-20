@@ -115,8 +115,10 @@ def update(self):
 		# tags
 		selected = {}
 		self.db.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % id)
-		# TODO: read selected tags
-		for i in selected:
+		for i in self.tags_ids:
+			if self.e_tags[i].get_active() == True:
+				selected[self.tags_ids[i]] = 1
+		for i in selected.keys():
 			self.db.cursor.execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
 
 		self.update_statusbar(_("Movie information has been updated"))
@@ -161,6 +163,7 @@ def update_language_ids(self):
 	for lang in self.db.get_all_data(table_name="languages", order_by=None):
 		self.languages_ids[i] = lang['id']
 		i += 1
+
 def update_tag_ids(self):
 	self.tags_ids = {}
 	i = 0

@@ -704,7 +704,7 @@ Year</property>
 	  <property name="position">400</property>
 
 	  <child>
-	    <widget class="GtkScrolledWindow" id="scrolledwindow1">
+	    <widget class="GtkScrolledWindow" id="scrolledwindow_list">
 	      <property name="width_request">350</property>
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
@@ -1264,7 +1264,7 @@ Year</property>
 	      </child>
 
 	      <child>
-		<widget class="GtkNotebook" id="notebook2">
+		<widget class="GtkNotebook" id="notebook_edit">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="show_tabs">True</property>
@@ -1274,7 +1274,7 @@ Year</property>
 		  <property name="enable_popup">False</property>
 
 		  <child>
-		    <widget class="GtkTable" id="table4">
+		    <widget class="GtkTable" id="table_details">
 		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="n_rows">9</property>
@@ -1945,46 +1945,33 @@ Year</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="vbox15">
+		    <widget class="GtkScrolledWindow" id="scrolledwindow_plot">
 		      <property name="visible">True</property>
-		      <property name="homogeneous">False</property>
-		      <property name="spacing">0</property>
+		      <property name="can_focus">True</property>
+		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+		      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+		      <property name="shadow_type">GTK_SHADOW_IN</property>
+		      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		      <child>
-			<widget class="GtkScrolledWindow" id="scrolledwindow2">
+			<widget class="GtkTextView" id="e_plot">
+			  <property name="border_width">6</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-			  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-			  <property name="shadow_type">GTK_SHADOW_IN</property>
-			  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
-
-			  <child>
-			    <widget class="GtkTextView" id="e_plot">
-			      <property name="border_width">6</property>
-			      <property name="visible">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="editable">True</property>
-			      <property name="overwrite">False</property>
-			      <property name="accepts_tab">False</property>
-			      <property name="justification">GTK_JUSTIFY_LEFT</property>
-			      <property name="wrap_mode">GTK_WRAP_WORD</property>
-			      <property name="cursor_visible">True</property>
-			      <property name="pixels_above_lines">0</property>
-			      <property name="pixels_below_lines">0</property>
-			      <property name="pixels_inside_wrap">0</property>
-			      <property name="left_margin">0</property>
-			      <property name="right_margin">0</property>
-			      <property name="indent">0</property>
-			      <property name="text" translatable="yes"></property>
-			    </widget>
-			  </child>
+			  <property name="editable">True</property>
+			  <property name="overwrite">False</property>
+			  <property name="accepts_tab">False</property>
+			  <property name="justification">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap_mode">GTK_WRAP_WORD</property>
+			  <property name="cursor_visible">True</property>
+			  <property name="pixels_above_lines">0</property>
+			  <property name="pixels_below_lines">0</property>
+			  <property name="pixels_inside_wrap">0</property>
+			  <property name="left_margin">0</property>
+			  <property name="right_margin">0</property>
+			  <property name="indent">0</property>
+			  <property name="text" translatable="yes"></property>
 			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">True</property>
-			  <property name="fill">True</property>
-			</packing>
 		      </child>
 		    </widget>
 		    <packing>
@@ -2017,7 +2004,7 @@ Year</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkScrolledWindow" id="sss">
+		    <widget class="GtkScrolledWindow" id="scrolledwindow_with">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -2076,7 +2063,7 @@ Year</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkTable" id="table12">
+		    <widget class="GtkTable" id="table_tech_info">
 		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="n_rows">6</property>
@@ -2408,7 +2395,7 @@ Year</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="vbox39">
+		    <widget class="GtkVBox" id="vbox_languages">
 		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
@@ -3016,7 +3003,7 @@ Year</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="vbox33">
+		    <widget class="GtkVBox" id="vbox_volumes">
 		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
@@ -3518,7 +3505,7 @@ Year</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkScrolledWindow" id="scrolledwindow17">
+		    <widget class="GtkScrolledWindow" id="scrolledwindow_tags">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
@@ -3532,60 +3519,13 @@ Year</property>
 			  <property name="shadow_type">GTK_SHADOW_IN</property>
 
 			  <child>
-			    <widget class="GtkHBox" id="e_tag_hbox">
+			    <widget class="GtkVBox" id="e_tag_vbox">
 			      <property name="visible">True</property>
 			      <property name="homogeneous">False</property>
 			      <property name="spacing">0</property>
 
 			      <child>
-				<widget class="GtkVBox" id="e_tag_vbox_1">
-				  <property name="visible">True</property>
-				  <property name="homogeneous">False</property>
-				  <property name="spacing">0</property>
-
-				  <child>
-				    <placeholder/>
-				  </child>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkVBox" id="e_tag_vbox_2">
-				  <property name="visible">True</property>
-				  <property name="homogeneous">False</property>
-				  <property name="spacing">0</property>
-
-				  <child>
-				    <placeholder/>
-				  </child>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkVBox" id="e_tag_vbox_3">
-				  <property name="visible">True</property>
-				  <property name="homogeneous">False</property>
-				  <property name="spacing">0</property>
-
-				  <child>
-				    <placeholder/>
-				  </child>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
-				</packing>
+				<placeholder/>
 			      </child>
 			    </widget>
 			  </child>
@@ -3622,7 +3562,7 @@ Year</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkScrolledWindow" id="scrolledwindow6">
+		    <widget class="GtkScrolledWindow" id="scrolledwindow_notes">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -3681,7 +3621,7 @@ Year</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="vbox5">
+		    <widget class="GtkVBox" id="vbox_loans">
 		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
@@ -4213,7 +4153,7 @@ Year</property>
 	  <property name="enable_popup">False</property>
 
 	  <child>
-	    <widget class="GtkVBox" id="vbox13">
+	    <widget class="GtkVBox" id="vbox_a_movie_info">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
@@ -4732,7 +4672,7 @@ Year</property>
 	  </child>
 
 	  <child>
-	    <widget class="GtkTable" id="table16">
+	    <widget class="GtkTable" id="table_a_details">
 	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="n_rows">11</property>
@@ -5423,7 +5363,7 @@ Year</property>
 	  </child>
 
 	  <child>
-	    <widget class="GtkTable" id="table6">
+	    <widget class="GtkTable" id="table_a_tech_info">
 	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="n_rows">9</property>
@@ -6007,7 +5947,7 @@ Year</property>
 	  </child>
 
 	  <child>
-	    <widget class="GtkHBox" id="hbox89">
+	    <widget class="GtkHBox" id="hbox_a_lang">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
@@ -6614,7 +6554,64 @@ Year</property>
 	  </child>
 
 	  <child>
-	    <widget class="GtkScrolledWindow" id="scrolledwindow9">
+	    <widget class="GtkScrolledWindow" id="scrolledwindow_a_tags">
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
+	      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+	      <child>
+		<widget class="GtkViewport" id="viewport6">
+		  <property name="visible">True</property>
+		  <property name="shadow_type">GTK_SHADOW_IN</property>
+
+		  <child>
+		    <widget class="GtkVBox" id="am_tag_vbox">
+		      <property name="visible">True</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
+
+		      <child>
+			<placeholder/>
+		      </child>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="tab_expand">False</property>
+	      <property name="tab_fill">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label185">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Tags</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_LEFT</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+	      <property name="width_chars">-1</property>
+	      <property name="single_line_mode">False</property>
+	      <property name="angle">0</property>
+	    </widget>
+	    <packing>
+	      <property name="type">tab</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkScrolledWindow" id="scrolledwindow_a_plot">
 	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
@@ -6673,7 +6670,7 @@ Year</property>
 	  </child>
 
 	  <child>
-	    <widget class="GtkScrolledWindow" id="scrolledwindow10">
+	    <widget class="GtkScrolledWindow" id="scrolledwindow_a_with">
 	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
@@ -6732,7 +6729,7 @@ Year</property>
 	  </child>
 
 	  <child>
-	    <widget class="GtkScrolledWindow" id="scrolledwindow7">
+	    <widget class="GtkScrolledWindow" id="scrolledwindow_a_notes">
 	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>

@@ -40,7 +40,7 @@ def check_args(self):
 			if o in ("-h", "--help"):
 				con_usage()
 				sys.exit()
-			if o in ("-D"):
+			if o in ("-D", "--debug"):
 				self.debug.set_debug()
 			if o in ("-o", "--search_original"):
 				con_search_movie(self, a, 1)

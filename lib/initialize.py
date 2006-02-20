@@ -78,7 +78,7 @@ def locations(self):
 		self.debug.show("Creating poster directory")
 		os.makedirs(os.path.join(griffith_dir, "posters"))
 
-	self.griffith_dir = griffith_dir   
+	self.griffith_dir = griffith_dir
 
 	if self.windows:
 		#win32 platform, add the "lib" folder to the system path
@@ -94,7 +94,7 @@ def locations(self):
 	elif self.posix:
 		self.locations['lib'] = string.replace(self.locations['exec'], "/bin","/lib/griffith")
 		self.DIR = "/usr/share/locale"
-		sys.path.append('/usr/share') # for debian 
+		sys.path.append('/usr/share') # for debian
 		#some locations
 		self.locations['movie_plugins'] = string.replace(self.locations['exec'], \
 				"/bin","/lib/griffith/plugins/movie")
@@ -106,12 +106,12 @@ def locations(self):
 		print "Operating system not supported"
 		sys.exit()		
 				
-	# includes plugins in system path for easier impor		 
+	# includes plugins in system path for easier impor		
 	sys.path.append(self.locations['lib'])
 	sys.path.append(self.locations['movie_plugins'])
 	sys.path.append(self.locations['export_plugins'])
 
-	#socket.setdefaulttimeout(30) 
+	#socket.setdefaulttimeout(30)
 
 	gettext.bindtextdomain(self.APP, self.DIR)
 	gettext.textdomain(self.APP)
@@ -178,7 +178,6 @@ def treeview(self):
 	self.main_treeview.show()
 	
 def loans_treeview(self):
-
 	self.loan_history.set_model(self.loans_treemodel)
 	self.loan_history.set_headers_visible(True)
 	# loan date
@@ -264,7 +263,7 @@ def people_treeview(self):
 		self.p_treemodel.set_value(myiter, 0, str(row['name']))
 		self.p_treemodel.set_value(myiter, 1, str(row['email']))
 	
-	self.p_treeview.show() 
+	self.p_treeview.show()
 	
 def combos(self):
 	# collections filter
@@ -276,104 +275,108 @@ def combos(self):
 	update_language_ids(self)
 	update_tag_ids(self)
 
-	self.e_condition.insert_text(0, _("Damaged")) 
-	self.e_condition.insert_text(1, _("Poor")) 
-	self.e_condition.insert_text(2, _("Fair")) 
-	self.e_condition.insert_text(3, _("Good")) 
-	self.e_condition.insert_text(4, _("Excellent")) 
+	self.e_condition.insert_text(0, _("Damaged"))
+	self.e_condition.insert_text(1, _("Poor"))
+	self.e_condition.insert_text(2, _("Fair"))
+	self.e_condition.insert_text(3, _("Good"))
+	self.e_condition.insert_text(4, _("Excellent"))
 	self.e_condition.insert_text(5, _("N/A"))
 	
-	self.p_condition.insert_text(0, _("Damaged")) 
-	self.p_condition.insert_text(1, _("Poor")) 
-	self.p_condition.insert_text(2, _("Fair")) 
-	self.p_condition.insert_text(3, _("Good")) 
-	self.p_condition.insert_text(4, _("Excellent")) 
+	self.p_condition.insert_text(0, _("Damaged"))
+	self.p_condition.insert_text(1, _("Poor"))
+	self.p_condition.insert_text(2, _("Fair"))
+	self.p_condition.insert_text(3, _("Good"))
+	self.p_condition.insert_text(4, _("Excellent"))
 	self.p_condition.insert_text(5, _("N/A"))
 	
-	self.e_color.insert_text(0, _("Color")) 
-	self.e_color.insert_text(1, _("Black and White")) 
-	self.e_color.insert_text(2, _("Mixed")) 
-	self.e_color.insert_text(3, _("N/A")) 
+	self.e_color.insert_text(0, _("Color"))
+	self.e_color.insert_text(1, _("Black and White"))
+	self.e_color.insert_text(2, _("Mixed"))
+	self.e_color.insert_text(3, _("N/A"))
 	
-	self.p_color.insert_text(0, _("Color")) 
-	self.p_color.insert_text(1, _("Black and White")) 
-	self.p_color.insert_text(2, _("Mixed")) 
-	self.p_color.insert_text(3, _("N/A")) 
+	self.p_color.insert_text(0, _("Color"))
+	self.p_color.insert_text(1, _("Black and White"))
+	self.p_color.insert_text(2, _("Mixed"))
+	self.p_color.insert_text(3, _("N/A"))
 	
-	self.e_region.insert_text(0, _("Region 0 (No Region Coding)")) 
-	self.e_region.insert_text(1, _("Region 1 (United States of America, Canada)")) 
-	self.e_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)")) 
+	self.e_region.insert_text(0, _("Region 0 (No Region Coding)"))
+	self.e_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
+	self.e_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
 	self.e_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
-	self.e_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)")) 
-	self.e_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)")) 
-	self.e_region.insert_text(6, _("Region 6 (Popular Republic of China)")) 
-	self.e_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)")) 
-	self.e_region.insert_text(8, _("Region 9 (Often used as region free)")) 
+	self.e_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
+	self.e_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
+	self.e_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
+	self.e_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
+	self.e_region.insert_text(8, _("Region 9 (Often used as region free)"))
 	self.e_region.insert_text(9, _("N/A"))
 	
-	self.p_region.insert_text(0, _("Region 0 (No Region Coding)")) 
-	self.p_region.insert_text(1, _("Region 1 (United States of America, Canada)")) 
-	self.p_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)")) 
+	self.p_region.insert_text(0, _("Region 0 (No Region Coding)"))
+	self.p_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
+	self.p_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
 	self.p_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
-	self.p_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)")) 
-	self.p_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)")) 
-	self.p_region.insert_text(6, _("Region 6 (Popular Republic of China)")) 
-	self.p_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)")) 
-	self.p_region.insert_text(8, _("Region 9 (Often used as region free)")) 
-	self.p_region.insert_text(9, _("N/A")) 
+	self.p_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
+	self.p_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
+	self.p_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
+	self.p_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
+	self.p_region.insert_text(8, _("Region 9 (Often used as region free)"))
+	self.p_region.insert_text(9, _("N/A"))
 	
-	self.e_layers.insert_text(0, _("Single Side, Single Layer")) 
-	self.e_layers.insert_text(1, _("Single Side, Dual Layer")) 
-	self.e_layers.insert_text(2, _("Dual Side, Single Layer")) 
-	self.e_layers.insert_text(3, _("Dual Side, Dual Layer")) 
-	self.e_layers.insert_text(4, _("N/A")) 
+	self.e_layers.insert_text(0, _("Single Side, Single Layer"))
+	self.e_layers.insert_text(1, _("Single Side, Dual Layer"))
+	self.e_layers.insert_text(2, _("Dual Side, Single Layer"))
+	self.e_layers.insert_text(3, _("Dual Side, Dual Layer"))
+	self.e_layers.insert_text(4, _("N/A"))
 	
-	self.p_layers.insert_text(0, _("Single Side, Single Layer")) 
-	self.p_layers.insert_text(1, _("Single Side, Dual Layer")) 
-	self.p_layers.insert_text(2, _("Dual Side, Single Layer")) 
-	self.p_layers.insert_text(3, _("Dual Side, Dual Layer")) 
-	self.p_layers.insert_text(4, _("N/A")) 
+	self.p_layers.insert_text(0, _("Single Side, Single Layer"))
+	self.p_layers.insert_text(1, _("Single Side, Dual Layer"))
+	self.p_layers.insert_text(2, _("Dual Side, Single Layer"))
+	self.p_layers.insert_text(3, _("Dual Side, Dual Layer"))
+	self.p_layers.insert_text(4, _("N/A"))
 	
-	self.am_condition.insert_text(0, _("Damaged")) 
-	self.am_condition.insert_text(1, _("Poor")) 
-	self.am_condition.insert_text(2, _("Fair")) 
-	self.am_condition.insert_text(3, _("Good")) 
-	self.am_condition.insert_text(4, _("Excellent")) 
-	self.am_condition.insert_text(5, _("N/A")) 
+	self.am_condition.insert_text(0, _("Damaged"))
+	self.am_condition.insert_text(1, _("Poor"))
+	self.am_condition.insert_text(2, _("Fair"))
+	self.am_condition.insert_text(3, _("Good"))
+	self.am_condition.insert_text(4, _("Excellent"))
+	self.am_condition.insert_text(5, _("N/A"))
 	
-	self.am_color.insert_text(0, _("Color")) 
-	self.am_color.insert_text(1, _("Black and White")) 
-	self.am_color.insert_text(2, _("Mixed")) 
+	self.am_color.insert_text(0, _("Color"))
+	self.am_color.insert_text(1, _("Black and White"))
+	self.am_color.insert_text(2, _("Mixed"))
 	self.am_color.insert_text(3, _("N/A"))
 	
-	self.am_region.insert_text(0, _("Region 0 (No Region Coding)")) 
-	self.am_region.insert_text(1, _("Region 1 (United States of America, Canada)")) 
-	self.am_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)")) 
+	self.am_region.insert_text(0, _("Region 0 (No Region Coding)"))
+	self.am_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
+	self.am_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
 	self.am_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
-	self.am_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)")) 
-	self.am_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)")) 
-	self.am_region.insert_text(6, _("Region 6 (Popular Republic of China)")) 
-	self.am_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)")) 
-	self.am_region.insert_text(8, _("Region 9 (Often used as region free)")) 
-	self.am_region.insert_text(9, _("N/A")) 
+	self.am_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
+	self.am_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
+	self.am_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
+	self.am_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
+	self.am_region.insert_text(8, _("Region 9 (Often used as region free)"))
+	self.am_region.insert_text(9, _("N/A"))
 	
-	self.am_layers.insert_text(0, _("Single Side, Single Layer")) 
-	self.am_layers.insert_text(1, _("Single Side, Dual Layer")) 
-	self.am_layers.insert_text(2, _("Dual Side, Single Layer")) 
-	self.am_layers.insert_text(3, _("Dual Side, Dual Layer")) 
+	self.am_layers.insert_text(0, _("Single Side, Single Layer"))
+	self.am_layers.insert_text(1, _("Single Side, Dual Layer"))
+	self.am_layers.insert_text(2, _("Dual Side, Single Layer"))
+	self.am_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.am_layers.insert_text(4, _("N/A"))
 	
 	media = self.db.get_all_data(table_name="media", order_by="id ASC")
 	for i in media:
-		self.e_media.insert_text(i['id'], i['name']) 
-		self.p_media.insert_text(i['id'], i['name']) 
-		self.am_media.insert_text(i['id'], i['name']) 
-			
+		self.e_media.insert_text(i['id'], i['name'])
+		self.p_media.insert_text(i['id'], i['name'])
+		self.am_media.insert_text(i['id'], i['name'])
+		
 	import initialize
 	initialize.fill_volumes_combo(self)
 	initialize.fill_collections_combo(self)
 	initialize.fill_preferences_languages_combo(self)
 	initialize.fill_preferences_tags_combo(self)
+	self.e_tags = {} # dictionary for tag CheckBoxes
+	self.am_tags = {} # dictionary for tag CheckBoxes
+	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
@@ -403,7 +406,7 @@ def initialize_gtkspell(self):
 				except:
 					spell_error = True
 			if self.config.get('spell_plot', True)=='True' and \
-				self.config.get('spell_lang')!='':		   
+				self.config.get('spell_lang')!='':		
 				try:
 					self.plot_spell = gtkspell.Spell(self.e_plot, self.config.get('spell_lang'))
 				except:
@@ -459,7 +462,7 @@ def fill_preferences_languages_combo(self):
 	for i in self.languages_ids.keys():
 		id = self.languages_ids[i]
 		name = self.db.get_value(field='name', table_name="languages", where="id='%s'"%id)
-		self.lang_name_combo.insert_text(int(i), str(name)) 
+		self.lang_name_combo.insert_text(int(i), str(name))
 	self.lang_name_combo.show_all()
 
 def fill_preferences_tags_combo(self):
@@ -467,7 +470,7 @@ def fill_preferences_tags_combo(self):
 	for i in self.tags_ids.keys():
 		id = self.tags_ids[i]
 		name = self.db.get_value(field='name', table_name="tags", where="id='%s'"%id)
-		self.tag_name_combo.insert_text(int(i), str(name)) 
+		self.tag_name_combo.insert_text(int(i), str(name))
 	self.tag_name_combo.show_all()
 
 def fill_language_combo(self, widget, default=None):
@@ -515,6 +518,17 @@ def create_language_hbox(self, widget, tab, default=None, type=None):
 	widget.pack_start(box, expand=False, fill=False, padding=1)
 	widget.show_all()
 
+def create_tag_vbox(self, widget, tab):
+	for i in widget.get_children():
+		i.destroy()
+	for i in self.tags_ids:
+		tag_id = self.tags_ids[i]
+		tag_name = self.db.get_value(field='name', table_name="tags", where="id='%s'"%tag_id)
+		tab[i] = gtk.CheckButton(tag_name)
+		tab[i].set_active(False)
+		widget.pack_start(tab[i])
+	widget.show_all()
+
 def remove_hbox(self, widget, tab):
 	number = len(widget.get_children())-1	# last box number
 	try:
@@ -526,15 +540,6 @@ def remove_hbox(self, widget, tab):
 
 def create_subtitle_hbox(self, widget, tab, default=None):
 	from initialize import fill_language_combo
-	number = len(widget.get_children())	# new box number
-	tab.append({})				# creates new tab[number][]
-	tab[number]['id'] = gtk.combo_box_new_text()
-	fill_language_combo(self, widget=tab[number]['id'], default=default)
-	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
-	widget.show_all()
-
-def create_tag_hbox(self, widget, tab, default=None):
-	from initialize import fill_tag_combo
 	number = len(widget.get_children())	# new box number
 	tab.append({})				# creates new tab[number][]
 	tab[number]['id'] = gtk.combo_box_new_text()

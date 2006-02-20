@@ -142,9 +142,9 @@ def clear_details(self):
 		i.destroy()
 	for i in self.e_sub_vbox.get_children():
 		i.destroy()
-	# tags - remove old widgets
-	for i in self.e_tag_hbox.get_children():
-		i.destroy()
+	# tags - clear tag selection
+	for i in self.e_tag_vbox.get_children():
+		i.set_active(False)
 	
 	try:
 		rimage = int(str(self.config.get('rating_image')))

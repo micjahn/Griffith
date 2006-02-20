@@ -46,7 +46,7 @@ class GriffithSQL:
 			
 		self.check_if_table_exists()
 
-	def new_db(self, parent):
+	def new_db(self, parent): #{{{
 		"""initializes a new griffith database file"""
 		response = gutils.question(self, \
 			_("Are you sure you want to create a new database?\nYou will lose ALL your current data!"), \
@@ -76,6 +76,7 @@ class GriffithSQL:
 				pass
 		else:
 			pass
+	#}}}
 	
 	# create tables ----------------------------------------------------{{{
 	def create_db(self):
@@ -481,7 +482,6 @@ class GriffithSQL:
 		
 		# languages
 		selected = {}
-		self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % id)	# remove old data
 		for i in data.am_languages:
 			if i['id'].get_active() != None:
 				lang_id = languages_ids[i['id'].get_active()]
@@ -494,7 +494,6 @@ class GriffithSQL:
 				self.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
 		# subtitles
 		selected = {}
-		self.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s';" % id)	# remove old data
 		for i in data.am_subtitles:
 			if i['id'].get_active() != None:
 				lang_id = languages_ids[i['id'].get_active()]
@@ -502,7 +501,19 @@ class GriffithSQL:
 		for i in selected.keys():
 			self.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
 
-		# TODO: tags 
+		# tags 
+		# TODO: make use of parent.tags_ids
+		tags_ids = {}
+		i = 0
+		for tag in self.get_all_data(table_name="tags", what="id", order_by=None):
+			tags_ids[i] = tag['id']
+			i = i+1
+		selected = {}
+		for i in tags_ids:
+			if data.am_tags[i].get_active() == True:
+				selected[tags_ids[i]] = 1
+		for i in selected.keys():
+			self.cursor.execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
 
 	def add_volume(self, name):
 		# check if volume already exists

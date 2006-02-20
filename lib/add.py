@@ -88,6 +88,9 @@ def initialize_add_dialog(self):
 		i.destroy()
 	self.am_languages = []
 	self.am_subtitles = []
+	# tags - clear tag selection
+	for i in self.am_tag_vbox.get_children():
+		i.set_active(False)
 
 	handler = self.Image.set_from_file(image)
 	gutils.garbage(handler)
