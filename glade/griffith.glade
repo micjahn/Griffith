@@ -2396,13 +2396,13 @@ Year</property>
 
 		  <child>
 		    <widget class="GtkVBox" id="vbox_languages">
-		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">0</property>
 
 		      <child>
 			<widget class="GtkScrolledWindow" id="scrolledwindow11">
+			  <property name="border_width">6</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
@@ -2689,6 +2689,7 @@ Year</property>
 
 		      <child>
 			<widget class="GtkScrolledWindow" id="scrolledwindow12">
+			  <property name="border_width">6</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
@@ -3506,6 +3507,7 @@ Year</property>
 
 		  <child>
 		    <widget class="GtkScrolledWindow" id="scrolledwindow_tags">
+		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
@@ -3520,6 +3522,7 @@ Year</property>
 
 			  <child>
 			    <widget class="GtkVBox" id="e_tag_vbox">
+			      <property name="border_width">6</property>
 			      <property name="visible">True</property>
 			      <property name="homogeneous">False</property>
 			      <property name="spacing">0</property>
@@ -5948,6 +5951,7 @@ Year</property>
 
 	  <child>
 	    <widget class="GtkHBox" id="hbox_a_lang">
+	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">0</property>
@@ -6555,6 +6559,7 @@ Year</property>
 
 	  <child>
 	    <widget class="GtkScrolledWindow" id="scrolledwindow_a_tags">
+	      <property name="border_width">6</property>
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
@@ -6569,6 +6574,7 @@ Year</property>
 
 		  <child>
 		    <widget class="GtkVBox" id="am_tag_vbox">
+		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">0</property>
