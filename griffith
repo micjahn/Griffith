@@ -346,6 +346,8 @@ class Griffith:
 		self.db.add_tag(name)
 		update.update_tag_ids(self)
 		initialize.fill_preferences_tags_combo(self)
+		initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+		initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 
 	def on_tag_remove_clicked(self, widget):
 		active = self.tag_name_combo.get_active()
@@ -354,6 +356,8 @@ class Griffith:
 			self.db.remove_tag(id=id)
 			update.update_tag_ids(self)
 			initialize.fill_preferences_tags_combo(self)
+			initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 		else:
 			self.debug.show("You have to select tag first")
 
@@ -362,6 +366,8 @@ class Griffith:
 		new_name = self.tag_name_combo.get_active_text()
 		self.db.update_tag(id=id, name=new_name)
 		initialize.fill_preferences_tags_combo(self)
+		initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+		initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	
 	def on_tag_name_combo_changed(self, widget):
 		active = self.tag_name_combo.get_active()

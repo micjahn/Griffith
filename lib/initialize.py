@@ -486,18 +486,6 @@ def fill_language_combo(self, widget, default=None):
 		i = gutils.findKey(default, self.languages_ids)
 		widget.set_active(int(i))
 
-def fill_tag_combo(self, widget, default=None):
-	try:
-		widget.get_model().clear()
-	except:
-		pass
-	for i in self.tags_ids:
-		id = self.tags_ids[i]
-		name = self.db.get_value(field='name', table_name="tags", where="id='%s'"%id)
-		widget.insert_text(int(i), str(name))
-	if default != None:
-		widget.set_active(int(self.tags_ids[default]))
-
 def create_language_hbox(self, widget, tab, default=None, type=None):
 	from initialize import fill_language_combo
 	number = len(widget.get_children())	# new box number
