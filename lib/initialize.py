@@ -487,24 +487,28 @@ def fill_language_combo(self, widget, default=None):
 		widget.set_active(int(i))
 
 def create_language_hbox(self, widget, tab, default=None, type=None):
-	from initialize import fill_language_combo
-	number = len(widget.get_children())	# new box number
-	tab.append({})				# creates new tab[number][]
-	box = gtk.HBox(spacing=2)
-	tab[number]['id'] = gtk.combo_box_new_text()
-	fill_language_combo(self, widget=tab[number]['id'], default=default)
-	tab[number]['type'] = gtk.combo_box_new_text()
-	tab[number]['type'].insert_text(0, '')
-	tab[number]['type'].insert_text(1, _("lector"))
-	tab[number]['type'].insert_text(2, _("dubbing"))
-	tab[number]['type'].insert_text(3, _("subtitles"))
-	if type != None:
-		tab[number]['type'].set_active(type)
+	if len(self.languages_ids) == 0:
+		if widget.get_children() == []:	# emnpty array
+			widget.add(gtk.Label(_('You have to fill in languages list in preferences window')))
 	else:
-		tab[number]['type'].set_active(0)
-	box.add(tab[number]['id'])
-	box.add(tab[number]['type'])
-	widget.pack_start(box, expand=False, fill=False, padding=1)
+		from initialize import fill_language_combo
+		number = len(widget.get_children())	# new box number
+		tab.append({})				# creates new tab[number][]
+		box = gtk.HBox(spacing=2)
+		tab[number]['id'] = gtk.combo_box_new_text()
+		fill_language_combo(self, widget=tab[number]['id'], default=default)
+		tab[number]['type'] = gtk.combo_box_new_text()
+		tab[number]['type'].insert_text(0, '')
+		tab[number]['type'].insert_text(1, _("lector"))
+		tab[number]['type'].insert_text(2, _("dubbing"))
+		tab[number]['type'].insert_text(3, _("subtitles"))
+		if type != None:
+			tab[number]['type'].set_active(type)
+		else:
+			tab[number]['type'].set_active(0)
+		box.add(tab[number]['id'])
+		box.add(tab[number]['type'])
+		widget.pack_start(box, expand=False, fill=False, padding=1)
 	widget.show_all()
 
 def create_tag_vbox(self, widget, tab):

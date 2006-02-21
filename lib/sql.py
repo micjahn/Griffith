@@ -571,8 +571,11 @@ class GriffithSQL:
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()
 
-	def get_value(self, field, table_name, where):
-		self.cursor.execute("SELECT %s FROM %s WHERE %s"%(field, table_name, where))
+	def get_value(self, field, table_name, where=None):
+		query = "SELECT %s FROM %s" % (field, table_name)
+		if where:
+			query += " WHERE %s" % where
+		self.cursor.execute(query)
 		try: 
 			value = self.cursor.fetchone()[0]
 		except:
