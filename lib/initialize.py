@@ -266,15 +266,6 @@ def people_treeview(self):
 	self.p_treeview.show()
 	
 def combos(self):
-	# collections filter
-	for collection in self.db.get_all_collections_data():
-		self.f_col.insert_text(int(collection['id']), collection['name'])
-
-	# dictionary for language combos
-	from update import update_language_ids, update_tag_ids
-	update_language_ids(self)
-	update_tag_ids(self)
-
 	self.e_condition.insert_text(0, _("Damaged"))
 	self.e_condition.insert_text(1, _("Poor"))
 	self.e_condition.insert_text(2, _("Fair"))
@@ -368,13 +359,21 @@ def combos(self):
 		self.p_media.insert_text(i['id'], i['name'])
 		self.am_media.insert_text(i['id'], i['name'])
 		
+	# collections filter
+	for collection in self.db.get_all_collections_data():
+		self.f_col.insert_text(int(collection['id']), collection['name'])
+
+	self.e_tags = {} # dictionary for tag CheckBoxes
+	self.am_tags = {} # dictionary for tag CheckBoxes
+	import update
+	update.update_language_ids(self)
+	update.update_tag_ids(self)
+	
 	import initialize
 	initialize.fill_volumes_combo(self)
 	initialize.fill_collections_combo(self)
 	initialize.fill_preferences_languages_combo(self)
 	initialize.fill_preferences_tags_combo(self)
-	self.e_tags = {} # dictionary for tag CheckBoxes
-	self.am_tags = {} # dictionary for tag CheckBoxes
 	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	

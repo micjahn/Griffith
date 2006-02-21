@@ -31,8 +31,7 @@ def treeview_clicked(self):
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		id = tmp_model.get_value(tmp_iter,1)
-		data = self.db.select_movie_by_num(id)
-		row = data[0]
+		row = self.db.select_movie_by_num(id)[0]
 
 		plot_buffer = self.e_plot.get_buffer()
 		obs_buffer = self.e_obs.get_buffer()
@@ -179,7 +178,6 @@ def treeview_clicked(self):
 		for tag in self.db.get_all_data(table_name="movie_tag", where="movie_id='%s'" % row['id'], what="tag_id", order_by=None):
 			i = gutils.findKey(tag['tag_id'], self.tags_ids)
 			self.e_tags[i].set_active(True)
-
 
 def populate(self, data):
 	self.treemodel.clear()

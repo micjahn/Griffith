@@ -73,9 +73,13 @@ def restore(self):
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()
+		import update
+		update.update_language_ids(self)
+		update.update_tag_ids(self)
 		import initialize
 		initialize.fill_volumes_combo(self)
 		initialize.fill_collections_combo(self)
 		initialize.fill_preferences_languages_combo(self)
 		initialize.fill_preferences_tags_combo(self)
+
 
