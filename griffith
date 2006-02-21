@@ -596,8 +596,10 @@ class Griffith:
 		if self.e_trailer.get_text():
 			gutils.run_browser(self.e_trailer.get_text())
 
+	def on_visit_forum_activate(site, *args):
+		gutils.run_browser("http://griffith.vasconunes.net/forum/")
+
 	# toolbar
-	
 	def toggle_toolbar(self, *args):
 		state = self.menu_toolbar.get_active()
 		if state == False:

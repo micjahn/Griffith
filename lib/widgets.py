@@ -310,6 +310,7 @@ def define_widgets(self, gladefile):
 		"on_fetch_poster_clicked"               : self.get_poster,
 		"on_go_imdb_clicked"                    : self.go_imdb_site,
 		"on_go_trailer_clicked"                 : self.go_trailer_site,
+		"on_visit_forum_activate"               : self.on_visit_forum_activate,
 		"on_new_bt_clicked"                     : self.new_dbb,
 		"on_new_activate"                       : self.new_dbb,
 		"on_view_toolbar_activate"              : self.toggle_toolbar,

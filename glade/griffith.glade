@@ -393,13 +393,21 @@
 		<widget class="GtkMenu" id="menuitem4_menu">
 
 		  <child>
-		    <widget class="GtkMenuItem" id="about1">
+		  <widget class="GtkImageMenuItem" id="about1">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">_About</property>
-		      <property name="use_underline">True</property>
+		      <property name="label">gtk-about</property>
+		      <property name="use_stock">True</property>
 		      <signal name="activate" handler="on_about1_activate" last_modification_time="Fri, 15 Apr 2005 22:58:18 GMT"/>
 		    </widget>
-		  </child>
+	          </child>
+                 <child>
+                   <widget class="GtkMenuItem" id="visit_forum">
+                     <property name="visible">True</property>
+                     <property name="label" translatable="yes">Visit forum</property>
+                     <property name="use_underline">True</property>
+                     <signal name="activate" handler="on_visit_forum_activate" last_modification_time="Tue, 21 Feb 2006 01:24:59 GMT"/>
+                   </widget>
+                 </child>
 		</widget>
 	      </child>
 	    </widget>
