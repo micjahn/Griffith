@@ -241,6 +241,7 @@ class GriffithSQL:
 				'id' INTEGER PRIMARY KEY,
 				'name' STRING NOT NULL
 			);
+			INSERT INTO 'tags' VALUES (0, "Favourite");
 		""")
 
 	def create_table_movie_tag(self):
