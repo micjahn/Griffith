@@ -469,7 +469,7 @@ class GriffithSQL:
 		# languages
 		selected = {}
 		for i in data.am_languages:
-			if i['id'].get_active() != None:
+			if i['id'].get_active() > -1:
 				lang_id = languages_ids[i['id'].get_active()]
 				type = i['type'].get_active()
 				if not selected.has_key(lang_id):
