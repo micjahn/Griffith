@@ -402,11 +402,27 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkMenuItem" id="visit_forum">
+		    <widget class="GtkMenuItem" id="goto_homepage">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Visit forum</property>
+		      <property name="label" translatable="yes">Homepage</property>
 		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_visit_forum_activate" last_modification_time="Tue, 21 Feb 2006 01:24:59 GMT"/>
+		      <signal name="activate" handler="on_goto_homepage_activate" last_modification_time="Tue, 21 Feb 2006 01:24:59 GMT"/>
+		    </widget>
+		  </child>
+		  <child>
+		    <widget class="GtkMenuItem" id="goto_forum">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Forum</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_goto_forum_activate" last_modification_time="Tue, 21 Feb 2006 01:24:59 GMT"/>
+		    </widget>
+		  </child>
+		  <child>
+		    <widget class="GtkMenuItem" id="goto_report_bug">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Report bug</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_goto_report_bug_activate" last_modification_time="Tue, 21 Feb 2006 01:24:59 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
