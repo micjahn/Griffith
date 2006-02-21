@@ -69,9 +69,14 @@ class GriffithSQL:
 				parent.total = 0
 				parent.count_statusbar()
 				parent.treemodel.clear()
+				import update
+				update.update_language_ids(parent)
+				update.update_tag_ids(parent)
 				import initialize
 				initialize.fill_volumes_combo(parent)
 				initialize.fill_collections_combo(parent)
+				initialize.fill_preferences_languages_combo(parent)
+				initialize.fill_preferences_tags_combo(parent)
 			else:
 				pass
 		else:
