@@ -84,10 +84,7 @@ def initialize_add_dialog(self):
 	# languages - remove old widgets
 	for i in self.am_lang_vbox.get_children():
 		i.destroy()
-	for i in self.am_sub_vbox.get_children():
-		i.destroy()
 	self.am_languages = []
-	self.am_subtitles = []
 	# tags - clear tag selection
 	for i in self.am_tag_vbox.get_children():
 		i.set_active(False)

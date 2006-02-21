@@ -169,17 +169,11 @@ def treeview_clicked(self):
 
 		#languages
 		languages = self.db.get_all_data(table_name="movie_lang", order_by=None, where="movie_id='%s'" % row['id'])
-		subtitles = self.db.get_all_data(table_name="movie_sub", order_by=None, where="movie_id='%s'" % row['id'])
 		self.e_languages = []	# language widgets
-		self.e_subtitles = []	# subtile widgets
 		if len(languages) > 0:
 			from initialize import create_language_hbox
 			for i in languages:
 				create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, default=i['lang_id'], type=i['type'])
-		if len(subtitles) > 0:
-			from initialize import create_subtitle_hbox
-			for i in subtitles:
-				create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles, default=i['lang_id'])
 
 		#tags
 		for tag in self.db.get_all_data(table_name="movie_tag", where="movie_id='%s'" % row['id'], what="tag_id", order_by=None):

@@ -270,7 +270,7 @@ def combos(self):
 	for collection in self.db.get_all_collections_data():
 		self.f_col.insert_text(int(collection['id']), collection['name'])
 
-	# dictionary for language/subtitle combos
+	# dictionary for language combos
 	from update import update_language_ids, update_tag_ids
 	update_language_ids(self)
 	update_tag_ids(self)
@@ -497,6 +497,7 @@ def create_language_hbox(self, widget, tab, default=None, type=None):
 	tab[number]['type'].insert_text(0, '')
 	tab[number]['type'].insert_text(1, _("lector"))
 	tab[number]['type'].insert_text(2, _("dubbing"))
+	tab[number]['type'].insert_text(3, _("subtitles"))
 	if type != None:
 		tab[number]['type'].set_active(type)
 	else:
@@ -524,14 +525,5 @@ def remove_hbox(self, widget, tab):
 		widget.remove(widget.get_children().pop())
 	except:
 		self.debug.show("List is empty")
-	widget.show_all()
-
-def create_subtitle_hbox(self, widget, tab, default=None):
-	from initialize import fill_language_combo
-	number = len(widget.get_children())	# new box number
-	tab.append({})				# creates new tab[number][]
-	tab[number]['id'] = gtk.combo_box_new_text()
-	fill_language_combo(self, widget=tab[number]['id'], default=default)
-	widget.pack_start(tab[number]['id'], expand=False, fill=False, padding=1)
 	widget.show_all()
 

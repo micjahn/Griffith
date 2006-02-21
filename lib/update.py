@@ -102,16 +102,6 @@ def update(self):
 			for type in selected[lang].keys():
 				self.db.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
 
-		# subtitles
-		selected = {}
-		self.db.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s';" % id)	# remove old data
-		for i in self.e_subtitles:
-			if i['id'].get_active() != None:
-				lang_id = self.languages_ids[i['id'].get_active()]
-				selected[lang_id] = 1
-		for i in selected.keys():
-			self.db.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
-
 		# tags
 		selected = {}
 		self.db.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % id)

@@ -326,18 +326,10 @@ class Griffith:
 		initialize.create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
 	def on_e_lang_remove_clicked(self, widget):
 		initialize.remove_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
-	def on_e_sub_add_clicked(self, widget):
-		initialize.create_subtitle_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
-	def on_e_sub_remove_clicked(self, widget):
-		initialize.remove_hbox(self, widget=self.e_sub_vbox, tab=self.e_subtitles)
 	def on_am_lang_add_clicked(self, widget):
 		initialize.create_language_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
 	def on_am_lang_remove_clicked(self, widget):
 		initialize.remove_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
-	def on_am_sub_add_clicked(self, widget):
-		initialize.create_subtitle_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
-	def on_am_sub_remove_clicked(self, widget):
-		initialize.remove_hbox(self, widget=self.am_sub_vbox, tab=self.am_subtitles)
 	#}}}
 
 	# tags -------------------------------------------------------------{{{

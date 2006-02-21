@@ -233,16 +233,6 @@ class GriffithSQL:
 			);
 		""")
 
-	def create_table_movie_sub(self):
-		self.debug.show("Creating 'movie_sub' table...")
-		self.cursor.execute ("""
-			CREATE TABLE movie_sub
-			(
-				'movie_id' INTEGER NOT NULL,
-				'lang_id' INTEGER NOT NULL
-			);
-		""")
-
 	def create_table_tags(self):
 		self.debug.show("Creating 'tags' table...")
 		self.cursor.execute ("""
@@ -292,10 +282,6 @@ class GriffithSQL:
 			self.cursor.execute("SELECT movie_id FROM movie_lang LIMIT 1")
 		except:
 			self.create_table_movie_lang()
-		try:
-			self.cursor.execute("SELECT movie_id FROM movie_sub LIMIT 1")
-		except:
-			self.create_table_movie_sub()
 		try:
 			self.cursor.execute("SELECT id FROM tags LIMIT 1")
 		except:
@@ -492,14 +478,6 @@ class GriffithSQL:
 		for lang in selected.keys():
 			for type in selected[lang].keys():
 				self.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
-		# subtitles
-		selected = {}
-		for i in data.am_subtitles:
-			if i['id'].get_active() != None:
-				lang_id = languages_ids[i['id'].get_active()]
-				selected[lang_id] = 1
-		for i in selected.keys():
-			self.cursor.execute("INSERT INTO movie_sub(movie_id, lang_id) VALUES ('%s', '%s');" % (id, i) )
 
 		# tags 
 		# TODO: make use of parent.tags_ids
@@ -698,7 +676,6 @@ class GriffithSQL:
 		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
 		id = self.cursor.fetchone()[0]
 		self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
-		self.cursor.execute("DELETE FROM movie_sub WHERE movie_id = '%s'" % id)
 		self.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
 		self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
 		self.con.commit()
@@ -762,12 +739,6 @@ class GriffithSQL:
 			return False
 
 		self.cursor.execute("SELECT count(movie_id) FROM movie_lang WHERE lang_id = '%s'" % id)
-		movies = int(self.cursor.fetchone()[0])
-		if movies > 0:
-			gutils.warning(self, msg="%s movie(s) are assigned to this language.\nChange movie details first!"%str(movies))
-			return False
-		
-		self.cursor.execute("SELECT count(movie_id) FROM movie_sub WHERE lang_id = '%s'" % id)
 		movies = int(self.cursor.fetchone()[0])
 		if movies > 0:
 			gutils.warning(self, msg="%s movie(s) are assigned to this language.\nChange movie details first!"%str(movies))
