@@ -2,7 +2,8 @@ Source: griffith
 Section: gnome
 Priority: optional
 Maintainer: Piotr Ozarowski <ozarow@gmail.com>
-Build-Depends: debhelper (>>4), make, python (>= 2.3), gettext
+Build-Depends: debhelper (>>4), python (>= 2.3), make (>=3.8), gettext
+Standards-Version: 3.6.2
 
 Package: griffith
 Architecture: all
