@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-02-25 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed problem under macosx and safari not opening websites fired up by griffith
+
 2006-02-21 Piotr Ozarowski <ozarow@gmail.com>
 	* New entries in help menu
 	* Worning if languages list is not filled

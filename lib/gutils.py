@@ -337,6 +337,8 @@ def update_preview_cb(file_chooser, preview):
 	return
 	
 def run_browser(url):
+	webbrowser.register('open', webbrowser.GenericBrowser("open '%s'"))
+	webbrowser._tryorder.append('open')
 	webbrowser.open(url)
 	
 def get_media_list_index(media):
