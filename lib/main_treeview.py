@@ -95,10 +95,6 @@ def treeview_clicked(self):
 			self.return_button.set_sensitive(False)
 			self.b_email_reminder.set_sensitive(False)
 			self.loan_button.set_sensitive(True)
-			# not loaned icon
-			self.Image.set_from_file("%s/not_loaned.png"%self.locations['images'])		
-			Pixbuf = self.Image.get_pixbuf()
-			self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 			
 		# poster
 		tmp_dest = os.path.join(self.griffith_dir, "posters")
