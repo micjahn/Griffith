@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2006-02-25 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Fixed problem under macosx and safari not opening websites fired up by griffith
+	* Removed loan flag from the main treeview.
 
 2006-02-21 Piotr Ozarowski <ozarow@gmail.com>
 	* New entries in help menu

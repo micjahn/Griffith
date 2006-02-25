@@ -34,6 +34,7 @@ import string
 import os, gtk
 import version
 import gutils
+import pango
 	
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
@@ -51,6 +52,7 @@ def cover_image_process(self, filename, id):
 	
 	if self.config.get('font')!='':
 		fontName = self.config.get('font')
+		print fontName
 		#pdfmetrics.registerFont(TTFont(fontName, font))
 	else:
 		fontName = "Helvetica"
@@ -115,8 +117,11 @@ def cover_simple(self, id):
 	number = self.cover_simple_include_movie_number.get_active()
 	poster = self.cover_simple_include_poster.get_active()
 	
+	print self.config.get('font')
+	
 	if self.config.get('font', '')!='':
 		fontName = self.config.get('font', '')
+		print fontName
 		#pdfmetrics.registerFont(TTFont(fontName, font))
 	else:
 		fontName = "Helvetica"

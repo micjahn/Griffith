@@ -88,10 +88,6 @@ def treeview_clicked(self):
 			self.loan_button.set_sensitive(False)
 			self.b_email_reminder.set_sensitive(True)
 			self.return_button.set_sensitive(True)
-			# loaned icon
-			self.Image.set_from_file("%s/loaned.png"%self.locations['images'])
-			Pixbuf = self.Image.get_pixbuf()
-			self.treemodel.set_value(tmp_iter, 0, Pixbuf)
 		else:
 			self.popup_loan.set_sensitive(True)
 			self.popup_email.set_sensitive(False)
@@ -184,12 +180,6 @@ def populate(self, data):
 	for row in data:
 		myiter = self.treemodel.append(None)
 		self.treemodel.set_value(myiter,1,'%004d' % int(row['number']))
-		
-		# shows a flag before the film to flag it as a loaned film
-		if row['loaned']:
-			self.Image.set_from_file(self.locations['images'] + "/loaned.png")
-			Pixbuf = self.Image.get_pixbuf()
-			self.treemodel.set_value(myiter, 0, Pixbuf)	
 		
 		# check preferences to hide or show columns
 		if (self.config.get('view_otitle') == 'True'):

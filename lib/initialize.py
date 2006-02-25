@@ -139,11 +139,6 @@ def treeview(self):
 	self.treemodel = gtk.TreeStore(gtk.gdk.Pixbuf, str, gtk.gdk.Pixbuf, str, str, str)
 	self.main_treeview.set_model(self.treemodel)
 	self.main_treeview.set_headers_visible(True)
-	# loan flag column
-	renderer=gtk.CellRendererPixbuf()
-	self.flag_column=gtk.TreeViewColumn(13*" ", renderer, pixbuf=0)
-	self.flag_column.set_resizable(False)
-	self.main_treeview.append_column(self.flag_column)
 	# number column
 	renderer=gtk.CellRendererText()
 	column=gtk.TreeViewColumn(_("N."), renderer, text=1)

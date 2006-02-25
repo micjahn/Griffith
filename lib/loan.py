@@ -98,6 +98,7 @@ def commit_loan(self):
 	query += "', '" + str(datetime.date.today()) + "', '');"
 	self.db.cursor.execute(query)
 	self.db.con.commit()
+	
 	# finally, force a refresh
 	self.treeview_clicked()
 	self.main_treeview.set_cursor(int(movie_id)-1, None, False)
