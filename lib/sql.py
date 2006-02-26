@@ -682,6 +682,9 @@ class GriffithSQL:
 
 	# remove data ------------------------------------------------------{{{
 	def remove_movie_by_num(self,number):
+		if self.is_movie_loaned(movie_number=number):
+			self.debug.show("Movie (number=%s) is loaned. Can't delete!")
+			return False
 		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
 		id = self.cursor.fetchone()[0]
 		self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
@@ -895,7 +898,15 @@ class GriffithSQL:
 		self.cursor.execute("SELECT COUNT(id) FROM %s" % (table_name) + " WHERE %s" % (where))
 		return int(self.cursor.fetchone()[0])
 		
-	
+	def is_movie_loaned(self,movie_id=None, movie_number=None):
+		if movie_id==None and movie_number == None:
+			return None
+		if movie_id:
+			self.cursor.execute("SELECT loaned FROM movies WHERE id = '%s'" % movie_id)
+		if movie_number:
+			self.cursor.execute("SELECT loaned FROM movies WHERE number = '%s'" % movie_number)
+		return self.cursor.fetchone()[0]
+
 	def is_volume_loaned(self,volume):
 		self.cursor.execute("SELECT loaned FROM volumes WHERE id = '%s'" % volume)
 		return self.cursor.fetchone()[0]

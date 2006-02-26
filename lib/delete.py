@@ -29,6 +29,9 @@ def delete_movie(self):
 	m_id = None
 	try:
 		m_id, m_iter = self.get_maintree_selection()
+		if self.db.is_movie_loaned(movie_number=m_id):
+			gutils.warning(self, msg="You can't delete movie while it is loaned.")
+			return False
 		response = gutils.question(self,_("Are you sure you want to delete this movie?"), \
 			1, self.main_window)
 		if response == -8:	# gtk.RESPONSE_YES == -8

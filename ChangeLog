@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-02-26 Piotr Ozarowski <ozarow@gmail.com>
+	* Movie now can't be deleted while it is loaned
+
 2006-02-25 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Fixed problem under macosx and safari not opening websites fired up by griffith
 	* Removed loan flag from the main treeview.
