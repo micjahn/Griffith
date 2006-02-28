@@ -37,6 +37,7 @@ LOCALEDIR = $(PREFIX)/share/locale
 
 PYFILES := $(shell $(FIND) . -name "*.py" -print)
 TEMPLATES= $(shell cd data/export_templates; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^CVS]*" -print)
+LANGUAGES= bg cs de es fr pl pt
 
 make: help
 
@@ -55,21 +56,13 @@ install: uninstall
 	$(INSTALL) -m 644 images/griffith.xpm $(ICONDIR)
 	$(INSTALL) -m 644 data/griffith.desktop $(APPLICATIONSDIR)
 	#$(INSTALL) -m 644 fonts/*.* $(FONTSDIR)
-	$(INSTALL) -m 755 -d $(LOCALEDIR)/pt/LC_MESSAGES
-	$(INSTALL) -m 755 -d $(LOCALEDIR)/pl/LC_MESSAGES
-	$(INSTALL) -m 755 -d $(LOCALEDIR)/de/LC_MESSAGES
-	$(INSTALL) -m 755 -d $(LOCALEDIR)/bg/LC_MESSAGES
-	$(INSTALL) -m 755 -d $(LOCALEDIR)/cs/LC_MESSAGES
-	$(INSTALL) -m 755 -d $(LOCALEDIR)/es/LC_MESSAGES
-	$(INSTALL) -m 755 -d $(LOCALEDIR)/fr/LC_MESSAGES
-	$(INSTALL) -m 644 i18n/pt/LC_MESSAGES/*.mo $(LOCALEDIR)/pt/LC_MESSAGES
-	$(INSTALL) -m 644 i18n/pl/LC_MESSAGES/*.mo $(LOCALEDIR)/pl/LC_MESSAGES
-	$(INSTALL) -m 644 i18n/de/LC_MESSAGES/*.mo $(LOCALEDIR)/de/LC_MESSAGES
-	$(INSTALL) -m 644 i18n/bg/LC_MESSAGES/*.mo $(LOCALEDIR)/bg/LC_MESSAGES
-	$(INSTALL) -m 644 i18n/cs/LC_MESSAGES/*.mo $(LOCALEDIR)/cs/LC_MESSAGES
-	$(INSTALL) -m 644 i18n/es/LC_MESSAGES/*.mo $(LOCALEDIR)/es/LC_MESSAGES
-	$(INSTALL) -m 644 i18n/fr/LC_MESSAGES/*.mo $(LOCALEDIR)/fr/LC_MESSAGES
-
+	
+	# installing language files
+	for lang in $(LANGUAGES); do \
+		${INSTALL} -m 755 -d $(LOCALEDIR)/$$lang/LC_MESSAGES; \
+		$(INSTALL) -m 644 i18n/$$lang/LC_MESSAGES/*.mo $(LOCALEDIR)/$$lang/LC_MESSAGES; \
+	done
+	
 	# installing export templates:
 	for dir in $(TEMPLATES); do \
 		${INSTALL} -m 755 -d  ${TPLDIR}/$$dir; \
@@ -78,7 +71,7 @@ install: uninstall
 	done
 	
 	if test -f $(PREFIX)/bin/griffith; then ${RM} $(PREFIX)/bin/griffith; fi	
-
+	
 	ln -s $(LIBDIR)/griffith $(BINDIR)/griffith
 	chmod +x $(BINDIR)/griffith
 	$(MAKE) -C docs install
@@ -93,15 +86,13 @@ uninstall:
 	${RM} -rf $(IMAGESDIR)
 	${RM} -rf $(GLADEDIR)
 	${RM} -rf $(DATADIR)
-	${RM} -rf $(ICONDIR)/griffith.ong
+	${RM} -rf $(ICONDIR)/griffith.png
+	${RM} -rf $(ICONDIR)/griffith.xpm
 	${RM} -rf $(APPLICATIONSDIR)/griffith.desktop
-	${RM} -rf $(LOCALEDIR)/pt/LC_MESSAGES/griffith.mo
-	${RM} -rf $(LOCALEDIR)/pl/LC_MESSAGES/griffith.mo
-	${RM} -rf $(LOCALEDIR)/de/LC_MESSAGES/griffith.mo 	
-	${RM} -rf $(LOCALEDIR)/bg/LC_MESSAGES/griffith.mo
-	${RM} -rf $(LOCALEDIR)/cs/LC_MESSAGES/griffith.mo
-	${RM} -rf $(LOCALEDIR)/es/LC_MESSAGES/griffith.mo
-	${RM} -rf $(LOCALEDIR)/fr/LC_MESSAGES/griffith.mo
+	# uninstalling language files
+	for lang in $(LANGUAGES); do \
+		${RM} -rf $(LOCALEDIR)/$$lang/LC_MESSAGES/griffith.mo; \
+	done
 	${RM} -rf $(BINDIR)/griffith
 	
 clean:
