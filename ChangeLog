@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-02-28 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added french translation (Thanks to Pierre-Luc Lévy)
+
 2006-02-26 Piotr Ozarowski <ozarow@gmail.com>
 	* Movie now can't be deleted while it is loaned
 
