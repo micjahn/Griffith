@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-28 18:22+0000\n"
+"POT-Creation-Date: 2006-03-01 00:55+0100\n"
 "PO-Revision-Date: 2006-02-28 02:33+0000\n"
 "Last-Translator: Pierre-Luc Lévy <pllevy@free.fr>\n"
 "Language-Team: Français\n"
@@ -76,7 +76,7 @@ msgid "Czech"
 msgstr ""
 
 #: ../lib/about.py:49 ../lib/about.py:51 ../lib/about.py:53 ../lib/about.py:55
-#: ../lib/about.py:57 ../lib/about.py:59
+#: ../lib/about.py:57 ../lib/about.py:59 ../lib/about.py:61
 msgid " by "
 msgstr " par "
 
@@ -84,11 +84,15 @@ msgstr " par "
 msgid "Bulgarian"
 msgstr ""
 
-#: ../lib/about.py:53 ../lib/plugins/movie/PluginMovieOFDb.py:13
+#: ../lib/about.py:53 ../lib/plugins/movie/PluginMovieCineMovies.py:31
+msgid "French"
+msgstr "Français"
+
+#: ../lib/about.py:55 ../lib/plugins/movie/PluginMovieOFDb.py:13
 msgid "German"
 msgstr ""
 
-#: ../lib/about.py:55 ../lib/plugins/movie/PluginMovieFilmweb.py:29
+#: ../lib/about.py:57 ../lib/plugins/movie/PluginMovieFilmweb.py:29
 #: ../lib/plugins/movie/PluginMovieOnet.py:29
 #: ../lib/plugins/movie/PluginMovieStopklatka.py:29
 #: ../lib/plugins/movie/PluginMovieTanukiAnime.py:29
@@ -96,25 +100,25 @@ msgstr ""
 msgid "Polish"
 msgstr ""
 
-#: ../lib/about.py:57 ../lib/plugins/movie/PluginMovie7arte.py:32
+#: ../lib/about.py:59 ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieClubeMyDVD.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr ""
 
-#: ../lib/about.py:59
+#: ../lib/about.py:61
 msgid "Spanish"
 msgstr ""
 
-#: ../lib/about.py:71
+#: ../lib/about.py:73
 msgid "This program is released under the GNU"
 msgstr "Ce programme est distribué sous la GNU"
 
-#: ../lib/about.py:72
+#: ../lib/about.py:74
 msgid "General Public License.\n"
 msgstr "General Public License.\n"
 
-#: ../lib/about.py:73
+#: ../lib/about.py:75
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
 msgstr "Visitez http://www.gnu.org/copyleft/gpl.html pour plus de détails."
 
@@ -182,17 +186,17 @@ msgstr "Couverture générée avec Griffith v"
 msgid "Released Under the GNU/GPL License"
 msgstr "Distribué sous la license GNU/GPL"
 
-#: ../lib/cover.py:181 ../lib/initialize.py:155 ../lib/quick_filter.py:30
+#: ../lib/cover.py:181 ../lib/initialize.py:154 ../lib/quick_filter.py:30
 #: ../glade/griffith.glade.h:87 ../lib/plugins/export/PluginExportHTML.py:105
 msgid "Original Title"
 msgstr "Titre Original"
 
-#: ../lib/cover.py:182 ../lib/initialize.py:161 ../lib/quick_filter.py:32
+#: ../lib/cover.py:182 ../lib/initialize.py:160 ../lib/quick_filter.py:32
 #: ../glade/griffith.glade.h:138 ../lib/plugins/export/PluginExportHTML.py:111
 msgid "Title"
 msgstr "Titre"
 
-#: ../lib/cover.py:184 ../lib/initialize.py:167 ../lib/quick_filter.py:34
+#: ../lib/cover.py:184 ../lib/initialize.py:166 ../lib/quick_filter.py:34
 #: ../glade/griffith.glade.h:35 ../lib/plugins/export/PluginExportHTML.py:96
 msgid "Director"
 msgstr "Réalisateur"
@@ -317,85 +321,85 @@ msgstr "Images"
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: ../lib/initialize.py:144
+#: ../lib/initialize.py:143
 msgid "N."
 msgstr "N."
 
-#: ../lib/initialize.py:150 ../glade/griffith.glade.h:53
+#: ../lib/initialize.py:149 ../glade/griffith.glade.h:53
 #: ../lib/plugins/export/PluginExportHTML.py:98
 msgid "Image"
 msgstr "Image"
 
-#: ../lib/initialize.py:180
+#: ../lib/initialize.py:179
 msgid "Loan Date"
 msgstr "Date de prêt"
 
-#: ../lib/initialize.py:186
+#: ../lib/initialize.py:185
 msgid "Return Date"
 msgstr "Date de retour"
 
-#: ../lib/initialize.py:191
+#: ../lib/initialize.py:190
 msgid "Loaned To"
 msgstr "Prêté à"
 
-#: ../lib/initialize.py:243 ../glade/griffith.glade.h:71
+#: ../lib/initialize.py:242 ../glade/griffith.glade.h:71
 msgid "Name"
 msgstr "Nom"
 
-#: ../lib/initialize.py:249 ../glade/exporthtml.glade.h:17
+#: ../lib/initialize.py:248 ../glade/exporthtml.glade.h:17
 #: ../glade/griffith.glade.h:37
 msgid "E-mail"
 msgstr "Courriel"
 
-#: ../lib/initialize.py:264 ../lib/initialize.py:271 ../lib/initialize.py:322
+#: ../lib/initialize.py:263 ../lib/initialize.py:270 ../lib/initialize.py:321
 msgid "Damaged"
 msgstr "Endommagé"
 
-#: ../lib/initialize.py:265 ../lib/initialize.py:272 ../lib/initialize.py:323
+#: ../lib/initialize.py:264 ../lib/initialize.py:271 ../lib/initialize.py:322
 msgid "Poor"
 msgstr "Mauvais état"
 
-#: ../lib/initialize.py:266 ../lib/initialize.py:273 ../lib/initialize.py:324
+#: ../lib/initialize.py:265 ../lib/initialize.py:272 ../lib/initialize.py:323
 msgid "Fair"
 msgstr "Correct"
 
-#: ../lib/initialize.py:267 ../lib/initialize.py:274 ../lib/initialize.py:325
+#: ../lib/initialize.py:266 ../lib/initialize.py:273 ../lib/initialize.py:324
 msgid "Good"
 msgstr "Bon"
 
-#: ../lib/initialize.py:268 ../lib/initialize.py:275 ../lib/initialize.py:326
+#: ../lib/initialize.py:267 ../lib/initialize.py:274 ../lib/initialize.py:325
 msgid "Excellent"
 msgstr "Excellent"
 
-#: ../lib/initialize.py:269 ../lib/initialize.py:276 ../lib/initialize.py:281
-#: ../lib/initialize.py:286 ../lib/initialize.py:297 ../lib/initialize.py:308
-#: ../lib/initialize.py:314 ../lib/initialize.py:320 ../lib/initialize.py:327
-#: ../lib/initialize.py:332 ../lib/initialize.py:343 ../lib/initialize.py:349
+#: ../lib/initialize.py:268 ../lib/initialize.py:275 ../lib/initialize.py:280
+#: ../lib/initialize.py:285 ../lib/initialize.py:296 ../lib/initialize.py:307
+#: ../lib/initialize.py:313 ../lib/initialize.py:319 ../lib/initialize.py:326
+#: ../lib/initialize.py:331 ../lib/initialize.py:342 ../lib/initialize.py:348
 msgid "N/A"
 msgstr "N/A"
 
-#: ../lib/initialize.py:278 ../lib/initialize.py:283 ../lib/initialize.py:329
+#: ../lib/initialize.py:277 ../lib/initialize.py:282 ../lib/initialize.py:328
 #: ../glade/griffith.glade.h:27
 msgid "Color"
 msgstr "Couleur"
 
-#: ../lib/initialize.py:279 ../lib/initialize.py:284 ../lib/initialize.py:330
+#: ../lib/initialize.py:278 ../lib/initialize.py:283 ../lib/initialize.py:329
 msgid "Black and White"
 msgstr "Noir et Blanc"
 
-#: ../lib/initialize.py:280 ../lib/initialize.py:285 ../lib/initialize.py:331
+#: ../lib/initialize.py:279 ../lib/initialize.py:284 ../lib/initialize.py:330
 msgid "Mixed"
 msgstr ""
 
-#: ../lib/initialize.py:288 ../lib/initialize.py:299 ../lib/initialize.py:334
+#: ../lib/initialize.py:287 ../lib/initialize.py:298 ../lib/initialize.py:333
 msgid "Region 0 (No Region Coding)"
 msgstr "Region 0 (Pas d'encodage)"
 
-#: ../lib/initialize.py:289 ../lib/initialize.py:300 ../lib/initialize.py:335
+#: ../lib/initialize.py:288 ../lib/initialize.py:299 ../lib/initialize.py:334
 msgid "Region 1 (United States of America, Canada)"
 msgstr "Region 1 (Etats Unis, Canada)"
 
-#: ../lib/initialize.py:290 ../lib/initialize.py:301 ../lib/initialize.py:336
+#: ../lib/initialize.py:289 ../lib/initialize.py:300 ../lib/initialize.py:335
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
@@ -403,11 +407,11 @@ msgstr ""
 "Region 2 (Europe dont France, Grèce, Turquie, Egypte, Arabie, Japon "
 "etAfrique du Sud)"
 
-#: ../lib/initialize.py:291 ../lib/initialize.py:302 ../lib/initialize.py:337
+#: ../lib/initialize.py:290 ../lib/initialize.py:301 ../lib/initialize.py:336
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
 msgstr "Region 3 (Corée, Thailande, Vietnam, Borneo et Indonésie)"
 
-#: ../lib/initialize.py:292 ../lib/initialize.py:303 ../lib/initialize.py:338
+#: ../lib/initialize.py:291 ../lib/initialize.py:302 ../lib/initialize.py:337
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
@@ -415,62 +419,62 @@ msgstr ""
 "Region 4 (Australie et Nouvelle Zélande, Mexique, les Caraïbes et L'Amérique "
 "du Sud)"
 
-#: ../lib/initialize.py:293 ../lib/initialize.py:304 ../lib/initialize.py:339
+#: ../lib/initialize.py:292 ../lib/initialize.py:303 ../lib/initialize.py:338
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
 msgstr "Region 5 (Inde, Afrique, Russie and les pays de l'ex URSS)"
 
-#: ../lib/initialize.py:294 ../lib/initialize.py:305 ../lib/initialize.py:340
+#: ../lib/initialize.py:293 ../lib/initialize.py:304 ../lib/initialize.py:339
 msgid "Region 6 (Popular Republic of China)"
 msgstr "Region 6 (République Populaire de Chine)"
 
-#: ../lib/initialize.py:295 ../lib/initialize.py:306 ../lib/initialize.py:341
+#: ../lib/initialize.py:294 ../lib/initialize.py:305 ../lib/initialize.py:340
 msgid "Region 8 (Airlines/Cruise Ships)"
 msgstr "Region 8 (Compagnies aériennes/bateaux de croisière)"
 
-#: ../lib/initialize.py:296 ../lib/initialize.py:307 ../lib/initialize.py:342
+#: ../lib/initialize.py:295 ../lib/initialize.py:306 ../lib/initialize.py:341
 msgid "Region 9 (Often used as region free)"
 msgstr "Region 9 (Souvent utilisé comme région libre)"
 
-#: ../lib/initialize.py:310 ../lib/initialize.py:316 ../lib/initialize.py:345
+#: ../lib/initialize.py:309 ../lib/initialize.py:315 ../lib/initialize.py:344
 msgid "Single Side, Single Layer"
 msgstr ""
 
-#: ../lib/initialize.py:311 ../lib/initialize.py:317 ../lib/initialize.py:346
+#: ../lib/initialize.py:310 ../lib/initialize.py:316 ../lib/initialize.py:345
 msgid "Single Side, Dual Layer"
 msgstr ""
 
-#: ../lib/initialize.py:312 ../lib/initialize.py:318 ../lib/initialize.py:347
+#: ../lib/initialize.py:311 ../lib/initialize.py:317 ../lib/initialize.py:346
 msgid "Dual Side, Single Layer"
 msgstr ""
 
-#: ../lib/initialize.py:313 ../lib/initialize.py:319 ../lib/initialize.py:348
+#: ../lib/initialize.py:312 ../lib/initialize.py:318 ../lib/initialize.py:347
 msgid "Dual Side, Dual Layer"
 msgstr ""
 
-#: ../lib/initialize.py:409
+#: ../lib/initialize.py:408
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr ""
 
-#: ../lib/initialize.py:410
+#: ../lib/initialize.py:409
 #, python-format
 msgid ""
 "Please install the aspell-%s package or adjust the spellchekcer preferences."
 msgstr ""
 
-#: ../lib/initialize.py:486
+#: ../lib/initialize.py:485
 msgid "You have to fill in languages list in preferences window"
 msgstr ""
 
-#: ../lib/initialize.py:496
+#: ../lib/initialize.py:495
 #, fuzzy
 msgid "lector"
 msgstr "Réalisateur"
 
-#: ../lib/initialize.py:497
+#: ../lib/initialize.py:496
 msgid "dubbing"
 msgstr ""
 
-#: ../lib/initialize.py:498
+#: ../lib/initialize.py:497
 msgid "subtitles"
 msgstr ""
 
@@ -1435,10 +1439,6 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieMoviefone.py:16
 msgid "English"
 msgstr ""
-
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:31
-msgid "French"
-msgstr "Français"
 
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
