@@ -35,7 +35,7 @@ binary: build install
 	dh_installchangelogs ChangeLog
 	dh_installdocs
 	dh_installmenu
-	dh_link usr/lib/griffith/griffith /usr/bin/griffith
+	dh_link usr/share/griffith/lib/griffith /usr/bin/griffith
 	dh_compress
 	dh_fixperms
 	dh_python

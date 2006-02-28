@@ -21,13 +21,13 @@ XGETTEXT ?= xgettext
 FIND ?= find
 
 PREFIX = $(DESTDIR)/usr
-LIBDIR = $(PREFIX)/lib/griffith
-PLUGINSDIR = $(PREFIX)/lib/griffith/plugins
-MOVIEPLUGINSDIR = $(PREFIX)/lib/griffith/plugins/movie
-EXPORTPLUGINSDIR = $(PREFIX)/lib/griffith/plugins/export
 BINDIR = $(PREFIX)/bin
 DATADIR = $(PREFIX)/share/griffith
-TPLDIR = $(PREFIX)/share/griffith/export_templates
+LIBDIR = $(DATADIR)/lib
+PLUGINSDIR = $(DATADIR)/plugins
+MOVIEPLUGINSDIR = $(PLUGINSDIR)/movie
+EXPORTPLUGINSDIR = $(PLUGINSDIR)/export
+TPLDIR = $(DATADIR)/export_templates
 #FONTSDIR = $(PREFIX)/share/griffith/fonts
 APPLICATIONSDIR = $(PREFIX)/share/applications
 ICONDIR = $(PREFIX)/share/pixmaps
@@ -39,8 +39,8 @@ TEMPLATES= $(shell cd data/export_templates; $(FIND) . -maxdepth 1 -mindepth 1 -
 make: help
 
 install: uninstall
-	$(INSTALL) -m 755 -d $(BINDIR) $(LIBDIR) $(PLUGINSDIR) $(MOVIEPLUGINSDIR) \
-		$(EXPORTPLUGINSDIR) $(DATADIR) $(FONTSDIR) $(APPLICATIONSDIR) $(ICONDIR) $(TPLDIR)
+	$(INSTALL) -m 755 -d $(BINDIR) $(DATADIR) $(LIBDIR) $(PLUGINSDIR) $(MOVIEPLUGINSDIR) \
+		$(EXPORTPLUGINSDIR) $(FONTSDIR) $(APPLICATIONSDIR) $(ICONDIR) $(TPLDIR)
 	$(INSTALL) -m 755 griffith $(LIBDIR)
 	$(INSTALL) -m 644 lib/*.py $(LIBDIR)
 	$(INSTALL) -m 644 lib/plugins/movie/*.py $(MOVIEPLUGINSDIR)

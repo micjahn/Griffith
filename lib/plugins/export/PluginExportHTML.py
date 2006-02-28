@@ -123,7 +123,7 @@ class ExportPlugin(gtk.Window):
 	def __init__(self, database, locations, parent, debug):#{{{
 		self.db = database
 		self.debug = debug
-		self.share_dir = locations['images']
+		self.share_dir = locations['share']
 		self.widgets = {}
 		self.style_list = {}
 		self.templates = self.make_template_list()
