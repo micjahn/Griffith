@@ -50,6 +50,8 @@ class AboutDialog:
 			"Blondak <blondak@neser.cz>" + \
 			"\n" + _("Bulgarian") + _(" by ") + \
 			"Luchezar P. Petkov <luchezar.petkov@gmail.com>" + \
+			"\n" + _("French") + _(" by ") + \
+			"Pierre-Luc Lévy <pllevy@free.fr>" + \
 			"\n" + _("German") + _(" by ") + \
 			"Christian Sagmueller <christian@sagmueller.net>" + \
 			"\n" + _("Polish") + _(" by ") + \
