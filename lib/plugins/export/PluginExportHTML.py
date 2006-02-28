@@ -131,7 +131,7 @@ class ExportPlugin(gtk.Window):
 		if os.name == 'nt' or os.name == 'win32':	
 			gf = os.path.abspath(os.path.dirname(sys.argv[0]))+'\\glade\\exporthtml.glade'
 		else:
-			gf = self.share_dir + "/exporthtml.glade"
+			gf = locations['share'] + "/glade/exporthtml.glade"
 		self.define_widgets(gtk.glade.XML(gf))
 		self.fill_widgets()
 	#}}}

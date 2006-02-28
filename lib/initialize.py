@@ -83,13 +83,13 @@ def locations(self):
 	if self.windows:
 		#win32 platform, add the "lib" folder to the system path
 		os.environ['PATH'] += ";lib;"
-		self.locations['lib'] = "%s\lib" % self.locations['exec']
-		self.DIR = "%s\i18n" % self.locations['exec']
-		gtk.rc_parse('%s\gtkrc' % self.locations['exec'])
+		self.locations['lib'] = "%s\\lib" % self.locations['exec']
+		self.DIR = "%s\\i18n" % self.locations['exec']
+		gtk.rc_parse('%s\\gtkrc' % self.locations['exec'])
 		#some locations
-		self.locations['movie_plugins'] = "%s\lib\plugins\movie" % self.locations['exec']
-		self.locations['export_plugins'] = "%s\lib\plugins\export" % self.locations['exec']
-		self.locations['images'] = "%s\images" % self.locations['exec']
+		self.locations['movie_plugins'] = "%s\\lib\\plugins\\movie" % self.locations['exec']
+		self.locations['export_plugins'] = "%s\\lib\\plugins\\export" % self.locations['exec']
+		self.locations['images'] = "%s\\images" % self.locations['exec']
 		self.locations['desktop'] = ""
 	elif self.posix:
 		self.locations['share'] = string.replace(self.locations['exec'], "/bin","/share/griffith")
@@ -99,7 +99,7 @@ def locations(self):
 		#some locations
 		self.locations['movie_plugins'] = self.locations['share'] + "/plugins/movie"
 		self.locations['export_plugins'] = self.locations['share'] + "/plugins/export"
-		self.locations['images'] = self.locations['share'] + "/images/"
+		self.locations['images'] = self.locations['share'] + "/images"
 		self.locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop')
 	else:
 		print "Operating system not supported"

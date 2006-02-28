@@ -24,6 +24,8 @@ PREFIX = $(DESTDIR)/usr
 BINDIR = $(PREFIX)/bin
 DATADIR = $(PREFIX)/share/griffith
 LIBDIR = $(DATADIR)/lib
+IMAGESDIR = $(DATADIR)/images
+GLADEDIR = $(DATADIR)/glade
 PLUGINSDIR = $(DATADIR)/plugins
 MOVIEPLUGINSDIR = $(PLUGINSDIR)/movie
 EXPORTPLUGINSDIR = $(PLUGINSDIR)/export
@@ -40,13 +42,15 @@ make: help
 
 install: uninstall
 	$(INSTALL) -m 755 -d $(BINDIR) $(DATADIR) $(LIBDIR) $(PLUGINSDIR) $(MOVIEPLUGINSDIR) \
-		$(EXPORTPLUGINSDIR) $(FONTSDIR) $(APPLICATIONSDIR) $(ICONDIR) $(TPLDIR)
+		$(EXPORTPLUGINSDIR) $(FONTSDIR) $(APPLICATIONSDIR) $(ICONDIR) $(TPLDIR) \
+		$(IMAGESDIR) $(GLADEDIR)
 	$(INSTALL) -m 755 griffith $(LIBDIR)
 	$(INSTALL) -m 644 lib/*.py $(LIBDIR)
 	$(INSTALL) -m 644 lib/plugins/movie/*.py $(MOVIEPLUGINSDIR)
 	$(INSTALL) -m 644 lib/plugins/export/*.py $(EXPORTPLUGINSDIR)
-	$(INSTALL) -m 644 glade/*.glade $(DATADIR)
-	$(INSTALL) -m 644 images/*.png $(DATADIR)
+	$(INSTALL) -m 644 glade/*.glade $(GLADEDIR)
+	$(INSTALL) -m 644 glade/*.png $(GLADEDIR)
+	$(INSTALL) -m 644 images/*.png $(IMAGESDIR)
 	$(INSTALL) -m 644 images/griffith.png $(ICONDIR)
 	$(INSTALL) -m 644 images/griffith.xpm $(ICONDIR)
 	$(INSTALL) -m 644 data/griffith.desktop $(APPLICATIONSDIR)
@@ -80,12 +84,14 @@ install: uninstall
 	$(MAKE) -C docs install
 	
 uninstall:
+	${RM} -rf $(TPLDIR)
 	${RM} -rf $(MOVIEPLUGINSDIR)
 	${RM} -rf $(EXPORTPLUGINSDIR)
 	${RM} -rf $(PLUGINSDIR)
 	${RM} -rf $(LIBDIR)
-	${RM} -rf $(CSSDIR)
 	#${RM} -rf $(FONTSDIR)
+	${RM} -rf $(IMAGESDIR)
+	${RM} -rf $(GLADEDIR)
 	${RM} -rf $(DATADIR)
 	${RM} -rf $(ICONDIR)/griffith.ong
 	${RM} -rf $(APPLICATIONSDIR)/griffith.desktop
