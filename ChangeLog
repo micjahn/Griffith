@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-03-01 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* French and portuguese translations updated to match current revision
+
 2006-02-28 Piotr Ozarowski <ozarow@gmail.com>
 	* All *\.py files moved to usr/share/ directory
 
