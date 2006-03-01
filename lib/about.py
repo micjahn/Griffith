@@ -68,7 +68,7 @@ class AboutDialog:
 		else:
 			logo_file = os.path.abspath(os.path.dirname(sys.argv[0]))
 			logo = gtk.gdk.pixbuf_new_from_file(logo_file.replace \
-				("/bin", "/share/griffith") + "/griffith.png")
+				("/bin", "/share/griffith/images") + "/griffith.png")
 		dialog.set_logo(logo)
 		dialog.set_license(_("This program is released under the GNU" + \
 			"General Public License.\n" + \
