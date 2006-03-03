@@ -238,11 +238,11 @@ def define_widgets(self, gladefile):
 
 	# poster events
 	# we need to add a little hack here to exclude macintosh/win32 from enter/leave events because this seems buggy on these ones
-	if sys.platform != "darwin" and sys.platform != "win32":
-		self.zoom_poster.connect("enter", self.z_poster)
-		self.zoom_poster.connect("leave", self.z_poster_hide)
-	else:
-		self.zoom_poster.connect("clicked", self.z_poster)
+	#if sys.platform != "darwin" and sys.platform != "win32":
+	#	self.zoom_poster.connect("enter", self.z_poster)
+	#	self.zoom_poster.connect("leave", self.z_poster_hide)
+	#else:
+	self.zoom_poster.connect("clicked", self.z_poster)
 		
 	self.main_window.connect('key_press_event', self.on_key_press_event)
 	self.main_treeview.connect('button_press_event', \
