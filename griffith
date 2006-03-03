@@ -235,6 +235,7 @@ class Griffith:
 			id = 0
 		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
 		self.db.add_volume(name)
+		update.update_volume_combo_ids(self)
 		initialize.fill_volumes_combo(self, prefix, id)
 
 	def add_collection(self, widget):
@@ -245,6 +246,7 @@ class Griffith:
 			id = 0
 		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
 		self.db.add_collection(name)
+		update.update_collection_combo_ids(self)
 		initialize.fill_collections_combo(self, prefix, id)
 
 	def remove_volume(self, widget):
@@ -255,6 +257,7 @@ class Griffith:
 			id = 0
 		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
 		self.db.remove_volume(name=name)
+		update.update_volume_combo_ids(self)
 		initialize.fill_volumes_combo(self, prefix, id)
 
 	def remove_collection(self, widget):
@@ -265,6 +268,7 @@ class Griffith:
 			id = 0
 		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
 		self.db.remove_collection(name=name)
+		update.update_collection_combo_ids(self)
 		initialize.fill_collections_combo(self, prefix, id)
 
 	def e_rename_volume(self, widget):
@@ -280,18 +284,18 @@ class Griffith:
 		initialize.fill_collections_combo(self, prefix='e', default=id)
 
 	def e_show_volume(self, widget):
-		volume_id = self.e_volume_combo.get_active()
-		if volume_id == 0:
+		id = self.volume_combo_ids[self.e_volume_combo.get_active()]
+		if id == 0:
 			view.filter_all(self)
 		else:
-			view.filter_by_volume(self, volume_id)
+			view.filter_by_volume(self, id)
 
 	def e_show_collection(self, widget):
-		collection_id = self.e_collection_combo.get_active()
-		if collection_id == 0:
+		id = self.collection_combo_ids[self.e_collection_combo.get_active()]
+		if id == 0:
 			view.filter_all(self)
 		else:
-			view.filter_by_collection(self, collection_id)
+			view.filter_by_collection(self, id)
 	#}}}
 	
 	# languages -------------------------------------------------------{{{
@@ -508,11 +512,11 @@ class Griffith:
 		return True
 		
 	def filter_collection(self, *args):
-		collection_id = self.f_col.get_active()
-		if collection_id == 0:
+		id = self.collection_combo_ids[self.f_col.get_active()]
+		if id == 0:
 			view.filter_all(self)
 		else:
-			view.filter_by_collection(self, collection_id)
+			view.filter_by_collection(self, id)
    
 	# windows/dialogs  
 	

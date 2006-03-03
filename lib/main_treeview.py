@@ -151,8 +151,10 @@ def treeview_clicked(self):
 			self.loans_treemodel.set_value(myiter, 2, person[0]['name'])
 
 		#volumes/collections
-		self.e_volume_combo.set_active(self.volume_combo_ids[row['volume_id']])
-		self.e_collection_combo.set_active(self.collection_combo_ids[row['collection_id']])
+		i = gutils.findKey(row['volume_id'], self.volume_combo_ids)
+		self.e_volume_combo.set_active(i)
+		i = gutils.findKey(row['collection_id'], self.collection_combo_ids)
+		self.e_collection_combo.set_active(i)
 		self.e_volume_id.set_text(str(row['volume_id']))
 		self.e_collection_id.set_text(str(row['collection_id']))
 		self.e_volume_id.hide()

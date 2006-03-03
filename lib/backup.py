@@ -76,6 +76,8 @@ def restore(self):
 		import update
 		update.update_language_ids(self)
 		update.update_tag_ids(self)
+		update.update_volume_combo_ids(self)
+		update.update_collection_combo_ids(self)
 		import initialize
 		initialize.fill_volumes_combo(self)
 		initialize.fill_collections_combo(self)

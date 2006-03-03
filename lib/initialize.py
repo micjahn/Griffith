@@ -353,15 +353,19 @@ def combos(self):
 		self.p_media.insert_text(i['id'], i['name'])
 		self.am_media.insert_text(i['id'], i['name'])
 		
-	# collections filter
-	for collection in self.db.get_all_collections_data():
-		self.f_col.insert_text(int(collection['id']), collection['name'])
-
 	self.e_tags = {} # dictionary for tag CheckBoxes
 	self.am_tags = {} # dictionary for tag CheckBoxes
 	import update
 	update.update_language_ids(self)
 	update.update_tag_ids(self)
+	update.update_volume_combo_ids(self)
+	update.update_collection_combo_ids(self)
+	
+	# collections filter
+	for i in self.collection_combo_ids:
+		id = self.collection_combo_ids[i]
+		name = self.db.get_value(field='name', table_name="collections", where="id='%s'"%id)
+		self.f_col.insert_text(int(i), str(name))
 	
 	import initialize
 	initialize.fill_volumes_combo(self)
@@ -415,40 +419,36 @@ def initialize_gtkspell(self):
 def fill_volumes_combo(self, prefix='e', default=0):
 	self.am_volume_combo.get_model().clear()
 	self.e_volume_combo.get_model().clear()
-	i = 0
-	self.volume_combo_ids = {}
-	for volume in self.db.get_all_volumes_data():
-		self.volume_combo_ids[volume['id']] = i
-		self.am_volume_combo.insert_text(i, str(volume['name']))
-		self.e_volume_combo.insert_text(i, str(volume['name']))
-		i = i+1
-
+	for i in self.volume_combo_ids:
+		id = self.volume_combo_ids[i]
+		name = self.db.get_value(field='name', table_name="volumes", where="id='%s'"%id)
+		self.am_volume_combo.insert_text(int(i), str(name))
+		self.e_volume_combo.insert_text(int(i), str(name))
 	self.am_volume_combo.show_all()
 	self.e_volume_combo.show_all()
+	i = gutils.findKey(default, self.volume_combo_ids)
 	if prefix == 'e':
-		self.e_volume_combo.set_active(int(self.volume_combo_ids[default]))
+		self.e_volume_combo.set_active(int(default))
 		self.am_volume_combo.set_active(0)
 	else:
-		self.am_volume_combo.set_active(int(self.volume_combo_ids[default]))
+		self.am_volume_combo.set_active(int(i))
 
 def fill_collections_combo(self, prefix='e', default=0):
 	self.am_collection_combo.get_model().clear()
 	self.e_collection_combo.get_model().clear()
-	i = 0
-	self.collection_combo_ids = {}
-	for collection in self.db.get_all_collections_data():
-		self.collection_combo_ids[collection['id']] = i
-		self.am_collection_combo.insert_text(i, str(collection['name']))
-		self.e_collection_combo.insert_text(i, str(collection['name']))
-		i = i+1
-	
+	for i in self.collection_combo_ids:
+		id = self.collection_combo_ids[i]
+		name = self.db.get_value(field='name', table_name="collections", where="id='%s'"%id)
+		self.am_collection_combo.insert_text(int(i), str(name))
+		self.e_collection_combo.insert_text(int(i), str(name))
 	self.am_collection_combo.show_all()
 	self.e_collection_combo.show_all()
+	i = gutils.findKey(default, self.collection_combo_ids)
 	if prefix == 'e':
-		self.e_collection_combo.set_active(int(self.collection_combo_ids[default]))
+		self.e_collection_combo.set_active(int(i))
 		self.am_collection_combo.set_active(0)
 	else:
-		self.am_collection_combo.set_active(int(self.collection_combo_ids[default]))
+		self.am_collection_combo.set_active(int(i))
 
 def fill_preferences_languages_combo(self):
 	self.lang_name_combo.get_model().clear()

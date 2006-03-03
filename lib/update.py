@@ -160,3 +160,17 @@ def update_tag_ids(self):
 	for tag in self.db.get_all_data(table_name="tags", order_by=None):
 		self.tags_ids[i] = tag['id']
 		i += 1
+
+def update_volume_combo_ids(self):
+	self.volume_combo_ids = {}
+	i = 0
+	for volume in self.db.get_all_data(table_name="volumes", order_by=None):
+		self.volume_combo_ids[i] = volume['id']
+		i += 1
+
+def update_collection_combo_ids(self):
+	self.collection_combo_ids = {}
+	i = 0
+	for collection in self.db.get_all_data(table_name="collections", order_by=None):
+		self.collection_combo_ids[i] = collection['id']
+		i += 1

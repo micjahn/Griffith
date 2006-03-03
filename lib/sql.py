@@ -458,8 +458,8 @@ class GriffithSQL:
 			str(int(data.rating_slider_add.get_value()))+"','" +\
 			str(int(data.am_seen.get_active()))+"','" +\
 			number+"', '" +\
-			str(data.am_volume_combo.get_active()) + "', '"+\
-			str(data.am_collection_combo.get_active()) + "')"
+			str(self.volume_combo_ids[data.am_volume_combo.get_active()]) + "', '"+\
+			str(self.collection_combo_ids[data.am_collection_combo.get_active()]) + "')"
 		self.cursor.execute(query)
 		
 		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
@@ -501,7 +501,7 @@ class GriffithSQL:
 
 	def add_volume(self, name):
 		# check if volume already exists
-		for volume in self.get_all_volumes_data():
+		for volume in self.get_all_data(table_name="volumes", order_by=None):
 			if name == volume['name']:
 				self.debug.show("Volume '%s' already exists"%name)
 				return False
@@ -515,7 +515,7 @@ class GriffithSQL:
 
 	def add_collection(self, name):
 		# check if volume already exists
-		for collection in self.get_all_collections_data():
+		for collection in self.db.get_all_data(table_name="collections", order_by=None):
 			if name == collection['name']:
 				self.debug.show("Collection '%s' already exists"%name)
 				return False
@@ -586,14 +586,6 @@ class GriffithSQL:
 		except:
 			value = None
 		return value
-	
-	def get_all_volumes_data(self):		# TODO: rewrite all code to use get_all_data()
-		self.cursor.execute("SELECT * FROM volumes ORDER BY id")
-		return self.cursor.fetchall()
-		
-	def get_all_collections_data(self):	# TODO: rewrite all code to use get_all_data()
-		self.cursor.execute("SELECT * FROM collections ORDER BY id")
-		return self.cursor.fetchall()
 	
 	def select_movie_by_num(self,number):
 		self.cursor.execute("SELECT * FROM movies WHERE number = '"+number+"' ORDER BY number ASC")
@@ -798,6 +790,11 @@ class GriffithSQL:
 			self.debug.show("You have to select collection first")
 			return False
 		if name!=None:
+			tmp = self.get_value(field="id", table_name="collections", where="name='%s'"%name)
+			if tmp != None:
+				self.debug.show("This name is already in use (id=%s)"%tmp)
+				gutils.warning(self, msg="This name is already in use!")
+				return False
 			try:
 				self.cursor.execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
 			except:
@@ -843,6 +840,11 @@ class GriffithSQL:
 			self.debug.show("You have to select volume first")
 			return False
 		if name!=None:
+			tmp = self.get_value(field="id", table_name="volumes", where="name='%s'"%name)
+			if tmp != None:
+				self.debug.show("This name is already in use (id=%s)"%tmp)
+				gutils.warning(self, msg="This name is already in use!")
+				return False
 			try:
 				self.cursor.execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
 			except:
@@ -875,6 +877,11 @@ class GriffithSQL:
 		if str(id) == '0':
 			self.debug.show("You have to select language first")
 			return False
+		tmp = self.get_value(field="id", table_name="languages", where="name='%s'"%name)
+		if tmp != None:
+			self.debug.show("This name is already in use (id=%s)"%tmp)
+			gutils.warning(self, msg="This name is already in use!")
+			return False
 		try:
 			self.cursor.execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (name, id))
 		except:
@@ -885,6 +892,11 @@ class GriffithSQL:
 	def update_tag(self, id, name):
 		if str(id) == '0':
 			self.debug.show("You have to select tag first")
+			return False
+		tmp = self.get_value(field="id", table_name="tags", where="name='%s'"%name)
+		if tmp != None:
+			self.debug.show("This name is already in use (id=%s)"%tmp)
+			gutils.warning(self, msg="This name is already in use!")
 			return False
 		try:
 			self.cursor.execute("UPDATE tags SET name ='%s' WHERE id='%s';" % (name,id))

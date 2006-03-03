@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-03-03 Piotr Ozarowski <ozarow@gmail.com>
+	* New tag/language/volume/collection name must be unique
+	* Volume/collection ids dictionary is filled only if needed
+
 2006-03-01 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* French and portuguese translations updated to match current revision
 	* Added a new french movie plugin - Allocine (Thanks to Pierre-Luc Lévy)
