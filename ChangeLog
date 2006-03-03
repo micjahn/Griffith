@@ -7,6 +7,7 @@ Griffith ChangeLog
 2006-03-03 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* IMDB changed the way posters are included in html. Plugin fixed.
 	* Added custom fonts selection for PDF reports.
+	* Fixed bug when adding new collections.
 
 2006-03-03 Piotr Ozarowski <ozarow@gmail.com>
 	* New tag/language/volume/collection name must be unique

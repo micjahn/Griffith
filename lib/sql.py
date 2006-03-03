@@ -515,7 +515,7 @@ class GriffithSQL:
 
 	def add_collection(self, name):
 		# check if volume already exists
-		for collection in self.db.get_all_data(table_name="collections", order_by=None):
+		for collection in self.get_all_data(table_name="collections", order_by=None):
 			if name == collection['name']:
 				self.debug.show("Collection '%s' already exists"%name)
 				return False
