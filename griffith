@@ -273,15 +273,17 @@ class Griffith:
 
 	def e_rename_volume(self, widget):
 		id = self.e_volume_id.get_text()
-		new_name = self.e_volume_combo.get_active_text()
-		self.db.update_volume(id, name=new_name)
-		initialize.fill_volumes_combo(self, prefix='e', default=id)
+		if id != 0:
+			new_name = self.e_volume_combo.get_active_text()
+			self.db.update_volume(id, name=new_name)
+			initialize.fill_volumes_combo(self, prefix='e', default=id)
 
 	def e_rename_collection(self, widget):
 		id = self.e_collection_id.get_text()
-		new_name = self.e_collection_combo.get_active_text()
-		self.db.update_collection(id, name=new_name)
-		initialize.fill_collections_combo(self, prefix='e', default=id)
+		if id != 0:
+			new_name = self.e_collection_combo.get_active_text()
+			self.db.update_collection(id, name=new_name)
+			initialize.fill_collections_combo(self, prefix='e', default=id)
 
 	def e_show_volume(self, widget):
 		id = self.volume_combo_ids[self.e_volume_combo.get_active()]
@@ -307,7 +309,7 @@ class Griffith:
 
 	def on_lang_remove_clicked(self, widget):
 		active = self.lang_name_combo.get_active()
-		if active>-1:
+		if active>0:
 			id = self.languages_ids[active]
 			self.db.remove_language(id=id)
 			update.update_language_ids(self)
@@ -317,9 +319,10 @@ class Griffith:
 
 	def on_lang_rename_clicked(self, widget):
 		id = self.languages_ids[self.lang_name_active]
-		new_name = self.lang_name_combo.get_active_text()
-		self.db.update_language(id=id, name=new_name)
-		initialize.fill_preferences_languages_combo(self)
+		if id>0:
+			new_name = self.lang_name_combo.get_active_text()
+			self.db.update_language(id=id, name=new_name)
+			initialize.fill_preferences_languages_combo(self)
 	
 	def on_lang_name_combo_changed(self, widget):
 		active = self.lang_name_combo.get_active()

@@ -92,7 +92,7 @@ def update(self):
 		selected = {}
 		self.db.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % id)	# remove old data
 		for i in self.e_languages:
-			if i['id'].get_active() >-1:
+			if i['id'].get_active() > 0:
 				lang_id = self.languages_ids[i['id'].get_active()]
 				type = i['type'].get_active()
 				if not selected.has_key(lang_id):

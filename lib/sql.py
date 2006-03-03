@@ -225,6 +225,7 @@ class GriffithSQL:
 				'id' INTEGER PRIMARY KEY,
 				'name' STRING NOT NULL
 			);
+			INSERT INTO 'languages' VALUES (0,'');
 		""")
 
 	def create_table_movie_lang(self):
@@ -486,7 +487,7 @@ class GriffithSQL:
 		# languages
 		selected = {}
 		for i in data.am_languages:
-			if i['id'].get_active() > -1:
+			if i['id'].get_active() > 0:
 				lang_id = languages_ids[i['id'].get_active()]
 				type = i['type'].get_active()
 				if not selected.has_key(lang_id):
