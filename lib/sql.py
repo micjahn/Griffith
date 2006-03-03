@@ -423,6 +423,24 @@ class GriffithSQL:
 
 	# add data ---------------------------------------------------------{{{
 	def add_movie(self, data):
+		# TODO: make use of parent data {{{
+		i = 0
+		languages_ids = {}
+		for item in self.get_all_data(table_name="languages", order_by=None):
+			languages_ids[i] = item['id']
+			i = i+1
+		i = 0
+		volume_combo_ids = {}
+		for item in self.get_all_data(table_name="volumes", order_by=None):
+			volume_combo_ids[i] = item['id']
+			i = i+1
+		i = 0
+		collection_combo_ids = {}
+		for item in self.get_all_data(table_name="collections", order_by=None):
+			collection_combo_ids[i] = item['id']
+			i = i+1
+		#}}}
+
 		plot_buffer = data.am_plot.get_buffer()
 		with_buffer = data.am_with.get_buffer()
 		obs_buffer = data.am_obs.get_buffer()
@@ -458,19 +476,12 @@ class GriffithSQL:
 			str(int(data.rating_slider_add.get_value()))+"','" +\
 			str(int(data.am_seen.get_active()))+"','" +\
 			number+"', '" +\
-			str(self.volume_combo_ids[data.am_volume_combo.get_active()]) + "', '"+\
-			str(self.collection_combo_ids[data.am_collection_combo.get_active()]) + "')"
+			str(volume_combo_ids[data.am_volume_combo.get_active()]) + "', '"+\
+			str(collection_combo_ids[data.am_collection_combo.get_active()]) + "')"
 		self.cursor.execute(query)
 		
 		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
 		id = self.cursor.fetchone()[0]
-
-		# TODO: make use of parent.languages_ids
-		languages_ids = {}
-		i = 0
-		for lang in self.get_all_data(table_name="languages", order_by=None):
-			languages_ids[i] = lang['id']
-			i = i+1
 		
 		# languages
 		selected = {}
