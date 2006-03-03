@@ -36,6 +36,7 @@ import version
 import gutils
 import string
 import sys
+import config
 
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
@@ -57,12 +58,13 @@ class ExportPlugin:
     def export_simple_pdf(self):
         """exports a simple movie list to a pdf file"""
         
-        #if self.aa.config.get('font', '')!='':
-	#	fontName = self.aa.config.get('font', '')
-		#pdfmetrics.registerFont(TTFont(fontName, font))
-	#else:
-	self.fontName = "Helvetica"
-
+        myconfig = config.Config()
+        if myconfig.get('font', '')!='':
+        	self.fontName = "custom_font"
+        	pdfmetrics.registerFont(TTFont(self.fontName, myconfig.get('font', '')))
+        else:
+        	self.fontName = "Helvetica"
+        	
         filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf")
         if filename[0]:
             overwrite = None
@@ -77,7 +79,7 @@ class ExportPlugin:
                 c = SimpleDocTemplate(filename[0])    
                 style = self.styles["Normal"]        
                 Story = [Spacer(1,2*inch)]
-                # define some custom stylesheet
+                # define some custom stylesheetfont
                 total = self.db.count_records('movies')
                 p = Paragraph("<font name='" + self.fontName +"' size=\"18\">" + saxutils.escape((_("List of films")).encode('utf-8')) + '</font>', self.styles["Heading1"] )
                 Story.append(p)

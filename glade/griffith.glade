@@ -7456,13 +7456,13 @@ Stars</property>
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox75">
+		<widget class="GtkHBox" id="hbox98">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
-		  <property name="spacing">0</property>
+		  <property name="spacing">4</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="label148">
+		    <widget class="GtkLabel" id="label186">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Font for reports</property>
 		      <property name="use_underline">False</property>
@@ -7487,21 +7487,26 @@ Stars</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkFontSelection" id="p_font">
+		    <widget class="GtkFileChooserButton" id="p_font">
 		      <property name="visible">True</property>
-		      <property name="preview_text" translatable="yes">The Wizard of OZ :)</property>
+		      <property name="title" translatable="yes">Select A File</property>
+		      <property name="action">GTK_FILE_CHOOSER_ACTION_OPEN</property>
+		      <property name="local_only">True</property>
+		      <property name="show_hidden">False</property>
+		      <property name="do_overwrite_confirmation">False</property>
+		      <property name="width_chars">-1</property>
 		    </widget>
 		    <packing>
-		      <property name="padding">8</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
+		      <property name="padding">0</property>
+		      <property name="expand">True</property>
+		      <property name="fill">True</property>
 		    </packing>
 		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
-		  <property name="expand">True</property>
-		  <property name="fill">True</property>
+		  <property name="expand">False</property>
+		  <property name="fill">False</property>
 		</packing>
 	      </child>
 	    </widget>

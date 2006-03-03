@@ -50,10 +50,9 @@ def cover_image_process(self, filename, id):
 	size = self.cover_image_size.get_active()
 	number = self.cover_image_number.get_active()
 	
-	if self.config.get('font')!='':
-		fontName = self.config.get('font')
-		print fontName
-		#pdfmetrics.registerFont(TTFont(fontName, font))
+	if self.config.get('font', '')!='':
+		fontName = "custom_font"
+		pdfmetrics.registerFont(TTFont(fontName,self.config.get('font', '')))
 	else:
 		fontName = "Helvetica"
 
@@ -117,12 +116,9 @@ def cover_simple(self, id):
 	number = self.cover_simple_include_movie_number.get_active()
 	poster = self.cover_simple_include_poster.get_active()
 	
-	print self.config.get('font')
-	
 	if self.config.get('font', '')!='':
-		fontName = self.config.get('font', '')
-		print fontName
-		#pdfmetrics.registerFont(TTFont(fontName, font))
+		fontName = "custom_font"
+		pdfmetrics.registerFont(TTFont(fontName,self.config.get('font', '')))
 	else:
 		fontName = "Helvetica"
 	
