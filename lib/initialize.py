@@ -361,12 +361,6 @@ def combos(self):
 	update.update_volume_combo_ids(self)
 	update.update_collection_combo_ids(self)
 	
-	# collections filter
-	for i in self.collection_combo_ids:
-		id = self.collection_combo_ids[i]
-		name = self.db.get_value(field='name', table_name="collections", where="id='%s'"%id)
-		self.f_col.insert_text(int(i), str(name))
-	
 	import initialize
 	initialize.fill_volumes_combo(self)
 	initialize.fill_collections_combo(self)
@@ -436,13 +430,17 @@ def fill_volumes_combo(self, prefix='e', default=0):
 def fill_collections_combo(self, prefix='e', default=0):
 	self.am_collection_combo.get_model().clear()
 	self.e_collection_combo.get_model().clear()
+	self.f_col.get_model().clear()
 	for i in self.collection_combo_ids:
 		id = self.collection_combo_ids[i]
 		name = self.db.get_value(field='name', table_name="collections", where="id='%s'"%id)
 		self.am_collection_combo.insert_text(int(i), str(name))
 		self.e_collection_combo.insert_text(int(i), str(name))
+		self.f_col.insert_text(int(i), str(name))
 	self.am_collection_combo.show_all()
 	self.e_collection_combo.show_all()
+	self.f_col.show_all()
+	self.f_col.set_active(0)
 	i = gutils.findKey(default, self.collection_combo_ids)
 	if prefix == 'e':
 		self.e_collection_combo.set_active(int(i))
