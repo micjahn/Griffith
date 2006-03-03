@@ -478,8 +478,8 @@ def fill_language_combo(self, widget, default=None):
 		widget.set_active(int(i))
 
 def create_language_hbox(self, widget, tab, default=None, type=None):
-	if len(self.languages_ids) == 0:
-		if widget.get_children() == []:	# emnpty array
+	if len(self.languages_ids) == 1:
+		if len(widget.get_children()) < 1:	# only empty item
 			widget.add(gtk.Label(_('You have to fill in languages list in preferences window')))
 	else:
 		from initialize import fill_language_combo
