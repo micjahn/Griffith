@@ -402,6 +402,12 @@
 		  </child>
 
 		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="separatormenuitem2">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
 		    <widget class="GtkMenuItem" id="goto_homepage">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Homepage</property>
@@ -409,6 +415,7 @@
 		      <signal name="activate" handler="on_goto_homepage_activate" last_modification_time="Tue, 21 Feb 2006 01:24:59 GMT"/>
 		    </widget>
 		  </child>
+
 		  <child>
 		    <widget class="GtkMenuItem" id="goto_forum">
 		      <property name="visible">True</property>
@@ -417,6 +424,7 @@
 		      <signal name="activate" handler="on_goto_forum_activate" last_modification_time="Tue, 21 Feb 2006 01:24:59 GMT"/>
 		    </widget>
 		  </child>
+
 		  <child>
 		    <widget class="GtkMenuItem" id="goto_report_bug">
 		      <property name="visible">True</property>
@@ -542,7 +550,6 @@
 	      <child>
 		<widget class="GtkToolButton" id="toolbutton10">
 		  <property name="visible">True</property>
-		  <property name="sensitive">False</property>
 		  <property name="tooltip" translatable="yes">Select last movie</property>
 		  <property name="stock_id">gtk-goto-last</property>
 		  <property name="visible_horizontal">True</property>
@@ -604,7 +611,7 @@
 
 	  <child>
 	    <widget class="GtkEntry" id="filter_txt">
-	      <property name="width_request">152</property>
+	      <property name="width_request">158</property>
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="editable">True</property>
@@ -625,9 +632,10 @@
 
 	  <child>
 	    <widget class="GtkButton" id="button10">
+	      <property name="height_request">25</property>
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="relief">GTK_RELIEF_NONE</property>
 	      <property name="focus_on_click">True</property>
 	      <signal name="clicked" handler="on_clear_filter_clicked" last_modification_time="Wed, 27 Apr 2005 19:03:15 GMT"/>
 
@@ -652,7 +660,6 @@
 
 	  <child>
 	    <widget class="GtkComboBoxEntry" id="filter_criteria">
-	      <property name="width_request">144</property>
 	      <property name="visible">True</property>
 	      <property name="items" translatable="yes">Number
 Original Title
@@ -668,7 +675,7 @@ Year</property>
 	      <signal name="changed" handler="on_filter_criteria_changed" last_modification_time="Wed, 27 Apr 2005 19:36:32 GMT"/>
 	    </widget>
 	    <packing>
-	      <property name="padding">7</property>
+	      <property name="padding">8</property>
 	      <property name="expand">False</property>
 	      <property name="fill">False</property>
 	    </packing>
@@ -804,7 +811,7 @@ Year</property>
 				<widget class="GtkButton" id="zoom_poster">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
-				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="relief">GTK_RELIEF_NONE</property>
 				  <property name="focus_on_click">True</property>
 
 				  <child>
@@ -3853,13 +3860,13 @@ Year</property>
   <property name="title" translatable="yes">Add a new movie</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_CENTER</property>
-  <property name="modal">True</property>
+  <property name="modal">False</property>
   <property name="resizable">True</property>
-  <property name="destroy_with_parent">False</property>
+  <property name="destroy_with_parent">True</property>
   <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">True</property>
+  <property name="skip_taskbar_hint">False</property>
   <property name="skip_pager_hint">False</property>
-  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
   <property name="urgency_hint">False</property>
@@ -10729,14 +10736,15 @@ Double Slim</property>
 </widget>
 
 <widget class="GtkWindow" id="poster_window">
+  <property name="can_focus">True</property>
   <property name="title" translatable="yes">Poster viewer</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
-  <property name="modal">True</property>
+  <property name="modal">False</property>
   <property name="resizable">False</property>
   <property name="destroy_with_parent">True</property>
   <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">True</property>
+  <property name="skip_taskbar_hint">False</property>
   <property name="skip_pager_hint">True</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
