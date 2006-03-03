@@ -14,7 +14,8 @@ Griffith ChangeLog
 	* New tag/language/volume/collection name must be unique
 	* Volume/collection ids dictionary is filled only if needed
 	* Changed behaviour of poster preview and add movie window
-	* Fixed bug with restoring data
+	* Fixed bug when restoring data
+	* Stopklatka movie plugin updated
 
 2006-03-01 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* French and portuguese translations updated to match current revision
