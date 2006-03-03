@@ -688,6 +688,13 @@ class Griffith:
 				
 		initialize.initialize_gtkspell(self)
 		
+		# add default folders to some select widgets
+		
+		if self.windows:
+			self.p_font.set_current_folder("c:\\windows\\fonts\\")
+		else:
+			self.p_font.set_current_folder("/usr/share/fonts/")
+		
 	def main(self):
 		gtk.threads_init()
 		gtk.threads_enter()
