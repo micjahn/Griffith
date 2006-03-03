@@ -81,5 +81,7 @@ def restore(self):
 		initialize.fill_collections_combo(self)
 		initialize.fill_preferences_languages_combo(self)
 		initialize.fill_preferences_tags_combo(self)
+		initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+		initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 
 
