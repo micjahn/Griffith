@@ -431,17 +431,17 @@ class GriffithSQL:
 		# TODO: make use of parent data {{{
 		i = 0
 		languages_ids = {}
-		for item in self.get_all_data("languages"):
+		for item in self.get_all_data("languages", what="id"):
 			languages_ids[i] = item['id']
 			i = i+1
 		i = 0
 		volume_combo_ids = {}
-		for item in self.get_all_data("volumes"):
+		for item in self.get_all_data("volumes", what="id"):
 			volume_combo_ids[i] = item['id']
 			i = i+1
 		i = 0
 		collection_combo_ids = {}
-		for item in self.get_all_data("collections"):
+		for item in self.get_all_data("collections", what="id"):
 			collection_combo_ids[i] = item['id']
 			i = i+1
 		i = 0
@@ -515,7 +515,7 @@ class GriffithSQL:
 
 	def add_volume(self, name):
 		# check if volume already exists
-		for volume in self.get_all_data("volumes"):
+		for volume in self.get_all_data("volumes", what="name"):
 			if name == volume['name']:
 				self.debug.show("Volume '%s' already exists"%name)
 				return False
@@ -529,7 +529,7 @@ class GriffithSQL:
 
 	def add_collection(self, name):
 		# check if volume already exists
-		for collection in self.get_all_data("collections"):
+		for collection in self.get_all_data("collections", what="name"):
 			if name == collection['name']:
 				self.debug.show("Collection '%s' already exists"%name)
 				return False
@@ -547,7 +547,7 @@ class GriffithSQL:
 			return False
 		name = gutils.gescape(name)
 		# check if language already exists
-		for language in self.get_all_data("languages"):
+		for language in self.get_all_data("languages", what="name"):
 			if name == language['name']:
 				self.debug.show("Language '%s' already exists"%name)
 				return False
@@ -564,7 +564,7 @@ class GriffithSQL:
 			self.debug.show("You didn't write name for new tag")
 			return False
 		# check if tag already exists
-		for tag in self.get_all_data("tags"):
+		for tag in self.get_all_data("tags", what="name"):
 			if name == tag['name']:
 				self.debug.show("Tag '%s' already exists"%name)
 				return False
@@ -703,10 +703,9 @@ class GriffithSQL:
 			name = self.get_value(field="name", table="volumes", where=" id = '%s'" % id)
 		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
-			self.cursor.execute("SELECT id FROM volumes WHERE name = '%s'" % name)
-			id = self.cursor.fetchone()
+			id = self.get_value(field="id", table="volumes", where="name = '%s'" % name)
 			if id != None:
-				id = str(int(id[0]))
+				id = str(int(id))
 		if str(id) == '0' or id == None:
 			self.debug.show("You have to select volume first")
 			return False

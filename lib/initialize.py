@@ -347,7 +347,7 @@ def combos(self):
 	self.am_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.am_layers.insert_text(4, _("N/A"))
 	
-	media = self.db.get_all_data("media")
+	media = self.db.get_all_data("media", order_by="id ASC")
 	for i in media:
 		self.e_media.insert_text(i['id'], i['name'])
 		self.p_media.insert_text(i['id'], i['name'])
@@ -427,6 +427,7 @@ def fill_volumes_combo(self, prefix='e', default=0):
 	else:
 		self.am_volume_combo.set_active(int(i))
 	self.e_volume_combo.set_wrap_width(3)
+	self.am_volume_combo.set_wrap_width(3)
 
 def fill_collections_combo(self, prefix='e', default=0):
 	self.am_collection_combo.get_model().clear()
@@ -448,6 +449,8 @@ def fill_collections_combo(self, prefix='e', default=0):
 		self.am_collection_combo.set_active(0)
 	else:
 		self.am_collection_combo.set_active(int(i))
+	self.e_collection_combo.set_wrap_width(2)
+	self.am_collection_combo.set_wrap_width(2)
 
 def fill_preferences_languages_combo(self):
 	self.lang_name_combo.get_model().clear()
