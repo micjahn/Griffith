@@ -119,7 +119,7 @@ class GriffithSQL:
 				'imdb' VARCHAR(100),
 				'actors' TEXT,
 				'trailer' VARCHAR(100),
-				'rating' VARCHAR(50),
+				'rating' INT(1) DEFAULT 0,
 				'loaned' INT(1) NOT NULL DEFAULT '0',
 				'media' INT(1) DEFAULT '0',
 				'num_media' INT(2),
@@ -440,6 +440,11 @@ class GriffithSQL:
 		for item in self.get_all_data(table_name="collections", order_by=None):
 			collection_combo_ids[i] = item['id']
 			i = i+1
+		i = 0
+		tags_ids = {}
+		for item in self.get_all_data(table_name="tags", what="id", order_by=None):
+			tags_ids[i] = item['id']
+			i = i+1
 		#}}}
 
 		plot_buffer = data.am_plot.get_buffer()
@@ -498,12 +503,6 @@ class GriffithSQL:
 				self.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
 
 		# tags 
-		# TODO: make use of parent.tags_ids
-		tags_ids = {}
-		i = 0
-		for tag in self.get_all_data(table_name="tags", what="id", order_by=None):
-			tags_ids[i] = tag['id']
-			i = i+1
 		selected = {}
 		for i in tags_ids:
 			if data.am_tags[i].get_active() == True:

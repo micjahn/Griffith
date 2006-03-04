@@ -1,6 +1,6 @@
 # -*- coding: ISO-8859-1 -*-
 
-__revision__ = '$Id: $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005-2006 Vasco Nunes
 # This program is free software; you can redistribute it and/or modify
@@ -25,17 +25,18 @@ import getopt
 import sys
 
 def check_args(self):
-
 	self.args = map(lambda i: i.replace('--', '').replace('-',''), sys.argv)			
 	
 	if self.args:	
 		try:
-			opts, args = getopt.getopt(sys.argv[1:], "hDo:s:d:w:y:", ["help", "debug", "search_original=", "search_title=", "director=", "with=", "year="])
+			opts, args = getopt.getopt(sys.argv[1:], "hDo:s:d:w:y:",
+					["help", "debug", "search_original=", "search_title=", "director=", "with=", "year="])
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
 			sys.exit(2)
 		
+		where = {}
 		for o, a in opts:
 			if o in ("-h", "--help"):
 				con_usage()
@@ -43,28 +44,26 @@ def check_args(self):
 			if o in ("-D", "--debug"):
 				self.debug.set_debug()
 			if o in ("-o", "--search_original"):
-				con_search_movie(self, a, 1)
+				where['original_title'] = a
 			if o in ("-s", "--search_title"):
-				con_search_movie(self, a, 2)
+				where['title'] = a
 			if o in ("-d", "--director"):
-				con_search_movie(self, a, 3)
+				where['director'] = a
 			if o in ("-w", "--with"):
-				con_search_movie(self, a, 4)
+				where['actors'] = a
 			if o in ("-y", "--year"):
-				con_search_movie(self, a, 5)
+				where['year'] = str(int(a))
+		if len(where)>0:
+			con_search_movie(self, where)
 
-def con_search_movie(self, arg, search_type):
-	if search_type==1:
-		data = self.db.select_movie_by_original_title(arg)
-	elif search_type==2:
-		data = self.db.select_movie_by_title(arg)
-	elif search_type==3:
-		data = self.db.select_movie_by_director(arg)
-	elif search_type==4:
-		data = self.db.select_movie_by_actors(arg)
-	elif search_type==5:
-		data = self.db.select_movie_by_year(arg)
-
+def con_search_movie(self, where):
+	query = ''
+	for i in where:
+		query += i + " LIKE '%" + where[i] + "%' AND "
+	query = query[:len(query)-5] # cut last " AND "
+	
+	data = self.db.get_all_data(table_name="movies", order_by="number ASC", where=query,
+			what='number, title, original_title, year, director')
 	if data:
 		for row in data:
 			print "\033[35;1m[%s]\033[0m\t\033[34m%s\033[0m (%s), %s - \033[32m%s\033[0m"%(row['number'],row['title'], \
@@ -74,4 +73,14 @@ def con_search_movie(self, arg, search_type):
 	sys.exit()
 
 def con_usage():
-	print "USAGE:", sys.argv[0], "[-h|D|s|d|w|y]"
+	print "USAGE:", sys.argv[0], "[OPTIONS]"
+	print "\nOPTION:"
+	print "-h\t\tprints this screen"
+	print "-D, --debug\trun with more debug info"
+	print "\n printing movie list:"
+	print "-s <expr>, --search_title=<expr>"
+	print "-o <expr>, --original_title=<expr>"
+	print "-d <expr>, --director=<expr>"
+	print "-w <expr>, --with=<expr>"
+	print "-y <expr>, --year=<expr>"
+

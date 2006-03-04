@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-03 15:37+0100\n"
+"POT-Creation-Date: 2006-03-04 15:18+0100\n"
 "PO-Revision-Date: 2005-06-19 16:30+0200\n"
 "Last-Translator: Piotr Ozarowski <ozarow@gmail.com>\n"
 "Language-Team: Polski\n"
@@ -14,31 +14,31 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:226
+#: ../griffith:227
 msgid "You saw all movies in your collection!"
 msgstr "Obejrza³e¶ ju¿ wszystkie filmy z kolekcji!"
 
-#: ../griffith:397
+#: ../griffith:401
 msgid "Are you sure you want to restore?\n"
 msgstr "Jeste¶ pewien, ¿e chcesz skorzystaæ z opcji przywracania?\n"
 
-#: ../griffith:398
+#: ../griffith:402
 msgid "Your current movie collection will be replaced.\n"
 msgstr "Twoja aktualna baza filmów zostanie podmieniona.\n"
 
-#: ../griffith:399
+#: ../griffith:403
 msgid "You can't undo this operation."
 msgstr "Nie ma mo¿liwo¶ci cofniêcia zmian."
 
-#: ../griffith:478
+#: ../griffith:482
 msgid " movie(s) in collection. "
 msgstr " filmów w kolekcji. "
 
-#: ../griffith:479
+#: ../griffith:483
 msgid " movie(s) loaned. "
 msgstr " filmów wypo¿yczonych. "
 
-#: ../griffith:480
+#: ../griffith:484
 msgid "You haven't seen "
 msgstr "Nie obejrza³e¶ jeszcze "
 
@@ -168,7 +168,7 @@ msgstr "Przywróæ z kopii bezpieczeñstwa"
 msgid "Can't read backup file"
 msgstr "Nie mogê odczytaæ kopii zapasowej"
 
-#: ../lib/backup.py:69
+#: ../lib/backup.py:83
 msgid "Backup restored"
 msgstr "Odzyskano dane z kopii zapasowej"
 
@@ -447,30 +447,30 @@ msgstr "Dwustronny, jednowarstwowy"
 msgid "Dual Side, Dual Layer"
 msgstr "Dwustronny, dwuwarstwowy"
 
-#: ../lib/initialize.py:412
+#: ../lib/initialize.py:406
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr "S³ownik nie jest dostêpny. Sprawdzanie pisowni zostanie wy³±czone. \n"
 
-#: ../lib/initialize.py:413
+#: ../lib/initialize.py:407
 #, python-format
 msgid ""
 "Please install the aspell-%s package or adjust the spellchekcer preferences."
 msgstr ""
 "Proszê zainstalowaæ paczkê aspell-%s lub poprawiæ ustawienia w preferencjach"
 
-#: ../lib/initialize.py:485
+#: ../lib/initialize.py:483
 msgid "You have to fill in languages list in preferences window"
 msgstr "Musisz wype³niæ listê jêzyków w oknie preferencji"
 
-#: ../lib/initialize.py:495
+#: ../lib/initialize.py:493
 msgid "lector"
 msgstr "lektor"
 
-#: ../lib/initialize.py:496
+#: ../lib/initialize.py:494
 msgid "dubbing"
 msgstr "dubbing"
 
-#: ../lib/initialize.py:497
+#: ../lib/initialize.py:495
 msgid "subtitles"
 msgstr "napisy"
 
@@ -490,15 +490,15 @@ msgstr "Film wypo¿yczono"
 msgid "Movie returned"
 msgstr "Film zosta³ zwrócony"
 
-#: ../lib/main_treeview.py:136
+#: ../lib/main_treeview.py:140
 msgid "This movie has been loaned to "
 msgstr "Film zosta³ wypo¿yczony przez "
 
-#: ../lib/main_treeview.py:136
+#: ../lib/main_treeview.py:140
 msgid " on "
 msgstr " dnia "
 
-#: ../lib/main_treeview.py:138
+#: ../lib/main_treeview.py:142
 msgid "Movie not loaned"
 msgstr "Film dostêpny"
 
@@ -895,7 +895,7 @@ msgstr "Klasyfikacja"
 
 #: ../glade/griffith.glade.h:25
 msgid "Clone"
-msgstr "Skopiuj zaznaczony"
+msgstr "Klonuj"
 
 #: ../glade/griffith.glade.h:26
 msgid "Collection"
@@ -1273,7 +1273,7 @@ msgstr "Studio"
 
 #: ../glade/griffith.glade.h:133
 msgid "Suggest an unseen movie"
-msgstr "Zasugeruj niewidziany jeszcze film"
+msgstr "Zasugeruj film do obejrzenia"
 
 #: ../glade/griffith.glade.h:134
 msgid "Tags"
@@ -1427,7 +1427,7 @@ msgstr "W³oski"
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:94
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:100
 #: ../lib/plugins/movie/PluginMovieIMDB.py:76
-#: ../lib/plugins/movie/PluginMovieOnet.py:83
+#: ../lib/plugins/movie/PluginMovieOnet.py:98
 #: ../lib/plugins/movie/PluginMovieWP.py:86
 msgid " as "
 msgstr " jako "
