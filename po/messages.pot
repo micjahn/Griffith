@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-04 22:30+0100\n"
+"POT-Creation-Date: 2006-03-04 22:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,31 +16,31 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:227
+#: ../griffith:225
 msgid "You saw all movies in your collection!"
 msgstr ""
 
-#: ../griffith:409
+#: ../griffith:407
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
 "You can't undo this operation."
 msgstr ""
 
-#: ../griffith:490
+#: ../griffith:488
 msgid " movie(s) in collection. "
 msgstr ""
 
-#: ../griffith:491
+#: ../griffith:489
 msgid " movie(s) loaned. "
 msgstr ""
 
-#: ../griffith:492
+#: ../griffith:490
 msgid "You haven't seen "
 msgstr ""
 
-#: ../griffith:492
-msgid " movie(s))"
+#: ../griffith:490
+msgid " movie(s)"
 msgstr ""
 
 #: ../lib/about.py:38
@@ -480,15 +480,15 @@ msgstr ""
 msgid "Movie returned"
 msgstr ""
 
-#: ../lib/main_treeview.py:140
+#: ../lib/main_treeview.py:139
 msgid "This movie has been loaned to "
 msgstr ""
 
-#: ../lib/main_treeview.py:140
+#: ../lib/main_treeview.py:139
 msgid " on "
 msgstr ""
 
-#: ../lib/main_treeview.py:142
+#: ../lib/main_treeview.py:141
 msgid "Movie not loaned"
 msgstr ""
 

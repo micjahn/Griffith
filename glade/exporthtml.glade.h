@@ -1,7 +1,7 @@
+char *s = N_("<b>Example</b>");
 char *s = N_("<b>Export</b>");
 char *s = N_("<b>Header</b>");
 char *s = N_("<b>Limits</b>");
-char *s = N_("<b>Preview</b>");
 char *s = N_("<b>Sort by</b>");
 char *s = N_("<b>Split into</b>");
 char *s = N_("<b>Style</b>");
