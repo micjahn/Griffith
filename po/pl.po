@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-04 20:49+0100\n"
-"PO-Revision-Date: 2005-06-19 16:30+0200\n"
+"POT-Creation-Date: 2006-03-04 22:30+0100\n"
+"PO-Revision-Date: 2006-03-04 22:05+0200\n"
 "Last-Translator: Piotr Ozarowski <ozarow@gmail.com>\n"
 "Language-Team: Polski\n"
 "MIME-Version: 1.0\n"
@@ -19,16 +19,14 @@ msgid "You saw all movies in your collection!"
 msgstr "Obejrza³e¶ ju¿ wszystkie filmy z kolekcji!"
 
 #: ../griffith:409
-msgid "Are you sure you want to restore?\n"
-msgstr "Jeste¶ pewien, ¿e chcesz skorzystaæ z opcji przywracania?\n"
-
-#: ../griffith:410
-msgid "Your current movie collection will be replaced.\n"
-msgstr "Twoja aktualna baza filmów zostanie podmieniona.\n"
-
-#: ../griffith:411
-msgid "You can't undo this operation."
-msgstr "Nie ma mo¿liwo¶ci cofniêcia zmian."
+msgid ""
+"Are you sure you want to restore?\n"
+"Your current movie collection will be replaced.\n"
+"You can't undo this operation."
+msgstr ""
+"Jeste¶ pewien, ¿e chcesz skorzystaæ z opcji przywracania?\n"
+"Twoja aktualna baza filmów zostanie podmieniona.\n"
+"Nie ma mo¿liwo¶ci cofniêcia zmian."
 
 #: ../griffith:490
 msgid " movie(s) in collection. "
@@ -41,6 +39,10 @@ msgstr " filmów wypo¿yczonych. "
 #: ../griffith:492
 msgid "You haven't seen "
 msgstr "Nie obejrza³e¶ jeszcze "
+
+#: ../griffith:492
+msgid " movie(s))"
+msgstr " pozycji "
 
 #: ../lib/about.py:38
 msgid "Main Author"
@@ -162,11 +164,11 @@ msgstr "Kopia zapasowa zosta³a pomy¶lnie utworzona"
 
 #: ../lib/backup.py:58
 msgid "Restore Griffith backup"
-msgstr "Przywróæ z kopii bezpieczeñstwa"
+msgstr "Przywróæ dane z kopii bezpieczeñstwa"
 
 #: ../lib/backup.py:65
 msgid "Can't read backup file"
-msgstr "Nie mogê odczytaæ kopii zapasowej"
+msgstr "Nie mogê odczytaæ pliku z kopi± zapasow±"
 
 #: ../lib/backup.py:83
 msgid "Backup restored"
@@ -219,9 +221,13 @@ msgstr "Kraj"
 msgid "Genre"
 msgstr "Rodzaj"
 
-#: ../lib/delete.py:35
+#: ../lib/delete.py:32
+msgid "You can't delete movie while it is loaned."
+msgstr "Nie mo¿esz usun±æ wypo¿yczonego filmu!"
+
+#: ../lib/delete.py:34
 msgid "Are you sure you want to delete this movie?"
-msgstr "Czy na pewno chcesz skasowaæ ten film?"
+msgstr "Czy na pewno chcesz usun±æ ten film?"
 
 #: ../lib/edit.py:55
 msgid "Image not valid."
@@ -229,7 +235,7 @@ msgstr "Plik nie jest prawid³owy"
 
 #: ../lib/edit.py:60
 msgid "Are you sure you want to delete this poster?"
-msgstr "Czy na pewno chcesz skasowaæ ten plakat?"
+msgstr "Czy na pewno chcesz usun±æ ten plakat?"
 
 #: ../lib/edit.py:171 ../lib/edit.py:177
 msgid "No posters found for this movie."
@@ -301,10 +307,10 @@ msgid ""
 "\n"
 "Loaned on %s"
 msgstr ""
-"po¿yczy³em:\n"
+"wypo¿yczy³em:\n"
 "%s (%s)\n"
 "\n"
-"Wypo¿yczony dnia %s"
+"Data wypo¿yczenia: %s"
 
 #: ../lib/gemail.py:65
 msgid "This person has no e-mail address defined."
@@ -573,7 +579,7 @@ msgid ""
 "You will lose ALL your current data!"
 msgstr ""
 "Czy na pewno chcesz stworzyæ now± bazê danych?\n"
-"Stracisz WSZYSTKIE dotychczasowe dane!"
+"Stracisz WSZYSTKIE aktualne dane!"
 
 #: ../lib/sql.py:56
 msgid ""
@@ -582,7 +588,7 @@ msgid ""
 "to lose your current data?"
 msgstr ""
 "Ostatnia szansa!\n"
-"Potwierdzasz chêæ skasowania aktualnych danych?"
+"Potwierdzasz chêæ usuniêcia aktualnych danych?"
 
 #: ../lib/update.py:36
 #, python-format
@@ -674,20 +680,20 @@ msgstr ""
 "rozwiwi±zaniem jest wpisanie tu w³asnego adresu e-mail."
 
 #: ../glade/exporthtml.glade.h:1
+msgid "<b>Example</b>"
+msgstr "<b>Przyk³ad</b>"
+
+#: ../glade/exporthtml.glade.h:2
 msgid "<b>Export</b>"
 msgstr "<b>Eksport</b>"
 
-#: ../glade/exporthtml.glade.h:2
+#: ../glade/exporthtml.glade.h:3
 msgid "<b>Header</b>"
 msgstr "<b>Nag³ówek</b>"
 
-#: ../glade/exporthtml.glade.h:3
+#: ../glade/exporthtml.glade.h:4
 msgid "<b>Limits</b>"
 msgstr "<b>Ograniczenia</b>"
-
-#: ../glade/exporthtml.glade.h:4
-msgid "<b>Preview</b>"
-msgstr "<b>Podgl±d</b>"
 
 #: ../glade/exporthtml.glade.h:5
 msgid "<b>Sort by</b>"
@@ -719,7 +725,7 @@ msgstr "Wska¿ plik styli"
 
 #: ../glade/exporthtml.glade.h:13
 msgid "Convert images"
-msgstr "Konertuj obrazki"
+msgstr "Konwertuj obrazki"
 
 #: ../glade/exporthtml.glade.h:14
 msgid "Data"
@@ -1576,96 +1582,3 @@ msgstr "Strona %d"
 #: ../lib/plugins/export/PluginExportXML.py:32
 msgid "Full XML list export plugin"
 msgstr "Wtyczka eksportu pe³nej listy XML"
-
-#~ msgid "<b>Subtitles</b>"
-#~ msgstr "<b>Napisy</b>"
-
-#~ msgid "Add new subtitle entry"
-#~ msgstr "Dodaj now± pozycjê z napisami"
-
-#~ msgid "Remove last subtitle entry"
-#~ msgstr "Usuñ ostatni± pozycjê"
-
-#~ msgid "_About"
-#~ msgstr "_Informacje o..."
-
-#~ msgid "Language not available. Defaulting to english."
-#~ msgstr ""
-#~ "Lokalizacja nie jest dostêpna. Ustawiam jezyk angielski jako domy¶lny."
-
-#~ msgid "Create a new Griffith document"
-#~ msgstr "Stwórz nowy dokument Griffith"
-
-#~ msgid "Internet"
-#~ msgstr "Internet"
-
-#~ msgid "Summary"
-#~ msgstr "Podsumowanie"
-
-#~ msgid "Excelent"
-#~ msgstr "¦wietny"
-
-#~ msgid "Overwrite"
-#~ msgstr "Nadpisz"
-
-#~ msgid "Create new inside"
-#~ msgstr "Stwórz nowy wewn±trz"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Are you REALLY sure you want to delete this directory and all data inside?"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Jeste¶ naprawdê PEWIEN, ¿e chcesz usun±æ ten katalog i ca³± jego "
-#~ "zawarto¶æ?"
-
-#~ msgid "New volume added to database"
-#~ msgstr "Nowy wolumin zosta³ dodany do bazy"
-
-#~ msgid "New collection added to database"
-#~ msgstr "Nowa kolekcja zosta³a dodana do bazy"
-
-#~ msgid "Volume successfully deleted"
-#~ msgstr "Wolumin zosta³ pomy¶lnie usuniêty"
-
-#~ msgid "Collection successfully deleted"
-#~ msgstr "Kolekcja zosta³a pomy¶lnie usuniêta"
-
-#~ msgid "DVD"
-#~ msgstr "DVD"
-
-#~ msgid "DVD-R"
-#~ msgstr "DVD-R"
-
-#~ msgid "DVD-RW"
-#~ msgstr "DVD-RW"
-
-#~ msgid "DVD+R"
-#~ msgstr "DVD+R"
-
-#~ msgid "DVD+RW"
-#~ msgstr "DVD+RW"
-
-#~ msgid "DVD-RAM"
-#~ msgstr "DVD-RAM"
-
-#~ msgid "VHS"
-#~ msgstr "VHS"
-
-#~ msgid "BETACAM"
-#~ msgstr "BETACAM"
-
-#~ msgid "WMV"
-#~ msgstr "WMV"
-
-#~ msgid "DIVX"
-#~ msgstr "DivX"
-
-#~ msgid "XVID"
-#~ msgstr "XviD"
-
-#~ msgid "VCD"
-#~ msgstr "VCD"
-
-#~ msgid "SVCD"
-#~ msgstr "SVCD"

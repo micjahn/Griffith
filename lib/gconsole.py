@@ -75,7 +75,7 @@ def con_search_movie(self, where):
 def con_usage():
 	print "USAGE:", sys.argv[0], "[OPTIONS]"
 	print "\nOPTION:"
-	print "-h\t\tprints this screen"
+	print "-h, --help\tprints this screen"
 	print "-D, --debug\trun with more debug info"
 	print "\n printing movie list:"
 	print "-s <expr>, --search_title=<expr>"

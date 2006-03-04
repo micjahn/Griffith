@@ -321,9 +321,9 @@ class ExportPlugin(gtk.Window):
 		# posters
 		self.widgets['combo_format'].set_active(0)
 		if self.config['poster_convert']:
-			self.widgets['vb_posters'].show()
+			self.widgets['vb_posters'].set_sensitive(True)
 		else:
-			self.widgets['vb_posters'].hide()
+			self.widgets['vb_posters'].set_sensitive(False)
 	#}}}
 
 	#==[ on change ]================================{{{
@@ -372,9 +372,9 @@ class ExportPlugin(gtk.Window):
 		active = widget.get_active()
 		self.config['poster_convert'] = active
 		if not active:
-			self.widgets['vb_posters'].hide()
+			self.widgets['vb_posters'].set_sensitive(False)
 		else:
-			self.widgets['vb_posters'].show()
+			self.widgets['vb_posters'].set_sensitive(True)
 	#}}}
 
 	# template tab ---------------------------------#{{{
