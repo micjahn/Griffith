@@ -362,7 +362,7 @@ def combos(self):
 	update.update_collection_combo_ids(self)
 	
 	import initialize
-	,initialize.fill_volumes_combo(self)
+	initialize.fill_volumes_combo(self)
 	initialize.fill_collections_combo(self)
 	initialize.fill_preferences_languages_combo(self)
 	initialize.fill_preferences_tags_combo(self)
