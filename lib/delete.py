@@ -24,23 +24,28 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import gutils
 import os
+#import main_treeview
 
 def delete_movie(self):
 	m_id = None
-	m_id, m_iter = self.get_maintree_selection()
-	if self.db.is_movie_loaned(movie_number=m_id):
-		gutils.warning(self, msg=_("You can't delete movie while it is loaned."))
-		return False
-	response = gutils.question(self,_("Are you sure you want to delete this movie?"), \
-		1, self.main_window)
-	if response == -8:	# gtk.RESPONSE_YES == -8
-		# try to delete poster image as well
-		poster = self.db.get_value('image', table="movies", where="number='%s'"%m_id)
-		if poster != None:
+	try:
+		m_id, m_iter = self.get_maintree_selection()
+		if self.db.is_movie_loaned(movie_number=m_id):
+			gutils.warning(self, msg="You can't delete movie while it is loaned.")
+			return False
+		response = gutils.question(self,_("Are you sure you want to delete this movie?"), \
+			1, self.main_window)
+		if response == -8:	# gtk.RESPONSE_YES == -8
+			# try to delete poster image as well
+			poster = self.db.select_movie_by_num(m_id)[0]['image']
 			delete_poster(self, poster)
-		delete_movie_from_db(self, m_id, m_iter)
-	else:
-		return False
+			delete_movie_from_db(self, m_id, m_iter)
+			self.main_treeview.set_cursor_on_cell(self.total_filter-1)
+			#self.select_last_row(self.total_filter)
+		else:
+			pass
+	except:
+		pass
 		
 def delete_poster(self, poster):
 	posters_dir = os.path.join(self.griffith_dir, "posters")
@@ -65,9 +70,8 @@ def delete_poster(self, poster):
 		
 def delete_movie_from_db(self, m_id, m_iter):
 	self.total -= 1
+	self.total_filter -= 1
 	self.db.remove_movie_by_num(m_id)
 	self.treemodel.remove(m_iter)
 	self.clear_details()
 	self.count_statusbar()
-	self.select_last_row(self.total)
-
