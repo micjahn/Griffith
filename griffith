@@ -68,6 +68,7 @@ class Griffith:
 		initialize.export_plugins(self)
 		initialize.people_treeview(self)
 		initialize.web_results(self)
+		self.initialized = 1
 			
 	###########
 	# callbacks

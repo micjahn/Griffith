@@ -169,7 +169,7 @@ def treeview(self):
 	self.main_treeview.append_column(self.director_column)
 	# add data to treeview
 	self.total = int(self.db.count_records('movies'))
-	self.main_treeview.show()
+	#self.main_treeview.show()
 	
 def loans_treeview(self):
 	self.loan_history.set_model(self.loans_treemodel)
@@ -479,7 +479,7 @@ def fill_language_combo(self, widget, default=None):
 
 def create_language_hbox(self, widget, tab, default=None, type=None):
 	if len(self.languages_ids) == 1:
-		if len(widget.get_children()) < 1:	# only empty item
+		if len(widget.get_children()) == 0:
 			widget.add(gtk.Label(_('You have to fill in languages list in preferences window')))
 	else:
 		from initialize import fill_language_combo

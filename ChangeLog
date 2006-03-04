@@ -4,17 +4,20 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-03-04 Piotr Ozarowski <ozarow@gmail.com>
+	* Fixed displaing movie info before initialization (tags problem)
+
 2006-03-03 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* IMDB changed the way posters are included in html. Plugin fixed.
 	* Added custom fonts selection for PDF reports.
 	* Fixed bug when adding new collections.
-	* Removing not last one movie language is now possible
 
 2006-03-03 Piotr Ozarowski <ozarow@gmail.com>
 	* New tag/language/volume/collection name must be unique
 	* Volume/collection ids dictionary is filled only if needed
 	* Changed behaviour of poster preview and add movie window
 	* Fixed bug when restoring data
+	* Removal of any movie language is now possible (not just last one)
 	* Stopklatka movie plugin updated
 	* Onet Film movie plugin updated
 
