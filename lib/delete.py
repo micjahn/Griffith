@@ -66,7 +66,7 @@ def delete_poster(self, poster):
 		
 def delete_movie_from_db(self, m_id, m_iter):
 	self.total -= 1
-	elf.total_filter -= 1
+	self.total_filter -= 1
 	self.db.remove_movie_by_num(m_id)
 	self.treemodel.remove(m_iter)
 	self.clear_details()
