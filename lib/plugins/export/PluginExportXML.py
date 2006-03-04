@@ -61,7 +61,7 @@ class ExportPlugin:
 				root = doc.documentElement
 				
 				# create object
-				data = self.db.get_all_data()
+				data = self.db.get_all_data(order_by="number ASC")
 				for row in data:
 					e = doc.createElement('movie')
 					root.appendChild(e)

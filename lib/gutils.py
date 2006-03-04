@@ -61,7 +61,7 @@ def find_next_available(self):
 	a = first = 0
 	row = None
 
-	for row in self.db.get_all_data():
+	for row in self.db.get_all_data(order_by="number ASC"):
 		second = row['number']
 		if second == None:
 			second = 0

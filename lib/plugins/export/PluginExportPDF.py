@@ -87,7 +87,7 @@ class ExportPlugin:
                 p = Paragraph("<font name='" + self.fontName +"' size=\"10\">" + saxutils.escape((_("Total Movies: %s") % str(total)).encode('utf-8'))  + '</font>', self.styles["Heading3"])
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
-                data = self.db.get_all_data()
+                data = self.db.get_all_data(order_by="number ASC")
                 for row in data:
                     number = str(row['number'])
 		    number = number.encode('utf-8')

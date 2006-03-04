@@ -291,7 +291,7 @@ def clone_movie(self):
 	treeselection = self.main_treeview.get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()	
 	m_id = tmp_model.get_value(tmp_iter, 1)
-	movie_id = self.db.get_value(field="id", table_name="movies", where="number='%s'"%m_id)
+	movie_id = self.db.get_value(field="id", table="movies", where="number='%s'"%m_id)
 	if movie_id == None:
 		return false
 	row = self.db.select_movie_by_num(m_id)[0]
@@ -330,14 +330,14 @@ def clone_movie(self):
 		str(row['seen']), \
 		str(next_number) )\
 	) # dont copy volume/collection data (loan problems)
-	next_movie_id = self.db.get_value(field="id", table_name="movies", where="number='%s'"%next_number)
+	next_movie_id = self.db.get_value(field="id", table="movies", where="number='%s'"%next_number)
 	# tags
-	for item in self.db.get_all_data(table_name="movie_tag",what="tag_id", where="movie_id='%s'"%movie_id, order_by=None):
+	for item in self.db.get_all_data(table_name="movie_tag",what="tag_id", where="movie_id='%s'"%movie_id):
 		self.db.cursor.execute("""
 			INSERT INTO movie_tag('movie_id','tag_id') VALUES('%s','%s')""" % \
 				(next_movie_id, item['tag_id']))
 	# languages
-	for item in self.db.get_all_data(table_name="movie_lang",what="lang_id, type", where="movie_id='%s'"%movie_id, order_by=None):
+	for item in self.db.get_all_data(table_name="movie_lang",what="lang_id, type", where="movie_id='%s'"%movie_id):
 		self.db.cursor.execute("""
 			INSERT INTO movie_lang('movie_id','lang_id', 'type')
 				VALUES('%s','%s', '%s')""" % \

@@ -297,6 +297,10 @@ class GriffithSQL:
 			self.cursor.execute("SELECT movie_id FROM movie_tag LIMIT 1")
 		except:
 			self.create_table_movie_tag()
+		
+		# "empty" language is needed
+		if self.get_value(field="name", table="languages", where="id = '0'") == None:
+			self.cursor.execute("INSERT INTO languages VALUES('0', '')")
 
 		# check old media
 		if self.count_records("movies", "media='DVD'") > 0:
@@ -391,11 +395,11 @@ class GriffithSQL:
 				sql_query += ', '
 				
 		sql_query += " FROM %s" % table
-		self.cursor.execute (sql_query)
-		self.cursor.execute ("DROP TABLE %s" % table)
+		self.cursor.execute(sql_query)
+		self.cursor.execute("DROP TABLE %s" % table)
 		eval("self.create_table_%s()"%table)
-		self.cursor.execute ("INSERT INTO %s SELECT * FROM %s_backup" % (table, table))
-		self.cursor.execute ("DROP TABLE %s_backup"%table)
+		self.cursor.execute("INSERT INTO %s SELECT * FROM %s_backup" % (table, table))
+		self.cursor.execute("DROP TABLE %s_backup"%table)
 		self.con.commit()
 	
 	def update_old_media(self):
@@ -427,22 +431,22 @@ class GriffithSQL:
 		# TODO: make use of parent data {{{
 		i = 0
 		languages_ids = {}
-		for item in self.get_all_data(table_name="languages", order_by=None):
+		for item in self.get_all_data("languages"):
 			languages_ids[i] = item['id']
 			i = i+1
 		i = 0
 		volume_combo_ids = {}
-		for item in self.get_all_data(table_name="volumes", order_by=None):
+		for item in self.get_all_data("volumes"):
 			volume_combo_ids[i] = item['id']
 			i = i+1
 		i = 0
 		collection_combo_ids = {}
-		for item in self.get_all_data(table_name="collections", order_by=None):
+		for item in self.get_all_data("collections"):
 			collection_combo_ids[i] = item['id']
 			i = i+1
 		i = 0
 		tags_ids = {}
-		for item in self.get_all_data(table_name="tags", what="id", order_by=None):
+		for item in self.get_all_data("tags", what="id"):
 			tags_ids[i] = item['id']
 			i = i+1
 		#}}}
@@ -486,8 +490,7 @@ class GriffithSQL:
 			str(collection_combo_ids[data.am_collection_combo.get_active()]) + "')"
 		self.cursor.execute(query)
 		
-		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
-		id = self.cursor.fetchone()[0]
+		id = self.get_value(field="id", table="movies", where="number = '%s'" % number)
 		
 		# languages
 		selected = {}
@@ -512,7 +515,7 @@ class GriffithSQL:
 
 	def add_volume(self, name):
 		# check if volume already exists
-		for volume in self.get_all_data(table_name="volumes", order_by=None):
+		for volume in self.get_all_data("volumes"):
 			if name == volume['name']:
 				self.debug.show("Volume '%s' already exists"%name)
 				return False
@@ -526,7 +529,7 @@ class GriffithSQL:
 
 	def add_collection(self, name):
 		# check if volume already exists
-		for collection in self.get_all_data(table_name="collections", order_by=None):
+		for collection in self.get_all_data("collections"):
 			if name == collection['name']:
 				self.debug.show("Collection '%s' already exists"%name)
 				return False
@@ -544,7 +547,7 @@ class GriffithSQL:
 			return False
 		name = gutils.gescape(name)
 		# check if language already exists
-		for language in self.get_all_data(table_name="languages", order_by=None):
+		for language in self.get_all_data("languages"):
 			if name == language['name']:
 				self.debug.show("Language '%s' already exists"%name)
 				return False
@@ -561,7 +564,7 @@ class GriffithSQL:
 			self.debug.show("You didn't write name for new tag")
 			return False
 		# check if tag already exists
-		for tag in self.get_all_data(table_name="tags", order_by=None):
+		for tag in self.get_all_data("tags"):
 			if name == tag['name']:
 				self.debug.show("Tag '%s' already exists"%name)
 				return False
@@ -576,7 +579,7 @@ class GriffithSQL:
 	# }}}
 
 	# select data ------------------------------------------------------{{{
-	def get_all_data(self, table_name="movies", order_by="number ASC",where=None, what=None):
+	def get_all_data(self, table_name="movies", order_by=None, where=None, what=None):
 		if what == None:
 			what = "*"
 		sql="SELECT %s FROM %s" %(what, table_name)
@@ -587,8 +590,8 @@ class GriffithSQL:
 		self.cursor.execute(sql)
 		return self.cursor.fetchall()
 
-	def get_value(self, field, table_name, where=None):
-		query = "SELECT %s FROM %s" % (field, table_name)
+	def get_value(self, field, table, where=None):
+		query = "SELECT %s FROM %s" % (field, table)
 		if where:
 			query += " WHERE %s" % where
 		self.cursor.execute(query)
@@ -688,26 +691,26 @@ class GriffithSQL:
 		if self.is_movie_loaned(movie_number=number):
 			self.debug.show("Movie (number=%s) is loaned. Can't delete!")
 			return False
-		self.cursor.execute("SELECT id FROM movies WHERE number = '%s'" % number)
-		id = self.cursor.fetchone()[0]
-		self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
-		self.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
-		self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
-		self.con.commit()
+		id = self.get_value(field="id", table="movies", where="number = '%s'" % number)
+		if id != None:
+			self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
+			self.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
+			self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
+			self.con.commit()
 	
 	def remove_volume(self, id=None, name=None):
 		if id != None:
-			self.cursor.execute("SELECT name FROM volumes WHERE id = '%s'" % id)
-			name = self.cursor.fetchone()[0]
+			name = self.get_value(field="name", table="volumes", where=" id = '%s'" % id)
 		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
 			self.cursor.execute("SELECT id FROM volumes WHERE name = '%s'" % name)
-			id = str(int(self.cursor.fetchone()[0]))
+			id = self.cursor.fetchone()
+			if id != None:
+				id = str(int(id[0]))
 		if str(id) == '0' or id == None:
 			self.debug.show("You have to select volume first")
 			return False
-		self.cursor.execute("SELECT count(id) FROM movies WHERE volume_id = '%s'" % id)
-		movies = int(self.cursor.fetchone()[0])
+		movies = int(self.get_value(field="count(id)", table="movies", where="volume_id = '%s'" % id))
 		if movies > 0:
 			gutils.warning(self, msg="%s movie(s) in this volume.\nRemoval is possible only if there is no movie assigned to volume"%str(movies))
 			return False
@@ -720,17 +723,15 @@ class GriffithSQL:
 	
 	def remove_collection(self, id=None, name=None):
 		if id != None:
-			self.cursor.execute("SELECT name FROM collections WHERE id = '%s'" % id)
-			name = self.cursor.fetchone()[0]
+			name = self.get_value(field="name", table="collections", where="id = '%s'" % id)
 		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
-			self.cursor.execute("SELECT id FROM collections WHERE name = '%s'" % name)
-			id = str(int(self.cursor.fetchone()[0]))
+			id = self.get_value(field="id", table="collections", where="name = '%s'" % name)
+			id = str(int(id))
 		if str(id) == '0' or id == None:
 			self.debug.show("You have to select collection first")
 			return False
-		self.cursor.execute("SELECT count(id) FROM movies WHERE collection_id = '%s'" % id)
-		movies = int(self.cursor.fetchone()[0])
+		movies = int(self.get_value(field="count(id)", table="movies", where="collection_id = '%s'" % id))
 		if movies > 0:
 			gutils.warning(self, msg="%s movie(s) in this collection.\nRemoval is possible only if there is no movie assigned to collection"%str(movies))
 			return False
@@ -743,18 +744,16 @@ class GriffithSQL:
 	
 	def remove_language(self, id=None, name=None):
 		if id != None:
-			self.cursor.execute("SELECT name FROM languages WHERE id = '%s'" % id)
-			name = self.cursor.fetchone()[0]
+			name = self.get_value(field="name", table="languages", where="id = '%s'"%id)
 		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
-			self.cursor.execute("SELECT id FROM languages WHERE name = '%s'" % name)
-			id = str(int(self.cursor.fetchone()[0]))
+			id = self.get_value(field="id", table="languages", where="name = '%s'"%name)
+			id = str(int(id))
 		if str(id) == '0' or id == None:
 			self.debug.show("You have to select language first")
 			return False
 
-		self.cursor.execute("SELECT count(movie_id) FROM movie_lang WHERE lang_id = '%s'" % id)
-		movies = int(self.cursor.fetchone()[0])
+		movies = int(self.get_value(field="count(movie_id)", table="movie_lang", where="lang_id = '%s'" % id))
 		if movies > 0:
 			gutils.warning(self, msg="%s movie(s) are assigned to this language.\nChange movie details first!"%str(movies))
 			return False
@@ -768,18 +767,16 @@ class GriffithSQL:
 	
 	def remove_tag(self, id=None, name=None):
 		if id != None:
-			self.cursor.execute("SELECT name FROM tags WHERE id = '%s'" % id)
-			name = self.cursor.fetchone()[0]
+			name = self.get_value(field="name", table="tags", where="id = '%s'"%id)
 		elif name != None and name != '' and id == None:
 			name =	gutils.gescape(name)
-			self.cursor.execute("SELECT id FROM tags WHERE name = '%s'" % name)
-			id = str(int(self.cursor.fetchone()[0]))
+			id = self.get_value(field="id", table="tags", where="name = '%s'"%name)
+			id = str(int(id))
 		if str(id) == '0' or id == None:
 			self.debug.show("You have to select tag first")
 			return False
 
-		self.cursor.execute("SELECT count(movie_id) FROM movie_tag WHERE tag_id = '%s'" % id)
-		movies = int(self.cursor.fetchone()[0])
+		movies = int(self.get_value(field="count(movie_id)", table="movie_tag", where="tag_id = '%s'" % id))
 		if movies > 0:
 			gutils.warning(self, msg="%s movie(s) are assigned to this tag.\nChange movie details first!"%str(movies))
 			return False
@@ -801,7 +798,7 @@ class GriffithSQL:
 			self.debug.show("You have to select collection first")
 			return False
 		if name!=None:
-			tmp = self.get_value(field="id", table_name="collections", where="name='%s'"%name)
+			tmp = self.get_value(field="id", table="collections", where="name='%s'"%name)
 			if tmp != None:
 				self.debug.show("This name is already in use (id=%s)"%tmp)
 				gutils.warning(self, msg="This name is already in use!")
@@ -851,7 +848,7 @@ class GriffithSQL:
 			self.debug.show("You have to select volume first")
 			return False
 		if name!=None:
-			tmp = self.get_value(field="id", table_name="volumes", where="name='%s'"%name)
+			tmp = self.get_value(field="id", table="volumes", where="name='%s'"%name)
 			if tmp != None:
 				self.debug.show("This name is already in use (id=%s)"%tmp)
 				gutils.warning(self, msg="This name is already in use!")
@@ -888,7 +885,7 @@ class GriffithSQL:
 		if str(id) == '0':
 			self.debug.show("You have to select language first")
 			return False
-		tmp = self.get_value(field="id", table_name="languages", where="name='%s'"%name)
+		tmp = self.get_value(field="id", table="languages", where="name='%s'"%name)
 		if tmp != None:
 			self.debug.show("This name is already in use (id=%s)"%tmp)
 			gutils.warning(self, msg="This name is already in use!")
@@ -904,7 +901,7 @@ class GriffithSQL:
 		if str(id) == '0':
 			self.debug.show("You have to select tag first")
 			return False
-		tmp = self.get_value(field="id", table_name="tags", where="name='%s'"%name)
+		tmp = self.get_value(field="id", table="tags", where="name='%s'"%name)
 		if tmp != None:
 			self.debug.show("This name is already in use (id=%s)"%tmp)
 			gutils.warning(self, msg="This name is already in use!")

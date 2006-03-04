@@ -252,5 +252,5 @@ def save_preferences(self):
 
 	self.pdf_reader = save_reader	
 	self.clear_details()
-	self.populate_treeview(self.db.get_all_data())
+	self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
 	self.select_last_row(self.total)

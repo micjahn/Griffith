@@ -165,7 +165,7 @@ def treeview_clicked(self):
 		self.e_collection_id.hide()
 
 		#languages
-		languages = self.db.get_all_data(table_name="movie_lang", order_by=None, where="movie_id='%s'" % row['id'])
+		languages = self.db.get_all_data("movie_lang", where="movie_id='%s'" % row['id'])
 		self.e_languages = []	# language widgets
 		if len(languages) > 0:
 			from initialize import create_language_hbox
@@ -173,7 +173,7 @@ def treeview_clicked(self):
 				create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, default=i['lang_id'], type=i['type'])
 
 		#tags
-		for tag in self.db.get_all_data(table_name="movie_tag", where="movie_id='%s'" % row['id'], what="tag_id", order_by=None):
+		for tag in self.db.get_all_data("movie_tag", where="movie_id='%s'" % row['id'], what="tag_id"):
 			i = gutils.findKey(tag['tag_id'], self.tags_ids)
 			self.e_tags[i].set_active(True)
 

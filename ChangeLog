@@ -9,6 +9,7 @@ Griffith ChangeLog
 	* Fixed wrong poster path in cloned movie
 	* Clone movie function copies tag/lang data now
 	* Console search can now use multiple options
+	* Some code cleanups
 
 2006-03-03 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* IMDB changed the way posters are included in html. Plugin fixed.

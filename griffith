@@ -276,15 +276,15 @@ class Griffith:
 		id = self.e_volume_id.get_text()
 		if id != 0:
 			new_name = self.e_volume_combo.get_active_text()
-			self.db.update_volume(id, name=new_name)
-			initialize.fill_volumes_combo(self, prefix='e', default=id)
+			if self.db.update_volume(id, name=new_name):
+				initialize.fill_volumes_combo(self, prefix='e', default=id)
 
 	def e_rename_collection(self, widget):
 		id = self.e_collection_id.get_text()
 		if id != 0:
 			new_name = self.e_collection_combo.get_active_text()
-			self.db.update_collection(id, name=new_name)
-			initialize.fill_collections_combo(self, prefix='e', default=id)
+			if self.db.update_collection(id, name=new_name):
+				initialize.fill_collections_combo(self, prefix='e', default=id)
 
 	def e_show_volume(self, widget):
 		id = self.volume_combo_ids[self.e_volume_combo.get_active()]
@@ -319,11 +319,15 @@ class Griffith:
 			self.debug.show("You have to select language first")
 
 	def on_lang_rename_clicked(self, widget):
-		id = self.languages_ids[self.lang_name_active]
+		try:
+			active = self.lang_name_active
+		except:
+			return False
+		id = self.languages_ids[active]
 		if id>0:
 			new_name = self.lang_name_combo.get_active_text()
-			self.db.update_language(id=id, name=new_name)
-			initialize.fill_preferences_languages_combo(self)
+			if self.db.update_language(id=id, name=new_name):
+				initialize.fill_preferences_languages_combo(self)
 	
 	def on_lang_name_combo_changed(self, widget):
 		active = self.lang_name_combo.get_active()
@@ -362,12 +366,16 @@ class Griffith:
 			self.debug.show("You have to select tag first")
 
 	def on_tag_rename_clicked(self, widget):
-		id = self.tags_ids[self.tag_name_active]
+		try:
+			active = self.tag_name_active
+		except:
+			return False
+		id = self.tags_ids[active]
 		new_name = self.tag_name_combo.get_active_text()
-		self.db.update_tag(id=id, name=new_name)
-		initialize.fill_preferences_tags_combo(self)
-		initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
-		initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+		if self.db.update_tag(id=id, name=new_name):
+			initialize.fill_preferences_tags_combo(self)
+			initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	
 	def on_tag_name_combo_changed(self, widget):
 		active = self.tag_name_combo.get_active()

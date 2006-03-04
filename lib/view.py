@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id: view.py,v 1.2 2005/09/27 21:33:16 pox Exp $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005 Vasco Nunes
 #
@@ -41,7 +41,7 @@ def filter_loaned(self):
 	
 def filter_all(self):
 	self.treemodel.clear()
-	data = self.db.get_all_data() 
+	data = self.db.get_all_data(order_by="number ASC") 
 	self.count_statusbar()
 	self.populate_treeview( data) 
 	argum = self.total

@@ -44,7 +44,7 @@ def change_filter(self):
 	elif criteria == self._("With")  and text:
 		data = self.db.select_movie_by_actors(text)
 	else:
-		data = self.db.get_all_data()
+		data = self.db.get_all_data(order_by="number ASC")
 	for row in data:
 		x = x + 1	
 	self.total_filter = x

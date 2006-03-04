@@ -693,7 +693,6 @@ class ExportPlugin(gtk.Window):
 		id=1	# item's position on page (1 - first, ...)
 		i = 1
 		page=1	# page number
-		#data = self.db.get_all_data(order_by=config['sorting']+' '+config['sorting2'], where=self.sql_where)
 		for row in data:	# fill items {{{
 			# check if there is a need to create new file
 			if id==1:

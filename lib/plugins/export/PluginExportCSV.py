@@ -55,7 +55,7 @@ class ExportPlugin:
                     
             if overwrite == True or overwrite == None:
                 writer = csv.writer(file(filename[0], "w"), dialect=csv.excel)        
-                data = self.db.get_all_data()
+                data = self.db.get_all_data(order_by="number ASC")
                 for row in data:
                     t = []
                     for s in row:
