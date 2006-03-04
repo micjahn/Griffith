@@ -489,7 +489,7 @@ You can't undo this operation."""), \
 		not_seen = self.db.count_records('movies','seen=0')
 		self.update_statusbar(str(text) + self._(' movie(s) in collection. ')
 			+ str(loaned) + self._(' movie(s) loaned. ')
-			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s))"
+			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
 		)
 		
 	def update_statusbar(self, text):
