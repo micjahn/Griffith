@@ -6,6 +6,8 @@ Griffith ChangeLog
 
 2006-03-04 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed displaing movie info before initialization (tags problem)
+	* Fixed wrong poster path in cloned movie
+	* Clone movie function copies tag/lang data now
 
 2006-03-03 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* IMDB changed the way posters are included in html. Plugin fixed.

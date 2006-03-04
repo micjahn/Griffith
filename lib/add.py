@@ -291,61 +291,81 @@ def clone_movie(self):
 	treeselection = self.main_treeview.get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()	
 	m_id = tmp_model.get_value(tmp_iter, 1)
-	data = self.db.select_movie_by_num(m_id)
+	movie_id = self.db.get_value(field="id", table_name="movies", where="number='%s'"%m_id)
+	if movie_id == None:
+		return false
+	row = self.db.select_movie_by_num(m_id)[0]
 	next_number = gutils.find_next_available(self)
-	for row in data:
-		self.db.cursor.execute(
-			"INSERT INTO 'movies'('id','original_title','title','director', 'plot', 'image', 'year', 'runtime','actors','country','genre','media','classification','studio','site', 'color','region','layers','condition','imdb','trailer','obs','num_media','rating','loaned','seen','number') VALUES (Null,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0','%s','%s')"% \
-			(gutils.gescape(str(row['original_title'])), \
-			gutils.gescape(str(row['title'])), \
-			gutils.gescape(str(row['director'])), \
-			gutils.gescape(str(row['plot'])), \
-			gutils.gescape(str(row['image'])), \
-			gutils.gescape(str(row['year'])), \
-			gutils.gescape(str(row['runtime'])), \
-			gutils.gescape(str(row['actors'])), \
-			gutils.gescape(str(row['country'])), \
-			gutils.gescape(str(row['genre'])), \
-			gutils.gescape(str(row['media'])), \
-			gutils.gescape(str(row['classification'])), \
-			gutils.gescape(str(row['studio'])), \
-			gutils.gescape(str(row['site'])), \
-			gutils.gescape(str(row['color'])), \
-			gutils.gescape(str(row['region'])), \
-			gutils.gescape(str(row['layers'])), \
-			gutils.gescape(str(row['condition'])), \
-			gutils.gescape(str(row['imdb'])), \
-			gutils.gescape(str(row['trailer'])), \
-			gutils.gescape(str(row['obs'])), \
-			str(row['num_media']), \
-			str(row['rating']), \
-			str(row['seen']), \
-			str(next_number) \
-			))
+	new_image = str(row['image']) + '_' + str(next_number)
+	self.db.cursor.execute(
+		"""INSERT INTO 'movies' ('id','original_title','title','director','plot','image',
+			'year','runtime','actors','country','genre','media','classification','studio',
+			'site','color','region','layers','condition','imdb','trailer','obs','num_media',
+			'rating','loaned','seen','number')
+		VALUES (Null,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',
+			'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0','%s','%s')""" % \
+		(gutils.gescape(str(row['original_title'])), \
+		gutils.gescape(str(row['title'])), \
+		gutils.gescape(str(row['director'])), \
+		gutils.gescape(str(row['plot'])), \
+		gutils.gescape(new_image), \
+		gutils.gescape(str(row['year'])), \
+		gutils.gescape(str(row['runtime'])), \
+		gutils.gescape(str(row['actors'])), \
+		gutils.gescape(str(row['country'])), \
+		gutils.gescape(str(row['genre'])), \
+		gutils.gescape(str(row['media'])), \
+		gutils.gescape(str(row['classification'])), \
+		gutils.gescape(str(row['studio'])), \
+		gutils.gescape(str(row['site'])), \
+		gutils.gescape(str(row['color'])), \
+		gutils.gescape(str(row['region'])), \
+		gutils.gescape(str(row['layers'])), \
+		gutils.gescape(str(row['condition'])), \
+		gutils.gescape(str(row['imdb'])), \
+		gutils.gescape(str(row['trailer'])), \
+		gutils.gescape(str(row['obs'])), \
+		str(row['num_media']), \
+		str(row['rating']), \
+		str(row['seen']), \
+		str(next_number) )\
+	) # dont copy volume/collection data (loan problems)
+	next_movie_id = self.db.get_value(field="id", table_name="movies", where="number='%s'"%next_number)
+	# tags
+	for item in self.db.get_all_data(table_name="movie_tag",what="tag_id", where="movie_id='%s'"%movie_id, order_by=None):
+		self.db.cursor.execute("""
+			INSERT INTO movie_tag('movie_id','tag_id') VALUES('%s','%s')""" % \
+				(next_movie_id, item['tag_id']))
+	# languages
+	for item in self.db.get_all_data(table_name="movie_lang",what="lang_id, type", where="movie_id='%s'"%movie_id, order_by=None):
+		self.db.cursor.execute("""
+			INSERT INTO movie_lang('movie_id','lang_id', 'type')
+				VALUES('%s','%s', '%s')""" % \
+			(next_movie_id, item['lang_id'], item['type']))
 
-		myiter = self.treemodel.insert_after(None, self.treemodel.get_iter(next_number-2))
-		tmp_dest = os.path.join(self.griffith_dir, "posters")
-		if str(str(row['image'])) != '':
-			image_path = os.path.join(tmp_dest, str(row['image'])+".jpg")
-			clone_path = os.path.join(tmp_dest, str(next_number)+".jpg")
-			# clone image
-			shutil.copyfile(image_path, clone_path)
-			image_path = clone_path
+	myiter = self.treemodel.insert_after(None, self.treemodel.get_iter(next_number-2))
+	tmp_dest = os.path.join(self.griffith_dir, "posters")
+	if str(str(row['image'])) != '':
+		image_path = os.path.join(tmp_dest, str(row['image'])+".jpg")
+		clone_path = os.path.join(tmp_dest, new_image+".jpg")
+		# clone image
+		shutil.copyfile(image_path, clone_path)
+		image_path = clone_path
+	else:
+		if os.name == 'nt':
+			image_path = "images/default.png"
 		else:
-			if os.name == 'nt':
-				image_path = "images/default.png"
-			else:
-				image_path = os.path.join(self.locations['images'], "default.png")
-		handler = self.Image.set_from_file(image_path)
-		gutils.garbage(handler)
-		self.treemodel.set_value(myiter, 1, '%004d' % int(next_number))
-		pixbuf = self.Image.get_pixbuf() 
-		pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
-		self.treemodel.set_value(myiter, 2, pixbuf)
-		self.treemodel.set_value(myiter, 3, str(row['original_title']))
-		self.treemodel.set_value(myiter, 4, str(row['title']))
-		self.treemodel.set_value(myiter, 5, str(row['director']))
-		gutils.garbage(pixbuf)
+			image_path = os.path.join(self.locations['images'], "default.png")
+	handler = self.Image.set_from_file(image_path)
+	gutils.garbage(handler)
+	self.treemodel.set_value(myiter, 1, '%004d' % int(next_number))
+	pixbuf = self.Image.get_pixbuf() 
+	pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
+	self.treemodel.set_value(myiter, 2, pixbuf)
+	self.treemodel.set_value(myiter, 3, str(row['original_title']))
+	self.treemodel.set_value(myiter, 4, str(row['title']))
+	self.treemodel.set_value(myiter, 5, str(row['director']))
+	gutils.garbage(pixbuf)
 		
 	#update statusbar
 	self.total = self.total + 1
