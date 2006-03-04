@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2006-03-04 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* After deleting a movie, last row is now selected on main treeview
+	* Minor fixes to Allocine and 7arte movie plugins
 
 2006-03-04 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed displaing movie info before initialization (tags problem)
