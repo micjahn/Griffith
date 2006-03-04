@@ -169,7 +169,7 @@ def treeview(self):
 	self.main_treeview.append_column(self.director_column)
 	# add data to treeview
 	self.total = int(self.db.count_records('movies'))
-	#self.main_treeview.show()
+	self.main_treeview.show()
 	
 def loans_treeview(self):
 	self.loan_history.set_model(self.loans_treemodel)
@@ -362,7 +362,7 @@ def combos(self):
 	update.update_collection_combo_ids(self)
 	
 	import initialize
-	initialize.fill_volumes_combo(self)
+	,initialize.fill_volumes_combo(self)
 	initialize.fill_collections_combo(self)
 	initialize.fill_preferences_languages_combo(self)
 	initialize.fill_preferences_tags_combo(self)

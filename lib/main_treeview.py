@@ -26,6 +26,10 @@ import os
 import gtk
 
 def treeview_clicked(self):
+	try:
+		tmp = self.initialized # if Griffith is not initialized, return false
+	except:
+		return
 	if self.total:
 		self.clear_details()
 		treeselection = self.main_treeview.get_selection()
