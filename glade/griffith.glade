@@ -634,6 +634,7 @@
 	    <widget class="GtkButton" id="button10">
 	      <property name="height_request">25</property>
 	      <property name="visible">True</property>
+	      <property name="tooltip" translatable="yes">Clears filter</property>
 	      <property name="can_focus">True</property>
 	      <property name="relief">GTK_RELIEF_NONE</property>
 	      <property name="focus_on_click">True</property>
@@ -810,6 +811,7 @@ Year</property>
 			      <child>
 				<widget class="GtkButton" id="zoom_poster">
 				  <property name="visible">True</property>
+				  <property name="tooltip" translatable="yes">Open image in poster window</property>
 				  <property name="can_focus">True</property>
 				  <property name="relief">GTK_RELIEF_NONE</property>
 				  <property name="focus_on_click">True</property>
@@ -837,6 +839,7 @@ Year</property>
 			  <child>
 			    <widget class="GtkToolButton" id="open_poster">
 			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Load poster from disk</property>
 			      <property name="stock_id">gtk-open</property>
 			      <property name="visible_horizontal">True</property>
 			      <property name="visible_vertical">True</property>
@@ -868,6 +871,7 @@ Year</property>
 			  <child>
 			    <widget class="GtkToolButton" id="delete_poster">
 			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Removes poster</property>
 			      <property name="stock_id">gtk-cancel</property>
 			      <property name="visible_horizontal">True</property>
 			      <property name="visible_vertical">True</property>
