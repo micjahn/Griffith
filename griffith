@@ -404,9 +404,9 @@ class Griffith:
 		
 	def restore(self, *args):
 		response = gutils.question(self, \
-			self._("Are you sure you want to restore?\n" \
-			+ "Your current movie collection will be replaced.\n" \
-			+ "You can't undo this operation."), \
+			self._("""Are you sure you want to restore?
+Your current movie collection will be replaced.
+You can't undo this operation."""), \
 			1, self.main_window)
 		if response == gtk.RESPONSE_YES:
 			backup.restore(self)
@@ -487,7 +487,7 @@ class Griffith:
 		not_seen = self.db.count_records('movies','seen=0')
 		self.update_statusbar(str(text) + self._(' movie(s) in collection. ')
 			+ str(loaned) + self._(' movie(s) loaned. ')
-			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+" movie(s)"
+			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
 		)
 		
 	def update_statusbar(self, text):
