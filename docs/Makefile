@@ -3,7 +3,7 @@ LANGUAGES = en pl pt
 
 
 all: man
-#man: $(LANGUAGES)
+
 man: $(LANGUAGES)
 	for dir in $(LANGUAGES); do \
 	          $(MAKE) -C $$dir man; \

@@ -36,7 +36,7 @@ ICONDIR = $(PREFIX)/share/pixmaps
 LOCALEDIR = $(PREFIX)/share/locale
 
 PYFILES := $(shell $(FIND) . -name "*.py" -print)
-TEMPLATES= $(shell cd data/export_templates; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^CVS]*" -print)
+TEMPLATES= $(shell cd data/export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^CVS]*" -print)
 LANGUAGES= bg cs de es fr pl pt
 
 make: help
