@@ -101,7 +101,6 @@ def commit_loan(self):
 	
 	# finally, force a refresh
 	self.treeview_clicked()
-	self.main_treeview.set_cursor(int(movie_id)-1, None, False)
 	
 def return_loan(self):
 	movie_id = self.e_number.get_text()
@@ -141,4 +140,3 @@ def return_loan(self):
 		
 		# force a refresh
 		self.treeview_clicked()
-		self.main_treeview.set_cursor(int(movie_id)-1, None, False)

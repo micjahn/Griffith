@@ -12,6 +12,7 @@ Griffith ChangeLog
 	* Minor fixes to Allocine and 7arte movie plugins
 	* Portuguese translation updated.
 	* Quick filter not always working as expected. This is fixed now.
+	* When loaning/returning a movie wrong row is selected. Fixed.
 
 2006-03-04 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed displaing movie info before initialization (tags problem)
