@@ -1,6 +1,8 @@
 griffith (0.6-1) stable; urgency=low
 
   * New upstream
+  * Recommendations and build-depends updated
+  * Package is now lintian and linda clean
 
  -- Piotr Ozarowski <ozarow@gmail.com>  Sun,  5 Mar 2006 11:45:35 +0100
 
