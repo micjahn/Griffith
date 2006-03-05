@@ -352,7 +352,11 @@ def combos(self):
 		self.e_media.insert_text(i['id'], i['name'])
 		self.p_media.insert_text(i['id'], i['name'])
 		self.am_media.insert_text(i['id'], i['name'])
-		
+	
+	from initialize	import initialize_dictionaries
+	initialize_dictionaries
+
+def initialize_dictionaries(self):
 	self.e_tags = {} # dictionary for tag CheckBoxes
 	self.am_tags = {} # dictionary for tag CheckBoxes
 	import update
@@ -360,7 +364,6 @@ def combos(self):
 	update.update_tag_ids(self)
 	update.update_volume_combo_ids(self)
 	update.update_collection_combo_ids(self)
-	
 	import initialize
 	initialize.fill_volumes_combo(self)
 	initialize.fill_collections_combo(self)
@@ -368,7 +371,7 @@ def combos(self):
 	initialize.fill_preferences_tags_combo(self)
 	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
-	
+
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
 	self.results_treeview.set_model(self.treemodel_results)

@@ -66,20 +66,8 @@ def restore(self):
 			return
 		self.db.con.close()
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
-		self.e_tags = {} # dictionary for tag CheckBoxes
-		self.am_tags = {} # dictionary for tag CheckBoxes
-		import update
-		update.update_language_ids(self)
-		update.update_tag_ids(self)
-		update.update_volume_combo_ids(self)
-		update.update_collection_combo_ids(self)
-		import initialize
-		initialize.fill_volumes_combo(self)
-		initialize.fill_collections_combo(self)
-		initialize.fill_preferences_languages_combo(self)
-		initialize.fill_preferences_tags_combo(self)
-		initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
-		initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+		from initialize	import initialize_dictionaries
+		initialize_dictionaries(self)
 		gutils.info(self, _("Backup restored"), self.main_window)
 		# let's refresh the treeview
 		self.populate_treeview(self.db.get_all_data())

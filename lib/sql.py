@@ -69,14 +69,8 @@ class GriffithSQL:
 				parent.total = 0
 				parent.count_statusbar()
 				parent.treemodel.clear()
-				import update
-				update.update_language_ids(parent)
-				update.update_tag_ids(parent)
-				import initialize
-				initialize.fill_volumes_combo(parent)
-				initialize.fill_collections_combo(parent)
-				initialize.fill_preferences_languages_combo(parent)
-				initialize.fill_preferences_tags_combo(parent)
+				from initialize	import initialize_dictionaries
+				initialize_dictionaries(parent)
 			else:
 				pass
 		else:
@@ -247,8 +241,8 @@ class GriffithSQL:
 				'id' INTEGER PRIMARY KEY,
 				'name' STRING NOT NULL
 			);
-			INSERT INTO 'tags' VALUES (0, "Favourite");
-		""")
+			INSERT INTO 'tags' VALUES (0, '""" + _("Favourite") + "');" \
+		)
 
 	def create_table_movie_tag(self):
 		self.debug.show("Creating 'movie_tag' table...")

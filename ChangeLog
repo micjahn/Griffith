@@ -10,6 +10,7 @@ Griffith ChangeLog
 
 2006-03-05 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed bug when searching movie titles containing polish characters
+	* Update volume/collection data after creating new database
 
 2006-03-04 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* After deleting a movie, last row is now selected on main treeview
