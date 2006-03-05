@@ -5,7 +5,7 @@ __revision__ = '$Id$'
 # Copyright (c) 2005 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
+# it under the terms of the GNU General Public License as published byp
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 #
@@ -97,15 +97,30 @@ def initialize_add_dialog(self):
 def add_movie_db(self, close):
 	if  len(self.am_original_title.get_text()) or len(self.am_title.get_text()):
 		self.db.add_movie(self)
+		
+		# lets move poster from tmp to posters dir
+		tmp_dest = os.path.join(self.griffith_dir, "posters")
+		
+		if self.windows:
+			temp_dir = "c:\\tmp\\"
+		else:
+			temp_dir = "/tmp/"
+			
+		pic = string.replace(self.am_picture_name.get_text()+".jpg",temp_dir,"")
+		
+
+		if len(self.am_picture_name.get_text()):
+			if os.path.isfile(os.path.join(temp_dir, pic)):
+				shutil.move(os.path.join(temp_dir, pic), tmp_dest)
+		
 		if int(self.am_number.get_text()) >= 2:
 			insert_after = self.treemodel.get_iter(int(self.am_number.get_text())-2)
 		else:
 			insert_after = None
 		myiter = self.treemodel.insert_after(None, insert_after)
-		tmp_dest = os.path.join(self.griffith_dir, "posters")
+	
 		if len(self.am_picture_name.get_text()):
-			image_path = os.path.join(tmp_dest, \
-				str(self.am_picture_name.get_text())+".jpg")
+			image_path = os.path.join(tmp_dest, pic)
 		else:
 			image_path = os.path.join(self.locations['images'], "default.png")
 		handler = self.Image.set_from_file(image_path)
@@ -176,7 +191,6 @@ def populate_with_results(self):
 	self.am_director.set_text(gutils.convert_entities(self.movie.director))
 	plot_buffer = self.am_plot.get_buffer()
 	plot_buffer.set_text(gutils.convert_entities(self.movie.plot))
-	#self.am_with.set_text(gutils.convert_entities(self.movie.with))
 	with_buffer = self.am_with.get_buffer()
 	with_buffer.set_text(gutils.convert_entities(self.movie.with))
 	self.am_country.set_text(gutils.convert_entities(self.movie.country))
@@ -193,9 +207,12 @@ def populate_with_results(self):
 	if self.movie.rating:
 		self.rating_slider_add.set_value(float(self.movie.rating))
 	# poster
-	tmp_dest = os.path.join(self.griffith_dir, "posters")
+	if self.windows:
+		temp_dir = "c:\\tmp\\"
+	else:
+		temp_dir = "/tmp/"
 	if self.movie.picture != "":
-		image = os.path.join(tmp_dest, self.movie.picture)
+		image = os.path.join(temp_dir, self.movie.picture)
 		try:
 			handler = self.Image.set_from_file(image)
 			pixbuf = self.Image.get_pixbuf()
