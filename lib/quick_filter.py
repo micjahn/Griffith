@@ -25,8 +25,11 @@ import gutils
 
 def change_filter(self):
 	x = 0
+	
 	criteria = gutils.on_combo_box_entry_changed(self.filter_criteria)
 	text = gutils.gescape(self.e_filter.get_text())
+	print criteria
+	print text
 	if criteria == self._("Original Title") and text:
 		data = self.db.select_movie_by_original_title(text)
 	elif criteria == self._("Title")  and text:
@@ -49,10 +52,11 @@ def change_filter(self):
 		x = x + 1	
 	self.total_filter = x
 	self.treemodel.clear()
-	self.clear_details()
 	self.populate_treeview(data)
+	self.go_last()
 		
 def clear_filter(self):
 	self.e_filter.set_text("")
 	self.filter_criteria.set_active(1)
 	self.total_filter = self.total
+	self.go_last()
