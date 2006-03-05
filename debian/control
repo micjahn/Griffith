@@ -2,7 +2,7 @@ Source: griffith
 Section: gnome
 Priority: optional
 Maintainer: Piotr Ozarowski <ozarow@gmail.com>
-Build-Depends: debhelper (>>4), python (>= 2.3), make (>=3.8), gettext
+Build-Depends-Indep: debhelper (>>4), python (>= 2.3), make (>=3.8), gettext
 Standards-Version: 3.6.2
 
 Package: griffith
@@ -10,8 +10,6 @@ Architecture: all
 Depends: python (>=2.3), python-gtk2 (>= 2.6), python-glade2, python-sqlite, python-reportlab, python-imaging
 Recommends: python-gnome2-extras, griffith-extra-artwork (>=0.6)
 Description: A film collection manager
- Griffith is a film collection manager application.
- .
  Adding items to the movie collection is as quick and easy as typing the film
  title and selecting a supported source. Griffith will then try to fetch all
  the related information from the Web.
