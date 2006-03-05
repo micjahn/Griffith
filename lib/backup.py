@@ -66,8 +66,8 @@ def restore(self):
 			return
 		self.db.con.close()
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
-		from initialize	import initialize_dictionaries
-		initialize_dictionaries(self)
+		from initialize	import dictionaries
+		dictionaries(self)
 		gutils.info(self, _("Backup restored"), self.main_window)
 		# let's refresh the treeview
 		self.populate_treeview(self.db.get_all_data())
@@ -75,5 +75,4 @@ def restore(self):
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()
-
 

@@ -64,6 +64,7 @@ class Griffith:
 		initialize.treeview(self)
 		initialize.loans_treeview(self)
 		initialize.combos(self)
+		initialize.dictionaries(self)
 		initialize.movie_plugins(self)
 		initialize.export_plugins(self)
 		initialize.people_treeview(self)

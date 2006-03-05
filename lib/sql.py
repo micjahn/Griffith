@@ -69,8 +69,8 @@ class GriffithSQL:
 				parent.total = 0
 				parent.count_statusbar()
 				parent.treemodel.clear()
-				from initialize	import initialize_dictionaries
-				initialize_dictionaries(parent)
+				from initialize	import dictionaries
+				dictionaries(parent)
 			else:
 				pass
 		else:

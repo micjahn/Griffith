@@ -352,11 +352,10 @@ def combos(self):
 		self.e_media.insert_text(i['id'], i['name'])
 		self.p_media.insert_text(i['id'], i['name'])
 		self.am_media.insert_text(i['id'], i['name'])
-	
-	from initialize	import initialize_dictionaries
-	initialize_dictionaries
 
-def initialize_dictionaries(self):
+def dictionaries(self):
+	"""initializes combos filled dynamically by users"""
+	self.e_languages = []
 	self.e_tags = {} # dictionary for tag CheckBoxes
 	self.am_tags = {} # dictionary for tag CheckBoxes
 	import update

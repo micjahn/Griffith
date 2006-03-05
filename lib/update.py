@@ -27,6 +27,9 @@ import os
 
 def update(self):
 	id = self.e_movie_id.get_text()
+	if self.db.get_value(field="id", table="movies", where="id='%s'"%str(id)) == None:
+		self.debug.show("Trying to update not existing movie. Aborting")
+		return False
 
 	number = self.e_number.get_text()
 	self.db.cursor.execute("SELECT id, title FROM movies WHERE number='%s'" % number)
