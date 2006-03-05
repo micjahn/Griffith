@@ -121,6 +121,9 @@ def add_movie_db(self, close):
 	
 		if len(self.am_picture_name.get_text()):
 			image_path = os.path.join(tmp_dest, pic)
+			#lets make the thumbnail and medium image from poster for future use
+			gutils.make_thumbnail(self, image_path)
+			gutils.make_medium_image(self, image_path)
 		else:
 			image_path = os.path.join(self.locations['images'], "default.png")
 		handler = self.Image.set_from_file(image_path)
@@ -144,6 +147,7 @@ def add_movie_db(self, close):
 		next_number=gutils.find_next_available(self)
 		initialize_add_dialog(self)
 		self.am_number.set_text(str(next_number))
+		
 		if close:
 			self.hide_add_movie()
 	else:

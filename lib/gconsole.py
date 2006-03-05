@@ -23,14 +23,15 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import getopt
 import sys
+import gutils
 
 def check_args(self):
 	self.args = map(lambda i: i.replace('--', '').replace('-',''), sys.argv)			
 	
 	if self.args:	
 		try:
-			opts, args = getopt.getopt(sys.argv[1:], "hDo:s:d:w:y:",
-					["help", "debug", "search_original=", "search_title=", "director=", "with=", "year="])
+			opts, args = getopt.getopt(sys.argv[1:], "hDco:s:d:w:y:",
+					["help", "debug", "clean", "search_original=", "search_title=", "director=", "with=", "year="])
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
@@ -43,6 +44,9 @@ def check_args(self):
 				sys.exit()
 			if o in ("-D", "--debug"):
 				self.debug.set_debug()
+			if o in ("-c", "--clean"):
+				gutils.clean_posters_dir(self)
+				sys.exit()
 			if o in ("-o", "--search_original"):
 				where['original_title'] = a
 			if o in ("-s", "--search_title"):
@@ -77,6 +81,7 @@ def con_usage():
 	print "\nOPTION:"
 	print "-h, --help\tprints this screen"
 	print "-D, --debug\trun with more debug info"
+	print "-c, --clean\tfind and delete orphan files in poster's directory"
 	print "\n printing movie list:"
 	print "-s <expr>, --search_title=<expr>"
 	print "-o <expr>, --original_title=<expr>"

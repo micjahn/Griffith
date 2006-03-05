@@ -8,6 +8,8 @@ Griffith ChangeLog
 	* Fixed bug when using 'clone movie' function on filtered treeview.
 	* When using quick filter, 'all movies' filter on menu should be checked. Fixed.
 	* Posters are now saved to the system temp dir and only moved to posters dir when the movie is really commited to db.
+	* Added a new feature to find and delete orphaned files in poster's directory. For now, it's a console only tool.
+	  'griffith -c' or 'griffith --clean'. Griffith should not produce orphans anymore but this is useful for cleaning old ones.
 
 2006-03-05 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed bug when searching movie titles containing polish characters

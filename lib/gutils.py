@@ -382,3 +382,38 @@ def make_medium_image(self, file_name):
 		save_pixmap(self, pixbuf, os.path.join(self.griffith_dir, "posters/m_%s"%file_name))
 	else:
 		return 0
+		
+def clean_posters_dir(self):
+	if os.name == 'nt' or os.name == 'win32':
+		# default to My Documents
+		import winshell
+		mydocs = winshell.my_documents()
+		griffith_dir = os.path.join(mydocs, 'griffith')
+	else:
+		griffith_dir = os.path.join(os.path.expanduser('~'), \
+			'.griffith')
+	
+	posters_dir = os.path.join(griffith_dir, "posters")
+	
+	counter = 0
+	
+	for files in os.walk(posters_dir):
+		for names in files:
+			for name in names:
+				if name.startswith('poster'):
+					# lets check if this poster is orphan
+					used = self.db.count_records('movies', 'image="%s"'%string.replace(name,".jpg",""))
+					if not used:
+						counter += 1
+						os.unlink(os.path.join(posters_dir, name))
+						m_file = os.path.join(posters_dir, "m_"+name)
+						if os.path.isfile(m_file):
+							os.unlink(m_file)
+						t_file = os.path.join(posters_dir, "t_"+name)
+						if os.path.isfile(t_file):
+							os.unlink(t_file)
+							
+	if counter:
+		print "%d orphan files cleaned."%counter
+	else:
+		print "No orphan files found."
