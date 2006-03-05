@@ -25,7 +25,7 @@ import gutils
 
 def change_filter(self):
 	x = 0
-	
+	self.all_movies.set_active(2)
 	criteria = gutils.on_combo_box_entry_changed(self.filter_criteria)
 	text = gutils.gescape(self.e_filter.get_text())
 	if criteria == self._("Original Title") and text:
