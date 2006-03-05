@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-03-05 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Fixed bug when using 'clone movie' function on filtered treeview.
+
 2006-03-05 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed bug when searching movie titles containing polish characters
 

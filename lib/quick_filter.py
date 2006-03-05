@@ -49,7 +49,6 @@ def change_filter(self):
 	for row in data:
 		x = x + 1	
 	self.total_filter = x
-	self.treemodel.clear()
 	self.populate_treeview(data)
 	self.go_last()
 		
