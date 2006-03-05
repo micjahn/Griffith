@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-04 22:30+0100\n"
+"POT-Creation-Date: 2006-03-05 11:41+0100\n"
 "PO-Revision-Date: 2006-03-04 22:05+0200\n"
 "Last-Translator: Piotr Ozarowski <ozarow@gmail.com>\n"
 "Language-Team: Polski\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:227
+#: ../griffith:226
 msgid "You saw all movies in your collection!"
 msgstr "Obejrza³e¶ ju¿ wszystkie filmy z kolekcji!"
 
-#: ../griffith:409
+#: ../griffith:408
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -28,21 +28,21 @@ msgstr ""
 "Twoja aktualna baza filmów zostanie podmieniona.\n"
 "Nie ma mo¿liwo¶ci cofniêcia zmian."
 
-#: ../griffith:490
+#: ../griffith:489
 msgid " movie(s) in collection. "
 msgstr " filmów w kolekcji. "
 
-#: ../griffith:491
+#: ../griffith:490
 msgid " movie(s) loaned. "
 msgstr " filmów wypo¿yczonych. "
 
-#: ../griffith:492
+#: ../griffith:491
 msgid "You haven't seen "
 msgstr "Nie obejrza³e¶ jeszcze "
 
-#: ../griffith:492
-msgid " movie(s))"
-msgstr " pozycji "
+#: ../griffith:491
+msgid " movie(s)"
+msgstr " pozycji"
 
 #: ../lib/about.py:38
 msgid "Main Author"
@@ -124,7 +124,7 @@ msgstr "General Public License.\n"
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
 msgstr "Szczegó³y dostêpne s± na stronie http://www.gnu.org/copyleft/gpl.html"
 
-#: ../lib/add.py:140 ../lib/add.py:274
+#: ../lib/add.py:155 ../lib/add.py:286
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
@@ -132,15 +132,15 @@ msgstr ""
 "Powiniene¶ wype³niæ pole oryginalnego tytu³u\n"
 "lub pole tytu³u."
 
-#: ../lib/add.py:249
+#: ../lib/add.py:261
 msgid "No results"
 msgstr "Nie znaleziono pasuj±cych"
 
-#: ../lib/add.py:282
+#: ../lib/add.py:294
 msgid "Url: "
 msgstr "URL: "
 
-#: ../lib/add.py:283
+#: ../lib/add.py:295
 msgid "Language: "
 msgstr "Jêzyk: "
 
@@ -170,7 +170,7 @@ msgstr "Przywróæ dane z kopii bezpieczeñstwa"
 msgid "Can't read backup file"
 msgstr "Nie mogê odczytaæ pliku z kopi± zapasow±"
 
-#: ../lib/backup.py:83
+#: ../lib/backup.py:71
 msgid "Backup restored"
 msgstr "Odzyskano dane z kopii zapasowej"
 
@@ -188,17 +188,17 @@ msgstr "Ok³adka stworzona przez Griffith v"
 msgid "Released Under the GNU/GPL License"
 msgstr "Wydany na licencji GNU/GPL"
 
-#: ../lib/cover.py:177 ../lib/initialize.py:154 ../lib/quick_filter.py:30
+#: ../lib/cover.py:177 ../lib/initialize.py:154 ../lib/quick_filter.py:31
 #: ../glade/griffith.glade.h:90 ../lib/plugins/export/PluginExportHTML.py:105
 msgid "Original Title"
 msgstr "Tytu³ oryginalny"
 
-#: ../lib/cover.py:178 ../lib/initialize.py:160 ../lib/quick_filter.py:32
+#: ../lib/cover.py:178 ../lib/initialize.py:160 ../lib/quick_filter.py:33
 #: ../glade/griffith.glade.h:142 ../lib/plugins/export/PluginExportHTML.py:111
 msgid "Title"
 msgstr "Tytu³"
 
-#: ../lib/cover.py:180 ../lib/initialize.py:166 ../lib/quick_filter.py:34
+#: ../lib/cover.py:180 ../lib/initialize.py:166 ../lib/quick_filter.py:35
 #: ../glade/griffith.glade.h:36 ../lib/plugins/export/PluginExportHTML.py:96
 msgid "Director"
 msgstr "Re¿yser"
@@ -216,7 +216,7 @@ msgstr " min."
 msgid "Country"
 msgstr "Kraj"
 
-#: ../lib/cover.py:184 ../lib/quick_filter.py:42 ../glade/griffith.glade.h:47
+#: ../lib/cover.py:184 ../lib/quick_filter.py:43 ../glade/griffith.glade.h:47
 #: ../lib/plugins/export/PluginExportHTML.py:97
 msgid "Genre"
 msgstr "Rodzaj"
@@ -241,12 +241,12 @@ msgstr "Czy na pewno chcesz usun±æ ten plakat?"
 msgid "No posters found for this movie."
 msgstr "Nie znaleziono plakatów dla tego filmu."
 
-#: ../lib/edit.py:217 ../lib/movie.py:94
+#: ../lib/edit.py:217 ../lib/movie.py:98
 msgid "Fetching poster"
 msgstr "Pobieram plakat"
 
-#: ../lib/edit.py:217 ../lib/movie.py:69 ../lib/movie.py:94
-#: ../lib/movie.py:198
+#: ../lib/edit.py:217 ../lib/movie.py:69 ../lib/movie.py:98
+#: ../lib/movie.py:201
 msgid "Wait a moment"
 msgstr "Proszê czekaæ"
 
@@ -266,7 +266,7 @@ msgstr "Czy chcesz podmieniæ plakat na aktualny?"
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
 msgstr "Wybaczm, ale ten film nie posiada plakatu w serwisie Amazon.com"
 
-#: ../lib/gconsole.py:72
+#: ../lib/gconsole.py:76
 msgid "No movie found"
 msgstr "Nie znaleziono filmów"
 
@@ -453,30 +453,30 @@ msgstr "Dwustronny, jednowarstwowy"
 msgid "Dual Side, Dual Layer"
 msgstr "Dwustronny, dwuwarstwowy"
 
-#: ../lib/initialize.py:406
+#: ../lib/initialize.py:408
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr "S³ownik nie jest dostêpny. Sprawdzanie pisowni zostanie wy³±czone. \n"
 
-#: ../lib/initialize.py:407
+#: ../lib/initialize.py:409
 #, python-format
 msgid ""
 "Please install the aspell-%s package or adjust the spellchekcer preferences."
 msgstr ""
 "Proszê zainstalowaæ paczkê aspell-%s lub poprawiæ ustawienia w preferencjach"
 
-#: ../lib/initialize.py:487
+#: ../lib/initialize.py:489
 msgid "You have to fill in languages list in preferences window"
 msgstr "Musisz wype³niæ listê jêzyków w oknie preferencji"
 
-#: ../lib/initialize.py:497
+#: ../lib/initialize.py:499
 msgid "lector"
 msgstr "lektor"
 
-#: ../lib/initialize.py:498
+#: ../lib/initialize.py:500
 msgid "dubbing"
 msgstr "dubbing"
 
-#: ../lib/initialize.py:499
+#: ../lib/initialize.py:501
 msgid "subtitles"
 msgstr "napisy"
 
@@ -492,19 +492,19 @@ msgstr "Czy chcesz wypo¿yczyæ ca³± kolekcjê?"
 msgid "Movie loaned"
 msgstr "Film wypo¿yczono"
 
-#: ../lib/loan.py:127
+#: ../lib/loan.py:126
 msgid "Movie returned"
 msgstr "Film zosta³ zwrócony"
 
-#: ../lib/main_treeview.py:140
+#: ../lib/main_treeview.py:139
 msgid "This movie has been loaned to "
 msgstr "Film zosta³ wypo¿yczony przez "
 
-#: ../lib/main_treeview.py:140
+#: ../lib/main_treeview.py:139
 msgid " on "
 msgstr " dnia "
 
-#: ../lib/main_treeview.py:142
+#: ../lib/main_treeview.py:141
 msgid "Movie not loaned"
 msgstr "Film dostêpny"
 
@@ -512,15 +512,15 @@ msgstr "Film dostêpny"
 msgid "Fetching data"
 msgstr "Pobieram dane"
 
-#: ../lib/movie.py:198
+#: ../lib/movie.py:201
 msgid "Searching"
 msgstr "Szukam"
 
-#: ../lib/movie.py:231
+#: ../lib/movie.py:239
 msgid "Connection error"
 msgstr "B³±d po³±czenia"
 
-#: ../lib/movie.py:255 ../glade/exporthtml.glade.h:11
+#: ../lib/movie.py:263 ../glade/exporthtml.glade.h:11
 #: ../glade/griffith.glade.h:22
 msgid "Cancel"
 msgstr "Anuluj"
@@ -554,22 +554,22 @@ msgstr ""
 "%s\n"
 "Jeste¶ pewien, ¿e chcesz usun±æ t± osobê?"
 
-#: ../lib/quick_filter.py:36 ../glade/griffith.glade.h:155
+#: ../lib/quick_filter.py:37 ../glade/griffith.glade.h:155
 #: ../lib/plugins/export/PluginExportHTML.py:112
 msgid "Year"
 msgstr "Rok"
 
-#: ../lib/quick_filter.py:38 ../glade/griffith.glade.h:77
+#: ../lib/quick_filter.py:39 ../glade/griffith.glade.h:77
 #: ../lib/plugins/export/PluginExportHTML.py:104
 msgid "Number"
 msgstr "Numer"
 
-#: ../lib/quick_filter.py:40 ../glade/griffith.glade.h:104
+#: ../lib/quick_filter.py:41 ../glade/griffith.glade.h:104
 #: ../lib/plugins/export/PluginExportHTML.py:107
 msgid "Rating"
 msgstr "Ocena"
 
-#: ../lib/quick_filter.py:44 ../glade/griffith.glade.h:154
+#: ../lib/quick_filter.py:45 ../glade/griffith.glade.h:154
 msgid "With"
 msgstr "Obsada"
 
@@ -590,7 +590,11 @@ msgstr ""
 "Ostatnia szansa!\n"
 "Potwierdzasz chêæ usuniêcia aktualnych danych?"
 
-#: ../lib/update.py:36
+#: ../lib/sql.py:244
+msgid "Favourite"
+msgstr "Ulubiony"
+
+#: ../lib/update.py:39
 #, python-format
 msgid ""
 "This number is already assigned to:\n"
@@ -599,23 +603,23 @@ msgstr ""
 "Ten numer jest juz przypisany do:\n"
 " %s!"
 
-#: ../lib/update.py:45
+#: ../lib/update.py:48
 msgid "You can't change collection while it is loaned!"
 msgstr "Nie mo¿esz zmieniæ kolekcji gdy jest ona wypo¿yczona!"
 
-#: ../lib/update.py:48
+#: ../lib/update.py:51
 msgid "You can't change volume while it is loaned!"
 msgstr "Nie mo¿esz zmieniæ woluminu gdy jest on wypo¿yczony!"
 
-#: ../lib/update.py:114
+#: ../lib/update.py:117
 msgid "Movie information has been updated"
 msgstr "Informacje o filmie zosta³y uaktualnione"
 
-#: ../lib/update.py:135
+#: ../lib/update.py:138
 msgid "You should fill the original title"
 msgstr "Powiniene¶ wype³niæ pole tytu³u oryginalnego"
 
-#: ../lib/update.py:142 ../lib/update.py:148
+#: ../lib/update.py:145 ../lib/update.py:151
 msgid "Image has been updated"
 msgstr "Plakat zosta³ uaktualniony"
 
@@ -623,20 +627,20 @@ msgstr "Plakat zosta³ uaktualniony"
 msgid "Griffith is a film collection manager."
 msgstr "Griffith jest programem zarz±dzaj±cym zbiorem filmów."
 
-#: ../lib/view.py:29
+#: ../lib/view.py:28
 msgid "Filter activated. Showing only not seen movies."
 msgstr "Filtr aktywny. Pokazujê tylko nieobejrzane filmy."
 
-#: ../lib/view.py:37
+#: ../lib/view.py:35
 msgid "Filter activated. Showing only loaned movies."
 msgstr "Filtr aktywny. Pokazujê tylko wypo¿yczone filmy."
 
-#: ../lib/view.py:54
+#: ../lib/view.py:51
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
 msgstr "Filtr aktywny. Pokazujê tylko filmy z woluminu: %s"
 
-#: ../lib/view.py:64
+#: ../lib/view.py:60
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr "Filtr aktywny. Pokazujê tylko filmy z kolekcji: %s"
