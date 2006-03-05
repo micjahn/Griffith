@@ -70,7 +70,7 @@ def con_search_movie(self, where):
 			what='number, title, original_title, year, director')
 	if data:
 		for row in data:
-			print "\033[35;1m[%s]\033[0m\t\033[34m%s\033[0m (%s), %s - \033[32m%s\033[0m"%(row['number'],row['title'], \
+			print "\033[31;1m[%s]\033[0m\t\033[38m%s\033[0m (%s), %s - \033[32m%s\033[0m"%(row['number'],row['title'], \
 				row['original_title'], row['year'], row['director'])
 	else:
 		print _("No movie found")
