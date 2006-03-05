@@ -28,8 +28,6 @@ def change_filter(self):
 	
 	criteria = gutils.on_combo_box_entry_changed(self.filter_criteria)
 	text = gutils.gescape(self.e_filter.get_text())
-	print criteria
-	print text
 	if criteria == self._("Original Title") and text:
 		data = self.db.select_movie_by_original_title(text)
 	elif criteria == self._("Title")  and text:
