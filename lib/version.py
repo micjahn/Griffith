@@ -23,7 +23,7 @@ __revision__ = '$Id$'
 
 from gettext import gettext as _
 pname        = "Griffith"
-pversion     = "0.6"
+pversion     = "0.6+svn"
 pauthor      = "Vasco Nunes <vasco.m.nunes@gmail.com>"
 pyear        = "2005-2006"
 pwebsite     = "http://griffith.vasconunes.net/"
