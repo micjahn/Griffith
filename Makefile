@@ -5,13 +5,12 @@
 
 # $Id$
 
-
 PACKAGE=griffith
+LANGUAGES= bg cs de es fr pl pt
 VERSION=$(shell grep "^pversion" lib/version.py | cut -d \"  -f 2)
 
 .PHONY: help clean freshmeat gnomefiles install
 
-PYTHON ?= python2.3
 INSTALL ?= install
 MAKE ?= make
 RM ?= rm
@@ -30,18 +29,18 @@ PLUGINSDIR = $(DATADIR)/plugins
 MOVIEPLUGINSDIR = $(PLUGINSDIR)/movie
 EXPORTPLUGINSDIR = $(PLUGINSDIR)/export
 TPLDIR = $(DATADIR)/export_templates
-#FONTSDIR = $(PREFIX)/share/griffith/fonts
 APPLICATIONSDIR = $(PREFIX)/share/applications
 ICONDIR = $(PREFIX)/share/pixmaps
 LOCALEDIR = $(PREFIX)/share/locale
 
-PYFILES := $(shell $(FIND) . -name "*.py" -print)
-TEMPLATES= $(shell cd data/export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^CVS]*" -print)
-LANGUAGES= bg cs de es fr pl pt
+TEMPLATES= $(shell cd data/export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^\.svn]*" -print)
 
 make: help
 
 install: uninstall
+	@echo
+	@echo "installing griffith"
+	@echo "^^^^^^^^^^^^^^^^^^^"
 	$(INSTALL) -m 755 -d $(BINDIR) $(DATADIR) $(LIBDIR) $(PLUGINSDIR) $(MOVIEPLUGINSDIR) \
 		$(EXPORTPLUGINSDIR) $(FONTSDIR) $(APPLICATIONSDIR) $(ICONDIR) $(TPLDIR) \
 		$(IMAGESDIR) $(GLADEDIR)
@@ -55,7 +54,6 @@ install: uninstall
 	$(INSTALL) -m 644 images/griffith.png $(ICONDIR)
 	$(INSTALL) -m 644 images/griffith.xpm $(ICONDIR)
 	$(INSTALL) -m 644 data/griffith.desktop $(APPLICATIONSDIR)
-	#$(INSTALL) -m 644 fonts/*.* $(FONTSDIR)
 	
 	# installing language files
 	for lang in $(LANGUAGES); do \
@@ -77,26 +75,28 @@ install: uninstall
 	$(MAKE) -C docs install
 	
 uninstall:
-	${RM} -rf $(TPLDIR)
-	${RM} -rf $(MOVIEPLUGINSDIR)
-	${RM} -rf $(EXPORTPLUGINSDIR)
-	${RM} -rf $(PLUGINSDIR)
-	${RM} -rf $(LIBDIR)
-	#${RM} -rf $(FONTSDIR)
-	${RM} -rf $(IMAGESDIR)
-	${RM} -rf $(GLADEDIR)
-	${RM} -rf $(DATADIR)
-	${RM} -rf $(ICONDIR)/griffith.png
-	${RM} -rf $(ICONDIR)/griffith.xpm
-	${RM} -rf $(APPLICATIONSDIR)/griffith.desktop
-	# uninstalling language files
+	@echo
+	@echo "uninstalling griffith"
+	@echo "^^^^^^^^^^^^^^^^^^^^^"
+	${RM} -r $(TPLDIR)
+	${RM} -r $(MOVIEPLUGINSDIR)
+	${RM} -r $(EXPORTPLUGINSDIR)
+	${RM} -r $(PLUGINSDIR)
+	${RM} -r $(LIBDIR)
+	${RM} -r $(IMAGESDIR)
+	${RM} -r $(GLADEDIR)
+	${RM} -r $(DATADIR)
+	${RM} -r $(ICONDIR)/griffith.png
+	${RM} -r $(ICONDIR)/griffith.xpm
+	${RM} -r $(APPLICATIONSDIR)/griffith.desktop
 	for lang in $(LANGUAGES); do \
-		${RM} -rf $(LOCALEDIR)/$$lang/LC_MESSAGES/griffith.mo; \
+		${RM} -r $(LOCALEDIR)/$$lang/LC_MESSAGES/griffith.mo; \
 	done
-	${RM} -rf $(BINDIR)/griffith
+	${RM} -r $(BINDIR)/griffith
+	$(MAKE) -C docs uninstall
 	
 clean:
-	${RM} -f *.pyc *.bak po/*.~ glade/*~ glade/*.bak lib/*.pyc *~ lib/*~ lib/plugins/movie/*~ lib/plugins/export/*~
+	${RM} *.pyc *.bak po/*.~ glade/*~ glade/*.bak lib/*.pyc *~ lib/*~ lib/plugins/movie/*~ lib/plugins/export/*~
 	
 help:
 	@echo Usage:
@@ -121,7 +121,7 @@ dist:
 	@tar -xf griffith.tar -C $(PACKAGE)-$(VERSION)
 	@${RM} griffith.tar
 	@tar -czf $(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)-$(VERSION) && echo File ./$(PACKAGE)-$(VERSION).tar.gz generated successfully
-	@${RM} -rf $(PACKAGE)-$(VERSION)
+	@${RM} -r $(PACKAGE)-$(VERSION)
 
 package:
 	@echo "Remember to update the debian/changelog file!"
