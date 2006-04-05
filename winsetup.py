@@ -52,7 +52,7 @@ import py2exe
 
 opts = { 
     "py2exe": { 
-        "includes": "cgi,PIL,pango,atk,psyco,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlite,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
+        "includes": "cgi,PIL,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlite,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
         "dist_dir": "dist", 
     } 
 } 
@@ -60,7 +60,7 @@ opts = {
 setup(
     name = "Griffith",
     description = "A movie collection manager.",
-    version = "0.4.3",
+    version = "0.6",
     windows = [ 
         { 
             "script": "griffith", 
@@ -80,18 +80,22 @@ setup(
 		glob.glob("data\\export_templates\\html_table\\*.*")),
 		("images/export_templates/html_tables",
 		glob.glob("data\\export_templates\\html_tables\\*.*")),
-		("fonts",
-		glob.glob("fonts\\*.TTF")),
 		("glade",
 		glob.glob("glade\\*.*")),
 		("i18n/bg/LC_MESSAGES",
-		glob.glob("i18n\\pt\\LC_MESSAGES\\*.mo")),
-		("i18n/bg/LC_MESSAGES",
-		glob.glob("i18n\\pt\\LC_MESSAGES\\*.mo")),
-		("i18n/pl/LC_MESSAGES",
-		glob.glob("i18n\\pl\\LC_MESSAGES\\*.mo")),
+		glob.glob("i18n\\bg\\LC_MESSAGES\\*.mo")),
+		("i18n/cs/LC_MESSAGES",
+		glob.glob("i18n\\cs\\LC_MESSAGES\\*.mo")),
 		("i18n/de/LC_MESSAGES",
 		glob.glob("i18n\\de\\LC_MESSAGES\\*.mo")),
+		("i18n/es/LC_MESSAGES",
+		glob.glob("i18n\\es\\LC_MESSAGES\\*.mo")),
+		("i18n/fr/LC_MESSAGES",
+		glob.glob("i18n\\fr\\LC_MESSAGES\\*.mo")),
+		("i18n/pl/LC_MESSAGES",
+		glob.glob("i18n\\pl\\LC_MESSAGES\\*.mo")),
+		("i18n/pt/LC_MESSAGES",
+		glob.glob("i18n\\pt\\LC_MESSAGES\\*.mo")),
 		("lib/plugins/export",
 		glob.glob("lib\\plugins\\export\\*.*")),
 		("lib/plugins/movie",
