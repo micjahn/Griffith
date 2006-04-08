@@ -29,6 +29,9 @@ Name: "ger"; MessagesFile: "compiler:German.isl"
 Name: "cze"; MessagesFile: "compiler:Czech.isl"
 Name: "fre"; MessagesFile: "compiler:French.isl"
 
+[LangOptions]
+LanguageCodePage=0
+
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
