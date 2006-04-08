@@ -4,6 +4,12 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-04-07 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* some win32 related fixes
+
+2006-04-05 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Some changes to winsetup.py
+
 2006-03-11 Piotr Ozarowski <ozarow@gmail.com>
 	* Makefile fixes:
 	 + Manpages are now uninstalled as well

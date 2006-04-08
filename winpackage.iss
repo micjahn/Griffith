@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.5.1
+AppVerName=Griffith 0.6
 AppPublisher=Vasco Nunes
 AppPublisherURL=http://griffith.vasconunes.net/
 AppSupportURL=http://griffith.vasconunes.net/
@@ -14,7 +14,7 @@ AllowNoIcons=yes
 LicenseFile=C:\griffith\COPYING
 InfoAfterFile=C:\griffith\README
 OutputDir=C:\griffith\installer
-OutputBaseFilename=griffith-0.5-win32
+OutputBaseFilename=griffith-0.6-win32
 SetupIconFile=C:\griffith\images\griffith.ico
 Compression=lzma
 SolidCompression=yes
@@ -23,9 +23,11 @@ WizardImageFile=C:\griffith\images\griffith_win32_installer.bmp
 [Languages]
 Name: "eng"; MessagesFile: "compiler:Default.isl"
 Name: "por"; MessagesFile: "compiler:Portuguese.isl"
+Name: "por"; MessagesFile: "compiler:BrazilianPortuguese.isl"
 Name: "pol"; MessagesFile: "compiler:Polish.isl"
 Name: "ger"; MessagesFile: "compiler:German.isl"
 Name: "cze"; MessagesFile: "compiler:Czech.isl"
+Name: "fre"; MessagesFile: "compiler:French.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked

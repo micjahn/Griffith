@@ -102,7 +102,7 @@ def add_movie_db(self, close):
 		tmp_dest = os.path.join(self.griffith_dir, "posters")
 		
 		if self.windows:
-			temp_dir = "c:\\tmp\\"
+			temp_dir = "C:\\windows\\temp\\"
 		else:
 			temp_dir = "/tmp/"
 			
@@ -117,7 +117,7 @@ def add_movie_db(self, close):
 			insert_after = self.treemodel.get_iter(int(self.am_number.get_text())-2)
 		else:
 			insert_after = None
-		myiter = self.treemodel.insert_after(None, insert_after)
+		myiter = self.treemodel.insert_after(None, insert_after)	
 	
 		if len(self.am_picture_name.get_text()):
 			image_path = os.path.join(tmp_dest, pic)
@@ -212,7 +212,7 @@ def populate_with_results(self):
 		self.rating_slider_add.set_value(float(self.movie.rating))
 	# poster
 	if self.windows:
-		temp_dir = "c:\\tmp\\"
+		temp_dir = "C:\\windows\\temp\\"
 	else:
 		temp_dir = "/tmp/"
 	if self.movie.picture != "":
