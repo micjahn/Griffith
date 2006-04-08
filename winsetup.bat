@@ -5,7 +5,7 @@
 @rd /S /Q dist 
  
 @rem ***** create the exe 
-@python.exe -OO winsetup.py py2exe --bundle 1
+@python.exe -OO winsetup.py py2exe
 @mkdir dist\etc
 
 @xcopy c:\gtk\etc c:\griffith\dist\etc /s /e
