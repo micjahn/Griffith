@@ -23,9 +23,9 @@ __revision__ = '$Id: $'
 
 
 # for build this on a win32 environment and becames with a standalone distribution 
-# a base python 2.4 for 2in32 instalation must be present
-# along with gtk+ development libraries
-# pywin32com extensions, reportlab module, pygtk for win32 and pysqlite 1.0.1.win32-py2.4
+# a base python 2.4 for win32 instalation must be present
+# along with gtk+ 2.8 development libraries
+# pywin32com extensions, reportlab module, pygtk 2.8 for win32, pycairo 1.0 and pysqlite 1.0.1.win32-py2.4
 
 import time
 import sys
@@ -52,16 +52,16 @@ import py2exe
 
 opts = { 
     "py2exe": { 
-        "includes": "cgi,PIL,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlite,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
+        "includes": "cairo,pangocairo,cgi,PIL,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlite,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
         "dist_dir": "dist", 
     } 
 } 
 
 setup(
     name = "Griffith",
-    description = "A movie collection manager.",
+    description = "Griffith",
     version = "0.6",
-    windows = [ 
+    console = [ 
         { 
             "script": "griffith", 
             "icon_resources": [(1, "images\griffith.ico")] 
