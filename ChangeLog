@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-04-08 Piotr Ozarowski <ozarow@gmail.com>
+	* First tag can now be renamed
+
 2006-04-08 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* win32 distro is using now gtk2.8 with pygtk2.8. This fixes lots of old pygtk related bugs (mainly major pixbuf ones)
 

@@ -59,7 +59,7 @@ class Griffith:
 	founded_results_id = None
 	
 	def initialize_griffith(self):
-		initialize.locations(self) 
+		initialize.locations(self)
 		initialize.toolbar(self)
 		initialize.treeview(self)
 		initialize.loans_treeview(self)
@@ -81,7 +81,7 @@ class Griffith:
 
 	def destroy(self, widget, data=None):
 		self.save_state()
-		gtk.main_quit()   
+		gtk.main_quit()
 		
 	# about dialog				  
 		
@@ -117,7 +117,7 @@ class Griffith:
 		self.w_results.hide()
 		
 	def populate_dialog_with_results(self, *args):
-		add.populate_with_results(self) 
+		add.populate_with_results(self)
 		
 	def source_changed(self, *args):
 		add.source_changed(self)
@@ -159,20 +159,20 @@ class Griffith:
    
 	def go_first(self, *args):
 		if self.total_filter:
-			self.main_treeview.set_cursor_on_cell(0)	
+			self.main_treeview.set_cursor_on_cell(0)
 		
 	def go_last(self, *args):
 		if self.total_filter:
-			self.main_treeview.set_cursor_on_cell(self.total_filter-1)  
+			self.main_treeview.set_cursor_on_cell(self.total_filter-1)
 			
 	def loan_movie(self, *args):
-		loan.loan_movie(self)		
+		loan.loan_movie(self)
 		
 	def clone_movie(self, *args):
-		add.clone_movie(self)	
+		add.clone_movie(self)
 		
 	# poster	
-		   
+
 	def change_poster(self, *args):
 		edit.change_poster(self)
 		
@@ -210,7 +210,7 @@ class Griffith:
 		edit.toggle_seen(self)
 		
 	def sugest_movie(self, *args):
-		quick_filter.change_filter(self)		
+		quick_filter.change_filter(self)
 		subtotal = self.db.count_records('movies','seen=0')
 		self.clear_filter()
 		self.all_movies.set_active(1)
@@ -218,8 +218,8 @@ class Griffith:
 		if subtotal > 0:
 			data = self.db.get_not_seen_movies()
 			sugested_movie = data[random.randrange(subtotal)]
-			self.debug.show("suggested movie: %s"%sugested_movie['title'])			
-			self.main_treeview.set_cursor_on_cell(sugested_movie['number']-1)	
+			self.debug.show("suggested movie: %s"%sugested_movie['title'])
+			self.main_treeview.set_cursor_on_cell(sugested_movie['number']-1)
 			self.treeview_clicked()
 		else:
 			gutils.info(self, \
@@ -331,7 +331,7 @@ class Griffith:
 	def on_lang_name_combo_changed(self, widget):
 		active = self.lang_name_combo.get_active()
 		if active>-1:
-			self.lang_name_active = active		
+			self.lang_name_active = active
 
 	def on_e_lang_add_clicked(self, widget):
 		initialize.create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
@@ -379,12 +379,12 @@ class Griffith:
 	def on_tag_name_combo_changed(self, widget):
 		active = self.tag_name_combo.get_active()
 		if active>-1:
-			self.tag_name_active = active		
+			self.tag_name_active = active
 	# }}}
 
 	# main treeview
 	def treeview_clicked(self, *args):
-		main_treeview.treeview_clicked(self)				 
+		main_treeview.treeview_clicked(self)
 					
 	def populate_treeview(self, data):
 		main_treeview.populate(self, data)
@@ -396,7 +396,7 @@ class Griffith:
 		
 	def select_last_row(self, rtotal):
 		if rtotal:
-			self.main_treeview.set_cursor_on_cell(rtotal-1)	
+			self.main_treeview.set_cursor_on_cell(rtotal-1)
 		
 	# backup/restore		
 		
@@ -502,7 +502,7 @@ You can't undo this operation."""), \
 		
 	def clear_filter(self, *args):
 		quick_filter.clear_filter(self)
-	   
+
 	# menu filter
 
 	def filter_loaned(self, *args):
@@ -532,7 +532,7 @@ You can't undo this operation."""), \
 	# windows/dialogs  
 	
 	def results_cancel_ck(self, *args):
-		self.w_results.hide() 
+		self.w_results.hide()
    
 	def save_state(self):
 		"""Saves main window state"""
@@ -540,7 +540,7 @@ You can't undo this operation."""), \
 		size = self.main_window.get_size()
 		self.config["width"] = size[0]
 		self.config["height"] = size[1]
-		self.config["left"] = pos[0]	  
+		self.config["left"] = pos[0]
 		self.config["top"] = pos[1]
 		self.config.save()
 		
@@ -553,7 +553,7 @@ You can't undo this operation."""), \
 				int(self.config.get("top")))
 			self.main_window.resize(int(self.config.get("width")), \
 				int(self.config.get("height"))) 
-		self.main_window.show()  
+		self.main_window.show()
    
 	def on_delete_event_r(self, *args):
 		self.w_results.hide()
@@ -562,35 +562,35 @@ You can't undo this operation."""), \
 	def on_delete_event_poster(self, *args):
 		self.poster_window.hide()
 		return True
-		   
+
 	def on_delete_event_wp(self, *args):
 		self.w_people.hide()
-		return True		
-		   
+		return True
+
 	def on_delete_event_ap(self, *args):
 		self.w_add_person.hide()
-		return True		   
-		   
+		return True
+
 	def on_delete_event_ep(self, *args):
 		self.w_edit_person.hide()
 		return True
-		   
+
 	def on_delete_event_lt(self, *args):
 		self.w_loan_to.hide()
 		return True
-		   
+
 	def on_delete_event_pcs(self, *args):
 		self.w_print_cover_simple.hide()
 		return True
-		   
+
 	def on_delete_event_pci(self, *args):
 		self.w_print_cover_image.hide()
 		return True
-		   
+
 	def on_delete_event_p(self, *args):
 		self.w_preferences.hide()
-		return True 
-		   
+		return True
+
 	def go_oficial_site(self, *args):
 		if self.e_site.get_text():
 			gutils.run_browser(self.e_site.get_text())
@@ -618,7 +618,7 @@ You can't undo this operation."""), \
 		else:
 			self.toolbar.show()
 		self.config["view_toolbar"] = state
-		self.config.save()										 
+		self.config.save()
 	
 	def new_dbb(self, *args):
 		self.db.new_db(self)
@@ -631,7 +631,7 @@ You can't undo this operation."""), \
 		if keyname == 'Delete' and self.main_treeview.is_focus() == True:
 			self.delete_movie() 
 			
-	def on_p_tree_button_press_event(self, widget, event): 
+	def on_p_tree_button_press_event(self, widget, event):
 		"""add a double click event to people tree"""				
 		if event.type == gtk.gdk._2BUTTON_PRESS:
 			people.edit_person(self)
@@ -650,16 +650,16 @@ You can't undo this operation."""), \
 				self.popup.popup( None, None, None, event.button, time)
 			return 1
 			
-	def on_results_button_press_event(self, widget, event):  
+	def on_results_button_press_event(self, widget, event):
 		"""add a double click event to add movie results"""
 		if event.type == gtk.gdk._2BUTTON_PRESS:
 			add.populate_with_results(self)
 			
-	def on_poster_results_button_press_event(self, widget, event):  
+	def on_poster_results_button_press_event(self, widget, event):
 		"""add a double click event to poster results"""
 		if event.type == gtk.gdk._2BUTTON_PRESS:
 			add.populate_with_results(self)
-							  
+
 	def __init__(self):
 		"""
 		main griffith application constructor

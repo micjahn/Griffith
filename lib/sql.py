@@ -891,8 +891,11 @@ class GriffithSQL:
 		return True
 	
 	def update_tag(self, id, name):
-		if str(id) == '0':
+		if id == None:
 			self.debug.show("You have to select tag first")
+			return False
+		if name == '':
+			self.debug.show("Tag's name is empty")
 			return False
 		tmp = self.get_value(field="id", table="tags", where="name='%s'"%name)
 		if tmp != None:
