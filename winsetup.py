@@ -61,7 +61,7 @@ setup(
     name = "Griffith",
     description = "Griffith",
     version = "0.6",
-    console = [ 
+    windows = [ 
         { 
             "script": "griffith", 
             "icon_resources": [(1, "images\griffith.ico")] 
