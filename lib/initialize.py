@@ -90,6 +90,7 @@ def locations(self):
 		self.locations['movie_plugins'] = "%s\\lib\\plugins\\movie" % self.locations['exec']
 		self.locations['export_plugins'] = "%s\\lib\\plugins\\export" % self.locations['exec']
 		self.locations['images'] = "%s\\images" % self.locations['exec']
+		self.locations['share'] = self.locations['images']
 		self.locations['desktop'] = ""
 	elif self.posix:
 		self.locations['share'] = string.replace(self.locations['exec'], "/bin","/share/griffith")

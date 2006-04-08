@@ -23,9 +23,9 @@ __revision__ = '$Id: $'
 
 
 # for build this on a win32 environment and becames with a standalone distribution 
-# a base python 2.4 for win32 instalation must be present
-# along with gtk+ 2.8 development libraries
-# pywin32com extensions, reportlab module, pygtk 2.8 for win32, pycairo 1.0 and pysqlite 1.0.1.win32-py2.4
+# a base python 2.4 for 2in32 instalation must be present
+# along with gtk+ development libraries
+# pywin32com extensions, reportlab module, pygtk for win32 and pysqlite-1.1.7.win32-py2.4 (current win32 distro install is using this pysqlite 3 version)
 
 import time
 import sys
