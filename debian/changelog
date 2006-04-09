@@ -1,3 +1,16 @@
+griffith (0.6+svn302-1) unstable; urgency=low
+
+  * Updated to latest SVN version
+
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sun,  9 Apr 2006 14:44:15 +0200
+
+griffith (0.6+svn293-1) unstable; urgency=low
+
+  * Upstream homepage added to the package description
+  * Updated to latest SVN version
+
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sun, 12 Mar 2006 17:48:08 +0100
+
 griffith (0.6-1) unstable; urgency=low
 
   * New upstream release (closes: #329853)
@@ -10,7 +23,7 @@ griffith (0.5.1-1) unstable; urgency=low
 
   * New upstream release
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 26 Nov 2005 01:15:00 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 26 Nov 2005 01:15:00 +0200
 
 griffith (0.5-2) unstable; urgency=low
 
@@ -21,46 +34,46 @@ griffith (0.5-2) unstable; urgency=low
   * Fixed bug when overwriting files in HTML export plugin
   * Fixed bug with German translation (wrong file was copied)
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Mon, 21 Nov 2005 22:42:00 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Mon, 21 Nov 2005 22:42:00 +0200
 
 griffith (0.5-1) unstable; urgency=low
 
   * New upstream release
   * Dependency updated
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 12 Nov 2005 01:42:00 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 12 Nov 2005 01:42:00 +0200
 
 griffith (0.4.2+cvs20050923-1) unstable; urgency=low
 
   * CVS update
   * Add build-dependency
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Fri, 23 Sep 2005 23:50:00 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Fri, 23 Sep 2005 23:50:00 +0200
 
 
 griffith (0.4.2-1) unstable; urgency=low
 
   * New upstream release
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Sun, 11 Sep 2005 10:00:00 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sun, 11 Sep 2005 10:00:00 +0200
 
 griffith (0.4.1-1) unstable; urgency=low
 
   * New upstream release
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 20 Aug 2005 01:12:12 +0000
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 20 Aug 2005 01:12:12 +0200
  
 griffith (0.4-1) unstable; urgency=low
 
   * New upstream release
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Wed, 17 Aug 2005 09:58:00 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Wed, 17 Aug 2005 09:58:00 +0200
 
 griffith (0.3-4) unstable; urgency=low
 
   * Package is now signed with my GPG key
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Sun, 14 Aug 2005 17:47:00 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sun, 14 Aug 2005 17:47:00 +0200
 
 griffith (0.3-3) unstable; urgency=high
 
@@ -68,44 +81,44 @@ griffith (0.3-3) unstable; urgency=high
   * Dependency fixup
   * Architecture fixup
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 11 Aug 2005 13:04:01 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 11 Aug 2005 13:04:01 +0200
 
 griffith (0.4cvs20050728-2) unstable; urgency=low
 
   * Added Anime DataBase (english) plugin
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Mon, 1 Aug 2005 00:54:01 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Mon, 1 Aug 2005 00:54:01 +0200
 
 griffith (0.4cvs20050728-1) unstable; urgency=low
 
   * Added german translation (thanks to Christian Sagmuller)
   * added OFDb (german) plugin (thanks to Christian Sagmuller)
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 21 Jul 2005 13:48:01 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 21 Jul 2005 13:48:01 +0200
 
 griffith (0.3-2) unstable; urgency=low
 
   * Dependency fixup
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 21 Jul 2005 13:48:01 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 21 Jul 2005 13:48:01 +0200
 
 griffith (0.3-1) unstable; urgency=low
 
   * New upstream release
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 21 Jul 2005 13:48:01 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 21 Jul 2005 13:48:01 +0200
 
 griffith (0.2-1) unstable; urgency=low
 
   * New upstream release
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 02 Jul 2005 08:40:01 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Sat, 02 Jul 2005 08:40:01 +0200
 
 griffith (0.2cvs20050630-1) unstable; urgency=low
 
   * Fixed gutils.read_plugins to not list .puc and .pyo files
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 30 Jun 2005 14:00:00 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Thu, 30 Jun 2005 14:00:00 +0200
 
 griffith (0.2cvs20050629-1) unstable; urgency=low
 
@@ -114,11 +127,11 @@ griffith (0.2cvs20050629-1) unstable; urgency=low
   * Fixed "copyright-should-refer-to-common-license-file" bug
   * Fixed Makefile
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Wed, 29 Jun 2005 23:52:42 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Wed, 29 Jun 2005 23:52:42 +0200
 
 griffith (0.2cvs20050624-1) unstable; urgency=low
 
   * Initial release
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Fri, 24 Jun 2005 15:51:42 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Fri, 24 Jun 2005 15:51:42 +0200
 

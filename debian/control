@@ -2,7 +2,7 @@ Source: griffith
 Section: gnome
 Priority: optional
 Maintainer: Piotr Ozarowski <ozarow@gmail.com>
-Build-Depends-Indep: debhelper (>>4), python (>= 2.3), gettext
+Build-Depends-Indep: debhelper (>>4), python (>= 2.3)
 Standards-Version: 3.6.2
 
 Package: griffith
@@ -14,4 +14,4 @@ Description: A film collection manager
  title and selecting a supported source. Griffith will then try to fetch all
  the related information from the Web.
  .
- Homepage: http://griffith.vasconunes.net/
+  Homepage: http://griffith.vasconunes.net/
