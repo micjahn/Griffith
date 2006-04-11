@@ -297,7 +297,7 @@ class ExportPlugin(gtk.Window):
 
 		# set defaults --------------------------------
 		self.widgets['entry_header'].set_text(self.config['title'])
-		self.widgets['combo_theme'].set_active(3)	# html_tables
+		self.widgets['combo_theme'].set_active(2)	# html_tables
 		self.widgets['combo_sortby'].set_active(17)	# orginal title
 		# spliting
 		self.widgets['sb_split_num'].set_value(self.config['split_num'])
