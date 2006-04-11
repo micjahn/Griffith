@@ -63,8 +63,8 @@ class Griffith:
 		initialize.toolbar(self)
 		initialize.treeview(self)
 		initialize.loans_treeview(self)
-		initialize.combos(self)
 		initialize.dictionaries(self)
+		initialize.combos(self)
 		initialize.movie_plugins(self)
 		initialize.export_plugins(self)
 		initialize.people_treeview(self)
@@ -683,7 +683,6 @@ You can't undo this operation."""), \
 		self.restore_state()
 		self.clear_details()
 		self.count_statusbar()
-		self.filter_criteria.set_active(1)
 		self.select_last_row(self.total)
 
 		# adding some completion fields

@@ -662,14 +662,7 @@
 	  <child>
 	    <widget class="GtkComboBoxEntry" id="filter_criteria">
 	      <property name="visible">True</property>
-	      <property name="items" translatable="yes">Number
-Original Title
-Title
-Director
-Genre
-Rating
-With
-Year</property>
+	      <property name="items" translatable="yes"></property>
 	      <property name="add_tearoffs">False</property>
 	      <property name="has_frame">True</property>
 	      <property name="focus_on_click">True</property>

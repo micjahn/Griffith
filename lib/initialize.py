@@ -353,6 +353,11 @@ def combos(self):
 		self.e_media.insert_text(i['id'], i['name'])
 		self.p_media.insert_text(i['id'], i['name'])
 		self.am_media.insert_text(i['id'], i['name'])
+	i = 0
+	for criteria in self.sort_criteria:
+		self.filter_criteria.insert_text(i, self.field_names[criteria])
+		i += 1
+	self.filter_criteria.set_active(0)
 
 def dictionaries(self):
 	"""initializes combos filled dynamically by users"""
@@ -371,6 +376,39 @@ def dictionaries(self):
 	initialize.fill_preferences_tags_combo(self)
 	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+	self.sort_criteria = (
+		"original_title", "title", "number", "director",
+		"plot", "actors", "obs", "year", "runtime", "country",
+		"genre", "studio", "num_media"
+	)
+	self.field_names = {
+		"number"         : _("Number"),
+		"original_title" : _("Original Title"),
+		"title"          : _("Title"),
+		"year"           : _("Year"),
+		"actors"         : _("With"),
+		"classification" : _("Classification"),
+		"country"        : _("Country"),
+		"genre"          : _("Genre"),
+		"director"       : _("Director"),
+		"site"           : _("Site"),
+		"imdb"           : _("IMDb"),
+		"trailer"        : _("Trailer"),
+		"loaned"         : _("Loaned"),
+		"rating"         : _("Rating"),
+		"runtime"        : _("Runtime"),
+		"studio"         : _("Studio"),
+		"seen"           : _("Seen"),
+		"region"         : _("Region"),
+		"layers"         : _("Layers"),
+		"condition"      : _("Condition"),
+		"color"          : _("Color"),
+		"volume_id"      : _("Volume"),
+		"collection_id"  : _("Collection"),
+		"plot"           : _("Plot"),
+		"num_media"      : _("Discs"),
+		"obs"            : _("Notes")
+	}
 
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
