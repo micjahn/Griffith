@@ -26,9 +26,13 @@ import gutils
 def change_filter(self):
 	x = 0
 	self.all_movies.set_active(2)
+	collection_id = self.collection_combo_ids[self.f_col.get_active()]
+	where_clause = ''
 	text = gutils.gescape(self.e_filter.get_text())
 	if(len(text)==0):
-		data = self.db.get_all_data(order_by="number ASC")
+		if collection_id != 0:
+			where_clause = " collection_id = '%s'" % collection_id
+		data = self.db.get_all_data(where=where_clause, order_by="number ASC")
 	else:
 		text = gutils.gescape(text)
 		criteria = self.sort_criteria[self.filter_criteria.get_active()]
@@ -36,6 +40,8 @@ def change_filter(self):
 			where_clause = criteria + " = '"+text+"'"
 		else:
 			where_clause = criteria + " LIKE '%" + text + "%'"
+		if collection_id != 0:
+			where_clause += " AND collection_id = '%s'" % collection_id
 		data = self.db.get_all_data(where=where_clause, order_by="number ASC")
 	self.total_filter = len(data)
 	self.populate_treeview(data)
