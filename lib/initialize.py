@@ -379,7 +379,7 @@ def dictionaries(self):
 	self.sort_criteria = (
 		"original_title", "title", "number", "director",
 		"plot", "actors", "obs", "year", "runtime", "country",
-		"genre", "studio", "num_media"
+		"genre", "studio", "num_media", "rating"
 	)
 	self.field_names = {
 		"number"         : _("Number"),

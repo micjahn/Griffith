@@ -32,14 +32,12 @@ def change_filter(self):
 	else:
 		text = gutils.gescape(text)
 		criteria = self.sort_criteria[self.filter_criteria.get_active()]
-		if {"year":None, "runtime":None, "num_media":None}.has_key(criteria):
+		if {"year":None, "runtime":None, "num_media":None, "rating":None}.has_key(criteria):
 			where_clause = criteria + " = '"+text+"'"
 		else:
 			where_clause = criteria + " LIKE '%" + text + "%'"
 		data = self.db.get_all_data(where=where_clause, order_by="number ASC")
-	for row in data:
-		x = x + 1	
-	self.total_filter = x
+	self.total_filter = len(data)
 	self.populate_treeview(data)
 	self.go_last()
 		
