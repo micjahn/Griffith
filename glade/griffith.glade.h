@@ -75,14 +75,6 @@ char *s = N_("Needs authentication");
 char *s = N_("Not Seen Movies");
 char *s = N_("Notes");
 char *s = N_("Number");
-char *s = N_("Number\n"
-             "Original Title\n"
-             "Title\n"
-             "Director\n"
-             "Genre\n"
-             "Rating\n"
-             "With\n"
-             "Year");
 char *s = N_("OK");
 char *s = N_("Official site");
 char *s = N_("Oficial Site");
@@ -117,7 +109,6 @@ char *s = N_("Runtime");
 char *s = N_("SMTP server");
 char *s = N_("Save preferences");
 char *s = N_("Searching on the web");
-char *s = N_("Seen It");
 char *s = N_("Seen it");
 char *s = N_("Select");
 char *s = N_("Select A File");

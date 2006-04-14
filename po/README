@@ -1,11 +1,31 @@
 USAGE:
 =====
-* To update language files, type:
-	`make update`
 
-* To generate griffith.mo files from *.po, type:
-	`make dist`
+Updating language files:
+^^^^^^^^^^^^^^^^^^^^^^^^
+	$ make update
 
-* To create a new translation, type:
-	`cp messages.pot XX.po`
+Generating griffith.mo files:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	$ make dist
+
+To create a new translation, type:
+	`make update && cp messages.pot XX.po`
   where the XX is your country/language code
+
+Creating new translation:
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Follow these steps:
+	$ svn checkout http://svn.berlios.de/svnroot/repos/griffith/griffith
+	$ cd griffith/po
+	$ make update
+remember to replace XX with your country language code:
+	$ cp messages.pot XX.po
+edit XX.po with your favourite editor (VIM/KBabel/poEdit/...)
+	$ make dist
+if no errors occurs:
+	# cp ../i18n/XX/LC_MESSAGES/griffith.mo /usr/local/share/locale/XX/LC_MESSAGES/griffith.mo
+test your translation:
+	$ LANG=XX griffith
+if all seems to be OK, send your translation (compressed XX.po file)
+to the devel mailing list or directly to us

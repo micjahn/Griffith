@@ -96,7 +96,7 @@ class ExportPlugin(gtk.Window):
 		_("Director")       : "director",
 		_("Genre")          : "genre",
 		_("Image")          : "image",
-		_("Official Site")  : "site",
+		_("Official site")  : "site",
 		_("IMDb page")      : "imdb",
 		_("Trailer")        : "trailer",
 		_("Loaned")         : "loaned",
@@ -297,8 +297,8 @@ class ExportPlugin(gtk.Window):
 
 		# set defaults --------------------------------
 		self.widgets['entry_header'].set_text(self.config['title'])
-		self.widgets['combo_theme'].set_active(2)	# html_tables
-		self.widgets['combo_sortby'].set_active(14)	# orginal title
+		self.widgets['combo_theme'].set_active(3)	# html_tables
+		self.widgets['combo_sortby'].set_active(17)	# orginal title
 		# spliting
 		self.widgets['sb_split_num'].set_value(self.config['split_num'])
 		if self.config['split_by'] == 0:

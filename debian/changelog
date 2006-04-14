@@ -1,8 +1,14 @@
-griffith (0.6+svn302-1) unstable; urgency=low
+griffith (0.6.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Piotr Ozarowski <ozarow@gmail.com>  Fri, 14 Apr 2006 22:50:45 +0200
+
+griffith (0.6+svn305-1) unstable; urgency=low
 
   * Updated to latest SVN version
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Sun,  9 Apr 2006 14:44:15 +0200
+ -- Piotr Ozarowski <ozarow@gmail.com>  Tue, 11 Apr 2006 15:40:54 +0200
 
 griffith (0.6+svn293-1) unstable; urgency=low
 
