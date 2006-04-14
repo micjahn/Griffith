@@ -37,7 +37,7 @@ TEMPLATES= $(shell cd data/export_templates >/dev/null; $(FIND) . -maxdepth 1 -m
 
 make: help
 
-install: uninstall
+install:
 	@echo
 	@echo "installing griffith"
 	@echo "^^^^^^^^^^^^^^^^^^^"
