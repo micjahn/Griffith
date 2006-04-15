@@ -76,6 +76,8 @@ setup(
 		glob.glob("data\\export_templates\\csv\\*.*")),
 		("images/export_templates/xml",
 		glob.glob("data\\export_templates\\xml\\*.*")),
+		("images/export_templates/latex",
+		glob.glob("data\\export_templates\\latex\\*.*")),
 		("images/export_templates/html_table",
 		glob.glob("data\\export_templates\\html_table\\*.*")),
 		("images/export_templates/html_tables",
