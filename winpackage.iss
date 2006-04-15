@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.6
+AppVerName=Griffith 0.6.1
 AppPublisher=Vasco Nunes
 AppPublisherURL=http://griffith.vasconunes.net/
 AppSupportURL=http://griffith.vasconunes.net/

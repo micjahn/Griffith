@@ -60,7 +60,7 @@ opts = {
 setup(
     name = "Griffith",
     description = "Griffith",
-    version = "0.6",
+    version = "0.6.1",
     windows = [ 
         { 
             "script": "griffith", 
