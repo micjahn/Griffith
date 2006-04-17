@@ -1,3 +1,11 @@
+griffith (0.6.1+svn) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+  * Added Laszlo Boszormenyi to Uploaders
+  * Added watch file
+
+ -- Piotr Ozarowski <ozarow@gmail.com>  Mon, 17 Apr 2006 14:38:11 +0200
+
 griffith (0.6.1-1) unstable; urgency=low
 
   * New upstream release

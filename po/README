@@ -9,10 +9,6 @@ Generating griffith.mo files:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	$ make dist
 
-To create a new translation, type:
-	`make update && cp messages.pot XX.po`
-  where the XX is your country/language code
-
 Creating new translation:
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Follow these steps:
