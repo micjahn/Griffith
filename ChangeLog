@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2006 Vasco Nunes
 
 2006-04-17 Piotr Ozarowski <ozarow@gmail.com>
+	* ADOdb transition
+
+2006-04-17 Piotr Ozarowski <ozarow@gmail.com>
 	* Version changed to 0.6.1+svn
 	* Minor fixes in doc files
 	* Added watch file for Debian package

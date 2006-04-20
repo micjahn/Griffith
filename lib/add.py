@@ -96,7 +96,73 @@ def initialize_add_dialog(self):
 
 def add_movie_db(self, close):
 	if  len(self.am_original_title.get_text()) or len(self.am_title.get_text()):
-		self.db.add_movie(self)
+		# TODO: make use of parent data {{{
+		i = 0
+		languages_ids = {}
+		cursor = self.db.get_all_data("languages", what="id")
+		while not cursor.EOF:
+			languages_ids[i] = cursor.fields[0]
+			i += 1
+			cursor.MoveNext()
+		i = 0
+		volume_combo_ids = {}
+		cursor = self.db.get_all_data("volumes", what="id")
+		while not cursor.EOF:
+			volume_combo_ids[i] = cursor.fields[0]
+			i += 1
+			cursor.MoveNext()
+		i = 0
+		collection_combo_ids = {}
+		cursor = self.db.get_all_data("collections", what="id")
+		while not cursor.EOF:
+			collection_combo_ids[i] = cursor.fields[0]
+			i += 1
+			cursor.MoveNext()
+		i = 0
+		tags_ids = {}
+		cursor = self.db.get_all_data("tags", what="id")
+		while not cursor.EOF:
+			tags_ids[i] = cursor.fields[0]
+			i += 1
+			cursor.MoveNext()
+		#}}}
+
+		plot_buffer = self.am_plot.get_buffer()
+		with_buffer = self.am_with.get_buffer()
+		obs_buffer = self.am_obs.get_buffer()
+		number = self.am_number.get_text()
+		(filepath, filename) = os.path.split(self.am_picture_name.get_text())
+		data = {
+			'actors'         : gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter())),
+			'classification' : gutils.gescape(self.am_classification.get_text()),
+			'collection_id'  : str(collection_combo_ids[self.am_collection_combo.get_active()]),
+			'color'          : str(int(self.am_color.get_active())),
+			'condition'      : str(int(self.am_condition.get_active())),
+			'country'        : gutils.gescape(self.am_country.get_text()),
+			'director'       : gutils.gescape(self.am_director.get_text()),
+			'genre'          : gutils.gescape(self.am_genre.get_text()),
+			'image'          : filename,
+			'imdb'           : self.am_imdb.get_text(),
+			'layers'         : str(int(self.am_layers.get_active())),
+			'loaned'         : '0',
+			'media'          : str(self.am_media.get_active()),
+			'number'         : number,
+			'num_media'      : self.am_discs.get_text(),
+			'obs'            : gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(), obs_buffer.get_end_iter())),
+			'original_title' : gutils.gescape(self.am_original_title.get_text()),
+			'plot'           : gutils.gescape(plot_buffer.get_text(plot_buffer.get_start_iter(), plot_buffer.get_end_iter())),
+			'rating'         : str(int(self.rating_slider_add.get_value())),
+			'region'         : str(int(self.am_region.get_active())),
+			'runtime'        : self.am_runtime.get_text(),
+			'seen'           : str(int(self.am_seen.get_active())),
+			'site'           : self.am_site.get_text(),
+			'studio'         : gutils.gescape(self.am_studio.get_text()),
+			'title'          : gutils.gescape(self.am_title.get_text()),
+			'trailer'        : self.am_trailer.get_text(),
+			'volume_id'      : str(volume_combo_ids[self.am_volume_combo.get_active()]),
+			'year'           : self.am_year.get_text()
+		}
+		self.db.add_movie(data)
 		
 		# lets move poster from tmp to posters dir
 		tmp_dest = os.path.join(self.griffith_dir, "posters")
@@ -107,7 +173,6 @@ def add_movie_db(self, close):
 			temp_dir = "/tmp/"
 			
 		pic = string.replace(self.am_picture_name.get_text()+".jpg",temp_dir,"")
-		
 
 		if len(self.am_picture_name.get_text()):
 			if os.path.isfile(os.path.join(temp_dir, pic)):
@@ -117,7 +182,7 @@ def add_movie_db(self, close):
 			insert_after = self.treemodel.get_iter(int(self.am_number.get_text())-2)
 		else:
 			insert_after = None
-		myiter = self.treemodel.insert_after(None, insert_after)	
+		myiter = self.treemodel.insert_after(None, insert_after)
 	
 		if len(self.am_picture_name.get_text()):
 			image_path = os.path.join(tmp_dest, pic)
@@ -128,11 +193,9 @@ def add_movie_db(self, close):
 			image_path = os.path.join(self.locations['images'], "default.png")
 		handler = self.Image.set_from_file(image_path)
 		pixbuf = self.Image.get_pixbuf()
-		self.treemodel.set_value(myiter, 1, \
-			'%004d' % int(self.am_number.get_text()))
+		self.treemodel.set_value(myiter, 1, '%004d' % int(self.am_number.get_text()))
 		self.treemodel.set_value(myiter, 2, pixbuf.scale_simple(30,40,3))
-		self.treemodel.set_value(myiter, \
-			3, str(self.am_original_title.get_text()))
+		self.treemodel.set_value(myiter, 3, str(self.am_original_title.get_text()))
 		self.treemodel.set_value(myiter, 4, str(self.am_title.get_text()))
 		self.treemodel.set_value(myiter, 5, str(self.am_director.get_text()))
 		#update statusbar
@@ -151,8 +214,7 @@ def add_movie_db(self, close):
 		if close:
 			self.hide_add_movie()
 	else:
-		gutils.error(self.w_results, \
-			_("You should fill the original title\nor the movie title."))
+		gutils.error(self.w_results, _("You should fill the original title\nor the movie title."))
 	
 def change_rating_from_slider(self):
 	rating = int(self.rating_slider_add.get_value())
@@ -300,7 +362,7 @@ def source_changed(self):
 		
 def clone_movie(self):
 	treeselection = self.main_treeview.get_selection()
-	(tmp_model, tmp_iter) = treeselection.get_selected()	
+	(tmp_model, tmp_iter) = treeselection.get_selected()
 	m_id = tmp_model.get_value(tmp_iter, 1)
 	movie_id = self.db.get_value(field="id", table="movies", where="number='%s'"%m_id)
 	
@@ -310,51 +372,53 @@ def clone_movie(self):
 	row = self.db.select_movie_by_num(m_id)[0]
 	next_number = gutils.find_next_available(self)
 	new_image = str(row['image']) + '_' + str(next_number)
-	self.db.cursor.execute(
-		"""INSERT INTO 'movies' ('id','original_title','title','director','plot','image',
-			'year','runtime','actors','country','genre','media','classification','studio',
-			'site','color','region','layers','condition','imdb','trailer','obs','num_media',
-			'rating','loaned','seen','number')
-		VALUES (Null,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',
-			'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0','%s','%s')""" % \
-		(gutils.gescape(str(row['original_title'])), \
-		gutils.gescape(str(row['title'])), \
-		gutils.gescape(str(row['director'])), \
-		gutils.gescape(str(row['plot'])), \
-		gutils.gescape(new_image), \
-		gutils.gescape(str(row['year'])), \
-		gutils.gescape(str(row['runtime'])), \
-		gutils.gescape(str(row['actors'])), \
-		gutils.gescape(str(row['country'])), \
-		gutils.gescape(str(row['genre'])), \
-		gutils.gescape(str(row['media'])), \
-		gutils.gescape(str(row['classification'])), \
-		gutils.gescape(str(row['studio'])), \
-		gutils.gescape(str(row['site'])), \
-		gutils.gescape(str(row['color'])), \
-		gutils.gescape(str(row['region'])), \
-		gutils.gescape(str(row['layers'])), \
-		gutils.gescape(str(row['condition'])), \
-		gutils.gescape(str(row['imdb'])), \
-		gutils.gescape(str(row['trailer'])), \
-		gutils.gescape(str(row['obs'])), \
-		str(row['num_media']), \
-		str(row['rating']), \
-		str(row['seen']), \
-		str(next_number) )\
-	) # dont copy volume/collection data (loan problems)
+	data = {
+		'actors'         : gutils.gescape(str(row['actors'])),
+		'classification' : gutils.gescape(str(row['classification'])),
+		'color'          : gutils.gescape(str(row['color'])),
+		'condition'      : gutils.gescape(str(row['condition'])),
+		'country'        : gutils.gescape(str(row['country'])),
+		'director'       : gutils.gescape(str(row['director'])),
+		'genre'          : gutils.gescape(str(row['genre'])),
+		'image'          : gutils.gescape(new_image),
+		'imdb'           : gutils.gescape(str(row['imdb'])),
+		'layers'         : gutils.gescape(str(row['layers'])),
+		'media'          : gutils.gescape(str(row['media'])),
+		'number'         : str(next_number),
+		'num_media'      : str(row['num_media']),
+		'obs'            : gutils.gescape(str(row['obs'])),
+		'original_title' : gutils.gescape(str(row['original_title'])),
+		'plot'           : gutils.gescape(str(row['plot'])),
+		'rating'         : str(row['rating']),
+		'region'         : gutils.gescape(str(row['region'])),
+		'runtime'        : gutils.gescape(str(row['runtime'])),
+		'seen'           : str(row['seen']),
+		'site'           : gutils.gescape(str(row['site'])),
+		'studio'         : gutils.gescape(str(row['studio'])),
+		'title'          : gutils.gescape(str(row['title'])),
+		'trailer'        : gutils.gescape(str(row['trailer'])),
+		'year'           : gutils.gescape(str(row['year']))
+	}
+	self.db.add_movie(self, data)
+	# TODO: loan problems (don't copy volume/collection data until resolved)
 	next_movie_id = self.db.get_value(field="id", table="movies", where="number='%s'"%next_number)
 	# tags
-	for item in self.db.get_all_data(table_name="movie_tag",what="tag_id", where="movie_id='%s'"%movie_id):
-		self.db.cursor.execute("""
+	cursor = self.db.get_all_data(table_name="movie_tag",what="tag_id", where="movie_id='%s'"%movie_id)
+	while not cursor.EOF:
+		tag_id = cursor.fields[0]
+		self.db.conn.Execute("""
 			INSERT INTO movie_tag('movie_id','tag_id') VALUES('%s','%s')""" % \
-				(next_movie_id, item['tag_id']))
+				(next_movie_id, tag_id))
+		cursor.MoveNext()
 	# languages
-	for item in self.db.get_all_data(table_name="movie_lang",what="lang_id, type", where="movie_id='%s'"%movie_id):
-		self.db.cursor.execute("""
+	cursor = self.db.get_all_data(table_name="movie_lang",what="lang_id, type", where="movie_id='%s'"%movie_id)
+	while not cursor.EOF:
+		item = cursor.GetRowAssoc(0)
+		self.db.conn.Execute("""
 			INSERT INTO movie_lang('movie_id','lang_id', 'type')
 				VALUES('%s','%s', '%s')""" % \
 			(next_movie_id, item['lang_id'], item['type']))
+		cursor.MoveNext()
 	tmp_dest = os.path.join(self.griffith_dir, "posters")
 	if str(str(row['image'])) != '':
 		image_path = os.path.join(tmp_dest, str(row['image'])+".jpg")

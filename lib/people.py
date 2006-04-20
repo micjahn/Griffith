@@ -44,12 +44,10 @@ def clear_person(self):
 	
 def add_person_db(self):
 	if (self.ap_name.get_text()<>''):
-		self.db.cursor.execute(
-			"INSERT INTO 'people'('id','name','email','phone') VALUES (Null,'"
-			+gutils.gescape(self.ap_name.get_text())+"','"
-			+gutils.gescape(self.ap_email.get_text())+"','"
+		self.db.conn.Execute("INSERT INTO 'people'('id','name','email','phone') VALUES (Null,'" \
+			+gutils.gescape(self.ap_name.get_text())+"','" \
+			+gutils.gescape(self.ap_email.get_text())+"','" \
 			+gutils.gescape(self.ap_phone.get_text())+"')")
-		self.db.con.commit()
 		self.w_add_person.hide()
 		myiter = self.p_treemodel.insert_after(None, None)
 		self.p_treemodel.set_value(myiter,0,str(self.ap_name.get_text()))
@@ -64,31 +62,32 @@ def edit_person(self):
 		name = tmp_model.get_value(tmp_iter,0)
 	except:
 		return
-	data = self.db.select_person_by_name(name)
-	for row in data:
+	cursor = self.db.select_person_by_name(name)
+	while not cursor.EOF:
+		row = cursor.GetRowAssoc(0)
 		self.ep_name.set_text(str(row['name']))
 		self.ep_email.set_text(str(row['email']))
 		self.ep_phone.set_text(str(row['phone']))
 		self.ep_id.set_text(str(row['id']))
+		cursor.MoveNext()
 	self.w_edit_person.show()
 	
 def edit_person_cancel(self):
 	self.w_edit_person.hide()
 	
 def update_person(self):
-	self.db.cursor.execute("UPDATE people SET name = '" + self.ep_name.get_text() +"', email='" + self.ep_email.get_text() +"', phone='" + self.ep_phone.get_text() +"' WHERE id = '" + self.ep_id.get_text() +"'") 
-	self.db.con.commit()
+	self.db.conn.Execute("UPDATE people SET name = '" + self.ep_name.get_text() +"', email='" + self.ep_email.get_text() +"', phone='" + self.ep_phone.get_text() +"' WHERE id = '" + self.ep_id.get_text() +"'") 
 	self.update_statusbar(_("Record updated"))
-	self.db.con.commit()
 	self.treeview_clicked()
 	edit_person_cancel(self)
 	self.p_treemodel.clear()
-	data = self.db.get_all_data('people', 'name ASC')
-
-	for row in data:
+	cursor = self.db.get_all_data('people', 'name ASC')
+	while not cursor.EOF:
+		row = cursor.GetRowAssoc(0)
 		myiter = self.p_treemodel.insert_before(None, None)
 		self.p_treemodel.set_value(myiter, 0, str(row['name']))
 		self.p_treemodel.set_value(myiter, 1, str(row['email']))
+		cursor.MoveNext()
 		
 def delete_person(self):
 	response = None
@@ -101,15 +100,13 @@ def delete_person(self):
 	except:
 		return
 	data_person=self.db.select_person_by_name(person)
-	self.db.cursor.execute("SELECT * FROM loans WHERE person_id = '" + str(data_person[0]['id']) + "' AND return_date = ''")
-	data = self.db.cursor.fetchall()
-	if data:
+	cursor = self.db.conn.Execute("SELECT * FROM loans WHERE person_id = '" + str(data_person[0]['id']) + "' AND return_date = ''")
+	if not cursor.EOF:
 		gutils.info(self, _("This person has loaned films from you. First return them."), self.main_window)
-		return
+		return False
 	data_person=self.db.select_person_by_name(person)
-	self.db.cursor.execute("SELECT * FROM loans WHERE person_id = '" + str(data_person[0]['id']) + "'")
-	data_past = self.db.cursor.fetchall()
-	if data_past:
+	cursor = self.db.conn.Execute("SELECT * FROM loans WHERE person_id = '" + str(data_person[0]['id']) + "'")
+	if not cursor.EOF:
 		past = 1
 		past_msg = _("This person has data in the loan history. This data will be erased if you continue.")
 	try:
@@ -127,9 +124,10 @@ def delete_person_from_db(self, past):
 	treeselection = self.p_treeview.get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
 	name = tmp_model.get_value(tmp_iter, 0)
-	data_person=self.db.select_person_by_name(name)
+	data_person = self.db.select_person_by_name(name)
 	if past:
-		self.db.cursor.execute("DELETE FROM loans WHERE person_id = '"+str(data_person[0]['id'])+"'")
+		self.db.conn.Execute("DELETE FROM loans WHERE person_id = '"+str(data_person[0]['id'])+"'")
 	self.db.remove_person_by_name(name)
 	self.p_treemodel.remove(tmp_iter)
 	self.treeview_clicked()
+

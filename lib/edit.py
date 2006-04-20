@@ -94,17 +94,12 @@ def change_rating_from_slider(self):
 	rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, rating)
 	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
 	gutils.garbage(handler)
-	self.db.cursor.execute(
-			"UPDATE movies SET rating = '" 
-			+str(int(self.rating_slider.get_value()))+"' WHERE number = '" + self.e_number.get_text() +"'")
-	
+
 def toggle_seen(self):
 	seen = '0'
 	if self.e_seen.get_active():
 		seen = '1'
-	self.db.cursor.execute(
-		"UPDATE movies SET seen = '" 
-		+seen+"' WHERE number = '" + self.e_number.get_text() +"'")
+	self.db.conn.Execute("UPDATE movies SET seen = '" + seen + "' WHERE number = '" + self.e_number.get_text() + "'")
 	self.count_statusbar()
 			
 def clear_details(self):
@@ -156,8 +151,8 @@ def clear_details(self):
 	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
 	gutils.garbage(handler)
 
-def fetch_bigger_poster(self):	
-	match = 0	
+def fetch_bigger_poster(self):
+	match = 0
 	self.debug.show("fetching poster from amazon")
 	this_movie = self.db.select_movie_by_num(self.e_number.get_text())
 	current_poster = this_movie[0]['image']

@@ -152,7 +152,7 @@ class Griffith:
 		delete.delete_movie_from_db(self)
 		
 	def update_movie(self, *args):
-		update.update(self) 
+		update.update(self)
 		
 	def clear_details(self):
 		edit.clear_details(self)

@@ -35,7 +35,7 @@ def treeview_clicked(self):
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		id = tmp_model.get_value(tmp_iter,1)
-		row = self.db.select_movie_by_num(id)[0]
+		row = self.db.select_movie_by_num(id).GetRowAssoc(0)
 
 		plot_buffer = self.e_plot.get_buffer()
 		obs_buffer = self.e_obs.get_buffer()
@@ -132,18 +132,20 @@ def treeview_clicked(self):
 				data_loan = self.db.get_loan_info(volume_id=row['volume_id'])
 			else:
 				data_loan = self.db.get_loan_info(movie_id=row['number'])
-			data_person = self.db.select_person_by_id(data_loan[0]['person_id'])
-			self.person_name = data_person[0]['name']
-			self.person_email = data_person[0]['email']
-			self.loan_date = str(data_loan[0]['date'])
+			data_loan = data_loan.GetRowAssoc(0)
+			data_person = self.db.select_person_by_id(data_loan['person_id'])
+			self.person_name = data_person['name']
+			self.person_email = data_person['email']
+			self.loan_date = str(data_loan['date'])
 			self.loan_info.set_label(self._("This movie has been loaned to ") + self.person_name + self._(" on ") + self.loan_date[:10])
 		else:
 			self.loan_info.set_label(self._("Movie not loaned"))
 	
 		#loan history	
-		self.loans_treemodel.clear()						
-		loans = self.db.get_loan_history(collection_id=row['collection_id'], volume_id=row['volume_id'], movie_id=row['number'])
-		for loan_row in loans:
+		self.loans_treemodel.clear()
+		cursor = self.db.get_loan_history(collection_id=row['collection_id'], volume_id=row['volume_id'], movie_id=row['number'])
+		while not cursor.EOF:
+			loan_row = cursor.GetRowAssoc(0)
 			myiter = self.loans_treemodel.append(None)
 			self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan_row['date'])[:10])
 			if loan_row['return_date'] != '':
@@ -151,12 +153,18 @@ def treeview_clicked(self):
 			else:
 				self.loans_treemodel.set_value(myiter, 1, "---")
 			person = self.db.select_person_by_id(loan_row['person_id'])
-			self.loans_treemodel.set_value(myiter, 2, person[0]['name'])
+			person = person.GetRowAssoc(0)
+			self.loans_treemodel.set_value(myiter, 2, person['name'])
+			cursor.MoveNext()
 
 		#volumes/collections
 		i = gutils.findKey(row['volume_id'], self.volume_combo_ids)
+		if not i:
+			i = 0
 		self.e_volume_combo.set_active(i)
 		i = gutils.findKey(row['collection_id'], self.collection_combo_ids)
+		if not i:
+			i = 0
 		self.e_collection_combo.set_active(i)
 		self.e_volume_id.set_text(str(row['volume_id']))
 		self.e_collection_id.set_text(str(row['collection_id']))
@@ -164,21 +172,27 @@ def treeview_clicked(self):
 		self.e_collection_id.hide()
 
 		#languages
-		languages = self.db.get_all_data("movie_lang", where="movie_id='%s'" % row['id'])
+		cursor = self.db.get_all_data("movie_lang", where="movie_id='%s'" % row['id'])
 		self.e_languages = []	# language widgets
-		if len(languages) > 0:
+		if not cursor.EOF:
 			from initialize import create_language_hbox
-			for i in languages:
+			while not cursor.EOF:
+				i = cursor.GetRowAssoc(0)
 				create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, default=i['lang_id'], type=i['type'])
+				cursor.MoveNext()
 
 		#tags
-		for tag in self.db.get_all_data("movie_tag", where="movie_id='%s'" % row['id'], what="tag_id"):
-			i = gutils.findKey(tag['tag_id'], self.tags_ids)
+		cursor = self.db.get_all_data("movie_tag", where="movie_id='%s'" % row['id'], what="tag_id")
+		while not cursor.EOF:
+			tag = cursor.fields[0]
+			i = gutils.findKey(tag, self.tags_ids)
 			self.e_tags[i].set_active(True)
+			cursor.MoveNext()
 
-def populate(self, data):
+def populate(self, cursor):
 	self.treemodel.clear()
-	for row in data:
+	while not cursor.EOF:
+		row = cursor.GetRowAssoc(0)
 		myiter = self.treemodel.append(None)
 		self.treemodel.set_value(myiter,1,'%004d' % int(row['number']))
 		
@@ -224,3 +238,4 @@ def populate(self, data):
 		self.treemodel.set_value(myiter,3,str(row['original_title']))
 		self.treemodel.set_value(myiter,4,str(row['title']))
 		self.treemodel.set_value(myiter,5,str(row['director']))
+		cursor.MoveNext()

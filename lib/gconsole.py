@@ -66,14 +66,15 @@ def con_search_movie(self, where):
 		query += i + " LIKE '%" + where[i] + "%' AND "
 	query = query[:len(query)-5] # cut last " AND "
 	
-	data = self.db.get_all_data(table_name="movies", order_by="number ASC", where=query,
+	cursor = self.db.get_all_data(table_name="movies", order_by="number ASC", where=query,
 			what='number, title, original_title, year, director')
-	if data:
-		for row in data:
-			print "\033[31;1m[%s]\033[0m\t\033[38m%s\033[0m (%s), %s - \033[32m%s\033[0m"%(row['number'],row['title'], \
-				row['original_title'], row['year'], row['director'])
-	else:
+	if cursor.EOF:
 		print _("No movie found")
+	while not cursor.EOF:
+		row = cursor.GetRowAssoc(0)
+		print "\033[31;1m[%s]\033[0m\t\033[38m%s\033[0m (%s), %s - \033[32m%s\033[0m"%(row['number'],row['title'], \
+			row['original_title'], row['year'], row['director'])
+		cursor.MoveNext()
 	sys.exit()
 
 def con_usage():

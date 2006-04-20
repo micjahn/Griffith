@@ -77,7 +77,7 @@ class Config:
 			
 	def make_defaults(self):
 		self.config['pdf_reader']           = "xpdf"
-		self.config['default_db']           = "griffith.gri"
+		self.config['default_db']           = "griffith.db"
 		self.config['height']               = "None"
 		self.config['width']                = "None"
 		self.config['top']                  = "None"

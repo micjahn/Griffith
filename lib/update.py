@@ -32,15 +32,15 @@ def update(self):
 		return False
 
 	number = self.e_number.get_text()
-	self.db.cursor.execute("SELECT id, title FROM movies WHERE number='%s'" % number)
-	tmp = self.db.cursor.fetchall()
-	if len(tmp) > 0:
-		if (int(tmp[0]['id']) != int(id)):
-			gutils.error(self, msg=_("This number is already assigned to:\n %s!") % tmp[0]['title'])
+	cursor = self.db.conn.Execute("SELECT id, title FROM movies WHERE number='%s'" % number)
+	if not cursor.EOF:
+		if (int(cursor.fields[0]) != int(id)):
+			gutils.error(self, msg=_("This number is already assigned to:\n %s!") % cursor.fields[1])
 			return False
 	
-	self.db.cursor.execute("SELECT loaned, volume_id, collection_id FROM movies WHERE id='%s'" % id)
-	loaned, volume_id, collection_id = self.db.cursor.fetchall()[0]
+	cursor = self.db.conn.Execute("SELECT loaned, volume_id, collection_id FROM movies WHERE id='%s'" % id)
+	loaned, volume_id, collection_id = cursor.FetchRow()
+	print 'update.py: loaned='+loaned+'volume_id='+volume_id # FIXME
 	new_volume_id = self.volume_combo_ids[self.e_volume_combo.get_active()]
 	new_collection_id = self.collection_combo_ids[self.e_collection_combo.get_active()]
 	if loaned:
@@ -57,7 +57,7 @@ def update(self):
 	if self.e_seen.get_active():
 		seen = '1'
 	if (self.e_original_title.get_text()<>''):
-		self.db.cursor.execute(
+		self.db.conn.Execute(
 			"UPDATE movies SET original_title = '"
 			+gutils.gescape(self.e_original_title.get_text())+"', title ='"
 			+gutils.gescape(self.e_title.get_text())+"', director='"
@@ -141,39 +141,46 @@ def update_image(self,image,id):
 	self.db.cursor.execute(
 		"UPDATE movies SET image = '"
 		+os.path.splitext(image)[0]+"' WHERE number = '"+id+"'")
-	self.db.con.commit()
 	self.update_statusbar(_("Image has been updated"))
 	
 def clear_image(self,id):
 	self.db.cursor.execute(
 		"UPDATE movies SET image = '' WHERE number = '"+id+"'")
-	self.db.con.commit()
 	self.update_statusbar(_("Image has been updated"))
 
 def update_language_ids(self):
 	self.languages_ids = {}
 	i = 0
-	for lang in self.db.get_all_data("languages", what="id"):
-		self.languages_ids[i] = lang['id']
+	cursor = self.db.get_all_data("languages", what="id")
+	while not cursor.EOF:
+		self.languages_ids[i] = cursor.fields[0]
 		i += 1
+		cursor.MoveNext()
 
 def update_tag_ids(self):
 	self.tags_ids = {}
 	i = 0
-	for tag in self.db.get_all_data("tags", what="id"):
-		self.tags_ids[i] = tag['id']
+	cursor = self.db.get_all_data("tags", what="id")
+	while not cursor.EOF:
+		self.tags_ids[i] = cursor.fields[0]
 		i += 1
+		cursor.MoveNext()
 
 def update_volume_combo_ids(self):
 	self.volume_combo_ids = {}
 	i = 0
-	for volume in self.db.get_all_data("volumes", what="id"):
-		self.volume_combo_ids[i] = volume['id']
+	cursor = self.db.get_all_data("volumes", what="id")
+	while not cursor.EOF:
+		self.volume_combo_ids[i] = cursor.fields[0]
 		i += 1
+		cursor.MoveNext()
 
 def update_collection_combo_ids(self):
 	self.collection_combo_ids = {}
 	i = 0
-	for collection in self.db.get_all_data("collections", what="id"):
-		self.collection_combo_ids[i] = collection['id']
+	cursor = self.db.get_all_data("collections", what="id")
+	while not cursor.EOF:
+		self.collection_combo_ids[i] = cursor.fields[0]
 		i += 1
+		cursor.MoveNext()
+

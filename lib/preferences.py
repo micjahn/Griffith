@@ -30,7 +30,7 @@ try:
 	import gtkspell
 	spell_support = 1
 except:
-	print "gtkspell support not available - please install python-gnome-extras" 
+	print "gtkspell support not available - please install python-gnome-extras"
 	spell_support = 0
 
 def show_preferences(self):
@@ -67,7 +67,7 @@ def show_preferences(self):
 	self.mail_email.set_text(self.config.get('mail_email', 'griffith'))
 		
 	# pdf reader
-	self.epdf_reader.set_text(self.pdf_reader)  
+	self.epdf_reader.set_text(self.pdf_reader)
 	
 	# pdf font
 	if self.config.get('font'):
@@ -75,15 +75,15 @@ def show_preferences(self):
 	
 	# defaults
 	if self.config.get('media'):
-		self.p_media.set_active(int(self.config.get('media')))  
+		self.p_media.set_active(int(self.config.get('media')))
 	if self.config.get('condition'):
-		self.p_condition.set_active(int(self.config.get('condition'))) 
+		self.p_condition.set_active(int(self.config.get('condition')))
 	if self.config.get('region'):
-		self.p_region.set_active(int(self.config.get('region')))	  
+		self.p_region.set_active(int(self.config.get('region')))
 	if self.config.get('layers'):
 		self.p_layers.set_active(int(self.config.get('layers')))
 	if self.config.get('color'):
-		self.p_color.set_active(int(self.config.get('color')))  
+		self.p_color.set_active(int(self.config.get('color')))
 		
 	# default movie plugin
 	self.debug.show("Default movie plugin: %s" % self.config.get('default_movie_plugin'))
@@ -122,7 +122,7 @@ def show_preferences(self):
 	else:
 		self.spell_plot.set_active(True)
 		
-	self.spell_lang.set_text(str(self.config.get('spell_lang', 'en'))) 
+	self.spell_lang.set_text(str(self.config.get('spell_lang', 'en')))
 		
 	self.w_preferences.show()
 
@@ -170,7 +170,7 @@ def save_preferences(self):
 	if self.spellchecker.get_active():
 		self.config['use_gtkspell'] = 'True'
 	else:
-		self.config['use_gtkspell'] = 'False'		  
+		self.config['use_gtkspell'] = 'False'		
 	if self.spell_notes.get_active():
 		self.config['spell_notes'] = 'True'
 	else:
@@ -179,7 +179,7 @@ def save_preferences(self):
 		self.config['spell_plot'] = 'True'
 	else:
 		self.config['spell_plot'] = 'False'
-	  
+	
 	# rating image
 	self.config['rating_image'] = str(self.rating_image.get_active())
 	
@@ -204,7 +204,7 @@ def save_preferences(self):
 	# default movie plugin
 	if self.default_plugin.get_active():
 		self.config['default_movie_plugin'] = \
-			gutils.on_combo_box_entry_changed(self.default_plugin)  
+			gutils.on_combo_box_entry_changed(self.default_plugin)
 	mcounter = 0		
 	for p in self.plugins:
 		plugin_module = os.path.basename(p).replace(".py","")
@@ -218,8 +218,7 @@ def save_preferences(self):
 		save_reader = ''
 	else:
 		save_reader = self.epdf_reader.get_text()
-	 
-	 
+
 	self.config['spell_lang'] = self.spell_lang.get_text()
 	self.config['pdf_reader'] = save_reader
 	self.config.save()
@@ -233,7 +232,7 @@ def save_preferences(self):
 		else:
 			pass
 		
-		if self.config.get('use_gtkspell', 'False') == 'True':	
+		if self.config.get('use_gtkspell', 'False') == 'True':
 			if self.config.get('spell_plot', 'True') == 'False' and not plot_was_false:
 				self.plot_spell.detach()
 			elif self.config.get('spell_plot', 'True') == 'True' and plot_was_false:
@@ -250,7 +249,7 @@ def save_preferences(self):
 			else:
 				pass
 
-	self.pdf_reader = save_reader	
+	self.pdf_reader = save_reader
 	self.clear_details()
 	self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
 	self.select_last_row(self.total)

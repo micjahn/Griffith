@@ -22,28 +22,23 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from gettext import gettext as _
-import sqlite
+#from pysqlite2 import dbapi2 as sqlite
+import adodb
 import os.path
 import gutils
 import gtk
 
 class GriffithSQL:
-	con = None
-	cursor = None
-	
+	conn = None
+
 	def __init__(self, config, debug, griffith_dir):
 		self.griffith_dir = griffith_dir
 		self.config = config
 		self.debug = debug
-		try:
-			self.con = sqlite.connect(os.path.join(griffith_dir, \
-				config.get('default_db')), autocommit=1)
-			self.cursor = self.con.cursor()
-		except:
-			self.debug.show("Error reading database file")
-			import sys
-			sys.exit()
-			
+		config['default_db'] = 'griffith.db' # FIXME: update configuration
+		self.conn = adodb.NewADOConnection('sqlite')
+		self.conn.Connect(database=os.path.join(griffith_dir, config.get('default_db')))
+
 		self.check_if_table_exists()
 
 	def new_db(self, parent): #{{{
@@ -61,7 +56,7 @@ class GriffithSQL:
 					for name in files:
 						os.remove(os.path.join(root, name))
 				# delete db
-				parent.db.con.close()
+				parent.db.conn.Close()
 				os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
 				# create/connect db
 				parent.db = GriffithSQL(self.config, self.debug, self.griffith_dir)
@@ -81,9 +76,14 @@ class GriffithSQL:
 	def create_db(self):
 		self.create_table_movies()
 		self.create_table_volumes()
+		self.create_table_collections()
 		self.create_table_loans()
 		self.create_table_people()
 		self.create_table_media()
+		self.create_table_languages()
+		self.create_table_movie_lang()
+		self.create_table_movie_tag()
+		self.create_table_tags()
 
 	def create_table_movies(self, backup=False):
 		if backup:
@@ -92,40 +92,38 @@ class GriffithSQL:
 		else:
 			self.debug.show("Creating 'movies' table...")
 			query = "CREATE TABLE movies"
-		query += """
-			(
-				'id' INTEGER PRIMARY KEY,
-				'volume_id' INT NOT NULL DEFAULT '0',
-				'collection_id' INT NOT NULL DEFAULT '0',
-				'original_title' VARCHAR(255) NOT NULL,
-				'title' VARCHAR(255),
-				'director' VARCHAR(100),
-				'number' INT(11) NOT NULL,
-				'image' TEXT,
-				'plot' TEXT,
-				'country' VARCHAR(100),
-				'year' INT(4),
-				'runtime' INT(4),
-				'classification' VARCHAR(50),
-				'genre' VARCHAR(100),
-				'studio' VARCHAR(50),
-				'site' VARCHAR(100),
-				'imdb' VARCHAR(100),
-				'actors' TEXT,
-				'trailer' VARCHAR(100),
-				'rating' INT(1) DEFAULT 0,
-				'loaned' INT(1) NOT NULL DEFAULT '0',
-				'media' INT(1) DEFAULT '0',
-				'num_media' INT(2),
-				'obs' TEXT,
-				'seen' INT(1) NOT NULL DEFAULT '0',
-				'region' INT DEFAULT 2,
-				'condition' INT DEFAULT 3,
-				'color' INT DEFAULT 0,
-				'layers' INT DEFAULT 4
-			)
-		"""
-		self.cursor.execute(query)
+		query += """(
+			'id' INTEGER PRIMARY KEY,
+			'volume_id' INT NOT NULL DEFAULT '0',
+			'collection_id' INT NOT NULL DEFAULT '0',
+			'original_title' VARCHAR(255) NOT NULL,
+			'title' VARCHAR(255),
+			'director' VARCHAR(100),
+			'number' INT(11) NOT NULL,
+			'image' TEXT,
+			'plot' TEXT,
+			'country' VARCHAR(100),
+			'year' INT(4),
+			'runtime' INT(4),
+			'classification' VARCHAR(50),
+			'genre' VARCHAR(100),
+			'studio' VARCHAR(50),
+			'site' VARCHAR(100),
+			'imdb' VARCHAR(100),
+			'actors' TEXT,
+			'trailer' VARCHAR(100),
+			'rating' INT(1) DEFAULT 0,
+			'loaned' INT(1) NOT NULL DEFAULT '0',
+			'media' INT(1) DEFAULT '0',
+			'num_media' INT(2),
+			'obs' TEXT,
+			'seen' INT(1) NOT NULL DEFAULT '0',
+			'region' INT DEFAULT 2,
+			'condition' INT DEFAULT 3,
+			'color' INT DEFAULT 0,
+			'layers' INT DEFAULT 4
+		)"""
+		self.conn.Execute(query)
 
 	def create_table_loans(self, backup=False):
 		query = ''
@@ -135,18 +133,16 @@ class GriffithSQL:
 		else:
 			self.debug.show("Creating 'loans' table...")
 			query = "CREATE TABLE loans"
-		query += """
-			(
-				id INTEGER PRIMARY KEY,
-				person_id INT(11) NOT NULL default '0',
-				movie_id INTEGER default '0',
-				volume_id INTEGER default '0',
-				collection_id INTEGER default '0',
-				date DATE NOT NULL default '0000-00-00',
-				return_date DATE
-			)
-		"""
-		self.cursor.execute(query)
+		query += """(
+			id INTEGER PRIMARY KEY,
+			person_id INT(11) NOT NULL default '0',
+			movie_id INTEGER default '0',
+			volume_id INTEGER default '0',
+			collection_id INTEGER default '0',
+			date DATE NOT NULL default '0000-00-00',
+			return_date DATE
+		)"""
+		self.conn.Execute(query)
 			
 	def create_table_people(self, backup=False):
 		if backup:
@@ -155,19 +151,17 @@ class GriffithSQL:
 		else:
 			self.debug.show("Creating 'people' table...")
 			query = "CREATE TABLE people"
-		query += """
-			(
-				id INTEGER PRIMARY KEY,
-				name VARCHAR(200) NOT NULL,
-				email VARCHAR(150),
-				phone VARCHAR(50)
-			)
-		"""
-		self.cursor.execute(query)
+		query += """(
+			id INTEGER PRIMARY KEY,
+			name VARCHAR(200) NOT NULL,
+			email VARCHAR(150),
+			phone VARCHAR(50)
+		)"""
+		self.conn.Execute(query)
 	
 	def create_table_volumes(self):
 		self.debug.show("Creating 'volumes' table...")
-		self.cursor.execute ("""
+		self.conn.Execute ("""
 			CREATE TABLE volumes
 			(
 				'id' INTEGER PRIMARY KEY,
@@ -175,11 +169,11 @@ class GriffithSQL:
 				'loaned' INT(1) NOT NULL default '0'
 			);
 			INSERT INTO 'volumes' VALUES (0,'','0');
-			""")
+		""")
 			
 	def create_table_collections(self):
 		self.debug.show("Creating 'collections' table...")
-		self.cursor.execute ("""
+		self.conn.Execute ("""
 			CREATE TABLE collections
 			(
 				'id' INTEGER PRIMARY KEY,
@@ -187,11 +181,11 @@ class GriffithSQL:
 				'loaned' INT(1) NOT NULL default '0'
 			);
 			INSERT INTO 'collections' VALUES (0,'','0');
-			""")
+		""")
 	
 	def create_table_media(self):
 		self.debug.show("Creating 'media' table...")
-		self.cursor.execute ("""
+		self.conn.Execute ("""
 			CREATE TABLE media
 			(
 				'id' INTEGER PRIMARY KEY,
@@ -213,7 +207,7 @@ class GriffithSQL:
 
 	def create_table_languages(self):
 		self.debug.show("Creating 'languages' table...")
-		self.cursor.execute ("""
+		self.conn.Execute ("""
 			CREATE TABLE languages
 			(
 				'id' INTEGER PRIMARY KEY,
@@ -224,7 +218,7 @@ class GriffithSQL:
 
 	def create_table_movie_lang(self):
 		self.debug.show("Creating 'movie_lang' table...")
-		self.cursor.execute ("""
+		self.conn.Execute ("""
 			CREATE TABLE movie_lang
 			(
 				'movie_id' INTEGER NOT NULL,
@@ -235,7 +229,7 @@ class GriffithSQL:
 
 	def create_table_tags(self):
 		self.debug.show("Creating 'tags' table...")
-		self.cursor.execute ("""
+		self.conn.Execute ("""
 			CREATE TABLE tags
 			(
 				'id' INTEGER PRIMARY KEY,
@@ -246,7 +240,7 @@ class GriffithSQL:
 
 	def create_table_movie_tag(self):
 		self.debug.show("Creating 'movie_tag' table...")
-		self.cursor.execute ("""
+		self.conn.Execute ("""
 			CREATE TABLE movie_tag
 			(
 				'movie_id' INTEGER NOT NULL,
@@ -259,42 +253,43 @@ class GriffithSQL:
 	# upgrade tables ---------------------------------------------------{{{
 	def check_if_table_exists(self):
 		try:
-			self.cursor.execute("SELECT id FROM movies LIMIT 1")
+			self.conn.Execute("SELECT id FROM movies LIMIT 1")
 		except:
 			self.create_db()
+			return
 		try:
-			self.cursor.execute("SELECT id FROM volumes LIMIT 1")
+			self.conn.Execute("SELECT id FROM volumes LIMIT 1")
 		except:
 			self.create_table_volumes()
 		try:
-			self.cursor.execute("SELECT id FROM collections LIMIT 1")
+			self.conn.Execute("SELECT id FROM collections LIMIT 1")
 		except:
 			self.create_table_collections()
 		try:
-			self.cursor.execute("SELECT id FROM media LIMIT 1")
+			self.conn.Execute("SELECT id FROM media LIMIT 1")
 		except:
 			self.create_table_media()
 			self.update_old_media()
 		try:
-			self.cursor.execute("SELECT id FROM languages LIMIT 1")
+			self.conn.Execute("SELECT id FROM languages LIMIT 1")
 		except:
 			self.create_table_languages()
 		try:
-			self.cursor.execute("SELECT movie_id FROM movie_lang LIMIT 1")
+			self.conn.Execute("SELECT movie_id FROM movie_lang LIMIT 1")
 		except:
 			self.create_table_movie_lang()
 		try:
-			self.cursor.execute("SELECT id FROM tags LIMIT 1")
+			self.conn.Execute("SELECT id FROM tags LIMIT 1")
 		except:
 			self.create_table_tags()
 		try:
-			self.cursor.execute("SELECT movie_id FROM movie_tag LIMIT 1")
+			self.conn.Execute("SELECT movie_id FROM movie_tag LIMIT 1")
 		except:
 			self.create_table_movie_tag()
 		
 		# "empty" language is needed
 		if self.get_value(field="name", table="languages", where="id = '0'") == None:
-			self.cursor.execute("INSERT INTO languages VALUES('0', '')")
+			self.conn.Execute("INSERT INTO languages VALUES('0', '')")
 
 		# check old media
 		if self.count_records("movies", "media='DVD'") > 0:
@@ -336,7 +331,7 @@ class GriffithSQL:
 		need_upgrade = False
 		for column in columns:
 			try:
-				self.cursor.execute("SELECT %s FROM movies LIMIT 1"%column)
+				self.conn.Execute("SELECT %s FROM movies LIMIT 1"%column)
 			except:
 				columns[column] = 0	# column is missing
 				need_upgrade = True
@@ -356,7 +351,7 @@ class GriffithSQL:
 		need_upgrade = False
 		for column in columns:
 			try:
-				self.cursor.execute("SELECT %s FROM loans LIMIT 1"%column)
+				self.conn.Execute("SELECT %s FROM loans LIMIT 1"%column)
 			except:
 				columns[column] = 0	# column is missing
 				need_upgrade = True
@@ -389,16 +384,15 @@ class GriffithSQL:
 				sql_query += ', '
 				
 		sql_query += " FROM %s" % table
-		self.cursor.execute(sql_query)
-		self.cursor.execute("DROP TABLE %s" % table)
+		self.conn.Execute(sql_query)
+		self.conn.Execute("DROP TABLE %s" % table)
 		eval("self.create_table_%s()"%table)
-		self.cursor.execute("INSERT INTO %s SELECT * FROM %s_backup" % (table, table))
-		self.cursor.execute("DROP TABLE %s_backup"%table)
-		self.con.commit()
+		self.conn.Execute("INSERT INTO %s SELECT * FROM %s_backup" % (table, table))
+		self.conn.Execute("DROP TABLE %s_backup"%table)
 	
 	def update_old_media(self):
 		self.debug.show("Upgrading old media values...")
-		self.cursor.execute("""
+		self.conn.Execute("""
 			UPDATE movies SET media = '0' WHERE media = 'DVD';
 			UPDATE movies SET media = '1' WHERE media = 'DVD-R';
 			UPDATE movies SET media = '2' WHERE media = 'DVD-RW';
@@ -416,73 +410,20 @@ class GriffithSQL:
 			UPDATE movies SET media = '10' WHERE media = 'VHS';
 			UPDATE movies SET media = '11' WHERE media = 'BETACAM';
 		""")
-		self.con.commit()
 
 	# }}}
 
 	# add data ---------------------------------------------------------{{{
 	def add_movie(self, data):
-		# TODO: make use of parent data {{{
-		i = 0
-		languages_ids = {}
-		for item in self.get_all_data("languages", what="id"):
-			languages_ids[i] = item['id']
-			i = i+1
-		i = 0
-		volume_combo_ids = {}
-		for item in self.get_all_data("volumes", what="id"):
-			volume_combo_ids[i] = item['id']
-			i = i+1
-		i = 0
-		collection_combo_ids = {}
-		for item in self.get_all_data("collections", what="id"):
-			collection_combo_ids[i] = item['id']
-			i = i+1
-		i = 0
-		tags_ids = {}
-		for item in self.get_all_data("tags", what="id"):
-			tags_ids[i] = item['id']
-			i = i+1
-		#}}}
-
-		plot_buffer = data.am_plot.get_buffer()
-		with_buffer = data.am_with.get_buffer()
-		obs_buffer = data.am_obs.get_buffer()
-		number = data.am_number.get_text()
-		(filepath, filename) = os.path.split(data.am_picture_name.get_text())
-		query = """
-			INSERT INTO 'movies' ('id', 'original_title', 'title', 'director', 'plot', 'image', 'year',
-			'runtime', 'actors', 'country', 'genre', 'media', 'classification', 'studio', 'site', 'color',
-			'region', 'layers', 'condition', 'imdb', 'trailer', 'obs', 'num_media', 'loaned', 'rating', 'seen',
-			'number', 'volume_id', 'collection_id')
-			VALUES (Null,'""" + gutils.gescape(data.am_original_title.get_text()) + "','" +\
-			gutils.gescape(data.am_title.get_text())+"','" +\
-			gutils.gescape(data.am_director.get_text())+"','" +\
-			gutils.gescape(plot_buffer.get_text(plot_buffer.get_start_iter(), plot_buffer.get_end_iter()))+"','" +\
-			filename+"','" +\
-			data.am_year.get_text()+"','" +\
-			data.am_runtime.get_text()+"','" +\
-			gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter()))+"','" +\
-			gutils.gescape(data.am_country.get_text())+"','" +\
-			gutils.gescape(data.am_genre.get_text())+"','" +\
-			str(data.am_media.get_active())+"','" +\
-			gutils.gescape(data.am_classification.get_text())+"','" +\
-			gutils.gescape(data.am_studio.get_text())+"','" +\
-			data.am_site.get_text()+"','" +\
-			str(int(data.am_color.get_active()))+"','" +\
-			str(int(data.am_region.get_active()))+"','" +\
-			str(int(data.am_layers.get_active()))+"','" +\
-			str(int(data.am_condition.get_active()))+"','" +\
-			data.am_imdb.get_text()+"','" +\
-			data.am_trailer.get_text()+"','" +\
-			gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(), obs_buffer.get_end_iter()))+"','" +\
-			data.am_discs.get_text()+"','0','" +\
-			str(int(data.rating_slider_add.get_value()))+"','" +\
-			str(int(data.am_seen.get_active()))+"','" +\
-			number+"', '" +\
-			str(volume_combo_ids[data.am_volume_combo.get_active()]) + "', '"+\
-			str(collection_combo_ids[data.am_collection_combo.get_active()]) + "')"
-		self.cursor.execute(query)
+		data['id'] = "Null"
+		query = "INSERT INTO movies (id,"
+		for field in data.keys():
+			query += "'%s'," % field
+		query = query[:len(query)-1] + ") VALUES (Null," # remove last comma
+		for field in data:
+			query += "'%s'," % data[field]
+		query = query[:len(query)-1] + ");" # remove last comma
+		self.conn.Execute(query)
 		
 		id = self.get_value(field="id", table="movies", where="number = '%s'" % number)
 		
@@ -497,7 +438,7 @@ class GriffithSQL:
 				selected[lang_id][type] = True
 		for lang in selected.keys():
 			for type in selected[lang].keys():
-				self.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
+				self.conn.Execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
 
 		# tags 
 		selected = {}
@@ -505,17 +446,19 @@ class GriffithSQL:
 			if data.am_tags[i].get_active() == True:
 				selected[tags_ids[i]] = 1
 		for i in selected.keys():
-			self.cursor.execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
+			self.conn.Execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
 
 	def add_volume(self, name):
 		# check if volume already exists
-		for volume in self.get_all_data("volumes", what="name"):
-			if name == volume['name']:
+		cursor = self.get_all_data("volumes", what="name")
+		while not cursor.EOF:
+			if name == cursor.fields[0]:
 				self.debug.show("Volume '%s' already exists"%name)
 				return False
+			cursor.MoveNext()
 		self.debug.show("Adding '%s' volume to database..."%name)
 		try:
-			self.cursor.execute("INSERT INTO 'volumes'('id', 'name', 'loaned') VALUES (Null,'"+
+			self.conn.Execute("INSERT INTO 'volumes'('id', 'name', 'loaned') VALUES (Null,'"+
 				gutils.gescape(name)+"','0');")
 		except:
 			return False
@@ -523,13 +466,15 @@ class GriffithSQL:
 
 	def add_collection(self, name):
 		# check if volume already exists
-		for collection in self.get_all_data("collections", what="name"):
-			if name == collection['name']:
+		cursor = self.get_all_data("collections", what="name")
+		while not cursor.EOF:
+			if name == cursor.fields[0]:
 				self.debug.show("Collection '%s' already exists"%name)
 				return False
+			cursor.MoveNext()
 		self.debug.show("Adding '%s' collection to database..."%name)
 		try:
-			self.cursor.execute("INSERT INTO 'collections'('id', 'name', 'loaned') VALUES (Null,'"+
+			self.conn.Execute("INSERT INTO 'collections'('id', 'name', 'loaned') VALUES (Null,'"+
 				gutils.gescape(name)+"','0');")
 		except:
 			return False
@@ -541,13 +486,15 @@ class GriffithSQL:
 			return False
 		name = gutils.gescape(name)
 		# check if language already exists
-		for language in self.get_all_data("languages", what="name"):
-			if name == language['name']:
+		cursor = self.get_all_data("languages", what="name")
+		while not cursor.EOF:
+			if name == cursor.fields[0]:
 				self.debug.show("Language '%s' already exists"%name)
 				return False
+			cursor.MoveNext()
 		self.debug.show("Adding '%s' language to database..."%name)
 		try:
-			self.cursor.execute("INSERT INTO 'languages'('id', 'name') VALUES (Null,'"+
+			self.conn.Execute("INSERT INTO 'languages'('id', 'name') VALUES (Null,'"+
 				gutils.gescape(name)+"');")
 		except:
 			return False
@@ -558,13 +505,15 @@ class GriffithSQL:
 			self.debug.show("You didn't write name for new tag")
 			return False
 		# check if tag already exists
-		for tag in self.get_all_data("tags", what="name"):
-			if name == tag['name']:
+		cursor = self.get_all_data("tags", what="name")
+		while not cursor.EOF:
+			if name == cursor.fields[0]:
 				self.debug.show("Tag '%s' already exists"%name)
 				return False
+			cursor.MoveNext()
 		self.debug.show("Adding '%s' tag to database..."%name)
 		try:
-			self.cursor.execute("INSERT INTO 'tags'('id', 'name') VALUES (Null,'"+
+			self.conn.Execute("INSERT INTO 'tags'('id', 'name') VALUES (Null,'"+
 				gutils.gescape(name)+"');")
 		except:
 			return False
@@ -576,80 +525,43 @@ class GriffithSQL:
 	def get_all_data(self, table_name="movies", order_by=None, where=None, what=None):
 		if what == None:
 			what = "*"
-		sql="SELECT %s FROM %s" %(what, table_name)
+		sql = "SELECT %s FROM %s" % (what, table_name)
 		if where:
-			sql = sql + " WHERE %s" % where
+			sql += " WHERE %s" % where
 		if order_by != None:
-			sql = sql + " ORDER BY %s" % order_by
-		self.cursor.execute(sql)
-		return self.cursor.fetchall()
+			sql += " ORDER BY %s" % order_by
+		return self.conn.Execute(sql)
 
 	def get_value(self, field, table, where=None):
 		query = "SELECT %s FROM %s" % (field, table)
 		if where:
 			query += " WHERE %s" % where
-		self.cursor.execute(query)
-		try: 
-			value = self.cursor.fetchone()[0]
-		except:
-			value = None
-		return value
+		cursor = self.conn.Execute(query)
+		if not cursor.EOF:
+			return cursor.fields[0]
+		else:
+			return None
 	
 	def select_movie_by_num(self,number):
-		self.cursor.execute("SELECT * FROM movies WHERE number = '"+number+"' ORDER BY number ASC")
-		return self.cursor.fetchall()
-	
-	def select_movie_by_original_title(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE original_title LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
-		
-	def select_movie_by_title(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE title LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
-		
-	def select_movie_by_director(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE director LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
-
-	def select_movie_by_rating(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE rating LIKE '"+txt+"' ORDER BY number ASC")
-		return self.cursor.fetchall()
-		
-	def select_movie_by_year(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE year = '"+txt+"' ORDER BY number ASC")
-		return self.cursor.fetchall()
-
-	def select_movie_by_genre(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE genre LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
-		
-	def select_movie_by_actors(self,txt):
-		self.cursor.execute("SELECT * FROM movies WHERE actors LIKE '%"+txt+"%' ORDER BY number ASC")
-		return self.cursor.fetchall()
+		return self.conn.Execute("SELECT * FROM movies WHERE number = '%s' ORDER BY number ASC" % number)
 	
 	def select_movies_by_volume(self,volume_id):
-		self.cursor.execute("SELECT * FROM movies WHERE volume_id = '%s' ORDER BY number ASC" % volume_id)
-		return self.cursor.fetchall()
+		return self.conn.Execute("SELECT * FROM movies WHERE volume_id = '%s' ORDER BY number ASC" % volume_id)
 
 	def select_movies_by_collection(self,collection):
-		self.cursor.execute("SELECT * FROM movies WHERE collection_id = '%s' ORDER BY number ASC" % collection)
-		return self.cursor.fetchall()
+		return self.conn.Execute("SELECT * FROM movies WHERE collection_id = '%s' ORDER BY number ASC" % collection)
 	
 	def select_person_by_name(self, name):
-		self.cursor.execute("SELECT * FROM people WHERE name = '"+name+"'")
-		return self.cursor.fetchall()
+		return self.conn.Execute("SELECT * FROM people WHERE name = '%s'" % name)
 		
 	def select_person_by_id(self, p_id):
-		self.cursor.execute("SELECT * FROM people WHERE id = '"+str(p_id)+"'")
-		return self.cursor.fetchall()
+		return self.conn.Execute("SELECT * FROM people WHERE id = '%s'" % str(p_id) )
 		
 	def get_loaned_movies(self):
-		self.cursor.execute("SELECT * FROM movies WHERE loaned='1' ORDER BY number")
-		return self.cursor.fetchall()
+		return self.conn.Execute("SELECT * FROM movies WHERE loaned='1' ORDER BY number")
 		
 	def get_not_seen_movies(self):
-		self.cursor.execute("SELECT * FROM movies WHERE seen='0' ORDER BY number")
-		return self.cursor.fetchall()
+		return self.conn.Execute("SELECT * FROM movies WHERE seen='0' ORDER BY number")
 
 	def get_loan_info(self, movie_id=None, volume_id=None, collection_id=None):
 		query = "SELECT * FROM loans WHERE "
@@ -660,8 +572,7 @@ class GriffithSQL:
 		else:
 			query += "movie_id='%s'" % str(movie_id)
 		query +=  " AND return_date = ''"
-		self.cursor.execute(query)
-		return self.cursor.fetchall()
+		return self.conn.Execute(query)
 
 	def get_loan_history(self, movie_id=None, volume_id=None, collection_id=None):
 		query = "SELECT * FROM loans WHERE return_date <> '' AND ("
@@ -676,8 +587,7 @@ class GriffithSQL:
 				query += " OR "
 			query += " movie_id='%s'" % str(movie_id)
 		query +=  ")"
-		self.cursor.execute(query)
-		return self.cursor.fetchall()
+		return self.conn.Execute(query)
 	# }}}
 
 	# remove data ------------------------------------------------------{{{
@@ -687,10 +597,9 @@ class GriffithSQL:
 			return False
 		id = self.get_value(field="id", table="movies", where="number = '%s'" % number)
 		if id != None:
-			self.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
-			self.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
-			self.cursor.execute("DELETE FROM movies WHERE number = '"+number+"'")
-			self.con.commit()
+			self.conn.Execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
+			self.conn.Execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
+			self.conn.Execute("DELETE FROM movies WHERE number = '"+number+"'")
 	
 	def remove_volume(self, id=None, name=None):
 		if id != None:
@@ -709,7 +618,7 @@ class GriffithSQL:
 			return False
 		self.debug.show("Removing '%s' volume (id=%s) from database..."%(name, id))
 		try:
-			self.cursor.execute("DELETE FROM volumes WHERE id = '%s'" % id)
+			self.conn.Execute("DELETE FROM volumes WHERE id = '%s'" % id)
 		except:
 				return False
 		return True
@@ -730,7 +639,7 @@ class GriffithSQL:
 			return False
 		self.debug.show("Removing '%s' collection (id=%s) from database..."%(name, id))
 		try:
-			self.cursor.execute("DELETE FROM collections WHERE id = '%s'" % id)
+			self.conn.Execute("DELETE FROM collections WHERE id = '%s'" % id)
 		except:
 				return False
 		return True
@@ -753,7 +662,7 @@ class GriffithSQL:
 		
 		self.debug.show("Removing '%s' language (id=%s) from database..."%(name, id))
 		try:
-			self.cursor.execute("DELETE FROM languages WHERE id = '%s'" % id)
+			self.conn.Execute("DELETE FROM languages WHERE id = '%s'" % id)
 		except:
 				return False
 		return True
@@ -776,13 +685,13 @@ class GriffithSQL:
 		
 		self.debug.show("Removing '%s' tag (id=%s) from database..."%(name, id))
 		try:
-			self.cursor.execute("DELETE FROM tags WHERE id = '%s'" % id)
+			self.conn.Execute("DELETE FROM tags WHERE id = '%s'" % id)
 		except:
 				return False
 		return True
 	
 	def remove_person_by_name(self, number):
-		self.cursor.execute("DELETE FROM people WHERE name = '"+number+"'")
+		self.conn.Execute("DELETE FROM people WHERE name = '"+number+"'")
 	# }}}
 
 	# update data ------------------------------------------------------{{{
@@ -797,14 +706,14 @@ class GriffithSQL:
 				gutils.warning(self, msg="This name is already in use!")
 				return False
 			try:
-				self.cursor.execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
+				self.conn.Execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
 			except:
 				self.debug.show("ERROR during updating collection's name!")
 				return False
 			return True
 		if loaned==1:
 			try:
-				self.cursor.execute("""
+				self.conn.Execute("""
 					UPDATE collections SET loaned='1' WHERE id='%s';
 					UPDATE movies SET loaned='1' WHERE collection_id='%s';
 				""" % (id, id))
@@ -813,14 +722,14 @@ class GriffithSQL:
 				return False
 			if volume_id:
 				try:
-					self.cursor.execute("UPDATE volumes SET loaned='1' WHERE id='%s';"%volume_id)
+					self.conn.Execute("UPDATE volumes SET loaned='1' WHERE id='%s';"%volume_id)
 				except:
 					self.debug.show("ERROR during updating volume's loan data!")
 					return False
 			return True
 		elif loaned==0:
 			try:
-				self.cursor.execute("""
+				self.conn.Execute("""
 					UPDATE collections SET loaned='0' WHERE id='%s';
 					UPDATE movies SET loaned='0' WHERE collection_id='%s';
 				""" %( id, id))
@@ -829,7 +738,7 @@ class GriffithSQL:
 				return False
 			if volume_id:
 				try:
-					self.cursor.execute("UPDATE volumes SET loaned='0' WHERE id='%s';"%volume_id)
+					self.conn.Execute("UPDATE volumes SET loaned='0' WHERE id='%s';"%volume_id)
 				except:
 					self.debug.show("ERROR during updating volume's loan data!")
 					return False
@@ -847,14 +756,14 @@ class GriffithSQL:
 				gutils.warning(self, msg="This name is already in use!")
 				return False
 			try:
-				self.cursor.execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
+				self.conn.Execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
 			except:
 				self.debug.show("ERROR during updating volume's name!")
 				return False
 			return True
 		if loaned==1:
 			try:
-				self.cursor.execute("""
+				self.conn.Execute("""
 					UPDATE volumes SET loaned=1 WHERE id='%s';
 					UPDATE movies SET loaned=1 WHERE volume_id='%s';
 				"""%(id, id))
@@ -864,7 +773,7 @@ class GriffithSQL:
 			return True
 		elif loaned==0:
 			try:
-				self.cursor.execute("""
+				self.conn.Execute("""
 					UPDATE volumes SET loaned=0 WHERE id='%s';
 					UPDATE movies SET loaned=0 WHERE volume_id='%s';
 				"""%(id, id))
@@ -884,7 +793,7 @@ class GriffithSQL:
 			gutils.warning(self, msg="This name is already in use!")
 			return False
 		try:
-			self.cursor.execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (name, id))
+			self.conn.Execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (name, id))
 		except:
 			self.debug.show("ERROR during updating language name!")
 			return False
@@ -903,7 +812,7 @@ class GriffithSQL:
 			gutils.warning(self, msg="This name is already in use!")
 			return False
 		try:
-			self.cursor.execute("UPDATE tags SET name ='%s' WHERE id='%s';" % (name,id))
+			self.conn.Execute("UPDATE tags SET name ='%s' WHERE id='%s';" % (name,id))
 		except:
 			self.debug.show("ERROR during updating tag name!")
 			return False
@@ -911,24 +820,21 @@ class GriffithSQL:
 	#}}}
 
 	def count_records(self,table_name, where='1'):
-		self.cursor.execute("SELECT COUNT(id) FROM %s" % (table_name) + " WHERE %s" % (where))
-		return int(self.cursor.fetchone()[0])
+		return int(self.conn.GetRow("SELECT COUNT(id) FROM %s" % (table_name) + " WHERE %s" % (where))[0])
 		
 	def is_movie_loaned(self,movie_id=None, movie_number=None):
 		if movie_id==None and movie_number == None:
 			return None
 		if movie_id:
-			self.cursor.execute("SELECT loaned FROM movies WHERE id = '%s'" % movie_id)
+			sql = "SELECT loaned FROM movies WHERE id = '%s'" % movie_id
 		if movie_number:
-			self.cursor.execute("SELECT loaned FROM movies WHERE number = '%s'" % movie_number)
-		return self.cursor.fetchone()[0]
+			sql = "SELECT loaned FROM movies WHERE number = '%s'" % movie_number
+		return self.conn.GetRow(sql)[0]
 
 	def is_volume_loaned(self,volume):
-		self.cursor.execute("SELECT loaned FROM volumes WHERE id = '%s'" % volume)
-		return self.cursor.fetchone()[0]
+		return self.conn.GetRow("SELECT loaned FROM volumes WHERE id = '%s'" % volume)[0]
 
 	def is_collection_loaned(self,collection):
-		self.cursor.execute("SELECT loaned FROM collections WHERE id = '%s'" % collection)
-		return self.cursor.fetchone()[0]
+		return self.conn.GetRow("SELECT loaned FROM collections WHERE id = '%s'" % collection)[0]
 
 # vim: fdm=marker

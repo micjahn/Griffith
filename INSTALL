@@ -64,7 +64,7 @@ UNIX systems
 	If you want to make your own Debian package, follow these steps:
 	* change your working directory to griffith source
 	* edit debian/changelog file, f.e. like this:
-		$ dch -v <version> -D UNRELEASED "NOT RELEASED YET"
+		$ dch -v <version> -D UNRELEASED -i NOT RELEASED YET
 	* type `debuild` or `dpkg-buildpackage -rfakeroot` to build package
 	* install new package (`dpkg -i ../griffith_<version>_all.deb`)
 

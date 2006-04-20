@@ -57,8 +57,7 @@ def locations(self):
 		griffith_dir = os.path.join(mydocs, 'griffith')
 		
 	else:
-		griffith_dir = os.path.join(os.path.expanduser('~'), \
-			'.griffith')
+		griffith_dir = os.path.join(os.path.expanduser('~'), ".griffith")
 	try:
 		if not os.path.exists(griffith_dir):
 			self.debug.show('Creating %s' % griffith_dir)
@@ -104,7 +103,7 @@ def locations(self):
 		self.locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop')
 	else:
 		print "Operating system not supported"
-		sys.exit()		
+		sys.exit()
 				
 	# includes plugins in system path for easier impor		
 	sys.path.append(self.locations['lib'])
@@ -231,10 +230,7 @@ def export_plugins(self):
 		
 def people_treeview(self):
 	row = None
-	self.p_treemodel = gtk.TreeStore(gobject.TYPE_STRING,
-						gobject.TYPE_STRING,
-						gobject.TYPE_STRING,
-						gobject.TYPE_STRING)
+	self.p_treemodel = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
 	self.p_treeview.set_model(self.p_treemodel)
 	self.p_treeview.set_headers_visible(True)
 
@@ -252,11 +248,12 @@ def people_treeview(self):
 	self.p_treeview.append_column(column)
 	# add data to treeview
 	data = self.db.get_all_data(table_name='people', order_by='name ASC')
-
-	for row in data:
+	while not data.EOF:
+		row = data.GetRowAssoc(0)
 		myiter = self.p_treemodel.insert_before(None, None)
 		self.p_treemodel.set_value(myiter, 0, str(row['name']))
 		self.p_treemodel.set_value(myiter, 1, str(row['email']))
+		data.MoveNext()
 	
 	self.p_treeview.show()
 	
@@ -288,7 +285,7 @@ def combos(self):
 	self.e_region.insert_text(0, _("Region 0 (No Region Coding)"))
 	self.e_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
 	self.e_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
-	self.e_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
+	self.e_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))
 	self.e_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
 	self.e_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
 	self.e_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
@@ -299,7 +296,7 @@ def combos(self):
 	self.p_region.insert_text(0, _("Region 0 (No Region Coding)"))
 	self.p_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
 	self.p_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
-	self.p_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
+	self.p_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))
 	self.p_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
 	self.p_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
 	self.p_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
@@ -334,7 +331,7 @@ def combos(self):
 	self.am_region.insert_text(0, _("Region 0 (No Region Coding)"))
 	self.am_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
 	self.am_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
-	self.am_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))	
+	self.am_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))
 	self.am_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
 	self.am_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
 	self.am_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
@@ -349,10 +346,12 @@ def combos(self):
 	self.am_layers.insert_text(4, _("N/A"))
 	
 	media = self.db.get_all_data("media", order_by="id ASC")
-	for i in media:
+	while not media.EOF:
+		i = media.GetRowAssoc(0)
 		self.e_media.insert_text(i['id'], i['name'])
 		self.p_media.insert_text(i['id'], i['name'])
 		self.am_media.insert_text(i['id'], i['name'])
+		media.MoveNext()
 	i = 0
 	for criteria in self.sort_criteria:
 		self.filter_criteria.insert_text(i, self.field_names[criteria])
@@ -438,7 +437,7 @@ def initialize_gtkspell(self):
 				except:
 					spell_error = True
 			if self.config.get('spell_plot', True)=='True' and \
-				self.config.get('spell_lang')!='':		
+				self.config.get('spell_lang')!='':
 				try:
 					self.plot_spell = gtkspell.Spell(self.e_plot, self.config.get('spell_lang'))
 				except:

@@ -61,14 +61,16 @@ def find_next_available(self):
 	a = first = 0
 	row = None
 
-	for row in self.db.get_all_data(order_by="number ASC"):
-		second = row['number']
+	cursor = self.db.get_all_data(order_by="number ASC", what="number")
+	while not cursor.EOF:
+		second = cursor.fields[0]
 		if second == None:
 			second = 0
 		if (second>first+1):
 			break
 		first = second
 		a += a
+		cursor.MoveNext()
 		
 	if first == None:
 		return 1

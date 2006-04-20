@@ -50,8 +50,8 @@ def commit_loan(self):
 	
 	# movie is now loaned. change db
 	movie_id = self.e_number.get_text()
-	self.db.cursor.execute("SELECT volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
-	volume_id, collection_id = self.db.cursor.fetchall()[0]
+	cursor = self.db.conn.Execute("SELECT volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
+	volume_id, collection_id = cursor.GetRowAssoc(0)
 	data_person = self.db.select_person_by_name(person)
 
 	# ask if user wants to loan whole collection
@@ -72,11 +72,11 @@ def commit_loan(self):
 		if loan_whole_collection:
 			self.db.update_collection(id=collection_id, loaned=1)
 		else:
-			self.db.cursor.execute("UPDATE movies SET loaned='1' WHERE number='%s';" % movie_id)
+			self.db.conn.Execute("UPDATE movies SET loaned='1' WHERE number='%s';" % movie_id)
 	elif volume_id>0:
 		self.db.update_volume(id=volume_id, loaned=1)
 	else:
-		self.db.cursor.execute("UPDATE movies SET loaned='1' WHERE number='%s';" % movie_id)
+		self.db.conn.Execute("UPDATE movies SET loaned='1' WHERE number='%s';" % movie_id)
 	self.update_statusbar(_("Movie loaned"))
 
 	# next, we insert a new row on the loans table
@@ -96,23 +96,22 @@ def commit_loan(self):
 	else:
 		query += str(movie_id)
 	query += "', '" + str(datetime.date.today()) + "', '');"
-	self.db.cursor.execute(query)
-	self.db.con.commit()
-	
+	self.db.conn.Execute(query)
+
 	# finally, force a refresh
 	self.treeview_clicked()
 	
 def return_loan(self):
 	movie_id = self.e_number.get_text()
 	if movie_id:
-		self.db.cursor.execute("SELECT volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
-		volume_id, collection_id = self.db.cursor.fetchall()[0]
-	
+		cursor = self.db.conn.Execute("SELECT volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
+		volume_id, collection_id = cursor.GetRowAssoc(0)
+
 		collection_is_loaned = False
 		if collection_id>0:
 			# if all movies in collection are loaned, ask if whole collection was returned
-			self.db.cursor.execute("SELECT loaned FROM collections WHERE id='%s'"%collection_id)
-			collection_is_loaned = self.db.cursor.fetchall()[0][0]
+			cursor = self.db.conn.Execute("SELECT loaned FROM collections WHERE id='%s'"%collection_id)
+			collection_is_loaned = cursor.GetRowAssoc(0)[0]
 		
 		if volume_id > 0 and collection_is_loaned:
 			self.db.update_collection(id=collection_id, volume_id=volume_id, loaned=0)
@@ -121,9 +120,9 @@ def return_loan(self):
 		elif volume_id > 0:
 			self.db.update_volume(id=volume_id, loaned=0)
 		else:
-			self.db.cursor.execute("UPDATE movies SET loaned='0' WHERE number='%s';" % movie_id)
+			self.db.conn.Execute("UPDATE movies SET loaned='0' WHERE number='%s';" % movie_id)
 		
-		self.update_statusbar(_("Movie returned"))	
+		self.update_statusbar(_("Movie returned"))
 		
 		data_movie=self.db.select_movie_by_num(movie_id)
 		# fill return information on loans table
@@ -135,8 +134,8 @@ def return_loan(self):
 		else:
 			query +="movie_id='%s'" % movie_id
 		query += " AND return_date = ''"
-		self.db.cursor.execute(query)
-		self.db.con.commit()			
-		
+		self.db.conn.Execute(query)
+
 		# force a refresh
 		self.treeview_clicked()
+
