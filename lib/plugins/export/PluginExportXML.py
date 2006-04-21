@@ -61,8 +61,9 @@ class ExportPlugin:
 				root = doc.documentElement
 				
 				# create object
-				data = self.db.get_all_data(order_by="number ASC")
-				for row in data:
+				cursor = self.db.get_all_data(order_by="number ASC")
+				while not cursor.EOF:
+					row = cursor.GetRowAssoc(0)
 					e = doc.createElement('movie')
 					root.appendChild(e)
 					for key,value in row.items():
@@ -70,6 +71,7 @@ class ExportPlugin:
 						t = doc.createTextNode(str(value))
 						e2.appendChild(t)
 						e.appendChild(e2)
+					cursor.MoveNext()
 					
 				# write XML to file
 				fp = open(filename[0], "w")

@@ -54,14 +54,13 @@ class ExportPlugin:
                     overwrite = False
                     
             if overwrite == True or overwrite == None:
-                writer = csv.writer(file(filename[0], "w"), dialect=csv.excel)        
-                data = self.db.get_all_data(order_by="number ASC")
-                for row in data:
+                writer = csv.writer(file(filename[0], "w"), dialect=csv.excel)
+                cursor = self.db.get_all_data(order_by="number ASC")
+		while not cursor.EOF:
+                    row = cursor.GetRowAssoc(0)
                     t = []
                     for s in row:
-                        try:
-                            t.append(s.encode('latin-1'))
-                        except:
-                            t.append(s)
-                    writer.writerow(t) 
+                        t.append(row[s])
+                    writer.writerow(t)
+                    cursor.MoveNext()
                 gutils.info(self, _("%s file has been created.")%"CSV", self.parent)

@@ -128,7 +128,7 @@ class ExportPlugin(gtk.Window):
 		self.style_list = {}
 		self.templates = self.make_template_list()
 		# glade
-		if os.name == 'nt' or os.name == 'win32':	
+		if os.name == 'nt' or os.name == 'win32':
 			gf = os.path.abspath(os.path.dirname(sys.argv[0]))+'\\glade\\exporthtml.glade'
 		else:
 			gf = locations['share'] + "/glade/exporthtml.glade"
@@ -157,8 +157,8 @@ class ExportPlugin(gtk.Window):
 		j=0 # number of templates
 		dir = os.path.join(self.share_dir, 'export_templates')
 		for i in os.listdir(dir):
-		        fileName = os.path.join(dir, i)
-		        if not os.path.islink(fileName) and os.path.isdir(fileName):
+			fileName = os.path.join(dir, i)
+			if not os.path.islink(fileName) and os.path.isdir(fileName):
 				# delete previous values
 				doc = None; styles = {}; tpl_name=None; tpl_author=None; tpl_email=None; tpl_version=None; tpl_ext=None; tpl_desc=None
 				try:
@@ -174,7 +174,7 @@ class ExportPlugin(gtk.Window):
 					tpl_ext         = template.getElementsByTagName('extension')[0].firstChild.nodeValue
 					tpl_desc        = self.get_node_value_by_language( template, 'description', language )
 					k=0	# number of styles
-					try: 
+					try:
 						styles_list = template.getElementsByTagName('styles')[0].getElementsByTagName('style')
 						for style in styles_list:
 							tpl_style_name = self.get_node_value_by_language( style, 'name', language )
@@ -466,7 +466,7 @@ class ExportPlugin(gtk.Window):
 		end = template.find('</@'+ field +'>', start+1)
 		if start > -1 and end > -1:
 			if remove == True:
-				return template[:start] + template[end+4+len(field):]	
+				return template[:start] + template[end+4+len(field):]
 			else:
 				tmp = gutils.trim(template,'<@'+field+'>', '</@'+field+'>')
 				tmp = tmp.replace("@DATA@", data)
@@ -644,15 +644,16 @@ class ExportPlugin(gtk.Window):
 			else:
 				tpl_header = self.fill_template(tpl_header, self.names[j], remove=True)
 
+		self.db.conn.BeginTrans()
 		# prepare SQL query
 		select = ''
-		query = """
+		self.db.conn.Execute("""
 			CREATE TEMPORARY TABLE answer
 			(
 				id INT(1) DEFAULT 0,
 				name VARCHAR(16) DEFAULT "No"
 			);
-		"""
+		""")
 		for i in self.fields:
 			if self.fields[i] == True:
 				if i == "image":
@@ -660,7 +661,7 @@ class ExportPlugin(gtk.Window):
 					select += "movies.image ||'."
 					if config['poster_convert']:
 						select += config['poster_format'].lower()
-					else:	
+					else:
 						select += "jpg"
 					select += "' AS image, "
 					select += "movies.image AS image_src, "	# for file name
@@ -671,10 +672,9 @@ class ExportPlugin(gtk.Window):
 		if self.fields['seen']== True:
 			select = select.replace("movies.seen AS seen, ",'')
 		select = select[:len(select)-2] # cut last ', '
-		query += """
-			INSERT INTO answer VALUES (0, \"""" + _("No") + """");
-			INSERT INTO answer VALUES (1, \"""" + _("Yes") + """");
-			SELECT """ + select 
+		self.db.conn.Execute("INSERT INTO answer VALUES (0, '%s');" % _("No"))
+		self.db.conn.Execute("INSERT INTO answer VALUES (1, '%s');" % _("Yes"))
+		query = "SELECT " + select
 		if self.fields['loaned'] == True:
 			query += ", t1.name AS loaned"
 		if self.fields['seen'] == True:
@@ -688,12 +688,12 @@ class ExportPlugin(gtk.Window):
 			query += " WHERE " + self.sql_where
 		query += " ORDER BY " + config['sorting']+' '+config['sorting2'] + ';'
 
-		self.db.cursor.execute(query)
-        	data = self.db.cursor.fetchall()
+		cursor = self.db.conn.Execute(query)
 		id=1	# item's position on page (1 - first, ...)
 		i = 1
 		page=1	# page number
-		for row in data:	# fill items {{{
+		while not cursor.EOF:	# fill items {{{
+			row = cursor.GetRowAssoc(0)
 			# check if there is a need to create new file
 			if id==1:
 				filename = os.path.join(config['exported_dir'],'page_%s.'%page + \
@@ -740,7 +740,7 @@ class ExportPlugin(gtk.Window):
 							self.debug.show("Can't copy %s" % image_file)
 					else:	# convert posters
 						try:
-			    				im = Image.open(image_file, 'r').convert(config['poster_mode'])
+							im = Image.open(image_file, 'r').convert(config['poster_mode'])
 							im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
 							im.save(os.path.join(posters_dir, image) + '.' + config['poster_format'].lower(), config['poster_format'])
 						except:
@@ -764,8 +764,9 @@ class ExportPlugin(gtk.Window):
 			else:
 				id=id+1
 			i=i+1
+			cursor.MoveNext()
 		#}}}
-        	self.db.cursor.execute ("DROP TABLE answer")
+		self.db.conn.Execute("DROP TABLE answer")
 		gutils.info(self, _("Document has been generated."), self)
 		self.on_quit()
 	#}}}
