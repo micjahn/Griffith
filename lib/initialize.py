@@ -551,7 +551,7 @@ def create_tag_vbox(self, widget, tab):
 	for i in self.tags_ids:
 		tag_id = self.tags_ids[i]
 		tag_name = self.db.get_value(field='name', table="tags", where="id='%s'"%tag_id)
-		tab[i] = gtk.CheckButton(tag_name)
+		tab[i] = gtk.CheckButton(str(tag_name))
 		tab[i].set_active(False)
 		widget.pack_start(tab[i])
 	widget.show_all()

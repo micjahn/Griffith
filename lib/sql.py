@@ -439,7 +439,7 @@ class GriffithSQL:
 		# check if volume already exists
 		cursor = self.get_all_data("volumes", what="name")
 		while not cursor.EOF:
-			if name == cursor.fields[0]:
+			if str(name) == str(cursor.fields[0]):
 				self.debug.show("Volume '%s' already exists"%name)
 				return False
 			cursor.MoveNext()
@@ -455,7 +455,7 @@ class GriffithSQL:
 		# check if volume already exists
 		cursor = self.get_all_data("collections", what="name")
 		while not cursor.EOF:
-			if name == cursor.fields[0]:
+			if str(name) == str(cursor.fields[0]):
 				self.debug.show("Collection '%s' already exists"%name)
 				return False
 			cursor.MoveNext()
@@ -475,7 +475,7 @@ class GriffithSQL:
 		# check if language already exists
 		cursor = self.get_all_data("languages", what="name")
 		while not cursor.EOF:
-			if name == cursor.fields[0]:
+			if str(name) == str(cursor.fields[0]):
 				self.debug.show("Language '%s' already exists"%name)
 				return False
 			cursor.MoveNext()
@@ -494,7 +494,7 @@ class GriffithSQL:
 		# check if tag already exists
 		cursor = self.get_all_data("tags", what="name")
 		while not cursor.EOF:
-			if name == cursor.fields[0]:
+			if str(name) == str(cursor.fields[0]):
 				self.debug.show("Tag '%s' already exists"%name)
 				return False
 			cursor.MoveNext()
