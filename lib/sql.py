@@ -414,38 +414,25 @@ class GriffithSQL:
 	# }}}
 
 	# add data ---------------------------------------------------------{{{
-	def add_movie(self, data):
-		data['id'] = "Null"
+	def add_movie(self, t_movies, t_languages, t_tags):
 		query = "INSERT INTO movies (id,"
-		for field in data.keys():
+		for field in t_movies.keys():
 			query += "'%s'," % field
 		query = query[:len(query)-1] + ") VALUES (Null," # remove last comma
-		for field in data:
-			query += "'%s'," % data[field]
+		for field in t_movies:
+			query += "'%s'," % t_movies[field]
 		query = query[:len(query)-1] + ");" # remove last comma
 		self.conn.Execute(query)
 
-		id = self.get_value(field="id", table="movies", where="number = '%s'" % number)
+		id = self.get_value(field="id", table="movies", where="number = '%s'" % t_movies['number'])
 
 		# languages
-		selected = {}
-		for i in data.am_languages:
-			if i['id'].get_active() > 0:
-				lang_id = languages_ids[i['id'].get_active()]
-				type = i['type'].get_active()
-				if not selected.has_key(lang_id):
-					selected[lang_id] = {}
-				selected[lang_id][type] = True
-		for lang in selected.keys():
-			for type in selected[lang].keys():
+		for lang in t_languages.keys():
+			for type in t_languages[lang].keys():
 				self.conn.Execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
 
 		# tags
-		selected = {}
-		for i in tags_ids:
-			if data.am_tags[i].get_active() == True:
-				selected[tags_ids[i]] = 1
-		for i in selected.keys():
+		for i in t_tags.keys():
 			self.conn.Execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
 
 	def add_volume(self, name):

@@ -162,7 +162,23 @@ def add_movie_db(self, close):
 			'volume_id'      : str(volume_combo_ids[self.am_volume_combo.get_active()]),
 			'year'           : self.am_year.get_text()
 		}
-		self.db.add_movie(data)
+		# languages
+		t_languages = {}
+		for i in self.am_languages:
+			if i['id'].get_active() > 0:
+				lang_id = languages_ids[i['id'].get_active()]
+				type = i['type'].get_active()
+				if not t_languages.has_key(lang_id):
+					t_languages[lang_id] = {}
+				t_languages[lang_id][type] = True
+		# tags
+		t_tags = {}
+		for i in tags_ids:
+			if self.am_tags[i].get_active() == True:
+				t_tags[tags_ids[i]] = 1
+
+		# add movie data to database
+		self.db.add_movie(data, t_languages, t_tags)
 		
 		# lets move poster from tmp to posters dir
 		tmp_dest = os.path.join(self.griffith_dir, "posters")
