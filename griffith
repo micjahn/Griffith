@@ -25,8 +25,7 @@ import sys
 import gtk
 import os.path
 import random
-assert gtk.pygtk_version >= (2, 4, 0), \
-	'pygtk should be >= 2.4.0' 
+assert gtk.pygtk_version >= (2, 4, 0), 'pygtk should be >= 2.4.0'
 import gtk.glade
 import about
 import gutils
@@ -54,10 +53,10 @@ from gettext import gettext as _
 
 class Griffith:
 	"""The main application class"""
-   
+
 	Image = gtk.Image()
 	founded_results_id = None
-	
+
 	def initialize_griffith(self):
 		initialize.locations(self)
 		initialize.toolbar(self)
@@ -69,12 +68,13 @@ class Griffith:
 		initialize.export_plugins(self)
 		initialize.people_treeview(self)
 		initialize.web_results(self)
+		view.filter_all(self)
 		self.initialized = 1
-			
+
 	###########
 	# callbacks
 	###########		
-			
+
 	def on_export_activate(self, menu_iter, plugin_name):
 		export_plugin = __import__('PluginExport%s' % plugin_name)
 		export_plugin.ExportPlugin(self.db, self.locations, self.main_window, self.debug)
@@ -82,30 +82,30 @@ class Griffith:
 	def destroy(self, widget, data=None):
 		self.save_state()
 		gtk.main_quit()
-		
-	# about dialog				  
-		
+
+	# about dialog				
+
 	def about_dialog(self, *args):
 		about_dialog = about.AboutDialog()
 		about_dialog.icon = self.locations['images']
-			
+
 	# add movie
-		
+
 	def clear_add_dialog(self, *args):
 		add.initialize_add_dialog(self)
-	
+
 	def hide_add_movie(self, *args):
 		self.add_movie_window.hide()
-		
+
 	def hide_add(self, *args):
 		self.add_movie_window.hide()
-		
+
 	def get_from_web(self, *args):
 		add.get_from_web(self)
-		
+
 	def show_search_results(self, results):
 		add.show_websearch_results(self)
-		
+
 	def hide_results(self, *args):
 		self.treemodel_results.clear()
 		try:
@@ -115,100 +115,99 @@ class Griffith:
 		except:
 			pass
 		self.w_results.hide()
-		
+
 	def populate_dialog_with_results(self, *args):
 		add.populate_with_results(self)
-		
+
 	def source_changed(self, *args):
 		add.source_changed(self)
-		
+
 	# preferences
-		
+
 	def show_preferences(self, *args):
 		preferences.show_preferences(self)
-		
+
 	def hide_preferences(self, *args):
 		self.w_preferences.hide()
-		
+
 	def save_preferences(self, *args):
 		preferences.save_preferences(self)
 		self.hide_preferences()
-		
-	# movie operations related 
-		
+
+	# movie operations related
+
 	def add_movie(self, *args):
 		add.add_movie(self)
-		
+
 	def add_movie_db(self, *args):
 		add.add_movie_db(self, 0)
-		
+
 	def add_movie_close_db(self, *args):
 		add.add_movie_db(self, 1)
-		
+
 	def delete_movie(self, *args):
 		delete.delete_movie(self)
-		
+
 	def delete_movie_from_db(self, *args):
 		delete.delete_movie_from_db(self)
-		
+
 	def update_movie(self, *args):
 		update.update(self)
-		
+
 	def clear_details(self):
 		edit.clear_details(self)
-   
+
 	def go_first(self, *args):
 		if self.total_filter:
 			self.main_treeview.set_cursor_on_cell(0)
-		
+
 	def go_last(self, *args):
 		if self.total_filter:
 			self.main_treeview.set_cursor_on_cell(self.total_filter-1)
-			
+
 	def loan_movie(self, *args):
 		loan.loan_movie(self)
-		
+
 	def clone_movie(self, *args):
 		add.clone_movie(self)
-		
+
 	# poster	
 
 	def change_poster(self, *args):
 		edit.change_poster(self)
-		
+
 	def del_poster(self, *args):
 		edit.delete_poster(self)
-		
+
 	def z_poster(self, *args):
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
-		id = tmp_model.get_value(tmp_iter, 1)
-		data = self.db.select_movie_by_num(id)
-		for row in data:
-			if row['image']:
-				tmp_dest = os.path.join(self.griffith_dir, "posters")
-				tmp_img = os.path.join(tmp_dest, row['image']+".jpg")
-				self.big_poster.set_from_file(tmp_img)
-				self.poster_window.show()
-				
+		number = tmp_model.get_value(tmp_iter, 1)
+		image = self.db.get_value(field="image", table="movies", where="number=%s"%number)
+		if image != None:
+			tmp_dest = os.path.join(self.griffith_dir, "posters")
+			tmp_img = os.path.join(tmp_dest, image+".jpg")
+			self.big_poster.set_from_file(tmp_img)
+			self.poster_window.show()
+
 	def z_poster_hide(self, *args):
 		self.poster_window.hide()
-			
+
 	def get_poster(self, *args):
 		"""tries to fetch a new big poster from amazon"""
 		edit.fetch_bigger_poster(self)
-		
+
 	# rating
-		
+
 	def scale_rating_change(self, *args):
 		edit.change_rating_from_slider(self)
 
 	def scale_rating_change_add(self, *args):
 		add.change_rating_from_slider(self)
-		
+
 	def toggle_seen(self, *args):
 		edit.toggle_seen(self)
-		
+
 	def sugest_movie(self, *args):
 		quick_filter.change_filter(self)
 		subtotal = self.db.count_records('movies','seen=0')
@@ -216,8 +215,10 @@ class Griffith:
 		self.all_movies.set_active(1)
 		self.count_statusbar()
 		if subtotal > 0:
-			data = self.db.get_not_seen_movies()
-			sugested_movie = data[random.randrange(subtotal)]
+			cursor = self.db.get_not_seen_movies()
+			for i in range(0, random.randrange(subtotal)):
+				cursor.MoveNext()
+			sugested_movie = cursor.GetRowAssoc(0)
 			self.debug.show("suggested movie: %s"%sugested_movie['title'])
 			self.main_treeview.set_cursor_on_cell(sugested_movie['number']-1)
 			self.treeview_clicked()
@@ -299,7 +300,7 @@ class Griffith:
 		else:
 			view.filter_by_collection(self, id)
 	#}}}
-	
+
 	# languages -------------------------------------------------------{{{
 	def on_lang_add_clicked(self, widget):
 		name = self.lang_name_combo.get_active_text()
@@ -327,7 +328,7 @@ class Griffith:
 			new_name = self.lang_name_combo.get_active_text()
 			if self.db.update_language(id=id, name=new_name):
 				initialize.fill_preferences_languages_combo(self)
-	
+
 	def on_lang_name_combo_changed(self, widget):
 		active = self.lang_name_combo.get_active()
 		if active>-1:
@@ -375,7 +376,7 @@ class Griffith:
 			initialize.fill_preferences_tags_combo(self)
 			initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
-	
+
 	def on_tag_name_combo_changed(self, widget):
 		active = self.tag_name_combo.get_active()
 		if active>-1:
@@ -385,24 +386,24 @@ class Griffith:
 	# main treeview
 	def treeview_clicked(self, *args):
 		main_treeview.treeview_clicked(self)
-					
-	def populate_treeview(self, data):
-		main_treeview.populate(self, data)
-		
+
+	def populate_treeview(self, cursor):
+		main_treeview.populate(self, cursor)
+
 	def get_maintree_selection(self):
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		return tmp_model.get_value(tmp_iter, 1), tmp_iter
-		
+
 	def select_last_row(self, rtotal):
 		if rtotal:
 			self.main_treeview.set_cursor_on_cell(rtotal-1)
-		
+
 	# backup/restore		
-		
+
 	def backup(self, *args):
 		backup.backup(self)
-		
+
 	def restore(self, *args):
 		response = gutils.question(self, \
 			self._("""Are you sure you want to restore?
@@ -413,75 +414,75 @@ You can't undo this operation."""), \
 			backup.restore(self)
 		else:
 			pass
-			
+
 	# cover
-			
+
 	def print_cover_simple_show(self, *args):
 		self.cover_simple_size.set_active(0)
 		self.w_print_cover_simple.show()
-		
+
 	def print_cover_simple_hide(self, *args):
 		self.w_print_cover_simple.hide()
-		
+
 	def print_cover_simple_process(self, *args):
 		movie_id, movie_iter = self.get_maintree_selection()
 		cover.cover_simple(self, movie_id)
-		
+
 	def print_cover_image(self, *args):
 		self.cover_image_size.set_active(0)
 		self.w_print_cover_image.show()
-		
+
 	def print_cover_image_process(self, *args):
 		self.w_print_cover_image.hide()
 		movie_id, movie_iter = self.get_maintree_selection()
 		cover.cover_image(self, movie_id)
-		
+
 	def print_cover_image_hide(self, *args):
 		self.w_print_cover_image.hide()
-		
+
 	# loans management		
-		
+
 	def show_people_window(self, *args):
 		people.show_people_window(self)
-		
+
 	def hide_people_window(self, *args):
 		people.hide_people_window(self)
-		
+
 	def add_person(self, *args):
 		people.add_person(self)
-		
+
 	def add_person_cancel(self, *args):
 		people.add_person_cancel(self)
-	
+
 	def add_person_db(self, *args):
 		people.add_person_db(self)
-		
+
 	def delete_person(self, *args):
 		people.delete_person(self)
-		
+
 	def edit_person(self, *args):
 		people.edit_person(self)
-		
+
 	def update_person(self, *args):
 		people.update_person(self)
-		
+
 	def edit_person_cancel(self, *args):
 		people.edit_person_cancel(self)
-		
+
 	def cancel_loan(self, *args):
 		loan.cancel_loan(self)
 
 	def commit_loan(self, *args):
 		loan.commit_loan(self)
-		
+
 	def return_loan(self, *args):
 		loan.return_loan(self)
-		
+
 	def email_reminder(self, *args):
 		gemail.send_email(self)
-		
+
 	# statusbar
-		
+
 	def count_statusbar(self):
 		text = str(self.total)
 		loaned = self.db.count_records('movies','loaned=1')
@@ -490,16 +491,16 @@ You can't undo this operation."""), \
 			+ str(loaned) + self._(' movie(s) loaned. ')
 			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
 		)
-		
+
 	def update_statusbar(self, text):
 		context_id = self.statusbar.get_context_id(text)
 		message_id = self.statusbar.push(context_id, text)
-		
+
 	# quick filter operations
-		
+
 	def filter_txt(self, *args):
 		quick_filter.change_filter(self)
-		
+
 	def clear_filter(self, *args):
 		quick_filter.clear_filter(self)
 
@@ -507,29 +508,29 @@ You can't undo this operation."""), \
 
 	def filter_loaned(self, *args):
 		view.filter_loaned(self)
-		
+
 	def filter_not_seen(self, *args):
 		view.filter_not_seen(self)
-		
+
 	def filter_all(self, *args):
 		view.filter_all(self)
-		
+
 	def on_delete_event_am(self, *args):
 		self.add_movie_window.hide()
 		return True
-		
+
 	def on_delete_event_pw(self, *args):
 		self.poster_window.hide()
 		return True
-		
+
 	def filter_collection(self, *args):
 		quick_filter.change_filter(self)
 
-	# windows/dialogs  
-	
+	# windows/dialogs
+
 	def results_cancel_ck(self, *args):
 		self.w_results.hide()
-   
+
 	def save_state(self):
 		"""Saves main window state"""
 		pos = self.main_window.get_position()
@@ -539,7 +540,7 @@ You can't undo this operation."""), \
 		self.config["left"] = pos[0]
 		self.config["top"] = pos[1]
 		self.config.save()
-		
+
 	def restore_state(self):
 		"""Restores main window state"""
 		if self.config.get("left") == "None":
@@ -548,13 +549,13 @@ You can't undo this operation."""), \
 			self.main_window.move(int(self.config.get("left")), \
 				int(self.config.get("top")))
 			self.main_window.resize(int(self.config.get("width")), \
-				int(self.config.get("height"))) 
+				int(self.config.get("height")))
 		self.main_window.show()
-   
+
 	def on_delete_event_r(self, *args):
 		self.w_results.hide()
 		return True
-		
+
 	def on_delete_event_poster(self, *args):
 		self.poster_window.hide()
 		return True
@@ -615,18 +616,18 @@ You can't undo this operation."""), \
 			self.toolbar.show()
 		self.config["view_toolbar"] = state
 		self.config.save()
-	
+
 	def new_dbb(self, *args):
 		self.db.new_db(self)
-			
+
 	# key events
-			
+
 	def on_key_press_event(self, widget, event):
 		"""some key events actions"""
 		keyname = gtk.gdk.keyval_name(event.keyval)
 		if keyname == 'Delete' and self.main_treeview.is_focus() == True:
-			self.delete_movie() 
-			
+			self.delete_movie()
+
 	def on_p_tree_button_press_event(self, widget, event):
 		"""add a double click event to people tree"""				
 		if event.type == gtk.gdk._2BUTTON_PRESS:
@@ -645,12 +646,12 @@ You can't undo this operation."""), \
 				self.main_treeview.set_cursor( path, col, 0)
 				self.popup.popup( None, None, None, event.button, time)
 			return 1
-			
+
 	def on_results_button_press_event(self, widget, event):
 		"""add a double click event to add movie results"""
 		if event.type == gtk.gdk._2BUTTON_PRESS:
 			add.populate_with_results(self)
-			
+
 	def on_poster_results_button_press_event(self, widget, event):
 		"""add a double click event to poster results"""
 		if event.type == gtk.gdk._2BUTTON_PRESS:
@@ -660,7 +661,7 @@ You can't undo this operation."""), \
 		"""
 		main griffith application constructor
 		"""	
-		
+
 		# debug object
 		self.debug = gdebug.GriffithDebug()
 		# Configuration
@@ -682,7 +683,7 @@ You can't undo this operation."""), \
 		self.select_last_row(self.total)
 
 		# adding some completion fields
-		
+
 		self.completion = gtk.EntryCompletion()
 		self.am_original_title.set_completion(self.completion)
 		self.completion.set_model(self.treemodel)
@@ -691,23 +692,23 @@ You can't undo this operation."""), \
 		self.am_title.set_completion(self.completion_t)
 		self.completion_t.set_model(self.treemodel)
 		self.completion_t.set_text_column(4)
-				
+
 		initialize.initialize_gtkspell(self)
-		
+
 		# add default folders to some select widgets
-		
+
 		if self.windows:
 			self.p_font.set_current_folder("c:\\windows\\fonts\\")
 		else:
 			self.p_font.set_current_folder("/usr/share/fonts/")
-		
+
 	def main(self):
 		gtk.threads_init()
 		gtk.threads_enter()
 		gtk.main()
 		gtk.threads_leave()
 		return 0
-		
+
 if __name__ == "__main__":
 	griffith = Griffith()
 	griffith.main()

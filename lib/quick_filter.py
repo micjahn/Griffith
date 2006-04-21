@@ -43,7 +43,7 @@ def change_filter(self):
 			where_clause += " AND collection_id = '%s'" % collection_id
 	cursor = self.db.get_all_data(where=where_clause, order_by="number ASC")
 	#self.total_filter = cursor.RecordCount()
-	# TODO: replace this "while" loop with "RecordCount()" when it will be available for SQLite
+	# TODO: replace "while" loop with "RecordCount()" when it will be available for SQLite
 	self.total_filter = 0
 	while not cursor.EOF:
 		self.total_filter += 1

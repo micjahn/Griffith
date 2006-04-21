@@ -35,7 +35,6 @@ try:
 	import gtkspell
 	spell_support = 1
 except:
-	print "gtkspell support not available - please install python-gnome-extras"
 	spell_support = 0
 
 def locations(self):
@@ -55,7 +54,7 @@ def locations(self):
 		import winshell
 		mydocs = winshell.my_documents()
 		griffith_dir = os.path.join(mydocs, 'griffith')
-		
+
 	else:
 		griffith_dir = os.path.join(os.path.expanduser('~'), ".griffith")
 	try:
@@ -72,7 +71,7 @@ def locations(self):
 	if not os.access(griffith_dir, os.W_OK):
 		self.debug.show('Cannot write to griffith directory, %s' % griffith_dir)
 		sys.exit()
-		
+
 	if not os.path.exists(os.path.join(griffith_dir, "posters")):
 		self.debug.show("Creating poster directory")
 		os.makedirs(os.path.join(griffith_dir, "posters"))
@@ -104,7 +103,7 @@ def locations(self):
 	else:
 		print "Operating system not supported"
 		sys.exit()
-				
+
 	# includes plugins in system path for easier impor		
 	sys.path.append(self.locations['lib'])
 	sys.path.append(self.locations['movie_plugins'])
@@ -117,23 +116,23 @@ def locations(self):
 	self._ = gettext.gettext
 	gtk.glade.bindtextdomain(self.APP, self.DIR)
 	gtk.glade.textdomain(self.APP)
-	
+
 	# glade
 	if self.windows:
 		gf = '%s\glade\griffith.glade' % self.locations['exec']
 	else:
 		gf = self.locations['share'] + "/glade/griffith.glade"
 	self.gladefile = gtk.glade.XML(gf)
-	
+
 	widgets.define_widgets(self, self.gladefile)
 	self.pdf_reader = self.config.get('pdf_reader')
-	
+
 def toolbar(self):
 	"""if toolbar is hide in config lets hide the widget"""
 	if not self.config.get("view_toolbar"):
 		self.toolbar.hide()
 		self.menu_toolbar.set_active(False)
-		
+
 def treeview(self):
 	self.treemodel = gtk.TreeStore(gtk.gdk.Pixbuf, str, gtk.gdk.Pixbuf, str, str, str)
 	self.main_treeview.set_model(self.treemodel)
@@ -170,7 +169,7 @@ def treeview(self):
 	# add data to treeview
 	self.total = int(self.db.count_records('movies'))
 	self.main_treeview.show()
-	
+
 def loans_treeview(self):
 	self.loan_history.set_model(self.loans_treemodel)
 	self.loan_history.set_headers_visible(True)
@@ -190,7 +189,7 @@ def loans_treeview(self):
 	self.loaner_column=gtk.TreeViewColumn(_("Loaned To"), renderer, text=2)
 	self.loaner_column.set_resizable(True)
 	self.loan_history.append_column(self.loaner_column)
-	
+
 def movie_plugins(self):
 	"""
 	dinamically finds the movie source information plugins
@@ -211,7 +210,7 @@ def movie_plugins(self):
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
 	self.am_source.set_active(self.d_plugin)
-	
+
 def export_plugins(self):
 	"""
 	dinamically finds the available export plugins
@@ -227,7 +226,7 @@ def export_plugins(self):
 		self.export_menu.append(menu_items)
 		menu_items.connect("activate", self.on_export_activate, plugin_name)
 		menu_items.show()
-		
+
 def people_treeview(self):
 	row = None
 	self.p_treemodel = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
@@ -254,9 +253,9 @@ def people_treeview(self):
 		self.p_treemodel.set_value(myiter, 0, str(row['name']))
 		self.p_treemodel.set_value(myiter, 1, str(row['email']))
 		data.MoveNext()
-	
+
 	self.p_treeview.show()
-	
+
 def combos(self):
 	self.e_condition.insert_text(0, _("Damaged"))
 	self.e_condition.insert_text(1, _("Poor"))
@@ -264,24 +263,24 @@ def combos(self):
 	self.e_condition.insert_text(3, _("Good"))
 	self.e_condition.insert_text(4, _("Excellent"))
 	self.e_condition.insert_text(5, _("N/A"))
-	
+
 	self.p_condition.insert_text(0, _("Damaged"))
 	self.p_condition.insert_text(1, _("Poor"))
 	self.p_condition.insert_text(2, _("Fair"))
 	self.p_condition.insert_text(3, _("Good"))
 	self.p_condition.insert_text(4, _("Excellent"))
 	self.p_condition.insert_text(5, _("N/A"))
-	
+
 	self.e_color.insert_text(0, _("Color"))
 	self.e_color.insert_text(1, _("Black and White"))
 	self.e_color.insert_text(2, _("Mixed"))
 	self.e_color.insert_text(3, _("N/A"))
-	
+
 	self.p_color.insert_text(0, _("Color"))
 	self.p_color.insert_text(1, _("Black and White"))
 	self.p_color.insert_text(2, _("Mixed"))
 	self.p_color.insert_text(3, _("N/A"))
-	
+
 	self.e_region.insert_text(0, _("Region 0 (No Region Coding)"))
 	self.e_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
 	self.e_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
@@ -292,7 +291,7 @@ def combos(self):
 	self.e_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
 	self.e_region.insert_text(8, _("Region 9 (Often used as region free)"))
 	self.e_region.insert_text(9, _("N/A"))
-	
+
 	self.p_region.insert_text(0, _("Region 0 (No Region Coding)"))
 	self.p_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
 	self.p_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
@@ -303,31 +302,31 @@ def combos(self):
 	self.p_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
 	self.p_region.insert_text(8, _("Region 9 (Often used as region free)"))
 	self.p_region.insert_text(9, _("N/A"))
-	
+
 	self.e_layers.insert_text(0, _("Single Side, Single Layer"))
 	self.e_layers.insert_text(1, _("Single Side, Dual Layer"))
 	self.e_layers.insert_text(2, _("Dual Side, Single Layer"))
 	self.e_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.e_layers.insert_text(4, _("N/A"))
-	
+
 	self.p_layers.insert_text(0, _("Single Side, Single Layer"))
 	self.p_layers.insert_text(1, _("Single Side, Dual Layer"))
 	self.p_layers.insert_text(2, _("Dual Side, Single Layer"))
 	self.p_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.p_layers.insert_text(4, _("N/A"))
-	
+
 	self.am_condition.insert_text(0, _("Damaged"))
 	self.am_condition.insert_text(1, _("Poor"))
 	self.am_condition.insert_text(2, _("Fair"))
 	self.am_condition.insert_text(3, _("Good"))
 	self.am_condition.insert_text(4, _("Excellent"))
 	self.am_condition.insert_text(5, _("N/A"))
-	
+
 	self.am_color.insert_text(0, _("Color"))
 	self.am_color.insert_text(1, _("Black and White"))
 	self.am_color.insert_text(2, _("Mixed"))
 	self.am_color.insert_text(3, _("N/A"))
-	
+
 	self.am_region.insert_text(0, _("Region 0 (No Region Coding)"))
 	self.am_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
 	self.am_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
@@ -338,13 +337,13 @@ def combos(self):
 	self.am_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
 	self.am_region.insert_text(8, _("Region 9 (Often used as region free)"))
 	self.am_region.insert_text(9, _("N/A"))
-	
+
 	self.am_layers.insert_text(0, _("Single Side, Single Layer"))
 	self.am_layers.insert_text(1, _("Single Side, Dual Layer"))
 	self.am_layers.insert_text(2, _("Dual Side, Single Layer"))
 	self.am_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.am_layers.insert_text(4, _("N/A"))
-	
+
 	media = self.db.get_all_data("media", order_by="id ASC")
 	while not media.EOF:
 		i = media.GetRowAssoc(0)
@@ -424,7 +423,7 @@ def web_results(self):
 	self.column2.set_resizable(True)
 	self.column2.set_sort_column_id(1)
 	self.results_treeview.append_column(self.column2)
-	
+
 def initialize_gtkspell(self):
 	global spell_support
 	spell_error = False

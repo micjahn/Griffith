@@ -64,7 +64,7 @@ def restore(self):
 		if not response_unzip:
 			gutils.error(self, _("Can't read backup file"), self.main_window)
 			return
-		self.db.conn.close()
+		self.db.conn.Close()
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
 		from initialize	import dictionaries
 		dictionaries(self)

@@ -37,10 +37,9 @@ def update(self):
 		if (int(cursor.fields[0]) != int(id)):
 			gutils.error(self, msg=_("This number is already assigned to:\n %s!") % cursor.fields[1])
 			return False
-	
+
 	cursor = self.db.conn.Execute("SELECT loaned, volume_id, collection_id FROM movies WHERE id='%s'" % id)
 	loaned, volume_id, collection_id = cursor.FetchRow()
-	print 'update.py: loaned='+loaned+'volume_id='+volume_id # FIXME
 	new_volume_id = self.volume_combo_ids[self.e_volume_combo.get_active()]
 	new_collection_id = self.collection_combo_ids[self.e_collection_combo.get_active()]
 	if loaned:
@@ -72,12 +71,12 @@ def update(self):
 			+self.e_classification.get_text()+"', studio = '"
 			+self.e_studio.get_text()+"', site ='"
 			+self.e_site.get_text()+"', condition ="
-		
+
 			+str(self.e_condition.get_active())+", color ="
 			+str(self.e_color.get_active())+", region ="
 			+str(self.e_region.get_active())+", layers ="
 			+str(self.e_layers.get_active())+", imdb ='"
-			
+
 			+self.e_imdb.get_text()+"', seen ='"
 			+seen+"', obs ='"
 			+gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(),obs_buffer.get_end_iter()))+"', trailer='"
@@ -87,13 +86,13 @@ def update(self):
 			+"', volume_id='" + str(new_volume_id)
 			+"', collection_id='" + str(new_collection_id)
 			+"', number = '" + number
-		
+
 			+"' WHERE id = '" + id +"'"
 		)
-		
+
 		# languages
 		selected = {}
-		self.db.cursor.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % id)	# remove old data
+		self.db.conn.Execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % id)	# remove old data
 		for i in self.e_languages:
 			if i['id'].get_active() > 0:
 				lang_id = self.languages_ids[i['id'].get_active()]
@@ -103,16 +102,16 @@ def update(self):
 				selected[lang_id][type] = True
 		for lang in selected.keys():
 			for type in selected[lang].keys():
-				self.db.cursor.execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
+				self.db.conn.Execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
 
 		# tags
 		selected = {}
-		self.db.cursor.execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % id)
+		self.db.conn.Execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % id)
 		for i in self.tags_ids:
 			if self.e_tags[i].get_active() == True:
 				selected[self.tags_ids[i]] = 1
 		for i in selected.keys():
-			self.db.cursor.execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
+			self.db.conn.Execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
 
 		self.update_statusbar(_("Movie information has been updated"))
 		# update main treelist
@@ -123,7 +122,7 @@ def update(self):
 		tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
 		tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
 		tmp_model.set_value(tmp_iter,1,'%004d' % int(number))
-		
+
 		# update volume/collection combo
 		self.e_volume_combo.set_active(int(new_volume_id))
 		self.e_collection_combo.set_active(int(new_collection_id))
@@ -133,19 +132,16 @@ def update(self):
 		self.e_collection_id.hide()
 
 		# refresh winbdow
-		self.treeview_clicked() 
+		self.treeview_clicked()
 	else:
 		gutils.error(self.w_results,_("You should fill the original title"))
 
 def update_image(self,image,id):
-	self.db.cursor.execute(
-		"UPDATE movies SET image = '"
-		+os.path.splitext(image)[0]+"' WHERE number = '"+id+"'")
+	self.db.conn.Execute("UPDATE movies SET image = '" + os.path.splitext(image)[0]+"' WHERE number = '"+id+"'")
 	self.update_statusbar(_("Image has been updated"))
-	
+
 def clear_image(self,id):
-	self.db.cursor.execute(
-		"UPDATE movies SET image = '' WHERE number = '"+id+"'")
+	self.db.conn.Execute("UPDATE movies SET image = '' WHERE number = '"+id+"'")
 	self.update_statusbar(_("Image has been updated"))
 
 def update_language_ids(self):

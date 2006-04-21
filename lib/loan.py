@@ -27,32 +27,34 @@ import gtk
 import datetime
 
 def loan_movie(self):
-	data = self.db.get_all_data("people","name ASC")
+	cursor = self.db.get_all_data("people","name ASC", what="name")
 	model = gtk.ListStore(str)
-	if data:
-		for row in data:
-			model.append([row['name']])
+	if not cursor.EOF:
+		while not cursor.EOF:
+			name = cursor.fields[0]
+			model.append([name])
+			cursor.MoveNext()
 		self.loan_to.set_model(model)
 		self.loan_to.set_text_column(0)
 		self.loan_to.set_active(0)
 		self.w_loan_to.show()
 	else:
 		gutils.info(self, _("No person is defined yet."), self.main_window)
-		
+
 def cancel_loan(self):
 	self.w_loan_to.hide()
-	
+
 def commit_loan(self):
 	person = gutils.on_combo_box_entry_changed(self.loan_to)
 	if person == '' or person == None:
 		return
 	self.w_loan_to.hide()
-	
+
 	# movie is now loaned. change db
 	movie_id = self.e_number.get_text()
 	cursor = self.db.conn.Execute("SELECT volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
-	volume_id, collection_id = cursor.GetRowAssoc(0)
-	data_person = self.db.select_person_by_name(person)
+	volume_id, collection_id = cursor.FetchRow()
+	person_id = self.db.get_value(field="id", table="people", where="name='%s'"%person)
 
 	# ask if user wants to loan whole collection
 	if collection_id>0:
@@ -88,31 +90,31 @@ def commit_loan(self):
 		query +="volume_id"
 	else:
 		query +="movie_id"
-	query += "', 'date', 'return_date') VALUES (Null, '" + str(data_person[0]['id']) + "', '"
+	query += "', 'date', 'return_date') VALUES (Null, '%s', '" % str(person_id)
 	if collection_id > 0 and loan_whole_collection:
 		query += str(collection_id)
 	elif volume_id>0:
 		query += str(volume_id)
 	else:
 		query += str(movie_id)
-	query += "', '" + str(datetime.date.today()) + "', '');"
+	query += "', '%s', Null);" % str(datetime.date.today())
 	self.db.conn.Execute(query)
 
 	# finally, force a refresh
 	self.treeview_clicked()
-	
+
 def return_loan(self):
 	movie_id = self.e_number.get_text()
 	if movie_id:
 		cursor = self.db.conn.Execute("SELECT volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
-		volume_id, collection_id = cursor.GetRowAssoc(0)
+		volume_id, collection_id = cursor.FetchRow()
 
 		collection_is_loaned = False
 		if collection_id>0:
 			# if all movies in collection are loaned, ask if whole collection was returned
 			cursor = self.db.conn.Execute("SELECT loaned FROM collections WHERE id='%s'"%collection_id)
-			collection_is_loaned = cursor.GetRowAssoc(0)[0]
-		
+			collection_is_loaned = cursor.fields[0]
+
 		if volume_id > 0 and collection_is_loaned:
 			self.db.update_collection(id=collection_id, volume_id=volume_id, loaned=0)
 		elif collection_is_loaned:
@@ -121,9 +123,9 @@ def return_loan(self):
 			self.db.update_volume(id=volume_id, loaned=0)
 		else:
 			self.db.conn.Execute("UPDATE movies SET loaned='0' WHERE number='%s';" % movie_id)
-		
+
 		self.update_statusbar(_("Movie returned"))
-		
+
 		data_movie=self.db.select_movie_by_num(movie_id)
 		# fill return information on loans table
 		query = "UPDATE loans SET return_date='%s' WHERE " % str(datetime.date.today())

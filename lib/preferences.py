@@ -30,7 +30,6 @@ try:
 	import gtkspell
 	spell_support = 1
 except:
-	print "gtkspell support not available - please install python-gnome-extras"
 	spell_support = 0
 
 def show_preferences(self):

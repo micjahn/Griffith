@@ -41,7 +41,7 @@ def treeview_clicked(self):
 		obs_buffer = self.e_obs.get_buffer()
 		with_buffer = self.e_with.get_buffer()
 		with_iter = with_buffer.get_start_iter()
-		
+
 		self.e_movie_id.set_text(str(row['id']))
 		self.e_number.set_text(str(row['number']))
 		self.e_original_title.set_text(str(row['original_title']))
@@ -83,7 +83,7 @@ def treeview_clicked(self):
 		if row['obs']<>None:
 			obs_buffer.set_text(str(row['obs']))
 		self.e_media.set_active(int(row['media']))
-		
+
 		# check loan status and adjust buttons and history box
 		if row['loaned']:
 			self.popup_loan.set_sensitive(False)
@@ -99,7 +99,7 @@ def treeview_clicked(self):
 			self.return_button.set_sensitive(False)
 			self.b_email_reminder.set_sensitive(False)
 			self.loan_button.set_sensitive(True)
-			
+
 		# poster
 		tmp_dest = os.path.join(self.griffith_dir, "posters")
 		tmp_img = os.path.join(tmp_dest, "m_%s.jpg"%row['image'])
@@ -132,7 +132,7 @@ def treeview_clicked(self):
 				data_loan = self.db.get_loan_info(volume_id=row['volume_id'])
 			else:
 				data_loan = self.db.get_loan_info(movie_id=row['number'])
-			data_loan = data_loan.GetRowAssoc(0)
+			data_loan = data_loan.GetRowAssoc(0) # FIXME: not working!
 			data_person = self.db.select_person_by_id(data_loan['person_id'])
 			self.person_name = data_person['name']
 			self.person_email = data_person['email']
@@ -140,7 +140,7 @@ def treeview_clicked(self):
 			self.loan_info.set_label(self._("This movie has been loaned to ") + self.person_name + self._(" on ") + self.loan_date[:10])
 		else:
 			self.loan_info.set_label(self._("Movie not loaned"))
-	
+
 		#loan history	
 		self.loans_treemodel.clear()
 		cursor = self.db.get_loan_history(collection_id=row['collection_id'], volume_id=row['volume_id'], movie_id=row['number'])
@@ -195,7 +195,7 @@ def populate(self, cursor):
 		row = cursor.GetRowAssoc(0)
 		myiter = self.treemodel.append(None)
 		self.treemodel.set_value(myiter,1,'%004d' % int(row['number']))
-		
+
 		# check preferences to hide or show columns
 		if (self.config.get('view_otitle') == 'True'):
 			self.otitle_column.set_visible(True)

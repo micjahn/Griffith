@@ -55,7 +55,7 @@ def filter_by_volume(self, volume_id):
 	self.go_last()
 	
 def filter_by_collection(self, collection_id):
-	self.db.conn.Execute("SELECT name FROM collections WHERE id = '%s'" % collection_id)
+	cursor = self.db.conn.Execute("SELECT name FROM collections WHERE id = '%s'" % collection_id)
 	collection_name = cursor.fields[0]
 	self.update_statusbar(_("Filter activated. Showing only movies from collection: %s")%collection_name)
 	cursor = self.db.select_movies_by_collection(collection_id)
