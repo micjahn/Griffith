@@ -35,7 +35,7 @@ from PIL import Image
 
 def change_poster(self):
 	"""
-	changes movie poster image to a custom one 
+	changes movie poster image to a custom one
 	showing a file chooser dialog to select it
 	"""
 	import shutil
@@ -56,7 +56,7 @@ def change_poster(self):
 			
 def delete_poster(self):
 	m_id, m_iter = self.get_maintree_selection()
-	poster = self.db.select_movie_by_num(m_id)[0]['image']
+	poster = self.db.get_value(field="image", table="movies", where="number='%s'"%m_id)
 	response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.main_window)
 	if response==-8:
 		image_path = self.locations['images'] + "/default.png"
@@ -154,8 +154,9 @@ def clear_details(self):
 def fetch_bigger_poster(self):
 	match = 0
 	self.debug.show("fetching poster from amazon")
-	this_movie = self.db.select_movie_by_num(self.e_number.get_text())
-	current_poster = this_movie[0]['image']
+	cursor = self.db.select_movie_by_num(self.e_number.get_text())
+	this_movie = cursor.GetRowAssoc(0)
+	current_poster = this_movie['image']
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 		
 	try:
@@ -230,18 +231,17 @@ def get_poster(self, f, result, current_poster):
 		gutils.garbage(handler)
 		
 		try:
-		    im = Image.open(file_to_copy)
+			im = Image.open(file_to_copy)
 		except IOError:
-		    self.debug.show("failed to identify %s"%file_to_copy)
+			self.debug.show("failed to identify %s"%file_to_copy)
 		else:
-		    if im.format == "GIF":
+			if im.format == "GIF":
 				gutils.warning(self, _("Sorry. This poster image format is not supported."))
 				os.remove(file_to_copy)
 				return
 		self.poster_window.show()
 		self.poster_window.move(0,0)
-		response = \
-				gutils.question(self, \
+		response = gutils.question(self, \
 				_("Do you want to use this poster instead?"), \
 				1, self.main_window)
 		if response == -8:
