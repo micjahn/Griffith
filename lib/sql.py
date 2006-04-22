@@ -412,10 +412,11 @@ class GriffithSQL:
 
 	# add data ---------------------------------------------------------{{{
 	def add_movie(self, t_movies, t_languages, t_tags):
-		query = "INSERT INTO movies (id,"
+		query = "INSERT INTO movies ("
 		for field in t_movies.keys():
 			query += "'%s'," % field
-		query = query[:len(query)-1] + ") VALUES (Null," # remove last comma
+		query = query[:len(query)-1]	# remove last comma
+		query += ") VALUES ("
 		for field in t_movies:
 			query += "'%s'," % t_movies[field]
 		query = query[:len(query)-1] + ");" # remove last comma

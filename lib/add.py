@@ -385,10 +385,10 @@ def clone_movie(self):
 	if movie_id == None:
 		return false
 		
-	row = self.db.select_movie_by_num(m_id)[0]
+	row = self.db.get_all_data(where="number='%s'"%m_id).GetRowAssoc(0)
 	next_number = gutils.find_next_available(self)
 	new_image = str(row['image']) + '_' + str(next_number)
-	data = {
+	t_movies = {
 		'actors'         : gutils.gescape(str(row['actors'])),
 		'classification' : gutils.gescape(str(row['classification'])),
 		'color'          : gutils.gescape(str(row['color'])),
@@ -415,26 +415,28 @@ def clone_movie(self):
 		'trailer'        : gutils.gescape(str(row['trailer'])),
 		'year'           : gutils.gescape(str(row['year']))
 	}
-	self.db.add_movie(self, data)
-	# TODO: loan problems (don't copy volume/collection data until resolved)
-	next_movie_id = self.db.get_value(field="id", table="movies", where="number='%s'"%next_number)
 	# tags
+	t_tags = {}
 	cursor = self.db.get_all_data(table_name="movie_tag",what="tag_id", where="movie_id='%s'"%movie_id)
 	while not cursor.EOF:
-		tag_id = cursor.fields[0]
-		self.db.conn.Execute("""
-			INSERT INTO movie_tag('movie_id','tag_id') VALUES('%s','%s')""" % \
-				(next_movie_id, tag_id))
+		t_tags[cursor.fields[0]] = 1
 		cursor.MoveNext()
 	# languages
+	t_languages = {}
 	cursor = self.db.get_all_data(table_name="movie_lang",what="lang_id, type", where="movie_id='%s'"%movie_id)
 	while not cursor.EOF:
-		item = cursor.GetRowAssoc(0)
-		self.db.conn.Execute("""
-			INSERT INTO movie_lang('movie_id','lang_id', 'type')
-				VALUES('%s','%s', '%s')""" % \
-			(next_movie_id, item['lang_id'], item['type']))
+		lang_id = cursor.fields[0]
+		type = cursor.fields[1]
+		if not t_languages.has_key(lang_id):
+			t_languages[lang_id] = {}
+		t_languages[lang_id][type] = True
 		cursor.MoveNext()
+		
+	self.db.add_movie(t_movies, t_languages, t_tags)
+
+	# WARNING: loan problems (don't copy volume/collection data until resolved)
+
+	next_movie_id = self.db.get_value(field="id", table="movies", where="number='%s'"%next_number)
 	tmp_dest = os.path.join(self.griffith_dir, "posters")
 	if str(str(row['image'])) != '':
 		image_path = os.path.join(tmp_dest, str(row['image'])+".jpg")
@@ -456,3 +458,4 @@ def clone_movie(self):
 	self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
 	self.main_treeview.set_cursor(next_number-1)
 	self.treeview_clicked()
+
