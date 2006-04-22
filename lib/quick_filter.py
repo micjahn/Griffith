@@ -48,6 +48,7 @@ def change_filter(self):
 	while not cursor.EOF:
 		self.total_filter += 1
 		cursor.MoveNext()
+	cursor = self.db.get_all_data(where=where_clause, order_by="number ASC") # FIXME: python-adodb doesn't have MoveFirst()
 	self.populate_treeview(cursor)
 	self.go_last()
 		

@@ -133,8 +133,7 @@ def treeview_clicked(self):
 			else:
 				data_loan = self.db.get_loan_info(movie_id=row['number'])
 			data_loan = data_loan.GetRowAssoc(0)
-			data_person = self.db.select_person_by_id(data_loan['person_id'])
-			data_person = data_person.GetRowAssoc(0)
+			data_person = self.db.select_person_by_id(data_loan['person_id']).GetRowAssoc(0)
 			self.person_name = data_person['name']
 			self.person_email = data_person['email']
 			self.loan_date = str(data_loan['date'])
