@@ -27,7 +27,6 @@ import os
 import gtk
 import htmlentitydefs
 import re
-import zipfile
 import webbrowser
 import gobject
 
@@ -202,52 +201,6 @@ def gdecode(txt, encode):
 	except:
 		return txt
 	
-# I/O functions
-def backup(source, target):
-
-	try:
-		mzip = zipfile.ZipFile(target, 'w')
-		mzip.write(os.path.join(source,'griffith.gri'))
-		mzip.write(os.path.join(source,'griffith.conf'))
-		tmp_path=os.path.join(source,'posters')
-		for each in os.listdir(tmp_path):
-			mzip.write(os.path.join(tmp_path,each))
-	except:
-		return 0
-	mzip.close()
-	return 1
-		
-def restore(file, dir):
-	try:
-		zip = zipfile.ZipFile(file, 'r')
-		for each in zip.namelist():
-			file_to_restore = os.path.split(each)
-			if os.path.isdir(file_to_restore[1]):
-				pass
-			if file_to_restore[1].endswith('.gri'):
-				myfile = os.path.join(dir,file_to_restore[1])
-				outfile = open(myfile, 'wb')
-				outfile.write(zip.read(each))
-				outfile.flush()
-				outfile.close()
-			elif file_to_restore[1].endswith('config'):
-				myfile = os.path.join(dir,file_to_restore[1])
-				outfile = open(myfile, 'wb')
-				outfile.write(zip.read(each))
-				outfile.flush()
-				outfile.close()
-			elif file_to_restore[1].endswith('.jpg'):
-				mypath = os.path.join(dir,'posters')
-				myfile = os.path.join(mypath,file_to_restore[1])
-				outfile = open(myfile, 'wb')
-				outfile.write(zip.read(each))
-				outfile.flush()
-				outfile.close()	
-		return 1
-	except:
-		return 0
-	zip.close()
-			
 # Messages
 
 def error(self, msg, parent=None):

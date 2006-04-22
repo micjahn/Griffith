@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2006 Vasco Nunes
 
 2006-04-22 Piotr Ozarowski <ozarow@gmail.com>
+	* Backup/restore function rewrited (smaller zipfile)
+
+2006-04-21 Piotr Ozarowski <ozarow@gmail.com>
 	* Adding another numeric tag/lang/volume/collection is now not possible
 
 2006-04-20 Piotr Ozarowski <ozarow@gmail.com>

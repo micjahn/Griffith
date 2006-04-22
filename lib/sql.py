@@ -168,8 +168,8 @@ class GriffithSQL:
 				'name' STRING NOT NULL,
 				'loaned' INT(1) NOT NULL default '0'
 			);
-			INSERT INTO 'volumes' VALUES (0,'','0');
 		""")
+		self.conn.Execute("INSERT INTO 'volumes' VALUES (0,'','0');")
 
 	def create_table_collections(self):
 		self.debug.show("Creating 'collections' table...")
@@ -180,8 +180,8 @@ class GriffithSQL:
 				'name' STRING NOT NULL,
 				'loaned' INT(1) NOT NULL default '0'
 			);
-			INSERT INTO 'collections' VALUES (0,'','0');
 		""")
+		self.conn.Execute("INSERT INTO 'collections' VALUES (0,'','0');")
 
 	def create_table_media(self):
 		self.debug.show("Creating 'media' table...")
@@ -191,19 +191,19 @@ class GriffithSQL:
 				'id' INTEGER PRIMARY KEY,
 				'name' STRING NOT NULL
 			);
-			INSERT INTO 'media' VALUES (0, "DVD");
-			INSERT INTO 'media' VALUES (1, "DVD-R");
-			INSERT INTO 'media' VALUES (2, "DVD-RW");
-			INSERT INTO 'media' VALUES (3, "DVD+R");
-			INSERT INTO 'media' VALUES (4, "DVD+RW");
-			INSERT INTO 'media' VALUES (5, "DVD-RAM");
-			INSERT INTO 'media' VALUES (6, "CD");
-			INSERT INTO 'media' VALUES (7, "CD-RW");
-			INSERT INTO 'media' VALUES (8, "VCD");
-			INSERT INTO 'media' VALUES (9, "SVCD");
-			INSERT INTO 'media' VALUES (10, "VHS");
-			INSERT INTO 'media' VALUES (11, "BETACAM");
 		""")
+		self.conn.Execute("INSERT INTO 'media' VALUES (0, 'DVD');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (1, 'DVD-R');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (2, 'DVD-RW');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (3, 'DVD+R');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (4, 'DVD+RW');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (5, 'DVD-RAM');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (6, 'CD');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (7, 'CD-RW');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (8, 'VCD');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (9, 'SVCD');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (10, 'VHS');")
+		self.conn.Execute("INSERT INTO 'media' VALUES (11, 'BETACAM');")
 
 	def create_table_languages(self):
 		self.debug.show("Creating 'languages' table...")
@@ -213,8 +213,8 @@ class GriffithSQL:
 				'id' INTEGER PRIMARY KEY,
 				'name' STRING NOT NULL
 			);
-			INSERT INTO 'languages' VALUES (0,'');
 		""")
+		self.conn.Execute("INSERT INTO 'languages' VALUES (0,'');")
 
 	def create_table_movie_lang(self):
 		self.debug.show("Creating 'movie_lang' table...")
@@ -235,8 +235,8 @@ class GriffithSQL:
 				'id' INTEGER PRIMARY KEY,
 				'name' STRING NOT NULL
 			);
-			INSERT INTO 'tags' VALUES (0, '""" + _("Favourite") + "');" \
-		)
+		""")
+		self.conn.Execute("INSERT INTO 'tags' VALUES (0, '" + _("Favourite") + "');")
 
 	def create_table_movie_tag(self):
 		self.debug.show("Creating 'movie_tag' table...")
@@ -256,7 +256,7 @@ class GriffithSQL:
 			self.conn.Execute("SELECT id FROM movies LIMIT 1")
 		except:
 			self.create_db()
-			return
+			return True
 		try:
 			self.conn.Execute("SELECT id FROM volumes LIMIT 1")
 		except:
@@ -269,7 +269,6 @@ class GriffithSQL:
 			self.conn.Execute("SELECT id FROM media LIMIT 1")
 		except:
 			self.create_table_media()
-			self.update_old_media()
 		try:
 			self.conn.Execute("SELECT id FROM languages LIMIT 1")
 		except:
@@ -392,24 +391,22 @@ class GriffithSQL:
 
 	def update_old_media(self):
 		self.debug.show("Upgrading old media values...")
-		self.conn.Execute("""
-			UPDATE movies SET media = '0' WHERE media = 'DVD';
-			UPDATE movies SET media = '1' WHERE media = 'DVD-R';
-			UPDATE movies SET media = '2' WHERE media = 'DVD-RW';
-			UPDATE movies SET media = '3' WHERE media = 'DVD+R';
-			UPDATE movies SET media = '4' WHERE media = 'DVD+RW';
-			UPDATE movies SET media = '5' WHERE media = 'DVD-RAM';
-			UPDATE movies SET media = '6' WHERE media = 'DivX';
-			UPDATE movies SET media = '6' WHERE media = 'DIVX';
-			UPDATE movies SET media = '6' WHERE media = 'XviD';
-			UPDATE movies SET media = '6' WHERE media = 'XVID';
-			UPDATE movies SET media = '6' WHERE media = 'WMV';
-			UPDATE movies SET media = '6' WHERE media = 'WMV';
-			UPDATE movies SET media = '8' WHERE media = 'VCD';
-			UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	
-			UPDATE movies SET media = '10' WHERE media = 'VHS';
-			UPDATE movies SET media = '11' WHERE media = 'BETACAM';
-		""")
+		self.conn.Execute("UPDATE movies SET media = '0' WHERE media = 'DVD';")
+		self.conn.Execute("UPDATE movies SET media = '1' WHERE media = 'DVD-R';")
+		self.conn.Execute("UPDATE movies SET media = '2' WHERE media = 'DVD-RW';")
+		self.conn.Execute("UPDATE movies SET media = '3' WHERE media = 'DVD+R';")
+		self.conn.Execute("UPDATE movies SET media = '4' WHERE media = 'DVD+RW';")
+		self.conn.Execute("UPDATE movies SET media = '5' WHERE media = 'DVD-RAM';")
+		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'DivX';")
+		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'DIVX';")
+		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'XviD';")
+		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'XVID';")
+		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'WMV';")
+		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'WMV';")
+		self.conn.Execute("UPDATE movies SET media = '8' WHERE media = 'VCD';")
+		self.conn.Execute("UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	")
+		self.conn.Execute("UPDATE movies SET media = '10' WHERE media = 'VHS';")
+		self.conn.Execute("UPDATE movies SET media = '11' WHERE media = 'BETACAM';")
 
 	# }}}
 
