@@ -140,7 +140,7 @@ class GriffithSQL:
 			volume_id INTEGER default '0',
 			collection_id INTEGER default '0',
 			date DATE NOT NULL default '0000-00-00',
-			return_date DATE
+			return_date DATE DEFAULT ''
 		)"""
 		self.conn.Execute(query)
 
@@ -709,15 +709,13 @@ class GriffithSQL:
 				try:
 					self.conn.Execute("UPDATE volumes SET loaned='1' WHERE id='%s';"%volume_id)
 				except:
-					self.debug.show("ERROR during updating volume's loan data!")
+					self.debug.show("ERROR during updating collection's loan data!")
 					return False
 			return True
 		elif loaned==0:
 			try:
-				self.conn.Execute("""
-					UPDATE collections SET loaned='0' WHERE id='%s';
-					UPDATE movies SET loaned='0' WHERE collection_id='%s';
-				""" %( id, id))
+				self.conn.Execute("UPDATE collections SET loaned='0' WHERE id='%s';" % id)
+				self.conn.Execute("UPDATE movies SET loaned='0' WHERE collection_id='%s';" % id)
 			except:
 				self.debug.show("ERROR during updating collection's loan data!")
 				return False

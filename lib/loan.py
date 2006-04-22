@@ -83,21 +83,21 @@ def commit_loan(self):
 
 	# next, we insert a new row on the loans table
 	data_movie=self.db.select_movie_by_num(movie_id)
-	query = "INSERT INTO 'loans'('id', 'person_id','"
+	query = "INSERT INTO 'loans'('person_id','"
 	if collection_id > 0 and loan_whole_collection:
 		query +="collection_id"
 	elif volume_id > 0:
 		query +="volume_id"
 	else:
 		query +="movie_id"
-	query += "', 'date', 'return_date') VALUES (Null, '%s', '" % str(person_id)
+	query += "', 'date', 'return_date') VALUES ('%s', '" % str(person_id)
 	if collection_id > 0 and loan_whole_collection:
 		query += str(collection_id)
 	elif volume_id>0:
 		query += str(volume_id)
 	else:
 		query += str(movie_id)
-	query += "', '%s', Null);" % str(datetime.date.today())
+	query += "', '%s', '');" % str(datetime.date.today())
 	self.db.conn.Execute(query)
 
 	# finally, force a refresh

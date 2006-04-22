@@ -8,7 +8,7 @@ Griffith ChangeLog
 	* Adding another numeric tag/lang/volume/collection is now not possible
 
 2006-04-20 Piotr Ozarowski <ozarow@gmail.com>
-	* ADOdb transition
+	* ADOdb transition started
 
 2006-04-17 Piotr Ozarowski <ozarow@gmail.com>
 	* Version changed to 0.6.1+svn
