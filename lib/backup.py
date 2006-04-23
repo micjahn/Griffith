@@ -81,27 +81,18 @@ def restore(self):
 		except:
 			gutils.error(self, _("Can't read backup file"), self.main_window)
 			return False
+		mypath = os.path.join(self.griffith_dir,'posters')
 		for each in zip.namelist():
 			file_to_restore = os.path.split(each)
-			if os.path.isdir(file_to_restore[1]):
-				pass
-			if file_to_restore[1].endswith('.db'):
+			if not os.path.isdir(file_to_restore[1]):
+				#if file_to_restore[1].endswith('.db'):
 				# TODO: what if self.config[default_db] has a custom name?
 				# (we dont have new config loaded yet, so we dont know the name)
-				myfile = os.path.join(self.griffith_dir,file_to_restore[1])
-				outfile = open(myfile, 'wb')
-				outfile.write(zip.read(each))
-				outfile.flush()
-				outfile.close()
-			elif file_to_restore[1].endswith('config'):
-				myfile = os.path.join(self.griffith_dir,file_to_restore[1])
-				outfile = open(myfile, 'wb')
-				outfile.write(zip.read(each))
-				outfile.flush()
-				outfile.close()
-			elif file_to_restore[1].endswith('.jpg'):
-				mypath = os.path.join(self.griffith_dir,'posters')
-				myfile = os.path.join(mypath,file_to_restore[1])
+				
+				if file_to_restore[1].endswith('.jpg'):
+					myfile = os.path.join(mypath,file_to_restore[1])
+				else:
+					myfile = os.path.join(self.griffith_dir,file_to_restore[1])
 				outfile = open(myfile, 'wb')
 				outfile.write(zip.read(each))
 				outfile.flush()
@@ -120,4 +111,75 @@ def restore(self):
 		self.treeview_clicked()
 		self.count_statusbar()
 		gutils.info(self, _("Backup restored"), self.main_window)
+
+def merge(self):
+	"""merge a griffith compressed backup"""
+	filename = gutils.file_chooser(_("Restore Griffith backup"), \
+		action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
+		(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, \
+		gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+	if filename[0]:
+		from tempfile import mkdtemp
+		from shutil import rmtree, move
+		tmp_dir=mkdtemp()
+		try:
+			zip = zipfile.ZipFile(filename[0], 'r')
+		except:
+			gutils.error(self, _("Can't read backup file"), self.main_window)
+			return False
+		for each in zip.namelist():
+			file_to_restore = os.path.split(each)
+			if not os.path.isdir(file_to_restore[1]):
+				myfile = os.path.join(tmp_dir,file_to_restore[1])
+				outfile = open(myfile, 'wb')
+				outfile.write(zip.read(each))
+				outfile.flush()
+				outfile.close()
+		zip.close()
+
+		ndb=sql.GriffithSQL(self.config, self.debug, tmp_dir)
+
+		merged=0
+		movies=0
+		cursor = ndb.get_all_data()
+		while not cursor.EOF:
+			movies+=1
+			row = cursor.GetRowAssoc(0)
+			old = self.db.get_value(table="movies", field="number", where="original_title='%s'" \
+				% gutils.gescape(str(row['original_title'])))
+			next = gutils.find_next_available(self)
+			if old != None:
+				self.debug.show('MERGE: %s: Movie "%s" already present in database'%(old,row['original_title']))
+				cursor.MoveNext()
+				continue
+			self.debug.show('MERGE: Adding "%s" to database (new number: %s)'%(row['original_title'],next))
+			t_movies = {}
+			for key in row.keys():
+				t_movies[key] = gutils.gescape(str(row[key]))
+			t_movies['number'] = next	# replace number with new one
+			# TODO: tags and languages
+			self.db.add_movie(t_movies)
+			dest_file = os.path.join(self.griffith_dir,'posters',row['image']+'.jpg')
+			if not os.path.isfile(dest_file):
+				src_file = os.path.join(tmp_dir,row['image']+'.jpg')
+				if os.path.isfile(src_file):
+					move(src_file, dest_file)
+			merged+=1
+			cursor.MoveNext()
+		ndb.conn.Close();
+
+		rmtree(tmp_dir)
+
+#		self.db.conn.Close()
+#		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
+		from initialize	import dictionaries
+		dictionaries(self)
+		# let's refresh the treeview
+		self.clear_details()
+		self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
+		self.total = self.db.count_records("movies")
+		self.select_last_row(self.total)
+		self.treeview_clicked()
+		self.count_statusbar()
+		gutils.info(self, _("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies,merged)), self.main_window)
 

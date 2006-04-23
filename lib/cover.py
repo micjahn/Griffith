@@ -155,8 +155,9 @@ def cover_simple(self, id):
 	c.rect(pos_x, pos_y, cover_x, cover_y)
 	
 	# get movie information from db
-	data = self.db.select_movie_by_num(id)
-	for row in data:
+	cursor = self.db.select_movie_by_num(id)
+	while not cursor.EOF:
+		row = cursor.GetRowAssoc(0)
 		if number == True:
 			c.setFont(fontName, 10)
 			c.drawCentredString(pageWidth/2, 530, id)
@@ -187,6 +188,7 @@ def cover_simple(self, id):
 		# draw bigger poster image
 		if poster == True and str(row['image']):
 			c.drawImage(image, x=(pageWidth-(pageWidth-cover_x)-235), y=(pageHeight/2)-125, width=180, height=250)
+		cursor.MoveNext()
 	c.showPage()
 	c.save()
 	self.w_print_cover_simple.hide()

@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2006-04-22 Piotr Ozarowski <ozarow@gmail.com>
 	* Backup/restore function rewrited (smaller zipfile)
+	* Merge database function added (rewrited coffelius's patch)
 
 2006-04-21 Piotr Ozarowski <ozarow@gmail.com>
 	* Adding another numeric tag/lang/volume/collection is now not possible

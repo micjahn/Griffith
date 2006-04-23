@@ -274,6 +274,7 @@ def define_widgets(self, gladefile):
 		"on_save_preferences_clicked"           : self.save_preferences,
 		"on_backup_activate"                    : self.backup,
 		"on_restore_activate"                   : self.restore,
+		"on_merge_activate"                     : self.merge,
 		"on_cover_simple_activate"              : self.print_cover_simple_show,
 		"on_cancel_print_cover_simple_clicked"  : self.print_cover_simple_hide,
 		"on_b_print_cover_simple_clicked"       : self.print_cover_simple_process,

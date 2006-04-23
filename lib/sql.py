@@ -411,7 +411,7 @@ class GriffithSQL:
 	# }}}
 
 	# add data ---------------------------------------------------------{{{
-	def add_movie(self, t_movies, t_languages, t_tags):
+	def add_movie(self, t_movies, t_languages=None, t_tags=None):
 		query = "INSERT INTO movies ("
 		for field in t_movies.keys():
 			query += "'%s'," % field
@@ -425,13 +425,16 @@ class GriffithSQL:
 		id = self.get_value(field="id", table="movies", where="number = '%s'" % t_movies['number'])
 
 		# languages
-		for lang in t_languages.keys():
-			for type in t_languages[lang].keys():
-				self.conn.Execute("INSERT INTO movie_lang(movie_id, lang_id, type) VALUES ('%s', '%s', '%s');" % (id, lang, type) )
-
+		if t_languages != None:
+			for lang in t_languages.keys():
+				for type in t_languages[lang].keys():
+					self.conn.Execute("INSERT INTO movie_lang(movie_id, lang_id, type) \
+							VALUES ('%s', '%s', '%s');" % (id, lang, type) )
 		# tags
-		for i in t_tags.keys():
-			self.conn.Execute("INSERT INTO movie_tag(movie_id, tag_id) VALUES ('%s', '%s');" % (id, i) )
+		if t_tags != None:
+			for i in t_tags.keys():
+				self.conn.Execute("INSERT INTO movie_tag(movie_id, tag_id) \
+						VALUES ('%s', '%s');" % (id, i) )
 
 	def add_volume(self, name):
 		# check if volume already exists

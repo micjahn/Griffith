@@ -411,8 +411,15 @@ You can't undo this operation."""), \
 			1, self.main_window)
 		if response == gtk.RESPONSE_YES:
 			backup.restore(self)
-		else:
-			pass
+
+	def merge(self, *args):
+		response = gutils.question(self, \
+			self._("""Are you sure you want to mix?
+Your current movie collection will be mixed with a backup.
+You can't undo this operation."""), \
+			1, self.main_window)
+		if response == gtk.RESPONSE_YES:
+			backup.merge(self)
 
 	# cover
 
