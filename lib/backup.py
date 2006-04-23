@@ -22,11 +22,12 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from gettext import gettext as _
-import gutils
+import config
+import edit
 import gtk
+import gutils
 import os.path
 import sql
-import edit
 import zipfile
 
 def backup(self):
@@ -86,7 +87,7 @@ def restore(self):
 			file_to_restore = os.path.split(each)
 			if not os.path.isdir(file_to_restore[1]):
 				#if file_to_restore[1].endswith('.db'):
-				# TODO: what if self.config[default_db] has a custom name?
+				# TODO: what if self.config['default_db'] has a custom name?
 				# (we dont have new config loaded yet, so we dont know the name)
 				
 				if file_to_restore[1].endswith('.jpg'):
@@ -121,12 +122,15 @@ def merge(self):
 	if filename[0]:
 		from tempfile import mkdtemp
 		from shutil import rmtree, move
+		
 		tmp_dir=mkdtemp()
+		
 		try:
 			zip = zipfile.ZipFile(filename[0], 'r')
 		except:
 			gutils.error(self, _("Can't read backup file"), self.main_window)
 			return False
+
 		for each in zip.namelist():
 			file_to_restore = os.path.split(each)
 			if not os.path.isdir(file_to_restore[1]):
@@ -137,11 +141,21 @@ def merge(self):
 				outfile.close()
 		zip.close()
 
-		ndb=sql.GriffithSQL(self.config, self.debug, tmp_dir)
+		# load stored database filename
+		filename = config.Config(file=os.path.join(tmp_dir,'griffith.conf'))["default_db"]
+		filename = os.path.join(tmp_dir,filename)
+		# check if file needs conversion
+		if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
+			self.debug.show("MERGE: SQLite2 database format detected. Converting...")
+			if not self.db.convert_from_sqlite2(filename, os.path.join(tmp_dir, self.config["default_db"])):
+				self.debug.show("MERGE: Can't convert database, aborting.")
+				return False
+
+		tmp_db = sql.GriffithSQL(self.config, self.debug, tmp_dir)
 
 		merged=0
 		movies=0
-		cursor = ndb.get_all_data()
+		cursor = tmp_db.get_all_data()
 		while not cursor.EOF:
 			movies+=1
 			row = cursor.GetRowAssoc(0)
@@ -149,16 +163,17 @@ def merge(self):
 				% gutils.gescape(str(row['original_title'])))
 			next = gutils.find_next_available(self)
 			if old != None:
-				self.debug.show('MERGE: %s: Movie "%s" already present in database'%(old,row['original_title']))
+				#self.debug.show('MERGE: %s: Movie "%s" already present in database'%(old,row['original_title']))
 				cursor.MoveNext()
 				continue
-			self.debug.show('MERGE: Adding "%s" to database (new number: %s)'%(row['original_title'],next))
+			#self.debug.show('MERGE: Adding "%s" to database (new number: %s)'%(row['original_title'],next))
 			t_movies = {}
 			for key in row.keys():
 				t_movies[key] = gutils.gescape(str(row[key]))
 			t_movies['number'] = next	# replace number with new one
 
-			# dont restore volume/collection/tag/language/loan data (it's dangerous)
+			# don't restore volume/collection/tag/language/loan data (it's dangerous)
+			t_movies.pop('id')
 			t_movies.pop('volume_id')
 			t_movies.pop('collection_id')
 			t_movies.pop('loaned')
@@ -172,12 +187,10 @@ def merge(self):
 					move(src_file, dest_file)
 			merged+=1
 			cursor.MoveNext()
-		ndb.conn.Close();
+		tmp_db.conn.Close();
 
 		rmtree(tmp_dir)
 
-#		self.db.conn.Close()
-#		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
 		from initialize	import dictionaries
 		dictionaries(self)
 		# let's refresh the treeview

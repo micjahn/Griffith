@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-04-23 Piotr Ozarowski <ozarow@gmail.com>
+	* SQLite2 database automatic conversion added
+
 2006-04-22 Piotr Ozarowski <ozarow@gmail.com>
 	* Backup/restore function rewritten (smaller zipfile)
 	* Merge database function added (rewritten coffelius's patch)

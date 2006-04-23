@@ -35,9 +35,14 @@ class GriffithSQL:
 		self.griffith_dir = griffith_dir
 		self.config = config
 		self.debug = debug
-		config['default_db'] = 'griffith.db' # FIXME: update configuration
+		filename = os.path.join(griffith_dir, config["default_db"])
+		if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
+			self.debug.show("SQLite2 database format detected. Converting...")
+			if self.convert_from_sqlite2(filename, os.path.join(griffith_dir, "griffith.db")):
+				self.config["default_db"] = "griffith.db"
+				self.config.save()
 		self.conn = adodb.NewADOConnection('sqlite')
-		self.conn.Connect(database=os.path.join(griffith_dir, config.get('default_db')))
+		self.conn.Connect(database=os.path.join(griffith_dir, config['default_db']))
 
 		self.check_if_table_exists()
 
@@ -843,4 +848,59 @@ class GriffithSQL:
 	def is_collection_loaned(self,collection):
 		return self.conn.GetRow("SELECT loaned FROM collections WHERE id = '%s'" % collection)[0]
 
+	def convert_from_sqlite2(self, source_file, destination_file):	#{{{
+		try:
+			import sqlite
+		except:
+			self.debug.show("SQLite2 conversion: please install pysqlite legacy (v1.0) - more info in README file")
+			return False
+		
+		def copy_table(sqlite2_cursor, adodb_conn, table_name):
+			sqlite2_cursor.execute("SELECT * FROM %s"%table_name)
+			data = sqlite2_cursor.fetchall()
+			for row in data:
+				query = "INSERT INTO %s("%table_name
+				for column in row.keys():
+					query += column+','
+				query = query[:len(query)-1]
+				query += ") VALUES ("
+				for value in row:
+					if value == None:
+						query += "NULL,"
+					else:
+						query += "'%s'"%gutils.gescape(str(value)) + ','
+				query = query[:len(query)-1] + ');'
+				adodb_conn.Execute(query)
+		
+		from tempfile import mkdtemp
+		from shutil import rmtree, move
+		tmp_dir=mkdtemp()
+		
+		sqlite2_con = sqlite.connect(source_file,autocommit=1)
+		sqlite2_cursor = sqlite2_con.cursor()
+
+		new_db = GriffithSQL(self.config, self.debug, tmp_dir)
+		# remove default values
+		new_db.conn.Execute("DELETE FROM volumes")
+		new_db.conn.Execute("DELETE FROM collections")
+		new_db.conn.Execute("DELETE FROM media")
+		new_db.conn.Execute("DELETE FROM languages")
+		new_db.conn.Execute("DELETE FROM tags")
+
+		copy_table(sqlite2_cursor, new_db.conn, "movies")
+		copy_table(sqlite2_cursor, new_db.conn, "volumes")
+		copy_table(sqlite2_cursor, new_db.conn, "collections")
+		copy_table(sqlite2_cursor, new_db.conn, "loans")
+		copy_table(sqlite2_cursor, new_db.conn, "people")
+		copy_table(sqlite2_cursor, new_db.conn, "media")
+		copy_table(sqlite2_cursor, new_db.conn, "languages")
+		copy_table(sqlite2_cursor, new_db.conn, "movie_lang")
+		copy_table(sqlite2_cursor, new_db.conn, "movie_tag")
+		copy_table(sqlite2_cursor, new_db.conn, "tags")
+
+		move(os.path.join(tmp_dir,self.config["default_db"]), destination_file)
+		self.debug.show("Cnnvert from SQLite2: " + destination_file + " created")
+		new_db.conn.Close();
+		rmtree(tmp_dir)
+		return True	#}}}
 # vim: fdm=marker
