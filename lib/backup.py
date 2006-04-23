@@ -96,9 +96,13 @@ def restore(self):
 				outfile.close()
 		zip.close()
 
-		# load stored database filename
-		filename = config.Config(file=os.path.join(self.griffith_dir,'griffith.conf'))["default_db"]
-		filename = os.path.join(self.griffith_dir,filename)
+		# restore config file
+		old_default_db = self.config["default_db"]
+		self.config = config.Config(file=os.path.join(self.griffith_dir,'griffith.conf'))
+		filename = os.path.join(self.griffith_dir, self.config["default_db"])
+		self.config["default_db"] = old_default_db
+		self.config.save()
+
 		# check if file needs conversion
 		if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
 			self.debug.show("RESTORE: SQLite2 database format detected. Converting...")
