@@ -69,8 +69,9 @@ class GriffithSQL:
 				parent.total = 0
 				parent.count_statusbar()
 				parent.treemodel.clear()
-				from initialize	import dictionaries
+				from initialize	import dictionaries, people_treeview
 				dictionaries(parent)
+				people_treeview(parent)
 			else:
 				pass
 		else:
