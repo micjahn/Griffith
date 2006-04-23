@@ -683,6 +683,32 @@ class GriffithSQL:
 	# }}}
 
 	# update data ------------------------------------------------------{{{
+	def update_movie(self, t_movies, t_languages=None, t_tags=None):
+		movie_id = t_movies.pop('id')
+		if movie_id == None:
+			self.debug.show("Update movie: Movie ID is not set, can't update!")
+			return False
+		query = "UPDATE movies SET "
+		for field in t_movies.keys():
+			query += "%s='%s'," % (field, t_movies[field])
+		query = query[:len(query)-1]	# remove last comma
+		query += " WHERE id='%s'"%movie_id
+		self.conn.Execute(query)
+
+		self.conn.Execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % movie_id)	# remove old data
+		# languages
+		if t_languages != None:
+			for lang in t_languages.keys():
+				for type in t_languages[lang].keys():
+					self.conn.Execute("INSERT INTO movie_lang(movie_id, lang_id, type) \
+							VALUES ('%s', '%s', '%s');" % (movie_id, lang, type) )
+		self.conn.Execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % movie_id)
+		# tags
+		if t_tags != None:
+			for i in t_tags.keys():
+				self.conn.Execute("INSERT INTO movie_tag(movie_id, tag_id) \
+						VALUES ('%s', '%s');" % (id, i) )
+
 	def update_collection(self, id, name=None, volume_id=None, loaned=None):
 		if str(id) == '0':
 			self.debug.show("You have to select collection first")

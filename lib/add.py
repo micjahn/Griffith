@@ -96,46 +96,15 @@ def initialize_add_dialog(self):
 
 def add_movie_db(self, close):
 	if  len(self.am_original_title.get_text()) or len(self.am_title.get_text()):
-		# TODO: make use of parent data {{{
-		i = 0
-		languages_ids = {}
-		cursor = self.db.get_all_data("languages", what="id")
-		while not cursor.EOF:
-			languages_ids[i] = cursor.fields[0]
-			i += 1
-			cursor.MoveNext()
-		i = 0
-		volume_combo_ids = {}
-		cursor = self.db.get_all_data("volumes", what="id")
-		while not cursor.EOF:
-			volume_combo_ids[i] = cursor.fields[0]
-			i += 1
-			cursor.MoveNext()
-		i = 0
-		collection_combo_ids = {}
-		cursor = self.db.get_all_data("collections", what="id")
-		while not cursor.EOF:
-			collection_combo_ids[i] = cursor.fields[0]
-			i += 1
-			cursor.MoveNext()
-		i = 0
-		tags_ids = {}
-		cursor = self.db.get_all_data("tags", what="id")
-		while not cursor.EOF:
-			tags_ids[i] = cursor.fields[0]
-			i += 1
-			cursor.MoveNext()
-		#}}}
-
 		plot_buffer = self.am_plot.get_buffer()
 		with_buffer = self.am_with.get_buffer()
 		obs_buffer = self.am_obs.get_buffer()
 		number = self.am_number.get_text()
 		(filepath, filename) = os.path.split(self.am_picture_name.get_text())
-		data = {
+		t_movies = {
 			'actors'         : gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter())),
 			'classification' : gutils.gescape(self.am_classification.get_text()),
-			'collection_id'  : str(collection_combo_ids[self.am_collection_combo.get_active()]),
+			'collection_id'  : str(self.collection_combo_ids[self.am_collection_combo.get_active()]),
 			'color'          : str(int(self.am_color.get_active())),
 			'condition'      : str(int(self.am_condition.get_active())),
 			'country'        : gutils.gescape(self.am_country.get_text()),
@@ -159,26 +128,26 @@ def add_movie_db(self, close):
 			'studio'         : gutils.gescape(self.am_studio.get_text()),
 			'title'          : gutils.gescape(self.am_title.get_text()),
 			'trailer'        : self.am_trailer.get_text(),
-			'volume_id'      : str(volume_combo_ids[self.am_volume_combo.get_active()]),
+			'volume_id'      : str(self.volume_combo_ids[self.am_volume_combo.get_active()]),
 			'year'           : self.am_year.get_text()
 		}
 		# languages
 		t_languages = {}
 		for i in self.am_languages:
 			if i['id'].get_active() > 0:
-				lang_id = languages_ids[i['id'].get_active()]
+				lang_id = self.languages_ids[i['id'].get_active()]
 				type = i['type'].get_active()
 				if not t_languages.has_key(lang_id):
 					t_languages[lang_id] = {}
 				t_languages[lang_id][type] = True
 		# tags
 		t_tags = {}
-		for i in tags_ids:
+		for i in self.tags_ids:
 			if self.am_tags[i].get_active() == True:
-				t_tags[tags_ids[i]] = 1
+				t_tags[self.tags_ids[i]] = 1
 
 		# add movie data to database
-		self.db.add_movie(data, t_languages, t_tags)
+		self.db.add_movie(t_movies, t_languages, t_tags)
 		
 		# lets move poster from tmp to posters dir
 		tmp_dest = os.path.join(self.griffith_dir, "posters")
