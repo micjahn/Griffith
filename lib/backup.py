@@ -157,8 +157,14 @@ def merge(self):
 			for key in row.keys():
 				t_movies[key] = gutils.gescape(str(row[key]))
 			t_movies['number'] = next	# replace number with new one
-			# TODO: tags and languages
+
+			# dont restore volume/collection/tag/language/loan data (it's dangerous)
+			t_movies.pop('volume_id')
+			t_movies.pop('collection_id')
+			t_movies.pop('loaned')
+			
 			self.db.add_movie(t_movies)
+			
 			dest_file = os.path.join(self.griffith_dir,'posters',row['image']+'.jpg')
 			if not os.path.isfile(dest_file):
 				src_file = os.path.join(tmp_dir,row['image']+'.jpg')
