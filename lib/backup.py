@@ -86,10 +86,6 @@ def restore(self):
 		for each in zip.namelist():
 			file_to_restore = os.path.split(each)
 			if not os.path.isdir(file_to_restore[1]):
-				#if file_to_restore[1].endswith('.db'):
-				# TODO: what if self.config['default_db'] has a custom name?
-				# (we dont have new config loaded yet, so we dont know the name)
-				
 				if file_to_restore[1].endswith('.jpg'):
 					myfile = os.path.join(mypath,file_to_restore[1])
 				else:
@@ -100,10 +96,21 @@ def restore(self):
 				outfile.close()
 		zip.close()
 
+		# load stored database filename
+		filename = config.Config(file=os.path.join(self.griffith_dir,'griffith.conf'))["default_db"]
+		filename = os.path.join(self.griffith_dir,filename)
+		# check if file needs conversion
+		if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
+			self.debug.show("RESTORE: SQLite2 database format detected. Converting...")
+			if not self.db.convert_from_sqlite2(filename, os.path.join(self.griffith_dir, self.config["default_db"])):
+				self.debug.show("RESTORE: Can't convert database, aborting.")
+				return False
+
 		self.db.conn.Close()
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
-		from initialize	import dictionaries
+		from initialize	import dictionaries, people_treeview
 		dictionaries(self)
+		people_treeview(self)
 		# let's refresh the treeview
 		self.clear_details()
 		self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
@@ -191,8 +198,9 @@ def merge(self):
 
 		rmtree(tmp_dir)
 
-		from initialize	import dictionaries
+		from initialize	import dictionaries, people_treeview
 		dictionaries(self)
+		people_treeview(self)
 		# let's refresh the treeview
 		self.clear_details()
 		self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
