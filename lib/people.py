@@ -26,22 +26,22 @@ import gutils
 
 def show_people_window(self):
 	self.w_people.show()
-	
+
 def hide_people_window(self):
 	self.w_people.hide()
-	
+
 def add_person(self):
 	clear_person(self)
 	self.w_add_person.show()
-	
+
 def add_person_cancel(self):
 	self.w_add_person.hide()
-	
+
 def clear_person(self):
 	self.ap_name.set_text("")
 	self.ap_email.set_text("")
 	self.ap_phone.set_text("")
-	
+
 def add_person_db(self):
 	if (self.ap_name.get_text()<>''):
 		self.db.conn.Execute("INSERT INTO 'people'('id','name','email','phone') VALUES (Null,'" \
@@ -54,7 +54,7 @@ def add_person_db(self):
 		self.p_treemodel.set_value(myiter,1,str(self.ap_email.get_text()))
 	else:
 		gutils.error(self.w_results,_("You should fill the person name"))
-		
+
 def edit_person(self):
 	try:
 		treeselection = self.p_treeview.get_selection()
@@ -71,10 +71,10 @@ def edit_person(self):
 		self.ep_id.set_text(str(row['id']))
 		cursor.MoveNext()
 	self.w_edit_person.show()
-	
+
 def edit_person_cancel(self):
 	self.w_edit_person.hide()
-	
+
 def update_person(self):
 	self.db.conn.Execute("UPDATE people SET name = '" + self.ep_name.get_text() +"', email='" + self.ep_email.get_text() +"', phone='" + self.ep_phone.get_text() +"' WHERE id = '" + self.ep_id.get_text() +"'") 
 	self.update_statusbar(_("Record updated"))
@@ -88,7 +88,7 @@ def update_person(self):
 		self.p_treemodel.set_value(myiter, 0, str(row['name']))
 		self.p_treemodel.set_value(myiter, 1, str(row['email']))
 		cursor.MoveNext()
-		
+
 def delete_person(self):
 	response = None
 	past = 0
@@ -99,35 +99,28 @@ def delete_person(self):
 		person = tmp_model.get_value(tmp_iter,0)
 	except:
 		return
-	data_person=self.db.select_person_by_name(person)
-	cursor = self.db.conn.Execute("SELECT * FROM loans WHERE person_id = '" + str(data_person[0]['id']) + "' AND return_date = ''")
+	data_person=self.db.select_person_by_name(person).GetRowAssoc(0)
+	cursor = self.db.get_all_data(table_name="loans", where="person_id = '%s' " % str(data_person['id']) + "AND return_date = ''" )
 	if not cursor.EOF:
 		gutils.info(self, _("This person has loaned films from you. First return them."), self.main_window)
 		return False
-	data_person=self.db.select_person_by_name(person)
-	cursor = self.db.conn.Execute("SELECT * FROM loans WHERE person_id = '" + str(data_person[0]['id']) + "'")
+	data_person=self.db.select_person_by_name(person).GetRowAssoc(0)
+	cursor = self.db.get_all_data(table_name="loans", where="person_id = '%s'" % str(data_person['id']))
 	if not cursor.EOF:
 		past = 1
 		past_msg = _("This person has data in the loan history. This data will be erased if you continue.")
-	try:
-		response = gutils.question(self,_("%s\nAre you sure you want to delete this person?"%past_msg), \
-			1, self.main_window)
+	response = gutils.question(self,_("%s\nAre you sure you want to delete this person?"%past_msg), \
+		1, self.main_window)
+	cursor.Close()
 
-		if response == -8:
-			delete_person_from_db(self, past)
-		else:
-			pass
-	except:
-		pass
-		
-def delete_person_from_db(self, past):
-	treeselection = self.p_treeview.get_selection()
-	(tmp_model, tmp_iter) = treeselection.get_selected()
-	name = tmp_model.get_value(tmp_iter, 0)
-	data_person = self.db.select_person_by_name(name)
-	if past:
-		self.db.conn.Execute("DELETE FROM loans WHERE person_id = '"+str(data_person[0]['id'])+"'")
-	self.db.remove_person_by_name(name)
-	self.p_treemodel.remove(tmp_iter)
-	self.treeview_clicked()
+	if response == -8:
+		treeselection = self.p_treeview.get_selection()
+		(tmp_model, tmp_iter) = treeselection.get_selected()
+		name = tmp_model.get_value(tmp_iter, 0)
+		data_person = self.db.select_person_by_name(name).GetRowAssoc(0)
+		if past:
+			self.db.conn.Execute("DELETE FROM loans WHERE person_id = '"+str(data_person['id'])+"'")
+		self.db.remove_person_by_name(name)
+		self.p_treemodel.remove(tmp_iter)
+		self.treeview_clicked()
 

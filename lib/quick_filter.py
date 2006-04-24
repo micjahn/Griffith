@@ -51,7 +51,7 @@ def change_filter(self):
 	cursor = self.db.get_all_data(where=where_clause, order_by="number ASC") # FIXME: python-adodb doesn't have MoveFirst()
 	self.populate_treeview(cursor)
 	self.go_last()
-		
+
 def clear_filter(self):
 	self.e_filter.set_text("")
 	self.filter_criteria.set_active(0)

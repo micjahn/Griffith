@@ -53,25 +53,25 @@ def show_preferences(self):
 		self.view_director.set_active(False)
 	else:
 		self.view_director.set_active(True)
-		
+
 	# email reminder
 	if self.config.get('mail_use_auth', 'False') == 'False':
 		self.mail_use_auth.set_active(False)
 	else:
 		self.mail_use_auth.set_active(True)
-	
+
 	self.mail_smtp_server.set_text(self.config.get('mail_smtp_server', 'localhost'))
 	self.mail_username.set_text(self.config.get('mail_username', ''))
 	self.mail_password.set_text(self.config.get('mail_password', ''))
 	self.mail_email.set_text(self.config.get('mail_email', 'griffith'))
-		
+
 	# pdf reader
 	self.epdf_reader.set_text(self.pdf_reader)
-	
+
 	# pdf font
 	if self.config.get('font'):
 		self.p_font.set_filename(self.config.get('font'))
-	
+
 	# defaults
 	if self.config.get('media'):
 		self.p_media.set_active(int(self.config.get('media')))
@@ -83,7 +83,7 @@ def show_preferences(self):
 		self.p_layers.set_active(int(self.config.get('layers')))
 	if self.config.get('color'):
 		self.p_color.set_active(int(self.config.get('color')))
-		
+
 	# default movie plugin
 	self.debug.show("Default movie plugin: %s" % self.config.get('default_movie_plugin'))
 	plugins = gutils.read_plugins('PluginMovie', \
@@ -97,7 +97,7 @@ def show_preferences(self):
 			self.default_plugin.set_active(mcounter)
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
-		
+
 	# rating image
 	try:
 		rimage = int(str(self.config.get('rating_image', '0')))
@@ -110,19 +110,19 @@ def show_preferences(self):
 		self.spellchecker.set_active(False)
 	else:
 		self.spellchecker.set_active(True)
-		
+
 	if self.config.get('spell_notes', 'True')=='False':
 		self.spell_notes.set_active(False)
 	else:
 		self.spell_notes.set_active(True)
-		
+
 	if self.config.get('spell_plot', 'True')=='False':
 		self.spell_plot.set_active(False)
 	else:
 		self.spell_plot.set_active(True)
-		
+
 	self.spell_lang.set_text(str(self.config.get('spell_lang', 'en')))
-		
+
 	self.w_preferences.show()
 
 def save_preferences(self):
@@ -133,10 +133,10 @@ def save_preferences(self):
 
 	if self.config.get('use_gtkspell', 'False') == 'True':
 		was_false = 0
-		
+
 	if self.config.get('spell_notes', 'False') == 'True':
 		obs_was_false = 0
-		
+
 	if self.config.get('spell_plot', 'False') == 'True':
 		plot_was_false = 0
 
@@ -160,11 +160,11 @@ def save_preferences(self):
 		self.config['view_director'] = 'True'
 	else:
 		self.config['view_director'] = 'False'
-		
+
 	# pdf font
 	if self.p_font.get_filename():
 		self.config['font'] = self.p_font.get_filename()
-	
+
 	# spellchecker
 	if self.spellchecker.get_active():
 		self.config['use_gtkspell'] = 'True'
@@ -178,28 +178,28 @@ def save_preferences(self):
 		self.config['spell_plot'] = 'True'
 	else:
 		self.config['spell_plot'] = 'False'
-	
+
 	# rating image
 	self.config['rating_image'] = str(self.rating_image.get_active())
-	
+
 	#defaults
 	self.config['media'] = str(self.p_media.get_active())
 	self.config['condition'] = str(self.p_condition.get_active())
 	self.config['region'] = str(self.p_region.get_active())
 	self.config['layers'] = str(self.p_layers.get_active())
 	self.config['color'] = str(self.p_color.get_active())
-   
+
 	# email reminder
 	if self.mail_use_auth.get_active():
 		self.config['mail_use_auth'] = 'True'
 	else:
 		self.config['mail_use_auth'] = 'False'
-		
+
 	self.config['mail_smtp_server'] = self.mail_smtp_server.get_text()
 	self.config['mail_username'] = self.mail_username.get_text()
 	self.config['mail_password'] = self.mail_password.get_text()
 	self.config['mail_email'] = self.mail_email.get_text()
-		
+
 	# default movie plugin
 	if self.default_plugin.get_active():
 		self.config['default_movie_plugin'] = \
@@ -212,7 +212,7 @@ def save_preferences(self):
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
 	self.am_source.set_active(self.d_plugin)
-		
+
 	if self.windows:
 		save_reader = ''
 	else:
@@ -230,7 +230,7 @@ def save_preferences(self):
 			initialize.initialize_gtkspell(self)
 		else:
 			pass
-		
+
 		if self.config.get('use_gtkspell', 'False') == 'True':
 			if self.config.get('spell_plot', 'True') == 'False' and not plot_was_false:
 				self.plot_spell.detach()
@@ -239,7 +239,7 @@ def save_preferences(self):
 				self.plot_spell.set_language(self.config.get('spell_lang', 'en'))
 			else:
 				pass
-				
+
 			if self.config.get('spell_notes', 'True') == 'False' and not obs_was_false:
 				self.obs_spell.detach()
 			elif self.config.get('spell_notes', 'True') == 'True' and obs_was_false:

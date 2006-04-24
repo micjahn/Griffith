@@ -32,7 +32,7 @@ if os.name == 'nt' or os.name == 'win32':
 	import winshell
 	mydocs = winshell.my_documents()
 	griffith_dir = os.path.join(mydocs, 'griffith')
-	
+
 else:
 	griffith_dir = os.path.join(os.path.expanduser('~'), \
 		'.griffith')

@@ -26,9 +26,9 @@ import sys
 import gutils
 
 def check_args(self):
-	self.args = map(lambda i: i.replace('--', '').replace('-',''), sys.argv)			
-	
-	if self.args:	
+	self.args = map(lambda i: i.replace('--', '').replace('-',''), sys.argv)
+
+	if self.args:
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], "hDco:s:d:w:y:",
 					["help", "debug", "clean", "search_original=", "search_title=", "director=", "with=", "year="])
@@ -36,7 +36,7 @@ def check_args(self):
 			# print help information and exit:
 			con_usage()
 			sys.exit(2)
-		
+
 		where = {}
 		for o, a in opts:
 			if o in ("-h", "--help"):
@@ -65,7 +65,7 @@ def con_search_movie(self, where):
 	for i in where:
 		query += i + " LIKE '%" + where[i] + "%' AND "
 	query = query[:len(query)-5] # cut last " AND "
-	
+
 	cursor = self.db.get_all_data(table_name="movies", order_by="number ASC", where=query,
 			what='number, title, original_title, year, director')
 	if cursor.EOF:

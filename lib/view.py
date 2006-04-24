@@ -29,14 +29,14 @@ def filter_not_seen(self):
 	self.populate_treeview(cursor)
 	self.total_filter = self.db.count_records('movies', 'seen=0')
 	self.go_last()
-	
+
 def filter_loaned(self):
 	cursor = self.db.get_loaned_movies()
 	self.update_statusbar(_("Filter activated. Showing only loaned movies."))
 	self.populate_treeview(cursor)
 	self.total_filter = self.db.count_records('movies', 'loaned=1')
 	self.go_last()
-	
+
 def filter_all(self):
 	cursor = self.db.get_all_data(order_by="number ASC")
 	self.count_statusbar()
@@ -53,7 +53,7 @@ def filter_by_volume(self, volume_id):
 	self.populate_treeview(cursor)
 	self.total_filter = self.db.count_records('movies', 'volume_id="%s"'%volume_id)
 	self.go_last()
-	
+
 def filter_by_collection(self, collection_id):
 	cursor = self.db.conn.Execute("SELECT name FROM collections WHERE id = '%s'" % collection_id)
 	collection_name = cursor.fields[0]

@@ -33,7 +33,7 @@ import gobject
 url_re = re.compile('^\w+://')
 entity = re.compile(r'\&.\w*?\;')
 html_tags = re.compile(r'\<.*?\>')
-		
+
 def remove_accents(txt, encoding='iso-8859-1'):
 	d = {192: u'A', 193: u'A', 194: u'A', 195: u'A', 196: u'A', 197: u'A',
 			199: u'C', 200: u'E', 201: u'E', 202: u'E', 203: u'E', 204: u'I',
@@ -52,7 +52,7 @@ def is_number(x):
 		return(x==x-0)
 	except:
 		return False
-		
+
 def find_next_available(self):
 	"""finds next available movie number.
 	This is the first empty position.
@@ -70,13 +70,13 @@ def find_next_available(self):
 		first = second
 		a += a
 		cursor.MoveNext()
-		
+
 	if first == None:
 		return 1
 	else:
 		number = first+1
 		return number
-		
+
 def trim(text,key1,key2):
 	p1 = string.find(text,key1)
 	if p1 == -1:
@@ -89,20 +89,20 @@ def trim(text,key1,key2):
 	else:
 		p2 = p1+p2
 	return text[p1:p2]
-	
+
 def after(text,key):
 	p1 = string.find(text,key)
 	return text[p1+len(key):]
-	
+
 def before(text,key):
 	p1 = string.find(text,key)
 	return text[:p1]
-	
+
 def gescape(text):
 	text=string.replace(text,"'", "''")
 	text=string.replace(text,"--", "-")
 	return text
-	
+
 def progress(blocks,size_block,size):
 	transfered = blocks * size_block
 	if size > 0 and transfered > size:
@@ -112,7 +112,7 @@ def progress(blocks,size_block,size):
 	print transfered, '/', size, 'bytes'
 
 # functions to handle comboboxentry stuff
-	
+
 def set_model_from_list (cb, items):
 	"""Setup a ComboBox or ComboBoxEntry based on a list of strings."""
 	model = gtk.ListStore(str)
@@ -125,7 +125,7 @@ def set_model_from_list (cb, items):
 		cell = gtk.CellRendererText()
 		cb.pack_start(cell, True)
 		cb.add_attribute(cell, 'text', 0)
-		
+
 def on_combo_box_entry_changed(widget):
 	model = widget.get_model()
 	m_iter = widget.get_active_iter()
@@ -133,10 +133,10 @@ def on_combo_box_entry_changed(widget):
 		return model.get_value(m_iter, 0)
 	else:
 		return 0
-	
+
 def on_combo_box_entry_changed_name(widget):
 		return widget.get_active_text()
-			
+
 def convert_entities(text):
 	def conv(ents):
 		entities = htmlentitydefs.entitydefs
@@ -170,7 +170,7 @@ def convert_entities(text):
 	else:
 		ctext = in_entity.re.sub(conv, text)
 		return ctext
-		
+
 def strip_tags(text):
 	finished = 0
 	while not finished:
@@ -185,7 +185,7 @@ def strip_tags(text):
 				text = text[:start] + text[start+stop+1:]
 				finished = 0
 	return text
-	
+
 def save_pixmap(self, pixmap, filename):
 	pixmap.save(filename, "jpeg", {"quality":"70"})
 
@@ -194,13 +194,13 @@ def clean(text):
 	t = string.replace(t, "&nbsp;", " ")
 	t = string.replace(t,'&#34;',"")
 	return string.strip(t)
-	
+
 def gdecode(txt, encode):
 	try:
 		return txt.decode(encode)
 	except:
 		return txt
-	
+
 # Messages
 
 def error(self, msg, parent=None):
@@ -209,28 +209,28 @@ def error(self, msg, parent=None):
 			gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, msg)
 	dialog.run()
 	dialog.destroy()
-	
+
 def urllib_error(msg, parent=None):
 	dialog = gtk.MessageDialog(parent,
 			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 			gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, msg)
 	dialog.run()
 	dialog.destroy()
-	
+
 def warning(self, msg, parent=None):
 	dialog = gtk.MessageDialog(parent,
 			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 			gtk.MESSAGE_WARNING, gtk.BUTTONS_OK, msg)
 	dialog.run()
 	dialog.destroy()
-	
+
 def info(self, msg, parent=None):
 	dialog = gtk.MessageDialog(parent,
 			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 			gtk.MESSAGE_INFO, gtk.BUTTONS_OK, msg)
 	dialog.run()
 	dialog.destroy()
-	
+
 def question(self, msg, cancel=1, parent=None):
 	if not parent: parent = self
 	dialog = gtk.MessageDialog(parent,
@@ -242,7 +242,7 @@ def question(self, msg, cancel=1, parent=None):
 	response = dialog.run()
 	dialog.destroy()
 	return response
-	
+
 def file_chooser(title, action=None, buttons=None, name="", folder=os.path.expanduser("~"), picture = False):
 	dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
 	dialog.set_default_response(gtk.RESPONSE_OK)
@@ -269,7 +269,7 @@ def file_chooser(title, action=None, buttons=None, name="", folder=os.path.expan
 	mfilter.set_name(_("All files"))
 	mfilter.add_pattern("*")
 	dialog.add_filter(mfilter)
-	
+
 
 	response = dialog.run()
 	if response == gtk.RESPONSE_OK:
@@ -290,12 +290,12 @@ def update_preview_cb(file_chooser, preview):
 		have_preview = False
 	file_chooser.set_preview_widget_active(have_preview)
 	return
-	
+
 def run_browser(url):
 	webbrowser.register('open', webbrowser.GenericBrowser("open '%s'"))
 	webbrowser._tryorder.append('open')
 	webbrowser.open(url)
-	
+
 def get_media_list_index(media):
 	media_desc = {"DVD":0,"DVD-R":1, "DVD-RW":2, "DVD+R":3, "DVD+RW":4, \
 		"DVD-RAM":5, "VHS":6, "BETACAM":7, "WMV":8, "DIVX":9, "XVID":10, \
@@ -317,7 +317,7 @@ def findKey(val, dict):
 
 def garbage(handler):
 	pass
-	
+
 def make_thumbnail(self, file_name):
 	source = os.path.join(self.griffith_dir, "posters/%s"%file_name)
 	if os.path.isfile(source):
@@ -327,7 +327,7 @@ def make_thumbnail(self, file_name):
 		save_pixmap(self, pixbuf, os.path.join(self.griffith_dir, "posters/t_%s"%file_name))
 	else:
 		return 0
-		
+
 def make_medium_image(self, file_name):
 	source = os.path.join(self.griffith_dir, "posters/%s"%file_name)
 	if os.path.isfile(source):
@@ -337,7 +337,7 @@ def make_medium_image(self, file_name):
 		save_pixmap(self, pixbuf, os.path.join(self.griffith_dir, "posters/m_%s"%file_name))
 	else:
 		return 0
-		
+
 def clean_posters_dir(self):
 	if os.name == 'nt' or os.name == 'win32':
 		# default to My Documents
@@ -347,11 +347,11 @@ def clean_posters_dir(self):
 	else:
 		griffith_dir = os.path.join(os.path.expanduser('~'), \
 			'.griffith')
-	
+
 	posters_dir = os.path.join(griffith_dir, "posters")
-	
+
 	counter = 0
-	
+
 	for files in os.walk(posters_dir):
 		for names in files:
 			for name in names:
@@ -367,7 +367,7 @@ def clean_posters_dir(self):
 						t_file = os.path.join(posters_dir, "t_"+name)
 						if os.path.isfile(t_file):
 							os.unlink(t_file)
-							
+
 	if counter:
 		print "%d orphan files cleaned."%counter
 	else:

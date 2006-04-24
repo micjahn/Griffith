@@ -38,7 +38,7 @@ class AboutDialog:
 		dialog.set_authors([_("Main Author") + ", " + _("Programmer")+":\n"+ \
 			version.pauthor + "\n",
 			'%s:\nPiotr Ozarowski <ozarow@gmail.com>\n'%_("Programmer") +"\n"+ \
-			 _('Contributors:'),
+			_('Contributors:'),
 			'Christian Sagmueller <christian@sagmueller.net>\n' \
 			'Arjen Schwarz <arjen.schwarz@gmail.com>' \
 			])
@@ -60,7 +60,7 @@ class AboutDialog:
 			"Vasco Nunes <vasco.m.nunes@gmail.com>" + \
 			"\n" + _("Spanish") + _(" by ") + \
 			"Daniel Ucero <escaranbujo@gmail.com>" \
-			)
+		)
 		if os.name == 'nt':
 			logo = gtk.gdk.pixbuf_new_from_file \
 				("%s/images/griffith.png"%os.path.abspath \

@@ -547,7 +547,7 @@ class GriffithSQL:
 
 	def select_person_by_name(self, name):
 		return self.conn.Execute("SELECT * FROM people WHERE name = '%s'" % name)
-	
+
 	def select_person_by_id(self, p_id):
 		return self.conn.Execute("SELECT * FROM people WHERE id = '%s'" % str(p_id) )
 
@@ -855,7 +855,7 @@ class GriffithSQL:
 		except:
 			self.debug.show("SQLite2 conversion: please install pysqlite legacy (v1.0) - more info in README file")
 			return False
-		
+
 		def copy_table(sqlite2_cursor, adodb_conn, table_name):
 			sqlite2_cursor.execute("SELECT * FROM %s"%table_name)
 			data = sqlite2_cursor.fetchall()
@@ -872,11 +872,11 @@ class GriffithSQL:
 						query += "'%s'"%gutils.gescape(str(value)) + ','
 				query = query[:len(query)-1] + ');'
 				adodb_conn.Execute(query)
-		
+
 		from tempfile import mkdtemp
 		from shutil import rmtree, move
 		tmp_dir=mkdtemp()
-		
+
 		sqlite2_con = sqlite.connect(source_file,autocommit=1)
 		sqlite2_cursor = sqlite2_con.cursor()
 
@@ -889,15 +889,18 @@ class GriffithSQL:
 		new_db.conn.Execute("DELETE FROM tags")
 
 		copy_table(sqlite2_cursor, new_db.conn, "movies")
-		copy_table(sqlite2_cursor, new_db.conn, "volumes")
-		copy_table(sqlite2_cursor, new_db.conn, "collections")
-		copy_table(sqlite2_cursor, new_db.conn, "loans")
 		copy_table(sqlite2_cursor, new_db.conn, "people")
 		copy_table(sqlite2_cursor, new_db.conn, "media")
-		copy_table(sqlite2_cursor, new_db.conn, "languages")
-		copy_table(sqlite2_cursor, new_db.conn, "movie_lang")
-		copy_table(sqlite2_cursor, new_db.conn, "movie_tag")
-		copy_table(sqlite2_cursor, new_db.conn, "tags")
+		copy_table(sqlite2_cursor, new_db.conn, "loans")
+		try:
+			copy_table(sqlite2_cursor, new_db.conn, "volumes")
+			copy_table(sqlite2_cursor, new_db.conn, "collections")
+			copy_table(sqlite2_cursor, new_db.conn, "languages")
+			copy_table(sqlite2_cursor, new_db.conn, "movie_lang")
+			copy_table(sqlite2_cursor, new_db.conn, "movie_tag")
+			copy_table(sqlite2_cursor, new_db.conn, "tags")
+		except:
+			pass
 
 		move(os.path.join(tmp_dir,self.config["default_db"]), destination_file)
 		self.debug.show("Cnnvert from SQLite2: " + destination_file + " created")

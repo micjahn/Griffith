@@ -42,7 +42,7 @@ def delete_movie(self):
 		self.main_treeview.set_cursor_on_cell(self.total_filter-1)
 	else:
 		return False
-		
+
 def delete_poster(self, poster):
 	posters_dir = os.path.join(self.griffith_dir, "posters")
 	image_thumbnail = os.path.join(posters_dir, "t_" + poster + ".jpg")
@@ -63,7 +63,7 @@ def delete_poster(self, poster):
 			os.remove(image_thumbnail)
 		except:
 			self.debug.show("Can't remove %s file"%image_thumbnail)
-		
+
 def delete_movie_from_db(self, m_id, m_iter):
 	self.total -= 1
 	self.total_filter -= 1

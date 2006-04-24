@@ -155,27 +155,27 @@ def define_widgets(self, gladefile):
 	self.image_add_rating  = gladefile.get_widget('image_add_rating')
 	self.menu_toolbar      = gladefile.get_widget('menu_toolbar')
 	self.export_menu       = gladefile.get_widget('export_menu')
-	
+
 	self.rating_slider     = gladefile.get_widget('rating_scale')
 	self.rating_slider_add = gladefile.get_widget('rating_scale_add')
-	
+
 	#tech data
 	self.e_condition = gladefile.get_widget('e_condition')
 	self.e_color     = gladefile.get_widget('e_color')
 	self.e_region    = gladefile.get_widget('e_region')
 	self.e_layers    = gladefile.get_widget('e_layers')
-	
+
 	self.am_condition = gladefile.get_widget('am_condition')
 	self.am_color     = gladefile.get_widget('am_color')
 	self.am_region    = gladefile.get_widget('am_region')
 	self.am_layers    = gladefile.get_widget('am_layers')
-	
+
 	#spellchecker
 	self.spellchecker = gladefile.get_widget('spellchecker_pref')
 	self.spell_notes  = gladefile.get_widget('spell_notes')
 	self.spell_plot   = gladefile.get_widget('spell_plot')
 	self.spell_lang   = gladefile.get_widget('spell_lang')
-	
+
 	self.e_seen           = gladefile.get_widget('e_seen')
 	self.am_seen          = gladefile.get_widget('am_seen')
 	self.b_email_reminder = gladefile.get_widget('b_email_reminder')
@@ -190,30 +190,30 @@ def define_widgets(self, gladefile):
 	self.all_movies       = gladefile.get_widget('all_movies')
 	self.results_select   = gladefile.get_widget('results_select')
 	self.results_cancel   = gladefile.get_widget('results_cancel')
-	
+
 	# poster button related
 	self.zoom_poster   = gladefile.get_widget('zoom_poster')
 	self.open_poster   = gladefile.get_widget('open_poster')
 	self.fetch_poster  = gladefile.get_widget('fetch_poster')
 	self.delete_poster = gladefile.get_widget('delete_poster')
-	
+
 	self.poster_window = gladefile.get_widget('poster_window')
 	self.big_poster    = gladefile.get_widget('big_poster')
-	
+
 	#main popup menu
 	self.popup        = gladefile.get_widget('popup')
 	self.popup_loan   = gladefile.get_widget('popup_loan')
 	self.popup_return = gladefile.get_widget('popup_return')
 	self.popup_email  = gladefile.get_widget('popup_email')
 	self.f_col        = gladefile.get_widget('f_col')
-	
+
 	#add some tooltips
 	self.tooltips = gtk.Tooltips()
 	self.tooltips.set_tip(self.epdf_reader, _('Define here the PDF reader you want to use within Griffith. Popular choices are xpdf, gpdf, evince or kpdf. Make sure you have this program installed and working first.'))
 	self.tooltips.set_tip(self.spell_lang, _("Here you can define the desired language to use while spell checking some fields. Use you locale setting. For example, to use european portuguese spell checking enter 'pt'"))
 	self.tooltips.set_tip(self.mail_smtp_server, _("Use this entry to define the SMTP server you want to use to send e-mails. On *nix systems, 'localhost' should work. Alternatively, you can use your Internet Service Provider's SMTP server address."))
-	self.tooltips.set_tip(self.mail_email, _("This is the from e-mail address that should be used to all outgoing e-mail. You want to include your own e-mail address here probably."))	
-	
+	self.tooltips.set_tip(self.mail_email, _("This is the from e-mail address that should be used to all outgoing e-mail. You want to include your own e-mail address here probably."))
+
 	# add handlers for windows delete events
 	self.add_movie_window.connect("delete_event", self.on_delete_event_am)
 	self.w_results.connect("delete_event", self.on_delete_event_r)
@@ -243,15 +243,15 @@ def define_widgets(self, gladefile):
 	#	self.zoom_poster.connect("leave", self.z_poster_hide)
 	#else:
 	self.zoom_poster.connect("clicked", self.z_poster)
-		
+
 	self.main_window.connect('key_press_event', self.on_key_press_event)
 	self.main_treeview.connect('button_press_event', \
 		self.on_maintree_button_press_event)
 	self.p_treeview.connect('button_press_event', \
 		self.on_p_tree_button_press_event)
-		
+
 	# define handlers for general events
-		
+
 	dic = {
 		"gtk_main_quit"                         : self.destroy,
 		"on_about1_activate"                    : self.about_dialog,
@@ -372,7 +372,7 @@ def connect_add_signals(self):
 		self.results_treeview.disconnect(self.results_poster_double_click)
 	except:
 		pass
-	
+
 	try:
 		self.results_select.disconnect(self.results_signal)
 	except:
@@ -382,17 +382,17 @@ def connect_add_signals(self):
 		self.results_treeview.disconnect(self.results_double_click)
 	except:
 		pass
-	
+
 	# connect signals
-	
+
 	self.results_signal = self.results_select.connect("clicked", \
 			self.populate_dialog_with_results)
 	self.results_double_click = self.results_treeview.connect('button_press_event', \
 		self.on_results_button_press_event)
-	
+
 def connect_poster_signals(self, event, result, current_poster):
 	import edit
-	
+
 	try:
 		self.results_select.disconnect(self.poster_results_signal)
 	except:
@@ -402,7 +402,7 @@ def connect_poster_signals(self, event, result, current_poster):
 		self.results_treeview.disconnect(self.results_poster_double_click)
 	except:
 		pass
-	
+
 	try:
 		self.results_select.disconnect(self.results_signal)
 	except:
@@ -412,12 +412,12 @@ def connect_poster_signals(self, event, result, current_poster):
 		self.results_treeview.disconnect(self.results_double_click)
 	except:
 		pass
-	
+
 	# connect signals
-	
+
 	self.results_poster_double_click = self.results_treeview.connect('button_press_event', \
 		edit.get_poster_select_dc, self, result, current_poster)
-	
+
 	self.poster_results_signal = \
 		self.results_select.connect("clicked", edit.get_poster_select, \
 		self, result, current_poster)
