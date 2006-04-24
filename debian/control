@@ -3,7 +3,7 @@ Section: gnome
 Priority: optional
 Maintainer: Piotr Ozarowski <ozarow@gmail.com>
 Uploaders: Laszlo Boszormenyi <gcs@debian.org>
-Build-Depends-Indep: debhelper (>=5), python (>= 2.3)
+Build-Depends: debhelper (>=5), python (>= 2.3)
 Standards-Version: 3.6.2
 
 Package: griffith
