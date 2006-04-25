@@ -54,6 +54,8 @@ class AboutDialog:
 			"Pierre-Luc Lévy <pllevy@free.fr>" + \
 			"\n" + _("German") + _(" by ") + \
 			"Christian Sagmueller <christian@sagmueller.net>" + \
+			"\n" + _("Italian") + _(" by ") + \
+			"Diego Porcelli <diego.p77@gmail.com>" + \
 			"\n" + _("Polish") + _(" by ") + \
 			"Piotr Ozarowski <ozarow@gmail.com>" + \
 			"\n" + _("Portuguese") + _(" by ") + \

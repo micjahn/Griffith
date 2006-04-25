@@ -6,7 +6,7 @@
 # $Id$
 
 PACKAGE=griffith
-LANGUAGES= bg cs de es fr pl pt
+LANGUAGES= bg cs de es fr pl pt it
 VERSION=$(shell grep "^pversion" lib/version.py | cut -d \"  -f 2)
 
 .PHONY: help clean freshmeat gnomefiles install
