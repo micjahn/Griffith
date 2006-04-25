@@ -52,7 +52,7 @@ import py2exe
 
 opts = { 
     "py2exe": { 
-        "includes": "cairo,pangocairo,cgi,PIL,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlite,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
+        "includes": "cairo,pangocairo,cgi,PIL,sqlite,pysqlite2,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,adodb,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
         "dist_dir": "dist", 
     } 
 } 
@@ -60,8 +60,8 @@ opts = {
 setup(
     name = "Griffith",
     description = "Griffith",
-    version = "0.6.1",
-    windows = [ 
+    version = "0.6.1+svn",
+    console = [ 
         { 
             "script": "griffith", 
             "icon_resources": [(1, "images\griffith.ico")] 
@@ -98,6 +98,8 @@ setup(
 		glob.glob("i18n\\pl\\LC_MESSAGES\\*.mo")),
 		("i18n/pt/LC_MESSAGES",
 		glob.glob("i18n\\pt\\LC_MESSAGES\\*.mo")),
+		("i18n/it/LC_MESSAGES",
+		glob.glob("i18n\\it\\LC_MESSAGES\\*.mo")),
 		("lib/plugins/export",
 		glob.glob("lib\\plugins\\export\\*.*")),
 		("lib/plugins/movie",
