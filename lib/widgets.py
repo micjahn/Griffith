@@ -103,6 +103,13 @@ def define_widgets(self, gladefile):
 	# preferences
 	self.w_preferences = gladefile.get_widget('w_preferences')
 	self.epdf_reader   = gladefile.get_widget('pdf_reader_entry')
+	self.p_db_type     = gladefile.get_widget("p_db_type")
+	self.p_db_host     = gladefile.get_widget("p_db_host")
+	self.p_db_port     = gladefile.get_widget("p_db_port")
+	self.p_db_name     = gladefile.get_widget("p_db_name")
+	self.p_db_user     = gladefile.get_widget("p_db_user")
+	self.p_db_passwd   = gladefile.get_widget("p_db_passwd")
+	self.p_db_details  = gladefile.get_widget("p_db_details")
 	# cover print
 	self.w_print_cover_simple              = gladefile.get_widget('w_print_cover_simple')
 	self.w_print_cover_image               = gladefile.get_widget('w_print_cover_image')
@@ -269,9 +276,11 @@ def define_widgets(self, gladefile):
 		"on_row_activated"                      : self.treeview_clicked,
 		"on_get_from_web_clicked"               : self.get_from_web,
 		"on_update_button_clicked"              : self.update_movie,
+		# preferences
 		"on_preferences1_activate"              : self.show_preferences,
 		"on_cancel_preferences_clicked"         : self.hide_preferences,
 		"on_save_preferences_clicked"           : self.save_preferences,
+		"on_p_db_type_changed"                  : self.on_p_db_type_changed,
 		"on_backup_activate"                    : self.backup,
 		"on_restore_activate"                   : self.restore,
 		"on_merge_activate"                     : self.merge,

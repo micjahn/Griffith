@@ -55,8 +55,8 @@ class GriffithSQL:
 			self.conn.Connect(database=os.path.join(griffith_dir, config["default_db"]))
 		elif config["db_type"] == "postgres":
 			self.pkey = "SERIAL NOT NULL PRIMARY KEY"
-			if not config.has_key("db_server"):
-				config["db_server"] = "localhost"
+			if not config.has_key("db_host"):
+				config["db_host"] = "localhost"
 			if not config.has_key("db_port"):
 				config["db_port"] = "5432"
 			if not config.has_key("db_user"):
@@ -66,7 +66,7 @@ class GriffithSQL:
 			if not config.has_key("db_name"):
 				config["db_name"] = "griffith"
 			self.conn.Connect("host=%s user=%s password=%s dbname=%s port=%s" % \
-				(config["db_server"], config["db_user"], config["db_passwd"], config["db_name"], config["db_port"]))
+				(config["db_host"], config["db_user"], config["db_passwd"], config["db_name"], config["db_port"]))
 
 		self.check_if_table_exists()
 
@@ -137,32 +137,32 @@ class GriffithSQL:
 			"id" %s,
 			"volume_id" INTEGER NOT NULL DEFAULT 0,
 			"collection_id" INTEGER NOT NULL DEFAULT 0,
+			"number" INTEGER NOT NULL,
 			"original_title" VARCHAR(255) NOT NULL,
 			"title" VARCHAR(255),
 			"director" VARCHAR(100),
-			"number" INTEGER NOT NULL,
-			"image" VARCHAR,
-			"plot" TEXT,
-			"country" VARCHAR(100),
 			"year" INTEGER,
-			"runtime" INTEGER,
-			"classification" VARCHAR(50),
+			"country" VARCHAR(100),
 			"genre" VARCHAR(100),
+			"image" VARCHAR,
+			"runtime" INTEGER,
 			"studio" VARCHAR(50),
 			"site" VARCHAR(100),
 			"imdb" VARCHAR(100),
-			"actors" TEXT,
 			"trailer" VARCHAR(100),
-			"rating" SMALLINT NOT NULL DEFAULT 0,
-			"loaned" SMALLINT NOT NULL DEFAULT 0, -- TODO: change it to BOOLEAN
-			"media" SMALLINT NOT NULL DEFAULT 0,
-			"num_media" SMALLINT,
-			"obs" TEXT,
 			"seen" SMALLINT NOT NULL DEFAULT 0, -- TODO: change it to BOOLEAN
-			"region" SMALLINT DEFAULT 9,
-			"condition" SMALLINT DEFAULT 5,
+			"loaned" SMALLINT NOT NULL DEFAULT 0, -- TODO: change it to BOOLEAN
+			"rating" SMALLINT NOT NULL DEFAULT 0,
+			"classification" VARCHAR(50),
 			"color" SMALLINT DEFAULT 3,
-			"layers" SMALLINT DEFAULT 4
+			"condition" SMALLINT DEFAULT 5,
+			"layers" SMALLINT DEFAULT 4,
+			"media" SMALLINT NOT NULL DEFAULT 0,
+			"region" SMALLINT DEFAULT 9,
+			"num_media" SMALLINT,
+			"actors" TEXT,
+			"plot" TEXT,
+			"obs" TEXT
 		)""" % self.pkey
 		self.conn.Execute(query)
 
@@ -457,6 +457,7 @@ class GriffithSQL:
 		self.conn.Execute("UPDATE collections SET name='', loaned=0 WHERE id = 0;")
 		self.conn.Execute("UPDATE volumes SET name='', loaned=0 WHERE id = 0;")
 		self.conn.Execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2020")
+		self.conn.Execute("UPDATE movies SET rating=0 WHERE rating IN ('', NULL)")
 		try:
 			self.update_old_media()
 		except:

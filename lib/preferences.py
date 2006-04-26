@@ -220,6 +220,21 @@ def save_preferences(self):
 
 	self.config['spell_lang'] = self.spell_lang.get_text()
 	self.config['pdf_reader'] = save_reader
+	
+	
+	self.config["db_port"] = self.p_db_port.get_value()
+	self.config["db_user"] = self.p_db_user.get_text()
+	self.config["db_passwd"] = self.p_db_passwd.get_text()
+	self.config["db_name"] = self.p_db_name.get_text()
+	db_type = self.p_db_type.get_active()
+	old_db_type = self.config["db_type"]
+	if db_type == 0:
+		self.config["db_type"] = "sqlite"
+	elif db_type == 1:
+		self.config["db_type"] = "postgres"
+	if old_db_type != self.config["db_type"]:
+		gutils.info(self, _("You have to restart Griffith\nfor the changes to take effect."), self.main_window)
+
 	self.config.save()
 
 	if spell_support:

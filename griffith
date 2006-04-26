@@ -21,34 +21,12 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import sys
-import gtk
-import os.path
-import random
+import sys, os.path, random
+import gtk, gtk.glade
 assert gtk.pygtk_version >= (2, 4, 0), 'pygtk should be >= 2.4.0'
-import gtk.glade
-import about
-import gutils
-import add
-import delete
-import update
-import loan
-import backup
-import cover
-import preferences
-import people
-import edit
-import version
-import initialize
-import view
-import gdebug
-import gemail
-import main_treeview
-import quick_filter
-import gconsole
-import sql
-import config
-import gglobals
+import about, add, backup, config, cover, delete, edit, gconsole, gdebug
+import gemail, gglobals, gutils, initialize, loan, main_treeview
+import people, preferences, quick_filter, sql, update, version, view
 from gettext import gettext as _
 
 class Griffith:
@@ -57,6 +35,54 @@ class Griffith:
 	Image = gtk.Image()
 	founded_results_id = None
 
+	def __init__(self):
+		"""main griffith application constructor"""	
+
+		# debug object
+		self.debug = gdebug.GriffithDebug()
+		# Configuration
+		self.config = config.Config()
+		# create/connect db
+		self.db = sql.GriffithSQL(self.config, self.debug, gglobals.griffith_dir)
+
+		# let's check any console arguments to parse
+		gconsole.check_args(self)
+
+		gtk.window_set_auto_startup_notification(True)
+		self.Image = gtk.Image()
+		self.filter_l = False
+		self.loans_treemodel = gtk.TreeStore(str, str, str)
+		self.initialize_griffith()
+		self.restore_state()
+		self.clear_details()
+		self.count_statusbar()
+		self.select_last_row(self.total)
+
+		# adding some completion fields
+		self.completion = gtk.EntryCompletion()
+		self.am_original_title.set_completion(self.completion)
+		self.completion.set_model(self.treemodel)
+		self.completion.set_text_column(3)
+		self.completion_t = gtk.EntryCompletion()
+		self.am_title.set_completion(self.completion_t)
+		self.completion_t.set_model(self.treemodel)
+		self.completion_t.set_text_column(4)
+
+		initialize.initialize_gtkspell(self)
+
+		# add default folders to some select widgets
+		if self.windows:
+			self.p_font.set_current_folder("c:\\windows\\fonts\\") # TODO: use env var.
+		else:
+			self.p_font.set_current_folder("/usr/share/fonts/")
+
+	def main(self):
+		gtk.threads_init()
+		gtk.threads_enter()
+		gtk.main()
+		gtk.threads_leave()
+		return 0
+
 	def initialize_griffith(self):
 		initialize.locations(self)
 		initialize.toolbar(self)
@@ -64,6 +90,7 @@ class Griffith:
 		initialize.loans_treeview(self)
 		initialize.dictionaries(self)
 		initialize.combos(self)
+		initialize.preferences(self)
 		initialize.movie_plugins(self)
 		initialize.export_plugins(self)
 		initialize.people_treeview(self)
@@ -82,13 +109,13 @@ class Griffith:
 		self.save_state()
 		gtk.main_quit()
 
-	# about dialog				
+	# about dialog	-------------------------------------------------------			
 
 	def about_dialog(self, *args):
 		about_dialog = about.AboutDialog()
 		about_dialog.icon = self.locations['images']
 
-	# add movie
+	# add movie -----------------------------------------------------------
 
 	def clear_add_dialog(self, *args):
 		add.initialize_add_dialog(self)
@@ -121,7 +148,7 @@ class Griffith:
 	def source_changed(self, *args):
 		add.source_changed(self)
 
-	# preferences
+	# preferences ---------------------------------------------------------
 
 	def show_preferences(self, *args):
 		preferences.show_preferences(self)
@@ -133,7 +160,14 @@ class Griffith:
 		preferences.save_preferences(self)
 		self.hide_preferences()
 
-	# movie operations related
+	def on_p_db_type_changed(self, widget):
+		active = widget.get_active()
+		if active == 1:
+			self.p_db_details.set_sensitive(True)
+		else:
+			self.p_db_details.set_sensitive(False)
+
+	# movie operations related --------------------------------------------
 
 	def add_movie(self, *args):
 		add.add_movie(self)
@@ -170,7 +204,7 @@ class Griffith:
 	def clone_movie(self, *args):
 		add.clone_movie(self)
 
-	# poster	
+	# poster --------------------------------------------------------------
 
 	def change_poster(self, *args):
 		edit.change_poster(self)
@@ -196,7 +230,7 @@ class Griffith:
 		"""tries to fetch a new big poster from amazon"""
 		edit.fetch_bigger_poster(self)
 
-	# rating
+	# rating --------------------------------------------------------------
 
 	def scale_rating_change(self, *args):
 		edit.change_rating_from_slider(self)
@@ -382,7 +416,7 @@ class Griffith:
 			self.tag_name_active = active
 	# }}}
 
-	# main treeview
+	# main treeview -------------------------------------------------------
 	def treeview_clicked(self, *args):
 		main_treeview.treeview_clicked(self)
 
@@ -398,7 +432,7 @@ class Griffith:
 		if rtotal:
 			self.main_treeview.set_cursor_on_cell(rtotal-1)
 
-	# backup/restore		
+	# backup/restore ------------------------------------------------------	
 
 	def backup(self, *args):
 		backup.backup(self)
@@ -421,7 +455,7 @@ You can't undo this operation."""), \
 		if response == gtk.RESPONSE_YES:
 			backup.merge(self)
 
-	# cover
+	# cover ---------------------------------------------------------------
 
 	def print_cover_simple_show(self, *args):
 		self.cover_simple_size.set_active(0)
@@ -446,7 +480,7 @@ You can't undo this operation."""), \
 	def print_cover_image_hide(self, *args):
 		self.w_print_cover_image.hide()
 
-	# loans management		
+	# loans management ----------------------------------------------------	
 
 	def show_people_window(self, *args):
 		people.show_people_window(self)
@@ -487,7 +521,7 @@ You can't undo this operation."""), \
 	def email_reminder(self, *args):
 		gemail.send_email(self)
 
-	# statusbar
+	# statusbar -----------------------------------------------------------
 
 	def count_statusbar(self):
 		text = str(self.total)
@@ -502,7 +536,7 @@ You can't undo this operation."""), \
 		context_id = self.statusbar.get_context_id(text)
 		message_id = self.statusbar.push(context_id, text)
 
-	# quick filter operations
+	# quick filter operations ---------------------------------------------
 
 	def filter_txt(self, *args):
 		quick_filter.change_filter(self)
@@ -510,7 +544,7 @@ You can't undo this operation."""), \
 	def clear_filter(self, *args):
 		quick_filter.clear_filter(self)
 
-	# menu filter
+	# menu filter ---------------------------------------------------------
 
 	def filter_loaned(self, *args):
 		view.filter_loaned(self)
@@ -532,7 +566,7 @@ You can't undo this operation."""), \
 	def filter_collection(self, *args):
 		quick_filter.change_filter(self)
 
-	# windows/dialogs
+	# windows/dialogs -----------------------------------------------------
 
 	def results_cancel_ck(self, *args):
 		self.w_results.hide()
@@ -613,7 +647,7 @@ You can't undo this operation."""), \
 	def on_goto_report_bug_activate(site, *args):
 		gutils.run_browser("http://developer.berlios.de/bugs/?group_id=4891")
 
-	# toolbar
+	# toolbar -------------------------------------------------------------
 	def toggle_toolbar(self, *args):
 		state = self.menu_toolbar.get_active()
 		if state == False:
@@ -626,7 +660,7 @@ You can't undo this operation."""), \
 	def new_dbb(self, *args):
 		self.db.new_db(self)
 
-	# key events
+	# key events ----------------------------------------------------------
 
 	def on_key_press_event(self, widget, event):
 		"""some key events actions"""
@@ -662,58 +696,6 @@ You can't undo this operation."""), \
 		"""add a double click event to poster results"""
 		if event.type == gtk.gdk._2BUTTON_PRESS:
 			add.populate_with_results(self)
-
-	def __init__(self):
-		"""
-		main griffith application constructor
-		"""	
-
-		# debug object
-		self.debug = gdebug.GriffithDebug()
-		# Configuration
-		self.config = config.Config()
-		# create/connect db
-		self.db = sql.GriffithSQL(self.config, self.debug, gglobals.griffith_dir)
-
-		# let's check any console arguments to parse
-		gconsole.check_args(self)
-
-		gtk.window_set_auto_startup_notification(True)
-		self.Image = gtk.Image()
-		self.filter_l = False
-		self.loans_treemodel = gtk.TreeStore(str, str, str)
-		self.initialize_griffith()
-		self.restore_state()
-		self.clear_details()
-		self.count_statusbar()
-		self.select_last_row(self.total)
-
-		# adding some completion fields
-
-		self.completion = gtk.EntryCompletion()
-		self.am_original_title.set_completion(self.completion)
-		self.completion.set_model(self.treemodel)
-		self.completion.set_text_column(3)
-		self.completion_t = gtk.EntryCompletion()
-		self.am_title.set_completion(self.completion_t)
-		self.completion_t.set_model(self.treemodel)
-		self.completion_t.set_text_column(4)
-
-		initialize.initialize_gtkspell(self)
-
-		# add default folders to some select widgets
-
-		if self.windows:
-			self.p_font.set_current_folder("c:\\windows\\fonts\\")
-		else:
-			self.p_font.set_current_folder("/usr/share/fonts/")
-
-	def main(self):
-		gtk.threads_init()
-		gtk.threads_enter()
-		gtk.main()
-		gtk.threads_leave()
-		return 0
 
 if __name__ == "__main__":
 	griffith = Griffith()

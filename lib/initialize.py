@@ -362,18 +362,16 @@ def dictionaries(self):
 	self.e_languages = []
 	self.e_tags = {} # dictionary for tag CheckBoxes
 	self.am_tags = {} # dictionary for tag CheckBoxes
-	import update
-	update.update_language_ids(self)
-	update.update_tag_ids(self)
-	update.update_volume_combo_ids(self)
-	update.update_collection_combo_ids(self)
-	import initialize
-	initialize.fill_volumes_combo(self)
-	initialize.fill_collections_combo(self)
-	initialize.fill_preferences_languages_combo(self)
-	initialize.fill_preferences_tags_combo(self)
-	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
-	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+	from update import update_language_ids, update_tag_ids, update_volume_combo_ids, update_collection_combo_ids
+	update_language_ids(self)
+	update_tag_ids(self)
+	update_volume_combo_ids(self)
+	update_collection_combo_ids(self)
+	from initialize import fill_volumes_combo, fill_collections_combo, create_tag_vbox, create_tag_vbox
+	fill_volumes_combo(self)
+	fill_collections_combo(self)
+	create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+	create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	self.sort_criteria = (
 		"original_title", "title", "number", "director",
 		"plot", "actors", "obs", "year", "runtime", "country",
@@ -490,6 +488,29 @@ def fill_collections_combo(self, prefix='e', default=0):
 		self.am_collection_combo.set_active(int(i))
 	self.e_collection_combo.set_wrap_width(2)
 	self.am_collection_combo.set_wrap_width(2)
+
+def preferences(self):
+	self.p_db_type.insert_text(0,"SQLite3 (internal)")
+	self.p_db_type.insert_text(1,"PostgreSQL")
+	if self.config.has_key("db_host"):
+		self.p_db_host.set_text(self.config["db_host"])
+	if self.config.has_key("db_port"):
+		self.p_db_port.set_value(int(self.config["db_port"]))
+	if self.config.has_key("db_user"):
+		self.p_db_user.set_text(self.config["db_user"])
+	if self.config.has_key("db_passwd"):
+		self.p_db_passwd.set_text(self.config["db_passwd"])
+	if self.config.has_key("db_name"):
+		self.p_db_name.set_text(self.config["db_name"])
+	if self.config.has_key("db_type") and self.config["db_type"] == "postgres":
+		self.p_db_type.set_active(1)
+		self.p_db_details.set_sensitive(True)
+	else:
+		self.p_db_type.set_active(0)
+		self.p_db_details.set_sensitive(False)
+	from initialize import fill_preferences_tags_combo, fill_preferences_languages_combo
+	fill_preferences_languages_combo(self)
+	fill_preferences_tags_combo(self)
 
 def fill_preferences_languages_combo(self):
 	self.lang_name_combo.get_model().clear()

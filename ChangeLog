@@ -4,9 +4,12 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-04-26 Piotr Ozarowski <ozarow@gmail.com>
+	* Added database settings to preferences window
+
 2006-04-25 Piotr Ozarowski <ozarow@gmail.com>
 	* Added PostgreSQL support!
-	* Merging data is now possible from .gri and .db files (still needs work)
+	* Added merging data from .gri and .db files (still needs work)
 	* Fixed some minor bugs
 
 2006-04-25 Vasco Nunes <vasco.m.nunes@gmail.com>
