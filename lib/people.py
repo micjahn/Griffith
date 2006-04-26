@@ -44,7 +44,7 @@ def clear_person(self):
 
 def add_person_db(self):
 	if (self.ap_name.get_text()<>''):
-		self.db.conn.Execute("INSERT INTO 'people'('id','name','email','phone') VALUES (Null,'" \
+		self.db.conn.Execute("INSERT INTO people(name,email,phone) VALUES ('" \
 			+gutils.gescape(self.ap_name.get_text())+"','" \
 			+gutils.gescape(self.ap_email.get_text())+"','" \
 			+gutils.gescape(self.ap_phone.get_text())+"')")
@@ -100,7 +100,7 @@ def delete_person(self):
 	except:
 		return
 	data_person=self.db.select_person_by_name(person).GetRowAssoc(0)
-	cursor = self.db.get_all_data(table_name="loans", where="person_id = '%s' " % str(data_person['id']) + "AND return_date = ''" )
+	cursor = self.db.get_all_data(table_name="loans", where="person_id = '%s' " % str(data_person['id']) + "AND return_date ISNULL)" )
 	if not cursor.EOF:
 		gutils.info(self, _("This person has loaned films from you. First return them."), self.main_window)
 		return False

@@ -62,7 +62,7 @@ def find_next_available(self):
 
 	cursor = self.db.get_all_data(order_by="number ASC", what="number")
 	while not cursor.EOF:
-		second = cursor.fields[0]
+		second = int(cursor.fields[0])
 		if second == None:
 			second = 0
 		if (second>first+1):

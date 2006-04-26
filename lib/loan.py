@@ -74,30 +74,30 @@ def commit_loan(self):
 		if loan_whole_collection:
 			self.db.update_collection(id=collection_id, loaned=1)
 		else:
-			self.db.conn.Execute("UPDATE movies SET loaned='1' WHERE number='%s';" % movie_id)
+			self.db.conn.Execute("UPDATE movies SET loaned=1 WHERE number='%s';" % movie_id)
 	elif volume_id>0:
 		self.db.update_volume(id=volume_id, loaned=1)
 	else:
-		self.db.conn.Execute("UPDATE movies SET loaned='1' WHERE number='%s';" % movie_id)
+		self.db.conn.Execute("UPDATE movies SET loaned=1 WHERE number='%s';" % movie_id)
 	self.update_statusbar(_("Movie loaned"))
 
 	# next, we insert a new row on the loans table
 	data_movie=self.db.select_movie_by_num(movie_id)
-	query = "INSERT INTO 'loans'('person_id','"
+	query = "INSERT INTO loans(person_id,"
 	if collection_id > 0 and loan_whole_collection:
 		query +="collection_id"
 	elif volume_id > 0:
 		query +="volume_id"
 	else:
 		query +="movie_id"
-	query += "', 'date', 'return_date') VALUES ('%s', '" % str(person_id)
+	query += ", date) VALUES ('%s', '" % str(person_id)
 	if collection_id > 0 and loan_whole_collection:
 		query += str(collection_id)
 	elif volume_id>0:
 		query += str(volume_id)
 	else:
 		query += str(movie_id)
-	query += "', '%s', '');" % str(datetime.date.today())
+	query += "', '%s');" % str(datetime.date.today())
 	self.db.conn.Execute(query)
 
 	# finally, force a refresh
@@ -106,7 +106,7 @@ def commit_loan(self):
 def return_loan(self):
 	movie_id = self.e_number.get_text()
 	if movie_id:
-		cursor = self.db.conn.Execute("SELECT volume_id, collection_id FROM movies WHERE number='%s'"%movie_id)
+		cursor = self.db.conn.Execute("SELECT volume_id, collection_id FROM movies WHERE number='%s'"%int(movie_id))
 		volume_id, collection_id = cursor.FetchRow()
 
 		collection_is_loaned = False
@@ -122,7 +122,7 @@ def return_loan(self):
 		elif volume_id > 0:
 			self.db.update_volume(id=volume_id, loaned=0)
 		else:
-			self.db.conn.Execute("UPDATE movies SET loaned='0' WHERE number='%s';" % movie_id)
+			self.db.conn.Execute("UPDATE movies SET loaned=0 WHERE number='%s';" % movie_id)
 
 		self.update_statusbar(_("Movie returned"))
 
@@ -135,7 +135,7 @@ def return_loan(self):
 			query +="volume_id='%s'" % volume_id
 		else:
 			query +="movie_id='%s'" % movie_id
-		query += " AND return_date = ''"
+		query += " AND return_date ISNULL"
 		self.db.conn.Execute(query)
 
 		# force a refresh

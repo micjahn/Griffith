@@ -537,7 +537,7 @@ def create_language_hbox(self, widget, tab, default=None, type=None):
 		tab[number]['type'].insert_text(2, _("dubbing"))
 		tab[number]['type'].insert_text(3, _("subtitles"))
 		if type != None:
-			tab[number]['type'].set_active(type)
+			tab[number]['type'].set_active(int(type))
 		else:
 			tab[number]['type'].set_active(0)
 		box.add(tab[number]['id'])

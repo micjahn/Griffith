@@ -42,34 +42,51 @@ def treeview_clicked(self):
 		with_buffer = self.e_with.get_buffer()
 		with_iter = with_buffer.get_start_iter()
 
-		self.e_movie_id.set_text(str(row['id']))
-		self.e_number.set_text(str(row['number']))
+		self.e_movie_id.set_text(str(int(row['id'])))
+		self.e_number.set_text(str(int(row['number'])))
 		self.e_original_title.set_text(str(row['original_title']))
-		self.e_title.set_text(str(row['title']))
-		self.e_director.set_text(str(row['director']))
-		plot_buffer.set_text(str(row['plot']))
-		self.e_discs.set_value(int(row['num_media']))
-		if str(row['year']) != "0":
+		if row["title"]:
+			self.e_title.set_text(str(row['title']))
+		if row["director"]:
+			self.e_director.set_text(str(row['director']))
+		if row["plot"]:
+			plot_buffer.set_text(str(row['plot']))
+		if row["num_media"]:
+			self.e_discs.set_value(int(row['num_media']))
+		if row['year']:
 			self.e_year.set_text(str(row['year']))
-		if str(row['runtime']) != "0":
-			self.e_runtime.set_text(str(row['runtime']))
-
-		with_buffer.set_text(str(row['actors']))
-
-		self.e_country.set_text(str(row['country']))
-		self.e_genre.set_text(str(row['genre']))
-		if row['condition'] != "":
-			self.e_condition.set_active(int(row['condition']))
-		if row['region'] != "":
-			self.e_region.set_active(int(row['region']))
-		if row['layers'] != "":
-			self.e_layers.set_active(int(row['layers']))
-		if row['color'] != "":
-			self.e_color.set_active(int(row['color']))
-		self.e_classification.set_text(str(row['classification']))
-		self.e_studio.set_text(str(row['studio']))
-		self.e_site.set_text(str(row['site']))
-		self.e_imdb.set_text(str(row['imdb']))
+		if row['runtime']:
+			self.e_runtime.set_text(str(int(row['runtime'])))
+		if row["actors"]:
+			with_buffer.set_text(str(row['actors']))
+		if row["country"]:
+			self.e_country.set_text(str(row['country']))
+		if row["genre"]:
+			self.e_genre.set_text(str(row['genre']))
+		if row["condition"] != None and row["condition"] != '':
+			self.e_condition.set_active(int(str(row['condition'])))
+		else:
+			self.e_condition.set_active(5) # N/A
+		if row["region"] != None and row["region"] != '':
+			self.e_region.set_active(int(str(row['region'])))
+		else:
+			self.e_condition.set_active(9) # N/A
+		if row["layers"] != None and row["layers"] != '':
+			self.e_layers.set_active(int(str(row['layers'])))
+		else:
+			self.e_condition.set_active(4) # N/A
+		if row['color'] != None and row["color"] != '':
+			self.e_color.set_active(int(str(row['color'])))
+		else:
+			self.e_condition.set_active(3) # N/A
+		if row['classification']:
+			self.e_classification.set_text(str(row['classification']))
+		if row["studio"]:
+			self.e_studio.set_text(str(row['studio']))
+		if row["site"]:
+			self.e_site.set_text(str(row['site']))
+		if row["imdb"]:
+			self.e_imdb.set_text(str(row['imdb']))
 		if row['seen']:
 			self.e_seen.set_active(True)
 		else:
@@ -79,13 +96,15 @@ def treeview_clicked(self):
 			self.rating_slider.set_value(int(row['rating']))
 		else:
 			self.image_rating.hide()
-		self.e_trailer.set_text(str(row['trailer']))
+		if row["trailer"]:
+			self.e_trailer.set_text(str(row['trailer']))
 		if row['obs']<>None:
 			obs_buffer.set_text(str(row['obs']))
-		self.e_media.set_active(int(row['media']))
+		if row["media"]:
+			self.e_media.set_active(int(row['media']))
 
 		# check loan status and adjust buttons and history box
-		if row['loaned']:
+		if int(row['loaned'])==1:
 			self.popup_loan.set_sensitive(False)
 			self.popup_email.set_sensitive(True)
 			self.popup_return.set_sensitive(True)
@@ -105,7 +124,7 @@ def treeview_clicked(self):
 		tmp_img = os.path.join(tmp_dest, "m_%s.jpg"%row['image'])
 		tmp_img2 = os.path.join(tmp_dest, "%s.jpg"%row['image'])
 
-		if len(row['image']) and os.path.isfile(tmp_img2):
+		if row['image'] and os.path.isfile(tmp_img2):
 			image_path = tmp_img
 			self.delete_poster.set_sensitive(True)
 			self.zoom_poster.set_sensitive(True)
@@ -125,7 +144,7 @@ def treeview_clicked(self):
 				self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
 				pixbuf = self.Image.get_pixbuf()
 		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
-		if row['loaned']:
+		if int(row['loaned']) == 1:
 			if row['collection_id'] > 0 and self.db.is_collection_loaned(row['collection_id']) == 1:
 				data_loan = self.db.get_loan_info(collection_id=row['collection_id'])
 			elif row['volume_id'] > 0 and self.db.is_volume_loaned(row['volume_id']) == 1:
@@ -133,9 +152,9 @@ def treeview_clicked(self):
 			else:
 				data_loan = self.db.get_loan_info(movie_id=row['number'])
 			data_loan = data_loan.GetRowAssoc(0)
-			data_person = self.db.select_person_by_id(data_loan['person_id']).GetRowAssoc(0)
-			self.person_name = data_person['name']
-			self.person_email = data_person['email']
+			data_person = self.db.select_person_by_id(int(data_loan['person_id'])).GetRowAssoc(0)
+			self.person_name = str(data_person['name'])
+			self.person_email = str(data_person['email'])
 			self.loan_date = str(data_loan['date'])
 			self.loan_info.set_label(self._("This movie has been loaned to ") + self.person_name + self._(" on ") + self.loan_date[:10])
 		else:
@@ -148,11 +167,11 @@ def treeview_clicked(self):
 			loan_row = cursor.GetRowAssoc(0)
 			myiter = self.loans_treemodel.append(None)
 			self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan_row['date'])[:10])
-			if loan_row['return_date'] != '':
+			if loan_row['return_date'] and  loan_row['return_date'] != '':
 				self.loans_treemodel.set_value(myiter, 1, str(loan_row['return_date'])[:10])
 			else:
 				self.loans_treemodel.set_value(myiter, 1, "---")
-			person = self.db.select_person_by_id(loan_row['person_id'])
+			person = self.db.select_person_by_id(int(loan_row['person_id']))
 			person = person.GetRowAssoc(0)
 			self.loans_treemodel.set_value(myiter, 2, person['name'])
 			cursor.MoveNext()
@@ -197,34 +216,34 @@ def populate(self, cursor):
 		self.treemodel.set_value(myiter,1,'%004d' % int(row['number']))
 
 		# check preferences to hide or show columns
-		if (self.config.get('view_otitle') == 'True'):
+		if self.config.get('view_otitle') == 'True':
 			self.otitle_column.set_visible(True)
 		else:
 			self.otitle_column.set_visible(False)
-		if (self.config.get('view_title') == 'True'):
+		if self.config.get('view_title') == 'True':
 			self.title_column.set_visible(True)
 		else:
 			self.title_column.set_visible(False)
-		if (self.config.get('view_director') == 'True'):
+		if self.config.get('view_director') == 'True':
 			self.director_column.set_visible(True)
 		else:
 			self.director_column.set_visible(False)
-		if (self.config.get('view_image') == 'True'):
+		if self.config['view_image'] == 'True':
 			self.image_column.set_visible(True)
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
-			tmp_img = os.path.join(tmp_dest, "t_"+row['image']+".jpg")
-			if len(row['image']) and os.path.isfile(tmp_img):
+			tmp_img = os.path.join(tmp_dest, "t_"+str(row['image'])+".jpg")
+			if row['image'] and os.path.isfile(tmp_img):
 				image_path = tmp_img
 			else:
-				image_path = self.locations['images'] + "/default_thumbnail.png"
+				image_path = os.path.join(self.locations['images'], "default_thumbnail.png")
 			# lets see if we have a scaled down thumbnail already created
-			if os.path.isfile(os.path.join(tmp_dest, "t_"+row['image']+".jpg")):
+			if os.path.isfile(os.path.join(tmp_dest, "t_"+str(row['image'])+".jpg")):
 				pass
 			else:
 				# if not, lets make one for future use :D
-				original_image = os.path.join(tmp_dest, "%s.jpg"%row['image'])
+				original_image = os.path.join(tmp_dest, "%s.jpg"%str(row['image']))
 				if os.path.isfile(original_image):
-					gutils.make_thumbnail(self, "%s.jpg"%row['image'])
+					gutils.make_thumbnail(self, "%s.jpg"%str(row['image']))
 				else:
 					self.Image.set_from_file("%s/default_thumbnail.png"%self.locations['images'])
 					pixbuf = self.Image.get_pixbuf()

@@ -125,44 +125,53 @@ def restore(self):
 		gutils.info(self, _("Backup restored"), self.main_window)
 
 def merge(self):
-	"""merge a griffith compressed backup"""
+	"""
+		Merge database from:
+		* compressed backup
+		* SQLite2 *.gri file
+		* SQLite3 *.db file
+	"""
 	filename = gutils.file_chooser(_("Restore Griffith backup"), \
 		action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, \
-		gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-	if filename[0]:
+		gtk.STOCK_OPEN, gtk.RESPONSE_OK))[0]
+	if filename:
 		from tempfile import mkdtemp
 		from shutil import rmtree, move
 		
-		tmp_dir=mkdtemp()
-		
-		try:
-			zip = zipfile.ZipFile(filename[0], 'r')
-		except:
-			gutils.error(self, _("Can't read backup file"), self.main_window)
-			return False
+		tmp_dir = mkdtemp()
+		tmp_config={}
+		tmp_config["db_type"] = "sqlite"
 
-		for each in zip.namelist():
-			file_to_restore = os.path.split(each)
-			if not os.path.isdir(file_to_restore[1]):
-				myfile = os.path.join(tmp_dir,file_to_restore[1])
-				outfile = open(myfile, 'wb')
-				outfile.write(zip.read(each))
-				outfile.flush()
-				outfile.close()
-		zip.close()
-
-		# load stored database filename
-		filename = config.Config(file=os.path.join(tmp_dir,'griffith.conf'))["default_db"]
-		filename = os.path.join(tmp_dir,filename)
-		# check if file needs conversion
-		if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
-			self.debug.show("MERGE: SQLite2 database format detected. Converting...")
-			if not self.db.convert_from_sqlite2(filename, os.path.join(tmp_dir, self.config["default_db"])):
-				self.debug.show("MERGE: Can't convert database, aborting.")
+		if filename.endswith('.zip'):
+			try:
+				zip = zipfile.ZipFile(filename, 'r')
+			except:
+				gutils.error(self, _("Can't read backup file"), self.main_window)
 				return False
+			for each in zip.namelist():
+				file_to_restore = os.path.split(each)
+				if not os.path.isdir(file_to_restore[1]):
+					myfile = os.path.join(tmp_dir,file_to_restore[1])
+					outfile = open(myfile, 'wb')
+					outfile.write(zip.read(each))
+					outfile.flush()
+					outfile.close()
+			# load stored database filename
+			tmp_config = config.Config(file=os.path.join(tmp_dir,'griffith.conf'))
+			filename = os.path.join(tmp_dir,tmp_config["default_db"])
+			zip.close()
 
-		tmp_db = sql.GriffithSQL(self.config, self.debug, tmp_dir)
+		# check if file needs conversion
+		if filename.endswith(".gri"):
+			if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
+				self.debug.show("MERGE: SQLite2 database format detected. Converting...")
+				if not self.db.convert_from_sqlite2(filename, os.path.join(tmp_dir, self.config["default_db"])):
+					self.debug.show("MERGE: Can't convert database, aborting.")
+					return False
+		griffith_dir, tmp_config["default_db"] = os.path.split(filename)
+
+		tmp_db = sql.GriffithSQL(tmp_config, self.debug, griffith_dir)
 
 		merged=0
 		movies=0
@@ -185,9 +194,11 @@ def merge(self):
 
 			# don't restore volume/collection/tag/language/loan data (it's dangerous)
 			t_movies.pop('id')
-			t_movies.pop('volume_id')
-			t_movies.pop('collection_id')
 			t_movies.pop('loaned')
+			if t_movies.has_key('volume_id'):
+				t_movies.pop('volume_id')
+			if t_movies.has_key('collection_id'):
+				t_movies.pop('collection_id')
 			
 			self.db.add_movie(t_movies)
 			

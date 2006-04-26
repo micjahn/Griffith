@@ -32,6 +32,9 @@ def update(self):
 		return False
 
 	number = self.e_number.get_text()
+	if number == None or number == '':
+		gutils.error(self, msg=_("Number is not set!"))
+		return False
 	cursor = self.db.get_all_data(what="id, title", where="number='%s'" % number)
 	if not cursor.EOF:
 		cursor = cursor.FetchRow()
@@ -47,7 +50,7 @@ def update(self):
 	collection_id = data[2]
 	new_volume_id = self.volume_combo_ids[self.e_volume_combo.get_active()]
 	new_collection_id = self.collection_combo_ids[self.e_collection_combo.get_active()]
-	if loaned:
+	if int(loaned)==1:
 		if collection_id>0 and collection_id != new_collection_id:
 			gutils.error(self, msg=_("You can't change collection while it is loaned!"))
 			return False
