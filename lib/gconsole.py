@@ -31,7 +31,7 @@ def check_args(self):
 	if self.args:
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], "hDco:s:d:w:y:",
-					["help", "debug", "clean", "search_original=", "search_title=", "director=", "with=", "year="])
+					["help", "debug", "clean", "fix-db", "search_original=", "search_title=", "director=", "with=", "year="])
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
@@ -46,6 +46,9 @@ def check_args(self):
 				self.debug.set_debug()
 			if o in ("-c", "--clean"):
 				gutils.clean_posters_dir(self)
+				sys.exit()
+			if o == "--fix-db":
+				self.db.fix_old_data()
 				sys.exit()
 			if o in ("-o", "--search_original"):
 				where['original_title'] = a
@@ -83,10 +86,11 @@ def con_usage():
 	print "-h, --help\tprints this screen"
 	print "-D, --debug\trun with more debug info"
 	print "-c, --clean\tfind and delete orphan files in poster's directory"
+	print "--fix-db\tfix old database"
 	print "\n printing movie list:"
-	print "-s <expr>, --search_title=<expr>"
-	print "-o <expr>, --original_title=<expr>"
 	print "-d <expr>, --director=<expr>"
+	print "-o <expr>, --original_title=<expr>"
+	print "-s <expr>, --search_title=<expr>"
 	print "-w <expr>, --with=<expr>"
 	print "-y <expr>, --year=<expr>"
 

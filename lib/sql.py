@@ -35,7 +35,6 @@ class GriffithSQL:
 		self.griffith_dir = griffith_dir
 		self.config = config
 		self.debug = debug
-#		config["db_type"] = "postgres" # TODO: just testing, remove it leter
 		if not config.has_key("db_type"):
 			config["db_type"] = "sqlite"
 
@@ -50,10 +49,7 @@ class GriffithSQL:
 
 		self.conn = adodb.NewADOConnection(config["db_type"])
 
-		if config["db_type"] == "sqlite":
-			self.pkey = "INTEGER PRIMARY KEY"
-			self.conn.Connect(database=os.path.join(griffith_dir, config["default_db"]))
-		elif config["db_type"] == "postgres":
+		if config["db_type"] == "postgres":
 			self.pkey = "SERIAL NOT NULL PRIMARY KEY"
 			if not config.has_key("db_host"):
 				config["db_host"] = "localhost"
@@ -65,8 +61,18 @@ class GriffithSQL:
 				config["db_passwd"] = "gRiFiTh"
 			if not config.has_key("db_name"):
 				config["db_name"] = "griffith"
-			self.conn.Connect("host=%s user=%s password=%s dbname=%s port=%s" % \
-				(config["db_host"], config["db_user"], config["db_passwd"], config["db_name"], config["db_port"]))
+			try:
+				self.conn.Connect("host=%s user=%s password=%s dbname=%s port=%s" % \
+					(config["db_host"], config["db_user"], config["db_passwd"], config["db_name"], config["db_port"]))
+			except:
+				self.config["db_type"] = "sqlite"
+				self.config.save()
+				self.conn.Close()
+				self.conn = adodb.NewADOConnection("sqlite")
+				gutils.error(self, _("Can't connect to external database."))
+		if config["db_type"] == "sqlite":
+			self.pkey = "INTEGER PRIMARY KEY"
+			self.conn.Connect(database=os.path.join(griffith_dir, config["default_db"]))
 
 		self.check_if_table_exists()
 
@@ -138,22 +144,22 @@ class GriffithSQL:
 			"volume_id" INTEGER NOT NULL DEFAULT 0,
 			"collection_id" INTEGER NOT NULL DEFAULT 0,
 			"number" INTEGER NOT NULL,
-			"original_title" VARCHAR(255) NOT NULL,
-			"title" VARCHAR(255),
-			"director" VARCHAR(100),
+			"original_title" VARCHAR NOT NULL,
+			"title" VARCHAR,
+			"director" VARCHAR,
 			"year" INTEGER,
-			"country" VARCHAR(100),
-			"genre" VARCHAR(100),
+			"country" VARCHAR,
+			"genre" VARCHAR,
 			"image" VARCHAR,
 			"runtime" INTEGER,
-			"studio" VARCHAR(50),
-			"site" VARCHAR(100),
-			"imdb" VARCHAR(100),
-			"trailer" VARCHAR(100),
+			"studio" VARCHAR,
+			"site" VARCHAR,
+			"imdb" VARCHAR,
+			"trailer" VARCHAR,
 			"seen" SMALLINT NOT NULL DEFAULT 0, -- TODO: change it to BOOLEAN
 			"loaned" SMALLINT NOT NULL DEFAULT 0, -- TODO: change it to BOOLEAN
 			"rating" SMALLINT NOT NULL DEFAULT 0,
-			"classification" VARCHAR(50),
+			"classification" VARCHAR(100),
 			"color" SMALLINT DEFAULT 3,
 			"condition" SMALLINT DEFAULT 5,
 			"layers" SMALLINT DEFAULT 4,
@@ -457,7 +463,7 @@ class GriffithSQL:
 		self.conn.Execute("UPDATE collections SET name='', loaned=0 WHERE id = 0;")
 		self.conn.Execute("UPDATE volumes SET name='', loaned=0 WHERE id = 0;")
 		self.conn.Execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2020")
-		self.conn.Execute("UPDATE movies SET rating=0 WHERE rating IN ('', NULL)")
+		self.conn.Execute("UPDATE movies SET rating=0 WHERE rating ISNULL")
 		try:
 			self.update_old_media()
 		except:
