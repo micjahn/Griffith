@@ -22,14 +22,33 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from gettext import gettext as _
-#from pysqlite2 import dbapi2 as sqlite
-import adodb
+from sqlalchemy import *
 import os.path
 import gutils
 import gtk
 
 class GriffithSQL:
-	conn = None
+	engine = None
+	class Movie(object):
+		pass
+	class Loan(object):
+		pass
+	class Person(object):
+		pass
+	class Volume(object):
+		pass
+	class Collection(object):
+		pass
+	class Medium(object):
+		pass
+	class Language(object):
+		pass
+	class Tag(object):
+		pass
+	class MovieTag(object):
+		pass
+	class MovieLanguage(object):
+		pass
 
 	def __init__(self, config, debug, griffith_dir):
 		self.griffith_dir = griffith_dir
@@ -47,12 +66,10 @@ class GriffithSQL:
 					self.config["default_db"] = "griffith.db"
 					self.config.save()
 
-		self.conn = adodb.NewADOConnection(config["db_type"])
-
+		# connect to database -----------------------------------------
 		if config["db_type"] == "postgres":
-			self.pkey = "SERIAL NOT NULL PRIMARY KEY"
 			if not config.has_key("db_host"):
-				config["db_host"] = "localhost"
+				config["db_host"] = "127.0.0.1"
 			if not config.has_key("db_port"):
 				config["db_port"] = "5432"
 			if not config.has_key("db_user"):
@@ -61,20 +78,147 @@ class GriffithSQL:
 				config["db_passwd"] = "gRiFiTh"
 			if not config.has_key("db_name"):
 				config["db_name"] = "griffith"
-			try:
-				self.conn.Connect("host=%s user=%s password=%s dbname=%s port=%s" % \
-					(config["db_host"], config["db_user"], config["db_passwd"], config["db_name"], config["db_port"]))
-			except:
-				self.config["db_type"] = "sqlite"
-				self.config.save()
-				self.conn.Close()
-				self.conn = adodb.NewADOConnection("sqlite")
-				gutils.error(self, _("Can't connect to external database."))
+#                        try:
+			self.engine = create_engine('postgres', {'database':config["db_name"], 'host':config["db_host"], 'user':config["db_user"], 'password':config["db_passwd"]})
+#                       except:
+#                                self.config["db_type"] = "sqlite"
+#                                self.config.save()
+#                                self.engine.Close()
+#                                self.engine = adodb.NewADOConnection("sqlite")
+#                                gutils.error(self, _("Can't connect to external database."))
 		if config["db_type"] == "sqlite":
-			self.pkey = "INTEGER PRIMARY KEY"
-			self.conn.Connect(database=os.path.join(griffith_dir, config["default_db"]))
+			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, config["default_db"])})
 
-		self.check_if_table_exists()
+		# prepare tables interface ------------------------------------
+		movies = Table("movies", self.engine,
+			Column("id", Integer, primary_key = True),
+			Column("volume_id", Integer, ForeignKey("volumes.id"), nullable=False, default=0 ),
+			Column("collection_id", Integer, ForeignKey("collections.id"), nullable=False, default=0),
+			Column("number", Integer, nullable=False),
+			Column("original_title", VARCHAR(255), nullable=False),
+			Column('title', VARCHAR(255), nullable=True),
+			Column("director", VARCHAR(255)),
+			Column("year", Integer),
+			Column("country", VARCHAR(128)),
+			Column("genre", VARCHAR(128)),
+			Column("image", VARCHAR(128)),
+			Column("runtime", Integer),
+			Column("studio", VARCHAR(128)),
+			Column("site", VARCHAR(255)),
+			Column("imdb", VARCHAR(255)),
+			Column("trailer", VARCHAR(255)),
+			Column("seen", Boolean, nullable=False, default=False),
+			Column("loaned", Boolean, nullable=False, default=False),
+			Column("rating", Integer(2), nullable=False, default=0),
+			Column("classification", VARCHAR(128)),
+			Column("color", types.SmallInteger(Integer), default=3),
+			Column("condition", types.SmallInteger(Integer), default=5),
+			Column("layers", types.SmallInteger(Integer), default=4),
+			Column("media", types.SmallInteger(Integer), ForeignKey('media.id'), nullable=False, default=0),
+			Column("region", types.SmallInteger(Integer), default=9),
+			Column("num_media", types.SmallInteger(Integer)),
+			Column("actors", TEXT),
+			Column("plot", TEXT),
+			Column("obs", TEXT)
+		)
+		loans = Table("loans", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("person_id", Integer, ForeignKey("people.id"), nullable=False,default=0),
+			Column("movie_id", Integer, ForeignKey("movies.id"), default=0),
+			Column("volume_id", Integer, ForeignKey("volumes.id"), default=0),
+			Column("collection_id", Integer, ForeignKey("collections.id"), default=0),
+			Column("date", Date, nullable=False),
+			Column("return_date", Date, nullable=True)
+		)
+		people = Table("people", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(255), nullable=False),
+			Column("email", VARCHAR(128)),
+			Column("phone", VARCHAR(64))
+		)
+		volumes = Table("volumes", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False),
+			Column("loaned", Boolean, nullable=False, default=False)
+		)
+		collections = Table("collections", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False),
+			Column("loaned", Boolean, nullable=False,default=False)
+		)
+		media = Table("media", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False)
+		)
+		languages = Table("languages", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False)
+		)
+		movie_lang = Table("movie_lang", self.engine,
+			Column("id", Integer, primary_key=True), # not used, but needed for some db
+			Column("movie_id", Integer, ForeignKey("movies.id"), nullable=False),
+			Column("lang_id", Integer, ForeignKey("languages.id"), nullable=False),
+			Column("type", types.SmallInteger(Integer))
+		)
+		tags = Table("tags", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False)
+		)
+		movie_tag = Table("movie_tag", self.engine,
+			Column("id", Integer, primary_key=True), # not used, but needed for some db
+			Column("movie_id", Integer, ForeignKey("movies.id")),
+			Column("tag_id", types.SmallInteger(Integer), ForeignKey("tags.id"))
+		)
+
+		try:
+			#if not self.engine.tables.has_key('movies'):
+			self.engine.execute("SELECT id FROM movies LIMIT 1")
+		except:
+			# create new database
+			self.debug.show("Creating tables...")
+			self.engine.create(volumes)
+			volumes.insert().execute(id=0, name='', loaned=False)
+			self.engine.create(collections)
+			collections.insert().execute(id=0, name='', loaned=False)
+			self.engine.create(media)
+			media.insert().execute(id=0, name='DVD')
+			media.insert().execute(id=1, name='DVD-R')
+			media.insert().execute(id=2, name='DVD-RW')
+			media.insert().execute(id=3, name='DVD+R')
+			media.insert().execute(id=4, name='DVD+RW')
+			media.insert().execute(id=5, name='DVD-RAM')
+			media.insert().execute(id=6, name='CD')
+			media.insert().execute(id=7, name='CD-RW')
+			media.insert().execute(id=8, name='VCD')
+			media.insert().execute(id=9, name='SVCD')
+			media.insert().execute(id=10, name='VHS')
+			media.insert().execute(id=11, name='BETACAM')
+			people.create()
+			movies.create()
+			loans.create()
+			self.engine.create(languages)
+			languages.insert().execute(id=0, name='')
+			movie_lang.create()
+			self.engine.create(tags)
+			tags.insert().execute(id=0, name=_("Favourite"))
+			movie_tag.create()
+			self.engine.commit()
+
+		self.Volume.mapper = mapper(self.Volume, volumes)
+		self.Collection.mapper = mapper(self.Collection, collections)
+		self.Medium.mapper = mapper(self.Medium, media)
+		self.Movie.mapper = mapper(self.Movie, movies, properties = {
+				'volumes'     : relation(self.Volume.mapper),
+				'collections' : relation(self.Collection.mapper)
+			}
+		)
+		self.Loan.mapper = mapper(self.Loan, loans)
+		self.Person.mapper = mapper(self.Person, people)
+		self.Language.mapper = mapper(self.Language, languages)
+		self.MovieLanguage.mapper = mapper(self.MovieLanguage, movie_lang)
+		self.Tag.mapper = mapper(self.Tag, tags)
+		self.MovieTag.mapper = mapper(self.MovieTag, movie_tag)
+
 
 	def new_db(self, parent): #{{{
 		"""initializes a new griffith database file"""
@@ -91,17 +235,17 @@ class GriffithSQL:
 					for name in files:
 						os.remove(os.path.join(root, name))
 				# delete db
-				parent.db.conn.Execute("DROP TABLE collections;")
-				parent.db.conn.Execute("DROP TABLE languages;")
-				parent.db.conn.Execute("DROP TABLE loans;")
-				parent.db.conn.Execute("DROP TABLE media;")
-				parent.db.conn.Execute("DROP TABLE movie_lang;")
-				parent.db.conn.Execute("DROP TABLE movie_tag;")
-				parent.db.conn.Execute("DROP TABLE movies;")
-				parent.db.conn.Execute("DROP TABLE people;")
-				parent.db.conn.Execute("DROP TABLE tags;")
-				parent.db.conn.Execute("DROP TABLE volumes;")
-				parent.db.conn.Close()
+				self.engine.drop(movie_lang)
+				self.engine.drop(movie_tag)
+				self.engine.drop(languages)
+				self.engine.drop(loans)
+				self.engine.drop(movies)
+				self.engine.drop(media)
+				self.engine.drop(collections)
+				self.engine.drop(people)
+				self.engine.drop(tags)
+				self.engine.drop(volumes)
+				parent.db.engine.close()
 				if self.config["default_db"] == "sqlite":
 					os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
 				# create/connect db
@@ -117,225 +261,12 @@ class GriffithSQL:
 				pass
 		else:
 			pass
-	#}}}
 
-	# create tables ----------------------------------------------------{{{
-	def create_db(self):
-		self.create_table_movies()
-		self.create_table_volumes()
-		self.create_table_collections()
-		self.create_table_loans()
-		self.create_table_people()
-		self.create_table_media()
-		self.create_table_languages()
-		self.create_table_movie_lang()
-		self.create_table_movie_tag()
-		self.create_table_tags()
-
-	def create_table_movies(self, backup=False):
-		if backup:
-			self.debug.show("Creating 'movies' temporary table...")
-			query = "CREATE TEMPORARY TABLE movies_backup ("
-		else:
-			self.debug.show("Creating 'movies' table...")
-			query = "CREATE TABLE movies ("
-		query += """
-			"id" %s,
-			"volume_id" INTEGER NOT NULL DEFAULT 0,
-			"collection_id" INTEGER NOT NULL DEFAULT 0,
-			"number" INTEGER NOT NULL,
-			"original_title" VARCHAR NOT NULL,
-			"title" VARCHAR,
-			"director" VARCHAR,
-			"year" INTEGER,
-			"country" VARCHAR,
-			"genre" VARCHAR,
-			"image" VARCHAR,
-			"runtime" INTEGER,
-			"studio" VARCHAR,
-			"site" VARCHAR,
-			"imdb" VARCHAR,
-			"trailer" VARCHAR,
-			"seen" SMALLINT NOT NULL DEFAULT 0, -- TODO: change it to BOOLEAN
-			"loaned" SMALLINT NOT NULL DEFAULT 0, -- TODO: change it to BOOLEAN
-			"rating" SMALLINT NOT NULL DEFAULT 0,
-			"classification" VARCHAR(100),
-			"color" SMALLINT DEFAULT 3,
-			"condition" SMALLINT DEFAULT 5,
-			"layers" SMALLINT DEFAULT 4,
-			"media" SMALLINT NOT NULL DEFAULT 0,
-			"region" SMALLINT DEFAULT 9,
-			"num_media" SMALLINT,
-			"actors" TEXT,
-			"plot" TEXT,
-			"obs" TEXT
-		)""" % self.pkey
-		self.conn.Execute(query)
-
-	def create_table_loans(self, backup=False):
-		query = ''
-		if backup:
-			self.debug.show("Creating 'loans' temporary table...")
-			query = "CREATE TEMPORARY TABLE loans_backup"
-		else:
-			self.debug.show("Creating 'loans' table...")
-			query = "CREATE TABLE loans"
-		query += """(
-			"id" %s,
-			"person_id" INTEGER NOT NULL DEFAULT 0,
-			"movie_id" BIGINT DEFAULT 0,
-			"volume_id" INTEGER DEFAULT 0,
-			"collection_id" INTEGER DEFAULT 0,
-			"date" DATE NOT NULL,
-			"return_date" DATE DEFAULT NULL
-		)""" % self.pkey
-		self.conn.Execute(query)
-
-	def create_table_people(self, backup=False):
-		if backup:
-			self.debug.show("Creating 'people' temporary table...")
-			query = "CREATE TEMPORARY TABLE people_backup"
-		else:
-			self.debug.show("Creating 'people' table...")
-			query = "CREATE TABLE people"
-		query += """(
-			"id" %s,
-			"name" VARCHAR(200) NOT NULL,
-			"email" VARCHAR(150),
-			"phone" VARCHAR(50)
-		)""" % self.pkey
-		self.conn.Execute(query)
-
-	def create_table_volumes(self):
-		self.debug.show("Creating 'volumes' table...")
-		self.conn.Execute ("""
-			CREATE TABLE volumes
-			(
-				"id" %s,
-				"name" VARCHAR NOT NULL,
-				"loaned" SMALLINT NOT NULL DEFAULT 0
-			);
-		""" % self.pkey)
-		self.conn.Execute("INSERT INTO volumes VALUES (0,'',0);")
-
-	def create_table_collections(self):
-		self.debug.show("Creating 'collections' table...")
-		self.conn.Execute ("""
-			CREATE TABLE collections
-			(
-				"id" %s,
-				"name" VARCHAR NOT NULL,
-				"loaned" SMALLINT NOT NULL DEFAULT 0
-			);
-		""" % self.pkey)
-		self.conn.Execute('INSERT INTO collections VALUES (0,\'\',0);')
-
-	def create_table_media(self):
-		self.debug.show("Creating 'media' table...")
-		self.conn.Execute ("""
-			CREATE TABLE media
-			(
-				"id" %s,
-				"name" VARCHAR NOT NULL
-			);
-		""" % self.pkey)
-		self.conn.Execute("INSERT INTO media VALUES (0, 'DVD');")
-		self.conn.Execute("INSERT INTO media VALUES (1, 'DVD-R');")
-		self.conn.Execute("INSERT INTO media VALUES (2, 'DVD-RW');")
-		self.conn.Execute("INSERT INTO media VALUES (3, 'DVD+R');")
-		self.conn.Execute("INSERT INTO media VALUES (4, 'DVD+RW');")
-		self.conn.Execute("INSERT INTO media VALUES (5, 'DVD-RAM');")
-		self.conn.Execute("INSERT INTO media VALUES (6, 'CD');")
-		self.conn.Execute("INSERT INTO media VALUES (7, 'CD-RW');")
-		self.conn.Execute("INSERT INTO media VALUES (8, 'VCD');")
-		self.conn.Execute("INSERT INTO media VALUES (9, 'SVCD');")
-		self.conn.Execute("INSERT INTO media VALUES (10, 'VHS');")
-		self.conn.Execute("INSERT INTO media VALUES (11, 'BETACAM');")
-
-	def create_table_languages(self):
-		self.debug.show("Creating 'languages' table...")
-		self.conn.Execute ("""
-			CREATE TABLE languages
-			(
-				"id" %s,
-				"name" VARCHAR NOT NULL
-			);
-		""" % self.pkey)
-		self.conn.Execute("INSERT INTO languages VALUES (0,'');")
-
-	def create_table_movie_lang(self):
-		self.debug.show("Creating 'movie_lang' table...")
-		self.conn.Execute ("""
-			CREATE TABLE movie_lang
-			(
-				"movie_id" BIGINT NOT NULL,
-				"lang_id" INTEGER NOT NULL,
-				"type" SMALLINT
-			);
-		""")
-
-	def create_table_tags(self):
-		self.debug.show("Creating 'tags' table...")
-		self.conn.Execute ("""
-			CREATE TABLE tags
-			(
-				"id" %s,
-				"name" VARCHAR NOT NULL
-			);
-		""" % self.pkey)
-		self.conn.Execute("INSERT INTO tags VALUES (0, '" + _("Favourite") + "');")
-
-	def create_table_movie_tag(self):
-		self.debug.show("Creating 'movie_tag' table...")
-		self.conn.Execute ("""
-			CREATE TABLE movie_tag
-			(
-				"movie_id" INTEGER NOT NULL,
-				"tag_id" SMALLINT NOT NULL
-			);
-		""")
-
-	# }}}
-
-	# upgrade tables ---------------------------------------------------{{{
+	# deprecated: ------------------------------------------------------{{{
 	def check_if_table_exists(self):
-		try:
-			self.conn.Execute("SELECT id FROM movies LIMIT 1")
-		except:
-			self.create_db()
-			return True
-		try:
-			self.conn.Execute("SELECT id FROM volumes LIMIT 1")
-		except:
-			self.create_table_volumes()
-		try:
-			self.conn.Execute("SELECT id FROM collections LIMIT 1")
-		except:
-			self.create_table_collections()
-		try:
-			self.conn.Execute("SELECT id FROM media LIMIT 1")
-		except:
-			self.create_table_media()
-		try:
-			self.conn.Execute("SELECT id FROM languages LIMIT 1")
-		except:
-			self.create_table_languages()
-		try:
-			self.conn.Execute("SELECT movie_id FROM movie_lang LIMIT 1")
-		except:
-			self.create_table_movie_lang()
-		try:
-			self.conn.Execute("SELECT id FROM tags LIMIT 1")
-		except:
-			self.create_table_tags()
-		try:
-			self.conn.Execute("SELECT movie_id FROM movie_tag LIMIT 1")
-		except:
-			self.create_table_movie_tag()
-
 		# "empty" language is needed
 		if self.get_value(field="name", table="languages", where="id = '0'") == None:
-			self.conn.Execute("INSERT INTO languages VALUES(0, '')")
+			self.engine.execute("INSERT INTO languages VALUES(0, '')")
 
 		# check old media
 		if self.config['db_type']== "sqlite":
@@ -378,32 +309,12 @@ class GriffithSQL:
 		need_upgrade = False
 		for column in columns:
 			try:
-				self.conn.Execute("SELECT %s FROM movies LIMIT 1"%column)
+				self.engine.execute("SELECT %s FROM movies LIMIT 1"%column)
 			except:
 				columns[column] = 0	# column is missing
 				need_upgrade = True
 		if need_upgrade:
 			self.upgrade_table("movies", columns)
-
-		# b) loans table
-		columns = {
-			'id'            : 1,
-			'movie_id'      : 1,
-			'volume_id'     : 1,
-			'collection_id' : 1,
-			'person_id'     : 1,
-			'date'          : 1,
-			'return_date'   : 1
-		}
-		need_upgrade = False
-		for column in columns:
-			try:
-				self.conn.Execute("SELECT %s FROM loans LIMIT 1"%column)
-			except:
-				columns[column] = 0	# column is missing
-				need_upgrade = True
-		if need_upgrade:
-			self.upgrade_table("loans", columns)
 
 	def upgrade_table(self, table, columns):
 		self.debug.show("Upgrading database: processing %s table..." % table)
@@ -431,45 +342,44 @@ class GriffithSQL:
 				sql_query += ', '
 
 		sql_query += " FROM %s" % table
-		self.conn.Execute(sql_query)
-		self.conn.Execute("DROP TABLE %s" % table)
+		self.engine.execute(sql_query)
+		self.engine.execute("DROP TABLE %s" % table)
 		eval("self.create_table_%s()"%table)
-		self.conn.Execute("INSERT INTO %s SELECT * FROM %s_backup" % (table, table))
-		self.conn.Execute("DROP TABLE %s_backup"%table)
-
+		self.engine.execute("INSERT INTO %s SELECT * FROM %s_backup" % (table, table))
+		self.engine.execute("DROP TABLE %s_backup"%table)
+	# }}}
+	
 	def update_old_media(self):
 		self.debug.show("Upgrading old media values...")
-		self.conn.Execute("UPDATE movies SET media = '0' WHERE media = 'DVD';")
-		self.conn.Execute("UPDATE movies SET media = '1' WHERE media = 'DVD-R';")
-		self.conn.Execute("UPDATE movies SET media = '2' WHERE media = 'DVD-RW';")
-		self.conn.Execute("UPDATE movies SET media = '3' WHERE media = 'DVD+R';")
-		self.conn.Execute("UPDATE movies SET media = '4' WHERE media = 'DVD+RW';")
-		self.conn.Execute("UPDATE movies SET media = '5' WHERE media = 'DVD-RAM';")
-		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'DivX';")
-		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'DIVX';")
-		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'XviD';")
-		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'XVID';")
-		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'WMV';")
-		self.conn.Execute("UPDATE movies SET media = '6' WHERE media = 'WMV';")
-		self.conn.Execute("UPDATE movies SET media = '8' WHERE media = 'VCD';")
-		self.conn.Execute("UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	")
-		self.conn.Execute("UPDATE movies SET media = '10' WHERE media = 'VHS';")
-		self.conn.Execute("UPDATE movies SET media = '11' WHERE media = 'BETACAM';")
+		self.engine.execute("UPDATE movies SET media = '0' WHERE media = 'DVD';")
+		self.engine.execute("UPDATE movies SET media = '1' WHERE media = 'DVD-R';")
+		self.engine.execute("UPDATE movies SET media = '2' WHERE media = 'DVD-RW';")
+		self.engine.execute("UPDATE movies SET media = '3' WHERE media = 'DVD+R';")
+		self.engine.execute("UPDATE movies SET media = '4' WHERE media = 'DVD+RW';")
+		self.engine.execute("UPDATE movies SET media = '5' WHERE media = 'DVD-RAM';")
+		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'DivX';")
+		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'DIVX';")
+		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'XviD';")
+		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'XVID';")
+		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'WMV';")
+		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'WMV';")
+		self.engine.execute("UPDATE movies SET media = '8' WHERE media = 'VCD';")
+		self.engine.execute("UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	")
+		self.engine.execute("UPDATE movies SET media = '10' WHERE media = 'VHS';")
+		self.engine.execute("UPDATE movies SET media = '11' WHERE media = 'BETACAM';")
 
 	def fix_old_data(self):
-		self.conn.Execute("UPDATE movies SET collection_id=0 WHERE collection_id=''")
-		self.conn.Execute("UPDATE movies SET volume_id=0 WHERE volume_id=''")
-		self.conn.Execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
-		self.conn.Execute("UPDATE collections SET name='', loaned=0 WHERE id = 0;")
-		self.conn.Execute("UPDATE volumes SET name='', loaned=0 WHERE id = 0;")
-		self.conn.Execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2020")
-		self.conn.Execute("UPDATE movies SET rating=0 WHERE rating ISNULL")
+		self.engine.execute("UPDATE movies SET collection_id=0 WHERE collection_id=''")
+		self.engine.execute("UPDATE movies SET volume_id=0 WHERE volume_id=''")
+		self.engine.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
+		self.engine.execute("UPDATE collections SET name='', loaned=0 WHERE id = 0;")
+		self.engine.execute("UPDATE volumes SET name='', loaned=0 WHERE id = 0;")
+		self.engine.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2020")
+		self.engine.execute("UPDATE movies SET rating=0 WHERE rating ISNULL")
 		try:
 			self.update_old_media()
 		except:
 			pass
-
-	# }}}
 
 	# add data ---------------------------------------------------------{{{
 	def add_movie(self, t_movies, t_languages=None, t_tags=None):
@@ -486,7 +396,7 @@ class GriffithSQL:
 			else:
 				query += "'%s'," % t_movies[field]
 		query = query[:len(query)-1] + ");" # remove last comma
-		self.conn.Execute(query)
+		self.engine.execute(query)
 
 		movie_id = self.get_value(field="id", table="movies", where="number = '%s'" % t_movies['number'])
 
@@ -494,12 +404,12 @@ class GriffithSQL:
 		if t_languages != None:
 			for lang in t_languages.keys():
 				for type in t_languages[lang].keys():
-					self.conn.Execute("INSERT INTO movie_lang(movie_id, lang_id, type) \
+					self.engine.execute("INSERT INTO movie_lang(movie_id, lang_id, type) \
 							VALUES ('%s', '%s', '%s');" % (movie_id, lang, type) )
 		# tags
 		if t_tags != None:
 			for i in t_tags.keys():
-				self.conn.Execute("INSERT INTO movie_tag(movie_id, tag_id) \
+				self.engine.execute("INSERT INTO movie_tag(movie_id, tag_id) \
 						VALUES ('%s', '%s');" % (movie_id, i) )
 
 	def add_volume(self, name):
@@ -512,7 +422,7 @@ class GriffithSQL:
 			cursor.MoveNext()
 		self.debug.show("Adding '%s' volume to database..."%name)
 		try:
-			self.conn.Execute("INSERT INTO volumes(name) VALUES ('"+gutils.gescape(name)+"');")
+			self.engine.execute("INSERT INTO volumes(name) VALUES ('"+gutils.gescape(name)+"');")
 		except:
 			return False
 		return True
@@ -527,7 +437,7 @@ class GriffithSQL:
 			cursor.MoveNext()
 		self.debug.show("Adding '%s' collection to database..."%name)
 		try:
-			self.conn.Execute("INSERT INTO collections(name) VALUES ('"+gutils.gescape(name)+"');")
+			self.engine.execute("INSERT INTO collections(name) VALUES ('"+gutils.gescape(name)+"');")
 		except:
 			return False
 		return True
@@ -546,7 +456,7 @@ class GriffithSQL:
 			cursor.MoveNext()
 		self.debug.show("Adding '%s' language to database..."%name)
 		try:
-			self.conn.Execute("INSERT INTO languages(name) VALUES ('"+gutils.gescape(name)+"');")
+			self.engine.execute("INSERT INTO languages(name) VALUES ('"+gutils.gescape(name)+"');")
 		except:
 			return False
 		return True
@@ -564,7 +474,7 @@ class GriffithSQL:
 			cursor.MoveNext()
 		self.debug.show("Adding '%s' tag to database..."%name)
 #		try:
-		self.conn.Execute("INSERT INTO tags(name) VALUES ('"+gutils.gescape(name)+"');")
+		self.engine.execute("INSERT INTO tags(name) VALUES ('"+gutils.gescape(name)+"');")
 #		except:
 #			return False
 		return True
@@ -580,38 +490,38 @@ class GriffithSQL:
 			sql += " WHERE %s" % where
 		if order_by != None:
 			sql += " ORDER BY %s" % order_by
-		return self.conn.Execute(sql)
+		return self.engine.execute(sql)
 
 	def get_value(self, field, table, where=None):
 		query = "SELECT %s FROM %s" % (field, table)
 		if where:
 			query += " WHERE %s" % where
-		cursor = self.conn.Execute(query)
+		cursor = self.engine.execute(query)
 		if not cursor.EOF:
 			return cursor.fields[0]
 		else:
 			return None
 
 	def select_movie_by_num(self,number):
-		return self.conn.Execute("SELECT * FROM movies WHERE number = '%s' ORDER BY number ASC" % number)
+		return self.engine.execute("SELECT * FROM movies WHERE number = '%s' ORDER BY number ASC" % number)
 
 	def select_movies_by_volume(self,volume_id):
-		return self.conn.Execute("SELECT * FROM movies WHERE volume_id = '%s' ORDER BY number ASC" % volume_id)
+		return self.engine.execute("SELECT * FROM movies WHERE volume_id = '%s' ORDER BY number ASC" % volume_id)
 
 	def select_movies_by_collection(self,collection):
-		return self.conn.Execute("SELECT * FROM movies WHERE collection_id = '%s' ORDER BY number ASC" % collection)
+		return self.engine.execute("SELECT * FROM movies WHERE collection_id = '%s' ORDER BY number ASC" % collection)
 
 	def select_person_by_name(self, name):
-		return self.conn.Execute("SELECT * FROM people WHERE name = '%s'" % name)
+		return self.engine.execute("SELECT * FROM people WHERE name = '%s'" % name)
 
 	def select_person_by_id(self, p_id):
-		return self.conn.Execute("SELECT * FROM people WHERE id = '%s'" % str(p_id) )
+		return self.engine.execute("SELECT * FROM people WHERE id = '%s'" % str(p_id) )
 
 	def get_loaned_movies(self):
-		return self.conn.Execute("SELECT * FROM movies WHERE loaned=1 ORDER BY number")
+		return self.engine.execute("SELECT * FROM movies WHERE loaned=1 ORDER BY number")
 
 	def get_not_seen_movies(self):
-		return self.conn.Execute("SELECT * FROM movies WHERE seen=0 ORDER BY number")
+		return self.engine.execute("SELECT * FROM movies WHERE seen=0 ORDER BY number")
 
 	def get_loan_info(self, movie_id=None, volume_id=None, collection_id=None):
 		query = "SELECT * FROM loans WHERE return_date ISNULL AND "
@@ -621,7 +531,7 @@ class GriffithSQL:
 			query += "volume_id='%s'" % str(volume_id)
 		else:
 			query += "movie_id='%s'" % str(movie_id)
-		return self.conn.Execute(query)
+		return self.engine.execute(query)
 
 	def get_loan_history(self, movie_id=None, volume_id=None, collection_id=None):
 		query = "SELECT * FROM loans WHERE NOT return_date ISNULL AND ("
@@ -636,7 +546,7 @@ class GriffithSQL:
 				query += " OR "
 			query += " movie_id='%s'" % str(movie_id)
 		query +=  ")"
-		return self.conn.Execute(query)
+		return self.engine.execute(query)
 	# }}}
 
 	# remove data ------------------------------------------------------{{{
@@ -646,9 +556,9 @@ class GriffithSQL:
 			return False
 		id = self.get_value(field="id", table="movies", where="number = '%s'" % number)
 		if id != None:
-			self.conn.Execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
-			self.conn.Execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
-			self.conn.Execute("DELETE FROM movies WHERE number = '"+number+"'")
+			self.engine.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
+			self.engine.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
+			self.engine.execute("DELETE FROM movies WHERE number = '"+number+"'")
 
 	def remove_volume(self, id=None, name=None):
 		if id != None:
@@ -667,7 +577,7 @@ class GriffithSQL:
 			return False
 		self.debug.show("Removing '%s' volume (id=%s) from database..."%(name, id))
 		try:
-			self.conn.Execute("DELETE FROM volumes WHERE id = '%s'" % id)
+			self.engine.execute("DELETE FROM volumes WHERE id = '%s'" % id)
 		except:
 				return False
 		return True
@@ -688,7 +598,7 @@ class GriffithSQL:
 			return False
 		self.debug.show("Removing '%s' collection (id=%s) from database..."%(name, id))
 		try:
-			self.conn.Execute("DELETE FROM collections WHERE id = '%s'" % id)
+			self.engine.execute("DELETE FROM collections WHERE id = '%s'" % id)
 		except:
 				return False
 		return True
@@ -711,7 +621,7 @@ class GriffithSQL:
 
 		self.debug.show("Removing '%s' language (id=%s) from database..."%(name, id))
 		try:
-			self.conn.Execute("DELETE FROM languages WHERE id = '%s'" % id)
+			self.engine.execute("DELETE FROM languages WHERE id = '%s'" % id)
 		except:
 				return False
 		return True
@@ -734,13 +644,13 @@ class GriffithSQL:
 
 		self.debug.show("Removing '%s' tag (id=%s) from database..."%(name, id))
 		try:
-			self.conn.Execute("DELETE FROM tags WHERE id = '%s'" % id)
+			self.engine.execute("DELETE FROM tags WHERE id = '%s'" % id)
 		except:
 				return False
 		return True
 
 	def remove_person_by_name(self, number):
-		self.conn.Execute("DELETE FROM people WHERE name = '"+number+"'")
+		self.engine.execute("DELETE FROM people WHERE name = '"+number+"'")
 	# }}}
 
 	# update data ------------------------------------------------------{{{
@@ -757,20 +667,20 @@ class GriffithSQL:
 				query += "%s='%s'," % (field, t_movies[field])
 		query = query[:len(query)-1]	# remove last comma
 		query += " WHERE id='%s'"%movie_id
-		self.conn.Execute(query)
+		self.engine.execute(query)
 
-		self.conn.Execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % movie_id)	# remove old data
+		self.engine.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % movie_id)	# remove old data
 		# languages
 		if t_languages != None:
 			for lang in t_languages.keys():
 				for type in t_languages[lang].keys():
-					self.conn.Execute("INSERT INTO movie_lang(movie_id, lang_id, type) \
+					self.engine.execute("INSERT INTO movie_lang(movie_id, lang_id, type) \
 							VALUES ('%s', '%s', '%s');" % (movie_id, lang, type) )
-		self.conn.Execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % movie_id)
+		self.engine.execute("DELETE FROM movie_tag WHERE movie_id = '%s';" % movie_id)
 		# tags
 		if t_tags != None:
 			for i in t_tags.keys():
-				self.conn.Execute("INSERT INTO movie_tag(movie_id, tag_id) \
+				self.engine.execute("INSERT INTO movie_tag(movie_id, tag_id) \
 						VALUES ('%s', '%s');" % (movie_id, i) )
 
 	def update_collection(self, id, name=None, volume_id=None, loaned=None):
@@ -784,35 +694,35 @@ class GriffithSQL:
 				gutils.warning(self, msg="This name is already in use!")
 				return False
 			try:
-				self.conn.Execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
+				self.engine.execute("UPDATE collections SET name = '%s' WHERE id = '%s';"%(name,id))
 			except:
 				self.debug.show("ERROR during updating collection's name!")
 				return False
 			return True
 		if loaned==1:
 			try:
-				self.conn.Execute("UPDATE collections SET loaned=1 WHERE id='%s';" % id)
-				self.conn.Execute("UPDATE movies SET loaned=1 WHERE collection_id='%s';" % id)
+				self.engine.execute("UPDATE collections SET loaned=1 WHERE id='%s';" % id)
+				self.engine.execute("UPDATE movies SET loaned=1 WHERE collection_id='%s';" % id)
 			except:
 				self.debug.show("ERROR during updating collection's loan data!")
 				return False
 			if volume_id:
 				try:
-					self.conn.Execute("UPDATE volumes SET loaned=1 WHERE id='%s';"%volume_id)
+					self.engine.execute("UPDATE volumes SET loaned=1 WHERE id='%s';"%volume_id)
 				except:
 					self.debug.show("ERROR during updating collection's loan data!")
 					return False
 			return True
 		elif loaned==0:
 			try:
-				self.conn.Execute("UPDATE collections SET loaned=0 WHERE id='%s';" % id)
-				self.conn.Execute("UPDATE movies SET loaned=0 WHERE collection_id='%s';" % id)
+				self.engine.execute("UPDATE collections SET loaned=0 WHERE id='%s';" % id)
+				self.engine.execute("UPDATE movies SET loaned=0 WHERE collection_id='%s';" % id)
 			except:
 				self.debug.show("ERROR during updating collection's loan data!")
 				return False
 			if volume_id:
 				try:
-					self.conn.Execute("UPDATE volumes SET loaned=0 WHERE id='%s';"%volume_id)
+					self.engine.execute("UPDATE volumes SET loaned=0 WHERE id='%s';"%volume_id)
 				except:
 					self.debug.show("ERROR during updating volume's loan data!")
 					return False
@@ -830,23 +740,23 @@ class GriffithSQL:
 				gutils.warning(self, msg="This name is already in use!")
 				return False
 			try:
-				self.conn.Execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
+				self.engine.execute("UPDATE volumes SET name = '%s' WHERE id = '%s';"%(name,id))
 			except:
 				self.debug.show("ERROR during updating volume's name!")
 				return False
 			return True
 		if loaned==1:
 			try:
-				self.conn.Execute("UPDATE volumes SET loaned=1 WHERE id='%s';" % id)
-				self.conn.Execute("UPDATE movies SET loaned=1 WHERE volume_id='%s';" % id)
+				self.engine.execute("UPDATE volumes SET loaned=1 WHERE id='%s';" % id)
+				self.engine.execute("UPDATE movies SET loaned=1 WHERE volume_id='%s';" % id)
 			except:
 				self.debug.show("ERROR during updating volume's loan data!")
 				return False
 			return True
 		elif loaned==0:
 			try:
-				self.conn.Execute("UPDATE volumes SET loaned=0 WHERE id='%s';" % id)
-				self.conn.Execute("UPDATE movies SET loaned=2 WHERE volume_id='%s';" % id)
+				self.engine.execute("UPDATE volumes SET loaned=0 WHERE id='%s';" % id)
+				self.engine.execute("UPDATE movies SET loaned=2 WHERE volume_id='%s';" % id)
 			except:
 				self.debug.show("ERROR during updating volume's loan data!")
 				return False
@@ -863,7 +773,7 @@ class GriffithSQL:
 			gutils.warning(self, msg="This name is already in use!")
 			return False
 		try:
-			self.conn.Execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (name, id))
+			self.engine.execute("UPDATE languages SET name ='%s' WHERE id='%s';" % (name, id))
 		except:
 			self.debug.show("ERROR during updating language name!")
 			return False
@@ -882,7 +792,7 @@ class GriffithSQL:
 			gutils.warning(self, msg="This name is already in use!")
 			return False
 		try:
-			self.conn.Execute("UPDATE tags SET name ='%s' WHERE id='%s';" % (name,id))
+			self.engine.execute("UPDATE tags SET name ='%s' WHERE id='%s';" % (name,id))
 		except:
 			self.debug.show("ERROR during updating tag name!")
 			return False
@@ -893,7 +803,7 @@ class GriffithSQL:
 		query = "SELECT COUNT(id) FROM %s" % (table_name)
 		if where:
 			query += " WHERE %s" % where
-		return int(self.conn.GetRow(query)[0])
+		return int(self.engine.execute(query)[0])
 
 	def is_movie_loaned(self,movie_id=None, movie_number=None):
 		if movie_id==None and movie_number == None:
@@ -902,13 +812,13 @@ class GriffithSQL:
 			sql = "SELECT loaned FROM movies WHERE id = '%s'" % movie_id
 		if movie_number:
 			sql = "SELECT loaned FROM movies WHERE number = '%s'" % movie_number
-		return self.conn.GetRow(sql)[0]
+		return self.engine.GetRow(sql)[0]
 
 	def is_volume_loaned(self,volume):
-		return self.conn.GetRow("SELECT loaned FROM volumes WHERE id = '%s'" % volume)[0]
+		return self.engine.GetRow("SELECT loaned FROM volumes WHERE id = '%s'" % volume)[0]
 
 	def is_collection_loaned(self,collection):
-		return self.conn.GetRow("SELECT loaned FROM collections WHERE id = '%s'" % collection)[0]
+		return self.engine.GetRow("SELECT loaned FROM collections WHERE id = '%s'" % collection)[0]
 
 	def convert_from_sqlite2(self, source_file, destination_file):	#{{{
 		try:
@@ -917,7 +827,7 @@ class GriffithSQL:
 			self.debug.show("SQLite2 conversion: please install pysqlite legacy (v1.0) - more info in README file")
 			return False
 
-		def copy_table(sqlite2_cursor, adodb_conn, table_name):
+		def copy_table(sqlite2_cursor, adodb_engine, table_name):
 			sqlite2_cursor.execute("SELECT * FROM %s"%table_name)
 			data = sqlite2_cursor.fetchall()
 			for row in data:
@@ -932,7 +842,7 @@ class GriffithSQL:
 					else:
 						query += "'%s'"%gutils.gescape(str(value)) + ','
 				query = query[:len(query)-1] + ');'
-				adodb_conn.Execute(query)
+				adodb_engine.execute(query)
 
 		from tempfile import mkdtemp
 		from shutil import rmtree, move
@@ -943,29 +853,29 @@ class GriffithSQL:
 
 		new_db = GriffithSQL(self.config, self.debug, tmp_dir)
 		# remove default values
-		new_db.conn.Execute("DELETE FROM volumes")
-		new_db.conn.Execute("DELETE FROM collections")
-		new_db.conn.Execute("DELETE FROM media")
-		new_db.conn.Execute("DELETE FROM languages")
-		new_db.conn.Execute("DELETE FROM tags")
+		new_db.engine.execute("DELETE FROM volumes")
+		new_db.engine.execute("DELETE FROM collections")
+		new_db.engine.execute("DELETE FROM media")
+		new_db.engine.execute("DELETE FROM languages")
+		new_db.engine.execute("DELETE FROM tags")
 
-		copy_table(sqlite2_cursor, new_db.conn, "movies")
-		copy_table(sqlite2_cursor, new_db.conn, "people")
-		copy_table(sqlite2_cursor, new_db.conn, "media")
-		copy_table(sqlite2_cursor, new_db.conn, "loans")
+		copy_table(sqlite2_cursor, new_db.engine, "movies")
+		copy_table(sqlite2_cursor, new_db.engine, "people")
+		copy_table(sqlite2_cursor, new_db.engine, "media")
+		copy_table(sqlite2_cursor, new_db.engine, "loans")
 		try:
-			copy_table(sqlite2_cursor, new_db.conn, "volumes")
-			copy_table(sqlite2_cursor, new_db.conn, "collections")
-			copy_table(sqlite2_cursor, new_db.conn, "languages")
-			copy_table(sqlite2_cursor, new_db.conn, "movie_lang")
-			copy_table(sqlite2_cursor, new_db.conn, "movie_tag")
-			copy_table(sqlite2_cursor, new_db.conn, "tags")
+			copy_table(sqlite2_cursor, new_db.engine, "volumes")
+			copy_table(sqlite2_cursor, new_db.engine, "collections")
+			copy_table(sqlite2_cursor, new_db.engine, "languages")
+			copy_table(sqlite2_cursor, new_db.engine, "movie_lang")
+			copy_table(sqlite2_cursor, new_db.engine, "movie_tag")
+			copy_table(sqlite2_cursor, new_db.engine, "tags")
 		except:
 			pass
 
 		move(os.path.join(tmp_dir,self.config["default_db"]), destination_file)
 		self.debug.show("Cnnvert from SQLite2: " + destination_file + " created")
-		new_db.conn.Close();
+		new_db.engine.Close();
 		rmtree(tmp_dir)
 		return True	#}}}
 # vim: fdm=marker
