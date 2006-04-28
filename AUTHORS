@@ -5,29 +5,18 @@ Peek <peekpt@gmail.com>
 * Logo, icon and general artwork
 
 Piotr Ozarowski <ozarow@gmail.com>
-* Polish translation
 * Stopklatka, Wirtualna Polska (WP), Filmweb, Onet, Filmweb, Anime Database (AniDB), Tanuki Anime movie plugins
 * HTML export plugin
 * Debian package/repository
 * Volumes/Collections feature
 * Languages/Tags feature
+* SQLAlchemy transition
 
 Christian Sagmueller <christian@sagmueller.net>
-* German translation
 * OFDb movie plugin
 
-Luchezar P. Petkov <luchezar.petkov@gmail.com
-* Bulgarian translation
+Pierre-Luc Levy
+* Allocine movie plugin
 
-Blondak <blondak@neser.cz>
-* Czech translation
-
-Daniel Ucero <escaranbujo@gmail.com>
-* Spanish translation
-
-Pierre-Luc Lévy <pllevy@free.fr>
-* French translation
-
-Diego Porcelli <diego.p77@gmail.com>
-* Italian translation
-
+Blonk <blondak@neser.cz>
+* CSFD movie plugin

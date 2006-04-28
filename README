@@ -10,6 +10,7 @@ Table of Contents
 =================
 * Introduction
 * System Requirements
+* External databases
 * Installation
 * Reporting Bugs
 * TODO list
@@ -39,6 +40,25 @@ System Requirements
   - A PDF reader for covers and reports support
   
 Windows installer includes all the needed requirements. A gtk+ runtime is not necessary when using this installer.
+
+
+External databases
+==================
+You need to prepare a new database and a new user by yourself
+
+  PostgreSQL
+  ----------
+	CREATE USER griffith UNENCRYPTED PASSWORD 'gRiFiTh' NOCREATEDB NOCREATEUSER;
+	CREATE DATABASE griffith WITH OWNER = griffith ENCODING = 'UNICODE';
+	GRANT ALL ON DATABASE griffith TO griffith;
+
+  MySQL
+  -----
+	CREATE DATABASE `griffith` DEFAULT CHARACTER SET utf8;
+	CREATE USER 'griffith'@'localhost' IDENTIFIED BY 'gRiFiTh';
+	CREATE USER 'griffith'@'%' IDENTIFIED BY 'gRiFiTh';
+	GRANT ALL ON `griffith` . * TO 'griffith'@'localhost';
+	GRANT ALL ON `griffith` . * TO 'griffith'@'%';
 
 
 Installation

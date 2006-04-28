@@ -28,6 +28,7 @@ import gutils
 import gtk
 
 class GriffithSQL:
+	version = 2	# database format version, incrase after any changes in data structures
 	engine = None
 	class Movie(object):
 		pass
@@ -49,8 +50,14 @@ class GriffithSQL:
 		pass
 	class MovieLanguage(object):
 		pass
+	class VCodec(object):
+		pass
+	class ACodec(object):
+		pass
+	class AChannel(object):
+		pass
 
-	def __init__(self, config, debug, griffith_dir):
+	def __init__(self, config, debug, griffith_dir):	#{{{
 		self.griffith_dir = griffith_dir
 		self.config = config
 		self.debug = debug
@@ -65,162 +72,181 @@ class GriffithSQL:
 				if self.convert_from_sqlite2(filename, os.path.join(griffith_dir, "griffith.db")):
 					self.config["default_db"] = "griffith.db"
 					self.config.save()
-
-		# connect to database -----------------------------------------
-		if config["db_type"] == "postgres":
+		else:
 			if not config.has_key("db_host"):
 				config["db_host"] = "127.0.0.1"
-			if not config.has_key("db_port"):
-				config["db_port"] = "5432"
 			if not config.has_key("db_user"):
 				config["db_user"] = "griffith"
 			if not config.has_key("db_passwd"):
 				config["db_passwd"] = "gRiFiTh"
 			if not config.has_key("db_name"):
 				config["db_name"] = "griffith"
-#                        try:
-			self.engine = create_engine('postgres', {'database':config["db_name"], 'host':config["db_host"], 'user':config["db_user"], 'password':config["db_passwd"]})
-#                       except:
-#                                self.config["db_type"] = "sqlite"
-#                                self.config.save()
-#                                self.engine.Close()
-#                                self.engine = adodb.NewADOConnection("sqlite")
-#                                gutils.error(self, _("Can't connect to external database."))
+
+		# connect to database -----------------------------------------
+		if config["db_type"] == "postgres":
+			if not config.has_key("db_port"):
+				config["db_port"] = "5432"
+#			try:
+			self.engine = create_engine('postgres', {
+				'database' : config["db_name"],
+				'host'     : config["db_host"],
+				'user'     : config["db_user"],
+				'password' : config["db_passwd"]})
+#			except:
+#				self.config["db_type"] = "sqlite"
+#				self.config.save()
+#				self.engine.Close()
+#				self.engine = adodb.NewADOConnection("sqlite")
+#				gutils.error(self, _("Can't connect to external database."))
+		elif config["db_type"] == "mysql":
+			if not config.has_key("db_port"):
+				config["db_port"] = "3306"
+#			try:
+			self.engine = create_engine('mysql', {
+				'db'     : config["db_name"],
+				'host'   : config["db_host"],
+				'user'   : config["db_user"],
+				'passwd' : config["db_passwd"]})
+#			except:
+#				self.config["db_type"] = "sqlite"
+#				self.config.save()
+#				self.engine.Close()
+#				self.engine = adodb.NewADOConnection("sqlite")
+#				gutils.error(self, _("Can't connect to external database."))
 		if config["db_type"] == "sqlite":
 			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, config["default_db"])})
 
 		# prepare tables interface ------------------------------------
-		movies = Table("movies", self.engine,
+		self.movies = Table("movies", self.engine,
 			Column("id", Integer, primary_key = True),
-			Column("volume_id", Integer, ForeignKey("volumes.id"), nullable=False, default=0 ),
-			Column("collection_id", Integer, ForeignKey("collections.id"), nullable=False, default=0),
 			Column("number", Integer, nullable=False),
-			Column("original_title", VARCHAR(255), nullable=False),
-			Column('title', VARCHAR(255), nullable=True),
-			Column("director", VARCHAR(255)),
+			Column("collection_id", Integer, ForeignKey("collections.id")),
+			Column("volume_id", Integer, ForeignKey("volumes.id")),
+			Column("media_id", Smallinteger, ForeignKey('media.id')),
+			Column("vcodec_id", Smallinteger, ForeignKey('vcodecs.id')),
+			Column("loaned", Boolean, nullable=False, default=False),
+			Column("seen", Boolean, nullable=False, default=False),
+			Column("rating", Smallinteger(2), nullable=False, default=0),
+			Column("color", Smallinteger, default=3),
+			Column("cond", Smallinteger, default=5),	# MySQL will not accept name "condition"
+			Column("layers", Smallinteger, default=4),
+			Column("region", Smallinteger, default=9),
+			Column("num_media", Smallinteger),
+			Column("runtime", Integer),
 			Column("year", Integer),
+			Column("o_title", VARCHAR(255), nullable=False),
+			Column('title', VARCHAR(255)),
+			Column("director", VARCHAR(255)),
+			Column("o_site", VARCHAR(255)),
+			Column("site", VARCHAR(255)),
+			Column("trailer", VARCHAR(256)),
 			Column("country", VARCHAR(128)),
 			Column("genre", VARCHAR(128)),
 			Column("image", VARCHAR(128)),
-			Column("runtime", Integer),
 			Column("studio", VARCHAR(128)),
-			Column("site", VARCHAR(255)),
-			Column("imdb", VARCHAR(255)),
-			Column("trailer", VARCHAR(255)),
-			Column("seen", Boolean, nullable=False, default=False),
-			Column("loaned", Boolean, nullable=False, default=False),
-			Column("rating", Integer(2), nullable=False, default=0),
 			Column("classification", VARCHAR(128)),
-			Column("color", types.SmallInteger(Integer), default=3),
-			Column("condition", types.SmallInteger(Integer), default=5),
-			Column("layers", types.SmallInteger(Integer), default=4),
-			Column("media", types.SmallInteger(Integer), ForeignKey('media.id'), nullable=False, default=0),
-			Column("region", types.SmallInteger(Integer), default=9),
-			Column("num_media", types.SmallInteger(Integer)),
 			Column("actors", TEXT),
 			Column("plot", TEXT),
-			Column("obs", TEXT)
+			Column("notes", TEXT)
 		)
-		loans = Table("loans", self.engine,
+		self.loans = Table("loans", self.engine,
 			Column("id", Integer, primary_key=True),
-			Column("person_id", Integer, ForeignKey("people.id"), nullable=False,default=0),
-			Column("movie_id", Integer, ForeignKey("movies.id"), default=0),
-			Column("volume_id", Integer, ForeignKey("volumes.id"), default=0),
-			Column("collection_id", Integer, ForeignKey("collections.id"), default=0),
+			Column("person_id", Integer, ForeignKey("people.id"), nullable=False),
+			Column("movie_id", Integer, ForeignKey("movies.id")),
+			Column("volume_id", Integer, ForeignKey("volumes.id")),
+			Column("collection_id", Integer, ForeignKey("collections.id")),
 			Column("date", Date, nullable=False),
 			Column("return_date", Date, nullable=True)
 		)
-		people = Table("people", self.engine,
+		self.people = Table("people", self.engine,
 			Column("id", Integer, primary_key=True),
 			Column("name", VARCHAR(255), nullable=False),
 			Column("email", VARCHAR(128)),
 			Column("phone", VARCHAR(64))
 		)
-		volumes = Table("volumes", self.engine,
+		self.volumes = Table("volumes", self.engine,
 			Column("id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False),
 			Column("loaned", Boolean, nullable=False, default=False)
 		)
-		collections = Table("collections", self.engine,
+		self.collections = Table("collections", self.engine,
 			Column("id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False),
 			Column("loaned", Boolean, nullable=False,default=False)
 		)
-		media = Table("media", self.engine,
+		self.media = Table("media", self.engine,
 			Column("id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False)
 		)
-		languages = Table("languages", self.engine,
+		self.languages = Table("languages", self.engine,
 			Column("id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False)
 		)
-		movie_lang = Table("movie_lang", self.engine,
-			Column("id", Integer, primary_key=True), # not used, but needed for some db
+		self.vcodecs = Table("vcodecs", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False)
+		)
+		self.acodecs = Table("acodecs", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False)
+		)
+		self.achannels = Table("achannels", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False)
+		)
+		self.tags = Table("tags", self.engine,
+			Column("id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False)
+		)
+		self.movie_lang = Table("movie_lang", self.engine,
+			Column("id", Integer, primary_key=True),
 			Column("movie_id", Integer, ForeignKey("movies.id"), nullable=False),
 			Column("lang_id", Integer, ForeignKey("languages.id"), nullable=False),
-			Column("type", types.SmallInteger(Integer))
+			Column("acodec_id", Integer, ForeignKey('acodecs.id'), nullable=True),
+			Column("achannel_id", Integer, ForeignKey('achannels.id'), nullable=True),
+			Column("type", Smallinteger)
 		)
-		tags = Table("tags", self.engine,
+		self.movie_tag = Table("movie_tag", self.engine,
 			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False)
-		)
-		movie_tag = Table("movie_tag", self.engine,
-			Column("id", Integer, primary_key=True), # not used, but needed for some db
 			Column("movie_id", Integer, ForeignKey("movies.id")),
-			Column("tag_id", types.SmallInteger(Integer), ForeignKey("tags.id"))
+			Column("tag_id", Integer, ForeignKey("tags.id"))
 		)
 
+		self.Volume.mapper = mapper(self.Volume, self.volumes)
+		self.Collection.mapper = mapper(self.Collection, self.collections)
+		self.Medium.mapper = mapper(self.Medium, self.media)
+		self.VCodec.mapper = mapper(self.VCodec, self.vcodecs)
+		self.Movie.mapper = mapper(self.Movie, self.movies, properties = {
+				'volumes'     : relation(self.Volume.mapper),
+				'collections' : relation(self.Collection.mapper),
+				'media'       : relation(self.Medium.mapper),
+				'vcodecs'     : relation(self.VCodec.mapper)
+			}
+		)
+		self.Loan.mapper = mapper(self.Loan, self.loans)
+		self.Person.mapper = mapper(self.Person, self.people)
+		self.Language.mapper = mapper(self.Language, self.languages)
+		self.MovieLanguage.mapper = mapper(self.MovieLanguage, self.movie_lang)
+		self.ACodec.mapper = mapper(self.ACodec, self.acodecs)
+		self.AChannel.mapper = mapper(self.AChannel, self.acodecs)
+		self.Tag.mapper = mapper(self.Tag, self.tags)
+		self.MovieTag.mapper = mapper(self.MovieTag, self.movie_tag)
+		
+		# check if  database needs upgrade
+		if not config.has_key("version"):
+			v = 1 # Griffith =< 0.6.1
+		else:
+			v = int(config["version"])
 		try:
 			#if not self.engine.tables.has_key('movies'):
 			self.engine.execute("SELECT id FROM movies LIMIT 1")
 		except:
-			# create new database
-			self.debug.show("Creating tables...")
-			self.engine.create(volumes)
-			volumes.insert().execute(id=0, name='', loaned=False)
-			self.engine.create(collections)
-			collections.insert().execute(id=0, name='', loaned=False)
-			self.engine.create(media)
-			media.insert().execute(id=0, name='DVD')
-			media.insert().execute(id=1, name='DVD-R')
-			media.insert().execute(id=2, name='DVD-RW')
-			media.insert().execute(id=3, name='DVD+R')
-			media.insert().execute(id=4, name='DVD+RW')
-			media.insert().execute(id=5, name='DVD-RAM')
-			media.insert().execute(id=6, name='CD')
-			media.insert().execute(id=7, name='CD-RW')
-			media.insert().execute(id=8, name='VCD')
-			media.insert().execute(id=9, name='SVCD')
-			media.insert().execute(id=10, name='VHS')
-			media.insert().execute(id=11, name='BETACAM')
-			people.create()
-			movies.create()
-			loans.create()
-			self.engine.create(languages)
-			languages.insert().execute(id=0, name='')
-			movie_lang.create()
-			self.engine.create(tags)
-			tags.insert().execute(id=0, name=_("Favourite"))
-			movie_tag.create()
-			self.engine.commit()
+			v = 0 # new database
+		if v<self.version:
+			self.upgrade_database(v)
+	#}}}
 
-		self.Volume.mapper = mapper(self.Volume, volumes)
-		self.Collection.mapper = mapper(self.Collection, collections)
-		self.Medium.mapper = mapper(self.Medium, media)
-		self.Movie.mapper = mapper(self.Movie, movies, properties = {
-				'volumes'     : relation(self.Volume.mapper),
-				'collections' : relation(self.Collection.mapper)
-			}
-		)
-		self.Loan.mapper = mapper(self.Loan, loans)
-		self.Person.mapper = mapper(self.Person, people)
-		self.Language.mapper = mapper(self.Language, languages)
-		self.MovieLanguage.mapper = mapper(self.MovieLanguage, movie_lang)
-		self.Tag.mapper = mapper(self.Tag, tags)
-		self.MovieTag.mapper = mapper(self.MovieTag, movie_tag)
-
-
-	def new_db(self, parent): #{{{
+	def new_db(self, parent):	#{{{
 		"""initializes a new griffith database file"""
 		response = gutils.question(self, \
 			_("Are you sure you want to create a new database?\nYou will lose ALL your current data!"), \
@@ -257,123 +283,104 @@ class GriffithSQL:
 				from initialize	import dictionaries, people_treeview
 				dictionaries(parent)
 				people_treeview(parent)
-			else:
-				pass
-		else:
-			pass
+	#}}}
 
-	# deprecated: ------------------------------------------------------{{{
-	def check_if_table_exists(self):
-		# "empty" language is needed
-		if self.get_value(field="name", table="languages", where="id = '0'") == None:
-			self.engine.execute("INSERT INTO languages VALUES(0, '')")
+	def upgrade_database(self, version):	#{{{
+		"""Create new db or update existing one to current format"""
+		if version == 0:
+			self.debug.show("Creating tables...")
+			self.volumes.create()
+			self.collections.create()
+			self.media.create()
+			self.media.insert().execute(id=1, name='DVD')
+			self.media.insert().execute(id=2, name='DVD-R')
+			self.media.insert().execute(id=3, name='DVD-RW')
+			self.media.insert().execute(id=4, name='DVD+R')
+			self.media.insert().execute(id=5, name='DVD+RW')
+			self.media.insert().execute(id=6, name='DVD-RAM')
+			self.media.insert().execute(id=7, name='CD')
+			self.media.insert().execute(id=8, name='CD-RW')
+			self.media.insert().execute(id=9, name='VCD')
+			self.media.insert().execute(id=10, name='SVCD')
+			self.media.insert().execute(id=11, name='VHS')
+			self.media.insert().execute(id=12, name='BETACAM')
+			self.media.insert().execute(id=13, name='LaserDisc')
+			self.acodecs.create()
+			self.acodecs.insert().execute(id=1, name='AC-3 Dolby audio')
+			self.acodecs.insert().execute(id=2, name='OGG')
+			self.acodecs.insert().execute(id=3, name='MP3')
+			self.acodecs.insert().execute(id=4, name='MPEG-1')
+			self.acodecs.insert().execute(id=5, name='MPEG-2')
+			self.acodecs.insert().execute(id=6, name='AAC')
+			self.acodecs.insert().execute(id=7, name='Windows Media Audio')
+			self.vcodecs.create()
+			self.vcodecs.insert().execute(id=1, name='MPEG-1')
+			self.vcodecs.insert().execute(id=2, name='MPEG-2')
+			self.vcodecs.insert().execute(id=3, name='XviD')
+			self.vcodecs.insert().execute(id=4, name='DivX')
+			self.vcodecs.insert().execute(id=5, name='H.264')
+			self.vcodecs.insert().execute(id=6, name='RealVideo')
+			self.vcodecs.insert().execute(id=7, name='QuickTime')
+			self.vcodecs.insert().execute(id=8, name='Windows Media Video')
+			self.achannels.create()
+			self.achannels.insert().execute(id=1, name='mono')
+			self.achannels.insert().execute(id=2, name='stereo')
+			self.achannels.insert().execute(id=3, name='5.1')
+			self.achannels.insert().execute(id=4, name='7.1')
+			self.people.create()
+			self.movies.create()
+			self.loans.create()
+			self.languages.create()
+			self.movie_lang.create()
+			self.tags.create()
+			self.tags.insert().execute(id=1, name=_("Favourite"))
+			self.tags.insert().execute(id=2, name=_("To buy"))
+			self.movie_tag.create()
+			self.engine.commit()
+			self.config["version"] = self.version
+			self.config.save()
+			return True
+		if version == 1:	# fix changes between v1 and v2
+			# TODO:
+			# * ranames in movie table:
+			#   + media => media_id
+			#   + obs => notes
+			#   + site => o_site
+			#   + imdb => site
+			#   + original_title => o_title
+			# * upgrade media table (media_id = media +1 )
+			# * upgrade old media if needed
+			version+=1
+		#if version == 2:	# fix changes between v2 and v3
+		#	version+=1
+	#}}}
 
-		# check old media
-		if self.config['db_type']== "sqlite":
-			if self.count_records("movies", 'media="DVD"') > 0:
-				self.update_old_media()
+	# deprecated: ------------------------------------------------------
 
-		# see if a db update is needed...
-		# a) movie table
-		columns = {
-			'id'             : 1,
-			'volume_id'      : 1,
-			'collection_id'  : 1,
-			'original_title' : 1,
-			'title'          : 1,
-			'director'       : 1,
-			'number'         : 1,
-			'image'          : 1,
-			'plot'           : 1,
-			'country'        : 1,
-			'year'           : 1,
-			'runtime'        : 1,
-			'classification' : 1,
-			'genre'          : 1,
-			'studio'         : 1,
-			'site'           : 1,
-			'imdb'           : 1,
-			'actors'         : 1,
-			'trailer'        : 1,
-			'rating'         : 1,
-			'loaned'         : 1,
-			'media'          : 1,
-			'num_media'      : 1,
-			'obs'            : 1,
-			'seen'           : 1,
-			'region'         : 1,
-			'condition'      : 1,
-			'color'          : 1,
-			'layers'         : 1
-		}
-		need_upgrade = False
-		for column in columns:
-			try:
-				self.engine.execute("SELECT %s FROM movies LIMIT 1"%column)
-			except:
-				columns[column] = 0	# column is missing
-				need_upgrade = True
-		if need_upgrade:
-			self.upgrade_table("movies", columns)
-
-	def upgrade_table(self, table, columns):
-		self.debug.show("Upgrading database: processing %s table..." % table)
-		eval("self.create_table_%s(backup=True)"%table)
-		sql_query = "INSERT INTO %s_backup ("%table
-		i = 0
-		for column in columns:
-			i = i+1
-			sql_query += column
-			if i == len(columns):
-				sql_query += ' '
-			else:
-				sql_query += ', '
-		sql_query += ") SELECT "
-		i = 0
-		for column in columns:
-			i = i+1
-			if columns[column] == 1:
-				sql_query += column
-			else:
-				sql_query += '""'
-			if i == len(columns):
-				sql_query += ' '
-			else:
-				sql_query += ', '
-
-		sql_query += " FROM %s" % table
-		self.engine.execute(sql_query)
-		self.engine.execute("DROP TABLE %s" % table)
-		eval("self.create_table_%s()"%table)
-		self.engine.execute("INSERT INTO %s SELECT * FROM %s_backup" % (table, table))
-		self.engine.execute("DROP TABLE %s_backup"%table)
-	# }}}
 	
 	def update_old_media(self):
 		self.debug.show("Upgrading old media values...")
-		self.engine.execute("UPDATE movies SET media = '0' WHERE media = 'DVD';")
-		self.engine.execute("UPDATE movies SET media = '1' WHERE media = 'DVD-R';")
-		self.engine.execute("UPDATE movies SET media = '2' WHERE media = 'DVD-RW';")
-		self.engine.execute("UPDATE movies SET media = '3' WHERE media = 'DVD+R';")
-		self.engine.execute("UPDATE movies SET media = '4' WHERE media = 'DVD+RW';")
-		self.engine.execute("UPDATE movies SET media = '5' WHERE media = 'DVD-RAM';")
-		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'DivX';")
-		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'DIVX';")
-		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'XviD';")
-		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'XVID';")
-		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'WMV';")
-		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'WMV';")
-		self.engine.execute("UPDATE movies SET media = '8' WHERE media = 'VCD';")
-		self.engine.execute("UPDATE movies SET media = '9' WHERE media = 'SVCD'; 	")
-		self.engine.execute("UPDATE movies SET media = '10' WHERE media = 'VHS';")
-		self.engine.execute("UPDATE movies SET media = '11' WHERE media = 'BETACAM';")
+		self.engine.execute("UPDATE movies SET media = '1' WHERE media = 'DVD';")
+		self.engine.execute("UPDATE movies SET media = '2' WHERE media = 'DVD-R';")
+		self.engine.execute("UPDATE movies SET media = '3' WHERE media = 'DVD-RW';")
+		self.engine.execute("UPDATE movies SET media = '4' WHERE media = 'DVD+R';")
+		self.engine.execute("UPDATE movies SET media = '5' WHERE media = 'DVD+RW';")
+		self.engine.execute("UPDATE movies SET media = '6' WHERE media = 'DVD-RAM';")
+		self.engine.execute("UPDATE movies SET media = '7' WHERE media = 'DivX';")
+		self.engine.execute("UPDATE movies SET media = '7' WHERE media = 'DIVX';")
+		self.engine.execute("UPDATE movies SET media = '7' WHERE media = 'XviD';")
+		self.engine.execute("UPDATE movies SET media = '7' WHERE media = 'XVID';")
+		self.engine.execute("UPDATE movies SET media = '7' WHERE media = 'WMV';")
+		self.engine.execute("UPDATE movies SET media = '7' WHERE media = 'WMV';")
+		self.engine.execute("UPDATE movies SET media = '9' WHERE media = 'VCD';")
+		self.engine.execute("UPDATE movies SET media = '10' WHERE media = 'SVCD'; 	")
+		self.engine.execute("UPDATE movies SET media = '11' WHERE media = 'VHS';")
+		self.engine.execute("UPDATE movies SET media = '12' WHERE media = 'BETACAM';")
 
 	def fix_old_data(self):
-		self.engine.execute("UPDATE movies SET collection_id=0 WHERE collection_id=''")
-		self.engine.execute("UPDATE movies SET volume_id=0 WHERE volume_id=''")
+		self.engine.execute("UPDATE movies SET collection_id=NULL WHERE collection_id=''")
+		self.engine.execute("UPDATE movies SET volume_id=NULL WHERE volume_id=''")
 		self.engine.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
-		self.engine.execute("UPDATE collections SET name='', loaned=0 WHERE id = 0;")
-		self.engine.execute("UPDATE volumes SET name='', loaned=0 WHERE id = 0;")
 		self.engine.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2020")
 		self.engine.execute("UPDATE movies SET rating=0 WHERE rating ISNULL")
 		try:
