@@ -24,23 +24,28 @@ from gettext import gettext as _
 import gutils
 
 def change_filter(self):
+	try:
+		tmp = self.initialized
+	except:
+		print "not initialized" # TODO: return False
 	x = 0
 	self.all_movies.set_active(2)
-	collection_id = self.collection_combo_ids[self.f_col.get_active()]
-	where_clause = ''
+	col_id = self.collection_combo_ids[self.f_col.get_active()]
 	text = gutils.gescape(self.e_filter.get_text())
 	if(len(text)==0):
-		if collection_id != 0:
-			where_clause = " collection_id = '%s'" % collection_id
+		if col_id != 0:
+			movies = self.db.Movie.select(order_by="number ASC", collection_id=col_id)
+		else:
+			movies = self.db.Movie.select(order_by="number ASC")
 	else:
-		text = gutils.gescape(text)
 		criteria = self.sort_criteria[self.filter_criteria.get_active()]
 		if {"year":None, "runtime":None, "num_media":None, "rating":None}.has_key(criteria):
-			where_clause = criteria + " = '"+text+"'"
+			movies = self.db.Movie.select(self.db.Movie.c[criteria]==text, order_by="number ASC")
 		else:
+			movies = self.db.Movie.select(self.db.Movie.c[criteria].like='%'+text+'%', order_by="number ASC")
 			where_clause = criteria + " LIKE '%" + text + "%'"
-		if collection_id != 0:
-			where_clause += " AND collection_id = '%s'" % collection_id
+		if col_id != 0:
+			where_clause += " AND collection_id = '%s'" % col_id
 	cursor = self.db.get_all_data(where=where_clause, order_by="number ASC")
 	#self.total_filter = cursor.RecordCount()
 	# TODO: replace "while" loop with "RecordCount()" when it will be available for SQLite

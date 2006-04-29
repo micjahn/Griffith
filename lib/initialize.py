@@ -446,17 +446,21 @@ def fill_volumes_combo(self, prefix='e', default=0):
 	self.e_volume_combo.get_model().clear()
 	for i in self.volume_combo_ids:
 		vol_id = self.volume_combo_ids[i]
-		name = self.db.Volume.select_by(id=vol_id)[0].name
+		if vol_id>0:
+			name = self.db.Volume.get_by(id=vol_id).name
+		else:
+			name = ''
 		self.am_volume_combo.insert_text(int(i), str(name))
 		self.e_volume_combo.insert_text(int(i), str(name))
 	self.am_volume_combo.show_all()
 	self.e_volume_combo.show_all()
 	i = gutils.findKey(default, self.volume_combo_ids)
-	if prefix == 'e':
-		self.e_volume_combo.set_active(int(default))
-		self.am_volume_combo.set_active(0)
-	else:
-		self.am_volume_combo.set_active(int(i))
+	if i!=None:
+		if prefix == 'e':
+			self.e_volume_combo.set_active(int(default))
+			self.am_volume_combo.set_active(0)
+		else:
+			self.am_volume_combo.set_active(int(i))
 	self.e_volume_combo.set_wrap_width(3)
 	self.am_volume_combo.set_wrap_width(3)
 
@@ -466,7 +470,10 @@ def fill_collections_combo(self, prefix='e', default=0):
 	self.f_col.get_model().clear()
 	for i in self.collection_combo_ids:
 		col_id = self.collection_combo_ids[i]
-		name = self.db.Collection.select_by(id=col_id)[0].name
+		if col_id>0:
+			name = self.db.Collection.get_by(id=col_id).name
+		else:
+			name = ''
 		self.am_collection_combo.insert_text(int(i), str(name))
 		self.e_collection_combo.insert_text(int(i), str(name))
 		self.f_col.insert_text(int(i), str(name))
@@ -475,11 +482,12 @@ def fill_collections_combo(self, prefix='e', default=0):
 	self.f_col.show_all()
 	self.f_col.set_active(0)
 	i = gutils.findKey(default, self.collection_combo_ids)
-	if prefix == 'e':
-		self.e_collection_combo.set_active(int(i))
-		self.am_collection_combo.set_active(0)
-	else:
-		self.am_collection_combo.set_active(int(i))
+	if i!=None:
+		if prefix == 'e':
+			self.e_collection_combo.set_active(int(i))
+			self.am_collection_combo.set_active(0)
+		else:
+			self.am_collection_combo.set_active(int(i))
 	self.e_collection_combo.set_wrap_width(2)
 	self.am_collection_combo.set_wrap_width(2)
 
@@ -510,7 +518,7 @@ def fill_preferences_languages_combo(self):
 	self.lang_name_combo.get_model().clear()
 	for i in self.languages_ids.keys():
 		lang_id = self.languages_ids[i]
-		name = self.db.Language.select_by(id=lang_id)[0].name
+		name = self.db.Language.get_by(id=lang_id).name
 		self.lang_name_combo.insert_text(int(i), str(name))
 	self.lang_name_combo.show_all()
 
@@ -518,7 +526,7 @@ def fill_preferences_tags_combo(self):
 	self.tag_name_combo.get_model().clear()
 	for i in self.tags_ids.keys():
 		tag_id = self.tags_ids[i]
-		name = self.db.Tag.select_by(id=tag_id)[0].name
+		name = self.db.Tag.get_by(id=tag_id).name
 		self.tag_name_combo.insert_text(int(i), str(name))
 	self.tag_name_combo.show_all()
 
@@ -528,8 +536,8 @@ def fill_language_combo(self, widget, default=None):
 	except:
 		pass
 	for i in self.languages_ids:
-		id = self.languages_ids[i]
-		name = self.db.get_value(field='name', table="languages", where="id='%s'"%id)
+		lang_id = self.languages_ids[i]
+		name = self.db.Language.get_by(id=lang_id).name
 		widget.insert_text(int(i), str(name))
 	if default != None and default!=0:
 		i = gutils.findKey(default, self.languages_ids)
@@ -565,7 +573,7 @@ def create_tag_vbox(self, widget, tab):
 		i.destroy()
 	for i in self.tags_ids:
 		tag_id = self.tags_ids[i]
-		tag_name = self.db.Tag.select_by(id=tag_id)[0].name
+		tag_name = self.db.Tag.get_by(id=tag_id).name
 		tab[i] = gtk.CheckButton(str(tag_name))
 		tab[i].set_active(False)
 		widget.pack_start(tab[i])

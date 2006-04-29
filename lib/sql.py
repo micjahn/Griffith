@@ -32,33 +32,46 @@ class GriffithSQL:
 	engine = None
 	class Movie(object):
 		def __repr__(self):
-			return "Movie number: %s, id=%s" % (self.name, self.id)
-	class Configuration(object):
-		pass
-	class Loan(object):
-		pass
-	class Person(object):
-		pass
-	class Volume(object):
-		pass
-	class Collection(object):
-		pass
-	class Medium(object):
-		pass
-	class Language(object):
-		pass
-	class Tag(object):
-		pass
-	class MovieTag(object):
-		pass
-	class MovieLanguage(object):
-		pass
-	class VCodec(object):
-		pass
-	class ACodec(object):
-		pass
+			return "Movie:%s(num:%s)" % (self.id, self.number)
 	class AChannel(object):
-		pass
+		def __repr__(self):
+			return "Achannel:%s" % self.name
+	class ACodec(object):
+		def __repr__(self):
+			return "Acodec:%s" % self.name
+	class Collection(object):
+		def __repr__(self):
+			return "Collection:%s" % self.name
+	class Configuration(object):
+		def __repr__(self):
+			return "Config:%s=%s" % (self.param, self.value)
+	class Language(object):
+		def __repr__(self):
+			return "Language:%s" % self.name
+	class Loan(object):
+		def __repr__(self):
+			return "Loan:%s" % self.id
+	class Medium(object):
+		def __repr__(self):
+			return "Medium:%s" % self.name
+	class MovieLanguage(object):
+		def __repr__(self):
+			return "Movie:%s_Lang:%s_Type:%s_ACodec:%s_AChannel:%s" % (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id)
+	class MovieTag(object):
+		def __repr__(self):
+			return "Movie-Tag:%s-%s" % (self.movie_id, self.tag_id)
+	class Person(object):
+		def __repr__(self):
+			return "Person:%s" % self.name
+	class Tag(object):
+		def __repr__(self):
+			return "Tag:%s" % self.name
+	class VCodec(object):
+		def __repr__(self):
+			return "VCodec:%s" % self.name
+	class Volume(object):
+		def __repr__(self):
+			return "Volume:%s" % self.name
 
 	def __init__(self, config, debug, griffith_dir):	#{{{
 		self.griffith_dir = griffith_dir
@@ -222,27 +235,43 @@ class GriffithSQL:
 		assign_mapper(self.Language, languages)
 		assign_mapper(self.MovieLanguage, movie_lang)
 		assign_mapper(self.ACodec, acodecs)
-		assign_mapper(self.AChannel, acodecs)
+		assign_mapper(self.AChannel, achannels)
 		assign_mapper(self.Tag, tags)
 		assign_mapper(self.MovieTag, movie_tag)
 		
-		# check if all tables exists
-		for table in self.engine.tables.keys():
-			pass
-
 		# check if database needs upgrade
-		v = self.Configuration.mapper.get_by(param="version")
+		try:
+			v = self.Configuration.mapper.get_by(param="version")	# returns None if table exists && param ISNULL
+		except exceptions.SQLError:	# table doesn't exist
+			try:
+				self.Configuration.mapper.table.create()
+			except:
+				self.debug.show("Error during creating configuration table.")
+				gutils.error(self, msg="Wrong permissions")
+				return False
+			v = None
+
 		if v != None:
-			self.version = v.value
+			v = v.value
 		else:
 			v = 1
-		try:
-			#if not self.engine.tables.has_key('movies'):
-			self.engine.execute("SELECT id FROM movies LIMIT 1")
-		except:
-			v = 0 # new database
+			try:
+				self.Movie.mapper.table.select().execute()
+			except exceptions.SQLError:	# table doesn't exist
+				v = 0 # new database
+			except:
+				raise
 		if v<self.version:
 			self.upgrade_database(v)
+		
+		# check if all tables exists
+#                for table in self.engine.tables.keys():
+#                        try:
+#                                self.engine.tables[table].select().execute()
+#                        except:
+#                                self.engine.tables[table].create()
+#                                self.engine.commit()
+
 	#}}}
 
 	def new_db(self, parent):	#{{{
@@ -259,21 +288,21 @@ class GriffithSQL:
 				for root, dirs, files in os.walk(os.path.join(self.griffith_dir,"posters"), topdown=False):
 					for name in files:
 						os.remove(os.path.join(root, name))
-				# delete db
-				self.Tag.mapper.table.drop()
+				# delete db TODO: DROP CASCADE
 				self.Loan.mapper.table.drop()
 				self.Person.mapper.table.drop()
 				self.Volume.mapper.table.drop()
 				self.Collection.mapper.table.drop()
-				self.Medium.mapper.table.drop()
-				self.Language.mapper.table.drop()
-				self.Tag.mapper.table.drop()
-				self.MovieTag.mapper.table.drop()
-				self.MovieLanguage.mapper.table.drop()
 				self.VCodec.mapper.table.drop()
 				self.ACodec.mapper.table.drop()
 				self.AChannel.mapper.table.drop()
-#				self.engine.tables['tags'].drop()
+				self.Medium.mapper.table.drop()
+				self.Language.mapper.table.drop()
+				self.Movie.mapper.table.drop()
+				self.MovieTag.mapper.table.drop()
+				self.MovieLanguage.mapper.table.drop()
+				self.Tag.mapper.table.drop()
+		#				self.engine.tables['tags'].drop()
 				self.config["version"] = 0
 				parent.db.engine.close()
 				if self.config["default_db"] == "sqlite":
@@ -293,7 +322,6 @@ class GriffithSQL:
 		"""Create new db or update existing one to current format"""
 		if version == 0:
 			self.debug.show("Creating tables...")
-			self.Configuration.mapper.table.create()
 			self.Configuration.mapper.table.insert().execute(param="version", value=2)
 			self.Volume.mapper.table.create()
 			self.Collection.mapper.table.create()
@@ -360,7 +388,6 @@ class GriffithSQL:
 		#if version == 2:	# fix changes between v2 and v3
 		#	version+=1
 		#	self.Configuration.get_by(param="version").value = version
-	#}}}
 
 	def update_old_media(self):
 		self.debug.show("Upgrading old media values...")
@@ -391,6 +418,7 @@ class GriffithSQL:
 			self.update_old_media()
 		except:
 			pass
+	#}}}
 
 	# add data ---------------------------------------------------------{{{
 	def add_movie(self, t_movies, t_languages=None, t_tags=None):
@@ -493,47 +521,6 @@ class GriffithSQL:
 	# }}}
 
 	# select data ------------------------------------------------------{{{
-	def get_all_data(self, table_name="movies", order_by=None, where=None, what=None):
-		if what == None:
-			what = "*"
-		sql = "SELECT %s FROM %s" % (what, table_name)
-		if where:
-			sql += " WHERE %s" % where
-		if order_by != None:
-			sql += " ORDER BY %s" % order_by
-		return self.engine.execute(sql)
-
-	def get_value(self, field, table, where=None):
-		query = "SELECT %s FROM %s" % (field, table)
-		if where:
-			query += " WHERE %s" % where
-		cursor = self.engine.execute(query)
-		if not cursor.EOF:
-			return cursor.fields[0]
-		else:
-			return None
-
-	def select_movie_by_num(self,number):
-		return self.engine.execute("SELECT * FROM movies WHERE number = '%s' ORDER BY number ASC" % number)
-
-	def select_movies_by_volume(self,volume_id):
-		return self.engine.execute("SELECT * FROM movies WHERE volume_id = '%s' ORDER BY number ASC" % volume_id)
-
-	def select_movies_by_collection(self,collection):
-		return self.engine.execute("SELECT * FROM movies WHERE collection_id = '%s' ORDER BY number ASC" % collection)
-
-	def select_person_by_name(self, name):
-		return self.engine.execute("SELECT * FROM people WHERE name = '%s'" % name)
-
-	def select_person_by_id(self, p_id):
-		return self.engine.execute("SELECT * FROM people WHERE id = '%s'" % str(p_id) )
-
-	def get_loaned_movies(self):
-		return self.engine.execute("SELECT * FROM movies WHERE loaned=1 ORDER BY number")
-
-	def get_not_seen_movies(self):
-		return self.engine.execute("SELECT * FROM movies WHERE seen=0 ORDER BY number")
-
 	def get_loan_info(self, movie_id=None, volume_id=None, collection_id=None):
 		query = "SELECT * FROM loans WHERE return_date ISNULL AND "
 		if collection_id>0:
@@ -835,7 +822,7 @@ class GriffithSQL:
 		try:
 			import sqlite
 		except:
-			self.debug.show("SQLite2 conversion: please install pysqlite legacy (v1.0) - more info in README file")
+			self.debug.show("SQLite2 conversion: please install pysqlite legacy (v1.0)")
 			return False
 
 		def copy_table(sqlite2_cursor, adodb_engine, table_name):
@@ -897,8 +884,8 @@ if __name__ == "__main__":
 	debug = gdebug.GriffithDebug()
 	db = GriffithSQL(config, debug, gglobals.griffith_dir)
 	db.engine.echo = True # print SQL queries
-	print "\nGriffith SQL\n============\nEngine: %s" % db.engine.name
-	print "Tables: %s" % db.engine.tables.keys()
-	print "Object name: db\n"
+	print "\nGriffithSQL test drive\n======================"
+	print "Connection: %s %s" % (db.engine.name, db.engine.opts)
+	print "Database object name: db\n"
 
 # vim: fdm=marker

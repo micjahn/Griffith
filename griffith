@@ -216,7 +216,7 @@ class Griffith:
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		number = tmp_model.get_value(tmp_iter, 1)
-		image = self.db.get_value(field="image", table="movies", where="number=%s"%number)
+		image = self.db.Movie.get_by(number=number).image
 		if image != None:
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
 			tmp_img = os.path.join(tmp_dest, image+".jpg")
@@ -525,8 +525,8 @@ You can't undo this operation."""), \
 
 	def count_statusbar(self):
 		text = str(self.total)
-		loaned = self.db.Movie.mapper.count_by(loaned=1)
-		not_seen = self.db.Movie.mapper.count_by(seen=0))
+		loaned = self.db.Movie.mapper.count_by(loaned=True)
+		not_seen = self.db.Movie.mapper.count_by(seen=False)
 		self.update_statusbar(str(text) + self._(' movie(s) in collection. ')
 			+ str(loaned) + self._(' movie(s) loaned. ')
 			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
@@ -539,10 +539,6 @@ You can't undo this operation."""), \
 	# quick filter operations ---------------------------------------------
 
 	def filter_txt(self, *args):
-		try:
-			tmp = self.initialized
-		except:
-			return # don't run at startup
 		quick_filter.change_filter(self)
 
 	def clear_filter(self, *args):
@@ -568,10 +564,6 @@ You can't undo this operation."""), \
 		return True
 
 	def filter_collection(self, *args):
-		try:
-			tmp = self.initialized
-		except:
-			return # don't run at startup
 		quick_filter.change_filter(self)
 
 	# windows/dialogs -----------------------------------------------------
