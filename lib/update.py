@@ -145,36 +145,28 @@ def clear_image(self,id):
 def update_language_ids(self):
 	self.languages_ids = {}
 	i = 0
-	cursor = self.db.get_all_data("languages", what="id")
-	while not cursor.EOF:
-		self.languages_ids[i] = cursor.fields[0]
+	for lang in self.db.Language.select():
+		self.languages_ids[i] = lang.id
 		i += 1
-		cursor.MoveNext()
 
 def update_tag_ids(self):
 	self.tags_ids = {}
 	i = 0
-	cursor = self.db.get_all_data("tags", what="id")
-	while not cursor.EOF:
-		self.tags_ids[i] = cursor.fields[0]
+	for tag in self.db.Tag.select():
+		self.tags_ids[i] = tag.id
 		i += 1
-		cursor.MoveNext()
 
 def update_volume_combo_ids(self):
 	self.volume_combo_ids = {}
 	i = 0
-	cursor = self.db.get_all_data("volumes", what="id")
-	while not cursor.EOF:
-		self.volume_combo_ids[i] = cursor.fields[0]
+	for volume in self.db.Tag.select():
+		self.volume_combo_ids[i] = volume.id
 		i += 1
-		cursor.MoveNext()
 
 def update_collection_combo_ids(self):
 	self.collection_combo_ids = {}
 	i = 0
-	cursor = self.db.get_all_data("collections", what="id")
-	while not cursor.EOF:
-		self.collection_combo_ids[i] = cursor.fields[0]
+	for collection in self.db.Collection.select():
+		self.collection_combo_ids[i] = collection.id
 		i += 1
-		cursor.MoveNext()
 

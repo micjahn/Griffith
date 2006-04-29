@@ -167,7 +167,6 @@ def treeview(self):
 	self.director_column.set_resizable(True)
 	self.main_treeview.append_column(self.director_column)
 	# add data to treeview
-	print self.db.Movie.mapper.count()
 	self.total = int(self.db.Movie.mapper.count())
 	self.main_treeview.show()
 
@@ -247,13 +246,10 @@ def people_treeview(self):
 	column.set_sort_column_id(1)
 	self.p_treeview.append_column(column)
 	# add data to treeview
-	data = self.db.get_all_data(table_name='people', order_by='name ASC')
-	while not data.EOF:
-		row = data.GetRowAssoc(0)
+	for person in self.db.Person.select(order_by="name ASC"):
 		myiter = self.p_treemodel.insert_before(None, None)
-		self.p_treemodel.set_value(myiter, 0, str(row['name']))
-		self.p_treemodel.set_value(myiter, 1, str(row['email']))
-		data.MoveNext()
+		self.p_treemodel.set_value(myiter, 0, str(person.name))
+		self.p_treemodel.set_value(myiter, 1, str(person.email))
 
 	self.p_treeview.show()
 
@@ -345,13 +341,10 @@ def combos(self):
 	self.am_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.am_layers.insert_text(4, _("N/A"))
 
-	media = self.db.get_all_data("media", order_by="id ASC")
-	while not media.EOF:
-		i = media.GetRowAssoc(0)
-		self.e_media.insert_text(i['id'], i['name'])
-		self.p_media.insert_text(i['id'], i['name'])
-		self.am_media.insert_text(i['id'], i['name'])
-		media.MoveNext()
+	for medium in self.db.Medium.select(order_by="id ASC"):
+		self.e_media.insert_text(medium.id, medium.name)
+		self.p_media.insert_text(medium.id, medium.name)
+		self.am_media.insert_text(medium.id, medium.name)
 	i = 0
 	for criteria in self.sort_criteria:
 		self.filter_criteria.insert_text(i, self.field_names[criteria])
@@ -452,8 +445,8 @@ def fill_volumes_combo(self, prefix='e', default=0):
 	self.am_volume_combo.get_model().clear()
 	self.e_volume_combo.get_model().clear()
 	for i in self.volume_combo_ids:
-		id = self.volume_combo_ids[i]
-		name = self.db.get_value(field='name', table="volumes", where="id='%s'"%id)
+		vol_id = self.volume_combo_ids[i]
+		name = self.db.Volume.select_by(id=vol_id)[0].name
 		self.am_volume_combo.insert_text(int(i), str(name))
 		self.e_volume_combo.insert_text(int(i), str(name))
 	self.am_volume_combo.show_all()
@@ -472,8 +465,8 @@ def fill_collections_combo(self, prefix='e', default=0):
 	self.e_collection_combo.get_model().clear()
 	self.f_col.get_model().clear()
 	for i in self.collection_combo_ids:
-		id = self.collection_combo_ids[i]
-		name = self.db.get_value(field='name', table="collections", where="id='%s'"%id)
+		col_id = self.collection_combo_ids[i]
+		name = self.db.Collection.select_by(id=col_id)[0].name
 		self.am_collection_combo.insert_text(int(i), str(name))
 		self.e_collection_combo.insert_text(int(i), str(name))
 		self.f_col.insert_text(int(i), str(name))
@@ -516,16 +509,16 @@ def preferences(self):
 def fill_preferences_languages_combo(self):
 	self.lang_name_combo.get_model().clear()
 	for i in self.languages_ids.keys():
-		id = self.languages_ids[i]
-		name = self.db.get_value(field='name', table="languages", where="id='%s'"%id)
+		lang_id = self.languages_ids[i]
+		name = self.db.Language.select_by(id=lang_id)[0].name
 		self.lang_name_combo.insert_text(int(i), str(name))
 	self.lang_name_combo.show_all()
 
 def fill_preferences_tags_combo(self):
 	self.tag_name_combo.get_model().clear()
 	for i in self.tags_ids.keys():
-		id = self.tags_ids[i]
-		name = self.db.get_value(field='name', table="tags", where="id='%s'"%id)
+		tag_id = self.tags_ids[i]
+		name = self.db.Tag.select_by(id=tag_id)[0].name
 		self.tag_name_combo.insert_text(int(i), str(name))
 	self.tag_name_combo.show_all()
 
@@ -572,7 +565,7 @@ def create_tag_vbox(self, widget, tab):
 		i.destroy()
 	for i in self.tags_ids:
 		tag_id = self.tags_ids[i]
-		tag_name = self.db.get_value(field='name', table="tags", where="id='%s'"%tag_id)
+		tag_name = self.db.Tag.select_by(id=tag_id)[0].name
 		tab[i] = gtk.CheckButton(str(tag_name))
 		tab[i].set_active(False)
 		widget.pack_start(tab[i])

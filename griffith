@@ -525,8 +525,8 @@ You can't undo this operation."""), \
 
 	def count_statusbar(self):
 		text = str(self.total)
-		loaned = self.db.count_records('movies','loaned=1')
-		not_seen = self.db.count_records('movies','seen=0')
+		loaned = self.db.Movie.mapper.count_by(loaned=1)
+		not_seen = self.db.Movie.mapper.count_by(seen=0))
 		self.update_statusbar(str(text) + self._(' movie(s) in collection. ')
 			+ str(loaned) + self._(' movie(s) loaned. ')
 			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
@@ -539,6 +539,10 @@ You can't undo this operation."""), \
 	# quick filter operations ---------------------------------------------
 
 	def filter_txt(self, *args):
+		try:
+			tmp = self.initialized
+		except:
+			return # don't run at startup
 		quick_filter.change_filter(self)
 
 	def clear_filter(self, *args):
@@ -564,6 +568,10 @@ You can't undo this operation."""), \
 		return True
 
 	def filter_collection(self, *args):
+		try:
+			tmp = self.initialized
+		except:
+			return # don't run at startup
 		quick_filter.change_filter(self)
 
 	# windows/dialogs -----------------------------------------------------
