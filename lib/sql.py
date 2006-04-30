@@ -141,18 +141,18 @@ class GriffithSQL:
 		movies = Table("movies", self.engine,
 			Column("movie_id", Integer, primary_key = True),
 			Column("number", Integer, nullable=False, unique="movie_number_key"),
-			Column("collection_id", Integer, ForeignKey("collections.collection_id")),
-			Column("volume_id", Integer, ForeignKey("volumes.volume_id")),
-			Column("medium_id", Smallinteger, ForeignKey('media.medium_id')),
-			Column("vcodec_id", Smallinteger, ForeignKey('vcodecs.vcodec_id')),
-			Column("loaned", Boolean, nullable=False, default=False),
-			Column("seen", Boolean, nullable=False, default=False),
+			Column("collection_id", Integer, ForeignKey("collections.collection_id"), default=None),
+			Column("volume_id", Integer, ForeignKey("volumes.volume_id"), default=None),
+			Column("medium_id", Smallinteger, ForeignKey('media.medium_id'), default=None),
+			Column("vcodec_id", Smallinteger, ForeignKey('vcodecs.vcodec_id'), default=None),
+			Column("loaned", Boolean, nullable=False, default=Boolean(False), index="movie_loaned_idx"),
+			Column("seen", Boolean, nullable=False, default=Boolean(False), index="movie_seen_idx"),
 			Column("rating", Smallinteger(2), nullable=False, default=0),
 			Column("color", Smallinteger, default=3),
 			Column("cond", Smallinteger, default=5),	# MySQL will not accept name "condition"
 			Column("layers", Smallinteger, default=4),
 			Column("region", Smallinteger, default=9),
-			Column("num_media", Smallinteger),
+			Column("media_num", Smallinteger),
 			Column("runtime", Integer),
 			Column("year", Integer),
 			Column("o_title", VARCHAR(255), nullable=False),
@@ -175,7 +175,7 @@ class GriffithSQL:
 			Column("movie_id", Integer, ForeignKey("movies.movie_id")),
 			Column("volume_id", Integer, ForeignKey("volumes.volume_id")),
 			Column("collection_id", Integer, ForeignKey("collections.collection_id")),
-			Column("date", Date, nullable=False),
+			Column("date", Date, nullable=False, default=func.now()),
 			Column("return_date", Date, nullable=True))
 		people = Table("people", self.engine,
 			Column("person_id", Integer, primary_key=True),
@@ -185,11 +185,11 @@ class GriffithSQL:
 		volumes = Table("volumes", self.engine,
 			Column("volume_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="volume_name_key"),
-			Column("loaned", Boolean, nullable=False, default=False))
+			Column("loaned", Boolean, nullable=False, default=Boolean(False)))
 		collections = Table("collections", self.engine,
 			Column("collection_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="collection_name_key"),
-			Column("loaned", Boolean, nullable=False,default=False))
+			Column("loaned", Boolean, nullable=False,default=Boolean(False)))
 		media = Table("media", self.engine,
 			Column("medium_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="medium_name_key"))
@@ -246,24 +246,17 @@ class GriffithSQL:
 		try:
 			v = self.Configuration.mapper.get_by(param="version")	# returns None if table exists && param ISNULL
 		except exceptions.SQLError:	# table doesn't exist
-			try:
-				self.Configuration.mapper.table.create()
-			except:
-				self.debug.show("Error during creating configuration table.")
-				gutils.error(self, msg="Wrong permissions")
-				return False
-			v = None
-
-		if v != None:
-			v = v.value
-		else:
 			v = 1
+
+		if v==1:
 			try:
 				self.Movie.mapper.table.select().execute()
 			except exceptions.SQLError:	# table doesn't exist
-				v = 0 # new database
+				v=0
 			except:
 				raise
+		if v!=None and v>1:
+			v = v.value
 		if v<self.version:
 			self.upgrade_database(v)
 		
@@ -310,56 +303,56 @@ class GriffithSQL:
 		"""Create new db or update existing one to current format"""
 		if version == 0:
 			self.debug.show("Creating tables...")
-			self.Configuration.mapper.table.insert().execute(param="version", value=2)
+			self.Configuration.mapper.table.create()
+			self.Configuration.mapper.table.insert().execute(param="version", value=self.version)
 			self.Volume.mapper.table.create()
 			self.Collection.mapper.table.create()
 			self.Medium.mapper.table.create()
-			self.Medium.mapper.table.insert().execute(id=1, name='DVD')
-			self.Medium.mapper.table.insert().execute(id=2, name='DVD-R')
-			self.Medium.mapper.table.insert().execute(id=3, name='DVD-RW')
-			self.Medium.mapper.table.insert().execute(id=4, name='DVD+R')
-			self.Medium.mapper.table.insert().execute(id=5, name='DVD+RW')
-			self.Medium.mapper.table.insert().execute(id=6, name='DVD-RAM')
-			self.Medium.mapper.table.insert().execute(id=7, name='CD')
-			self.Medium.mapper.table.insert().execute(id=8, name='CD-RW')
-			self.Medium.mapper.table.insert().execute(id=9, name='VCD')
-			self.Medium.mapper.table.insert().execute(id=10, name='SVCD')
-			self.Medium.mapper.table.insert().execute(id=11, name='VHS')
-			self.Medium.mapper.table.insert().execute(id=12, name='BETACAM')
-			self.Medium.mapper.table.insert().execute(id=13, name='LaserDisc')
+			self.Medium.mapper.table.insert().execute(medium_id=1, name='DVD')
+			self.Medium.mapper.table.insert().execute(medium_id=2, name='DVD-R')
+			self.Medium.mapper.table.insert().execute(medium_id=3, name='DVD-RW')
+			self.Medium.mapper.table.insert().execute(medium_id=4, name='DVD+R')
+			self.Medium.mapper.table.insert().execute(medium_id=5, name='DVD+RW')
+			self.Medium.mapper.table.insert().execute(medium_id=6, name='DVD-RAM')
+			self.Medium.mapper.table.insert().execute(medium_id=7, name='CD')
+			self.Medium.mapper.table.insert().execute(medium_id=8, name='CD-RW')
+			self.Medium.mapper.table.insert().execute(medium_id=9, name='VCD')
+			self.Medium.mapper.table.insert().execute(medium_id=10, name='SVCD')
+			self.Medium.mapper.table.insert().execute(medium_id=11, name='VHS')
+			self.Medium.mapper.table.insert().execute(medium_id=12, name='BETACAM')
+			self.Medium.mapper.table.insert().execute(medium_id=13, name='LaserDisc')
 			self.ACodec.mapper.table.create()
-			self.ACodec.mapper.table.insert().execute(id=1, name='AC-3 Dolby audio')
-			self.ACodec.mapper.table.insert().execute(id=2, name='OGG')
-			self.ACodec.mapper.table.insert().execute(id=3, name='MP3')
-			self.ACodec.mapper.table.insert().execute(id=4, name='MPEG-1')
-			self.ACodec.mapper.table.insert().execute(id=5, name='MPEG-2')
-			self.ACodec.mapper.table.insert().execute(id=6, name='AAC')
-			self.ACodec.mapper.table.insert().execute(id=7, name='Windows Media Audio')
+			self.ACodec.mapper.table.insert().execute(acodec_id=1, name='AC-3 Dolby audio')
+			self.ACodec.mapper.table.insert().execute(acodec_id=2, name='OGG')
+			self.ACodec.mapper.table.insert().execute(acodec_id=3, name='MP3')
+			self.ACodec.mapper.table.insert().execute(acodec_id=4, name='MPEG-1')
+			self.ACodec.mapper.table.insert().execute(acodec_id=5, name='MPEG-2')
+			self.ACodec.mapper.table.insert().execute(acodec_id=6, name='AAC')
+			self.ACodec.mapper.table.insert().execute(acodec_id=7, name='Windows Media Audio')
 			self.VCodec.mapper.table.create()
-			self.VCodec.mapper.table.insert().execute(id=1, name='MPEG-1')
-			self.VCodec.mapper.table.insert().execute(id=2, name='MPEG-2')
-			self.VCodec.mapper.table.insert().execute(id=3, name='XviD')
-			self.VCodec.mapper.table.insert().execute(id=4, name='DivX')
-			self.VCodec.mapper.table.insert().execute(id=5, name='H.264')
-			self.VCodec.mapper.table.insert().execute(id=6, name='RealVideo')
-			self.VCodec.mapper.table.insert().execute(id=7, name='QuickTime')
-			self.VCodec.mapper.table.insert().execute(id=8, name='Windows Media Video')
+			self.VCodec.mapper.table.insert().execute(vcodec_id=1, name='MPEG-1')
+			self.VCodec.mapper.table.insert().execute(vcodec_id=2, name='MPEG-2')
+			self.VCodec.mapper.table.insert().execute(vcodec_id=3, name='XviD')
+			self.VCodec.mapper.table.insert().execute(vcodec_id=4, name='DivX')
+			self.VCodec.mapper.table.insert().execute(vcodec_id=5, name='H.264')
+			self.VCodec.mapper.table.insert().execute(vcodec_id=6, name='RealVideo')
+			self.VCodec.mapper.table.insert().execute(vcodec_id=7, name='QuickTime')
+			self.VCodec.mapper.table.insert().execute(vcodec_id=8, name='Windows Media Video')
 			self.AChannel.mapper.table.create()
-			self.AChannel.mapper.table.insert().execute(id=1, name='mono')
-			self.AChannel.mapper.table.insert().execute(id=2, name='stereo')
-			self.AChannel.mapper.table.insert().execute(id=3, name='5.1')
-			self.AChannel.mapper.table.insert().execute(id=4, name='7.1')
+			self.AChannel.mapper.table.insert().execute(achannel_id=1, name='mono')
+			self.AChannel.mapper.table.insert().execute(achannel_id=2, name='stereo')
+			self.AChannel.mapper.table.insert().execute(achannel_id=3, name='5.1')
+			self.AChannel.mapper.table.insert().execute(achannel_id=4, name='7.1')
 			self.Person.mapper.table.create()
 			self.Movie.mapper.table.create()
 			self.Loan.mapper.table.create()
 			self.Language.mapper.table.create()
 			self.MovieLanguage.mapper.table.create()
 			self.Tag.mapper.table.create()
-			self.Tag.mapper.table.insert().execute(id=1, name=_("Favourite"))
-			self.Tag.mapper.table.insert().execute(id=2, name=_("To buy"))
+			self.Tag.mapper.table.insert().execute(tag_id=1, name=_("Favourite"))
+			self.Tag.mapper.table.insert().execute(tag_id=2, name=_("To buy"))
 			self.MovieTag.mapper.table.create()
 			self.engine.commit()
-			self.Configuration.get_by(param="version").value = self.version
 			return True
 		if version == 1:	# fix changes between v1 and v2
 			# TODO:
@@ -410,22 +403,18 @@ class GriffithSQL:
 
 	# add data ---------------------------------------------------------{{{
 	def add_movie(self, t_movies, t_languages=None, t_tags=None):
-		query = "INSERT INTO movies ("
-		for field in t_movies.keys():
-			query += "%s," % field
-		query = query[:len(query)-1]	# remove last comma
-		query += ") VALUES ("
-		for field in t_movies:
-			if t_movies[field] == "":
-				query += "NULL,"
-			elif str(t_movies[field]) == 'None':
-				query += "NULL,"
-			else:
-				query += "'%s'," % t_movies[field]
-		query = query[:len(query)-1] + ");" # remove last comma
-		self.engine.execute(query)
+		# remove empty fields (insert default value instead - mostly "NULL")
+		for i in t_movies.keys():
+			if t_movies[i] == '':
+				t_movies.pop(i)
+		for i in ["color","cond","layers","region","media_num"]:
+			if t_movies[i] == -1:
+				t_movies.pop(i)
 
-		movie_id = self.get_value(field="id", table="movies", where="number = '%s'" % t_movies['number'])
+		self.objectstore.clear()
+		self.Movie.mapper.table.insert().execute(t_movies)
+		self.objectstore.commit()
+		movie_id = self.Movie.mapper.get_by(number=t_movies['number']).movie_id
 
 		# languages
 		if t_languages != None:
@@ -532,7 +521,7 @@ class GriffithSQL:
 				query += " OR "
 			query += " movie_id='%s'" % str(movie_id)
 		query +=  ")"
-		return self.engine.execute(query)
+		return self.engine.execute(query).fetchall()
 	# }}}
 
 	# remove data ------------------------------------------------------{{{
@@ -554,7 +543,6 @@ class GriffithSQL:
 #		self.MovieTag.mapper.table.drop()
 #		self.MovieLanguage.mapper.table.drop()
 #		self.Tag.mapper.table.drop()
-
 		self.engine.execute("DROP TABLE loans CASCADE;")
 		self.engine.execute("DROP TABLE people CASCADE;")
 		self.engine.execute("DROP TABLE configuration CASCADE;")

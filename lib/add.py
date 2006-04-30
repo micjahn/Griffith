@@ -104,33 +104,43 @@ def add_movie_db(self, close):
 		t_movies = {
 			'actors'         : gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter())),
 			'classification' : gutils.gescape(self.am_classification.get_text()),
-			'collection_id'  : str(self.collection_combo_ids[self.am_collection_combo.get_active()]),
-			'color'          : str(int(self.am_color.get_active())),
-			'condition'      : str(int(self.am_condition.get_active())),
+			'color'          : self.am_color.get_active(),
+			'cond'           : self.am_condition.get_active(),
 			'country'        : gutils.gescape(self.am_country.get_text()),
 			'director'       : gutils.gescape(self.am_director.get_text()),
 			'genre'          : gutils.gescape(self.am_genre.get_text()),
 			'image'          : filename,
-			'imdb'           : self.am_imdb.get_text(),
-			'layers'         : str(int(self.am_layers.get_active())),
-			'loaned'         : '0',
-			'media'          : str(self.am_media.get_active()),
+			'layers'         : self.am_layers.get_active(),
+			'loaned'         : False,
+			'media_num'      : self.am_discs.get_text(),
+			'notes'          : gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(), obs_buffer.get_end_iter())),
 			'number'         : number,
-			'num_media'      : self.am_discs.get_text(),
-			'obs'            : gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(), obs_buffer.get_end_iter())),
-			'original_title' : gutils.gescape(self.am_original_title.get_text()),
+			'o_site'         : self.am_site.get_text(),
+			'o_title'        : gutils.gescape(self.am_original_title.get_text()),
 			'plot'           : gutils.gescape(plot_buffer.get_text(plot_buffer.get_start_iter(), plot_buffer.get_end_iter())),
-			'rating'         : str(int(self.rating_slider_add.get_value())),
-			'region'         : str(int(self.am_region.get_active())),
+			'rating'         : self.rating_slider_add.get_value(),
+			'region'         : self.am_region.get_active(),
 			'runtime'        : self.am_runtime.get_text(),
-			'seen'           : str(int(self.am_seen.get_active())),
-			'site'           : self.am_site.get_text(),
+			'site'           : self.am_imdb.get_text(),
 			'studio'         : gutils.gescape(self.am_studio.get_text()),
 			'title'          : gutils.gescape(self.am_title.get_text()),
 			'trailer'        : self.am_trailer.get_text(),
-			'volume_id'      : str(self.volume_combo_ids[self.am_volume_combo.get_active()]),
 			'year'           : self.am_year.get_text()
 		}
+		vol_id = str(self.volume_combo_ids[self.am_volume_combo.get_active()])
+		if int(vol_id)>0:
+			t_movies['volume_id'] = vol_id
+		col_id = str(self.collection_combo_ids[self.am_collection_combo.get_active()])
+		if int(col_id)>0:
+			t_movies['collection_id'] = col_id
+		medium_id = str(self.am_media.get_active())
+		if int(medium_id)>0:
+			t_movies['medium_id'] = medium_id
+		seen = int(self.am_seen.get_active())
+		if seen == 1:
+			t_movies['seen'] = True
+		else:
+			t_movies['seen'] = False
 		# languages
 		t_languages = {}
 		for i in self.am_languages:
@@ -361,24 +371,24 @@ def clone_movie(self):
 		'actors'         : gutils.gescape(str(row['actors'])),
 		'classification' : gutils.gescape(str(row['classification'])),
 		'color'          : gutils.gescape(str(row['color'])),
-		'condition'      : gutils.gescape(str(row['condition'])),
+		'cond'           : gutils.gescape(str(row['condition'])),
 		'country'        : gutils.gescape(str(row['country'])),
 		'director'       : gutils.gescape(str(row['director'])),
 		'genre'          : gutils.gescape(str(row['genre'])),
 		'image'          : gutils.gescape(new_image),
-		'imdb'           : gutils.gescape(str(row['imdb'])),
+		'site'           : gutils.gescape(str(row['imdb'])),
 		'layers'         : gutils.gescape(str(row['layers'])),
 		'media'          : gutils.gescape(str(row['media'])),
 		'number'         : str(next_number),
-		'num_media'      : str(row['num_media']),
-		'obs'            : gutils.gescape(str(row['obs'])),
-		'original_title' : gutils.gescape(str(row['original_title'])),
+		'media_num'      : str(row['num_media']),
+		'notes'          : gutils.gescape(str(row['obs'])),
+		'o_title'        : gutils.gescape(str(row['original_title'])),
 		'plot'           : gutils.gescape(str(row['plot'])),
 		'rating'         : str(row['rating']),
 		'region'         : gutils.gescape(str(row['region'])),
 		'runtime'        : gutils.gescape(str(row['runtime'])),
 		'seen'           : str(row['seen']),
-		'site'           : gutils.gescape(str(row['site'])),
+		'o_site'           : gutils.gescape(str(row['site'])),
 		'studio'         : gutils.gescape(str(row['studio'])),
 		'title'          : gutils.gescape(str(row['title'])),
 		'trailer'        : gutils.gescape(str(row['trailer'])),

@@ -39,7 +39,7 @@ def change_filter(self):
 			movies = self.db.Movie.select(order_by="number ASC")
 	else:
 		criteria = self.sort_criteria[self.filter_criteria.get_active()]
-		if {"year":None, "runtime":None, "num_media":None, "rating":None}.has_key(criteria):
+		if {"year":None, "runtime":None, "media_num":None, "rating":None}.has_key(criteria):
 			movies = self.db.Movie.select(self.db.Movie.c[criteria]==text, order_by="number ASC")
 		else:
 			movies = self.db.Movie.select(self.db.Movie.c[criteria].like('%'+text+'%'), order_by="number ASC")

@@ -367,13 +367,13 @@ def dictionaries(self):
 	create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 	create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	self.sort_criteria = (
-		"original_title", "title", "number", "director",
-		"plot", "actors", "obs", "year", "runtime", "country",
-		"genre", "studio", "num_media", "rating"
+		"o_title", "title", "number", "director",
+		"plot", "actors", "notes", "year", "runtime", "country",
+		"genre", "studio", "media_num", "rating"
 	)
 	self.field_names = {
 		"number"         : _("Number"),
-		"original_title" : _("Original Title"),
+		"o_title"        : _("Original Title"),
 		"title"          : _("Title"),
 		"year"           : _("Year"),
 		"actors"         : _("With"),
@@ -381,8 +381,8 @@ def dictionaries(self):
 		"country"        : _("Country"),
 		"genre"          : _("Genre"),
 		"director"       : _("Director"),
-		"site"           : _("Official site"),
-		"imdb"           : _("IMDb page"),
+		"o_site"         : _("Official site"),
+		"site"           : _("Site"),
 		"trailer"        : _("Trailer"),
 		"loaned"         : _("Loaned"),
 		"rating"         : _("Rating"),
@@ -391,13 +391,13 @@ def dictionaries(self):
 		"seen"           : _("Seen it"),
 		"region"         : _("Region"),
 		"layers"         : _("Layers"),
-		"condition"      : _("Condition"),
+		"cond"           : _("Condition"),
 		"color"          : _("Color"),
 		"volume_id"      : _("Volume"),
 		"collection_id"  : _("Collection"),
 		"plot"           : _("Plot"),
-		"num_media"      : _("Discs"),
-		"obs"            : _("Notes")
+		"media_num"      : _("Discs"),
+		"notes"          : _("Notes")
 	}
 
 def web_results(self):

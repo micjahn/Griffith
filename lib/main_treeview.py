@@ -51,8 +51,8 @@ def treeview_clicked(self):
 			self.e_director.set_text(str(movie.director))
 		if movie.plot:
 			plot_buffer.set_text(str(movie.plot))
-		if movie.num_media:
-			self.e_discs.set_value(int(movie.num_media))
+		if movie.media_num:
+			self.e_discs.set_value(int(movie.media_num))
 		if movie.year:
 			self.e_year.set_text(str(movie.year))
 		if movie.runtime:
@@ -145,14 +145,17 @@ def treeview_clicked(self):
 				pixbuf = self.Image.get_pixbuf()
 		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 		if int(movie.loaned) == 1:
-			if movie.collection_id > 0 and self.db.is_collection_loaned(row['collection_id']) == 1:
-				data_loan = self.db.get_loan_info(collection_id=movie.collection_id)
-			elif movie.volume_id > 0 and self.db.is_volume_loaned(movie.volume_id) == 1:
-				data_loan = self.db.get_loan_info(volume_id=movie.volume_id)
+			if movie.collection_id > 0:
+				collection = self.db.Loan.get_by(collection_id=movie.collection_id, return_date=None)
+				if int(collection.loaned) == 1:
+					data_loan = collection
+			elif movie.volume_id > 0:
+				volume = self.db.Loan.get_by(volume_id=movie.volume_id, return_date=None)
+				if int(volume.loaned)==1:
+					data_loan = volume
 			else:
-				data_loan = self.db.get_loan_info(movie_id=movie.number)
-			data_loan = data_loan.GetRowAssoc(0)
-			data_person = self.db.select_person_by_id(int(data_loan['person_id'])).GetRowAssoc(0)
+				data_loan = self.Loan.get_by(movie_id=movie.number, return_date=None)
+			data_person = self.db.Person.get_by(person_id=data_loan['person_id'])
 			self.person_name = str(data_person['name'])
 			self.person_email = str(data_person['email'])
 			self.loan_date = str(data_loan['date'])
@@ -190,22 +193,18 @@ def treeview_clicked(self):
 		self.e_collection_id.hide()
 
 		#languages
-		cursor = self.db.get_all_data("movie_lang", where="movie_id='%s'" % movie.movie_id)
 		self.e_languages = []	# language widgets
-		if not cursor.EOF:
+		languages = self.db.MovieLanguage.select_by(movie_id=movie.movie_id)
+		if languages != None:
 			from initialize import create_language_hbox
-			while not cursor.EOF:
-				i = cursor.GetRowAssoc(0)
+			for i in languages:
 				create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, default=i['lang_id'], type=i['type'])
-				cursor.MoveNext()
 
 		#tags
-		cursor = self.db.get_all_data("movie_tag", where="movie_id='%s'" % movie.movie_id, what="tag_id")
-		while not cursor.EOF:
-			tag = cursor.fields[0]
+		for tag in self.db.MovieTag.select_by(movie_id=movie.movie_id):
+			tag = tag.tag_id
 			i = gutils.findKey(tag, self.tags_ids)
 			self.e_tags[i].set_active(True)
-			cursor.MoveNext()
 
 def populate(self, movies):
 	self.treemodel.clear()
