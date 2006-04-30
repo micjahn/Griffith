@@ -143,7 +143,7 @@ class GriffithSQL:
 			Column("number", Integer, nullable=False, unique="movie_number_key"),
 			Column("collection_id", Integer, ForeignKey("collections.collection_id")),
 			Column("volume_id", Integer, ForeignKey("volumes.volume_id")),
-			Column("media_id", Smallinteger, ForeignKey('media.medium_id')),
+			Column("medium_id", Smallinteger, ForeignKey('media.medium_id')),
 			Column("vcodec_id", Smallinteger, ForeignKey('vcodecs.vcodec_id')),
 			Column("loaned", Boolean, nullable=False, default=False),
 			Column("seen", Boolean, nullable=False, default=False),

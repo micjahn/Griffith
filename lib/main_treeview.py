@@ -34,17 +34,17 @@ def treeview_clicked(self):
 		self.clear_details()
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
-		m_id = tmp_model.get_value(tmp_iter,1)
-		movie = self.db.Movie.select_by(id=m_id)
+		number = tmp_model.get_value(tmp_iter,1)
+		movie = self.db.Movie.get_by(number=number)
 
 		plot_buffer = self.e_plot.get_buffer()
 		obs_buffer = self.e_obs.get_buffer()
 		with_buffer = self.e_with.get_buffer()
 		with_iter = with_buffer.get_start_iter()
 
-		self.e_movie_id.set_text(str(int(movie.id)))
+		self.e_movie_id.set_text(str(int(movie.movie_id)))
 		self.e_number.set_text(str(int(movie.number)))
-		self.e_original_title.set_text(str(movie.original_title))
+		self.e_original_title.set_text(str(movie.o_title))
 		if movie.title:
 			self.e_title.set_text(str(movie.title))
 		if movie.director:
@@ -63,30 +63,30 @@ def treeview_clicked(self):
 			self.e_country.set_text(str(movie.country))
 		if movie.genre:
 			self.e_genre.set_text(str(movie.genre))
-		if movie.condition != None and movie.condition != '':
-			self.e_condition.set_active(int(str(movie.condition)))
+		if movie.cond != None and movie.cond != '':
+			self.e_condition.set_active(int(str(movie.cond)))
 		else:
 			self.e_condition.set_active(5) # N/A
 		if movie.region != None and movie.region != '':
 			self.e_region.set_active(int(str(movie.region)))
 		else:
-			self.e_condition.set_active(9) # N/A
+			self.e_region.set_active(9) # N/A
 		if movie.layers != None and movie.layers != '':
 			self.e_layers.set_active(int(str(movie.layers)))
 		else:
-			self.e_condition.set_active(4) # N/A
+			self.e_layers.set_active(4) # N/A
 		if movie.color != None and movie.color != '':
 			self.e_color.set_active(int(str(movie.color)))
 		else:
-			self.e_condition.set_active(3) # N/A
+			self.e_color.set_active(3) # N/A
 		if movie.classification:
 			self.e_classification.set_text(str(movie.classification))
 		if movie.studio:
 			self.e_studio.set_text(str(movie.studio))
+		if movie.o_site:
+			self.e_site.set_text(str(movie.o_site))
 		if movie.site:
-			self.e_site.set_text(str(movie.site))
-		if movie.imdb:
-			self.e_imdb.set_text(str(movie.imdb))
+			self.e_imdb.set_text(str(movie.site))
 		if movie.seen:
 			self.e_seen.set_active(True)
 		else:
@@ -98,10 +98,10 @@ def treeview_clicked(self):
 			self.image_rating.hide()
 		if movie.trailer:
 			self.e_trailer.set_text(str(movie.trailer))
-		if movie.obs<>None:
-			obs_buffer.set_text(str(movie.obs))
-		if movie.media:
-			self.e_media.set_active(int(movie.media))
+		if movie.notes<>None:
+			obs_buffer.set_text(str(movie.notes))
+		if movie.medium_id:
+			self.e_media.set_active(int(movie.medium_id))
 
 		# check loan status and adjust buttons and history box
 		if int(movie.loaned)==1:
@@ -162,8 +162,7 @@ def treeview_clicked(self):
 
 		#loan history	
 		self.loans_treemodel.clear()
-		return 
-		loans = self.db.get_loan_history(collection_id=movie.collection_id, volume_id=movie.volume_id, movie_id=movie.id)
+		loans = self.db.get_loan_history(collection_id=movie.collection_id, volume_id=movie.volume_id, movie_id=movie.movie_id)
 		for loan in loans:
 			myiter = self.loans_treemodel.append(None)
 			self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan.date)[:10])
@@ -191,7 +190,7 @@ def treeview_clicked(self):
 		self.e_collection_id.hide()
 
 		#languages
-		cursor = self.db.get_all_data("movie_lang", where="movie_id='%s'" % movie.id)
+		cursor = self.db.get_all_data("movie_lang", where="movie_id='%s'" % movie.movie_id)
 		self.e_languages = []	# language widgets
 		if not cursor.EOF:
 			from initialize import create_language_hbox
@@ -201,7 +200,7 @@ def treeview_clicked(self):
 				cursor.MoveNext()
 
 		#tags
-		cursor = self.db.get_all_data("movie_tag", where="movie_id='%s'" % movie.id, what="tag_id")
+		cursor = self.db.get_all_data("movie_tag", where="movie_id='%s'" % movie.movie_id, what="tag_id")
 		while not cursor.EOF:
 			tag = cursor.fields[0]
 			i = gutils.findKey(tag, self.tags_ids)
