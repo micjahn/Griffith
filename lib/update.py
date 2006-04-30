@@ -147,15 +147,14 @@ def update_language_ids(self):
 	self.languages_ids[0] = 0
 	i = 1
 	for lang in self.db.Language.select():
-		self.languages_ids[i] = lang.id
+		self.languages_ids[i] = lang.lang_id
 		i += 1
 
 def update_tag_ids(self):
 	self.tags_ids = {}
-	self.tags_ids[0] = 0
-	i = 1
+	i = 0
 	for tag in self.db.Tag.select():
-		self.tags_ids[i] = tag.id
+		self.tags_ids[i] = tag.tag_id
 		i += 1
 
 def update_volume_combo_ids(self):
@@ -163,7 +162,7 @@ def update_volume_combo_ids(self):
 	self.volume_combo_ids[0] = 0
 	i = 1
 	for volume in self.db.Volume.select():
-		self.volume_combo_ids[i] = volume.id
+		self.volume_combo_ids[i] = volume.volume_id
 		i += 1
 
 def update_collection_combo_ids(self):
@@ -171,6 +170,6 @@ def update_collection_combo_ids(self):
 	self.collection_combo_ids[0] = 0
 	i = 1
 	for collection in self.db.Collection.select():
-		self.collection_combo_ids[i] = collection.id
+		self.collection_combo_ids[i] = collection.collection_id
 		i += 1
 

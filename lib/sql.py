@@ -32,7 +32,10 @@ class GriffithSQL:
 	engine = None
 	class Movie(object):
 		def __repr__(self):
-			return "Movie:%s(num:%s)" % (self.id, self.number)
+			return "Movie:%s(num=%s)" % (self.movie_id, self.number)
+		def __init__(self):
+			# self.number = find_next_available() # TODO
+			pass
 	class AChannel(object):
 		def __repr__(self):
 			return "Achannel:%s" % self.name
@@ -136,12 +139,12 @@ class GriffithSQL:
 
 		# prepare tables interface ------------------------------------
 		movies = Table("movies", self.engine,
-			Column("id", Integer, primary_key = True),
-			Column("number", Integer, nullable=False),
-			Column("collection_id", Integer, ForeignKey("collections.id")),
-			Column("volume_id", Integer, ForeignKey("volumes.id")),
-			Column("media_id", Smallinteger, ForeignKey('media.id')),
-			Column("vcodec_id", Smallinteger, ForeignKey('vcodecs.id')),
+			Column("movie_id", Integer, primary_key = True),
+			Column("number", Integer, nullable=False, unique="movie_number_key"),
+			Column("collection_id", Integer, ForeignKey("collections.collection_id")),
+			Column("volume_id", Integer, ForeignKey("volumes.volume_id")),
+			Column("media_id", Smallinteger, ForeignKey('media.medium_id')),
+			Column("vcodec_id", Smallinteger, ForeignKey('vcodecs.vcodec_id')),
 			Column("loaned", Boolean, nullable=False, default=False),
 			Column("seen", Boolean, nullable=False, default=False),
 			Column("rating", Smallinteger(2), nullable=False, default=0),
@@ -168,54 +171,54 @@ class GriffithSQL:
 			Column("notes", TEXT))
 		loans = Table("loans", self.engine,
 			Column("id", Integer, primary_key=True),
-			Column("person_id", Integer, ForeignKey("people.id"), nullable=False),
-			Column("movie_id", Integer, ForeignKey("movies.id")),
-			Column("volume_id", Integer, ForeignKey("volumes.id")),
-			Column("collection_id", Integer, ForeignKey("collections.id")),
+			Column("person_id", Integer, ForeignKey("people.person_id"), nullable=False),
+			Column("movie_id", Integer, ForeignKey("movies.movie_id")),
+			Column("volume_id", Integer, ForeignKey("volumes.volume_id")),
+			Column("collection_id", Integer, ForeignKey("collections.collection_id")),
 			Column("date", Date, nullable=False),
 			Column("return_date", Date, nullable=True))
 		people = Table("people", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(255), nullable=False),
+			Column("person_id", Integer, primary_key=True),
+			Column("name", VARCHAR(255), nullable=False, unique="person_name_key"),
 			Column("email", VARCHAR(128)),
 			Column("phone", VARCHAR(64)))
 		volumes = Table("volumes", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False),
+			Column("volume_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="volume_name_key"),
 			Column("loaned", Boolean, nullable=False, default=False))
 		collections = Table("collections", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False),
+			Column("collection_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="collection_name_key"),
 			Column("loaned", Boolean, nullable=False,default=False))
 		media = Table("media", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False))
+			Column("medium_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="medium_name_key"))
 		languages = Table("languages", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False))
+			Column("lang_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="language_name_key"))
 		vcodecs = Table("vcodecs", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False))
+			Column("vcodec_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="vcodec_name_key"))
 		acodecs = Table("acodecs", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False))
+			Column("acodec_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="acodec_name_key"))
 		achannels = Table("achannels", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False))
+			Column("achannel_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="achannel_name_key"))
 		tags = Table("tags", self.engine,
-			Column("id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False))
+			Column("tag_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="tag_name_key"))
 		movie_lang = Table("movie_lang", self.engine,
 			Column("id", Integer, primary_key=True),
-			Column("movie_id", Integer, ForeignKey("movies.id"), nullable=False),
-			Column("lang_id", Integer, ForeignKey("languages.id"), nullable=False),
-			Column("acodec_id", Integer, ForeignKey('acodecs.id'), nullable=True),
-			Column("achannel_id", Integer, ForeignKey('achannels.id'), nullable=True),
+			Column("movie_id", Integer, ForeignKey("movies.movie_id"), nullable=False),
+			Column("lang_id", Integer, ForeignKey("languages.lang_id"), nullable=False),
+			Column("acodec_id", Integer, ForeignKey('acodecs.acodec_id'), nullable=True),
+			Column("achannel_id", Integer, ForeignKey('achannels.achannel_id'), nullable=True),
 			Column("type", Smallinteger))
 		movie_tag = Table("movie_tag", self.engine,
 			Column("id", Integer, primary_key=True),
-			Column("movie_id", Integer, ForeignKey("movies.id")),
-			Column("tag_id", Integer, ForeignKey("tags.id")))
+			Column("movie_id", Integer, ForeignKey("movies.movie_id")),
+			Column("tag_id", Integer, ForeignKey("tags.tag_id")))
 		configuration = Table("configuration", self.engine,
 			Column("param", VARCHAR(16), primary_key=True),
 			Column("value", VARCHAR(128), nullable=False))
@@ -226,10 +229,10 @@ class GriffithSQL:
 		assign_mapper(self.Medium, media)
 		assign_mapper(self.VCodec, vcodecs)
 		assign_mapper(self.Movie, movies, properties = {
-				'volumes'     : relation(self.Volume.mapper),
-				'collections' : relation(self.Collection.mapper),
-				'media'       : relation(self.Medium.mapper),
-				'vcodecs'     : relation(self.VCodec.mapper)})
+				'volume'     : relation(self.Volume.mapper),
+				'collection' : relation(self.Collection.mapper),
+				'medium'     : relation(self.Medium.mapper),
+				'vcodec'     : relation(self.VCodec.mapper)})
 		assign_mapper(self.Loan, loans)
 		assign_mapper(self.Person, people)
 		assign_mapper(self.Language, languages)
@@ -265,12 +268,12 @@ class GriffithSQL:
 			self.upgrade_database(v)
 		
 		# check if all tables exists
-#                for table in self.engine.tables.keys():
-#                        try:
-#                                self.engine.tables[table].select().execute()
-#                        except:
-#                                self.engine.tables[table].create()
-#                                self.engine.commit()
+#		for table in self.engine.tables.keys():
+#		        try:
+#				self.engine.tables[table].select().execute()
+#		        except:
+#				self.engine.tables[table].create()
+#				self.engine.commit()
 
 	#}}}
 
@@ -288,22 +291,7 @@ class GriffithSQL:
 				for root, dirs, files in os.walk(os.path.join(self.griffith_dir,"posters"), topdown=False):
 					for name in files:
 						os.remove(os.path.join(root, name))
-				# delete db TODO: DROP CASCADE
-				self.Loan.mapper.table.drop()
-				self.Person.mapper.table.drop()
-				self.Volume.mapper.table.drop()
-				self.Collection.mapper.table.drop()
-				self.VCodec.mapper.table.drop()
-				self.ACodec.mapper.table.drop()
-				self.AChannel.mapper.table.drop()
-				self.Medium.mapper.table.drop()
-				self.Language.mapper.table.drop()
-				self.Movie.mapper.table.drop()
-				self.MovieTag.mapper.table.drop()
-				self.MovieLanguage.mapper.table.drop()
-				self.Tag.mapper.table.drop()
-		#				self.engine.tables['tags'].drop()
-				self.config["version"] = 0
+				parent.db.drop_database()
 				parent.db.engine.close()
 				if self.config["default_db"] == "sqlite":
 					os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
@@ -548,6 +536,40 @@ class GriffithSQL:
 	# }}}
 
 	# remove data ------------------------------------------------------{{{
+	def drop_database(self):
+		# delete db TODO: DROP CASCADE
+#		for table in self.engine.tables.keys():
+#			self.engine.tables[table].drop()
+		self.objectstore.clear()
+#		self.Loan.mapper.table.drop()
+#		self.Person.mapper.table.drop()
+#		self.Volume.mapper.table.drop()
+#		self.Collection.mapper.table.drop()
+#		self.VCodec.mapper.table.drop()
+#		self.ACodec.mapper.table.drop()
+#		self.AChannel.mapper.table.drop()
+#		self.Medium.mapper.table.drop()
+#		self.Language.mapper.table.drop()
+#		self.Movie.mapper.table.drop()
+#		self.MovieTag.mapper.table.drop()
+#		self.MovieLanguage.mapper.table.drop()
+#		self.Tag.mapper.table.drop()
+
+		self.engine.execute("DROP TABLE loans CASCADE;")
+		self.engine.execute("DROP TABLE people CASCADE;")
+		self.engine.execute("DROP TABLE configuration CASCADE;")
+		self.engine.execute("DROP TABLE languages CASCADE;")
+		self.engine.execute("DROP TABLE movies CASCADE;")
+		self.engine.execute("DROP TABLE vcodecs CASCADE;")
+		self.engine.execute("DROP TABLE volumes CASCADE;")
+		self.engine.execute("DROP TABLE media CASCADE;")
+		self.engine.execute("DROP TABLE collections CASCADE;")
+		self.engine.execute("DROP TABLE acodecs CASCADE;")
+		self.engine.execute("DROP TABLE achannels CASCADE;")
+		self.engine.execute("DROP TABLE movie_tag CASCADE;")
+		self.engine.execute("DROP TABLE movie_lang CASCADE;")
+		self.engine.execute("DROP TABLE tags CASCADE;")
+
 	def remove_movie_by_num(self,number):
 		if self.is_movie_loaned(movie_number=number):
 			self.debug.show("Movie (number=%s) is loaned. Can't delete!")

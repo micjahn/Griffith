@@ -341,10 +341,10 @@ def combos(self):
 	self.am_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.am_layers.insert_text(4, _("N/A"))
 
-	for medium in self.db.Medium.select(order_by="id ASC"):
-		self.e_media.insert_text(medium.id, medium.name)
-		self.p_media.insert_text(medium.id, medium.name)
-		self.am_media.insert_text(medium.id, medium.name)
+	for medium in self.db.Medium.select(order_by="medium_id ASC"):
+		self.e_media.insert_text(medium.medium_id, medium.name)
+		self.p_media.insert_text(medium.medium_id, medium.name)
+		self.am_media.insert_text(medium.medium_id, medium.name)
 	i = 0
 	for criteria in self.sort_criteria:
 		self.filter_criteria.insert_text(i, self.field_names[criteria])
@@ -447,7 +447,7 @@ def fill_volumes_combo(self, prefix='e', default=0):
 	for i in self.volume_combo_ids:
 		vol_id = self.volume_combo_ids[i]
 		if vol_id>0:
-			name = self.db.Volume.get_by(id=vol_id).name
+			name = self.db.Volume.get_by(volume_id=vol_id).name
 		else:
 			name = ''
 		self.am_volume_combo.insert_text(int(i), str(name))
@@ -471,7 +471,7 @@ def fill_collections_combo(self, prefix='e', default=0):
 	for i in self.collection_combo_ids:
 		col_id = self.collection_combo_ids[i]
 		if col_id>0:
-			name = self.db.Collection.get_by(id=col_id).name
+			name = self.db.Collection.get_by(collection_id=col_id).name
 		else:
 			name = ''
 		self.am_collection_combo.insert_text(int(i), str(name))
@@ -518,7 +518,10 @@ def fill_preferences_languages_combo(self):
 	self.lang_name_combo.get_model().clear()
 	for i in self.languages_ids.keys():
 		lang_id = self.languages_ids[i]
-		name = self.db.Language.get_by(id=lang_id).name
+		if lang_id>0:
+			name = self.db.Language.get_by(lang_id=lang_id).name
+		else:
+			name = ''
 		self.lang_name_combo.insert_text(int(i), str(name))
 	self.lang_name_combo.show_all()
 
@@ -526,7 +529,7 @@ def fill_preferences_tags_combo(self):
 	self.tag_name_combo.get_model().clear()
 	for i in self.tags_ids.keys():
 		tag_id = self.tags_ids[i]
-		name = self.db.Tag.get_by(id=tag_id).name
+		name = self.db.Tag.get_by(tag_id=tag_id).name
 		self.tag_name_combo.insert_text(int(i), str(name))
 	self.tag_name_combo.show_all()
 
@@ -537,7 +540,10 @@ def fill_language_combo(self, widget, default=None):
 		pass
 	for i in self.languages_ids:
 		lang_id = self.languages_ids[i]
-		name = self.db.Language.get_by(id=lang_id).name
+		if lang_id>0:
+			name = self.db.Language.get_by(lang_id=lang_id).name
+		else:
+			name = ''
 		widget.insert_text(int(i), str(name))
 	if default != None and default!=0:
 		i = gutils.findKey(default, self.languages_ids)
@@ -573,7 +579,7 @@ def create_tag_vbox(self, widget, tab):
 		i.destroy()
 	for i in self.tags_ids:
 		tag_id = self.tags_ids[i]
-		tag_name = self.db.Tag.get_by(id=tag_id).name
+		tag_name = self.db.Tag.get_by(tag_id=tag_id).name
 		tab[i] = gtk.CheckButton(str(tag_name))
 		tab[i].set_active(False)
 		widget.pack_start(tab[i])

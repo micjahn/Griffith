@@ -54,22 +54,23 @@ def is_number(x):
 		return False
 
 def find_next_available(self):
-	"""finds next available movie number.
+	"""
+	finds next available movie number.
 	This is the first empty position.
-	If none is empty then increments the last position."""
+	If none is empty then increments the last position.
+	"""
 	a = first = 0
 	row = None
 
-	cursor = self.db.get_all_data(order_by="number ASC", what="number")
-	while not cursor.EOF:
-		second = int(cursor.fields[0])
+	movies = self.db.Movie.select(order_by="number ASC")
+	for movie in movies:
+		second = int(movie.number)
 		if second == None:
 			second = 0
 		if (second>first+1):
 			break
 		first = second
 		a += a
-		cursor.MoveNext()
 
 	if first == None:
 		return 1
