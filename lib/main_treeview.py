@@ -154,11 +154,11 @@ def treeview_clicked(self):
 				if int(volume.loaned)==1:
 					data_loan = volume
 			else:
-				data_loan = self.Loan.get_by(movie_id=movie.number, return_date=None)
-			data_person = self.db.Person.get_by(person_id=data_loan['person_id'])
-			self.person_name = str(data_person['name'])
-			self.person_email = str(data_person['email'])
-			self.loan_date = str(data_loan['date'])
+				data_loan = self.db.Loan.get_by(movie_id=movie.number, return_date=None)
+			data_person = self.db.Person.get_by(person_id=data_loan.person_id)
+			self.person_name = str(data_person.name)
+			self.person_email = str(data_person.email)
+			self.loan_date = str(data_loan.date)
 			self.loan_info.set_label(self._("This movie has been loaned to ") + self.person_name + self._(" on ") + self.loan_date[:10])
 		else:
 			self.loan_info.set_label(self._("Movie not loaned"))
@@ -173,10 +173,8 @@ def treeview_clicked(self):
 				self.loans_treemodel.set_value(myiter, 1, str(loan.return_date)[:10])
 			else:
 				self.loans_treemodel.set_value(myiter, 1, "---")
-			person = self.db.select_person_by_id(int(loan.person_id))
-			person = person.GetRowAssoc(0)
-			self.loans_treemodel.set_value(myiter, 2, person['name'])
-			cursor.MoveNext()
+			person = self.db.Person.get_by(person_id=loan.person_id)
+			self.loans_treemodel.set_value(myiter, 2, person.name)
 
 		#volumes/collections
 		i = gutils.findKey(movie.volume_id, self.volume_combo_ids)

@@ -54,6 +54,41 @@ class GriffithSQL:
 	class Loan(object):
 		def __repr__(self):
 			return "Loan:%s" % self.id
+		def loaned(self):
+			"""
+			Set loaned=True for all movies in volume/collection and for movie itself
+			Set loan's date to today's date
+			"""
+			if self.collection_id>0:
+				for movie in self.movie.mapper.select_by(collection_id=self.collection_id):
+					movie.loaned = True
+				self.collection.loaned = True
+			if self.volume_id>0:
+				for movie in self.movie.mapper.select_by(volume_id=self.volume_id):
+					movie.loaned = True
+				self.volume.loaned = True
+			if self.movie_id>0:
+				self.movie.loaned = True
+			self.date = func.now()	# update loan date
+			self.return_date = None
+			objectstore.commit()
+		def returned(self):
+			"""
+			Set loaned=False for all movies in volume/collection and for movie itself.
+			Set return_date to today's date
+			"""
+			if self.collection_id>0:
+				for movie in self.movie.mapper.select_by(collection_id=self.collection_id):
+					movie.loaned = False
+				self.collection.loaned = False
+			if self.volume_id>0:
+				for movie in self.movie.mapper.select_by(volume_id=self.volume_id):
+					movie.loaned = False
+				self.volume.loaned = False
+			if self.movie_id>0:
+				self.movie.loaned = False
+			self.return_date = func.now()
+			objectstore.commit()
 	class Medium(object):
 		def __repr__(self):
 			return "Medium:%s" % self.name
@@ -75,6 +110,27 @@ class GriffithSQL:
 	class Volume(object):
 		def __repr__(self):
 			return "Volume:%s" % self.name
+		def add(self):
+			if len(self.name)==0:
+				debug.show("Volume's name can't be empty")
+				return False
+			# check if volume already exists
+			if len(self.mapper.select_by(name=self.name))>0:
+				debug.show("Volume '%s' already exists"%self.name)
+				return False
+			debug.show("Adding '%s' volume to database..."%self.name)
+			self.commit()
+			return True
+		def remove(self):
+			if not self.volume_id>0:
+				debug.show("You have to select volume first")
+			movies = len(self.mapper.select_by(volume_id=self.volume_id))
+			if movies > 0:
+				gutils.warning(self, msg="%s movie(s) in this volume.\nRemoval is possible only if there is no movie assigned to volume"%str(movies))
+				return False
+			self.debug.show("Removing '%s' volume (id=%s) from database..."%(self.name, self.volume_id))
+			self.delete()
+			return True
 
 	def __init__(self, config, debug, griffith_dir):	#{{{
 		self.griffith_dir = griffith_dir
@@ -145,8 +201,8 @@ class GriffithSQL:
 			Column("volume_id", Integer, ForeignKey("volumes.volume_id"), default=None),
 			Column("medium_id", Smallinteger, ForeignKey('media.medium_id'), default=None),
 			Column("vcodec_id", Smallinteger, ForeignKey('vcodecs.vcodec_id'), default=None),
-			Column("loaned", Boolean, nullable=False, default=Boolean(False), index="movie_loaned_idx"),
-			Column("seen", Boolean, nullable=False, default=Boolean(False), index="movie_seen_idx"),
+			Column("loaned", Boolean, nullable=False, default=False, index="movie_loaned_idx"),
+			Column("seen", Boolean, nullable=False, default=False, index="movie_seen_idx"),
 			Column("rating", Smallinteger(2), nullable=False, default=0),
 			Column("color", Smallinteger, default=3),
 			Column("cond", Smallinteger, default=5),	# MySQL will not accept name "condition"
@@ -172,7 +228,7 @@ class GriffithSQL:
 		loans = Table("loans", self.engine,
 			Column("id", Integer, primary_key=True),
 			Column("person_id", Integer, ForeignKey("people.person_id"), nullable=False),
-			Column("movie_id", Integer, ForeignKey("movies.movie_id")),
+			Column("movie_id", Integer, ForeignKey("movies.movie_id"), nullable=False),
 			Column("volume_id", Integer, ForeignKey("volumes.volume_id")),
 			Column("collection_id", Integer, ForeignKey("collections.collection_id")),
 			Column("date", Date, nullable=False, default=func.now()),
@@ -185,11 +241,11 @@ class GriffithSQL:
 		volumes = Table("volumes", self.engine,
 			Column("volume_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="volume_name_key"),
-			Column("loaned", Boolean, nullable=False, default=Boolean(False)))
+			Column("loaned", Boolean, nullable=False, default=False))
 		collections = Table("collections", self.engine,
 			Column("collection_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="collection_name_key"),
-			Column("loaned", Boolean, nullable=False,default=Boolean(False)))
+			Column("loaned", Boolean, nullable=False, default=False))
 		media = Table("media", self.engine,
 			Column("medium_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="medium_name_key"))
@@ -228,12 +284,15 @@ class GriffithSQL:
 		assign_mapper(self.Collection, collections)
 		assign_mapper(self.Medium, media)
 		assign_mapper(self.VCodec, vcodecs)
-		assign_mapper(self.Movie, movies, properties = {
+		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
 				'volume'     : relation(self.Volume.mapper),
 				'collection' : relation(self.Collection.mapper),
 				'medium'     : relation(self.Medium.mapper),
 				'vcodec'     : relation(self.VCodec.mapper)})
-		assign_mapper(self.Loan, loans)
+		assign_mapper(self.Loan, loans, properties = {
+				'movie'      : relation(self.Movie.mapper),
+				'volume'     : relation(self.Volume.mapper),
+				'collection' : relation(self.Collection.mapper)})
 		assign_mapper(self.Person, people)
 		assign_mapper(self.Language, languages)
 		assign_mapper(self.MovieLanguage, movie_lang)
@@ -416,6 +475,7 @@ class GriffithSQL:
 		self.objectstore.commit()
 		movie_id = self.Movie.mapper.get_by(number=t_movies['number']).movie_id
 
+		# TODO:
 		# languages
 		if t_languages != None:
 			for lang in t_languages.keys():
@@ -428,53 +488,31 @@ class GriffithSQL:
 				self.engine.execute("INSERT INTO movie_tag(movie_id, tag_id) \
 						VALUES ('%s', '%s');" % (movie_id, i) )
 
-	def add_volume(self, name):
-		# check if volume already exists
-		cursor = self.get_all_data("volumes", what="name")
-		while not cursor.EOF:
-			if str(name) == str(cursor.fields[0]):
-				self.debug.show("Volume '%s' already exists"%name)
-				return False
-			cursor.MoveNext()
-		self.debug.show("Adding '%s' volume to database..."%name)
-		try:
-			self.engine.execute("INSERT INTO volumes(name) VALUES ('"+gutils.gescape(name)+"');")
-		except:
-			return False
-		return True
-
 	def add_collection(self, name):
 		# check if volume already exists
-		cursor = self.get_all_data("collections", what="name")
-		while not cursor.EOF:
-			if str(name) == str(cursor.fields[0]):
+		for collection in self.Collection.select():
+			if str(name) == str(collection.name):
 				self.debug.show("Collection '%s' already exists"%name)
 				return False
-			cursor.MoveNext()
 		self.debug.show("Adding '%s' collection to database..."%name)
-		try:
-			self.engine.execute("INSERT INTO collections(name) VALUES ('"+gutils.gescape(name)+"');")
-		except:
-			return False
+		c = self.Collection()
+		c.name = name
+		c.commit()
 		return True
 
 	def add_language(self, name):
 		if name == None or name == '':
 			self.debug.show("You didn't write name for new language")
 			return False
-		name = gutils.gescape(name)
 		# check if language already exists
-		cursor = self.get_all_data("languages", what="name")
-		while not cursor.EOF:
-			if str(name) == str(cursor.fields[0]):
+		for lang in self.Language():
+			if str(name) == str(lang.name):
 				self.debug.show("Language '%s' already exists"%name)
 				return False
-			cursor.MoveNext()
 		self.debug.show("Adding '%s' language to database..."%name)
-		try:
-			self.engine.execute("INSERT INTO languages(name) VALUES ('"+gutils.gescape(name)+"');")
-		except:
-			return False
+		lang = self.Language()
+		lang.name = name
+		lang.commit()
 		return True
 
 	def add_tag(self, name):
@@ -498,30 +536,44 @@ class GriffithSQL:
 	# }}}
 
 	# select data ------------------------------------------------------{{{
-	def get_loan_info(self, movie_id=None, volume_id=None, collection_id=None):
-		query = "SELECT * FROM loans WHERE return_date ISNULL AND "
-		if collection_id>0:
-			query += "collection_id='%s'" % str(collection_id)
+	def get_loan_info(self, movie_id, volume_id=None, collection_id=None):
+		"""Returns current collection/volume/movie loan data"""
+		if collection_id>0 and volume_id>0:
+			return self.Loan.select_by(
+					and_(or_(self.Loan.c.collection_id==collection_id,
+							self.Loan.c.volume_id==volume_id,
+							self.Loan.c.movie_id==movie_id),
+						self.Loan.c.return_date==None))
+		elif collection_id>0:
+			return self.Loan.select_by(
+					and_(or_(self.Loan.c.collection_id==collection_id,
+							self.Loan.c.movie_id==movie_id)),
+						self.Loan.c.return_date==None,)
 		elif volume_id>0:
-			query += "volume_id='%s'" % str(volume_id)
+			return self.Loan.select_by(and_(or_(self.Loan.c.volume_id==volume_id,
+								self.Loan.c.movie_id==movie_id)),
+							self.Loan.c.return_date==None)
 		else:
-			query += "movie_id='%s'" % str(movie_id)
-		return self.engine.execute(query)
+			return self.Loan.select_by(self.Loan.c.movie_id==movie_id,self.Loan.c.return_date==None)
 
 	def get_loan_history(self, movie_id=None, volume_id=None, collection_id=None):
-		query = "SELECT * FROM loans WHERE NOT return_date ISNULL AND ("
-		if collection_id>0:
-			query += "collection_id='%s'" % str(collection_id)
-		if volume_id>0:
-			if collection_id>0:
-				query += " OR "
-			query += "volume_id='%s'" % str(volume_id)
-		if movie_id>0:
-			if collection_id>0 or volume_id>0:
-				query += " OR "
-			query += " movie_id='%s'" % str(movie_id)
-		query +=  ")"
-		return self.engine.execute(query).fetchall()
+		"""Returns collection/volume/movie loan history"""
+		if collection_id>0 and volume_id>0:
+			return self.Loan.select_by(and_(or_(self.Loan.c.collection_id==collection_id,
+								self.Loan.c.volume_id==volume_id,
+								self.Loan.c.movie_id==movie_id),
+							not_(self.Loan.c.return_date==None)))
+		elif collection_id>0:
+			return self.Loan.select_by(and_(or_(self.Loan.c.collection_id==collection_id,
+								self.Loan.c.movie_id==movie_id),
+							not_(self.Loan.c.return_date==None)))
+		elif volume_id>0:
+			return self.Loan.select_by(and_(or_(self.Loan.c.volume_id==volume_id,
+								self.Loan.c.movie_id==movie_id),
+							not_(self.Loan.c.return_date==None)))
+		else:
+			return self.Loan.select_by(self.Loan.c.movie_id==movie_id,not_(self.Loan.c.return_date==None))
+
 	# }}}
 
 	# remove data ------------------------------------------------------{{{
@@ -567,28 +619,6 @@ class GriffithSQL:
 			self.engine.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
 			self.engine.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
 			self.engine.execute("DELETE FROM movies WHERE number = '"+number+"'")
-
-	def remove_volume(self, id=None, name=None):
-		if id != None:
-			name = self.get_value(field="name", table="volumes", where=" id = '%s'" % id)
-		elif name != None and name != '' and id == None:
-			name =	gutils.gescape(name)
-			id = self.get_value(field="id", table="volumes", where="name = '%s'" % name)
-			if id != None:
-				id = str(int(id))
-		if str(id) == '0' or id == None:
-			self.debug.show("You have to select volume first")
-			return False
-		movies = int(self.get_value(field="count(id)", table="movies", where="volume_id = '%s'" % id))
-		if movies > 0:
-			gutils.warning(self, msg="%s movie(s) in this volume.\nRemoval is possible only if there is no movie assigned to volume"%str(movies))
-			return False
-		self.debug.show("Removing '%s' volume (id=%s) from database..."%(name, id))
-		try:
-			self.engine.execute("DELETE FROM volumes WHERE id = '%s'" % id)
-		except:
-				return False
-		return True
 
 	def remove_collection(self, id=None, name=None):
 		if id != None:
@@ -663,20 +693,23 @@ class GriffithSQL:
 
 	# update data ------------------------------------------------------{{{
 	def update_movie(self, t_movies, t_languages=None, t_tags=None):
-		movie_id = t_movies.pop('id')
+		movie_id = t_movies.pop('movie_id')
 		if movie_id == None:
-			self.debug.show("Update movie: Movie ID is not set, can't update!")
+			self.debug.show("Update movie: Movie ID is not set. Operation aborted!")
 			return False
-		query = "UPDATE movies SET "
-		for field in t_movies.keys():
-			if t_movies[field] == "" or str(t_movies[field]) == 'None':
-				query += "%s=NULL," % field
-			else:
-				query += "%s='%s'," % (field, t_movies[field])
-		query = query[:len(query)-1]	# remove last comma
-		query += " WHERE id='%s'"%movie_id
-		self.engine.execute(query)
+		# remove empty fields (insert default value instead - mostly "NULL")
+		for i in t_movies.keys():
+			if t_movies[i] == '':
+				t_movies.pop(i)
+		for i in ["color","cond","layers","region","media_num"]:
+			if t_movies[i] == -1:
+				t_movies.pop(i)
 
+		self.objectstore.clear()
+		self.Movie.mapper.table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
+		self.objectstore.commit()
+
+		# TODO:
 		self.engine.execute("DELETE FROM movie_lang WHERE movie_id = '%s';" % movie_id)	# remove old data
 		# languages
 		if t_languages != None:
@@ -891,7 +924,8 @@ class GriffithSQL:
 if __name__ == "__main__":
 	import config, gdebug, gglobals
 	config = config.Config()
-	debug = gdebug.GriffithDebug()
+	global debug
+	debug = gdebug.GriffithDebug(True)
 	db = GriffithSQL(config, debug, gglobals.griffith_dir)
 	db.engine.echo = True # print SQL queries
 	print "\nGriffithSQL test drive\n======================"

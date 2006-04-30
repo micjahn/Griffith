@@ -24,42 +24,39 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 
 def filter_not_seen(self):
-	cursor = self.db.get_not_seen_movies()
+	movies = self.db.Movie.select_by(seen=False)
 	self.update_statusbar(_("Filter activated. Showing only not seen movies."))
-	self.populate_treeview(cursor)
-	self.total_filter = self.db.count_records('movies', 'seen=0')
+	self.populate_treeview(movies)
+	self.total_filter = len(movies)
 	self.go_last()
 
 def filter_loaned(self):
-	cursor = self.db.get_loaned_movies()
+	movies = self.db.Movie.select_by(loaned=True)
 	self.update_statusbar(_("Filter activated. Showing only loaned movies."))
-	self.populate_treeview(cursor)
-	self.total_filter = self.db.count_records('movies', 'loaned=1')
+	self.populate_treeview(movies)
+	self.total_filter = len(movies)
 	self.go_last()
 
 def filter_all(self):
-	cursor = self.db.get_all_data(order_by="number ASC")
+	movies = self.db.Movie.select()
 	self.count_statusbar()
-	self.populate_treeview(cursor)
-	argum = self.total
-	self.total_filter = self.total
+	self.populate_treeview(movies)
+	self.total_filter = len(movies)
 	self.go_last()
 
 def filter_by_volume(self, volume_id):
-	cursor = self.db.conn.Execute("SELECT name FROM volumes WHERE id = '%s'" % volume_id)
-	volume_name = cursor.fields[0]
+	movies = self.db.Movie.select_by(volume_id=volume_id)
+	collection_name = self.db.Collection.get_by(volume_id=volume_id).name
 	self.update_statusbar(_("Filter activated. Showing only movies from volume: %s")%volume_name)
-	cursor = self.db.select_movies_by_volume(volume_id)
-	self.populate_treeview(cursor)
-	self.total_filter = self.db.count_records('movies', 'volume_id="%s"'%volume_id)
+	self.populate_treeview(movies)
+	self.total_filter = len(movies)
 	self.go_last()
 
 def filter_by_collection(self, collection_id):
-	cursor = self.db.conn.Execute("SELECT name FROM collections WHERE id = '%s'" % collection_id)
-	collection_name = cursor.fields[0]
+	movies = self.db.Movie.select_by(collection_id=collection_id)
+	collection_name = self.db.Collection.get_by(collection_id=collection_id).name
 	self.update_statusbar(_("Filter activated. Showing only movies from collection: %s")%collection_name)
-	cursor = self.db.select_movies_by_collection(collection_id)
-	self.populate_treeview(cursor)
-	self.total_filter = self.db.count_records('movies', 'collection_id="%s"'%collection_id)
+	self.populate_treeview(movies)
+	self.total_filter = len(movies)
 	self.go_last()
 

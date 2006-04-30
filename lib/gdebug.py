@@ -24,8 +24,8 @@ __revision__ = '$Id$'
 class GriffithDebug:
 	debug_mode = None
 	
-	def __init__(self):
-		self.debug_mode = False
+	def __init__(self, mode=False):
+		self.debug_mode = mode
 
 	def set_debug(self):
 		self.debug_mode = True

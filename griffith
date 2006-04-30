@@ -39,7 +39,9 @@ class Griffith:
 		"""main griffith application constructor"""	
 
 		# debug object
-		self.debug = gdebug.GriffithDebug()
+		global debug
+		debug = gdebug.GriffithDebug()
+		self.debug = debug # deprecated
 		# Configuration
 		self.config = config.Config()
 		# create/connect db

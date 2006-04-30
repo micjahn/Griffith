@@ -102,11 +102,11 @@ def delete_person(self):
 	except:
 		return
 	person=self.db.Person.get_by(name=person)
-	data = self.db.engine.execute("SELECT * FROM loans WHERE person_id = '%s'" % str(person.person_id) + " AND return_date ISNULL" ).fetchall()
+	data = self.db.Loan.select_by(person_id=person.person_id, return_date=None)
 	if len(data)>0:
-		gutils.info(self, _("This person has loaned films from you. First return them."), self.main_window)
+		gutils.info(self, _("This person has loaned films from you. Return them first."), self.main_window)
 		return False
-	data = self.db.engine.execute("SELECT * FROM loans WHERE person_id = '%s'" % str(person.person_id)).fetchall()
+	data = self.Loan.select_by(person_id=person.person_id)
 	if len(data)>0:
 		past = 1
 		past_msg = _("This person has data in the loan history. This data will be erased if you continue.")

@@ -27,7 +27,8 @@ import os
 
 def update(self):
 	movie_id = self.e_movie_id.get_text()
-	if self.db.get_value(field="id", table="movies", where="id='%s'"%str(movie_id)) == None:
+	movie = self.db.Movie.get_by(movie_id=movie_id)
+	if movie == None:
 		self.debug.show("Trying to update not existing movie. Aborting")
 		return False
 
@@ -35,64 +36,60 @@ def update(self):
 	if number == None or number == '':
 		gutils.error(self, msg=_("Number is not set!"))
 		return False
-	cursor = self.db.get_all_data(what="id, title", where="number='%s'" % number)
-	if not cursor.EOF:
-		cursor = cursor.FetchRow()
-		old_id = cursor[0]
-		old_title = cursor[1]
-		if int(old_id) != int(movie_id):
-			gutils.error(self, msg=_("This number is already assigned to:\n %s!") % old_title)
+	if int(number) != int(movie.number):
+		old_movie = self.db.Movie.get_by(number=number)
+		if old_movie != None and int(old_movie.movie_id) != int(movie_id):
+			gutils.error(self, msg=_("This number is already assigned to:\n %s!") % old_movie.title)
 			return False
 
-	data = self.db.get_all_data(what="loaned, volume_id, collection_id", where="id='%s'" % movie_id).FetchRow()
-	loaned = data[0]
-	volume_id = data[1]
-	collection_id = data[2]
 	new_volume_id = self.volume_combo_ids[self.e_volume_combo.get_active()]
 	new_collection_id = self.collection_combo_ids[self.e_collection_combo.get_active()]
-	if int(loaned)==1:
-		if collection_id>0 and collection_id != new_collection_id:
+	if int(movie.loaned)==1:
+		if movie.collection_id>0 and movie.collection_id != new_collection_id:
 			gutils.error(self, msg=_("You can't change collection while it is loaned!"))
 			return False
-		if volume_id>0 and volume_id != new_volume_id:
+		if movie.volume_id>0 and movie.volume_id != new_volume_id:
 			gutils.error(self, msg=_("You can't change volume while it is loaned!"))
 			return False
 	plot_buffer = self.e_plot.get_buffer()
 	with_buffer = self.e_with.get_buffer()
 	obs_buffer = self.e_obs.get_buffer()
-	seen = '0'
-	if self.e_seen.get_active():
-		seen = '1'
-	if (self.e_original_title.get_text()<>''):
+	if self.e_original_title.get_text() != '':
 		t_movies = {
-			'actors'         : gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(),with_buffer.get_end_iter())),
+			'actors'         : with_buffer.get_text(with_buffer.get_start_iter(),with_buffer.get_end_iter()),
 			'classification' : self.e_classification.get_text(),
-			'collection_id'  : str(new_collection_id),
-			'color'          : str(self.e_color.get_active()),
-			'cond'           : str(self.e_condition.get_active()),
+			'collection_id'  : new_collection_id,
+			'color'          : self.e_color.get_active(),
+			'cond'           : self.e_condition.get_active(),
 			'country'        : self.e_country.get_text(),
-			'director'       : gutils.gescape(self.e_director.get_text()),
+			'director'       : self.e_director.get_text(),
 			'genre'          : self.e_genre.get_text(),
 			'site'           : self.e_imdb.get_text(),
-			'layers'         : str(self.e_layers.get_active()),
-			'media'          : str(self.e_media.get_active()),
+			'layers'         : self.e_layers.get_active(),
 			'number'         : number,
 			'media_num'      : self.e_discs.get_text(),
-			'notes'          : gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(),obs_buffer.get_end_iter())),
-			'o_title'        : gutils.gescape(self.e_original_title.get_text()),
-			'plot'           : gutils.gescape(plot_buffer.get_text(plot_buffer.get_start_iter(),plot_buffer.get_end_iter())),
-			'rating'         : str(int(self.rating_slider.get_value())),
-			'region'         : str(self.e_region.get_active()),
+			'notes'          : obs_buffer.get_text(obs_buffer.get_start_iter(),obs_buffer.get_end_iter()),
+			'o_title'        : self.e_original_title.get_text(),
+			'plot'           : plot_buffer.get_text(plot_buffer.get_start_iter(),plot_buffer.get_end_iter()),
+			'rating'         : self.rating_slider.get_value(),
+			'region'         : self.e_region.get_active(),
 			'runtime'        : self.e_runtime.get_text(),
-			'seen'           : seen,
-			'o_site'          : self.e_site.get_text(),
+			'o_site'         : self.e_site.get_text(),
 			'studio'         : self.e_studio.get_text(),
-			'title'          : gutils.gescape(self.e_title.get_text()),
+			'title'          : self.e_title.get_text(),
 			'trailer'        : self.e_trailer.get_text(),
-			'volume_id'      : str(new_volume_id),
+			'volume_id'      : new_volume_id,
 			'year'           : self.e_year.get_text(),
 			'movie_id'       : movie_id
 		}
+		medium_id = str(self.am_media.get_active())
+		if int(medium_id)>0:
+			t_movies['medium_id'] = medium_id
+		seen = int(self.am_seen.get_active())
+		if seen == 1:
+			t_movies['seen'] = True
+		else:
+			t_movies['seen'] = False
 		# languages
 		t_languages = {}
 		for i in self.e_languages:
@@ -134,12 +131,16 @@ def update(self):
 	else:
 		gutils.error(self.w_results,_("You should fill the original title"))
 
-def update_image(self,image,id):
-	self.db.conn.Execute("UPDATE movies SET image = '" + os.path.splitext(image)[0]+"' WHERE number = '"+id+"'")
+def update_image(self,image,number):
+	movie = self.db.Movie.get_by(number=number)
+	movie.image = os.path.splitext(image)[0]
+	movie.commit()
 	self.update_statusbar(_("Image has been updated"))
 
-def clear_image(self,id):
-	self.db.conn.Execute("UPDATE movies SET image = '' WHERE number = '"+id+"'")
+def clear_image(self,number):
+	movie = self.db.Movie.get_by(number=number)
+	movie.image = None
+	movie.commit()
 	self.update_statusbar(_("Image has been updated"))
 
 def update_language_ids(self):
