@@ -95,13 +95,6 @@ def change_rating_from_slider(self):
 	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
 	gutils.garbage(handler)
 
-def toggle_seen(self):
-	seen = '0'
-	if self.e_seen.get_active():
-		seen = '1'
-	self.db.conn.Execute("UPDATE movies SET seen = '" + seen + "' WHERE number = '" + self.e_number.get_text() + "'")
-	self.count_statusbar()
-
 def clear_details(self):
 	plot_buffer = self.e_plot.get_buffer()
 	obs_buffer = self.e_obs.get_buffer()
@@ -154,9 +147,8 @@ def clear_details(self):
 def fetch_bigger_poster(self):
 	match = 0
 	self.debug.show("fetching poster from amazon")
-	cursor = self.db.select_movie_by_num(self.e_number.get_text())
-	this_movie = cursor.GetRowAssoc(0)
-	current_poster = this_movie['image']
+	movie = self.db.Movie.get_by(movie_id=self.e_movie_id.get_text())
+	current_poster = movie.image
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 
 	try:

@@ -21,7 +21,7 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import sys, os.path, random
+import sys, os.path
 import gtk, gtk.glade
 assert gtk.pygtk_version >= (2, 4, 0), 'pygtk should be >= 2.4.0'
 import about, add, backup, config, cover, delete, edit, gconsole, gdebug
@@ -245,17 +245,16 @@ class Griffith:
 
 	def sugest_movie(self, *args):
 		quick_filter.change_filter(self)
-		subtotal = self.db.count_records('movies','seen=0')
+		subtotal = self.db.Movie.mapper.count_by(seen=False)
 		self.clear_filter()
 		self.all_movies.set_active(1)
 		self.count_statusbar()
 		if subtotal > 0:
-			cursor = self.db.get_not_seen_movies()
-			for i in range(0, random.randrange(subtotal)):
-				cursor.MoveNext()
-			sugested_movie = cursor.GetRowAssoc(0)
-			self.debug.show("suggested movie: %s"%sugested_movie['title'])
-			self.main_treeview.set_cursor_on_cell(sugested_movie['number']-1)
+			import random
+			movies = self.db.Movie.select_by(seen=False)
+			movie = movies[random.randrange(subtotal)]
+			self.debug.show("suggested movie: %s"%movie.title)
+			self.main_treeview.set_cursor_on_cell(movie.number-1)
 			self.treeview_clicked()
 		else:
 			gutils.info(self, \
@@ -270,7 +269,7 @@ class Griffith:
 		except:
 			id = 0
 		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
-		self.db.add_volume(name)
+		v = self.db.Volume(name)
 		update.update_volume_combo_ids(self)
 		initialize.fill_volumes_combo(self, prefix, id)
 

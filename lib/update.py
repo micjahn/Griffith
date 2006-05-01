@@ -85,7 +85,7 @@ def update(self):
 		medium_id = str(self.am_media.get_active())
 		if int(medium_id)>0:
 			t_movies['medium_id'] = medium_id
-		seen = int(self.am_seen.get_active())
+		seen = int(self.e_seen.get_active())
 		if seen == 1:
 			t_movies['seen'] = True
 		else:

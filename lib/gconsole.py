@@ -63,7 +63,7 @@ def check_args(self):
 		if len(where)>0:
 			con_search_movie(self, where)
 
-def con_search_movie(self, where):
+def con_search_movie(self, where): # FIXME
 	query = ''
 	for i in where:
 		query += i + " LIKE '%" + where[i] + "%' AND "

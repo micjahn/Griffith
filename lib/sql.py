@@ -32,10 +32,19 @@ class GriffithSQL:
 	engine = None
 	class Movie(object):
 		def __repr__(self):
-			return "Movie:%s(num=%s)" % (self.movie_id, self.number)
+			return "Movie:%s (number=%s)" % (self.movie_id, self.number)
 		def __init__(self):
 			# self.number = find_next_available() # TODO
 			pass
+		def remove(self):
+			if int(self.loaned)==1:
+				return False
+			for i in self.tags:
+				i.delete()
+			for i in self.languages:
+				i.delete()
+			self.delete()
+			objectstore.commit()
 	class AChannel(object):
 		def __repr__(self):
 			return "Achannel:%s" % self.name
@@ -94,10 +103,10 @@ class GriffithSQL:
 			return "Medium:%s" % self.name
 	class MovieLanguage(object):
 		def __repr__(self):
-			return "Movie:%s_Lang:%s_Type:%s_ACodec:%s_AChannel:%s" % (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id)
+			return "MovieLang:%s-%s (Type:%s ACodec:%s AChannel:%s)" % (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id)
 	class MovieTag(object):
 		def __repr__(self):
-			return "Movie-Tag:%s-%s" % (self.movie_id, self.tag_id)
+			return "MovieTag:%s-%s" % (self.movie_id, self.tag_id)
 	class Person(object):
 		def __repr__(self):
 			return "Person:%s" % self.name
@@ -284,15 +293,6 @@ class GriffithSQL:
 		assign_mapper(self.Collection, collections)
 		assign_mapper(self.Medium, media)
 		assign_mapper(self.VCodec, vcodecs)
-		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
-				'volume'     : relation(self.Volume.mapper),
-				'collection' : relation(self.Collection.mapper),
-				'medium'     : relation(self.Medium.mapper),
-				'vcodec'     : relation(self.VCodec.mapper)})
-		assign_mapper(self.Loan, loans, properties = {
-				'movie'      : relation(self.Movie.mapper),
-				'volume'     : relation(self.Volume.mapper),
-				'collection' : relation(self.Collection.mapper)})
 		assign_mapper(self.Person, people)
 		assign_mapper(self.Language, languages)
 		assign_mapper(self.MovieLanguage, movie_lang)
@@ -300,6 +300,17 @@ class GriffithSQL:
 		assign_mapper(self.AChannel, achannels)
 		assign_mapper(self.Tag, tags)
 		assign_mapper(self.MovieTag, movie_tag)
+		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
+				'volume'     : relation(self.Volume.mapper),
+				'collection' : relation(self.Collection.mapper),
+				'medium'     : relation(self.Medium.mapper),
+				'languages'  : relation(self.MovieLanguage.mapper),
+				'tags'       : relation(self.MovieTag.mapper),
+				'vcodec'     : relation(self.VCodec.mapper)})
+		assign_mapper(self.Loan, loans, properties = {
+				'movie'      : relation(self.Movie.mapper),
+				'volume'     : relation(self.Volume.mapper),
+				'collection' : relation(self.Collection.mapper)})
 		
 		# check if database needs upgrade
 		try:
@@ -309,6 +320,7 @@ class GriffithSQL:
 
 		if v==1:
 			try:
+				# FIXME:
 				self.Movie.mapper.table.select().execute()
 			except exceptions.SQLError:	# table doesn't exist
 				v=0
@@ -344,7 +356,6 @@ class GriffithSQL:
 					for name in files:
 						os.remove(os.path.join(root, name))
 				parent.db.drop_database()
-				parent.db.engine.close()
 				if self.config["default_db"] == "sqlite":
 					os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
 				# create/connect db
@@ -469,6 +480,11 @@ class GriffithSQL:
 		for i in ["color","cond","layers","region","media_num"]:
 			if t_movies[i] == -1:
 				t_movies.pop(i)
+		for i in ["volume_id","collection_id"]:
+			if t_movies.has_key(i) and int(t_movies[i]) == 0:
+				t_movies[i] = None
+		if t_movies.has_key("year") and int(t_movies["year"]) < 1986:
+			t_movies[i] = None
 
 		self.objectstore.clear()
 		self.Movie.mapper.table.insert().execute(t_movies)
@@ -515,7 +531,7 @@ class GriffithSQL:
 		lang.commit()
 		return True
 
-	def add_tag(self, name):
+	def add_tag(self, name): # FIXME
 		if name == None or name == '':
 			self.debug.show("You didn't write name for new tag")
 			return False
@@ -610,16 +626,6 @@ class GriffithSQL:
 		self.engine.execute("DROP TABLE movie_lang CASCADE;")
 		self.engine.execute("DROP TABLE tags CASCADE;")
 
-	def remove_movie_by_num(self,number):
-		if self.is_movie_loaned(movie_number=number):
-			self.debug.show("Movie (number=%s) is loaned. Can't delete!")
-			return False
-		id = self.get_value(field="id", table="movies", where="number = '%s'" % number)
-		if id != None:
-			self.engine.execute("DELETE FROM movie_lang WHERE movie_id = '%s'" % id)
-			self.engine.execute("DELETE FROM movie_tag WHERE movie_id = '%s'" % id)
-			self.engine.execute("DELETE FROM movies WHERE number = '"+number+"'")
-
 	def remove_collection(self, id=None, name=None):
 		if id != None:
 			name = self.get_value(field="name", table="collections", where="id = '%s'" % id)
@@ -702,8 +708,13 @@ class GriffithSQL:
 			if t_movies[i] == '':
 				t_movies.pop(i)
 		for i in ["color","cond","layers","region","media_num"]:
-			if t_movies[i] == -1:
+			if t_movies.has_key(i) and t_movies[i] == -1:
 				t_movies.pop(i)
+		for i in ["volume_id","collection_id"]:
+			if t_movies.has_key(i) and int(t_movies[i]) == 0:
+				t_movies[i] = None
+		if t_movies.has_key("year") and int(t_movies["year"]) < 1986:
+			t_movies[i] = None
 
 		self.objectstore.clear()
 		self.Movie.mapper.table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
@@ -861,7 +872,7 @@ class GriffithSQL:
 	def is_collection_loaned(self,collection):
 		return self.engine.GetRow("SELECT loaned FROM collections WHERE id = '%s'" % collection)[0]
 
-	def convert_from_sqlite2(self, source_file, destination_file):	#{{{
+	def convert_from_sqlite2(self, source_file, destination_file):	#{{{ FIXME
 		try:
 			import sqlite
 		except:

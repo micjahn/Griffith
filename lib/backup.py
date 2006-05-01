@@ -39,8 +39,7 @@ def backup(self):
 	if filename[0]:
 		overwrite = None
 		if os.path.isfile(filename[0]):
-			response = \
-				gutils.question(self, \
+			response = gutils.question(self, \
 				_("File exists. Do you want to overwrite it?"), \
 				1, self.main_window)
 			if response == -8:
@@ -57,16 +56,15 @@ def backup(self):
 			mzip.write(os.path.join(self.griffith_dir, self.config["default_db"]))
 			mzip.write(os.path.join(self.griffith_dir,'griffith.conf'))
 			tmp_path=os.path.join(self.griffith_dir,'posters')
-			cursor = self.db.get_all_data(what="image")
-			while not cursor.EOF:
-				filename = cursor.fields[0]+".jpg"
-				filename = os.path.join(tmp_path, filename.encode('utf-8'))
-				if os.path.isfile(filename):
-					try:
-						mzip.write(filename)
-					except:
-						self.debug.show("Can't compress %s" % filename)
-				cursor.MoveNext()
+			for movie in self.db.Movie.select():
+				if movie.image != None:
+					filename = str(movie.image)+".jpg"
+					filename = os.path.join(tmp_path, filename.encode('utf-8'))
+					if os.path.isfile(filename):
+						try:
+							mzip.write(filename)
+						except:
+							self.debug.show("Can't compress %s" % filename)
 			mzip.close()
 			gutils.info(self, _("Backup has been created"), self.main_window)
 	

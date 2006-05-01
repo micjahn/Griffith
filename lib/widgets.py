@@ -328,7 +328,6 @@ def define_widgets(self, gladefile):
 		"on_all_movies_activate"                : self.filter_all,
 		"on_rating_scale_value_changed"         : self.scale_rating_change,
 		"on_rating_scale_add_value_changed"     : self.scale_rating_change_add,
-		"on_e_seen_released"                    : self.toggle_seen,
 		"on_sugest_activate"                    : self.sugest_movie,
 		"on_email_reminder_clicked"             : self.email_reminder,
 		"on_go_first_clicked"                   : self.go_first,

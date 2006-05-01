@@ -88,9 +88,8 @@ def cover_image_process(self, filename, id):
 		_("Released Under the GNU/GPL License").encode('utf-8'))
 
 	# get movie information from db
-	data = self.db.select_movie_by_num(id)
-
-	for row in data:
+	movie = self.db.Movie.get_by(number=id)
+	if movie != None:
 		c.drawImage(filename, pos_x, pos_y, cover_x, cover_y)
 		if number == True:
 			c.setFillColor(colors.white)
@@ -155,40 +154,38 @@ def cover_simple(self, id):
 	c.rect(pos_x, pos_y, cover_x, cover_y)
 
 	# get movie information from db
-	cursor = self.db.select_movie_by_num(id)
-	while not cursor.EOF:
-		row = cursor.GetRowAssoc(0)
+	movie = self.db.Movie.get_by(number=id)
+	if movie != None:
 		if number == True:
 			c.setFont(fontName, 10)
 			c.drawCentredString(pageWidth/2, 530, id)
 
 		c.setFont(fontName, 16)
 		c.rotate(90)
-		c.drawString(60, (-pageWidth/2)-8, row['original_title'].encode('utf-8'))
+		c.drawString(60, (-pageWidth/2)-8, movie.o_title.encode('utf-8'))
 		c.rotate(-90)
-		if str(row['image']):
+		if movie.image != None:
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
-			image = os.path.join(tmp_dest, str(row['image']+".jpg"))
+			image = os.path.join(tmp_dest, str(movie.image)+".jpg")
 			c.drawImage(image, x=(pageWidth-30)/2, y=470, width=30, height=50)
 		# print movie info
 		c.setFont(fontName, 8)
 		textObject = c.beginText()
 		textObject.setTextOrigin(pageWidth-cover_x, 300)
 		textObject.setFont(fontName, 8)
-		textObject.textLine(_("Original Title").encode('utf-8')+': '+str(row['original_title']).encode('utf-8'))
-		textObject.textLine(_("Title").encode('utf-8')+': '+str(row['title']).encode('utf-8'))
+		textObject.textLine(_("Original Title").encode('utf-8')+': '+str(movie.o_title).encode('utf-8'))
+		textObject.textLine(_("Title").encode('utf-8')+': '+str(movie.title).encode('utf-8'))
 		textObject.textLine("")
-		textObject.textLine(_("Director").encode('utf-8')+': '+str(row['director']).encode('utf-8'))
+		textObject.textLine(_("Director").encode('utf-8')+': '+str(movie.director).encode('utf-8'))
 		textObject.textLine("")
-		textObject.textLine(_("Running Time").encode('utf-8')+': '+str(row['runtime']).encode('utf-8')+ _(" min").encode('utf-8'))
-		textObject.textLine(_("Country").encode('utf-8')+': '+str(row['country']).encode('utf-8'))
-		textObject.textLine(_("Genre").encode('utf-8')+': '+str(row['genre']).encode('utf-8'))
+		textObject.textLine(_("Running Time").encode('utf-8')+': '+str(movie.runtime).encode('utf-8')+ _(" min").encode('utf-8'))
+		textObject.textLine(_("Country").encode('utf-8')+': '+str(movie.country).encode('utf-8'))
+		textObject.textLine(_("Genre").encode('utf-8')+': '+str(movie.genre).encode('utf-8'))
 		textObject.textLine("")
 		c.drawText(textObject)
 		# draw bigger poster image
-		if poster == True and str(row['image']):
+		if poster == True and movie.image != None:
 			c.drawImage(image, x=(pageWidth-(pageWidth-cover_x)-235), y=(pageHeight/2)-125, width=180, height=250)
-		cursor.MoveNext()
 	c.showPage()
 	c.save()
 	self.w_print_cover_simple.hide()

@@ -36,6 +36,9 @@ def treeview_clicked(self):
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		number = tmp_model.get_value(tmp_iter,1)
 		movie = self.db.Movie.get_by(number=number)
+		if movie == None:
+			self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
+			return False
 
 		plot_buffer = self.e_plot.get_buffer()
 		obs_buffer = self.e_obs.get_buffer()
@@ -163,7 +166,7 @@ def treeview_clicked(self):
 		else:
 			self.loan_info.set_label(self._("Movie not loaned"))
 
-		#loan history	
+		# loan history	
 		self.loans_treemodel.clear()
 		loans = self.db.get_loan_history(collection_id=movie.collection_id, volume_id=movie.volume_id, movie_id=movie.movie_id)
 		for loan in loans:
@@ -176,7 +179,7 @@ def treeview_clicked(self):
 			person = self.db.Person.get_by(person_id=loan.person_id)
 			self.loans_treemodel.set_value(myiter, 2, person.name)
 
-		#volumes/collections
+		# volumes/collections
 		i = gutils.findKey(movie.volume_id, self.volume_combo_ids)
 		if not i:
 			i = 0
@@ -191,17 +194,14 @@ def treeview_clicked(self):
 		self.e_collection_id.hide()
 
 		#languages
-		self.e_languages = []	# language widgets
-		languages = self.db.MovieLanguage.select_by(movie_id=movie.movie_id)
-		if languages != None:
+		self.e_languages = []	# for language widgets
+		if len(movie.languages)>0:
 			from initialize import create_language_hbox
-			for i in languages:
-				create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, default=i['lang_id'], type=i['type'])
-
+			for i in movie.languages:
+				create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, default=i.lang_id, type=i.type)
 		#tags
-		for tag in self.db.MovieTag.select_by(movie_id=movie.movie_id):
-			tag = tag.tag_id
-			i = gutils.findKey(tag, self.tags_ids)
+		for tag in movie.tags:
+			i = gutils.findKey(tag.tag_id, self.tags_ids)
 			self.e_tags[i].set_active(True)
 
 def populate(self, movies):

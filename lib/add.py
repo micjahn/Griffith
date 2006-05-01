@@ -34,7 +34,7 @@ def add_movie(self):
 	quick_filter.clear_filter(self)
 	next_number = gutils.find_next_available(self)
 	initialize_add_dialog(self)
-	self.am_number.set_text(str(next_number))
+	self.am_number.set_value(int(next_number))
 	self.add_movie_window.show()
 	self.active_plugin = ""
 
@@ -158,27 +158,27 @@ def add_movie_db(self, close):
 
 		# add movie data to database
 		self.db.add_movie(t_movies, t_languages, t_tags)
-		
+
 		# lets move poster from tmp to posters dir
 		tmp_dest = os.path.join(self.griffith_dir, "posters")
-		
+
 		if self.windows:
 			temp_dir = "C:\\windows\\temp\\"
 		else:
 			temp_dir = "/tmp/"
-			
+
 		pic = string.replace(self.am_picture_name.get_text()+".jpg",temp_dir,"")
 
 		if len(self.am_picture_name.get_text()):
 			if os.path.isfile(os.path.join(temp_dir, pic)):
 				shutil.move(os.path.join(temp_dir, pic), tmp_dest)
-		
+
 		if int(self.am_number.get_text()) >= 2:
 			insert_after = self.treemodel.get_iter(int(self.am_number.get_text())-2)
 		else:
 			insert_after = None
 		myiter = self.treemodel.insert_after(None, insert_after)
-	
+
 		if len(self.am_picture_name.get_text()):
 			image_path = os.path.join(tmp_dest, pic)
 			#lets make the thumbnail and medium image from poster for future use
@@ -205,12 +205,12 @@ def add_movie_db(self, close):
 		next_number=gutils.find_next_available(self)
 		initialize_add_dialog(self)
 		self.am_number.set_text(str(next_number))
-		
+
 		if close:
 			self.hide_add_movie()
 	else:
 		gutils.error(self.w_results, _("You should fill the original title\nor the movie title."))
-	
+
 def change_rating_from_slider(self):
 	rating = int(self.rating_slider_add.get_value())
 	self.image_add_rating.show()
@@ -224,7 +224,7 @@ def change_rating_from_slider(self):
 		prefix = "meter"
 	rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, rating)
 	handler = self.image_add_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
-			
+
 def populate_with_results(self):
 	m_id = None
 	if self.founded_results_id:
@@ -236,12 +236,12 @@ def populate_with_results(self):
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		m_id = tmp_model.get_value(tmp_iter, 0)
 	self.hide_results()
-	
+
 	try:
 		self.debug.show("m_id: %s" % m_id)
 	except:
 		self.debug.show("m_id: Bad UNICODE character")
-	
+
 	plugin_name = 'PluginMovie' + self.active_plugin
 	plugin = __import__(plugin_name)
 	self.movie = plugin.Plugin(m_id)
@@ -288,7 +288,7 @@ def populate_with_results(self):
 		handler = self.Image.set_from_file(image)
 		Pixbuf = self.Image.get_pixbuf()
 		self.am_picture.set_from_pixbuf(Pixbuf)
-		
+
 def show_websearch_results(self):
 	total = self.founded_results_id = 0
 	for g in self.search_movie.ids:
@@ -316,7 +316,7 @@ def show_websearch_results(self):
 				populate_with_results(self)
 	else:
 		gutils.error(self.w_results, _("No results"), self.add_movie_window)
-	
+
 def get_from_web(self):
 	"""search the movie in web using the active plugin"""
 	if len(self.am_original_title.get_text()) \
@@ -341,7 +341,7 @@ def get_from_web(self):
 	else:
 		gutils.error(self.w_results, \
 			_("You should fill the original title\nor the movie title."))
-		
+
 def source_changed(self):
 	option = gutils.on_combo_box_entry_changed_name(self.am_source)
 	self.active_plugin = option
@@ -354,71 +354,69 @@ def source_changed(self):
 	# if movie plugin logo exists lets use it
 	if os.path.exists(image):
 		handler = self.am_plugin_image.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
-		
+
 def clone_movie(self):
 	treeselection = self.main_treeview.get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
-	m_id = tmp_model.get_value(tmp_iter, 1)
-	movie_id = self.db.get_value(field="id", table="movies", where="number='%s'"%m_id)
-	
-	if movie_id == None:
+	number = tmp_model.get_value(tmp_iter, 1)
+	movie = self.db.Movie.get_by(number=number)
+
+	if movie == None:
 		return false
-		
-	row = self.db.get_all_data(where="number='%s'"%m_id).GetRowAssoc(0)
+
 	next_number = gutils.find_next_available(self)
-	new_image = str(row['image']) + '_' + str(next_number)
+	new_image = str(movie.image) + '_' + str(next_number)
+	
+	# integer problem workaround
+	if int(movie.seen)==1:
+		seen = True
+	else:
+		seen = False
 	t_movies = {
-		'actors'         : gutils.gescape(str(row['actors'])),
-		'classification' : gutils.gescape(str(row['classification'])),
-		'color'          : gutils.gescape(str(row['color'])),
-		'cond'           : gutils.gescape(str(row['condition'])),
-		'country'        : gutils.gescape(str(row['country'])),
-		'director'       : gutils.gescape(str(row['director'])),
-		'genre'          : gutils.gescape(str(row['genre'])),
-		'image'          : gutils.gescape(new_image),
-		'site'           : gutils.gescape(str(row['imdb'])),
-		'layers'         : gutils.gescape(str(row['layers'])),
-		'media'          : gutils.gescape(str(row['media'])),
-		'number'         : str(next_number),
-		'media_num'      : str(row['num_media']),
-		'notes'          : gutils.gescape(str(row['obs'])),
-		'o_title'        : gutils.gescape(str(row['original_title'])),
-		'plot'           : gutils.gescape(str(row['plot'])),
-		'rating'         : str(row['rating']),
-		'region'         : gutils.gescape(str(row['region'])),
-		'runtime'        : gutils.gescape(str(row['runtime'])),
-		'seen'           : str(row['seen']),
-		'o_site'           : gutils.gescape(str(row['site'])),
-		'studio'         : gutils.gescape(str(row['studio'])),
-		'title'          : gutils.gescape(str(row['title'])),
-		'trailer'        : gutils.gescape(str(row['trailer'])),
-		'year'           : gutils.gescape(str(row['year']))
+		'actors'         : movie.actors,
+		'classification' : movie.classification,
+		'color'          : movie.color,
+		'cond'           : movie.cond,
+		'country'        : movie.country,
+		'director'       : movie.director,
+		'genre'          : movie.genre,
+		'image'          : new_image,
+		'site'           : movie.site,
+		'layers'         : movie.layers,
+		'medium_id'      : movie.medium_id,
+		'number'         : next_number,
+		'media_num'      : movie.media_num,
+		'notes'          : movie.notes,
+		'o_title'        : movie.o_title,
+		'plot'           : movie.plot,
+		'rating'         : movie.rating,
+		'region'         : movie.region,
+		'runtime'        : movie.runtime,
+		'seen'           : seen,
+		'o_site'         : movie.o_site,
+		'studio'         : movie.studio,
+		'title'          : movie.title,
+		'trailer'        : movie.trailer,
+		'year'           : movie.year
 	}
 	# tags
 	t_tags = {}
-	cursor = self.db.get_all_data(table_name="movie_tag",what="tag_id", where="movie_id='%s'"%movie_id)
-	while not cursor.EOF:
-		t_tags[cursor.fields[0]] = 1
-		cursor.MoveNext()
+	for tag in movie.tags:
+		t_tags[tag.tag_id] = 1
 	# languages
 	t_languages = {}
-	cursor = self.db.get_all_data(table_name="movie_lang",what="lang_id, type", where="movie_id='%s'"%movie_id)
-	while not cursor.EOF:
-		lang_id = cursor.fields[0]
-		type = cursor.fields[1]
-		if not t_languages.has_key(lang_id):
-			t_languages[lang_id] = {}
-		t_languages[lang_id][type] = True
-		cursor.MoveNext()
-		
+	for lang in movie.languages:
+		if not t_languages.has_key(lang.lang_id):
+			t_languages[lang.lang_id] = {}
+		t_languages[lang.lang_id][lang.type] = True
+
 	self.db.add_movie(t_movies, t_languages, t_tags)
 
 	# WARNING: loan problems (don't copy volume/collection data until resolved)
 
-	next_movie_id = self.db.get_value(field="id", table="movies", where="number='%s'"%next_number)
 	tmp_dest = os.path.join(self.griffith_dir, "posters")
-	if str(str(row['image'])) != '':
-		image_path = os.path.join(tmp_dest, str(row['image'])+".jpg")
+	if movie.image != None:
+		image_path = os.path.join(tmp_dest, str(movie.image)+".jpg")
 		clone_path = os.path.join(tmp_dest, new_image+".jpg")
 		# clone image
 		shutil.copyfile(image_path, clone_path)
@@ -429,12 +427,12 @@ def clone_movie(self):
 		else:
 			image_path = os.path.join(self.locations['images'], "default.png")
 	handler = self.Image.set_from_file(image_path)
-		
+
 	#update statusbar
 	self.total = self.total + 1
 	self.total_filter = self.total
 	self.count_statusbar()
-	self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
+	self.populate_treeview(self.db.Movie.select())
 	self.main_treeview.set_cursor(next_number-1)
 	self.treeview_clicked()
 

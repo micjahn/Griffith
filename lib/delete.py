@@ -27,18 +27,24 @@ import os
 
 def delete_movie(self):
 	m_id = None
-	m_id, m_iter = self.get_maintree_selection()
-	if self.db.is_movie_loaned(movie_number=m_id):
+	number, m_iter = self.get_maintree_selection()
+	movie = self.db.Movie.get_by(number=number)
+	if int(movie.loaned)==1:
 		gutils.warning(self, msg=_("You can't delete movie while it is loaned."))
 		return False
 	response = gutils.question(self,_("Are you sure you want to delete this movie?"), \
 		1, self.main_window)
 	if response == -8:	# gtk.RESPONSE_YES == -8
 		# try to delete poster image as well
-		poster = self.db.get_value('image', table="movies", where="number='%s'"%m_id)
-		if poster != None:
-			delete_poster(self, poster)
-		delete_movie_from_db(self, m_id, m_iter)
+		if movie.image != None:
+			delete_poster(self, movie.image)
+		movie.remove()
+		# update main treelist
+		self.total -= 1
+		self.total_filter -= 1
+		self.treemodel.remove(m_iter)
+		self.clear_details()
+		self.count_statusbar()
 		self.main_treeview.set_cursor_on_cell(self.total_filter-1)
 	else:
 		return False
