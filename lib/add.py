@@ -127,14 +127,14 @@ def add_movie_db(self, close):
 			'trailer'        : self.am_trailer.get_text(),
 			'year'           : self.am_year.get_text()
 		}
-		vol_id = str(self.volume_combo_ids[self.am_volume_combo.get_active()])
-		if int(vol_id)>0:
-			t_movies['volume_id'] = vol_id
-		col_id = str(self.collection_combo_ids[self.am_collection_combo.get_active()])
-		if int(col_id)>0:
-			t_movies['collection_id'] = col_id
-		medium_id = str(self.am_media.get_active())
-		if int(medium_id)>0:
+		vol_id = self.am_volume_combo.get_active()
+		if vol_id>0:
+			t_movies['volume_id'] = self.volume_combo_ids[vol_id]
+		col_id = self.am_collection_combo.get_active()
+		if col_id>0:
+			t_movies['collection_id'] = self.collection_combo_ids[col_id]
+		medium_id = self.am_media.get_active()
+		if medium_id>0:
 			t_movies['medium_id'] = medium_id
 		seen = int(self.am_seen.get_active())
 		if seen == 1:

@@ -280,9 +280,10 @@ class Griffith:
 		except:
 			id = 0
 		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
-		self.db.add_collection(name)
-		update.update_collection_combo_ids(self)
-		initialize.fill_collections_combo(self, prefix, id)
+		col = self.db.Collection(name=name)
+		if col.add():
+			update.update_collection_combo_ids(self)
+			initialize.fill_collections_combo(self, prefix, id)
 
 	def remove_volume(self, widget):
 		prefix = gutils.before(widget.get_name(), "_")
