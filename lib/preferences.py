@@ -249,32 +249,48 @@ def save_preferences(self):
 	self.pdf_reader = save_reader
 
 	# database
-	self.config["db_port"] = int(self.p_db_port.get_value())
-	self.config["db_user"] = self.p_db_user.get_text()
+	old = {}
+	old["db_type"]   = self.config["db_type"]
+	old["db_host"]   = self.config["db_host"]
+	old["db_port"]   = self.config["db_port"]
+	old["db_name"]   = self.config["db_name"]
+	old["db_user"]   = self.config["db_user"]
+	old["db_passwd"] = self.config["db_passwd"]
+	self.config["db_host"]   = self.p_db_host.get_text()
+	self.config["db_port"]   = int(self.p_db_port.get_value())
+	self.config["db_name"]   = self.p_db_name.get_text()
+	self.config["db_user"]   = self.p_db_user.get_text()
 	self.config["db_passwd"] = self.p_db_passwd.get_text()
-	self.config["db_name"] = self.p_db_name.get_text()
-	db_type = self.p_db_type.get_active()
-	old_db_type = self.config["db_type"]
-	if db_type == 0:
-		self.config["db_type"] = "sqlite"
-	elif db_type == 1:
+	db_type = int(self.p_db_type.get_active())
+	if db_type == 1:
 		self.config["db_type"] = "postgres"
 	elif db_type == 2:
 		self.config["db_type"] = "mysql"
+	else:
+		self.config["db_type"] = "sqlite"
 	self.config.save()
-	if old_db_type != self.config["db_type"]:
+
+	if old["db_type"] != self.config["db_type"] or (old["db_type"]!="sqlite" and (\
+			old["db_host"] != self.config["db_host"] or \
+			old["db_port"] != self.config["db_port"] or \
+			old["db_name"] != self.config["db_name"] or \
+			old["db_user"] != self.config["db_user"] or \
+			old["db_passwd"] != self.config["db_passwd"])):
 		self.debug.show("DATABASE: connecting to new db server...")
 		# NEW DB CONNECTION
-		#gutils.info(self, _("You have to restart Griffith\nfor the changes to take effect."), self.main_window)
 		import sql
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
+		if self.db.engine.name == "sqlite":
+			tmp = self.db.engine.filename
+		else:
+			tmp = self.db.engine.opts
+		self.debug.show("DATABASE: %s %s" % (self.db.engine.name, tmp))
 		self.clear_details()
-		self.total = 0
+		self.total = self.db.Movie.mapper.count()
 		self.count_statusbar()
-		self.treemodel.clear()
 		from initialize	import dictionaries, people_treeview
 		dictionaries(self)
-		people_treeview(self)
+		people_treeview(self, False)
 
 	self.clear_details()
 	self.populate_treeview(self.db.Movie.select())

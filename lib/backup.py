@@ -53,8 +53,11 @@ def backup(self):
 			except:
 				gutils.error(self, _("Error creating backup"), self.main_window)
 				return False
-			mzip.write(os.path.join(self.griffith_dir, self.config["default_db"]))
 			mzip.write(os.path.join(self.griffith_dir,'griffith.conf'))
+			if self.db.engine.name == "sqlite":
+				mzip.write(os.path.join(self.griffith_dir, self.config["default_db"]))
+			else:
+				pass
 			tmp_path=os.path.join(self.griffith_dir,'posters')
 			for movie in self.db.Movie.select():
 				if movie.image != None:
@@ -116,7 +119,7 @@ def restore(self):
 		# let's refresh the treeview
 		self.clear_details()
 		self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
-		self.total = self.db.count_records("movies")
+		self.total = self.db.Movie.mapper.count()
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()
@@ -216,8 +219,8 @@ def merge(self):
 		people_treeview(self)
 		# let's refresh the treeview
 		self.clear_details()
-		self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
-		self.total = self.db.count_records("movies")
+		self.populate_treeview(self.db.Movie.select())
+		self.total = self.db.Movie.mapper.count()
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()

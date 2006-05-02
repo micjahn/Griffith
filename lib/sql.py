@@ -420,7 +420,9 @@ class GriffithSQL:
 				config["db_name"] = "griffith"
 
 		# connect to database --------------------------------------{{{
-		if config["db_type"] == "postgres":
+		if config["db_type"] == "sqlite":
+			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, config["default_db"])})
+		elif config["db_type"] == "postgres":
 			if not config.has_key("db_port"):
 				config["db_port"] = "5432"
 			self.engine = create_engine('postgres', {
@@ -443,10 +445,9 @@ class GriffithSQL:
 		try:
 			self.engine.connection()
 		except:
-			self.config["db_type"] = "sqlite"
 			gutils.error(self, _("Database connection failed."))
-		if config["db_type"] == "sqlite":
-			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, config["default_db"])})
+			self.config["db_type"] = "sqlite"
+			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, "griffith,db")})
 
 		self.objectstore = objectstore#}}}
 
@@ -675,9 +676,21 @@ class GriffithSQL:
 				1, parent.main_window)
 			if response_sec == gtk.RESPONSE_YES:
 				# delete images
-				for root, dirs, files in os.walk(os.path.join(self.griffith_dir,"posters"), topdown=False):
-					for name in files:
-						os.remove(os.path.join(root, name))
+				posters_dir = os.path.join(self.griffith_dir, "posters")
+				# NOTE: only used images are removed (posters are shared between various db)
+				for movie in self.Movie.select():
+					debug.show("NEW DB: Removing old images...")
+					if movie.image != None:
+						name = movie.image.encode('utf-8')
+						p_file = os.path.join(posters_dir, name+".jpg")
+						m_file = os.path.join(posters_dir, "m_"+name+".jpg")
+						t_file = os.path.join(posters_dir, "t_"+name+"jpg")
+						try:
+							os.remove(p_file)
+							os.remove(m_file)
+							os.remove(t_file)
+						except:
+							pass
 				parent.db.drop_database()
 				if self.config["db_type"] == "sqlite":
 					os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
@@ -785,6 +798,8 @@ class GriffithSQL:
 			self.engine.commit()
 			return True
 		if version == 1:	# fix changes between v1 and v2
+			print 'not implemented yet'
+			return False
 			# TODO:
 			# * ranames in movie table:
 			#   + media => media_id
@@ -872,21 +887,6 @@ class GriffithSQL:
 	# }}}
 
 	# ---------------------------------------------------------------------
-	def count_records(self,table_name, where=None):
-		query = "SELECT COUNT(id) FROM %s" % (table_name)
-		if where:
-			query += " WHERE %s" % where
-		return int(self.engine.execute(query)[0])
-
-	def is_movie_loaned(self,movie_id=None, movie_number=None):
-		if movie_id==None and movie_number == None:
-			return None
-		if movie_id:
-			sql = "SELECT loaned FROM movies WHERE id = '%s'" % movie_id
-		if movie_number:
-			sql = "SELECT loaned FROM movies WHERE number = '%s'" % movie_number
-		return self.engine.GetRow(sql)[0]
-
 	def convert_from_sqlite2(self, source_file, destination_file):	#{{{ FIXME
 		try:
 			import sqlite
@@ -949,10 +949,7 @@ class GriffithSQL:
 # for debugging (run: ipython sql.py)
 if __name__ == "__main__":
 	import config, gdebug, gglobals
-	config = config.Config()
-	global debug
-	debug = gdebug.GriffithDebug(True)
-	db = GriffithSQL(config, debug, gglobals.griffith_dir)
+	db = GriffithSQL(config.Config(), gdebug.GriffithDebug(True), gglobals.griffith_dir)
 	if db.engine.name == "sqlite":
 		tmp = db.engine.filename
 	else:

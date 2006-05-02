@@ -227,30 +227,31 @@ def export_plugins(self):
 		menu_items.connect("activate", self.on_export_activate, plugin_name)
 		menu_items.show()
 
-def people_treeview(self):
+def people_treeview(self, create=True):
 	row = None
 	self.p_treemodel = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
 	self.p_treeview.set_model(self.p_treemodel)
 	self.p_treeview.set_headers_visible(True)
 
-	# number column
-	renderer=gtk.CellRendererText()
-	column=gtk.TreeViewColumn(_("Name"), renderer, text=0)
-	column.set_resizable(True)
-	column.set_sort_column_id(0)
-	self.p_treeview.append_column(column)
-	# original title column
-	renderer=gtk.CellRendererText()
-	column=gtk.TreeViewColumn(_("E-mail"),renderer, text=1)
-	column.set_resizable(True)
-	column.set_sort_column_id(1)
-	self.p_treeview.append_column(column)
+	if create==True:
+		# name column
+		renderer=gtk.CellRendererText()
+		column=gtk.TreeViewColumn(_("Name"), renderer, text=0)
+		column.set_resizable(True)
+		column.set_sort_column_id(0)
+		self.p_treeview.append_column(column)
+		# email column
+		renderer=gtk.CellRendererText()
+		column=gtk.TreeViewColumn(_("E-mail"),renderer, text=1)
+		column.set_resizable(True)
+		column.set_sort_column_id(1)
+		self.p_treeview.append_column(column)
 	# add data to treeview
+	self.p_treemodel.clear()
 	for person in self.db.Person.select(order_by="name ASC"):
 		myiter = self.p_treemodel.insert_before(None, None)
 		self.p_treemodel.set_value(myiter, 0, str(person.name))
 		self.p_treemodel.set_value(myiter, 1, str(person.email))
-
 	self.p_treeview.show()
 
 def combos(self):
@@ -341,36 +342,26 @@ def combos(self):
 	self.am_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.am_layers.insert_text(4, _("N/A"))
 
-	for medium in self.db.Medium.select(order_by="medium_id ASC"):
-		self.e_media.insert_text(medium.medium_id, medium.name)
-		self.p_media.insert_text(medium.medium_id, medium.name)
-		self.am_media.insert_text(medium.medium_id, medium.name)
-	i = 0
-	for criteria in self.sort_criteria:
-		self.filter_criteria.insert_text(i, self.field_names[criteria])
-		i += 1
-	self.filter_criteria.set_active(0)
-
 def dictionaries(self):
-	"""initializes combos filled dynamically by users"""
+	"""initializes data filled dynamically by users"""
+	import initialize, update
 	self.e_languages = []
 	self.e_tags = {} # dictionary for tag CheckBoxes
 	self.am_tags = {} # dictionary for tag CheckBoxes
-	from update import update_language_ids, update_tag_ids, update_volume_combo_ids, update_collection_combo_ids
-	update_language_ids(self)
-	update_tag_ids(self)
-	update_volume_combo_ids(self)
-	update_collection_combo_ids(self)
-	from initialize import fill_volumes_combo, fill_collections_combo, create_tag_vbox, create_tag_vbox
-	fill_volumes_combo(self)
-	fill_collections_combo(self)
-	create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
-	create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+	update.update_language_ids(self)
+	update.update_tag_ids(self)
+	update.update_volume_combo_ids(self)
+	update.update_collection_combo_ids(self)
+	initialize.fill_volumes_combo(self)
+	initialize.fill_collections_combo(self)
+	initialize.fill_preferences_languages_combo(self)
+	initialize.fill_preferences_tags_combo(self)
+	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	self.sort_criteria = (
 		"o_title", "title", "number", "director",
 		"plot", "actors", "notes", "year", "runtime", "country",
-		"genre", "studio", "media_num", "rating"
-	)
+		"genre", "studio", "media_num", "rating")
 	self.field_names = {
 		"number"         : _("Number"),
 		"o_title"        : _("Original Title"),
@@ -397,8 +388,17 @@ def dictionaries(self):
 		"collection_id"  : _("Collection"),
 		"plot"           : _("Plot"),
 		"media_num"      : _("Discs"),
-		"notes"          : _("Notes")
-	}
+		"notes"          : _("Notes")}
+	i = 0
+	for criteria in self.sort_criteria:
+		self.filter_criteria.insert_text(i, self.field_names[criteria])
+		i += 1
+	self.filter_criteria.set_active(0)
+
+	for medium in self.db.Medium.select(order_by="medium_id ASC"):
+		self.e_media.insert_text(medium.medium_id, medium.name)
+		self.p_media.insert_text(medium.medium_id, medium.name)
+		self.am_media.insert_text(medium.medium_id, medium.name)
 
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
@@ -505,15 +505,15 @@ def preferences(self):
 		self.p_db_passwd.set_text(self.config["db_passwd"])
 	if self.config.has_key("db_name"):
 		self.p_db_name.set_text(self.config["db_name"])
-	if self.config.has_key("db_type") and self.config["db_type"] == "postgres":
-		self.p_db_type.set_active(1)
+	if self.config.has_key("db_type") and self.config["db_type"] != "sqlite":
 		self.p_db_details.set_sensitive(True)
+		if self.config["db_type"] == "postgres":
+			self.p_db_type.set_active(1)
+		elif self.config["db_type"] == "mysql":
+			self.p_db_type.set_active(2)
 	else:
 		self.p_db_type.set_active(0)
 		self.p_db_details.set_sensitive(False)
-	from initialize import fill_preferences_tags_combo, fill_preferences_languages_combo
-	fill_preferences_languages_combo(self)
-	fill_preferences_tags_combo(self)
 
 def fill_preferences_languages_combo(self):
 	self.lang_name_combo.get_model().clear()

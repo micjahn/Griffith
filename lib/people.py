@@ -83,7 +83,6 @@ def update_person(self):
 	p.phone = self.ep_phone.get_text()
 	p.commit()
 	self.update_statusbar(_("Record updated"))
-	self.treeview_clicked()
 	edit_person_cancel(self)
 	self.p_treemodel.clear()
 	for p in self.db.Person.select(order_by='name ASC'):

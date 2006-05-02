@@ -358,7 +358,7 @@ def clean_posters_dir(self):
 			for name in names:
 				if name.startswith('poster'):
 					# lets check if this poster is orphan
-					used = self.db.count_records('movies', 'image="%s"'%string.replace(name,".jpg",""))
+					used = self.db.Movie.count_by(image=string.replace(name,".jpg",""))
 					if not used:
 						counter += 1
 						os.unlink(os.path.join(posters_dir, name))
