@@ -46,6 +46,7 @@ def define_widgets(self, gladefile):
 	self.am_country        = gladefile.get_widget('am_country')
 	self.am_genre          = gladefile.get_widget('am_genre')
 	self.am_media          = gladefile.get_widget('am_media')
+	self.am_vcodec         = gladefile.get_widget('am_vcodec')
 	self.am_classification = gladefile.get_widget('am_classification')
 	self.am_studio         = gladefile.get_widget('am_studio')
 	self.am_site           = gladefile.get_widget('am_site')
@@ -73,6 +74,7 @@ def define_widgets(self, gladefile):
 	self.e_country        = gladefile.get_widget('e_country')
 	self.e_genre          = gladefile.get_widget('e_genre')
 	self.e_media          = gladefile.get_widget('e_media')
+	self.e_vcodec         = gladefile.get_widget('e_vcodec')
 	self.e_classification = gladefile.get_widget('e_classification')
 	self.e_studio         = gladefile.get_widget('e_studio')
 	self.e_site           = gladefile.get_widget('e_site')
@@ -143,6 +145,7 @@ def define_widgets(self, gladefile):
 	self.view_title    = gladefile.get_widget('view_title')
 	self.view_director = gladefile.get_widget('view_director')
 	self.p_media       = gladefile.get_widget('p_media')
+	self.p_vcodec       = gladefile.get_widget('p_vcodec')
 	self.p_color       = gladefile.get_widget('p_color')
 	self.p_condition   = gladefile.get_widget('p_condition')
 	self.p_region      = gladefile.get_widget('p_region')
@@ -240,6 +243,26 @@ def define_widgets(self, gladefile):
 	self.tag_name_combo = gladefile.get_widget('tag_name_combo')	# preferences window
 	self.e_tag_vbox     = gladefile.get_widget('e_tag_vbox')	# edit window
 	self.am_tag_vbox    = gladefile.get_widget('am_tag_vbox')	# add window
+	# audio codecs
+	self.acodec_name_combo = gladefile.get_widget('acodec_name_combo')	# preferences window
+	self.e_acodec_vbox     = gladefile.get_widget('e_acodec_vbox')	# edit window
+	self.am_acodec_vbox    = gladefile.get_widget('am_acodec_vbox')	# add window
+	# audio channels
+	self.achannel_name_combo = gladefile.get_widget('achannel_name_combo')	# preferences window
+	self.e_achannel_vbox     = gladefile.get_widget('e_achannel_vbox')	# edit window
+	self.am_achannel_vbox    = gladefile.get_widget('am_achannel_vbox')	# add window
+	# subtitle formats
+	self.sub_format_name_combo = gladefile.get_widget('sub_format_name_combo')	# preferences window
+	self.e_sub_format_vbox     = gladefile.get_widget('e_sub_format_vbox')	# edit window
+	self.am_sub_format_vbox    = gladefile.get_widget('am_sub_format_vbox')	# add window
+	# media
+	self.medium_name_combo = gladefile.get_widget('medium_name_combo')	# preferences window
+	self.e_medium_vbox     = gladefile.get_widget('e_medium_vbox')	# edit window
+	self.am_medium_vbox    = gladefile.get_widget('am_medium_vbox')	# add window
+	# video codecs
+	self.vcodec_name_combo = gladefile.get_widget('vcodec_name_combo')	# preferences window
+	self.e_vcodec_vbox     = gladefile.get_widget('e_vcodec_vbox')	# edit window
+	self.am_vcodec_vbox    = gladefile.get_widget('am_vcodec_vbox')	# add window
 
 	# poster events
 	# we need to add a little hack here to exclude macintosh/win32 from enter/leave events because this seems buggy on these ones
@@ -369,7 +392,32 @@ def define_widgets(self, gladefile):
 		"on_tag_add_clicked"			: self.on_tag_add_clicked,
 		"on_tag_remove_clicked"			: self.on_tag_remove_clicked,
 		"on_tag_rename_clicked"			: self.on_tag_rename_clicked,
-		"on_tag_name_combo_changed"		: self.on_tag_name_combo_changed
+		"on_tag_name_combo_changed"		: self.on_tag_name_combo_changed,
+		# audio codecs
+		"on_acodec_add_clicked"			: self.on_acodec_add_clicked,
+		"on_acodec_remove_clicked"		: self.on_acodec_remove_clicked,
+		"on_acodec_rename_clicked"		: self.on_acodec_rename_clicked,
+		"on_acodec_name_combo_changed"		: self.on_acodec_name_combo_changed,
+		# audio channels
+		"on_achannel_add_clicked"		: self.on_achannel_add_clicked,
+		"on_achannel_remove_clicked"		: self.on_achannel_remove_clicked,
+		"on_achannel_rename_clicked"		: self.on_achannel_rename_clicked,
+		"on_achannel_name_combo_changed"	: self.on_achannel_name_combo_changed,
+		# subtitle formats
+		"on_sub_format_add_clicked"		: self.on_sub_format_add_clicked,
+		"on_sub_format_remove_clicked"		: self.on_sub_format_remove_clicked,
+		"on_sub_format_rename_clicked"		: self.on_sub_format_rename_clicked,
+		"on_sub_format_name_combo_changed"	: self.on_sub_format_name_combo_changed,
+		# media
+		"on_medium_add_clicked"			: self.on_medium_add_clicked,
+		"on_medium_remove_clicked"		: self.on_medium_remove_clicked,
+		"on_medium_rename_clicked"		: self.on_medium_rename_clicked,
+		"on_medium_name_combo_changed"		: self.on_medium_name_combo_changed,
+		# video codecs
+		"on_vcodec_add_clicked"			: self.on_vcodec_add_clicked,
+		"on_vcodec_remove_clicked"		: self.on_vcodec_remove_clicked,
+		"on_vcodec_rename_clicked"		: self.on_vcodec_rename_clicked,
+		"on_vcodec_name_combo_changed"		: self.on_vcodec_name_combo_changed
 	}
 	gladefile.signal_autoconnect(dic)
 

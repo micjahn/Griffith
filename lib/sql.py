@@ -274,7 +274,7 @@ class GriffithSQL:
 			return True#}}}
 	class MovieLanguage(object):
 		def __repr__(self):
-			return "MovieLanguage:%s-%s (Type:%s ACodec:%s AChannel:%s)" % (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id)
+			return "MovieLanguage:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)" % (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id, self.sub_format_id)
 	class MovieTag(object):
 		def __repr__(self):
 			return "MovieTag:%s-%s" % (self.movie_id, self.tag_id)
@@ -288,7 +288,7 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("SubFormat: name can't be empty")
 				return False
-			# check if achannel already exists
+			# check if sub_format already exists
 			if self.mapper.get_by(name=self.name) != None:
 				debug.show("SubFormat: '%s' already exists"%self.name)
 				return False
@@ -302,16 +302,16 @@ class GriffithSQL:
 			if len(self.assigned_movie_ids)>0:
 				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
 				return False
-			debug.show("SubFormat: removing '%s' (id=%s) from database..."%(self.name, self.achannel_id))
+			debug.show("SubFormat: removing '%s' (id=%s) from database..."%(self.name, self.sub_format_id))
 			self.delete()
 			self.commit()
 			return True
 		def update(self):
 			if self.sub_format_id<1:
-				debug.show("AChannel: none selected => none updated")
+				debug.show("SubFormat: none selected => none updated")
 				return False
 			if self.name==None or len(self.name)==0:
-				debug.show("AChannel: name can't be empty")
+				debug.show("SubFormat: name can't be empty")
 				return False
 			if self.mapper.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
@@ -362,7 +362,7 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("VCodec: name can't be empty")
 				return False
-			# check if tag already exists
+			# check if vcodec already exists
 			if self.mapper.get_by(name=self.name) != None:
 				debug.show("VCodec: '%s' already exists"%self.name)
 				return False
@@ -370,18 +370,18 @@ class GriffithSQL:
 			self.commit()
 			return True
 		def remove(self):
-			if self.tag_id<1:
+			if self.vcodec_id<1:
 				debug.show("VCodec: none selected => none removed")
 				return False
 			if len(self.assigned_movies)>0:
 				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
 				return False
-			debug.show("VCodec: removing '%s' (id=%s) from database..."%(self.name, self.tag_id))
+			debug.show("VCodec: removing '%s' (id=%s) from database..."%(self.name, self.vcodec_id))
 			self.delete()
 			self.commit()
 			return True
 		def update(self):
-			if self.tag_id<1:
+			if self.vcodec_id<1:
 				debug.show("VCodec: none selected => none removed")
 				return False
 			if self.name==None or len(self.name)==0:
@@ -604,14 +604,14 @@ class GriffithSQL:
 			'person'     : relation(self.Person.mapper),
 			'movie'      : relation(mapper(self.Movie, movies)),
 			'volume'     : relation(mapper(self.Volume, volumes)),
-			'collection' : relation(mapper(self.Collection, collections))})#}}}
+			'collection' : relation(mapper(self.Collection, collections))})
 		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
 			'volume'     : relation(self.Volume.mapper),
 			'collection' : relation(self.Collection.mapper),
 			'medium'     : relation(self.Medium.mapper),
 			'languages'  : relation(self.MovieLanguage.mapper),
 			'tags'       : relation(self.MovieTag.mapper),
-			'vcodec'     : relation(self.VCodec.mapper)})
+			'vcodec'     : relation(self.VCodec.mapper)})#}}}
 		
 		# check if database needs upgrade
 		try:
@@ -796,57 +796,57 @@ class GriffithSQL:
 			self.Volume.mapper.table.create()
 			self.Collection.mapper.table.create()
 			self.Medium.mapper.table.create()
-			self.Medium.mapper.table.insert().execute(medium_id=1, name='DVD')
-			self.Medium.mapper.table.insert().execute(medium_id=2, name='DVD-R')
-			self.Medium.mapper.table.insert().execute(medium_id=3, name='DVD-RW')
-			self.Medium.mapper.table.insert().execute(medium_id=4, name='DVD+R')
-			self.Medium.mapper.table.insert().execute(medium_id=5, name='DVD+RW')
-			self.Medium.mapper.table.insert().execute(medium_id=6, name='DVD-RAM')
-			self.Medium.mapper.table.insert().execute(medium_id=7, name='CD')
-			self.Medium.mapper.table.insert().execute(medium_id=8, name='CD-RW')
-			self.Medium.mapper.table.insert().execute(medium_id=9, name='VCD')
-			self.Medium.mapper.table.insert().execute(medium_id=10, name='SVCD')
-			self.Medium.mapper.table.insert().execute(medium_id=11, name='VHS')
-			self.Medium.mapper.table.insert().execute(medium_id=12, name='BETACAM')
-			self.Medium.mapper.table.insert().execute(medium_id=13, name='LaserDisc')
+			self.Medium.mapper.table.insert().execute(name='DVD')
+			self.Medium.mapper.table.insert().execute(name='DVD-R')
+			self.Medium.mapper.table.insert().execute(name='DVD-RW')
+			self.Medium.mapper.table.insert().execute(name='DVD+R')
+			self.Medium.mapper.table.insert().execute(name='DVD+RW')
+			self.Medium.mapper.table.insert().execute(name='DVD-RAM')
+			self.Medium.mapper.table.insert().execute(name='CD')
+			self.Medium.mapper.table.insert().execute(name='CD-RW')
+			self.Medium.mapper.table.insert().execute(name='VCD')
+			self.Medium.mapper.table.insert().execute(name='SVCD')
+			self.Medium.mapper.table.insert().execute(name='VHS')
+			self.Medium.mapper.table.insert().execute(name='BETACAM')
+			self.Medium.mapper.table.insert().execute(name='LaserDisc')
 			self.ACodec.mapper.table.create()
-			self.ACodec.mapper.table.insert().execute(acodec_id=1, name='AC-3 Dolby audio')
-			self.ACodec.mapper.table.insert().execute(acodec_id=2, name='OGG')
-			self.ACodec.mapper.table.insert().execute(acodec_id=3, name='MP3')
-			self.ACodec.mapper.table.insert().execute(acodec_id=4, name='MPEG-1')
-			self.ACodec.mapper.table.insert().execute(acodec_id=5, name='MPEG-2')
-			self.ACodec.mapper.table.insert().execute(acodec_id=6, name='AAC')
-			self.ACodec.mapper.table.insert().execute(acodec_id=7, name='Windows Media Audio')
+			self.ACodec.mapper.table.insert().execute(name='AC-3 Dolby audio')
+			self.ACodec.mapper.table.insert().execute(name='OGG')
+			self.ACodec.mapper.table.insert().execute(name='MP3')
+			self.ACodec.mapper.table.insert().execute(name='MPEG-1')
+			self.ACodec.mapper.table.insert().execute(name='MPEG-2')
+			self.ACodec.mapper.table.insert().execute(name='AAC')
+			self.ACodec.mapper.table.insert().execute(name='Windows Media Audio')
 			self.VCodec.mapper.table.create()
-			self.VCodec.mapper.table.insert().execute(vcodec_id=1, name='MPEG-1')
-			self.VCodec.mapper.table.insert().execute(vcodec_id=2, name='MPEG-2')
-			self.VCodec.mapper.table.insert().execute(vcodec_id=3, name='XviD')
-			self.VCodec.mapper.table.insert().execute(vcodec_id=4, name='DivX')
-			self.VCodec.mapper.table.insert().execute(vcodec_id=5, name='H.264')
-			self.VCodec.mapper.table.insert().execute(vcodec_id=6, name='RealVideo')
-			self.VCodec.mapper.table.insert().execute(vcodec_id=7, name='QuickTime')
-			self.VCodec.mapper.table.insert().execute(vcodec_id=8, name='Windows Media Video')
+			self.VCodec.mapper.table.insert().execute(name='MPEG-1')
+			self.VCodec.mapper.table.insert().execute(name='MPEG-2')
+			self.VCodec.mapper.table.insert().execute(name='XviD')
+			self.VCodec.mapper.table.insert().execute(name='DivX')
+			self.VCodec.mapper.table.insert().execute(name='H.264')
+			self.VCodec.mapper.table.insert().execute(name='RealVideo')
+			self.VCodec.mapper.table.insert().execute(name='QuickTime')
+			self.VCodec.mapper.table.insert().execute(name='Windows Media Video')
 			self.AChannel.mapper.table.create()
-			self.AChannel.mapper.table.insert().execute(achannel_id=1, name='mono')
-			self.AChannel.mapper.table.insert().execute(achannel_id=2, name='stereo')
-			self.AChannel.mapper.table.insert().execute(achannel_id=3, name='5.1')
-			self.AChannel.mapper.table.insert().execute(achannel_id=4, name='7.1')
+			self.AChannel.mapper.table.insert().execute(name='mono')
+			self.AChannel.mapper.table.insert().execute(name='stereo')
+			self.AChannel.mapper.table.insert().execute(name='5.1')
+			self.AChannel.mapper.table.insert().execute(name='7.1')
 			self.SubFormat.mapper.table.create()
-			self.SubFormat.mapper.table.insert().execute(achannel_id=1, name='DVD VOB')
-			self.SubFormat.mapper.table.insert().execute(achannel_id=2, name='MPL2 (.txt)')
-			self.SubFormat.mapper.table.insert().execute(achannel_id=3, name='MicroDVD (.sub)')
-			self.SubFormat.mapper.table.insert().execute(achannel_id=4, name='SubRip (.srt)')
-			self.SubFormat.mapper.table.insert().execute(achannel_id=5, name='SubViewer2 (.sub)')
-			self.SubFormat.mapper.table.insert().execute(achannel_id=6, name='Sub Station Alpha (.ssa)')
-			self.SubFormat.mapper.table.insert().execute(achannel_id=7, name='Advanced Sub Station Alpha (.ssa)')
+			self.SubFormat.mapper.table.insert().execute(name='DVD VOB')
+			self.SubFormat.mapper.table.insert().execute(name='MPL2 (.txt)')
+			self.SubFormat.mapper.table.insert().execute(name='MicroDVD (.sub)')
+			self.SubFormat.mapper.table.insert().execute(name='SubRip (.srt)')
+			self.SubFormat.mapper.table.insert().execute(name='SubViewer2 (.sub)')
+			self.SubFormat.mapper.table.insert().execute(name='Sub Station Alpha (.ssa)')
+			self.SubFormat.mapper.table.insert().execute(name='Advanced Sub Station Alpha (.ssa)')
 			self.Person.mapper.table.create()
 			self.Movie.mapper.table.create()
 			self.Loan.mapper.table.create()
 			self.Language.mapper.table.create()
 			self.MovieLanguage.mapper.table.create()
 			self.Tag.mapper.table.create()
-			self.Tag.mapper.table.insert().execute(tag_id=1, name=_("Favourite"))
-			self.Tag.mapper.table.insert().execute(tag_id=2, name=_("To buy"))
+			self.Tag.mapper.table.insert().execute(name=_("Favourite"))
+			self.Tag.mapper.table.insert().execute(name=_("To buy"))
 			self.MovieTag.mapper.table.create()
 			self.engine.commit()
 			return True

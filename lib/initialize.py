@@ -348,14 +348,17 @@ def dictionaries(self):
 	self.e_languages = []
 	self.e_tags = {} # dictionary for tag CheckBoxes
 	self.am_tags = {} # dictionary for tag CheckBoxes
-	update.update_language_ids(self)
-	update.update_tag_ids(self)
 	update.update_volume_combo_ids(self)
 	update.update_collection_combo_ids(self)
 	initialize.fill_volumes_combo(self)
 	initialize.fill_collections_combo(self)
-	initialize.fill_preferences_languages_combo(self)
 	initialize.fill_preferences_tags_combo(self)
+	initialize.language_combos(self)
+	initialize.acodec_combos(self)
+	initialize.achannel_combos(self)
+	initialize.sub_format_combos(self)
+	initialize.vcodec_combos(self)
+	initialize.media_combos(self)
 	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	self.sort_criteria = (
@@ -394,11 +397,6 @@ def dictionaries(self):
 		self.filter_criteria.insert_text(i, self.field_names[criteria])
 		i += 1
 	self.filter_criteria.set_active(0)
-
-	for medium in self.db.Medium.select(order_by="medium_id ASC"):
-		self.e_media.insert_text(medium.medium_id, medium.name)
-		self.p_media.insert_text(medium.medium_id, medium.name)
-		self.am_media.insert_text(medium.medium_id, medium.name)
 
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
@@ -440,6 +438,29 @@ def initialize_gtkspell(self):
 	else:
 		self.debug.show("Spellchecker is not available")
 
+def preferences(self):
+	self.p_db_type.insert_text(0,"SQLite3 (internal)")
+	self.p_db_type.insert_text(1,"PostgreSQL")
+	self.p_db_type.insert_text(2,"MySQL")
+	if self.config.has_key("db_host"):
+		self.p_db_host.set_text(self.config["db_host"])
+	if self.config.has_key("db_port"):
+		self.p_db_port.set_value(int(self.config["db_port"]))
+	if self.config.has_key("db_user"):
+		self.p_db_user.set_text(self.config["db_user"])
+	if self.config.has_key("db_passwd"):
+		self.p_db_passwd.set_text(self.config["db_passwd"])
+	if self.config.has_key("db_name"):
+		self.p_db_name.set_text(self.config["db_name"])
+	if self.config.has_key("db_type") and self.config["db_type"] != "sqlite":
+		self.p_db_details.set_sensitive(True)
+		if self.config["db_type"] == "postgres":
+			self.p_db_type.set_active(1)
+		elif self.config["db_type"] == "mysql":
+			self.p_db_type.set_active(2)
+	else:
+		self.p_db_type.set_active(0)
+		self.p_db_details.set_sensitive(False)
 
 def fill_volumes_combo(self, prefix='e', default=0):
 	self.am_volume_combo.get_model().clear()
@@ -491,64 +512,95 @@ def fill_collections_combo(self, prefix='e', default=0):
 	self.e_collection_combo.set_wrap_width(2)
 	self.am_collection_combo.set_wrap_width(2)
 
-def preferences(self):
-	self.p_db_type.insert_text(0,"SQLite3 (internal)")
-	self.p_db_type.insert_text(1,"PostgreSQL")
-	self.p_db_type.insert_text(2,"MySQL")
-	if self.config.has_key("db_host"):
-		self.p_db_host.set_text(self.config["db_host"])
-	if self.config.has_key("db_port"):
-		self.p_db_port.set_value(int(self.config["db_port"]))
-	if self.config.has_key("db_user"):
-		self.p_db_user.set_text(self.config["db_user"])
-	if self.config.has_key("db_passwd"):
-		self.p_db_passwd.set_text(self.config["db_passwd"])
-	if self.config.has_key("db_name"):
-		self.p_db_name.set_text(self.config["db_name"])
-	if self.config.has_key("db_type") and self.config["db_type"] != "sqlite":
-		self.p_db_details.set_sensitive(True)
-		if self.config["db_type"] == "postgres":
-			self.p_db_type.set_active(1)
-		elif self.config["db_type"] == "mysql":
-			self.p_db_type.set_active(2)
-	else:
-		self.p_db_type.set_active(0)
-		self.p_db_details.set_sensitive(False)
-
-def fill_preferences_languages_combo(self):
-	self.lang_name_combo.get_model().clear()
-	for i in self.languages_ids.keys():
-		lang_id = self.languages_ids[i]
-		if lang_id>0:
-			name = self.db.Language.get_by(lang_id=lang_id).name
-		else:
-			name = ''
-		self.lang_name_combo.insert_text(int(i), str(name))
-	self.lang_name_combo.show_all()
-
 def fill_preferences_tags_combo(self):
 	self.tag_name_combo.get_model().clear()
-	for i in self.tags_ids.keys():
-		tag_id = self.tags_ids[i]
-		name = self.db.Tag.get_by(tag_id=tag_id).name
-		self.tag_name_combo.insert_text(int(i), str(name))
+	self.tags_ids = {}
+	i = 0
+	for tag in self.db.Tag.select():
+		self.tags_ids[i] = tag.tag_id
+		self.tag_name_combo.insert_text(int(i), str(tag.name))
+		i += 1
 	self.tag_name_combo.show_all()
 
-def fill_language_combo(self, widget, default=None):
-	try:
-		widget.get_model().clear()
-	except:
-		pass
-	for i in self.languages_ids:
-		lang_id = self.languages_ids[i]
-		if lang_id>0:
-			name = self.db.Language.get_by(lang_id=lang_id).name
-		else:
-			name = ''
-		widget.insert_text(int(i), str(name))
-	if default != None and default!=0:
-		i = gutils.findKey(default, self.languages_ids)
-		widget.set_active(int(i))
+def language_combos(self):
+	self.lang_name_combo.get_model().clear()
+	self.languages_ids = {}
+	self.languages_ids[0] = 0	# empty one (to remove movie language)
+	i = 1
+	for lang in self.db.Language.select():
+		self.languages_ids[i] = lang.lang_id
+		self.lang_name_combo.insert_text(int(i), str(lang.name))
+		i += 1
+	self.lang_name_combo.show_all()
+def acodec_combos(self):
+	self.acodec_name_combo.get_model().clear()
+	self.acodecs_ids = {}
+	self.acodecs_ids[0] = 0	# empty one (to remove movie language)
+	i = 1
+	for acodec in self.db.ACodec.select():
+		self.acodecs_ids[i] = acodec.acodec_id
+		self.acodec_name_combo.insert_text(int(i), str(acodec.name))
+		i += 1
+	self.acodec_name_combo.show_all()
+def achannel_combos(self):
+	self.achannel_name_combo.get_model().clear()
+	self.achannels_ids = {}
+	self.achannels_ids[0] = 0	# empty one (to remove movie language)
+	i = 1
+	for achannel in self.db.AChannel.select():
+		self.achannels_ids[i] = achannel.achannel_id
+		self.achannel_name_combo.insert_text(int(i), str(achannel.name))
+		i += 1
+	self.achannel_name_combo.show_all()
+def sub_format_combos(self):
+	self.sub_format_name_combo.get_model().clear()
+	self.sub_formats_ids = {}
+	self.sub_formats_ids[0] = 0	# empty one (to remove movie language)
+	i = 1
+	for sub_format in self.db.SubFormat.select():
+		self.sub_formats_ids[i] = sub_format.sub_format_id
+		self.sub_format_name_combo.insert_text(int(i), str(sub_format.name))
+		i += 1
+	self.sub_format_name_combo.show_all()
+
+def media_combos(self):
+	self.medium_name_combo.get_model().clear()
+	self.e_media.get_model().clear()
+	self.p_media.get_model().clear()
+	self.am_media.get_model().clear()
+	self.media_ids = {}
+	i = 0
+	for medium in self.db.Medium.select():
+		self.media_ids[i] = medium.medium_id
+		self.medium_name_combo.insert_text(int(i), str(medium.name))
+		self.am_media.insert_text(int(i), str(medium.name))
+		self.e_media.insert_text(int(i), str(medium.name))
+		self.p_media.insert_text(int(i), str(medium.name))
+		i += 1
+	self.medium_name_combo.show_all()
+	self.am_media.show_all()
+	self.e_media.show_all()
+	self.p_media.show_all()
+	default_pos = gutils.findKey(self.config["media"], self.media_ids)
+	self.p_media.set_active(int(default_pos))
+
+def vcodec_combos(self):
+	self.vcodec_name_combo.get_model().clear()
+	self.vcodecs_ids = {}
+	i = 0
+	for vcodec in self.db.VCodec.select():
+		self.vcodecs_ids[i] = vcodec.vcodec_id
+		self.vcodec_name_combo.insert_text(int(i), str(vcodec.name))
+		self.am_vcodec.insert_text(int(i), str(vcodec.name))
+		self.e_vcodec.insert_text(int(i), str(vcodec.name))
+		self.p_vcodec.insert_text(int(i), str(vcodec.name))
+		i += 1
+	self.vcodec_name_combo.show_all()
+	self.am_vcodec.show_all()
+	self.e_vcodec.show_all()
+	self.p_media.show_all()
+	default_pos = gutils.findKey(self.config["vcodec"], self.vcodecs_ids)
+	self.p_vcodec.set_active(int(default_pos))
 
 def create_language_hbox(self, widget, tab, default=None, type=None):
 	if len(self.languages_ids) == 1:
@@ -574,6 +626,21 @@ def create_language_hbox(self, widget, tab, default=None, type=None):
 		box.add(tab[number]['type'])
 		widget.pack_start(box, expand=False, fill=False, padding=1)
 	widget.show_all()
+def fill_language_combo(self, widget, default=None):
+	try:
+		widget.get_model().clear()
+	except:
+		pass
+	for i in self.languages_ids:
+		lang_id = self.languages_ids[i]
+		if lang_id>0:
+			name = self.db.Language.get_by(lang_id=lang_id).name
+		else:
+			name = ''
+		widget.insert_text(int(i), str(name))
+	if default != None and default!=0:
+		i = gutils.findKey(default, self.languages_ids)
+		widget.set_active(int(i))
 
 def create_tag_vbox(self, widget, tab):
 	for i in widget.get_children():

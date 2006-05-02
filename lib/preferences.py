@@ -72,9 +72,7 @@ def show_preferences(self):
 	if self.config.get('font'):
 		self.p_font.set_filename(self.config.get('font'))
 
-	# defaults
-	if self.config.get('media'):
-		self.p_media.set_active(int(self.config.get('media')))
+	# defaults (for static data only)
 	if self.config.get('condition'):
 		self.p_condition.set_active(int(self.config.get('condition')))
 	if self.config.get('region'):
@@ -183,7 +181,8 @@ def save_preferences(self):
 	self.config['rating_image'] = str(self.rating_image.get_active())
 
 	#defaults
-	self.config['media'] = str(self.p_media.get_active())
+	self.config['media'] = gutils.findKey(self.p_media.get_active(), self.media_ids)
+	self.config['vcodec'] = gutils.findKey(self.p_vcodec.get_active(), self.vcodec_ids)
 	self.config['condition'] = str(self.p_condition.get_active())
 	self.config['region'] = str(self.p_region.get_active())
 	self.config['layers'] = str(self.p_layers.get_active())

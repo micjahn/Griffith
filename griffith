@@ -356,8 +356,7 @@ class Griffith:
 	def on_lang_add_clicked(self, widget):
 		lang = self.db.Language(name=self.lang_name_combo.get_active_text())
 		if lang.add():
-			update.update_language_ids(self)
-			initialize.fill_preferences_languages_combo(self)
+			initialize.language_combos(self)
 
 	def on_lang_remove_clicked(self, widget):
 		active = self.lang_name_combo.get_active()
@@ -365,8 +364,7 @@ class Griffith:
 			lang_id = self.languages_ids[active]
 			lang = self.db.Language.get_by(lang_id=lang_id)
 			if lang != None and lang.remove():
-				update.update_language_ids(self)
-				initialize.fill_preferences_languages_combo(self)
+				initialize.language_combos(self)
 		else:
 			self.debug.show("You have to select language first")
 
@@ -381,7 +379,7 @@ class Griffith:
 			if lang != None:
 				lang.name = self.lang_name_combo.get_active_text()
 				if lang.update():
-					initialize.fill_preferences_languages_combo(self)
+					initialize.language_combos(self)
 
 	def on_lang_name_combo_changed(self, widget):
 		active = self.lang_name_combo.get_active()
@@ -402,7 +400,6 @@ class Griffith:
 	def on_tag_add_clicked(self, widget):
 		tag = self.db.Tag(name=self.tag_name_combo.get_active_text())
 		if tag.add():
-			update.update_tag_ids(self)
 			initialize.fill_preferences_tags_combo(self)
 			initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
@@ -413,7 +410,6 @@ class Griffith:
 			tag_id = self.tags_ids[active]
 			tag = self.db.Tag.get_by(tag_id=tag_id)
 			if tag.remove():
-				update.update_tag_ids(self)
 				initialize.fill_preferences_tags_combo(self)
 				initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 				initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
@@ -438,6 +434,176 @@ class Griffith:
 		active = self.tag_name_combo.get_active()
 		if active>-1:
 			self.tag_name_active = active
+	# }}}
+
+	# audio codecs ------------------------------------------------------{{{
+	def on_acodec_add_clicked(self, widget):
+		acodec = self.db.ACodec(name=self.acodec_name_combo.get_active_text())
+		if acodec.add():
+			initialize.acodec_combos(self)
+
+	def on_acodec_remove_clicked(self, widget):
+		active = self.acodec_name_combo.get_active()
+		if active>-1:
+			acodec_id = self.acodecs_ids[active]
+			acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
+			if acodec.remove():
+				initialize.acodec_combos(self)
+		else:
+			self.debug.show("You have to select audio codec first")
+
+	def on_acodec_rename_clicked(self, widget):
+		try:
+			active = self.acodec_name_active
+		except:
+			return False
+		acodec_id = self.acodecs_ids[active]
+		acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
+		if acodec != None:
+			acodec.name = self.acodec_name_combo.get_active_text()
+			if acodec.update():
+				initialize.acodec_combos(self)
+
+	def on_acodec_name_combo_changed(self, widget):
+		active = self.acodec_name_combo.get_active()
+		if active>-1:
+			self.acodec_name_active = active
+	# }}}
+
+	# audio channels ----------------------------------------------------{{{
+	def on_achannel_add_clicked(self, widget):
+		achannel = self.db.AChannel(name=self.achannel_name_combo.get_active_text())
+		if achannel.add():
+			initialize.achannel_combos(self)
+
+	def on_achannel_remove_clicked(self, widget):
+		active = self.achannel_name_combo.get_active()
+		if active>-1:
+			achannel_id = self.achannels_ids[active]
+			achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
+			if achannel.remove():
+				initialize.achannel_combos(self)
+		else:
+			self.debug.show("You have to select audio channel first")
+
+	def on_achannel_rename_clicked(self, widget):
+		try:
+			active = self.achannel_name_active
+		except:
+			return False
+		achannel_id = self.achannels_ids[active]
+		achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
+		if achannel != None:
+			achannel.name = self.achannel_name_combo.get_active_text()
+			if achannel.update():
+				initialize.achannel_combos(self)
+
+	def on_achannel_name_combo_changed(self, widget):
+		active = self.achannel_name_combo.get_active()
+		if active>-1:
+			self.achannel_name_active = active
+	# }}}
+
+	# sub_formats -------------------------------------------------------------{{{
+	def on_sub_format_add_clicked(self, widget):
+		sub_format = self.db.SubFormat(name=self.sub_format_name_combo.get_active_text())
+		if sub_format.add():
+			initialize.sub_format_combos(self)
+
+	def on_sub_format_remove_clicked(self, widget):
+		active = self.sub_format_name_combo.get_active()
+		if active>-1:
+			sub_format_id = self.sub_formats_ids[active]
+			sub_format = self.db.SubFormat.get_by(sub_format_id=sub_format_id)
+			if sub_format.remove():
+				initialize.sub_format_combos(self)
+		else:
+			self.debug.show("You have to select subtitle format first")
+
+	def on_sub_format_rename_clicked(self, widget):
+		try:
+			active = self.sub_format_name_active
+		except:
+			return False
+		sub_format_id = self.sub_formats_ids[active]
+		sub_format = self.db.SubFormat.get_by(sub_format_id=sub_format_id)
+		if sub_format != None:
+			sub_format.name = self.sub_format_name_combo.get_active_text()
+			if sub_format.update():
+				initialize.sub_format_combos(self)
+
+	def on_sub_format_name_combo_changed(self, widget):
+		active = self.sub_format_name_combo.get_active()
+		if active>-1:
+			self.sub_format_name_active = active
+	# }}}
+
+	# media ------------------------------------------------------------{{{
+	def on_medium_add_clicked(self, widget):
+		medium = self.db.Medium(name=self.medium_name_combo.get_active_text())
+		if medium.add():
+			initialize.media_combos(self)
+
+	def on_medium_remove_clicked(self, widget):
+		active = self.medium_name_combo.get_active()
+		if active>-1:
+			medium_id = self.media_ids[active]
+			medium = self.db.Medium.get_by(medium_id=medium_id)
+			if medium.remove():
+				initialize.media_combos(self)
+		else:
+			self.debug.show("You have to select medium first")
+
+	def on_medium_rename_clicked(self, widget):
+		try:
+			active = self.medium_name_active
+		except:
+			return False
+		medium_id = self.media_ids[active]
+		medium = self.db.Medium.get_by(medium_id=medium_id)
+		if medium != None:
+			medium.name = self.medium_name_combo.get_active_text()
+			if medium.update():
+				initialize.media_combos(self)
+
+	def on_medium_name_combo_changed(self, widget):
+		active = self.medium_name_combo.get_active()
+		if active>-1:
+			self.medium_name_active = active
+	# }}}
+
+	# vcodecs -------------------------------------------------------------{{{
+	def on_vcodec_add_clicked(self, widget):
+		vcodec = self.db.VCodec(name=self.vcodec_name_combo.get_active_text())
+		if vcodec.add():
+			initialize.vcodec_combos(self)
+
+	def on_vcodec_remove_clicked(self, widget):
+		active = self.vcodec_name_combo.get_active()
+		if active>-1:
+			vcodec_id = self.vcodecs_ids[active]
+			vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
+			if vcodec.remove():
+				initialize.vcodec_combos(self)
+		else:
+			self.debug.show("You have to select video codec first")
+
+	def on_vcodec_rename_clicked(self, widget):
+		try:
+			active = self.vcodec_name_active
+		except:
+			return False
+		vcodec_id = self.vcodecs_ids[active]
+		vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
+		if vcodec != None:
+			vcodec.name = self.vcodec_name_combo.get_active_text()
+			if vcodec.update():
+				initialize.vcodec_combos(self)
+
+	def on_vcodec_name_combo_changed(self, widget):
+		active = self.vcodec_name_combo.get_active()
+		if active>-1:
+			self.vcodec_name_active = active
 	# }}}
 
 	# main treeview -------------------------------------------------------

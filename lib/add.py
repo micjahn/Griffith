@@ -62,15 +62,22 @@ def initialize_add_dialog(self):
 	# define defaults
 	self.rating_slider_add.set_value(0)
 	self.am_seen.set_active(False)
-	if self.config.get('media'):
-		self.am_media.set_active(int(self.config.get('media')))
-	if self.config.get('color'):
+	if self.config.has_key("vcodec"):
+		pos = gutils.findKey(self.config["vcodec"], self.vcodecs_ids)
+		self.am_vcodec.set_active(int(pos))
+	if self.config.has_key('media'):
+		pos = gutils.findKey(self.config["media"], self.media_ids)
+		self.am_media.set_active(int(pos))
+	if self.config.has_key('vcodec'):
+		pos = gutils.findKey(self.config["vcodec"], self.vcodecs_ids)
+		self.am_vcodec.set_active(int(pos))
+	if self.config.has_key('color'):
 		self.am_color.set_active(int(self.config.get('color')))
-	if self.config.get('layers'):
+	if self.config.has_key('layers'):
 		self.am_layers.set_active(int(self.config.get('layers')))
-	if self.config.get('region'):
+	if self.config.has_key('region'):
 		self.am_region.set_active(int(self.config.get('region')))
-	if self.config.get('condition'):
+	if self.config.has_key('condition'):
 		self.am_condition.set_active(int(self.config.get('condition')))
 	self.am_volume_combo.set_active(0)
 	self.am_collection_combo.set_active(0)

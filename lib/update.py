@@ -139,21 +139,6 @@ def clear_image(self,number):
 	movie.commit()
 	self.update_statusbar(_("Image has been updated"))
 
-def update_language_ids(self):
-	self.languages_ids = {}
-	self.languages_ids[0] = 0
-	i = 1
-	for lang in self.db.Language.select():
-		self.languages_ids[i] = lang.lang_id
-		i += 1
-
-def update_tag_ids(self):
-	self.tags_ids = {}
-	i = 0
-	for tag in self.db.Tag.select():
-		self.tags_ids[i] = tag.tag_id
-		i += 1
-
 def update_volume_combo_ids(self):
 	self.volume_combo_ids = {}
 	self.volume_combo_ids[0] = 0
