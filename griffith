@@ -164,10 +164,18 @@ class Griffith:
 
 	def on_p_db_type_changed(self, widget):
 		active = widget.get_active()
-		if active == 1:
-			self.p_db_details.set_sensitive(True)
-		else:
+		if active == 0:
 			self.p_db_details.set_sensitive(False)
+		elif active == 1:
+			# change port number IF previous one was MySQL's one
+			if self.p_db_port.get_value() == 3306:
+				self.p_db_port.set_value(5432)
+			self.p_db_details.set_sensitive(True)
+		elif active == 2:
+			# change port number IF previous one was PostgreSQL's one
+			if self.p_db_port.get_value() == 5432:
+				self.p_db_port.set_value(3306)
+			self.p_db_details.set_sensitive(True)
 
 	# movie operations related --------------------------------------------
 

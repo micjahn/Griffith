@@ -4,8 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
-2006-04-29 Piotr Ozarowski <ozarow@gmail.com>
-	* Startup time shortened
+2006-05-02 Piotr Ozarowski <ozarow@gmail.com>
+	* Added MySQL support
+	* Server can be changed on the fly (see database tab in preferences)
+	* Some GtkComboBoxEntry widgets changed to GtkComboBox
 
 2006-04-28 Piotr Ozarowski <ozarow@gmail.com>
 	* SQLAlchemy transition started

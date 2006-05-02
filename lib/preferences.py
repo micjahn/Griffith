@@ -221,22 +221,6 @@ def save_preferences(self):
 	self.config['spell_lang'] = self.spell_lang.get_text()
 	self.config['pdf_reader'] = save_reader
 	
-	
-	self.config["db_port"] = self.p_db_port.get_value()
-	self.config["db_user"] = self.p_db_user.get_text()
-	self.config["db_passwd"] = self.p_db_passwd.get_text()
-	self.config["db_name"] = self.p_db_name.get_text()
-	db_type = self.p_db_type.get_active()
-	old_db_type = self.config["db_type"]
-	if db_type == 0:
-		self.config["db_type"] = "sqlite"
-	elif db_type == 1:
-		self.config["db_type"] = "postgres"
-	if old_db_type != self.config["db_type"]:
-		gutils.info(self, _("You have to restart Griffith\nfor the changes to take effect."), self.main_window)
-
-	self.config.save()
-
 	if spell_support:
 		if self.config.get('use_gtkspell', 'False') == 'False' and not was_false:
 			self.obs_spell.detach()
@@ -262,8 +246,36 @@ def save_preferences(self):
 				self.obs_spell.set_language(self.config.get('spell_lang', 'en'))
 			else:
 				pass
-
 	self.pdf_reader = save_reader
+
+	# database
+	self.config["db_port"] = int(self.p_db_port.get_value())
+	self.config["db_user"] = self.p_db_user.get_text()
+	self.config["db_passwd"] = self.p_db_passwd.get_text()
+	self.config["db_name"] = self.p_db_name.get_text()
+	db_type = self.p_db_type.get_active()
+	old_db_type = self.config["db_type"]
+	if db_type == 0:
+		self.config["db_type"] = "sqlite"
+	elif db_type == 1:
+		self.config["db_type"] = "postgres"
+	elif db_type == 2:
+		self.config["db_type"] = "mysql"
+	self.config.save()
+	if old_db_type != self.config["db_type"]:
+		self.debug.show("DATABASE: connecting to new db server...")
+		# NEW DB CONNECTION
+		#gutils.info(self, _("You have to restart Griffith\nfor the changes to take effect."), self.main_window)
+		import sql
+		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
+		self.clear_details()
+		self.total = 0
+		self.count_statusbar()
+		self.treemodel.clear()
+		from initialize	import dictionaries, people_treeview
+		dictionaries(self)
+		people_treeview(self)
+
 	self.clear_details()
-	self.populate_treeview(self.db.get_all_data(order_by="number ASC"))
+	self.populate_treeview(self.db.Movie.select())
 	self.select_last_row(self.total)

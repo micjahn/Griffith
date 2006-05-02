@@ -6980,12 +6980,11 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkComboBoxEntry" id="rating_image">
+		    <widget class="GtkComboBox" id="rating_image">
 		      <property name="visible">True</property>
 		      <property name="items" translatable="yes">Meter
 Stars</property>
 		      <property name="add_tearoffs">False</property>
-		      <property name="has_frame">True</property>
 		      <property name="focus_on_click">True</property>
 		    </widget>
 		    <packing>
@@ -7182,11 +7181,10 @@ Stars</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkComboBoxEntry" id="p_media">
+			    <widget class="GtkComboBox" id="p_media">
 			      <property name="visible">True</property>
-			      <property name="items" translatable="yes"></property>
+			      <property name="items"></property>
 			      <property name="add_tearoffs">False</property>
-			      <property name="has_frame">True</property>
 			      <property name="focus_on_click">True</property>
 			    </widget>
 			    <packing>
@@ -7194,16 +7192,16 @@ Stars</property>
 			      <property name="right_attach">2</property>
 			      <property name="top_attach">0</property>
 			      <property name="bottom_attach">1</property>
+			      <property name="x_options">fill</property>
 			      <property name="y_options">fill</property>
 			    </packing>
 			  </child>
 
 			  <child>
-			    <widget class="GtkComboBoxEntry" id="p_condition">
+			    <widget class="GtkComboBox" id="p_condition">
 			      <property name="visible">True</property>
-			      <property name="items" translatable="yes"></property>
+			      <property name="items"></property>
 			      <property name="add_tearoffs">False</property>
-			      <property name="has_frame">True</property>
 			      <property name="focus_on_click">True</property>
 			    </widget>
 			    <packing>
@@ -7217,29 +7215,10 @@ Stars</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkComboBoxEntry" id="p_region">
+			    <widget class="GtkComboBox" id="p_layers">
 			      <property name="visible">True</property>
-			      <property name="items" translatable="yes"></property>
+			      <property name="items"></property>
 			      <property name="add_tearoffs">False</property>
-			      <property name="has_frame">True</property>
-			      <property name="focus_on_click">True</property>
-			    </widget>
-			    <packing>
-			      <property name="left_attach">1</property>
-			      <property name="right_attach">2</property>
-			      <property name="top_attach">2</property>
-			      <property name="bottom_attach">3</property>
-			      <property name="x_options">fill</property>
-			      <property name="y_options">fill</property>
-			    </packing>
-			  </child>
-
-			  <child>
-			    <widget class="GtkComboBoxEntry" id="p_layers">
-			      <property name="visible">True</property>
-			      <property name="items" translatable="yes"></property>
-			      <property name="add_tearoffs">False</property>
-			      <property name="has_frame">True</property>
 			      <property name="focus_on_click">True</property>
 			    </widget>
 			    <packing>
@@ -7253,11 +7232,10 @@ Stars</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkComboBoxEntry" id="p_color">
+			    <widget class="GtkComboBox" id="p_color">
 			      <property name="visible">True</property>
-			      <property name="items" translatable="yes"></property>
+			      <property name="items"></property>
 			      <property name="add_tearoffs">False</property>
-			      <property name="has_frame">True</property>
 			      <property name="focus_on_click">True</property>
 			    </widget>
 			    <packing>
@@ -7265,6 +7243,24 @@ Stars</property>
 			      <property name="right_attach">2</property>
 			      <property name="top_attach">4</property>
 			      <property name="bottom_attach">5</property>
+			      <property name="x_options">fill</property>
+			      <property name="y_options">fill</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkComboBoxEntry" id="p_region">
+			      <property name="visible">True</property>
+			      <property name="items"></property>
+			      <property name="add_tearoffs">False</property>
+			      <property name="has_frame">True</property>
+			      <property name="focus_on_click">True</property>
+			    </widget>
+			    <packing>
+			      <property name="left_attach">1</property>
+			      <property name="right_attach">2</property>
+			      <property name="top_attach">2</property>
+			      <property name="bottom_attach">3</property>
 			      <property name="x_options">fill</property>
 			      <property name="y_options">fill</property>
 			    </packing>
@@ -7801,11 +7797,10 @@ Stars</property>
 		  </child>
 
 		  <child>
-		    <widget class="GtkComboBoxEntry" id="default_plugin">
+		    <widget class="GtkComboBox" id="default_plugin">
 		      <property name="visible">True</property>
-		      <property name="items" translatable="yes"></property>
+		      <property name="items"></property>
 		      <property name="add_tearoffs">False</property>
-		      <property name="has_frame">True</property>
 		      <property name="focus_on_click">True</property>
 		    </widget>
 		    <packing>

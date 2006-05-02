@@ -494,6 +494,7 @@ def fill_collections_combo(self, prefix='e', default=0):
 def preferences(self):
 	self.p_db_type.insert_text(0,"SQLite3 (internal)")
 	self.p_db_type.insert_text(1,"PostgreSQL")
+	self.p_db_type.insert_text(2,"MySQL")
 	if self.config.has_key("db_host"):
 		self.p_db_host.set_text(self.config["db_host"])
 	if self.config.has_key("db_port"):

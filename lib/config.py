@@ -93,6 +93,10 @@ class Config:
 		self.config['spell_lang']           = "en"
 		self.config['default_movie_plugin'] = "IMDB"
 		self.config['rating']               = "0" # 0 = meter; 1 = stars
+		self.config['color']                = "3" # N/A
+		self.config['layers']               = "4" # N/A
+		self.config['condition']            = "5" # N/A
+		self.config['region']               = "9" # N/A
 		self.config['mail_smtp_server']     = "localhost"
 		self.config['mail_use_auth']        = "False"
 		self.config['mail_username']        = ""

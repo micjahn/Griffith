@@ -423,33 +423,34 @@ class GriffithSQL:
 		if config["db_type"] == "postgres":
 			if not config.has_key("db_port"):
 				config["db_port"] = "5432"
-			try:
-				self.engine = create_engine('postgres', {
-					'database' : config["db_name"],
-					'host'     : config["db_host"],
-					'user'     : config["db_user"],
-					'password' : config["db_passwd"]})
-			except:
-				self.config["db_type"] = "sqlite"
-				gutils.error(self, _("Database connection failed."))
+			self.engine = create_engine('postgres', {
+				'database' : config["db_name"],
+				'host'     : config["db_host"],
+				'port'     : config["db_port"],
+				'user'     : config["db_user"],
+				'password' : config["db_passwd"]})
 		elif config["db_type"] == "mysql":
 			if not config.has_key("db_port"):
 				config["db_port"] = "3306"
-			try:
-				self.engine = create_engine('mysql', {
-					'db'     : config["db_name"],
-					'host'   : config["db_host"],
-					'user'   : config["db_user"],
-					'passwd' : config["db_passwd"]})
-			except:
-				self.config["db_type"] = "sqlite"
-				gutils.error(self, _("Database connection failed."))
+			self.engine = create_engine('mysql', {
+				'db'     : config["db_name"],
+				'host'   : config["db_host"],
+				'port'   : config["db_port"],
+				'user'   : config["db_user"],
+				'passwd' : config["db_passwd"]})
+		
+		# try to establish a db connection
+		try:
+			self.engine.connection()
+		except:
+			self.config["db_type"] = "sqlite"
+			gutils.error(self, _("Database connection failed."))
 		if config["db_type"] == "sqlite":
 			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, config["default_db"])})
 
 		self.objectstore = objectstore#}}}
 
-		# prepare tables interface ---------------------------------{{{
+		# prepare tables inter0face ---------------------------------{{{
 		movies = Table("movies", self.engine,
 			Column("movie_id", Integer, primary_key = True),
 			Column("number", Integer, nullable=False, unique="movie_number_key"),
@@ -575,9 +576,10 @@ class GriffithSQL:
 			v = 1
 
 		if v==1:
+			#self.Person.mapper.table.select().execute()
 			try:
-				# FIXME:
-				self.Movie.mapper.table.select().execute()
+				# NOTE: "people" table is common for all versions
+				self.Person.mapper.table.select().execute()
 			except exceptions.SQLError:	# table doesn't exist
 				v=0
 			except:
@@ -677,8 +679,10 @@ class GriffithSQL:
 					for name in files:
 						os.remove(os.path.join(root, name))
 				parent.db.drop_database()
-				if self.config["default_db"] == "sqlite":
+				if self.config["db_type"] == "sqlite":
 					os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
+					if self.config["default_db"] == "griffith.gri":
+						self.config["default_db"] = "griffith.db"
 				# create/connect db
 				parent.db = GriffithSQL(self.config, debug, self.griffith_dir)
 				parent.clear_details()
@@ -690,37 +694,40 @@ class GriffithSQL:
 				people_treeview(parent)
 
 	def drop_database(self):
-		# delete db TODO: DROP CASCADE
-#		for table in self.engine.tables.keys():
-#			self.engine.tables[table].drop()
-		self.objectstore.clear()
-#		self.Loan.mapper.table.drop()
-#		self.Person.mapper.table.drop()
-#		self.Volume.mapper.table.drop()
-#		self.Collection.mapper.table.drop()
-#		self.VCodec.mapper.table.drop()
-#		self.ACodec.mapper.table.drop()
-#		self.AChannel.mapper.table.drop()
-#		self.Medium.mapper.table.drop()
-#		self.Language.mapper.table.drop()
-#		self.Movie.mapper.table.drop()
-#		self.MovieTag.mapper.table.drop()
-#		self.MovieLanguage.mapper.table.drop()
-#		self.Tag.mapper.table.drop()
-		self.engine.execute("DROP TABLE loans CASCADE;")
-		self.engine.execute("DROP TABLE people CASCADE;")
-		self.engine.execute("DROP TABLE configuration CASCADE;")
-		self.engine.execute("DROP TABLE languages CASCADE;")
-		self.engine.execute("DROP TABLE movies CASCADE;")
-		self.engine.execute("DROP TABLE vcodecs CASCADE;")
-		self.engine.execute("DROP TABLE volumes CASCADE;")
-		self.engine.execute("DROP TABLE media CASCADE;")
-		self.engine.execute("DROP TABLE collections CASCADE;")
-		self.engine.execute("DROP TABLE acodecs CASCADE;")
-		self.engine.execute("DROP TABLE achannels CASCADE;")
-		self.engine.execute("DROP TABLE movie_tag CASCADE;")
-		self.engine.execute("DROP TABLE movie_lang CASCADE;")
-		self.engine.execute("DROP TABLE tags CASCADE;")
+		if self.engine.name == "postgres":
+			self.engine.execute("DROP TABLE loans CASCADE;")
+			self.engine.execute("DROP TABLE people CASCADE;")
+			self.engine.execute("DROP TABLE configuration CASCADE;")
+			self.engine.execute("DROP TABLE languages CASCADE;")
+			self.engine.execute("DROP TABLE movies CASCADE;")
+			self.engine.execute("DROP TABLE vcodecs CASCADE;")
+			self.engine.execute("DROP TABLE volumes CASCADE;")
+			self.engine.execute("DROP TABLE media CASCADE;")
+			self.engine.execute("DROP TABLE collections CASCADE;")
+			self.engine.execute("DROP TABLE acodecs CASCADE;")
+			self.engine.execute("DROP TABLE achannels CASCADE;")
+			self.engine.execute("DROP TABLE movie_tag CASCADE;")
+			self.engine.execute("DROP TABLE movie_lang CASCADE;")
+			self.engine.execute("DROP TABLE tags CASCADE;")
+		else:
+			objectstore.clear()
+#			for table in self.engine.tables.keys():
+#				self.engine.tables[table].drop()
+			self.Loan.mapper.table.drop()
+			self.Person.mapper.table.drop()
+			self.Configuration.mapper.table.drop()
+			self.VCodec.mapper.table.drop()
+			self.ACodec.mapper.table.drop()
+			self.AChannel.mapper.table.drop()
+			self.Medium.mapper.table.drop()
+			self.Language.mapper.table.drop()
+			self.Volume.mapper.table.drop()
+			self.Collection.mapper.table.drop()
+			self.Movie.mapper.table.drop()
+			self.MovieTag.mapper.table.drop()
+			self.MovieLanguage.mapper.table.drop()
+			self.Tag.mapper.table.drop()
+			objectstore.commit()
 
 	def upgrade_database(self, version):
 		"""Create new db or update existing one to current format"""
