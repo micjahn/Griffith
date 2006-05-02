@@ -67,7 +67,7 @@ def commit_loan(self):
 		loan.collection_id = movie.collection_id
 	if movie.volume_id>0:
 		loan.volume_id = movie.volume_id
-	loan.loaned()
+	loan.set_loaned()
 	
 	# finally, force a refresh
 	self.update_statusbar(_("Movie loaned"))
@@ -77,7 +77,7 @@ def return_loan(self):
 	movie_id = self.e_movie_id.get_text()
 	if movie_id:
 		loan = self.db.Loan.get_by(movie_id=movie_id, return_date=None)
-		loan.returned()
+		loan.set_returned()
 		# force a refresh
 		self.treeview_clicked()
 

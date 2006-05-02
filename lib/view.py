@@ -46,7 +46,7 @@ def filter_all(self):
 
 def filter_by_volume(self, volume_id):
 	movies = self.db.Movie.select_by(volume_id=volume_id)
-	collection_name = self.db.Collection.get_by(volume_id=volume_id).name
+	volume_name = self.db.Volume.get_by(volume_id=volume_id).name
 	self.update_statusbar(_("Filter activated. Showing only movies from volume: %s")%volume_name)
 	self.populate_treeview(movies)
 	self.total_filter = len(movies)

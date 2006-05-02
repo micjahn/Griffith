@@ -188,10 +188,6 @@ def treeview_clicked(self):
 		if not i:
 			i = 0
 		self.e_collection_combo.set_active(i)
-		self.e_volume_id.set_text(str(movie.volume_id))
-		self.e_collection_id.set_text(str(movie.collection_id))
-		self.e_volume_id.hide()
-		self.e_collection_id.hide()
 
 		#languages
 		self.e_languages = []	# for language widgets

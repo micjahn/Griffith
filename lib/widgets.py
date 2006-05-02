@@ -84,8 +84,6 @@ def define_widgets(self, gladefile):
 	# volumes/collections tab
 	self.e_volume_combo                 = gladefile.get_widget('e_volume_combo')
 	self.e_collection_combo             = gladefile.get_widget('e_collection_combo')
-	self.e_volume_id                    = gladefile.get_widget('e_volume_id')
-	self.e_collection_id                = gladefile.get_widget('e_collection_id')
 	self.show_volume_entries_button     = gladefile.get_widget('show_volume_entries_button')
 	self.show_collection_entries_button = gladefile.get_widget('show_collection_entries_button')
 	self.am_volume_combo                = gladefile.get_widget('am_volume_combo')
@@ -339,6 +337,11 @@ def define_widgets(self, gladefile):
 		"on_popup_loan_activate"                : self.loan_movie,
 		"on_popup_return_activate"              : self.return_loan,
 		"on_popup_email_activate"               : self.email_reminder,
+		# volumes/collections
+		"on_e_collection_combo_changed"         : self.on_e_collection_combo_changed,
+		"on_e_volume_combo_changed"             : self.on_e_volume_combo_changed,
+		"on_am_collection_combo_changed"        : self.on_am_collection_combo_changed,
+		"on_am_volume_combo_changed"            : self.on_am_volume_combo_changed,
 		"on_e_add_volume_button_clicked"        : self.add_volume,
 		"on_e_add_collection_button_clicked"    : self.add_collection,
 		"on_e_remove_volume_button_clicked"     : self.remove_volume,

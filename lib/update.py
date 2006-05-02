@@ -121,10 +121,6 @@ def update(self):
 		# update volume/collection combo
 		self.e_volume_combo.set_active(int(new_volume_id))
 		self.e_collection_combo.set_active(int(new_collection_id))
-		self.e_volume_id.set_text(str(new_volume_id))
-		self.e_collection_id.set_text(str(new_collection_id))
-		self.e_volume_id.hide()
-		self.e_collection_id.hide()
 
 		# refresh winbdow
 		self.treeview_clicked()
