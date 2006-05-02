@@ -60,9 +60,7 @@ def commit_loan(self):
 		elif response == gtk.RESPONSE_CANCEL:
 			return False
 	
-	loan = self.db.Loan()
-	loan.movie_id = movie.movie_id
-	loan.person_id = person.person_id
+	loan = self.db.Loan(movie_id=movie.movie_id, person_id=person.person_id)
 	if loan_whole_collection:
 		loan.collection_id = movie.collection_id
 	if movie.volume_id>0:

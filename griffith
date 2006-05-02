@@ -354,18 +354,19 @@ class Griffith:
 
 	# languages -------------------------------------------------------{{{
 	def on_lang_add_clicked(self, widget):
-		name = self.lang_name_combo.get_active_text()
-		self.db.add_language(name)
-		update.update_language_ids(self)
-		initialize.fill_preferences_languages_combo(self)
+		lang = self.db.Language(name=self.lang_name_combo.get_active_text())
+		if lang.add():
+			update.update_language_ids(self)
+			initialize.fill_preferences_languages_combo(self)
 
 	def on_lang_remove_clicked(self, widget):
 		active = self.lang_name_combo.get_active()
 		if active>0:
-			id = self.languages_ids[active]
-			self.db.remove_language(id=id)
-			update.update_language_ids(self)
-			initialize.fill_preferences_languages_combo(self)
+			lang_id = self.languages_ids[active]
+			lang = self.db.Language.get_by(lang_id=lang_id)
+			if lang != None and lang.remove():
+				update.update_language_ids(self)
+				initialize.fill_preferences_languages_combo(self)
 		else:
 			self.debug.show("You have to select language first")
 
@@ -374,11 +375,13 @@ class Griffith:
 			active = self.lang_name_active
 		except:
 			return False
-		id = self.languages_ids[active]
-		if id>0:
-			new_name = self.lang_name_combo.get_active_text()
-			if self.db.update_language(id=id, name=new_name):
-				initialize.fill_preferences_languages_combo(self)
+		lang_id = self.languages_ids[active]
+		if lang_id>0:
+			lang = self.db.Language.get_by(lang_id=lang_id)
+			if lang != None:
+				lang.name = self.lang_name_combo.get_active_text()
+				if lang.update():
+					initialize.fill_preferences_languages_combo(self)
 
 	def on_lang_name_combo_changed(self, widget):
 		active = self.lang_name_combo.get_active()
@@ -397,22 +400,23 @@ class Griffith:
 
 	# tags -------------------------------------------------------------{{{
 	def on_tag_add_clicked(self, widget):
-		name = self.tag_name_combo.get_active_text()
-		self.db.add_tag(name)
-		update.update_tag_ids(self)
-		initialize.fill_preferences_tags_combo(self)
-		initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
-		initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
-
-	def on_tag_remove_clicked(self, widget):
-		active = self.tag_name_combo.get_active()
-		if active>-1:
-			id = self.tags_ids[active]
-			self.db.remove_tag(id=id)
+		tag = self.db.Tag(name=self.tag_name_combo.get_active_text())
+		if tag.add():
 			update.update_tag_ids(self)
 			initialize.fill_preferences_tags_combo(self)
 			initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+
+	def on_tag_remove_clicked(self, widget):
+		active = self.tag_name_combo.get_active()
+		if active>-1:
+			tag_id = self.tags_ids[active]
+			tag = self.db.Tag.get_by(tag_id=tag_id)
+			if tag.remove():
+				update.update_tag_ids(self)
+				initialize.fill_preferences_tags_combo(self)
+				initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+				initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 		else:
 			self.debug.show("You have to select tag first")
 
@@ -421,12 +425,14 @@ class Griffith:
 			active = self.tag_name_active
 		except:
 			return False
-		id = self.tags_ids[active]
-		new_name = self.tag_name_combo.get_active_text()
-		if self.db.update_tag(id=id, name=new_name):
-			initialize.fill_preferences_tags_combo(self)
-			initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
-			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+		tag_id = self.tags_ids[active]
+		tag = self.db.Tag.get_by(tag_id=tag_id)
+		if tag != None:
+			tag.name = self.tag_name_combo.get_active_text()
+			if tag.update():
+				initialize.fill_preferences_tags_combo(self)
+				initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
+				initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 
 	def on_tag_name_combo_changed(self, widget):
 		active = self.tag_name_combo.get_active()

@@ -175,18 +175,18 @@ class GriffithSQL:
 			self.commit()
 			return True
 		def remove(self):
-			if self.language_id<1:
+			if self.lang_id<1:
 				debug.show("Language: none selected => none removed")
 				return False
 			if len(self.assigned_movie_ids)>0:
 				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
 				return False
-			debug.show("Language: removing '%s' (id=%s) from database..."%(self.name, self.language_id))
+			debug.show("Language: removing '%s' (id=%s) from database..."%(self.name, self.lang_id))
 			self.delete()
 			self.commit()
 			return True
 		def update(self):
-			if self.language_id<1:
+			if self.lang_id<1:
 				debug.show("Language: none selected => none removed")
 				return False
 			if self.name==None or len(self.name)==0:
@@ -281,6 +281,43 @@ class GriffithSQL:
 	class Person(object):
 		def __repr__(self):
 			return "Person:%s" % self.name
+	class SubFormat(object):#{{{
+		def __repr__(self):
+			return "SubFormat:%s" % self.name
+		def add(self):
+			if self.name==None or len(self.name)==0:
+				debug.show("SubFormat: name can't be empty")
+				return False
+			# check if achannel already exists
+			if self.mapper.get_by(name=self.name) != None:
+				debug.show("SubFormat: '%s' already exists"%self.name)
+				return False
+			debug.show("SubFormat; adding '%s' to database..."%self.name)
+			self.commit()
+			return True
+		def remove(self):
+			if self.sub_format_id<1:
+				debug.show("SubFormat: none selected => none removed")
+				return False
+			if len(self.assigned_movie_ids)>0:
+				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+				return False
+			debug.show("SubFormat: removing '%s' (id=%s) from database..."%(self.name, self.achannel_id))
+			self.delete()
+			self.commit()
+			return True
+		def update(self):
+			if self.sub_format_id<1:
+				debug.show("AChannel: none selected => none updated")
+				return False
+			if self.name==None or len(self.name)==0:
+				debug.show("AChannel: name can't be empty")
+				return False
+			if self.mapper.get_by(name=self.name) != None:
+				gutils.warning(self, msg=_("This name is already in use!"))
+				return False
+			self.commit()
+			return True#}}}
 	class Tag(object):#{{{
 		def __repr__(self):
 			return "Tag:%s" % self.name
@@ -299,7 +336,7 @@ class GriffithSQL:
 			if self.tag_id<1:
 				debug.show("Tag: none selected => none removed")
 				return False
-			if len(self.assigned_movies) > 0:
+			if len(self.assigned_movie_ids) > 0:
 				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
 				return False
 			debug.show("Tag: removing '%s' (id=%s) from database..."%(self.name, self.tag_id))
@@ -519,16 +556,20 @@ class GriffithSQL:
 		achannels = Table("achannels", self.engine,
 			Column("achannel_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="achannel_name_key"))
+		sub_formats = Table("sub_formats", self.engine,
+			Column("sub_format_id", Integer, primary_key=True),
+			Column("name", VARCHAR(64), nullable=False, unique="sub_format_name_key"))
 		tags = Table("tags", self.engine,
 			Column("tag_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="tag_name_key"))
 		movie_lang = Table("movie_lang", self.engine,
 			Column("id", Integer, primary_key=True),
+			Column("type", Smallinteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle 
 			Column("movie_id", Integer, ForeignKey("movies.movie_id"), nullable=False),
 			Column("lang_id", Integer, ForeignKey("languages.lang_id"), nullable=False),
 			Column("acodec_id", Integer, ForeignKey('acodecs.acodec_id'), nullable=True),
 			Column("achannel_id", Integer, ForeignKey('achannels.achannel_id'), nullable=True),
-			Column("type", Smallinteger))
+			Column("sub_format_id", Integer, ForeignKey('sub_formats.sub_format_id'), nullable=True))
 		movie_tag = Table("movie_tag", self.engine,
 			Column("id", Integer, primary_key=True),
 			Column("movie_id", Integer, ForeignKey("movies.movie_id")),
@@ -553,10 +594,17 @@ class GriffithSQL:
 			'assigned_movie_ids': relation(self.MovieLanguage.mapper)})
 		assign_mapper(self.AChannel, achannels, properties={
 			'assigned_movie_ids': relation(self.MovieLanguage.mapper)})
+		assign_mapper(self.SubFormat, sub_formats, properties={
+			'assigned_movie_ids': relation(self.MovieLanguage.mapper)})
 		assign_mapper(self.Language, languages, properties={
 			'assigned_movie_ids': relation(self.MovieLanguage.mapper)})
 		assign_mapper(self.MovieTag, movie_tag)
 		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag.mapper)})
+		assign_mapper(self.Loan, loans, properties = {
+			'person'     : relation(self.Person.mapper),
+			'movie'      : relation(mapper(self.Movie, movies)),
+			'volume'     : relation(mapper(self.Volume, volumes)),
+			'collection' : relation(mapper(self.Collection, collections))})#}}}
 		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
 			'volume'     : relation(self.Volume.mapper),
 			'collection' : relation(self.Collection.mapper),
@@ -564,11 +612,6 @@ class GriffithSQL:
 			'languages'  : relation(self.MovieLanguage.mapper),
 			'tags'       : relation(self.MovieTag.mapper),
 			'vcodec'     : relation(self.VCodec.mapper)})
-		assign_mapper(self.Loan, loans, properties = {
-			'person'     : relation(self.Person.mapper),
-			'movie'      : relation(self.Movie.mapper),
-			'volume'     : relation(self.Volume.mapper),
-			'collection' : relation(self.Collection.mapper)})#}}}
 		
 		# check if database needs upgrade
 		try:
@@ -719,6 +762,7 @@ class GriffithSQL:
 			self.engine.execute("DROP TABLE collections CASCADE;")
 			self.engine.execute("DROP TABLE acodecs CASCADE;")
 			self.engine.execute("DROP TABLE achannels CASCADE;")
+			self.engine.execute("DROP TABLE sub_formats CASCADE;")
 			self.engine.execute("DROP TABLE movie_tag CASCADE;")
 			self.engine.execute("DROP TABLE movie_lang CASCADE;")
 			self.engine.execute("DROP TABLE tags CASCADE;")
@@ -732,6 +776,7 @@ class GriffithSQL:
 			self.VCodec.mapper.table.drop()
 			self.ACodec.mapper.table.drop()
 			self.AChannel.mapper.table.drop()
+			self.SubFormat.mapper.table.drop()
 			self.Medium.mapper.table.drop()
 			self.Language.mapper.table.drop()
 			self.Volume.mapper.table.drop()
@@ -786,6 +831,14 @@ class GriffithSQL:
 			self.AChannel.mapper.table.insert().execute(achannel_id=2, name='stereo')
 			self.AChannel.mapper.table.insert().execute(achannel_id=3, name='5.1')
 			self.AChannel.mapper.table.insert().execute(achannel_id=4, name='7.1')
+			self.SubFormat.mapper.table.create()
+			self.SubFormat.mapper.table.insert().execute(achannel_id=1, name='DVD VOB')
+			self.SubFormat.mapper.table.insert().execute(achannel_id=2, name='MPL2 (.txt)')
+			self.SubFormat.mapper.table.insert().execute(achannel_id=3, name='MicroDVD (.sub)')
+			self.SubFormat.mapper.table.insert().execute(achannel_id=4, name='SubRip (.srt)')
+			self.SubFormat.mapper.table.insert().execute(achannel_id=5, name='SubViewer2 (.sub)')
+			self.SubFormat.mapper.table.insert().execute(achannel_id=6, name='Sub Station Alpha (.ssa)')
+			self.SubFormat.mapper.table.insert().execute(achannel_id=7, name='Advanced Sub Station Alpha (.ssa)')
 			self.Person.mapper.table.create()
 			self.Movie.mapper.table.create()
 			self.Loan.mapper.table.create()
