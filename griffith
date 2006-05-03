@@ -620,7 +620,7 @@ class Griffith:
 
 	def select_last_row(self, rtotal):
 		if rtotal:
-			self.main_treeview.set_cursor_on_cell(rtotal-1)
+			self.main_treeview.set_cursor_on_cell(int(rtotal)-1)
 
 	# backup/restore ------------------------------------------------------	
 

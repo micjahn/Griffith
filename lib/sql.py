@@ -45,7 +45,7 @@ class GriffithSQL:
 			for i in self.languages:
 				i.delete()
 			self.delete()
-			objectstore.commit()#}}}
+			self.commit()#}}}
 	class Configuration(object):
 		def __repr__(self):
 			return "Config:%s=%s" % (self.param, self.value)
@@ -199,42 +199,66 @@ class GriffithSQL:
 			return True#}}}
 	class Loan(object):#{{{
 		def __repr__(self):
-			return "Loan:%s" % self.id
+			return "Loan:%s (movie:%s person:%s)" % (self.loan_id, self.movie_id, self.person_id)
 		def set_loaned(self):
 			"""
 			Set loaned=True for all movies in volume/collection and for movie itself
 			Set loan's date to today's date
 			"""
-			if self.collection_id>0:
+			if self.movie == None:
+				debug.show("Loan: wrong movie_id. Aborting")
+				return False
+			if self.person == None:
+				debug.show("Loan: wrong person_id. Aborting")
+				return False
+			if self.collection_id>0 and self.collection==None:
+				debug.show("Loan: wrong collection_id. Aborting")
+				return False
+			if self.volume_id>0 and self.volume==None:
+				debug.show("Loan: wrong volume_id. Aborting")
+				return False
+			if self.collection!=None:
 				for movie in self.movie.mapper.select_by(collection_id=self.collection_id):
 					movie.loaned = True
 				self.collection.loaned = True
-			if self.volume_id>0:
+			if self.volume!=None:
 				for movie in self.movie.mapper.select_by(volume_id=self.volume_id):
 					movie.loaned = True
 				self.volume.loaned = True
-			if self.movie_id>0:
-				self.movie.loaned = True
-			self.date = func.current_date()	# update loan date
+			self.movie.loaned = True
+			if self.date==None:
+				self.date = func.current_date()	# update loan date
 			self.return_date = None
-			objectstore.commit()
+			self.commit()
 		def set_returned(self):
 			"""
 			Set loaned=False for all movies in volume/collection and for movie itself.
 			Set return_date to today's date
 			"""
-			if self.collection_id>0:
+			if self.movie == None:
+				debug.show("Loan: wrong movie_id. Aborting")
+				return False
+			if self.person == None:
+				debug.show("Loan: wrong person_id. Aborting")
+				return False
+			if self.collection_id>0 and self.collection==None:
+				debug.show("Loan: wrong collection_id. Aborting")
+				return False
+			if self.volume_id>0 and self.volume==None:
+				debug.show("Loan: wrong volume_id. Aborting")
+				return False
+			if self.collection!=None:
 				for movie in self.movie.mapper.select_by(collection_id=self.collection_id):
 					movie.loaned = False
 				self.collection.loaned = False
-			if self.volume_id>0:
+			if self.volume_id!=None:
 				for movie in self.movie.mapper.select_by(volume_id=self.volume_id):
 					movie.loaned = False
 				self.volume.loaned = False
-			if self.movie_id>0:
-				self.movie.loaned = False
-			self.return_date = func.current_date()
-			objectstore.commit()#}}}
+			self.movie.loaned = False
+			if self.return_date==None:
+				self.return_date = func.current_date()
+			self.commit()#}}}
 	class Medium(object):#{{{
 		def __repr__(self):
 			return "Medium:%s" % self.name
@@ -485,8 +509,7 @@ class GriffithSQL:
 			gutils.error(self, _("Database connection failed."))
 			self.config["db_type"] = "sqlite"
 			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, "griffith,db")})
-
-		self.objectstore = objectstore#}}}
+		#}}}
 
 		# prepare tables inter0face ---------------------------------{{{
 		movies = Table("movies", self.engine,
@@ -521,7 +544,7 @@ class GriffithSQL:
 			Column("plot", TEXT),
 			Column("notes", TEXT))
 		loans = Table("loans", self.engine,
-			Column("id", Integer, primary_key=True),
+			Column("loan_id", Integer, primary_key=True),
 			Column("person_id", Integer, ForeignKey("people.person_id"), nullable=False),
 			Column("movie_id", Integer, ForeignKey("movies.movie_id"), nullable=False),
 			Column("volume_id", Integer, ForeignKey("volumes.volume_id")),
@@ -563,7 +586,7 @@ class GriffithSQL:
 			Column("tag_id", Integer, primary_key=True),
 			Column("name", VARCHAR(64), nullable=False, unique="tag_name_key"))
 		movie_lang = Table("movie_lang", self.engine,
-			Column("id", Integer, primary_key=True),
+			Column("ml_id", Integer, primary_key=True),
 			Column("type", Smallinteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle 
 			Column("movie_id", Integer, ForeignKey("movies.movie_id"), nullable=False),
 			Column("lang_id", Integer, ForeignKey("languages.lang_id"), nullable=False),
@@ -571,7 +594,7 @@ class GriffithSQL:
 			Column("achannel_id", Integer, ForeignKey('achannels.achannel_id'), nullable=True),
 			Column("sub_format_id", Integer, ForeignKey('sub_formats.sub_format_id'), nullable=True))
 		movie_tag = Table("movie_tag", self.engine,
-			Column("id", Integer, primary_key=True),
+			Column("mt_id", Integer, primary_key=True),
 			Column("movie_id", Integer, ForeignKey("movies.movie_id")),
 			Column("tag_id", Integer, ForeignKey("tags.tag_id")))
 		configuration = Table("configuration", self.engine,
@@ -658,7 +681,6 @@ class GriffithSQL:
 		if t_movies.has_key("year") and int(t_movies["year"]) < 1986:
 			t_movies[i] = None
 
-		self.objectstore.clear()
 		self.Movie.mapper.table.insert().execute(t_movies)
 		movie = self.Movie.mapper.get_by(number=t_movies['number'])
 
@@ -671,7 +693,7 @@ class GriffithSQL:
 		if t_tags != None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.MovieTag(tag_id=tag))
-		self.objectstore.commit()
+		movie.commit()
 	
 	def update_movie(self, t_movies, t_languages=None, t_tags=None):
 		movie_id = t_movies.pop('movie_id')
@@ -691,7 +713,6 @@ class GriffithSQL:
 		if t_movies.has_key("year") and int(t_movies["year"]) < 1986:
 			t_movies[i] = None
 
-		self.objectstore.clear()
 		self.Movie.mapper.table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
 		movie = self.Movie.mapper.get_by(movie_id=movie_id)
 
@@ -704,7 +725,7 @@ class GriffithSQL:
 		if t_tags != None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.MovieTag(tag_id=tag))
-		self.objectstore.commit()
+		movie.commit()
 	# }}}
 
 	# DATABASE ---------------------------------------------------------{{{

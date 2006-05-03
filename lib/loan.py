@@ -49,6 +49,9 @@ def commit_loan(self):
 	self.w_loan_to.hide()
 
 	person = self.db.Person.get_by(name=person_name)
+	if person==None:
+		self.debug.show("commit_loan: wrong person")
+		return False
 	movie = self.db.Movie.get_by(movie_id=self.e_movie_id.get_text())
 
 	# ask if user wants to loan whole collection

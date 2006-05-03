@@ -236,9 +236,9 @@ def populate(self, movies):
 				pass
 			else:
 				# if not, lets make one for future use :D
-				original_image = os.path.join(tmp_dest, "%s.jpg"%str(movie.image))
+				original_image = os.path.join(tmp_dest, "%s.jpg"%movie.image)
 				if os.path.isfile(original_image):
-					gutils.make_thumbnail(self, "%s.jpg"%str(movie.image))
+					gutils.make_thumbnail(self, "%s.jpg"%movie.image)
 				else:
 					self.Image.set_from_file("%s/default_thumbnail.png"%self.locations['images'])
 					pixbuf = self.Image.get_pixbuf()
@@ -249,6 +249,6 @@ def populate(self, movies):
 		else:
 			# let's hide image column from main treeview since we don't want it to be visible
 			self.image_column.set_visible(False)
-		self.treemodel.set_value(myiter,3,str(movie.o_title))
-		self.treemodel.set_value(myiter,4,str(movie.title))
-		self.treemodel.set_value(myiter,5,str(movie.director))
+		self.treemodel.set_value(myiter,3,movie.o_title)
+		self.treemodel.set_value(myiter,4,movie.title)
+		self.treemodel.set_value(myiter,5,movie.director)
