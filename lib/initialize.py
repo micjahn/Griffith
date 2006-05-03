@@ -342,6 +342,12 @@ def combos(self):
 	self.am_layers.insert_text(3, _("Dual Side, Dual Layer"))
 	self.am_layers.insert_text(4, _("N/A"))
 
+	i = 0
+	for criteria in self.sort_criteria:
+		self.filter_criteria.insert_text(i, self.field_names[criteria])
+		i += 1
+	self.filter_criteria.set_active(0)
+
 def dictionaries(self):
 	"""initializes data filled dynamically by users"""
 	import initialize, update
@@ -392,11 +398,6 @@ def dictionaries(self):
 		"plot"           : _("Plot"),
 		"media_num"      : _("Discs"),
 		"notes"          : _("Notes")}
-	i = 0
-	for criteria in self.sort_criteria:
-		self.filter_criteria.insert_text(i, self.field_names[criteria])
-		i += 1
-	self.filter_criteria.set_active(0)
 
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
@@ -570,7 +571,7 @@ def sub_format_combos(self):
 def media_combos(self):
 	# remember old values
 	old = None
-	if self.e_media.get_active()>0:
+	if self.e_media.get_active()>-1:
 		old = self.media_ids[self.e_media.get_active()]
 	# clear data
 	self.medium_name_combo.get_model().clear()
@@ -594,6 +595,8 @@ def media_combos(self):
 		pos = gutils.findKey(self.config["media"], self.media_ids)
 		if pos !=None:
 			self.p_media.set_active(int(pos))
+		else:
+			self.p_media.set_active(0)
 	if old!=None:
 		pos = gutils.findKey(old, self.media_ids)
 		if pos !=None:
@@ -602,10 +605,13 @@ def media_combos(self):
 def vcodec_combos(self):
 	# remember old values
 	old = None
-	if self.e_vcodec.get_active()>0:
+	if self.e_vcodec.get_active()>-1:
 		old = self.vcodecs_ids[self.e_vcodec.get_active()]
 	# clear data
 	self.vcodec_name_combo.get_model().clear()
+	self.e_vcodec.get_model().clear()
+	self.p_vcodec.get_model().clear()
+	self.am_vcodec.get_model().clear()
 	self.vcodecs_ids = {}
 	i = 0
 	for vcodec in self.db.VCodec.select():
@@ -621,11 +627,13 @@ def vcodec_combos(self):
 	self.p_vcodec.show_all()
 	if self.config.has_key("vcodec"):
 		pos = gutils.findKey(int(self.config["vcodec"]), self.vcodecs_ids)
-		if pos !=None:
+		if pos!=None:
 			self.p_vcodec.set_active(int(pos))
+		else:
+			self.p_vcodec.set_active(0)
 	if old!=None:
 		pos = gutils.findKey(old, self.vcodecs_ids)
-		if pos !=None:
+		if pos!=None:
 			self.e_vcodec.set_active(int(pos))
 
 def create_language_hbox(self, widget, tab, default=None, type=None):

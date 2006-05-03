@@ -284,13 +284,11 @@ def save_preferences(self):
 		else:
 			tmp = self.db.engine.opts
 		self.debug.show("DATABASE: %s %s" % (self.db.engine.name, tmp))
-		self.clear_details()
 		self.total = self.db.Movie.mapper.count()
 		self.count_statusbar()
 		from initialize	import dictionaries, people_treeview
 		dictionaries(self)
 		people_treeview(self, False)
-
 	self.clear_details()
 	self.populate_treeview(self.db.Movie.select())
 	self.select_last_row(self.total)
