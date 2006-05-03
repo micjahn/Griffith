@@ -62,15 +62,14 @@ def initialize_add_dialog(self):
 	# define defaults
 	self.rating_slider_add.set_value(0)
 	self.am_seen.set_active(False)
-	if self.config.has_key("vcodec"):
-		pos = gutils.findKey(self.config["vcodec"], self.vcodecs_ids)
-		self.am_vcodec.set_active(int(pos))
 	if self.config.has_key('media'):
 		pos = gutils.findKey(self.config["media"], self.media_ids)
-		self.am_media.set_active(int(pos))
-	if self.config.has_key('vcodec'):
+		if pos != None:
+			self.am_media.set_active(int(pos))
+	if self.config.has_key("vcodec"):
 		pos = gutils.findKey(self.config["vcodec"], self.vcodecs_ids)
-		self.am_vcodec.set_active(int(pos))
+		if pos != None:
+			self.am_vcodec.set_active(int(pos))
 	if self.config.has_key('color'):
 		self.am_color.set_active(int(self.config.get('color')))
 	if self.config.has_key('layers'):
@@ -142,7 +141,10 @@ def add_movie_db(self, close):
 			t_movies['collection_id'] = self.collection_combo_ids[col_id]
 		medium_id = self.am_media.get_active()
 		if medium_id>0:
-			t_movies['medium_id'] = medium_id
+			t_movies['medium_id'] = self.media_ids[medium_id]
+		vcodec_id = self.am_vcodec.get_active()
+		if vcodec_id>0:
+			t_movies['vcodec_id'] = self.vcodecs_ids[vcodec_id]
 		seen = int(self.am_seen.get_active())
 		if seen == 1:
 			t_movies['seen'] = True

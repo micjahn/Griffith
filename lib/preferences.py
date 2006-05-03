@@ -181,8 +181,8 @@ def save_preferences(self):
 	self.config['rating_image'] = str(self.rating_image.get_active())
 
 	#defaults
-	self.config['media'] = gutils.findKey(self.p_media.get_active(), self.media_ids)
-	self.config['vcodec'] = gutils.findKey(self.p_vcodec.get_active(), self.vcodec_ids)
+	self.config['media'] = self.media_ids[self.p_media.get_active()]
+	self.config['vcodec'] = self.vcodecs_ids[self.p_vcodec.get_active()]
 	self.config['condition'] = str(self.p_condition.get_active())
 	self.config['region'] = str(self.p_region.get_active())
 	self.config['layers'] = str(self.p_layers.get_active())

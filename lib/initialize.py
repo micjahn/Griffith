@@ -564,6 +564,11 @@ def sub_format_combos(self):
 	self.sub_format_name_combo.show_all()
 
 def media_combos(self):
+	# remember old values
+	old = None
+	if self.e_media.get_active()>0:
+		old = self.media_ids[self.e_media.get_active()]
+	# clear data
 	self.medium_name_combo.get_model().clear()
 	self.e_media.get_model().clear()
 	self.p_media.get_model().clear()
@@ -581,10 +586,21 @@ def media_combos(self):
 	self.am_media.show_all()
 	self.e_media.show_all()
 	self.p_media.show_all()
-	default_pos = gutils.findKey(self.config["media"], self.media_ids)
-	self.p_media.set_active(int(default_pos))
+	if self.config.has_key("media"):
+		pos = gutils.findKey(self.config["media"], self.media_ids)
+		if pos !=None:
+			self.p_media.set_active(int(pos))
+	if old!=None:
+		pos = gutils.findKey(old, self.media_ids)
+		if pos !=None:
+			self.e_media.set_active(int(pos))
 
 def vcodec_combos(self):
+	# remember old values
+	old = None
+	if self.e_vcodec.get_active()>0:
+		old = self.vcodecs_ids[self.e_vcodec.get_active()]
+	# clear data
 	self.vcodec_name_combo.get_model().clear()
 	self.vcodecs_ids = {}
 	i = 0
@@ -598,9 +614,15 @@ def vcodec_combos(self):
 	self.vcodec_name_combo.show_all()
 	self.am_vcodec.show_all()
 	self.e_vcodec.show_all()
-	self.p_media.show_all()
-	default_pos = gutils.findKey(self.config["vcodec"], self.vcodecs_ids)
-	self.p_vcodec.set_active(int(default_pos))
+	self.p_vcodec.show_all()
+	if self.config.has_key("vcodec"):
+		pos = gutils.findKey(int(self.config["vcodec"]), self.vcodecs_ids)
+		if pos !=None:
+			self.p_vcodec.set_active(int(pos))
+	if old!=None:
+		pos = gutils.findKey(old, self.vcodecs_ids)
+		if pos !=None:
+			self.e_vcodec.set_active(int(pos))
 
 def create_language_hbox(self, widget, tab, default=None, type=None):
 	if len(self.languages_ids) == 1:

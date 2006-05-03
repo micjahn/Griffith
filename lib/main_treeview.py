@@ -104,7 +104,11 @@ def treeview_clicked(self):
 		if movie.notes<>None:
 			obs_buffer.set_text(str(movie.notes))
 		if movie.medium_id:
-			self.e_media.set_active(int(movie.medium_id))
+			pos = gutils.findKey(movie.medium_id, self.media_ids)
+			self.e_media.set_active(int(pos))
+		if movie.vcodec_id:
+			pos = gutils.findKey(movie.vcodec_id, self.vcodecs_ids)
+			self.e_vcodec.set_active(int(pos))
 
 		# check loan status and adjust buttons and history box
 		if int(movie.loaned)==1:

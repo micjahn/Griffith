@@ -82,9 +82,12 @@ def update(self):
 			'year'           : self.e_year.get_text(),
 			'movie_id'       : movie_id
 		}
-		medium_id = str(self.am_media.get_active())
-		if int(medium_id)>0:
-			t_movies['medium_id'] = medium_id
+		medium_id = self.e_media.get_active()
+		if medium_id>0:
+			t_movies['medium_id'] = self.media_ids[medium_id]
+		vcodec_id = self.e_vcodec.get_active()
+		if vcodec_id>0:
+			t_movies['vcodec_id'] = self.vcodecs_ids[vcodec_id]
 		seen = int(self.e_seen.get_active())
 		if seen == 1:
 			t_movies['seen'] = True
