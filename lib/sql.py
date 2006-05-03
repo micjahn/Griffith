@@ -667,23 +667,23 @@ class GriffithSQL:
 	#}}}
 
 	# MOVIE ------------------------------------------------------------{{{
-	def add_movie(self, t_movies, t_languages=None, t_tags=None):
-		# remove empty fields (insert default value instead - mostly "NULL")
+	def clean_t_movies(self, t_movies):
 		for i in t_movies.keys():
 			if t_movies[i] == '':
-				t_movies.pop(i)
-		for i in ["color","cond","layers","region","media_num"]:
-			if t_movies[i] == -1:
-				t_movies.pop(i)
-		for i in ["volume_id","collection_id"]:
-			if t_movies.has_key(i) and int(t_movies[i]) == 0:
+				t_movies[i]=None
+		for i in ["color","cond","layers","region", 'media', 'vcodec']:
+			if t_movies.has_key(i) and t_movies[i] == -1:
+				t_movies[i]=None
+		for i in ["volume_id","collection_id", 'runtime']:
+			if t_movies.has_key(i) and (t_movies[i]==None or int(t_movies[i]) == 0):
 				t_movies[i] = None
-		if t_movies.has_key("year") and int(t_movies["year"]) < 1986:
-			t_movies[i] = None
+		if t_movies.has_key("year") and (t_movies["year"]==None or int(t_movies["year"]) < 1986):
+			t_movies["year"] = None
 
-		self.Movie.mapper.table.insert().execute(t_movies)
+	def add_movie(self, t_movies, t_languages=None, t_tags=None):
+		self.clean_t_movies(t_movies)
+		objectstore.clear()
 		movie = self.Movie.mapper.get_by(number=t_movies['number'])
-
 		# languages
 		if t_languages != None:
 			for lang in t_languages.keys():
@@ -693,29 +693,19 @@ class GriffithSQL:
 		if t_tags != None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.MovieTag(tag_id=tag))
-		movie.commit()
+		objectstore.commit()
 	
 	def update_movie(self, t_movies, t_languages=None, t_tags=None):
-		movie_id = t_movies.pop('movie_id')
+		movie_id = t_movies['movie_id']
 		if movie_id == None:
 			debug.show("Update movie: Movie ID is not set. Operation aborted!")
 			return False
-		# remove empty fields (insert default value instead - mostly "NULL")
-		for i in t_movies.keys():
-			if t_movies[i] == '':
-				t_movies.pop(i)
-		for i in ["color","cond","layers","region","media_num"]:
-			if t_movies.has_key(i) and t_movies[i] == -1:
-				t_movies.pop(i)
-		for i in ["volume_id","collection_id"]:
-			if t_movies.has_key(i) and int(t_movies[i]) == 0:
-				t_movies[i] = None
-		if t_movies.has_key("year") and int(t_movies["year"]) < 1986:
-			t_movies[i] = None
-
+		self.clean_t_movies(t_movies)
+		objectstore.clear()
 		self.Movie.mapper.table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
+		self.MovieLanguage.mapper.table.delete(self.MovieLanguage.c.movie_id==movie_id).execute()
+		self.MovieTag.mapper.table.delete(self.MovieTag.c.movie_id==movie_id).execute()
 		movie = self.Movie.mapper.get_by(movie_id=movie_id)
-
 		# languages
 		if t_languages != None:
 			for lang in t_languages.keys():
@@ -725,7 +715,7 @@ class GriffithSQL:
 		if t_tags != None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.MovieTag(tag_id=tag))
-		movie.commit()
+		objectstore.commit()
 	# }}}
 
 	# DATABASE ---------------------------------------------------------{{{
