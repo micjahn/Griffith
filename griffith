@@ -444,7 +444,7 @@ class Griffith:
 
 	def on_acodec_remove_clicked(self, widget):
 		active = self.acodec_name_combo.get_active()
-		if active>-1:
+		if active>0:
 			acodec_id = self.acodecs_ids[active]
 			acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
 			if acodec.remove():
@@ -478,7 +478,7 @@ class Griffith:
 
 	def on_achannel_remove_clicked(self, widget):
 		active = self.achannel_name_combo.get_active()
-		if active>-1:
+		if active>0:
 			achannel_id = self.achannels_ids[active]
 			achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
 			if achannel.remove():
@@ -512,7 +512,7 @@ class Griffith:
 
 	def on_sub_format_remove_clicked(self, widget):
 		active = self.sub_format_name_combo.get_active()
-		if active>-1:
+		if active>0:
 			sub_format_id = self.sub_formats_ids[active]
 			sub_format = self.db.SubFormat.get_by(sub_format_id=sub_format_id)
 			if sub_format.remove():

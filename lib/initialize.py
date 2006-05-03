@@ -526,6 +526,7 @@ def language_combos(self):
 	self.lang_name_combo.get_model().clear()
 	self.languages_ids = {}
 	self.languages_ids[0] = 0	# empty one (to remove movie language)
+	self.lang_name_combo.insert_text(0, '')
 	i = 1
 	for lang in self.db.Language.select():
 		self.languages_ids[i] = lang.lang_id
@@ -536,6 +537,7 @@ def acodec_combos(self):
 	self.acodec_name_combo.get_model().clear()
 	self.acodecs_ids = {}
 	self.acodecs_ids[0] = 0	# empty one (to remove movie language)
+	self.acodec_name_combo.insert_text(0, '')
 	i = 1
 	for acodec in self.db.ACodec.select():
 		self.acodecs_ids[i] = acodec.acodec_id
@@ -546,6 +548,7 @@ def achannel_combos(self):
 	self.achannel_name_combo.get_model().clear()
 	self.achannels_ids = {}
 	self.achannels_ids[0] = 0	# empty one (to remove movie language)
+	self.achannel_name_combo.insert_text(0, '')
 	i = 1
 	for achannel in self.db.AChannel.select():
 		self.achannels_ids[i] = achannel.achannel_id
@@ -556,6 +559,7 @@ def sub_format_combos(self):
 	self.sub_format_name_combo.get_model().clear()
 	self.sub_formats_ids = {}
 	self.sub_formats_ids[0] = 0	# empty one (to remove movie language)
+	self.sub_format_name_combo.insert_text(0, '')
 	i = 1
 	for sub_format in self.db.SubFormat.select():
 		self.sub_formats_ids[i] = sub_format.sub_format_id
