@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-05-08 Piotr Ozarowski <ozarow@gmail.com>
+	* Cinematografo movie plugin updated.
+
 2006-05-02 Piotr Ozarowski <ozarow@gmail.com>
 	* Added MySQL support
 	* Server can be changed on the fly (see database tab in preferences)
