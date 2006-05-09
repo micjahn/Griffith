@@ -205,6 +205,7 @@ class GriffithSQL:
 			Set loaned=True for all movies in volume/collection and for movie itself
 			Set loan's date to today's date
 			"""
+			objectstore.clear()
 			if self.movie == None:
 				debug.show("Loan: wrong movie_id. Aborting")
 				return False
@@ -229,12 +230,13 @@ class GriffithSQL:
 			if self.date==None:
 				self.date = func.current_date()	# update loan date
 			self.return_date = None
-			self.commit()
+			objectstore.commit()
 		def set_returned(self):
 			"""
 			Set loaned=False for all movies in volume/collection and for movie itself.
 			Set return_date to today's date
 			"""
+			objectstore.clear()
 			if self.movie == None:
 				debug.show("Loan: wrong movie_id. Aborting")
 				return False
@@ -258,7 +260,7 @@ class GriffithSQL:
 			self.movie.loaned = False
 			if self.return_date==None:
 				self.return_date = func.current_date()
-			self.commit()#}}}
+			objectstore.commit()#}}}
 	class Medium(object):#{{{
 		def __repr__(self):
 			return "Medium:%s" % self.name
@@ -508,7 +510,7 @@ class GriffithSQL:
 		except:
 			gutils.error(self, _("Database connection failed."))
 			self.config["db_type"] = "sqlite"
-			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, "griffith,db")})
+			self.engine = create_engine('sqlite', {'filename':os.path.join(griffith_dir, "griffith.db")})
 		#}}}
 
 		# prepare tables inter0face ---------------------------------{{{
@@ -677,12 +679,13 @@ class GriffithSQL:
 		for i in ["volume_id","collection_id", 'runtime']:
 			if t_movies.has_key(i) and (t_movies[i]==None or int(t_movies[i]) == 0):
 				t_movies[i] = None
-		if t_movies.has_key("year") and (t_movies["year"]==None or int(t_movies["year"]) < 1986):
+		if t_movies.has_key("year") and (t_movies["year"]==None or int(t_movies["year"]) < 1886):
 			t_movies["year"] = None
 
 	def add_movie(self, t_movies, t_languages=None, t_tags=None):
 		self.clean_t_movies(t_movies)
 		objectstore.clear()
+		self.Movie.mapper.table.insert().execute(t_movies)
 		movie = self.Movie.mapper.get_by(number=t_movies['number'])
 		# languages
 		if t_languages != None:
