@@ -735,8 +735,8 @@ class GriffithSQL:
 				# delete images
 				posters_dir = os.path.join(self.griffith_dir, "posters")
 				# NOTE: only used images are removed (posters are shared between various db)
+				debug.show("NEW DB: Removing old images...")
 				for movie in self.Movie.select():
-					debug.show("NEW DB: Removing old images...")
 					if movie.image != None:
 						name = movie.image.encode('utf-8')
 						p_file = os.path.join(posters_dir, name+".jpg")

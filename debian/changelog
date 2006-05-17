@@ -1,12 +1,12 @@
-griffith (0.6.1+svn330-1) UNRELEASED; urgency=low
+griffith (0.6.1+svn368-1) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
-  * Added Laszlo Boszormenyi to Uploaders
   * Raise debhelper compatibility level to 5
   * Added watch file
-  * Dependency updated
+  * Dependencies updated
+  * Upgrade to Standards-Version 3.7.2 (no changes)
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Mon, 17 Apr 2006 14:38:11 +0200
+ -- Piotr Ozarowski <ozarow@gmail.com>  Wed, 17 May 2006 02:20:52 +0200
 
 griffith (0.6.1-1) unstable; urgency=low
 

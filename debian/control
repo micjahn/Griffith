@@ -2,15 +2,14 @@ Source: griffith
 Section: gnome
 Priority: optional
 Maintainer: Piotr Ozarowski <ozarow@gmail.com>
-Uploaders: Laszlo Boszormenyi <gcs@debian.org>
 Build-Depends: debhelper (>=5), python (>= 2.3)
-Standards-Version: 3.6.2
+Standards-Version: 3.7.2
 
 Package: griffith
 Architecture: all
 Depends: python (>=2.3), python-gtk2 (>= 2.6), python-sqlalchemy, python-pysqlite2, python-glade2, python-reportlab, python-imaging
-Recommends: python-gnome2-extras (>=2.10)
-Suggests: griffith-extra-artwork (>=0.6), python-psycopg, python-mysqldb
+Recommends: python-gnome2-extras (>=2.10), python-psycopg, python-mysqldb
+Suggests: griffith-extra-artwork (>=0.6)
 Description: film collection manager
  Adding items to the movie collection is as quick and easy as typing the film
  title and selecting a supported source. Griffith will then try to fetch all
