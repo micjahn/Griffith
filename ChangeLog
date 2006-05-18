@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2006-05-18 Piotr Ozarowski <ozarow@gmail.com>
 	* Movie plugins code cleanups
+	* Added FilmeVonAZ movie plugin (thanks to Michael Jahn)
 
 2006-05-17 Piotr Ozarowski <ozarow@gmail.com>
 	* Added Kino.de movie plugin (thanks to Michael Jahn)
