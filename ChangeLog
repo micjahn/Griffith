@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-05-18 Piotr Ozarowski <ozarow@gmail.com>
+	* Movie plugins code cleanups
+
 2006-05-17 Piotr Ozarowski <ozarow@gmail.com>
 	* Added Kino.de movie plugin (thanks to Michael Jahn)
 
