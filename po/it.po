@@ -20,7 +20,6 @@ msgid "You saw all movies in your collection!"
 msgstr "Hai visto tutti i film della tua collezione"
 
 #: ../griffith:407
-#, fuzzy
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -43,7 +42,6 @@ msgid "You haven't seen "
 msgstr "Non lo hai visto "
 
 #: ../griffith:490
-#, fuzzy
 msgid " movie(s)"
 msgstr " Film"
 
@@ -226,7 +224,6 @@ msgid "Genre"
 msgstr "Genere"
 
 #: ../lib/delete.py:32
-#, fuzzy
 msgid "You can't delete movie while it is loaned."
 msgstr "Non puoi cancellare il film mentre è in prestito."
 
@@ -273,12 +270,10 @@ msgstr ""
 "Spiacente. Questo film è nella lista ma non ha una locandina disponibile in Amazon.com."
 
 #: ../lib/gconsole.py:72
-#, fuzzy
 msgid "No movie found"
 msgstr "Nessun film trovato"
 
 #: ../lib/gemail.py:37 ../lib/gemail.py:47
-#, python-format
 msgid "Error sending e-mail: %s"
 msgstr "Errore nell'invio e-mail: %s"
 
@@ -291,7 +286,6 @@ msgid "Movie loan reminder"
 msgstr "Promemoria del prestito film"
 
 #: ../lib/gemail.py:59
-#, python-format
 msgid ""
 "Hi, %s!\n"
 "\n"
@@ -306,7 +300,6 @@ msgid "that I'm really needing the following movie I have loaned you "
 msgstr " ho necessità di riavere il seguente film che ti ho prestato "
 
 #: ../lib/gemail.py:61
-#, python-format
 msgid ""
 "recently:\n"
 "\n"
@@ -467,15 +460,13 @@ msgstr "Dizionario non trovato. Il controllo traduzione potrebbe essere disabili
 #: ../lib/initialize.py:407
 msgid ""
 "Please install the aspell-%s package or adjust the spellchekcer preferences."
-msgstr ""
-"Per favore installa il pacchetto aspell-%s o reimposta le preferenze del controllo traduzione"
+msgstr "Per favore installa il pacchetto aspell-%s o reimposta le preferenze del controllo traduzione"
 
 #: ../lib/initialize.py:487
 msgid "You have to fill in languages list in preferences window"
 msgstr "Hai inserito la lista dei linguaggi nella finestra delle preferenze"
 
 #: ../lib/initialize.py:497
-#, fuzzy
 msgid "lector"
 msgstr "direttore"
 
@@ -553,7 +544,6 @@ msgstr ""
 "cancellati se continui."
 
 #: ../lib/people.py:116
-#, python-format
 msgid ""
 "%s\n"
 "Are you sure you want to delete this person?"
@@ -599,7 +589,6 @@ msgstr ""
 "perdere i dati attuali?"
 
 #: ../lib/update.py:36
-#, python-format
 msgid ""
 "This number is already assigned to:\n"
 " %s!"
@@ -640,12 +629,10 @@ msgid "Filter activated. Showing only loaned movies."
 msgstr "Filtro attivato. Visualizza solo i film prestati."
 
 #: ../lib/view.py:54
-#, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
 msgstr "Filtro attivato. Visualizza solo i film del volume: %s"
 
 #: ../lib/view.py:64
-#, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr "Filtro attivato. Visualizza solo i film della collezzione: %s"
 
@@ -688,7 +675,6 @@ msgstr ""
 "Inserisci il tuo indirizzo e-mail qui."
 
 #: ../glade/exporthtml.glade.h:1
-#, fuzzy
 msgid "<b>Example</b>"
 msgstr "<b>Esempio</b>"
 
@@ -829,7 +815,6 @@ msgid "<b>E-mail reminder</b>"
 msgstr "<b>Ricorda per E-mail</b>"
 
 #: ../glade/griffith.glade.h:4
-#, fuzzy
 msgid "<b>Languages</b>"
 msgstr "<b>Lingue</b>"
 
@@ -842,7 +827,6 @@ msgid "<b>Show only the following columns</b>"
 msgstr "<b>Visualizza solo le seguenti colonne</b>"
 
 #: ../glade/griffith.glade.h:7
-#, fuzzy
 msgid "<b>Tags</b>"
 msgstr "<b>Etichette</b>"
 
@@ -867,7 +851,6 @@ msgid "Add a new person"
 msgstr "Aggiungi una nuova persona"
 
 #: ../glade/griffith.glade.h:13
-#, fuzzy
 msgid "Add language"
 msgstr "Aggiungi una lingua"
 
@@ -884,7 +867,6 @@ msgid "Add new language entry"
 msgstr "Aggiungi una nuova lingua"
 
 #: ../glade/griffith.glade.h:17
-#, fuzzy
 msgid "Add new movie"
 msgstr "Aggiungi un nuovo film"
 
@@ -945,7 +927,6 @@ msgid "Details"
 msgstr "Dettagli"
 
 #: ../glade/griffith.glade.h:35
-#, fuzzy
 msgid "Dictionaries"
 msgstr "Dizionari"
 
@@ -978,7 +959,6 @@ msgid "Font for reports"
 msgstr "Carattere per i report"
 
 #: ../glade/griffith.glade.h:45
-#, fuzzy
 msgid "Forum"
 msgstr "Foro"
 
@@ -999,7 +979,6 @@ msgid "Griffith"
 msgstr "Griffith"
 
 #: ../glade/griffith.glade.h:51
-#, fuzzy
 msgid "Homepage"
 msgstr "Homepage"
 
@@ -1020,7 +999,6 @@ msgid "Include movie number"
 msgstr "Incluir il numero del film"
 
 #: ../glade/griffith.glade.h:57
-#, fuzzy
 msgid "Languages"
 msgstr "Lingue"
 
@@ -1162,7 +1140,7 @@ msgstr "Per favore aspetta un attimo..."
 
 #: ../glade/griffith.glade.h:98 ../lib/plugins/export/PluginExportHTML.py:106
 msgid "Plot"
-msgstr "Traccia"
+msgstr "Trama"
 
 #: ../glade/griffith.glade.h:99
 msgid "Plugins"
@@ -1193,7 +1171,6 @@ msgid "Region"
 msgstr "Regione"
 
 #: ../glade/griffith.glade.h:107
-#, fuzzy
 msgid "Remove"
 msgstr "Rimuovi"
 
@@ -1206,17 +1183,14 @@ msgid "Remove last language entry"
 msgstr "Rimuovi lìultima lingua inserita"
 
 #: ../glade/griffith.glade.h:110
-#, fuzzy
 msgid "Remove selected movie"
 msgstr "Elimina il film selezionato"
 
 #: ../glade/griffith.glade.h:111
-#, fuzzy
 msgid "Removes poster"
 msgstr "Elimina locandina"
 
 #: ../glade/griffith.glade.h:112
-#, fuzzy
 msgid "Rename"
 msgstr "Rinomina"
 
@@ -1261,17 +1235,14 @@ msgid "Select"
 msgstr "Seleziona"
 
 #: ../glade/griffith.glade.h:123
-#, fuzzy
 msgid "Select A File"
 msgstr "Seleziona un file"
 
 #: ../glade/griffith.glade.h:124
-#, fuzzy
 msgid "Select first movie"
 msgstr "Seleziona il primo film"
 
 #: ../glade/griffith.glade.h:125
-#, fuzzy
 msgid "Select last movie"
 msgstr "Seleziona l'ultimo film"
 
@@ -1322,7 +1293,6 @@ msgid "Suggest an unseen movie"
 msgstr "Seggerisci un film non visto"
 
 #: ../glade/griffith.glade.h:138
-#, fuzzy
 msgid "Tags"
 msgstr "Etichette"
 
@@ -1331,7 +1301,6 @@ msgid "Technical info"
 msgstr "Informazioni tecniche"
 
 #: ../glade/griffith.glade.h:140
-#, fuzzy
 msgid "Technical information"
 msgstr "Informazioni tecniche"
 
@@ -1356,8 +1325,8 @@ msgid ""
 "Type in the original film tile, select source and choose <i>Get from web</"
 "i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
-"Digita nella casella 'titolo originale del film', seleziona la sorgente e scegli </"
-"i>Preleva dalla rete<i>. Griffith cercherà tutte le informazioni relative dalla rete."
+"Digita nella casella 'Titolo Originale', seleziona la sorgente e scegli <"
+"i>Prendi dalla rete</i>. Griffith cercherà tutte le informazioni relative per il Film dalla rete."
 
 #: ../glade/griffith.glade.h:147
 msgid "Update"
@@ -1416,7 +1385,6 @@ msgid "add entered name to collections list"
 msgstr "aggiungi il seguente nome alla lista della collezione"
 
 #: ../glade/griffith.glade.h:163
-#, fuzzy
 msgid "add entered name to languages list"
 msgstr "aggiungi il seguente nome alla lista delle lingue"
 
@@ -1441,7 +1409,6 @@ msgid "remove selected collection"
 msgstr "rimuovi la collezione selezionata"
 
 #: ../glade/griffith.glade.h:169
-#, fuzzy
 msgid "remove selected language"
 msgstr "rimuovi la lingua selezionata"
 
@@ -1454,7 +1421,6 @@ msgid "rename collection assigned to movie"
 msgstr "renomina la collezine assegnata al film"
 
 #: ../glade/griffith.glade.h:172
-#, fuzzy
 msgid "rename selected language"
 msgstr "rinomina la lingua selezionata"
 
@@ -1493,13 +1459,11 @@ msgstr "Plugin per esportare la lista completa del CSV"
 
 #: ../lib/plugins/export/PluginExportCSV.py:45
 #: ../lib/plugins/export/PluginExportXML.py:46
-#, python-format
 msgid "Export a %s document"
 msgstr "Esporta un documento %s"
 
 #: ../lib/plugins/export/PluginExportCSV.py:67
 #: ../lib/plugins/export/PluginExportXML.py:78
-#, python-format
 msgid "%s file has been created."
 msgstr "Il file %s è stato creato."
 
@@ -1536,12 +1500,10 @@ msgstr "Successivo"
 #: ../lib/plugins/export/PluginExportHTML.py:516
 #: ../lib/plugins/export/PluginExportHTML.py:538
 #: ../lib/plugins/export/PluginExportHTML.py:704
-#, python-format
 msgid "Can't create %s!"
 msgstr "Impossibile creare %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:527
-#, python-format
 msgid ""
 "Directory %s already exists.\n"
 "Do you want to overwrite it?"
@@ -1550,18 +1512,15 @@ msgstr ""
 "Vuoi sovrascriverla?"
 
 #: ../lib/plugins/export/PluginExportHTML.py:531
-#, python-format
 msgid "Can't remove %s!"
 msgstr "Impossibile rimuovere %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:546
 #: ../lib/plugins/export/PluginExportHTML.py:559
-#, python-format
 msgid "Can't copy %s!"
 msgstr "Impossibile copiare %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:607
-#, python-format
 msgid "Can't open %s!"
 msgstr "Impossibile aprire %s!"
 
@@ -1595,7 +1554,6 @@ msgid "List of films"
 msgstr "Lista dei film"
 
 #: ../lib/plugins/export/PluginExportPDF.py:87
-#, python-format
 msgid "Total Movies: %s"
 msgstr "Totale Film: %s"
 
@@ -1604,7 +1562,6 @@ msgid "PDF has been created."
 msgstr "Il PDF è stato creato."
 
 #: ../lib/plugins/export/PluginExportPDF.py:120
-#, python-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
@@ -1635,5 +1592,3 @@ msgstr "Plugin per esportara la lista in XML"
 
 #~ msgid "_About"
 #~ msgstr "_Approposito di..."
-
-
