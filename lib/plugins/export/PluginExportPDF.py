@@ -44,7 +44,7 @@ plugin_name = "PDF"
 plugin_description = _("PDF export plugin")
 plugin_author = "Vasco Nunes"
 plugin_author_email = "<vasco.m.nunes@gmail.com>"
-plugin_version = "0.1"
+plugin_version = "0.2"
 
 class ExportPlugin:
     def __init__(self, database, locations, parent, debug):
@@ -80,39 +80,32 @@ class ExportPlugin:
                 style = self.styles["Normal"]
                 Story = [Spacer(1,2*inch)]
                 # define some custom stylesheetfont
-                total = self.db.count_records('movies')
+                total = self.db.Movie.mapper.count()
                 p = Paragraph("<font name='" + self.fontName +"' size=\"18\">" + saxutils.escape((_("List of films")).encode('utf-8')) + '</font>', self.styles["Heading1"] )
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
                 p = Paragraph("<font name='" + self.fontName +"' size=\"10\">" + saxutils.escape((_("Total Movies: %s") % str(total)).encode('utf-8'))  + '</font>', self.styles["Heading3"])
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
-                cursor = self.db.get_all_data(order_by="number ASC")
-		while not cursor.EOF:
-                    row = cursor.GetRowAssoc(0)
-                    number = str(row['number'])
-                    number = number.encode('utf-8')
-                    original_title = str(row['original_title'])
-                    original_title = original_title.encode('utf-8')
-                    title = str(row['title'])
-                    title = title.encode('utf-8')
-                    if row['year']:
-                        year = ' - ' + str(row['year'])
+                movies = self.db.Movie.select()
+		for movie in movies:
+                    number = movie.number
+                    original_title = str(movie.o_title)
+                    title = str(movie.title)
+                    if movie.year:
+                        year = ' - ' + str(movie.year)
                     else:
                         year = ""
-                    year = year.encode('utf-8')
-                    if row['director']:
-                        director = ' - ' + str(row['director'])
+                    if movie.director:
+                        director = ' - ' + str(movie.director)
                     else:
                         director = ""
-                    director = director.encode('utf-8')
                     p = Paragraph("<font name=" + self.fontName + " size=\"7\">" + \
-                        saxutils.escape(number + " | " + original_title) + \
+                        saxutils.escape(str(number) + " | " + original_title) + \
                         "</font><font name=" + self.fontName + " size=\"7\">" + \
                         saxutils.escape(" (" + title + ")" + year + director) + \
                         "</font>", self.styles["Normal"])
                     Story.append(p)
-		    cursor.MoveNext()
                 c.build(Story, onFirstPage=self.page_template, onLaterPages=self.page_template)
                 gutils.info(self, _("PDF has been created."), self.parent)
             
