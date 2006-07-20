@@ -45,7 +45,7 @@ class GriffithSQL:
 			for i in self.languages:
 				i.delete()
 			self.delete()
-			session.flush()#}}}
+			self.flush()#}}}
 	class Configuration(object):
 		def __repr__(self):
 			return "Config:%s=%s" % (self.param, self.value)
@@ -57,11 +57,11 @@ class GriffithSQL:
 				debug.show("AChannel: name can't be empty")
 				return False
 			# check if achannel already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("AChannel: '%s' already exists"%self.name)
 				return False
 			debug.show("AChannel; adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.achannel_id<1:
@@ -72,7 +72,7 @@ class GriffithSQL:
 				return False
 			debug.show("AChannel: removing '%s' (id=%s) from database..."%(self.name, self.achannel_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.achannel_id<1:
@@ -81,10 +81,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("AChannel: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 	class ACodec(object):#{{{
 		def __repr__(self):
@@ -94,11 +94,11 @@ class GriffithSQL:
 				debug.show("ACodec: name can't be empty")
 				return False
 			# check if acodec already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("ACodec: '%s' already exists"%self.name)
 				return False
 			debug.show("ACodec; adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.acodec_id<1:
@@ -109,7 +109,7 @@ class GriffithSQL:
 				return False
 			debug.show("ACodec: removing '%s' (id=%s) from database..."%(self.name, self.acodec_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.acodec_id<1:
@@ -118,10 +118,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("ACodec: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 	class Collection(object):#{{{
 		def __repr__(self):
@@ -131,11 +131,11 @@ class GriffithSQL:
 				debug.show("Collection: name can't be empty")
 				return False
 			# check if collection already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("Collection: '%s' already exists"%self.name)
 				return False
 			debug.show("Collection: adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.collection_id<1:
@@ -146,7 +146,7 @@ class GriffithSQL:
 				return False
 			debug.show("Collection: removing '%s' (id=%s) from database..."%(self.name, self.collection_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.collection_id<1:
@@ -155,10 +155,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("Collection: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 	class Language(object):#{{{
 		def __repr__(self):
@@ -168,11 +168,11 @@ class GriffithSQL:
 				debug.show("Language: name can't be empty")
 				return False
 			# check if language already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("Language: '%s' already exists"%self.name)
 				return False
 			debug.show("Language: adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.lang_id<1:
@@ -183,7 +183,7 @@ class GriffithSQL:
 				return False
 			debug.show("Language: removing '%s' (id=%s) from database..."%(self.name, self.lang_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.lang_id<1:
@@ -192,10 +192,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("Language: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 	class Loan(object):#{{{
 		def __repr__(self):
@@ -205,7 +205,7 @@ class GriffithSQL:
 			Set loaned=True for all movies in volume/collection and for movie itself
 			Set loan's date to today's date
 			"""
-			session.flush()
+			self.flush()
 			if self.movie == None:
 				debug.show("Loan: wrong movie_id. Aborting")
 				return False
@@ -219,24 +219,24 @@ class GriffithSQL:
 				debug.show("Loan: wrong volume_id. Aborting")
 				return False
 			if self.collection!=None:
-				for movie in self.movie.mapper.select_by(collection_id=self.collection_id):
+				for movie in self.movie.select_by(collection_id=self.collection_id):
 					movie.loaned = True
 				self.collection.loaned = True
 			if self.volume!=None:
-				for movie in self.movie.mapper.select_by(volume_id=self.volume_id):
+				for movie in self.movie.select_by(volume_id=self.volume_id):
 					movie.loaned = True
 				self.volume.loaned = True
 			self.movie.loaned = True
 			if self.date==None:
 				self.date = func.current_date()	# update loan date
 			self.return_date = None
-			objectstore.commit()
+			self.save_or_update()
 		def set_returned(self):
 			"""
 			Set loaned=False for all movies in volume/collection and for movie itself.
 			Set return_date to today's date
 			"""
-			session.flush()
+			self.flush()
 			if self.movie == None:
 				debug.show("Loan: wrong movie_id. Aborting")
 				return False
@@ -250,17 +250,17 @@ class GriffithSQL:
 				debug.show("Loan: wrong volume_id. Aborting")
 				return False
 			if self.collection!=None:
-				for movie in self.movie.mapper.select_by(collection_id=self.collection_id):
+				for movie in self.movie.select_by(collection_id=self.collection_id):
 					movie.loaned = False
 				self.collection.loaned = False
 			if self.volume_id!=None:
-				for movie in self.movie.mapper.select_by(volume_id=self.volume_id):
+				for movie in self.movie.select_by(volume_id=self.volume_id):
 					movie.loaned = False
 				self.volume.loaned = False
 			self.movie.loaned = False
 			if self.return_date==None:
 				self.return_date = func.current_date()
-			objectstore.commit()#}}}
+			self.save_or_update()#}}}
 	class Medium(object):#{{{
 		def __repr__(self):
 			return "Medium:%s" % self.name
@@ -269,11 +269,11 @@ class GriffithSQL:
 				debug.show("Medium: name can't be empty")
 				return False
 			# check if medium already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("Medium: '%s' already exists"%self.name)
 				return False
 			debug.show("Medium; adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.medium_id<1:
@@ -284,7 +284,7 @@ class GriffithSQL:
 				return False
 			debug.show("Medium: removing '%s' (id=%s) from database..."%(self.name, self.medium_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.medium_id<1:
@@ -293,10 +293,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("Medium: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 	class MovieLanguage(object):
 		def __repr__(self):
@@ -315,11 +315,11 @@ class GriffithSQL:
 				debug.show("SubFormat: name can't be empty")
 				return False
 			# check if sub_format already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("SubFormat: '%s' already exists"%self.name)
 				return False
 			debug.show("SubFormat; adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.sub_format_id<1:
@@ -330,7 +330,7 @@ class GriffithSQL:
 				return False
 			debug.show("SubFormat: removing '%s' (id=%s) from database..."%(self.name, self.sub_format_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.sub_format_id<1:
@@ -339,10 +339,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("SubFormat: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 	class Tag(object):#{{{
 		def __repr__(self):
@@ -352,11 +352,11 @@ class GriffithSQL:
 				debug.show("Tag: name can't be empty")
 				return False
 			# check if tag already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("Tag: '%s' already exists"%self.name)
 				return False
 			debug.show("Tag: adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.tag_id<1:
@@ -367,7 +367,7 @@ class GriffithSQL:
 				return False
 			debug.show("Tag: removing '%s' (id=%s) from database..."%(self.name, self.tag_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.tag_id<1:
@@ -376,10 +376,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("Tag: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 	class VCodec(object):#{{{
 		def __repr__(self):
@@ -389,11 +389,11 @@ class GriffithSQL:
 				debug.show("VCodec: name can't be empty")
 				return False
 			# check if vcodec already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("VCodec: '%s' already exists"%self.name)
 				return False
 			debug.show("VCodec: adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.vcodec_id<1:
@@ -404,7 +404,7 @@ class GriffithSQL:
 				return False
 			debug.show("VCodec: removing '%s' (id=%s) from database..."%(self.name, self.vcodec_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.vcodec_id<1:
@@ -413,10 +413,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("VCodec: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 	class Volume(object):#{{{
 		def __repr__(self):
@@ -426,11 +426,11 @@ class GriffithSQL:
 				debug.show("Volume: name can't be empty")
 				return False
 			# check if volume already exists
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				debug.show("Volume: '%s' already exists"%self.name)
 				return False
 			debug.show("Volume: adding '%s' to database..."%self.name)
-			session.flush()
+			self.flush()
 			return True
 		def remove(self):
 			if self.volume_id<1:
@@ -441,7 +441,7 @@ class GriffithSQL:
 				return False
 			debug.show("Volume: removing '%s' (id=%s) from database..."%(self.name, self.volume_id))
 			self.delete()
-			session.flush()
+			self.flush()
 			return True
 		def update(self):
 			if self.volume_id<1:
@@ -450,10 +450,10 @@ class GriffithSQL:
 			if self.name==None or len(self.name)==0:
 				debug.show("Volume: name can't be empty")
 				return False
-			if self.mapper.get_by(name=self.name) != None:
+			if self.get_by(name=self.name) != None:
 				gutils.warning(self, msg=_("This name is already in use!"))
 				return False
-			session.flush()
+			self.flush()
 			return True#}}}
 
 	def __init__(self, config, gdebug, griffith_dir):	#{{{
@@ -462,31 +462,31 @@ class GriffithSQL:
 		self.config = config
 		global debug
 		debug = gdebug
-		if not config.has_key("db_type"):
-			config["db_type"] = "sqlite"
+		if not config.has_key('db_type'):
+			config['db_type'] = 'sqlite'
 
 		# detect SQLite2 and convert to SQLite3
-		if config["db_type"] == "sqlite":
-			filename = os.path.join(griffith_dir, config["default_db"])
-			if os.path.isfile(filename) and open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
-				debug.show("SQLite2 database format detected. Converting...")
-				if self.convert_from_sqlite2(filename, os.path.join(griffith_dir, "griffith.db")):
-					self.config["default_db"] = "griffith.db"
+		if config['db_type'] == 'sqlite':
+			filename = os.path.join(griffith_dir, config['default_db'])
+			if os.path.isfile(filename) and open(filename).readline()[:47] == '** This file contains an SQLite 2.1 database **':
+				debug.show('SQLite2 database format detected. Converting...')
+				if self.convert_from_sqlite2(filename, os.path.join(griffith_dir, 'griffith.db')):
+					self.config['default_db'] = 'griffith.db'
 					self.config.save()
 		else:
-			if not config.has_key("db_host"):
-				config["db_host"] = "127.0.0.1"
-			if not config.has_key("db_user"):
-				config["db_user"] = "griffith"
-			if not config.has_key("db_passwd"):
-				config["db_passwd"] = "gRiFiTh"
-			if not config.has_key("db_name"):
-				config["db_name"] = "griffith"
+			if not config.has_key('db_host'):
+				config['db_host'] = '127.0.0.1'
+			if not config.has_key('db_user'):
+				config['db_user'] = 'griffith'
+			if not config.has_key('db_passwd'):
+				config['db_passwd'] = 'gRiFiTh'
+			if not config.has_key('db_name'):
+				config['db_name'] = 'griffith'
 
 		# connect to database --------------------------------------{{{
-		if config["db_type"] == 'sqlite':
+		if config['db_type'] == 'sqlite':
 			url = "sqlite://%s" % os.path.join(griffith_dir, config['default_db'])
-		elif config["db_type"] == 'postgres':
+		elif config['db_type'] == 'postgres':
 			if not config.has_key('db_port'):
 				config['db_port'] = 5432
 			url = "postgres://%s:%s@%s:%d/%s" % (
@@ -495,7 +495,7 @@ class GriffithSQL:
 				config['db_host'],
 				int(config['db_port']),
 				config['db_name'])
-		elif config["db_type"] == "mysql":
+		elif config['db_type'] == 'mysql':
 			if not config.has_key('db_port'):
 				config['db_port'] = 3306
 			url = "mysql://%s:%s@%s:%d/%s" % (
@@ -509,149 +509,149 @@ class GriffithSQL:
 		try:
 			self.metadata.engine.connect()
 		except:
-			gutils.error(self, _("Database connection failed."))
-			self.config["db_type"] = "sqlite"
+			gutils.error(self, _('Database connection failed.'))
+			self.config['db_type'] = 'sqlite'
 			url = "sqlite://%s" % os.path.join(griffith_dir, 'griffith.db')
 			self.metadata = BoundMetaData(url)
 			self.metadata.engine.connect()
 		#}}}
 
-		# prepare tables inter0face ---------------------------------{{{
-		movies = Table("movies", self.metadata,
-			Column("movie_id", Integer, primary_key = True),
-			Column("number", Integer, nullable=False, unique="movie_number_key"),
-			Column("collection_id", Integer, ForeignKey("collections.collection_id"), default=None),
-			Column("volume_id", Integer, ForeignKey("volumes.volume_id"), default=None),
-			Column("medium_id", Smallinteger, ForeignKey('media.medium_id'), default=None),
-			Column("vcodec_id", Smallinteger, ForeignKey('vcodecs.vcodec_id'), default=None),
-			Column("loaned", Boolean, nullable=False, default=False, index="movie_loaned_idx"),
-			Column("seen", Boolean, nullable=False, default=False, index="movie_seen_idx"),
-			Column("rating", Smallinteger(2), nullable=False, default=0),
-			Column("color", Smallinteger, default=3),
-			Column("cond", Smallinteger, default=5),	# MySQL will not accept name "condition"
-			Column("layers", Smallinteger, default=4),
-			Column("region", Smallinteger, default=9),
-			Column("media_num", Smallinteger),
-			Column("runtime", Integer),
-			Column("year", Integer),
-			Column("o_title", VARCHAR(255), nullable=False),
+		# prepare tables interface ---------------------------------{{{
+		movies = Table('movies', self.metadata,
+			Column('movie_id', Integer, primary_key = True),
+			Column('number', Integer, nullable=False, unique='movie_number_key'),
+			Column('collection_id', Integer, ForeignKey('collections.collection_id'), default=None),
+			Column('volume_id', Integer, ForeignKey('volumes.volume_id'), default=None),
+			Column('medium_id', Smallinteger, ForeignKey('media.medium_id'), default=None),
+			Column('vcodec_id', Smallinteger, ForeignKey('vcodecs.vcodec_id'), default=None),
+			Column('loaned', Boolean, nullable=False, default=False, index='movie_loaned_idx'),
+			Column('seen', Boolean, nullable=False, default=False, index='movie_seen_idx'),
+			Column('rating', Smallinteger(2), nullable=False, default=0),
+			Column('color', Smallinteger, default=3),
+			Column('cond', Smallinteger, default=5),	# MySQL will not accept name "condition"
+			Column('layers', Smallinteger, default=4),
+			Column('region', Smallinteger, default=9),
+			Column('media_num', Smallinteger),
+			Column('runtime', Integer),
+			Column('year', Integer),
+			Column('o_title', VARCHAR(255), nullable=False),
 			Column('title', VARCHAR(255)),
-			Column("director", VARCHAR(255)),
-			Column("o_site", VARCHAR(255)),
-			Column("site", VARCHAR(255)),
-			Column("trailer", VARCHAR(256)),
-			Column("country", VARCHAR(128)),
-			Column("genre", VARCHAR(128)),
-			Column("image", VARCHAR(128)),
-			Column("studio", VARCHAR(128)),
-			Column("classification", VARCHAR(128)),
-			Column("actors", TEXT),
-			Column("plot", TEXT),
-			Column("notes", TEXT))
-		loans = Table("loans", self.metadata,
-			Column("loan_id", Integer, primary_key=True),
-			Column("person_id", Integer, ForeignKey("people.person_id"), nullable=False),
-			Column("movie_id", Integer, ForeignKey("movies.movie_id"), nullable=False),
-			Column("volume_id", Integer, ForeignKey("volumes.volume_id")),
-			Column("collection_id", Integer, ForeignKey("collections.collection_id")),
-			Column("date", Date, nullable=False, default=func.current_date()),
-			Column("return_date", Date, nullable=True))
-		people = Table("people", self.metadata,
-			Column("person_id", Integer, primary_key=True),
-			Column("name", VARCHAR(255), nullable=False, unique="person_name_key"),
-			Column("email", VARCHAR(128)),
-			Column("phone", VARCHAR(64)))
-		volumes = Table("volumes", self.metadata,
-			Column("volume_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="volume_name_key"),
-			Column("loaned", Boolean, nullable=False, default=False))
-		collections = Table("collections", self.metadata,
-			Column("collection_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="collection_name_key"),
-			Column("loaned", Boolean, nullable=False, default=False))
-		media = Table("media", self.metadata,
-			Column("medium_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="medium_name_key"))
-		languages = Table("languages", self.metadata,
-			Column("lang_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="language_name_key"))
-		vcodecs = Table("vcodecs", self.metadata,
-			Column("vcodec_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="vcodec_name_key"))
-		acodecs = Table("acodecs", self.metadata,
-			Column("acodec_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="acodec_name_key"))
-		achannels = Table("achannels", self.metadata,
-			Column("achannel_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="achannel_name_key"))
-		sub_formats = Table("sub_formats", self.metadata,
-			Column("sub_format_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="sub_format_name_key"))
-		tags = Table("tags", self.metadata,
-			Column("tag_id", Integer, primary_key=True),
-			Column("name", VARCHAR(64), nullable=False, unique="tag_name_key"))
-		movie_lang = Table("movie_lang", self.metadata,
-			Column("ml_id", Integer, primary_key=True),
-			Column("type", Smallinteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle 
-			Column("movie_id", Integer, ForeignKey("movies.movie_id"), nullable=False),
-			Column("lang_id", Integer, ForeignKey("languages.lang_id"), nullable=False),
-			Column("acodec_id", Integer, ForeignKey('acodecs.acodec_id'), nullable=True),
-			Column("achannel_id", Integer, ForeignKey('achannels.achannel_id'), nullable=True),
-			Column("sub_format_id", Integer, ForeignKey('sub_formats.sub_format_id'), nullable=True))
-		movie_tag = Table("movie_tag", self.metadata,
-			Column("mt_id", Integer, primary_key=True),
-			Column("movie_id", Integer, ForeignKey("movies.movie_id")),
-			Column("tag_id", Integer, ForeignKey("tags.tag_id")))
-		configuration = Table("configuration", self.metadata,
-			Column("param", VARCHAR(16), primary_key=True),
-			Column("value", VARCHAR(128), nullable=False))#}}}
+			Column('director', VARCHAR(255)),
+			Column('o_site', VARCHAR(255)),
+			Column('site', VARCHAR(255)),
+			Column('trailer', VARCHAR(256)),
+			Column('country', VARCHAR(128)),
+			Column('genre', VARCHAR(128)),
+			Column('image', VARCHAR(128)),
+			Column('studio', VARCHAR(128)),
+			Column('classification', VARCHAR(128)),
+			Column('actors', TEXT),
+			Column('plot', TEXT),
+			Column('notes', TEXT))
+		loans = Table('loans', self.metadata,
+			Column('loan_id', Integer, primary_key=True),
+			Column('person_id', Integer, ForeignKey('people.person_id'), nullable=False),
+			Column('movie_id', Integer, ForeignKey('movies.movie_id'), nullable=False),
+			Column('volume_id', Integer, ForeignKey('volumes.volume_id')),
+			Column('collection_id', Integer, ForeignKey('collections.collection_id')),
+			Column('date', Date, nullable=False, default=func.current_date()),
+			Column('return_date', Date, nullable=True))
+		people = Table('people', self.metadata,
+			Column('person_id', Integer, primary_key=True),
+			Column('name', VARCHAR(255), nullable=False, unique='person_name_key'),
+			Column('email', VARCHAR(128)),
+			Column('phone', VARCHAR(64)))
+		volumes = Table('volumes', self.metadata,
+			Column('volume_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='volume_name_key'),
+			Column('loaned', Boolean, nullable=False, default=False))
+		collections = Table('collections', self.metadata,
+			Column('collection_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='collection_name_key'),
+			Column('loaned', Boolean, nullable=False, default=False))
+		media = Table('media', self.metadata,
+			Column('medium_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='medium_name_key'))
+		languages = Table('languages', self.metadata,
+			Column('lang_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='language_name_key'))
+		vcodecs = Table('vcodecs', self.metadata,
+			Column('vcodec_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='vcodec_name_key'))
+		acodecs = Table('acodecs', self.metadata,
+			Column('acodec_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='acodec_name_key'))
+		achannels = Table('achannels', self.metadata,
+			Column('achannel_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='achannel_name_key'))
+		sub_formats = Table('sub_formats', self.metadata,
+			Column('sub_format_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='sub_format_name_key'))
+		tags = Table('tags', self.metadata,
+			Column('tag_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='tag_name_key'))
+		movie_lang = Table('movie_lang', self.metadata,
+			Column('ml_id', Integer, primary_key=True),
+			Column('type', Smallinteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle 
+			Column('movie_id', Integer, ForeignKey('movies.movie_id'), nullable=False),
+			Column('lang_id', Integer, ForeignKey('languages.lang_id'), nullable=False),
+			Column('acodec_id', Integer, ForeignKey('acodecs.acodec_id'), nullable=True),
+			Column('achannel_id', Integer, ForeignKey('achannels.achannel_id'), nullable=True),
+			Column('sub_format_id', Integer, ForeignKey('sub_formats.sub_format_id'), nullable=True))
+		movie_tag = Table('movie_tag', self.metadata,
+			Column('mt_id', Integer, primary_key=True),
+			Column('movie_id', Integer, ForeignKey('movies.movie_id')),
+			Column('tag_id', Integer, ForeignKey('tags.tag_id')))
+		configuration = Table('configuration', self.metadata,
+			Column('param', VARCHAR(16), primary_key=True),
+			Column('value', VARCHAR(128), nullable=False))#}}}
 
 		# mappers -------------------------------------------------#{{{
 		assign_mapper(self.Configuration,configuration)
 		assign_mapper(self.Volume,volumes, properties={
-			'assigned_movies': relation(mapper(self.Movie, movies))})
+			'assigned_movies': relation(self.Movie)})
 		assign_mapper(self.Collection, collections, properties={
-			'assigned_movies': relation(mapper(self.Movie, movies, non_primary=True))})
+			'assigned_movies': relation(self.Movie)})
 		assign_mapper(self.Medium, media, properties={
-			'assigned_movies': relation(mapper(self.Movie, movies, non_primary=True))})
+			'assigned_movies': relation(self.Movie)})
 		assign_mapper(self.VCodec, vcodecs, properties={
-			'assigned_movies': relation(mapper(self.Movie, movies, non_primary=True))})
+			'assigned_movies': relation(self.Movie)})
 		assign_mapper(self.Person, people)
 		assign_mapper(self.MovieLanguage, movie_lang)
 		assign_mapper(self.ACodec, acodecs, properties={
-			'assigned_movie_ids': relation(self.MovieLanguage.mapper)})
+			'assigned_movie_ids': relation(self.MovieLanguage)})
 		assign_mapper(self.AChannel, achannels, properties={
-			'assigned_movie_ids': relation(self.MovieLanguage.mapper)})
+			'assigned_movie_ids': relation(self.MovieLanguage)})
 		assign_mapper(self.SubFormat, sub_formats, properties={
-			'assigned_movie_ids': relation(self.MovieLanguage.mapper)})
+			'assigned_movie_ids': relation(self.MovieLanguage)})
 		assign_mapper(self.Language, languages, properties={
-			'assigned_movie_ids': relation(self.MovieLanguage.mapper)})
+			'assigned_movie_ids': relation(self.MovieLanguage)})
 		assign_mapper(self.MovieTag, movie_tag)
-		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag.mapper)})
+		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag)})
 		assign_mapper(self.Loan, loans, properties = {
-			'person'     : relation(self.Person.mapper),
-			'movie'      : relation(mapper(self.Movie, movies, non_primary=True)),
-			'volume'     : relation(mapper(self.Volume, volumes, non_primary=True)),
-			'collection' : relation(mapper(self.Collection, collections, non_primary=True))})
+			'person'     : relation(self.Person),
+			'movie'      : relation(self.Movie),
+			'volume'     : relation(self.Volume),
+			'collection' : relation(self.Collection)})
 		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
-			'volume'     : relation(self.Volume.mapper),
-			'collection' : relation(self.Collection.mapper),
-			'medium'     : relation(self.Medium.mapper),
-			'languages'  : relation(self.MovieLanguage.mapper),
-			'tags'       : relation(self.MovieTag.mapper),
-			'vcodec'     : relation(self.VCodec.mapper)})#}}}
+			'volume'     : relation(self.Volume),
+			'collection' : relation(self.Collection),
+			'medium'     : relation(self.Medium),
+			'languages'  : relation(self.MovieLanguage),
+			'tags'       : relation(self.MovieTag),
+			'vcodec'     : relation(self.VCodec)})#}}}
 		
 		# check if database needs upgrade
 		try:
-			v = self.Configuration.mapper.get_by(param="version")	# returns None if table exists && param ISNULL
+			v = self.Configuration.get_by(param='version')	# returns None if table exists && param ISNULL
 		except exceptions.SQLError:	# table doesn't exist
 			v = 1
 
 		if v==1:
-			#self.Person.mapper.table.select().execute()
+			#self.Person.select().execute()
 			try:
 				# NOTE: "people" table is common for all versions
-				self.Person.mapper.table.select().execute()
+				self.Person.select().execute()
 			except exceptions.SQLError:	# table doesn't exist
 				v=0
 			except:
@@ -676,20 +676,19 @@ class GriffithSQL:
 		for i in t_movies.keys():
 			if t_movies[i] == '':
 				t_movies[i]=None
-		for i in ["color","cond","layers","region", 'media', 'vcodec']:
+		for i in ['color','cond','layers','region', 'media', 'vcodec']:
 			if t_movies.has_key(i) and t_movies[i] == -1:
 				t_movies[i]=None
-		for i in ["volume_id","collection_id", 'runtime']:
+		for i in ['volume_id','collection_id', 'runtime']:
 			if t_movies.has_key(i) and (t_movies[i]==None or int(t_movies[i]) == 0):
 				t_movies[i] = None
-		if t_movies.has_key("year") and (t_movies["year"]==None or int(t_movies["year"]) < 1886):
-			t_movies["year"] = None
+		if t_movies.has_key('year') and (t_movies['year']==None or int(t_movies['year']) < 1886):
+			t_movies['year'] = None
 
 	def add_movie(self, t_movies, t_languages=None, t_tags=None):
 		self.clean_t_movies(t_movies)
-		session.flush()
-		self.Movie.mapper.table.insert().execute(t_movies)
-		movie = self.Movie.mapper.get_by(number=t_movies['number'])
+		self.Movie.mapped_table.insert().execute(t_movies)
+		movie = self.Movie.get_by(number=t_movies['number'])
 		# languages
 		if t_languages != None:
 			for lang in t_languages.keys():
@@ -699,19 +698,18 @@ class GriffithSQL:
 		if t_tags != None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.MovieTag(tag_id=tag))
-		objectstore.commit()
+		movie.save_or_update()
 	
 	def update_movie(self, t_movies, t_languages=None, t_tags=None):
 		movie_id = t_movies['movie_id']
 		if movie_id == None:
-			debug.show("Update movie: Movie ID is not set. Operation aborted!")
+			debug.show('Update movie: Movie ID is not set. Operation aborted!')
 			return False
 		self.clean_t_movies(t_movies)
-		session.flush()
-		self.Movie.mapper.table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
-		self.MovieLanguage.mapper.table.delete(self.MovieLanguage.c.movie_id==movie_id).execute()
-		self.MovieTag.mapper.table.delete(self.MovieTag.c.movie_id==movie_id).execute()
-		movie = self.Movie.mapper.get_by(movie_id=movie_id)
+		self.Movie.mapped_table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
+		self.MovieLanguage.mapped_table.delete(self.MovieLanguage.c.movie_id==movie_id).execute()
+		self.MovieTag.mapped_table.delete(self.MovieTag.c.movie_id==movie_id).execute()
+		movie = self.Movie.get_by(movie_id=movie_id)
 		# languages
 		if t_languages != None:
 			for lang in t_languages.keys():
@@ -721,30 +719,30 @@ class GriffithSQL:
 		if t_tags != None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.MovieTag(tag_id=tag))
-		objectstore.commit()
+		#movie.save_or_update()
 	# }}}
 
 	# DATABASE ---------------------------------------------------------{{{
 	def new_db(self, parent):
 		"""initializes a new griffith database file"""
 		response = gutils.question(self, \
-			_("Are you sure you want to create a new database?\nYou will lose ALL your current data!"), \
+			_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
 			1, parent.main_window)
 		if response == gtk.RESPONSE_YES:
 			response_sec = gutils.question(self, \
-				_("Last chance!\nDo you confirm that you want\nto lose your current data?"), \
+				_('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
 				1, parent.main_window)
 			if response_sec == gtk.RESPONSE_YES:
 				# delete images
-				posters_dir = os.path.join(self.griffith_dir, "posters")
+				posters_dir = os.path.join(self.griffith_dir, 'posters')
 				# NOTE: only used images are removed (posters are shared between various db)
-				debug.show("NEW DB: Removing old images...")
+				debug.show('NEW DB: Removing old images...')
 				for movie in self.Movie.select():
 					if movie.image != None:
 						name = movie.image.encode('utf-8')
-						p_file = os.path.join(posters_dir, name+".jpg")
-						m_file = os.path.join(posters_dir, "m_"+name+".jpg")
-						t_file = os.path.join(posters_dir, "t_"+name+"jpg")
+						p_file = os.path.join(posters_dir, name+'.jpg')
+						m_file = os.path.join(posters_dir, 'm_'+name+'.jpg')
+						t_file = os.path.join(posters_dir, 't_'+name+'jpg')
 						try:
 							os.remove(p_file)
 							os.remove(m_file)
@@ -752,10 +750,10 @@ class GriffithSQL:
 						except:
 							pass
 				parent.db.drop_database()
-				if self.config["db_type"] == "sqlite":
+				if self.config['db_type'] == 'sqlite':
 					os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
-					if self.config["default_db"] == "griffith.gri":
-						self.config["default_db"] = "griffith.db"
+					if self.config['default_db'] == 'griffith.gri':
+						self.config['default_db'] = 'griffith.db'
 				# create/connect db
 				parent.db = GriffithSQL(self.config, debug, self.griffith_dir)
 				parent.clear_details()
@@ -767,105 +765,104 @@ class GriffithSQL:
 				people_treeview(parent)
 
 	def drop_database(self):
-		if self.metadata.name == "postgres":
-			self.metadata.execute("DROP TABLE loans CASCADE;")
-			self.metadata.execute("DROP TABLE people CASCADE;")
-			self.metadata.execute("DROP TABLE configuration CASCADE;")
-			self.metadata.execute("DROP TABLE languages CASCADE;")
-			self.metadata.execute("DROP TABLE movies CASCADE;")
-			self.metadata.execute("DROP TABLE vcodecs CASCADE;")
-			self.metadata.execute("DROP TABLE volumes CASCADE;")
-			self.metadata.execute("DROP TABLE media CASCADE;")
-			self.metadata.execute("DROP TABLE collections CASCADE;")
-			self.metadata.execute("DROP TABLE acodecs CASCADE;")
-			self.metadata.execute("DROP TABLE achannels CASCADE;")
-			self.metadata.execute("DROP TABLE sub_formats CASCADE;")
-			self.metadata.execute("DROP TABLE movie_tag CASCADE;")
-			self.metadata.execute("DROP TABLE movie_lang CASCADE;")
-			self.metadata.execute("DROP TABLE tags CASCADE;")
+		if self.metadata.name == 'postgres':
+			self.metadata.execute('DROP TABLE loans CASCADE;')
+			self.metadata.execute('DROP TABLE people CASCADE;')
+			self.metadata.execute('DROP TABLE configuration CASCADE;')
+			self.metadata.execute('DROP TABLE languages CASCADE;')
+			self.metadata.execute('DROP TABLE movies CASCADE;')
+			self.metadata.execute('DROP TABLE vcodecs CASCADE;')
+			self.metadata.execute('DROP TABLE volumes CASCADE;')
+			self.metadata.execute('DROP TABLE media CASCADE;')
+			self.metadata.execute('DROP TABLE collections CASCADE;')
+			self.metadata.execute('DROP TABLE acodecs CASCADE;')
+			self.metadata.execute('DROP TABLE achannels CASCADE;')
+			self.metadata.execute('DROP TABLE sub_formats CASCADE;')
+			self.metadata.execute('DROP TABLE movie_tag CASCADE;')
+			self.metadata.execute('DROP TABLE movie_lang CASCADE;')
+			self.metadata.execute('DROP TABLE tags CASCADE;')
 		else:
-			session.flush()
 #			for table in self.metadata.tables.keys():
 #				self.metadata.tables[table].drop()
-			self.Loan.mapper.table.drop()
-			self.Person.mapper.table.drop()
-			self.Configuration.mapper.table.drop()
-			self.VCodec.mapper.table.drop()
-			self.ACodec.mapper.table.drop()
-			self.AChannel.mapper.table.drop()
-			self.SubFormat.mapper.table.drop()
-			self.Medium.mapper.table.drop()
-			self.Language.mapper.table.drop()
-			self.Volume.mapper.table.drop()
-			self.Collection.mapper.table.drop()
-			self.Movie.mapper.table.drop()
-			self.MovieTag.mapper.table.drop()
-			self.MovieLanguage.mapper.table.drop()
-			self.Tag.mapper.table.drop()
-			objectstore.commit()
+			self.Loan.mapper.mapped_table.drop()
+			self.Person.mapper.mapped_table.drop()
+			self.Configuration.mapper.mapped_table.drop()
+			self.VCodec.mapper.mapped_table.drop()
+			self.ACodec.mapper.mapped_table.drop()
+			self.AChannel.mapper.mapped_table.drop()
+			self.SubFormat.mapper.mapped_table.drop()
+			self.Medium.mapper.mapped_table.drop()
+			self.Language.mapper.mapped_table.drop()
+			self.Volume.mapper.mapped_table.drop()
+			self.Collection.mapper.mapped_table.drop()
+			self.Movie.mapper.mapped_table.drop()
+			self.MovieTag.mapper.mapped_table.drop()
+			self.MovieLanguage.mapper.mapped_table.drop()
+			self.Tag.mapper.mapped_table.drop()
+			#objectstore.commit()
 
 	def upgrade_database(self, version):
 		"""Create new db or update existing one to current format"""
 		if version == 0:
-			debug.show("Creating tables...")
-			self.Configuration.mapper.table.create()
-			self.Configuration.mapper.table.insert().execute(param="version", value=self.version)
-			self.Volume.mapper.table.create()
-			self.Collection.mapper.table.create()
-			self.Medium.mapper.table.create()
-			self.Medium.mapper.table.insert().execute(name='DVD')
-			self.Medium.mapper.table.insert().execute(name='DVD-R')
-			self.Medium.mapper.table.insert().execute(name='DVD-RW')
-			self.Medium.mapper.table.insert().execute(name='DVD+R')
-			self.Medium.mapper.table.insert().execute(name='DVD+RW')
-			self.Medium.mapper.table.insert().execute(name='DVD-RAM')
-			self.Medium.mapper.table.insert().execute(name='CD')
-			self.Medium.mapper.table.insert().execute(name='CD-RW')
-			self.Medium.mapper.table.insert().execute(name='VCD')
-			self.Medium.mapper.table.insert().execute(name='SVCD')
-			self.Medium.mapper.table.insert().execute(name='VHS')
-			self.Medium.mapper.table.insert().execute(name='BETACAM')
-			self.Medium.mapper.table.insert().execute(name='LaserDisc')
-			self.ACodec.mapper.table.create()
-			self.ACodec.mapper.table.insert().execute(name='AC-3 Dolby audio')
-			self.ACodec.mapper.table.insert().execute(name='OGG')
-			self.ACodec.mapper.table.insert().execute(name='MP3')
-			self.ACodec.mapper.table.insert().execute(name='MPEG-1')
-			self.ACodec.mapper.table.insert().execute(name='MPEG-2')
-			self.ACodec.mapper.table.insert().execute(name='AAC')
-			self.ACodec.mapper.table.insert().execute(name='Windows Media Audio')
-			self.VCodec.mapper.table.create()
-			self.VCodec.mapper.table.insert().execute(name='MPEG-1')
-			self.VCodec.mapper.table.insert().execute(name='MPEG-2')
-			self.VCodec.mapper.table.insert().execute(name='XviD')
-			self.VCodec.mapper.table.insert().execute(name='DivX')
-			self.VCodec.mapper.table.insert().execute(name='H.264')
-			self.VCodec.mapper.table.insert().execute(name='RealVideo')
-			self.VCodec.mapper.table.insert().execute(name='QuickTime')
-			self.VCodec.mapper.table.insert().execute(name='Windows Media Video')
-			self.AChannel.mapper.table.create()
-			self.AChannel.mapper.table.insert().execute(name='mono')
-			self.AChannel.mapper.table.insert().execute(name='stereo')
-			self.AChannel.mapper.table.insert().execute(name='5.1')
-			self.AChannel.mapper.table.insert().execute(name='7.1')
-			self.SubFormat.mapper.table.create()
-			self.SubFormat.mapper.table.insert().execute(name='DVD VOB')
-			self.SubFormat.mapper.table.insert().execute(name='MPL2 (.txt)')
-			self.SubFormat.mapper.table.insert().execute(name='MicroDVD (.sub)')
-			self.SubFormat.mapper.table.insert().execute(name='SubRip (.srt)')
-			self.SubFormat.mapper.table.insert().execute(name='SubViewer2 (.sub)')
-			self.SubFormat.mapper.table.insert().execute(name='Sub Station Alpha (.ssa)')
-			self.SubFormat.mapper.table.insert().execute(name='Advanced Sub Station Alpha (.ssa)')
-			self.Person.mapper.table.create()
-			self.Movie.mapper.table.create()
-			self.Loan.mapper.table.create()
-			self.Language.mapper.table.create()
-			self.MovieLanguage.mapper.table.create()
-			self.Tag.mapper.table.create()
-			self.Tag.mapper.table.insert().execute(name=_("Favourite"))
-			self.Tag.mapper.table.insert().execute(name=_("To buy"))
-			self.MovieTag.mapper.table.create()
-			self.metadata.commit()
+			debug.show('Creating tables...')
+			self.Configuration.mapper.mapped_table.create()
+			self.Configuration.mapper.mapped_table.insert().execute(param='version', value=self.version)
+			self.Volume.mapper.mapped_table.create()
+			self.Collection.mapper.mapped_table.create()
+			self.Medium.mapper.mapped_table.create()
+			self.Medium.mapper.mapped_table.insert().execute(name='DVD')
+			self.Medium.mapper.mapped_table.insert().execute(name='DVD-R')
+			self.Medium.mapper.mapped_table.insert().execute(name='DVD-RW')
+			self.Medium.mapper.mapped_table.insert().execute(name='DVD+R')
+			self.Medium.mapper.mapped_table.insert().execute(name='DVD+RW')
+			self.Medium.mapper.mapped_table.insert().execute(name='DVD-RAM')
+			self.Medium.mapper.mapped_table.insert().execute(name='CD')
+			self.Medium.mapper.mapped_table.insert().execute(name='CD-RW')
+			self.Medium.mapper.mapped_table.insert().execute(name='VCD')
+			self.Medium.mapper.mapped_table.insert().execute(name='SVCD')
+			self.Medium.mapper.mapped_table.insert().execute(name='VHS')
+			self.Medium.mapper.mapped_table.insert().execute(name='BETACAM')
+			self.Medium.mapper.mapped_table.insert().execute(name='LaserDisc')
+			self.ACodec.mapper.mapped_table.create()
+			self.ACodec.mapper.mapped_table.insert().execute(name='AC-3 Dolby audio')
+			self.ACodec.mapper.mapped_table.insert().execute(name='OGG')
+			self.ACodec.mapper.mapped_table.insert().execute(name='MP3')
+			self.ACodec.mapper.mapped_table.insert().execute(name='MPEG-1')
+			self.ACodec.mapper.mapped_table.insert().execute(name='MPEG-2')
+			self.ACodec.mapper.mapped_table.insert().execute(name='AAC')
+			self.ACodec.mapper.mapped_table.insert().execute(name='Windows Media Audio')
+			self.VCodec.mapper.mapped_table.create()
+			self.VCodec.mapper.mapped_table.insert().execute(name='MPEG-1')
+			self.VCodec.mapper.mapped_table.insert().execute(name='MPEG-2')
+			self.VCodec.mapper.mapped_table.insert().execute(name='XviD')
+			self.VCodec.mapper.mapped_table.insert().execute(name='DivX')
+			self.VCodec.mapper.mapped_table.insert().execute(name='H.264')
+			self.VCodec.mapper.mapped_table.insert().execute(name='RealVideo')
+			self.VCodec.mapper.mapped_table.insert().execute(name='QuickTime')
+			self.VCodec.mapper.mapped_table.insert().execute(name='Windows Media Video')
+			self.AChannel.mapper.mapped_table.create()
+			self.AChannel.mapper.mapped_table.insert().execute(name='mono')
+			self.AChannel.mapper.mapped_table.insert().execute(name='stereo')
+			self.AChannel.mapper.mapped_table.insert().execute(name='5.1')
+			self.AChannel.mapper.mapped_table.insert().execute(name='7.1')
+			self.SubFormat.mapper.mapped_table.create()
+			self.SubFormat.mapper.mapped_table.insert().execute(name='DVD VOB')
+			self.SubFormat.mapper.mapped_table.insert().execute(name='MPL2 (.txt)')
+			self.SubFormat.mapper.mapped_table.insert().execute(name='MicroDVD (.sub)')
+			self.SubFormat.mapper.mapped_table.insert().execute(name='SubRip (.srt)')
+			self.SubFormat.mapper.mapped_table.insert().execute(name='SubViewer2 (.sub)')
+			self.SubFormat.mapper.mapped_table.insert().execute(name='Sub Station Alpha (.ssa)')
+			self.SubFormat.mapper.mapped_table.insert().execute(name='Advanced Sub Station Alpha (.ssa)')
+			self.Person.mapper.mapped_table.create()
+			self.Movie.mapper.mapped_table.create()
+			self.Loan.mapper.mapped_table.create()
+			self.Language.mapper.mapped_table.create()
+			self.MovieLanguage.mapper.mapped_table.create()
+			self.Tag.mapper.mapped_table.create()
+			self.Tag.mapper.mapped_table.insert().execute(name=_('Favourite'))
+			self.Tag.mapper.mapped_table.insert().execute(name=_('To buy'))
+			self.MovieTag.mapper.mapped_table.create()
+			#self.metadata.commit()
 			return True
 		if version == 1:	# fix changes between v1 and v2
 			print 'not implemented yet'
@@ -880,13 +877,13 @@ class GriffithSQL:
 			# * upgrade media table (media_id = media +1 )
 			# * upgrade old media if needed
 			version+=1
-			#self.Configuration.get_by(param="version").value = version
+			#self.Configuration.get_by(param='version').value = version
 		#if version == 2:	# fix changes between v2 and v3
 		#	version+=1
-		#	self.Configuration.get_by(param="version").value = version
+		#	self.Configuration.get_by(param='version').value = version
 
 	def update_old_media(self):
-		debug.show("Upgrading old media values...")
+		debug.show('Upgrading old media values...')
 		self.metadata.execute("UPDATE movies SET media = '1' WHERE media = 'DVD';")
 		self.metadata.execute("UPDATE movies SET media = '2' WHERE media = 'DVD-R';")
 		self.metadata.execute("UPDATE movies SET media = '3' WHERE media = 'DVD-RW';")
@@ -972,10 +969,10 @@ class GriffithSQL:
 				for column in row.keys():
 					query += column+','
 				query = query[:len(query)-1]
-				query += ") VALUES ("
+				query += ') VALUES ('
 				for value in row:
 					if value == None:
-						query += "NULL,"
+						query += 'NULL,'
 					else:
 						query += "'%s'"%gutils.gescape(str(value)) + ','
 				query = query[:len(query)-1] + ');'
@@ -990,43 +987,43 @@ class GriffithSQL:
 
 		new_db = GriffithSQL(self.config, debug, tmp_dir)
 		# remove default values
-		new_db.engine.execute("DELETE FROM volumes")
-		new_db.engine.execute("DELETE FROM collections")
-		new_db.engine.execute("DELETE FROM media")
-		new_db.engine.execute("DELETE FROM languages")
-		new_db.engine.execute("DELETE FROM tags")
+		new_db.engine.execute('DELETE FROM volumes')
+		new_db.engine.execute('DELETE FROM collections')
+		new_db.engine.execute('DELETE FROM media')
+		new_db.engine.execute('DELETE FROM languages')
+		new_db.engine.execute('DELETE FROM tags')
 
-		copy_table(sqlite2_cursor, new_db.engine, "movies")
-		copy_table(sqlite2_cursor, new_db.engine, "people")
-		copy_table(sqlite2_cursor, new_db.engine, "media")
-		copy_table(sqlite2_cursor, new_db.engine, "loans")
+		copy_table(sqlite2_cursor, new_db.engine, 'movies')
+		copy_table(sqlite2_cursor, new_db.engine, 'people')
+		copy_table(sqlite2_cursor, new_db.engine, 'media')
+		copy_table(sqlite2_cursor, new_db.engine, 'loans')
 		try:
-			copy_table(sqlite2_cursor, new_db.engine, "volumes")
-			copy_table(sqlite2_cursor, new_db.engine, "collections")
-			copy_table(sqlite2_cursor, new_db.engine, "languages")
-			copy_table(sqlite2_cursor, new_db.engine, "movie_lang")
-			copy_table(sqlite2_cursor, new_db.engine, "movie_tag")
-			copy_table(sqlite2_cursor, new_db.engine, "tags")
+			copy_table(sqlite2_cursor, new_db.engine, 'volumes')
+			copy_table(sqlite2_cursor, new_db.engine, 'collections')
+			copy_table(sqlite2_cursor, new_db.engine, 'languages')
+			copy_table(sqlite2_cursor, new_db.engine, 'movie_lang')
+			copy_table(sqlite2_cursor, new_db.engine, 'movie_tag')
+			copy_table(sqlite2_cursor, new_db.engine, 'tags')
 		except:
 			pass
 
-		move(os.path.join(tmp_dir,self.config["default_db"]), destination_file)
-		debug.show("Cnnvert from SQLite2: " + destination_file + " created")
+		move(os.path.join(tmp_dir,self.config['default_db']), destination_file)
+		debug.show("SQLite2 conversion: file %s created" % destination_file)
 		new_db.engine.Close();
 		rmtree(tmp_dir)
 		return True	#}}}
 
 # for debugging (run: ipython sql.py)
-if __name__ == "__main__":
+if __name__ == '__main__':
 	import config, gdebug, gglobals
 	db = GriffithSQL(config.Config(), gdebug.GriffithDebug(True), gglobals.griffith_dir)
-	if db.engine.name == "sqlite":
-		tmp = db.engine.filename
-	else:
-		tmp = db.engine.opts
-	db.engine.echo = True # print SQL queries
-	print "\nGriffithSQL test drive\n======================"
-	print "Connection: %s %s" % (db.engine.name, tmp)
-	print "Database object name: db\n"
+#	if db.engine.name == 'sqlite':
+#		tmp = db.engine.filename
+#	else:
+#		tmp = db.engine.opts
+#	db.engine.echo = True # print SQL queries
+	print '\nGriffithSQL test drive\n======================'
+#	print "Connection: %s %s" % (db.engine.name, tmp)
+	print 'Database object name: db\n'
 
 # vim: fdm=marker

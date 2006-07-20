@@ -671,6 +671,8 @@ class ExportPlugin(gtk.Window):
 			select = select.replace("movies.loaned AS loaned, ",'')
 		if self.fields['seen']== True:
 			select = select.replace("movies.seen AS seen, ",'')
+		if self.fields['media']== True:
+			select = select.replace("movies.media AS media, ",'')
 		select = select[:len(select)-2] # cut last ', '
 		self.db.conn.Execute("INSERT INTO answer VALUES (0, '%s');" % _("No"))
 		self.db.conn.Execute("INSERT INTO answer VALUES (1, '%s');" % _("Yes"))
@@ -679,11 +681,15 @@ class ExportPlugin(gtk.Window):
 			query += ", t1.name AS loaned"
 		if self.fields['seen'] == True:
 			query += ", t2.name AS seen"
+		if self.fields['media'] == True:
+			query += ", media.name AS media"
 		query += " FROM movies"
 		if self.fields['loaned'] == True:
 			query += " LEFT JOIN answer AS t1 ON (movies.loaned = t1.id)"
 		if self.fields['seen'] == True:
 			query += " LEFT JOIN answer AS t2 ON (movies.seen = t2.id)"
+		if self.fields['media'] == True:
+			query += " LEFT JOIN media ON (movies.medium_id = media.medium_id)"
 		if self.sql_where:
 			query += " WHERE " + self.sql_where
 		query += " ORDER BY " + config['sorting']+' '+config['sorting2'] + ';'
