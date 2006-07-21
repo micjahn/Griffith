@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2006-07-21 Piotr Ozarowski <ozarow@gmail.com>
 	* Updated Free Software Foundation address.
+	* FDb movie plugin updated.
 
 2006-07-20 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed media handling while exporting to HTML.
