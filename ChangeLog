@@ -4,6 +4,12 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-07-21 Piotr Ozarowski <ozarow@gmail.com>
+	* Updated Free Software Foundation address.
+
+2006-07-20 Piotr Ozarowski <ozarow@gmail.com>
+	* Fixed media handling while exporting to HTML.
+
 2006-06-29 Piotr Ozarowski <ozarow@gmail.com>
 	* German translation updated (thanks to Malte Wiemann)
 
