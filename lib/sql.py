@@ -485,7 +485,7 @@ class GriffithSQL:
 
 		# connect to database --------------------------------------{{{
 		if config['db_type'] == 'sqlite':
-			url = "sqlite://%s" % os.path.join(griffith_dir, config['default_db'])
+			url = "sqlite:///%s" % os.path.join(griffith_dir, config['default_db'])
 		elif config['db_type'] == 'postgres':
 			if not config.has_key('db_port'):
 				config['db_port'] = 5432
@@ -511,7 +511,7 @@ class GriffithSQL:
 		except:
 			gutils.error(self, _('Database connection failed.'))
 			self.config['db_type'] = 'sqlite'
-			url = "sqlite://%s" % os.path.join(griffith_dir, 'griffith.db')
+			url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
 			self.metadata = BoundMetaData(url)
 			self.metadata.engine.connect()
 		#}}}
@@ -687,7 +687,7 @@ class GriffithSQL:
 
 	def add_movie(self, t_movies, t_languages=None, t_tags=None):
 		self.clean_t_movies(t_movies)
-		self.Movie.mapped_table.insert().execute(t_movies)
+		self.Movie.mapper.mapped_table.insert().execute(t_movies)
 		movie = self.Movie.get_by(number=t_movies['number'])
 		# languages
 		if t_languages != None:
@@ -706,9 +706,9 @@ class GriffithSQL:
 			debug.show('Update movie: Movie ID is not set. Operation aborted!')
 			return False
 		self.clean_t_movies(t_movies)
-		self.Movie.mapped_table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
-		self.MovieLanguage.mapped_table.delete(self.MovieLanguage.c.movie_id==movie_id).execute()
-		self.MovieTag.mapped_table.delete(self.MovieTag.c.movie_id==movie_id).execute()
+		self.Movie.mapper.mapped_table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
+		self.MovieLanguage.mapper.mapped_table.delete(self.MovieLanguage.c.movie_id==movie_id).execute()
+		self.MovieTag.mapper.mapped_table.delete(self.MovieTag.c.movie_id==movie_id).execute()
 		movie = self.Movie.get_by(movie_id=movie_id)
 		# languages
 		if t_languages != None:
