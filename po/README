@@ -16,7 +16,7 @@ Follow these steps:
 	$ cd griffith/po
 	$ make update
 remember to replace XX with your country language code:
-	$ cp messages.pot XX.po
+	$ make XX.po
 edit XX.po with your favourite editor (VIM/KBabel/poEdit/...)
 	$ make dist
 if no errors occurs:

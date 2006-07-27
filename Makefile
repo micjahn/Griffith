@@ -6,8 +6,9 @@
 # $Id$
 
 PACKAGE=griffith
-LANGUAGES= bg cs de es fr pl pt it
+LANGUAGES=$(shell find i18n/ -maxdepth 1 -mindepth 1 -type d -printf "%f ")
 VERSION=$(shell grep "^pversion" lib/version.py | cut -d \"  -f 2)
+TEMPLATES= $(shell cd data/export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^\.svn]*" -print)
 
 .PHONY: help clean freshmeat gnomefiles install
 
@@ -33,13 +34,20 @@ APPLICATIONSDIR = $(PREFIX)/share/applications
 ICONDIR = $(PREFIX)/share/pixmaps
 LOCALEDIR = $(PREFIX)/share/locale
 
-TEMPLATES= $(shell cd data/export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^\.svn]*" -print)
-
-make: help
+help:
+	@echo Usage:
+	@echo "make		- not used"
+	@echo "make clean	- delete built modules and object files"
+	@echo "make install	- install binaries into the official directories"
+	@echo "make uninstall	- uninstall binaries from the official directories"
+	@echo "make help	- prints this help"
+	@echo "make dist	- makes a distribution tarball"
+	@echo
+	
 
 install:
 	@echo
-	@echo "installing griffith"
+	@echo "installing Griffith"
 	@echo "^^^^^^^^^^^^^^^^^^^"
 	$(INSTALL) -m 755 -d $(BINDIR) $(DATADIR) $(LIBDIR) $(PLUGINSDIR) $(MOVIEPLUGINSDIR) \
 		$(EXPORTPLUGINSDIR) $(FONTSDIR) $(APPLICATIONSDIR) $(ICONDIR) $(TPLDIR) \
@@ -76,7 +84,7 @@ install:
 	
 uninstall:
 	@echo
-	@echo "uninstalling griffith"
+	@echo "uninstalling Griffith"
 	@echo "^^^^^^^^^^^^^^^^^^^^^"
 	${RM} -r $(TPLDIR)
 	${RM} -r $(MOVIEPLUGINSDIR)
@@ -98,17 +106,6 @@ uninstall:
 clean:
 	${RM} *.pyc *.bak po/*.~ glade/*~ glade/*.bak lib/*.pyc *~ lib/*~ lib/plugins/movie/*~ lib/plugins/export/*~
 	
-help:
-	@echo Usage:
-	@echo "make		- not used"
-	@echo "make clean	- delete built modules and object files"
-	@echo "make install	- install binaries into the official directories"
-	@echo "make uninstall	- uninstall binaries from the official directories"
-	@echo "make help	- prints this help"
-	@echo "make dist	- makes a distribution tarball"
-	@echo "make package	- makes a Debian package"
-	@echo
-	
 freshmeat:
 	firefox http://freshmeat.net/add-release/54772/ &
 
@@ -122,10 +119,6 @@ dist:
 	@${RM} griffith.tar
 	@tar -czf $(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)-$(VERSION) && echo File ./$(PACKAGE)-$(VERSION).tar.gz generated successfully
 	@${RM} -r $(PACKAGE)-$(VERSION)
-
-package:
-	@echo "Remember to update the debian/changelog file!"
-	dpkg-buildpackage -rfakeroot
 
 lint:
 	pylint --enable-basic=n --indent-string='\t' griffith lib/*.py
