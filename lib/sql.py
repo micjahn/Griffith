@@ -99,9 +99,8 @@ class GriffithSQL:
 	class MovieTag(object):
 		def __repr__(self):
 			return "MovieTag:%s-%s" % (self.movie_id, self.tag_id)
-	class Person(object):
-		def __repr__(self):
-			return "Person:%s" % self.name
+	class Person(DBTable):
+		pass
 	class SubFormat(DBTable):
 		pass
 	class Tag(DBTable):#{{{
