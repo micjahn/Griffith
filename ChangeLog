@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-07-28 Piotr Ozarowski <ozarow@gmail.com>
+	* IMDb movie plugin adds new lines in "with" field again
+	* Draggable toolbar
+
 2006-07-27 Piotr Ozarowski <ozarow@gmail.com>
 	* Makefile for po files updated
 	  - use `cd po && make XX.po` to create new translation
