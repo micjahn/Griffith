@@ -278,11 +278,7 @@ def save_preferences(self):
 		import sql
 		del self.db.metadata
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
-		if self.db.engine.name == 'sqlite':
-			tmp = self.db.engine.filename
-		else:
-			tmp = self.db.engine.opts
-		self.debug.show("DATABASE: %s %s" % (self.db.engine.name, tmp))
+		self.debug.show("New database Engine: %s" % self.db.metadata.engine.name)
 		self.total = int(self.db.Movie.mapper.count())
 		self.count_statusbar()
 		from initialize	import dictionaries, people_treeview

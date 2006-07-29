@@ -342,33 +342,33 @@ class GriffithSQL:
 			Column('value', VARCHAR(128), nullable=False))#}}}
 
 		# mappers -------------------------------------------------#{{{
-		assign_mapper(self.Configuration, configuration)
-		assign_mapper(self.Volume,volumes, properties={
+		assign_mapper(self.Configuration, configuration, is_primary=True)
+		assign_mapper(self.Volume,volumes, is_primary=True, properties={
 			'assigned_movies': relation(self.Movie)})
-		assign_mapper(self.Collection, collections, properties={
+		assign_mapper(self.Collection, collections, is_primary=True, properties={
 			'assigned_movies': relation(self.Movie)})
-		assign_mapper(self.Medium, media, properties={
+		assign_mapper(self.Medium, media, is_primary=True, properties={
 			'assigned_movies': relation(self.Movie)})
-		assign_mapper(self.VCodec, vcodecs, properties={
+		assign_mapper(self.VCodec, vcodecs, is_primary=True, properties={
 			'assigned_movies': relation(self.Movie)})
-		assign_mapper(self.Person, people)
-		assign_mapper(self.MovieLang, movie_lang)
-		assign_mapper(self.ACodec, acodecs, properties={
+		assign_mapper(self.Person, people, is_primary=True)
+		assign_mapper(self.MovieLang, movie_lang, is_primary=True)
+		assign_mapper(self.ACodec, acodecs, is_primary=True, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
-		assign_mapper(self.AChannel, achannels, properties={
+		assign_mapper(self.AChannel, achannels, is_primary=True, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
-		assign_mapper(self.SubFormat, subformats, properties={
+		assign_mapper(self.SubFormat, subformats, is_primary=True, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
-		assign_mapper(self.Lang, languages, properties={
+		assign_mapper(self.Lang, languages, is_primary=True, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
-		assign_mapper(self.MovieTag, movie_tag)
-		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag)})
-		assign_mapper(self.Loan, loans, properties = {
+		assign_mapper(self.MovieTag, movie_tag, is_primary=True)
+		assign_mapper(self.Tag, tags, is_primary=True, properties={'assigned_movie_ids': relation(self.MovieTag)})
+		assign_mapper(self.Loan, loans, is_primary=True, properties = {
 			'person'     : relation(self.Person),
 			'movie'      : relation(self.Movie),
 			'volume'     : relation(self.Volume),
 			'collection' : relation(self.Collection)})
-		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
+		assign_mapper(self.Movie, movies, is_primary=True, order_by=movies.c.number , properties = {
 			'volume'     : relation(self.Volume),
 			'collection' : relation(self.Collection),
 			'medium'     : relation(self.Medium),

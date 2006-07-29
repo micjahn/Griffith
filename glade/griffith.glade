@@ -473,14 +473,14 @@
 	  <property name="spacing">0</property>
 
 	  <child>
-	    <widget class="GtkHandleBox" id="handlebox2">
+	    <widget class="GtkHandleBox" id="toolbar1">
 	      <property name="visible">True</property>
 	      <property name="shadow_type">GTK_SHADOW_OUT</property>
 	      <property name="handle_position">GTK_POS_LEFT</property>
 	      <property name="snap_edge">GTK_POS_TOP</property>
 
 	      <child>
-		<widget class="GtkToolbar" id="toolbar7">
+		<widget class="GtkToolbar" id="toolbar2">
 		  <property name="visible">True</property>
 		  <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
 		  <property name="toolbar_style">GTK_TOOLBAR_ICONS</property>
