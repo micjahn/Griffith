@@ -362,7 +362,7 @@ def dictionaries(self):
 	initialize.language_combos(self)
 	initialize.acodec_combos(self)
 	initialize.achannel_combos(self)
-	initialize.sub_format_combos(self)
+	initialize.subformat_combos(self)
 	initialize.vcodec_combos(self)
 	initialize.media_combos(self)
 	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
@@ -529,7 +529,7 @@ def language_combos(self):
 	self.languages_ids[0] = 0	# empty one (to remove movie language)
 	self.lang_name_combo.insert_text(0, '')
 	i = 1
-	for lang in self.db.Language.select():
+	for lang in self.db.Lang.select():
 		self.languages_ids[i] = lang.lang_id
 		self.lang_name_combo.insert_text(int(i), str(lang.name))
 		i += 1
@@ -556,17 +556,17 @@ def achannel_combos(self):
 		self.achannel_name_combo.insert_text(int(i), str(achannel.name))
 		i += 1
 	self.achannel_name_combo.show_all()
-def sub_format_combos(self):
-	self.sub_format_name_combo.get_model().clear()
-	self.sub_formats_ids = {}
-	self.sub_formats_ids[0] = 0	# empty one (to remove movie language)
-	self.sub_format_name_combo.insert_text(0, '')
+def subformat_combos(self):
+	self.subformat_name_combo.get_model().clear()
+	self.subformats_ids = {}
+	self.subformats_ids[0] = 0	# empty one (to remove movie language)
+	self.subformat_name_combo.insert_text(0, '')
 	i = 1
-	for sub_format in self.db.SubFormat.select():
-		self.sub_formats_ids[i] = sub_format.sub_format_id
-		self.sub_format_name_combo.insert_text(int(i), str(sub_format.name))
+	for subformat in self.db.SubFormat.select():
+		self.subformats_ids[i] = subformat.subformat_id
+		self.subformat_name_combo.insert_text(int(i), str(subformat.name))
 		i += 1
-	self.sub_format_name_combo.show_all()
+	self.subformat_name_combo.show_all()
 
 def media_combos(self):
 	# remember old values
@@ -668,7 +668,7 @@ def fill_language_combo(self, widget, default=None):
 	for i in self.languages_ids:
 		lang_id = self.languages_ids[i]
 		if lang_id>0:
-			name = self.db.Language.get_by(lang_id=lang_id).name
+			name = self.db.Lang.get_by(lang_id=lang_id).name
 		else:
 			name = ''
 		widget.insert_text(int(i), str(name))

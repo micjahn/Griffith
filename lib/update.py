@@ -29,12 +29,12 @@ def update(self):
 	movie_id = self.e_movie_id.get_text()
 	movie = self.db.Movie.get_by(movie_id=movie_id)
 	if movie == None:
-		self.debug.show("Trying to update not existing movie. Aborting")
+		self.debug.show('Trying to update not existing movie. Aborting')
 		return False
 
 	number = self.e_number.get_text()
 	if number == None or number == '':
-		gutils.error(self, msg=_("Number is not set!"))
+		gutils.error(self, msg=_('Number is not set!'))
 		return False
 	if int(number) != int(movie.number):
 		old_movie = self.db.Movie.get_by(number=number)

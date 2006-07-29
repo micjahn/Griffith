@@ -82,15 +82,13 @@ def show_preferences(self):
 	if self.config.get('color'):
 		self.p_color.set_active(int(self.config.get('color')))
 
-	# default movie plugin
-	self.debug.show("Default movie plugin: %s" % self.config.get('default_movie_plugin'))
 	plugins = gutils.read_plugins('PluginMovie', \
 		self.locations['movie_plugins'])
 	plugins.sort()
 	mcounter = 0
 	for p in plugins:
-		plugin_module = os.path.basename(p).replace(".py","")
-		plugin_name = plugin_module.replace("PluginMovie","")
+		plugin_module = os.path.basename(p).replace('.py','')
+		plugin_name = plugin_module.replace('PluginMovie','')
 		if self.config.get('default_movie_plugin') == plugin_name:
 			self.default_plugin.set_active(mcounter)
 			self.d_plugin = mcounter
@@ -205,8 +203,8 @@ def save_preferences(self):
 			gutils.on_combo_box_entry_changed(self.default_plugin)
 	mcounter = 0		
 	for p in self.plugins:
-		plugin_module = os.path.basename(p).replace(".py","")
-		plugin_name = plugin_module.replace("PluginMovie","")
+		plugin_module = os.path.basename(p).replace('.py','')
+		plugin_name = plugin_module.replace('PluginMovie','')
 		if gutils.on_combo_box_entry_changed(self.default_plugin) == plugin_name:
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
@@ -249,37 +247,38 @@ def save_preferences(self):
 
 	# database
 	old = {}
-	old["db_type"]   = self.config["db_type"]
-	old["db_host"]   = self.config["db_host"]
-	old["db_port"]   = self.config["db_port"]
-	old["db_name"]   = self.config["db_name"]
-	old["db_user"]   = self.config["db_user"]
-	old["db_passwd"] = self.config["db_passwd"]
-	self.config["db_host"]   = self.p_db_host.get_text()
-	self.config["db_port"]   = int(self.p_db_port.get_value())
-	self.config["db_name"]   = self.p_db_name.get_text()
-	self.config["db_user"]   = self.p_db_user.get_text()
-	self.config["db_passwd"] = self.p_db_passwd.get_text()
+	old['db_type']   = self.config['db_type']
+	old['db_host']   = self.config['db_host']
+	old['db_port']   = self.config['db_port']
+	old['db_name']   = self.config['db_name']
+	old['db_user']   = self.config['db_user']
+	old['db_passwd'] = self.config['db_passwd']
+	self.config['db_host']   = self.p_db_host.get_text()
+	self.config['db_port']   = int(self.p_db_port.get_value())
+	self.config['db_name']   = self.p_db_name.get_text()
+	self.config['db_user']   = self.p_db_user.get_text()
+	self.config['db_passwd'] = self.p_db_passwd.get_text()
 	db_type = int(self.p_db_type.get_active())
 	if db_type == 1:
-		self.config["db_type"] = "postgres"
+		self.config['db_type'] = 'postgres'
 	elif db_type == 2:
-		self.config["db_type"] = "mysql"
+		self.config['db_type'] = 'mysql'
 	else:
-		self.config["db_type"] = "sqlite"
+		self.config['db_type'] = 'sqlite'
 	self.config.save()
 
-	if old["db_type"] != self.config["db_type"] or (old["db_type"]!="sqlite" and (\
-			old["db_host"] != self.config["db_host"] or \
-			old["db_port"] != self.config["db_port"] or \
-			old["db_name"] != self.config["db_name"] or \
-			old["db_user"] != self.config["db_user"] or \
-			old["db_passwd"] != self.config["db_passwd"])):
-		self.debug.show("DATABASE: connecting to new db server...")
+	if old['db_type'] != self.config['db_type'] or (old['db_type']!='sqlite' and (\
+			old['db_host'] != self.config['db_host'] or \
+			old['db_port'] != self.config['db_port'] or \
+			old['db_name'] != self.config['db_name'] or \
+			old['db_user'] != self.config['db_user'] or \
+			old['db_passwd'] != self.config['db_passwd'])):
+		self.debug.show('DATABASE: connecting to new db server...')
 		# NEW DB CONNECTION
 		import sql
+		del self.db.metadata
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
-		if self.db.engine.name == "sqlite":
+		if self.db.engine.name == 'sqlite':
 			tmp = self.db.engine.filename
 		else:
 			tmp = self.db.engine.opts

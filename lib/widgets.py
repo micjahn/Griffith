@@ -252,9 +252,9 @@ def define_widgets(self, gladefile):
 	self.e_achannel_vbox     = gladefile.get_widget('e_achannel_vbox')	# edit window
 	self.am_achannel_vbox    = gladefile.get_widget('am_achannel_vbox')	# add window
 	# subtitle formats
-	self.sub_format_name_combo = gladefile.get_widget('sub_format_name_combo')	# preferences window
-	self.e_sub_format_vbox     = gladefile.get_widget('e_sub_format_vbox')	# edit window
-	self.am_sub_format_vbox    = gladefile.get_widget('am_sub_format_vbox')	# add window
+	self.subformat_name_combo = gladefile.get_widget('subformat_name_combo')	# preferences window
+	self.e_subformat_vbox     = gladefile.get_widget('e_subformat_vbox')	# edit window
+	self.am_subformat_vbox    = gladefile.get_widget('am_subformat_vbox')	# add window
 	# media
 	self.medium_name_combo = gladefile.get_widget('medium_name_combo')	# preferences window
 	self.e_medium_vbox     = gladefile.get_widget('e_medium_vbox')	# edit window
@@ -404,10 +404,10 @@ def define_widgets(self, gladefile):
 		"on_achannel_rename_clicked"		: self.on_achannel_rename_clicked,
 		"on_achannel_name_combo_changed"	: self.on_achannel_name_combo_changed,
 		# subtitle formats
-		"on_sub_format_add_clicked"		: self.on_sub_format_add_clicked,
-		"on_sub_format_remove_clicked"		: self.on_sub_format_remove_clicked,
-		"on_sub_format_rename_clicked"		: self.on_sub_format_rename_clicked,
-		"on_sub_format_name_combo_changed"	: self.on_sub_format_name_combo_changed,
+		"on_subformat_add_clicked"		: self.on_subformat_add_clicked,
+		"on_subformat_remove_clicked"		: self.on_subformat_remove_clicked,
+		"on_subformat_rename_clicked"		: self.on_subformat_rename_clicked,
+		"on_subformat_name_combo_changed"	: self.on_subformat_name_combo_changed,
 		# media
 		"on_medium_add_clicked"			: self.on_medium_add_clicked,
 		"on_medium_remove_clicked"		: self.on_medium_remove_clicked,

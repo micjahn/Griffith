@@ -177,7 +177,7 @@ class Griffith:
 				self.p_db_port.set_value(3306)
 			self.p_db_details.set_sensitive(True)
 
-	# movie operations related --------------------------------------------
+	# movie related operations --------------------------------------------
 
 	def add_movie(self, *args):
 		add.add_movie(self)
@@ -287,7 +287,7 @@ class Griffith:
 		prefix = gutils.before(widget.get_name(), "_")
 		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
 		vol = self.db.Volume(name=name)
-		if vol.add():
+		if vol.add_to_db():
 			update.update_volume_combo_ids(self)
 			initialize.fill_volumes_combo(self, prefix, id)
 
@@ -295,7 +295,7 @@ class Griffith:
 		prefix = gutils.before(widget.get_name(), "_")
 		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
 		col = self.db.Collection(name=name)
-		if col.add():
+		if col.add_to_db():
 			update.update_collection_combo_ids(self)
 			initialize.fill_collections_combo(self, prefix, id)
 
@@ -303,7 +303,7 @@ class Griffith:
 		prefix = gutils.before(widget.get_name(), "_")
 		vol_id = eval("self.%s_selected_volume"%prefix)
 		vol = self.db.Volume.get_by(volume_id=vol_id)
-		if vol.remove():
+		if vol.remove_from_db():
 			update.update_volume_combo_ids(self)
 			initialize.fill_volumes_combo(self, prefix, id)
 
@@ -311,7 +311,7 @@ class Griffith:
 		prefix = gutils.before(widget.get_name(), "_")
 		col_id = eval("self.%s_selected_collection"%prefix)
 		col = self.db.Collection.get_by(collection_id=col_id)
-		if col.remove():
+		if col.remove_from_db():
 			update.update_collection_combo_ids(self)
 			initialize.fill_collections_combo(self, prefix, id)
 
@@ -321,7 +321,7 @@ class Griffith:
 			new_name = self.e_volume_combo.get_active_text()
 			vol = self.db.Volume.get_by(volume_id=vol_id)
 			vol.name=new_name
-			if vol.update():
+			if vol.update_in_db():
 				initialize.fill_volumes_combo(self, prefix='e', default=vol_id)
 
 	def e_rename_collection(self, widget):
@@ -330,7 +330,7 @@ class Griffith:
 			new_name = self.e_collection_combo.get_active_text()
 			col = self.db.Collection.get_by(collection_id=col_id)
 			col.name=new_name
-			if col.update():
+			if col.update_in_db():
 				initialize.fill_collections_combo(self, prefix='e', default=col_id)
 
 	def e_show_volume(self, widget):
@@ -354,16 +354,16 @@ class Griffith:
 
 	# languages -------------------------------------------------------{{{
 	def on_lang_add_clicked(self, widget):
-		lang = self.db.Language(name=self.lang_name_combo.get_active_text())
-		if lang.add():
+		lang = self.db.Lang(name=self.lang_name_combo.get_active_text())
+		if lang.add_to_db():
 			initialize.language_combos(self)
 
 	def on_lang_remove_clicked(self, widget):
 		active = self.lang_name_combo.get_active()
 		if active>0:
 			lang_id = self.languages_ids[active]
-			lang = self.db.Language.get_by(lang_id=lang_id)
-			if lang != None and lang.remove():
+			lang = self.db.Lang.get_by(lang_id=lang_id)
+			if lang != None and lang.remove_from_db():
 				initialize.language_combos(self)
 		else:
 			self.debug.show("You have to select language first")
@@ -375,10 +375,10 @@ class Griffith:
 			return False
 		lang_id = self.languages_ids[active]
 		if lang_id>0:
-			lang = self.db.Language.get_by(lang_id=lang_id)
+			lang = self.db.Lang.get_by(lang_id=lang_id)
 			if lang != None:
 				lang.name = self.lang_name_combo.get_active_text()
-				if lang.update():
+				if lang.update_in_db():
 					initialize.language_combos(self)
 
 	def on_lang_name_combo_changed(self, widget):
@@ -399,7 +399,7 @@ class Griffith:
 	# tags -------------------------------------------------------------{{{
 	def on_tag_add_clicked(self, widget):
 		tag = self.db.Tag(name=self.tag_name_combo.get_active_text())
-		if tag.add():
+		if tag.add_to_db():
 			initialize.fill_preferences_tags_combo(self)
 			initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
@@ -409,7 +409,7 @@ class Griffith:
 		if active>-1:
 			tag_id = self.tags_ids[active]
 			tag = self.db.Tag.get_by(tag_id=tag_id)
-			if tag.remove():
+			if tag.remove_from_db():
 				initialize.fill_preferences_tags_combo(self)
 				initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 				initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
@@ -425,7 +425,7 @@ class Griffith:
 		tag = self.db.Tag.get_by(tag_id=tag_id)
 		if tag != None:
 			tag.name = self.tag_name_combo.get_active_text()
-			if tag.update():
+			if tag.update_in_db():
 				initialize.fill_preferences_tags_combo(self)
 				initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 				initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
@@ -439,7 +439,7 @@ class Griffith:
 	# audio codecs ------------------------------------------------------{{{
 	def on_acodec_add_clicked(self, widget):
 		acodec = self.db.ACodec(name=self.acodec_name_combo.get_active_text())
-		if acodec.add():
+		if acodec.add_to_db():
 			initialize.acodec_combos(self)
 
 	def on_acodec_remove_clicked(self, widget):
@@ -447,7 +447,7 @@ class Griffith:
 		if active>0:
 			acodec_id = self.acodecs_ids[active]
 			acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
-			if acodec.remove():
+			if acodec.remove_from_db():
 				initialize.acodec_combos(self)
 		else:
 			self.debug.show("You have to select audio codec first")
@@ -461,7 +461,7 @@ class Griffith:
 		acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
 		if acodec != None:
 			acodec.name = self.acodec_name_combo.get_active_text()
-			if acodec.update():
+			if acodec.update_in_db():
 				initialize.acodec_combos(self)
 
 	def on_acodec_name_combo_changed(self, widget):
@@ -473,7 +473,7 @@ class Griffith:
 	# audio channels ----------------------------------------------------{{{
 	def on_achannel_add_clicked(self, widget):
 		achannel = self.db.AChannel(name=self.achannel_name_combo.get_active_text())
-		if achannel.add():
+		if achannel.add_to_db():
 			initialize.achannel_combos(self)
 
 	def on_achannel_remove_clicked(self, widget):
@@ -481,7 +481,7 @@ class Griffith:
 		if active>0:
 			achannel_id = self.achannels_ids[active]
 			achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
-			if achannel.remove():
+			if achannel.remove_from_db():
 				initialize.achannel_combos(self)
 		else:
 			self.debug.show("You have to select audio channel first")
@@ -495,7 +495,7 @@ class Griffith:
 		achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
 		if achannel != None:
 			achannel.name = self.achannel_name_combo.get_active_text()
-			if achannel.update():
+			if achannel.update_in_db():
 				initialize.achannel_combos(self)
 
 	def on_achannel_name_combo_changed(self, widget):
@@ -504,44 +504,44 @@ class Griffith:
 			self.achannel_name_active = active
 	# }}}
 
-	# sub_formats -------------------------------------------------------------{{{
-	def on_sub_format_add_clicked(self, widget):
-		sub_format = self.db.SubFormat(name=self.sub_format_name_combo.get_active_text())
-		if sub_format.add():
-			initialize.sub_format_combos(self)
+	# subformats -------------------------------------------------------------{{{
+	def on_subformat_add_clicked(self, widget):
+		subformat = self.db.SubFormat(name=self.subformat_name_combo.get_active_text())
+		if subformat.add_to_db():
+			initialize.subformat_combos(self)
 
-	def on_sub_format_remove_clicked(self, widget):
-		active = self.sub_format_name_combo.get_active()
+	def on_subformat_remove_clicked(self, widget):
+		active = self.subformat_name_combo.get_active()
 		if active>0:
-			sub_format_id = self.sub_formats_ids[active]
-			sub_format = self.db.SubFormat.get_by(sub_format_id=sub_format_id)
-			if sub_format.remove():
-				initialize.sub_format_combos(self)
+			subformat_id = self.subformats_ids[active]
+			subformat = self.db.SubFormat.get_by(subformat_id=subformat_id)
+			if subformat.remove_from_db():
+				initialize.subformat_combos(self)
 		else:
 			self.debug.show("You have to select subtitle format first")
 
-	def on_sub_format_rename_clicked(self, widget):
+	def on_subformat_rename_clicked(self, widget):
 		try:
-			active = self.sub_format_name_active
+			active = self.subformat_name_active
 		except:
 			return False
-		sub_format_id = self.sub_formats_ids[active]
-		sub_format = self.db.SubFormat.get_by(sub_format_id=sub_format_id)
-		if sub_format != None:
-			sub_format.name = self.sub_format_name_combo.get_active_text()
-			if sub_format.update():
-				initialize.sub_format_combos(self)
+		subformat_id = self.subformats_ids[active]
+		subformat = self.db.SubFormat.get_by(subformat_id=subformat_id)
+		if subformat != None:
+			subformat.name = self.subformat_name_combo.get_active_text()
+			if subformat.update_in_db():
+				initialize.subformat_combos(self)
 
-	def on_sub_format_name_combo_changed(self, widget):
-		active = self.sub_format_name_combo.get_active()
+	def on_subformat_name_combo_changed(self, widget):
+		active = self.subformat_name_combo.get_active()
 		if active>-1:
-			self.sub_format_name_active = active
+			self.subformat_name_active = active
 	# }}}
 
 	# media ------------------------------------------------------------{{{
 	def on_medium_add_clicked(self, widget):
 		medium = self.db.Medium(name=self.medium_name_combo.get_active_text())
-		if medium.add():
+		if medium.add_to_db():
 			initialize.media_combos(self)
 
 	def on_medium_remove_clicked(self, widget):
@@ -549,7 +549,7 @@ class Griffith:
 		if active>-1:
 			medium_id = self.media_ids[active]
 			medium = self.db.Medium.get_by(medium_id=medium_id)
-			if medium.remove():
+			if medium.remove_from_db():
 				initialize.media_combos(self)
 		else:
 			self.debug.show("You have to select medium first")
@@ -563,7 +563,7 @@ class Griffith:
 		medium = self.db.Medium.get_by(medium_id=medium_id)
 		if medium != None:
 			medium.name = self.medium_name_combo.get_active_text()
-			if medium.update():
+			if medium.update_in_db():
 				initialize.media_combos(self)
 
 	def on_medium_name_combo_changed(self, widget):
@@ -575,7 +575,7 @@ class Griffith:
 	# vcodecs -------------------------------------------------------------{{{
 	def on_vcodec_add_clicked(self, widget):
 		vcodec = self.db.VCodec(name=self.vcodec_name_combo.get_active_text())
-		if vcodec.add():
+		if vcodec.add_to_db():
 			initialize.vcodec_combos(self)
 
 	def on_vcodec_remove_clicked(self, widget):
@@ -583,7 +583,7 @@ class Griffith:
 		if active>-1:
 			vcodec_id = self.vcodecs_ids[active]
 			vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
-			if vcodec.remove():
+			if vcodec.remove_from_db():
 				initialize.vcodec_combos(self)
 		else:
 			self.debug.show("You have to select video codec first")
@@ -597,7 +597,7 @@ class Griffith:
 		vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
 		if vcodec != None:
 			vcodec.name = self.vcodec_name_combo.get_active_text()
-			if vcodec.update():
+			if vcodec.update_in_db():
 				initialize.vcodec_combos(self)
 
 	def on_vcodec_name_combo_changed(self, widget):

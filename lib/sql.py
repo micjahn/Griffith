@@ -27,176 +27,89 @@ import os.path
 import gutils
 import gtk
 
+class DBTable(object):
+	def __repr__(self):
+		return "%s:%s" % (self.__class__.__name__, self.name)
+	def add_to_db(self):
+		if self.name==None or len(self.name)==0:
+			debug.show("%s: name can't be empty" % self.dbtable_cname)
+			return False
+		# check if achannel already exists
+		if self.get_by(name=self.name) != None:
+			debug.show("%s: '%s' already exists" % (self.__class__.__name__, self.name))
+			return False
+		debug.show("%s: adding '%s' to database..." % (self.__class__.__name__, self.name))
+		self.save()
+		self.flush()
+		self.refresh()
+		return True
+	def remove_from_db(self):
+		dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
+		if dbtable_id<1:
+			debug.show("%s: none selected => none removed" % self.__class__.__name__)
+			return False
+		if 'assigned_movie_ids' in self.__dict__:
+			if len(self.assigned_movie_ids)>0:
+				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+				return False
+		elif 'assigned_movie' in self.__dict__:
+			if len(self.assigned_movies)>0:
+				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+				return False
+		debug.show("%s: removing '%s' (id=%s) from database..."%(self.__class__.__name__, self.name, dbtable_id))
+		self.delete()
+		self.flush()
+		#self.refresh()
+		return True
+	def update_in_db(self):
+		dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
+		if dbtable_id<1:
+			debug.show("%s: none selected => none updated" % self.__class__.__name__)
+			return False
+		if self.name==None or len(self.name)==0:
+			debug.show("%s: name can't be empty" % self.__class__.__name__)
+			return False
+		if self.get_by(name=self.name) != None:
+			gutils.warning(self, msg=_("This name is already in use!"))
+			return False
+		self.update()
+		self.flush()
+		self.refresh()
+		return True
+	
 class GriffithSQL:
 	version = 2	# database format version, incrase after any changes in data structures
 	metadata = None
-	class Movie(object):#{{{
-		def __repr__(self):
-			return "Movie:%s (number=%s)" % (self.movie_id, self.number)
-		def __init__(self):
-			# self.number = find_next_available() # TODO
-			pass
-		def remove(self):
-			if int(self.loaned)==1:
-				debug.show("You can't remove loaned movie!")
-				return False
-			for i in self.tags:
-				i.delete()
-			for i in self.languages:
-				i.delete()
-			self.delete()
-			self.flush()#}}}
 	class Configuration(object):
 		def __repr__(self):
 			return "Config:%s=%s" % (self.param, self.value)
-	class AChannel(object):#{{{
+	class AChannel(DBTable):
+		pass
+	class ACodec(DBTable):
+		pass
+	class Collection(DBTable):
+		pass
+	class Lang(DBTable):
+		pass
+	class Medium(DBTable):
+		pass
+	class MovieLang(object):
 		def __repr__(self):
-			return "Achannel:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("AChannel: name can't be empty")
-				return False
-			# check if achannel already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("AChannel: '%s' already exists"%self.name)
-				return False
-			debug.show("AChannel; adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.achannel_id<1:
-				debug.show("AChannel: none selected => none removed")
-				return False
-			if len(self.assigned_movie_ids)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("AChannel: removing '%s' (id=%s) from database..."%(self.name, self.achannel_id))
-			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.achannel_id<1:
-				debug.show("AChannel: none selected => none updated")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("AChannel: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
-	class ACodec(object):#{{{
+			return "MovieLang:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)" % (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id, self.subformat_id)
+	class MovieTag(object):
 		def __repr__(self):
-			return "Acodec:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("ACodec: name can't be empty")
-				return False
-			# check if acodec already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("ACodec: '%s' already exists"%self.name)
-				return False
-			debug.show("ACodec; adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.acodec_id<1:
-				debug.show("ACodec: none selected => none removed")
-				return False
-			if len(self.assigned_movie_ids)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("ACodec: removing '%s' (id=%s) from database..."%(self.name, self.acodec_id))
-			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.acodec_id<1:
-				debug.show("ACodec: none selected => none updated")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("ACodec: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
-	class Collection(object):#{{{
+			return "MovieTag:%s-%s" % (self.movie_id, self.tag_id)
+	class Person(object):
 		def __repr__(self):
-			return "Collection:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("Collection: name can't be empty")
-				return False
-			# check if collection already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("Collection: '%s' already exists"%self.name)
-				return False
-			debug.show("Collection: adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.collection_id<1:
-				debug.show("Collection: none selected => none removed")
-				return False
-			if self.loaned or len(self.assigned_movies)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("Collection: removing '%s' (id=%s) from database..."%(self.name, self.collection_id))
-			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.collection_id<1:
-				debug.show("Collection: none selected => none updated")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("Collection: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
-	class Language(object):#{{{
-		def __repr__(self):
-			return "Language:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("Language: name can't be empty")
-				return False
-			# check if language already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("Language: '%s' already exists"%self.name)
-				return False
-			debug.show("Language: adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.lang_id<1:
-				debug.show("Language: none selected => none removed")
-				return False
-			if len(self.assigned_movie_ids)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("Language: removing '%s' (id=%s) from database..."%(self.name, self.lang_id))
-			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.lang_id<1:
-				debug.show("Language: none selected => none removed")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("Language: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
+			return "Person:%s" % self.name
+	class SubFormat(DBTable):
+		pass
+	class Tag(DBTable):#{{{
+		pass
+	class VCodec(DBTable):
+		pass
+	class Volume(DBTable):
+		pass
 	class Loan(object):#{{{
 		def __repr__(self):
 			return "Loan:%s (movie:%s person:%s)" % (self.loan_id, self.movie_id, self.person_id)
@@ -261,200 +174,22 @@ class GriffithSQL:
 			if self.return_date==None:
 				self.return_date = func.current_date()
 			self.save_or_update()#}}}
-	class Medium(object):#{{{
+	class Movie(object):#{{{
 		def __repr__(self):
-			return "Medium:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("Medium: name can't be empty")
+			return "Movie:%s (number=%s)" % (self.movie_id, self.number)
+		def __init__(self):
+			# self.number = find_next_available() # TODO
+			pass
+		def remove_from_db(self):
+			if int(self.loaned)==1:
+				debug.show("You can't remove loaned movie!")
 				return False
-			# check if medium already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("Medium: '%s' already exists"%self.name)
-				return False
-			debug.show("Medium; adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.medium_id<1:
-				debug.show("Medium: none selected => none removed")
-				return False
-			if len(self.assigned_movies)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("Medium: removing '%s' (id=%s) from database..."%(self.name, self.medium_id))
+			for i in self.tags:
+				i.delete()
+			for i in self.languages:
+				i.delete()
 			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.medium_id<1:
-				debug.show("Medium: none selected => none updated")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("Medium: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
-	class MovieLanguage(object):
-		def __repr__(self):
-			return "MovieLanguage:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)" % (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id, self.sub_format_id)
-	class MovieTag(object):
-		def __repr__(self):
-			return "MovieTag:%s-%s" % (self.movie_id, self.tag_id)
-	class Person(object):
-		def __repr__(self):
-			return "Person:%s" % self.name
-	class SubFormat(object):#{{{
-		def __repr__(self):
-			return "SubFormat:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("SubFormat: name can't be empty")
-				return False
-			# check if sub_format already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("SubFormat: '%s' already exists"%self.name)
-				return False
-			debug.show("SubFormat; adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.sub_format_id<1:
-				debug.show("SubFormat: none selected => none removed")
-				return False
-			if len(self.assigned_movie_ids)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("SubFormat: removing '%s' (id=%s) from database..."%(self.name, self.sub_format_id))
-			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.sub_format_id<1:
-				debug.show("SubFormat: none selected => none updated")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("SubFormat: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
-	class Tag(object):#{{{
-		def __repr__(self):
-			return "Tag:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("Tag: name can't be empty")
-				return False
-			# check if tag already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("Tag: '%s' already exists"%self.name)
-				return False
-			debug.show("Tag: adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.tag_id<1:
-				debug.show("Tag: none selected => none removed")
-				return False
-			if len(self.assigned_movie_ids) > 0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("Tag: removing '%s' (id=%s) from database..."%(self.name, self.tag_id))
-			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.tag_id<1:
-				debug.show("Tag: none selected => none removed")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("Tag: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
-	class VCodec(object):#{{{
-		def __repr__(self):
-			return "VCodec:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("VCodec: name can't be empty")
-				return False
-			# check if vcodec already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("VCodec: '%s' already exists"%self.name)
-				return False
-			debug.show("VCodec: adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.vcodec_id<1:
-				debug.show("VCodec: none selected => none removed")
-				return False
-			if len(self.assigned_movies)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("VCodec: removing '%s' (id=%s) from database..."%(self.name, self.vcodec_id))
-			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.vcodec_id<1:
-				debug.show("VCodec: none selected => none removed")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("VCodec: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
-	class Volume(object):#{{{
-		def __repr__(self):
-			return "Volume:%s" % self.name
-		def add(self):
-			if self.name==None or len(self.name)==0:
-				debug.show("Volume: name can't be empty")
-				return False
-			# check if volume already exists
-			if self.get_by(name=self.name) != None:
-				debug.show("Volume: '%s' already exists"%self.name)
-				return False
-			debug.show("Volume: adding '%s' to database..."%self.name)
-			self.flush()
-			return True
-		def remove(self):
-			if self.volume_id<1:
-				debug.show("Volume: none selected => none removed")
-				return False
-			if self.loaned or len(self.assigned_movies)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-			debug.show("Volume: removing '%s' (id=%s) from database..."%(self.name, self.volume_id))
-			self.delete()
-			self.flush()
-			return True
-		def update(self):
-			if self.volume_id<1:
-				debug.show("Volume: none selected => none removed")
-				return False
-			if self.name==None or len(self.name)==0:
-				debug.show("Volume: name can't be empty")
-				return False
-			if self.get_by(name=self.name) != None:
-				gutils.warning(self, msg=_("This name is already in use!"))
-				return False
-			self.flush()
-			return True#}}}
+			self.flush()#}}}
 
 	def __init__(self, config, gdebug, griffith_dir):	#{{{
 		from sqlalchemy.mods.threadlocal import assign_mapper
@@ -584,9 +319,9 @@ class GriffithSQL:
 		achannels = Table('achannels', self.metadata,
 			Column('achannel_id', Integer, primary_key=True),
 			Column('name', VARCHAR(64), nullable=False, unique='achannel_name_key'))
-		sub_formats = Table('sub_formats', self.metadata,
-			Column('sub_format_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='sub_format_name_key'))
+		subformats = Table('subformats', self.metadata,
+			Column('subformat_id', Integer, primary_key=True),
+			Column('name', VARCHAR(64), nullable=False, unique='subformat_name_key'))
 		tags = Table('tags', self.metadata,
 			Column('tag_id', Integer, primary_key=True),
 			Column('name', VARCHAR(64), nullable=False, unique='tag_name_key'))
@@ -597,7 +332,7 @@ class GriffithSQL:
 			Column('lang_id', Integer, ForeignKey('languages.lang_id'), nullable=False),
 			Column('acodec_id', Integer, ForeignKey('acodecs.acodec_id'), nullable=True),
 			Column('achannel_id', Integer, ForeignKey('achannels.achannel_id'), nullable=True),
-			Column('sub_format_id', Integer, ForeignKey('sub_formats.sub_format_id'), nullable=True))
+			Column('subformat_id', Integer, ForeignKey('subformats.subformat_id'), nullable=True))
 		movie_tag = Table('movie_tag', self.metadata,
 			Column('mt_id', Integer, primary_key=True),
 			Column('movie_id', Integer, ForeignKey('movies.movie_id')),
@@ -607,7 +342,7 @@ class GriffithSQL:
 			Column('value', VARCHAR(128), nullable=False))#}}}
 
 		# mappers -------------------------------------------------#{{{
-		assign_mapper(self.Configuration,configuration)
+		assign_mapper(self.Configuration, configuration)
 		assign_mapper(self.Volume,volumes, properties={
 			'assigned_movies': relation(self.Movie)})
 		assign_mapper(self.Collection, collections, properties={
@@ -617,15 +352,15 @@ class GriffithSQL:
 		assign_mapper(self.VCodec, vcodecs, properties={
 			'assigned_movies': relation(self.Movie)})
 		assign_mapper(self.Person, people)
-		assign_mapper(self.MovieLanguage, movie_lang)
+		assign_mapper(self.MovieLang, movie_lang)
 		assign_mapper(self.ACodec, acodecs, properties={
-			'assigned_movie_ids': relation(self.MovieLanguage)})
+			'assigned_movie_ids': relation(self.MovieLang)})
 		assign_mapper(self.AChannel, achannels, properties={
-			'assigned_movie_ids': relation(self.MovieLanguage)})
-		assign_mapper(self.SubFormat, sub_formats, properties={
-			'assigned_movie_ids': relation(self.MovieLanguage)})
-		assign_mapper(self.Language, languages, properties={
-			'assigned_movie_ids': relation(self.MovieLanguage)})
+			'assigned_movie_ids': relation(self.MovieLang)})
+		assign_mapper(self.SubFormat, subformats, properties={
+			'assigned_movie_ids': relation(self.MovieLang)})
+		assign_mapper(self.Lang, languages, properties={
+			'assigned_movie_ids': relation(self.MovieLang)})
 		assign_mapper(self.MovieTag, movie_tag)
 		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag)})
 		assign_mapper(self.Loan, loans, properties = {
@@ -637,7 +372,7 @@ class GriffithSQL:
 			'volume'     : relation(self.Volume),
 			'collection' : relation(self.Collection),
 			'medium'     : relation(self.Medium),
-			'languages'  : relation(self.MovieLanguage),
+			'languages'  : relation(self.MovieLang),
 			'tags'       : relation(self.MovieTag),
 			'vcodec'     : relation(self.VCodec)})#}}}
 		
@@ -693,7 +428,7 @@ class GriffithSQL:
 		if t_languages != None:
 			for lang in t_languages.keys():
 				for type in t_languages[lang].keys():
-					movie.languages.append(self.MovieLanguage(lang_id=lang, type=type))
+					movie.languages.append(self.MovieLang(lang_id=lang, type=type))
 		# tags
 		if t_tags != None:
 			for tag in t_tags.keys():
@@ -707,19 +442,21 @@ class GriffithSQL:
 			return False
 		self.clean_t_movies(t_movies)
 		self.Movie.mapper.mapped_table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
-		self.MovieLanguage.mapper.mapped_table.delete(self.MovieLanguage.c.movie_id==movie_id).execute()
+		self.MovieLang.mapper.mapped_table.delete(self.MovieLang.c.movie_id==movie_id).execute()
 		self.MovieTag.mapper.mapped_table.delete(self.MovieTag.c.movie_id==movie_id).execute()
 		movie = self.Movie.get_by(movie_id=movie_id)
 		# languages
 		if t_languages != None:
 			for lang in t_languages.keys():
 				for type in t_languages[lang].keys():
-					movie.languages.append(self.MovieLanguage(lang_id=lang, type=type))
+					movie.languages.append(self.MovieLang(lang_id=lang, type=type))
 		# tags
 		if t_tags != None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.MovieTag(tag_id=tag))
-		#movie.save_or_update()
+		movie.update()
+		movie.flush()
+		movie.refresh()
 	# }}}
 
 	# DATABASE ---------------------------------------------------------{{{
@@ -777,7 +514,7 @@ class GriffithSQL:
 			self.metadata.execute('DROP TABLE collections CASCADE;')
 			self.metadata.execute('DROP TABLE acodecs CASCADE;')
 			self.metadata.execute('DROP TABLE achannels CASCADE;')
-			self.metadata.execute('DROP TABLE sub_formats CASCADE;')
+			self.metadata.execute('DROP TABLE subformats CASCADE;')
 			self.metadata.execute('DROP TABLE movie_tag CASCADE;')
 			self.metadata.execute('DROP TABLE movie_lang CASCADE;')
 			self.metadata.execute('DROP TABLE tags CASCADE;')
@@ -792,12 +529,12 @@ class GriffithSQL:
 			self.AChannel.mapper.mapped_table.drop()
 			self.SubFormat.mapper.mapped_table.drop()
 			self.Medium.mapper.mapped_table.drop()
-			self.Language.mapper.mapped_table.drop()
+			self.Lang.mapper.mapped_table.drop()
 			self.Volume.mapper.mapped_table.drop()
 			self.Collection.mapper.mapped_table.drop()
 			self.Movie.mapper.mapped_table.drop()
 			self.MovieTag.mapper.mapped_table.drop()
-			self.MovieLanguage.mapper.mapped_table.drop()
+			self.MovieLang.mapper.mapped_table.drop()
 			self.Tag.mapper.mapped_table.drop()
 			#objectstore.commit()
 
@@ -856,8 +593,8 @@ class GriffithSQL:
 			self.Person.mapper.mapped_table.create()
 			self.Movie.mapper.mapped_table.create()
 			self.Loan.mapper.mapped_table.create()
-			self.Language.mapper.mapped_table.create()
-			self.MovieLanguage.mapper.mapped_table.create()
+			self.Lang.mapper.mapped_table.create()
+			self.MovieLang.mapper.mapped_table.create()
 			self.Tag.mapper.mapped_table.create()
 			self.Tag.mapper.mapped_table.insert().execute(name=_('Favourite'))
 			self.Tag.mapper.mapped_table.insert().execute(name=_('To buy'))
@@ -1016,14 +753,13 @@ class GriffithSQL:
 # for debugging (run: ipython sql.py)
 if __name__ == '__main__':
 	import config, gdebug, gglobals
+	import sys
 	db = GriffithSQL(config.Config(), gdebug.GriffithDebug(True), gglobals.griffith_dir)
-#	if db.engine.name == 'sqlite':
-#		tmp = db.engine.filename
-#	else:
-#		tmp = db.engine.opts
-#	db.engine.echo = True # print SQL queries
+	if len(sys.argv)>1:
+		if sys.argv[1] == 'echo':
+			db.metadata.engine.echo = True # print SQL queries
 	print '\nGriffithSQL test drive\n======================'
-#	print "Connection: %s %s" % (db.engine.name, tmp)
+	print "Engine: %s" % (db.metadata.engine.name)
 	print 'Database object name: db\n'
 
 # vim: fdm=marker
