@@ -27,7 +27,7 @@ import gtk
 import datetime
 
 def loan_movie(self):
-	people = self.db.Person.select(order_by="name ASC")
+	people = self.db.Person.select(order_by='name ASC')
 	model = gtk.ListStore(str)
 	if len(people)>0:
 		for person in people:
@@ -50,7 +50,7 @@ def commit_loan(self):
 
 	person = self.db.Person.get_by(name=person_name)
 	if person==None:
-		self.debug.show("commit_loan: wrong person")
+		self.debug.show("commit_loan: person doesn't exist")
 		return False
 	movie = self.db.Movie.get_by(movie_id=self.e_movie_id.get_text())
 
@@ -68,17 +68,14 @@ def commit_loan(self):
 		loan.collection_id = movie.collection_id
 	if movie.volume_id>0:
 		loan.volume_id = movie.volume_id
-	loan.set_loaned()
-	
-	# finally, force a refresh
-	self.update_statusbar(_("Movie loaned"))
-	self.treeview_clicked()
+	if loan.set_loaned():
+		self.update_statusbar(_("Movie loaned"))
+		self.treeview_clicked()
 
 def return_loan(self):
 	movie_id = self.e_movie_id.get_text()
 	if movie_id:
 		loan = self.db.Loan.get_by(movie_id=movie_id, return_date=None)
-		loan.set_returned()
-		# force a refresh
-		self.treeview_clicked()
+		if loan and loan.set_returned():
+			self.treeview_clicked()
 

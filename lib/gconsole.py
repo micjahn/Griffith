@@ -31,7 +31,7 @@ def check_args(self):
 	if self.args:
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], "hDco:s:d:w:y:",
-					["help", "debug", "clean", "fix-db", "search_original=", "search_title=", "director=", "with=", "year="])
+					['help', 'debug', 'sqlecho', 'clean', 'fix-db', 'search_original=', 'search_title=', 'director=', 'with=', 'year='])
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
@@ -49,7 +49,8 @@ def check_args(self):
 				sys.exit()
 			if o == "--fix-db":
 				self.db.fix_old_data()
-				sys.exit()
+			if o == "--sqlecho":
+				self.db.metadata.engine.echo = True
 			if o in ("-o", "--search_original"):
 				where['original_title'] = a
 			if o in ("-s", "--search_title"):
@@ -87,6 +88,7 @@ def con_usage():
 	print "-D, --debug\trun with more debug info"
 	print "-c, --clean\tfind and delete orphan files in poster's directory"
 	print "--fix-db\tfix old database"
+	print "--sqlecho\tprint SQL queries"
 	print "\n printing movie list:"
 	print "-d <expr>, --director=<expr>"
 	print "-o <expr>, --original_title=<expr>"

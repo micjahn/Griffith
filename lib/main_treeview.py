@@ -152,17 +152,8 @@ def treeview_clicked(self):
 				pixbuf = self.Image.get_pixbuf()
 		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 		if int(movie.loaned) == 1:
-			if movie.collection_id > 0:
-				collection = self.db.Loan.get_by(collection_id=movie.collection_id, return_date=None)
-				if int(collection.loaned) == 1:
-					data_loan = collection
-			elif movie.volume_id > 0:
-				volume = self.db.Loan.get_by(volume_id=movie.volume_id, return_date=None)
-				if int(volume.loaned)==1:
-					data_loan = volume
-			else:
-				data_loan = self.db.Loan.get_by(movie_id=movie.number, return_date=None)
-			data_person = self.db.Person.get_by(person_id=data_loan.person_id)
+			data_loan = self.db.get_loan_info(collection_id=movie.collection_id, volume_id=movie.volume_id, movie_id=movie.movie_id)
+			data_person = self.db.Person.get_by(person_id=data_loan.person.person_id)
 			self.person_name = str(data_person.name)
 			self.person_email = str(data_person.email)
 			self.loan_date = str(data_loan.date)
@@ -180,7 +171,7 @@ def treeview_clicked(self):
 				self.loans_treemodel.set_value(myiter, 1, str(loan.return_date)[:10])
 			else:
 				self.loans_treemodel.set_value(myiter, 1, "---")
-			person = self.db.Person.get_by(person_id=loan.person_id)
+			person = self.db.Person.get_by(person_id=loan.person.person_id)
 			self.loans_treemodel.set_value(myiter, 2, person.name)
 
 		# volumes/collections
