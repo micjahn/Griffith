@@ -38,7 +38,7 @@ def delete_movie(self):
 		# try to delete poster image as well
 		if movie.image != None:
 			delete_poster(self, movie.image)
-		movie.remove()
+		movie.remove_from_db()
 		# update main treelist
 		self.total -= 1
 		self.total_filter -= 1
@@ -69,12 +69,4 @@ def delete_poster(self, poster):
 			os.remove(image_thumbnail)
 		except:
 			self.debug.show("Can't remove %s file"%image_thumbnail)
-
-def delete_movie_from_db(self, m_id, m_iter):
-	self.total -= 1
-	self.total_filter -= 1
-	self.db.remove_movie_by_num(m_id)
-	self.treemodel.remove(m_iter)
-	self.clear_details()
-	self.count_statusbar()
 

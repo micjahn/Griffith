@@ -292,7 +292,6 @@ def define_widgets(self, gladefile):
 		"on_add_movie_close_clicked"            : self.add_movie_close_db,
 		"on_delete_movie_clicked"               : self.delete_movie,
 		"on_delete1_movie_activate"             : self.delete_movie,
-		"on_ok_delete_clicked"                  : self.delete_movie_from_db,
 		"on_main_treeview_row_activated"        : self.treeview_clicked,
 		"on_row_activated"                      : self.treeview_clicked,
 		"on_get_from_web_clicked"               : self.get_from_web,

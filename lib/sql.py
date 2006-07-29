@@ -32,7 +32,7 @@ class DBTable(object):
 		return "%s:%s" % (self.__class__.__name__, self.name)
 	def add_to_db(self):
 		if self.name==None or len(self.name)==0:
-			debug.show("%s: name can't be empty" % self.dbtable_cname)
+			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
 		# check if achannel already exists
 		if self.get_by(name=self.name) != None:
@@ -48,14 +48,14 @@ class DBTable(object):
 		if dbtable_id<1:
 			debug.show("%s: none selected => none removed" % self.__class__.__name__)
 			return False
-		if 'assigned_movie_ids' in self.__dict__:
-			if len(self.assigned_movie_ids)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
-		elif 'assigned_movie' in self.__dict__:
-			if len(self.assigned_movies)>0:
-				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-				return False
+		tmp = None
+		if hasattr(self,'assigned_movie_ids'):
+			tmp = getattr(self,'assigned_movie_ids')
+		elif hasattr(self,'assigned_movies'):
+			tmp = getattr(self,'assigned_movies')
+		if tmp and len(tmp)>0:
+			gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+			return False
 		debug.show("%s: removing '%s' (id=%s) from database..."%(self.__class__.__name__, self.name, dbtable_id))
 		self.delete()
 		self.flush()
