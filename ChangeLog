@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-07-30 Piotr Ozarowski <ozarow@gmail.com>
+	* Selecting next/previous movie is now possible (new toolbar buttons)
+
 2006-07-29 Piotr Ozarowski <ozarow@gmail.com>
 	* IMDb movie plugin adds new lines in "with" field again
 	* Draggable toolbar

@@ -38,14 +38,13 @@ def delete_movie(self):
 		# try to delete poster image as well
 		if movie.image != None:
 			delete_poster(self, movie.image)
-		movie.remove_from_db()
-		# update main treelist
-		self.total -= 1
-		self.total_filter -= 1
-		self.treemodel.remove(m_iter)
-		self.clear_details()
-		self.count_statusbar()
-		self.main_treeview.set_cursor_on_cell(self.total_filter-1)
+		if movie.remove_from_db():
+			# update main treelist
+			self.total -= 1
+			self.go_prev()
+			self.treemodel.remove(m_iter)
+			self.clear_details()
+			self.count_statusbar()
 	else:
 		return False
 

@@ -103,13 +103,13 @@ def define_widgets(self, gladefile):
 	# preferences
 	self.w_preferences = gladefile.get_widget('w_preferences')
 	self.epdf_reader   = gladefile.get_widget('pdf_reader_entry')
-	self.p_db_type     = gladefile.get_widget("p_db_type")
-	self.p_db_host     = gladefile.get_widget("p_db_host")
-	self.p_db_port     = gladefile.get_widget("p_db_port")
-	self.p_db_name     = gladefile.get_widget("p_db_name")
-	self.p_db_user     = gladefile.get_widget("p_db_user")
-	self.p_db_passwd   = gladefile.get_widget("p_db_passwd")
-	self.p_db_details  = gladefile.get_widget("p_db_details")
+	self.p_db_type     = gladefile.get_widget('p_db_type')
+	self.p_db_host     = gladefile.get_widget('p_db_host')
+	self.p_db_port     = gladefile.get_widget('p_db_port')
+	self.p_db_name     = gladefile.get_widget('p_db_name')
+	self.p_db_user     = gladefile.get_widget('p_db_user')
+	self.p_db_passwd   = gladefile.get_widget('p_db_passwd')
+	self.p_db_details  = gladefile.get_widget('p_db_details')
 	# cover print
 	self.w_print_cover_simple              = gladefile.get_widget('w_print_cover_simple')
 	self.w_print_cover_image               = gladefile.get_widget('w_print_cover_image')
@@ -223,16 +223,16 @@ def define_widgets(self, gladefile):
 	self.tooltips.set_tip(self.mail_email, _("This is the from e-mail address that should be used to all outgoing e-mail. You want to include your own e-mail address here probably."))
 
 	# add handlers for windows delete events
-	self.add_movie_window.connect("delete_event", self.on_delete_event_am)
-	self.w_results.connect("delete_event", self.on_delete_event_r)
-	self.w_people.connect("delete_event", self.on_delete_event_wp)
-	self.w_add_person.connect("delete_event", self.on_delete_event_ap)
-	self.w_edit_person.connect("delete_event", self.on_delete_event_ep)
-	self.w_loan_to.connect("delete_event", self.on_delete_event_lt)
-	self.w_print_cover_simple.connect("delete_event", self.on_delete_event_pcs)
-	self.w_print_cover_image.connect("delete_event", self.on_delete_event_pci)
-	self.poster_window.connect("delete_event", self.on_delete_event_pw)
-	self.w_preferences.connect("delete_event", self.on_delete_event_p)
+	self.add_movie_window.connect('delete_event', self.on_delete_event_am)
+	self.w_results.connect('delete_event', self.on_delete_event_r)
+	self.w_people.connect('delete_event', self.on_delete_event_wp)
+	self.w_add_person.connect('delete_event', self.on_delete_event_ap)
+	self.w_edit_person.connect('delete_event', self.on_delete_event_ep)
+	self.w_loan_to.connect('delete_event', self.on_delete_event_lt)
+	self.w_print_cover_simple.connect('delete_event', self.on_delete_event_pcs)
+	self.w_print_cover_image.connect('delete_event', self.on_delete_event_pci)
+	self.poster_window.connect('delete_event', self.on_delete_event_pw)
+	self.w_preferences.connect('delete_event', self.on_delete_event_p)
 
 	# languages
 	self.lang_name_combo = gladefile.get_widget('lang_name_combo')	# preferences window
@@ -270,7 +270,7 @@ def define_widgets(self, gladefile):
 	#	self.zoom_poster.connect("enter", self.z_poster)
 	#	self.zoom_poster.connect("leave", self.z_poster_hide)
 	#else:
-	self.zoom_poster.connect("clicked", self.z_poster)
+	self.zoom_poster.connect('clicked', self.z_poster)
 
 	self.main_window.connect('key_press_event', self.on_key_press_event)
 	self.main_treeview.connect('button_press_event', \
@@ -281,142 +281,145 @@ def define_widgets(self, gladefile):
 	# define handlers for general events
 
 	dic = {
-		"gtk_main_quit"                         : self.destroy,
-		"on_about1_activate"                    : self.about_dialog,
-		"on_quit1_activate"                     : self.destroy,
-		"on_toolbar_quit_clicked"               : self.destroy,
-		"on_toolbar_add_clicked"                : self.add_movie,
-		"on_cancel_add_movie_clicked"           : self.hide_add_movie,
-		"on_add1_activate"                      : self.add_movie,
-		"on_add_movie_clicked"                  : self.add_movie_db,
-		"on_add_movie_close_clicked"            : self.add_movie_close_db,
-		"on_delete_movie_clicked"               : self.delete_movie,
-		"on_delete1_movie_activate"             : self.delete_movie,
-		"on_main_treeview_row_activated"        : self.treeview_clicked,
-		"on_row_activated"                      : self.treeview_clicked,
-		"on_get_from_web_clicked"               : self.get_from_web,
-		"on_update_button_clicked"              : self.update_movie,
+		'gtk_main_quit'                         : self.destroy,
+		'on_about1_activate'                    : self.about_dialog,
+		'on_quit1_activate'                     : self.destroy,
+		'on_toolbar_quit_clicked'               : self.destroy,
+		'on_toolbar_add_clicked'                : self.add_movie,
+		'on_cancel_add_movie_clicked'           : self.hide_add_movie,
+		'on_add1_activate'                      : self.add_movie,
+		'on_add_movie_clicked'                  : self.add_movie_db,
+		'on_add_movie_close_clicked'            : self.add_movie_close_db,
+		'on_delete_movie_clicked'               : self.delete_movie,
+		'on_delete1_movie_activate'             : self.delete_movie,
+		'on_main_treeview_row_activated'        : self.treeview_clicked,
+		'on_row_activated'                      : self.treeview_clicked,
+		'on_get_from_web_clicked'               : self.get_from_web,
+		'on_update_button_clicked'              : self.update_movie,
 		# preferences
-		"on_preferences1_activate"              : self.show_preferences,
-		"on_cancel_preferences_clicked"         : self.hide_preferences,
-		"on_save_preferences_clicked"           : self.save_preferences,
-		"on_p_db_type_changed"                  : self.on_p_db_type_changed,
-		"on_backup_activate"                    : self.backup,
-		"on_restore_activate"                   : self.restore,
-		"on_merge_activate"                     : self.merge,
-		"on_cover_simple_activate"              : self.print_cover_simple_show,
-		"on_cancel_print_cover_simple_clicked"  : self.print_cover_simple_hide,
-		"on_b_print_cover_simple_clicked"       : self.print_cover_simple_process,
-		"on_add_clear_clicked"                  : self.clear_add_dialog,
-		"on_people_activate"                    : self.show_people_window,
-		"on_cancel_people_clicked"              : self.hide_people_window,
-		"on_filter_txt_changed"                 : self.filter_txt,
-		"on_filter_criteria_changed"            : self.filter_txt,
-		"on_clear_filter_clicked"               : self.clear_filter,
-		"on_people_add_clicked"                 : self.add_person,
-		"on_add_person_cancel_clicked"          : self.add_person_cancel,
-		"on_add_person_db_clicked"              : self.add_person_db,
-		"on_people_delete_clicked"              : self.delete_person,
-		"on_people_edit_clicked"                : self.edit_person,
-		"on_edit_person_cancel_clicked"         : self.edit_person_cancel,
-		"on_update_person_clicked"              : self.update_person,
-		"on_clone_activate"                     : self.clone_movie,
-		"on_loan_button_clicked"                : self.loan_movie,
-		"on_cancel_loan_clicked"                : self.cancel_loan,
-		"on_loan_ok_clicked"                    : self.commit_loan,
-		"on_return_button_clicked"              : self.return_loan,
-		"on_list_loaned_movies_activate"        : self.filter_loaned,
-		"on_cover_choose_image_activate"        : self.print_cover_image,
-		"on_cancel_print_cover_image_clicked"   : self.print_cover_image_hide,
-		"on_b_print_cover_image_clicked"        : self.print_cover_image_process,
-		"on_go_site_clicked"                    : self.go_oficial_site,
-		"on_combo_source_changed"               : self.source_changed,
+		'on_preferences1_activate'              : self.show_preferences,
+		'on_cancel_preferences_clicked'         : self.hide_preferences,
+		'on_save_preferences_clicked'           : self.save_preferences,
+		'on_p_db_type_changed'                  : self.on_p_db_type_changed,
+		'on_backup_activate'                    : self.backup,
+		'on_restore_activate'                   : self.restore,
+		'on_merge_activate'                     : self.merge,
+		'on_cover_simple_activate'              : self.print_cover_simple_show,
+		'on_cancel_print_cover_simple_clicked'  : self.print_cover_simple_hide,
+		'on_b_print_cover_simple_clicked'       : self.print_cover_simple_process,
+		'on_add_clear_clicked'                  : self.clear_add_dialog,
+		'on_people_activate'                    : self.show_people_window,
+		'on_cancel_people_clicked'              : self.hide_people_window,
+		'on_filter_txt_changed'                 : self.filter_txt,
+		'on_filter_criteria_changed'            : self.filter_txt,
+		'on_clear_filter_clicked'               : self.clear_filter,
+		'on_people_add_clicked'                 : self.add_person,
+		'on_add_person_cancel_clicked'          : self.add_person_cancel,
+		'on_add_person_db_clicked'              : self.add_person_db,
+		'on_people_delete_clicked'              : self.delete_person,
+		'on_people_edit_clicked'                : self.edit_person,
+		'on_edit_person_cancel_clicked'         : self.edit_person_cancel,
+		'on_update_person_clicked'              : self.update_person,
+		'on_clone_activate'                     : self.clone_movie,
+		'on_loan_button_clicked'                : self.loan_movie,
+		'on_cancel_loan_clicked'                : self.cancel_loan,
+		'on_loan_ok_clicked'                    : self.commit_loan,
+		'on_return_button_clicked'              : self.return_loan,
+		'on_list_loaned_movies_activate'        : self.filter_loaned,
+		'on_cover_choose_image_activate'        : self.print_cover_image,
+		'on_cancel_print_cover_image_clicked'   : self.print_cover_image_hide,
+		'on_b_print_cover_image_clicked'        : self.print_cover_image_process,
+		'on_go_site_clicked'                    : self.go_oficial_site,
+		'on_combo_source_changed'               : self.source_changed,
+		# toolbar
+		'on_go_first_clicked'                   : self.go_first,
+		'on_go_last_clicked'                    : self.go_last,
+		'on_go_back_clicked'                    : self.go_prev,
+		'on_go_forward_clicked'                 : self.go_next,
 		# poster
-		"on_e_picture_clicked"                  : self.change_poster,
-		"on_open_poster_clicked"                : self.change_poster,
-		"on_delete_poster_clicked"              : self.del_poster,
-		"on_fetch_poster_clicked"               : self.get_poster,
-		"on_go_imdb_clicked"                    : self.go_imdb_site,
-		"on_go_trailer_clicked"                 : self.go_trailer_site,
-		"on_goto_homepage_activate"             : self.on_goto_homepage_activate,
-		"on_goto_forum_activate"                : self.on_goto_forum_activate,
-		"on_goto_report_bug_activate"           : self.on_goto_report_bug_activate,
-		"on_new_bt_clicked"                     : self.new_dbb,
-		"on_new_activate"                       : self.new_dbb,
-		"on_view_toolbar_activate"              : self.toggle_toolbar,
-		"on_seen_movies_activate"               : self.filter_not_seen,
-		"on_all_movies_activate"                : self.filter_all,
-		"on_rating_scale_value_changed"         : self.scale_rating_change,
-		"on_rating_scale_add_value_changed"     : self.scale_rating_change_add,
-		"on_sugest_activate"                    : self.sugest_movie,
-		"on_email_reminder_clicked"             : self.email_reminder,
-		"on_go_first_clicked"                   : self.go_first,
-		"on_go_last_clicked"                    : self.go_last,
-		"on_popup_delete_activate"              : self.delete_movie,
-		"on_popup_clone_activate"               : self.clone_movie,
-		"on_popup_simple_activate"              : self.print_cover_simple_show,
-		"on_popup_choose_image_activate"        : self.print_cover_image,
-		"on_popup_loan_activate"                : self.loan_movie,
-		"on_popup_return_activate"              : self.return_loan,
-		"on_popup_email_activate"               : self.email_reminder,
+		'on_e_picture_clicked'                  : self.change_poster,
+		'on_open_poster_clicked'                : self.change_poster,
+		'on_delete_poster_clicked'              : self.del_poster,
+		'on_fetch_poster_clicked'               : self.get_poster,
+		'on_go_imdb_clicked'                    : self.go_imdb_site,
+		'on_go_trailer_clicked'                 : self.go_trailer_site,
+		'on_goto_homepage_activate'             : self.on_goto_homepage_activate,
+		'on_goto_forum_activate'                : self.on_goto_forum_activate,
+		'on_goto_report_bug_activate'           : self.on_goto_report_bug_activate,
+		'on_new_bt_clicked'                     : self.new_dbb,
+		'on_new_activate'                       : self.new_dbb,
+		'on_view_toolbar_activate'              : self.toggle_toolbar,
+		'on_seen_movies_activate'               : self.filter_not_seen,
+		'on_all_movies_activate'                : self.filter_all,
+		'on_rating_scale_value_changed'         : self.scale_rating_change,
+		'on_rating_scale_add_value_changed'     : self.scale_rating_change_add,
+		'on_sugest_activate'                    : self.sugest_movie,
+		'on_email_reminder_clicked'             : self.email_reminder,
+		'on_popup_delete_activate'              : self.delete_movie,
+		'on_popup_clone_activate'               : self.clone_movie,
+		'on_popup_simple_activate'              : self.print_cover_simple_show,
+		'on_popup_choose_image_activate'        : self.print_cover_image,
+		'on_popup_loan_activate'                : self.loan_movie,
+		'on_popup_return_activate'              : self.return_loan,
+		'on_popup_email_activate'               : self.email_reminder,
 		# volumes/collections
-		"on_e_collection_combo_changed"         : self.on_e_collection_combo_changed,
-		"on_e_volume_combo_changed"             : self.on_e_volume_combo_changed,
-		"on_am_collection_combo_changed"        : self.on_am_collection_combo_changed,
-		"on_am_volume_combo_changed"            : self.on_am_volume_combo_changed,
-		"on_e_add_volume_button_clicked"        : self.add_volume,
-		"on_e_add_collection_button_clicked"    : self.add_collection,
-		"on_e_remove_volume_button_clicked"     : self.remove_volume,
-		"on_e_remove_collection_button_clicked" : self.remove_collection,
-		"on_e_rename_volume_button_clicked"     : self.e_rename_volume,
-		"on_e_rename_collection_button_clicked" : self.e_rename_collection,
-		"on_e_show_volume_button_clicked"       : self.e_show_volume,
-		"on_e_show_collection_button_clicked"   : self.e_show_collection,
-		"on_am_add_volume_button_clicked"       : self.add_volume,
-		"on_am_add_collection_button_clicked"   : self.add_collection,
-		"on_am_remove_volume_button_clicked"    : self.remove_volume,
-		"on_am_remove_collection_button_clicked": self.remove_collection,
-		"on_f_col_changed"                      : self.filter_collection,
-		"on_results_cancel_clicked"		: self.results_cancel_ck,
+		'on_e_collection_combo_changed'         : self.on_e_collection_combo_changed,
+		'on_e_volume_combo_changed'             : self.on_e_volume_combo_changed,
+		'on_am_collection_combo_changed'        : self.on_am_collection_combo_changed,
+		'on_am_volume_combo_changed'            : self.on_am_volume_combo_changed,
+		'on_e_add_volume_button_clicked'        : self.add_volume,
+		'on_e_add_collection_button_clicked'    : self.add_collection,
+		'on_e_remove_volume_button_clicked'     : self.remove_volume,
+		'on_e_remove_collection_button_clicked' : self.remove_collection,
+		'on_e_rename_volume_button_clicked'     : self.e_rename_volume,
+		'on_e_rename_collection_button_clicked' : self.e_rename_collection,
+		'on_e_show_volume_button_clicked'       : self.e_show_volume,
+		'on_e_show_collection_button_clicked'   : self.e_show_collection,
+		'on_am_add_volume_button_clicked'       : self.add_volume,
+		'on_am_add_collection_button_clicked'   : self.add_collection,
+		'on_am_remove_volume_button_clicked'    : self.remove_volume,
+		'on_am_remove_collection_button_clicked': self.remove_collection,
+		'on_f_col_changed'                      : self.filter_collection,
+		'on_results_cancel_clicked'		: self.results_cancel_ck,
 		# languages
-		"on_lang_add_clicked"			: self.on_lang_add_clicked,
-		"on_lang_remove_clicked"		: self.on_lang_remove_clicked,
-		"on_lang_rename_clicked"		: self.on_lang_rename_clicked,
-		"on_e_lang_add_clicked"			: self.on_e_lang_add_clicked,
-		"on_e_lang_remove_clicked"		: self.on_e_lang_remove_clicked,
-		"on_am_lang_add_clicked"		: self.on_am_lang_add_clicked,
-		"on_am_lang_remove_clicked"		: self.on_am_lang_remove_clicked,
-		"on_lang_name_combo_changed"		: self.on_lang_name_combo_changed,
+		'on_lang_add_clicked'			: self.on_lang_add_clicked,
+		'on_lang_remove_clicked'		: self.on_lang_remove_clicked,
+		'on_lang_rename_clicked'		: self.on_lang_rename_clicked,
+		'on_e_lang_add_clicked'			: self.on_e_lang_add_clicked,
+		'on_e_lang_remove_clicked'		: self.on_e_lang_remove_clicked,
+		'on_am_lang_add_clicked'		: self.on_am_lang_add_clicked,
+		'on_am_lang_remove_clicked'		: self.on_am_lang_remove_clicked,
+		'on_lang_name_combo_changed'		: self.on_lang_name_combo_changed,
 		# tags
-		"on_tag_add_clicked"			: self.on_tag_add_clicked,
-		"on_tag_remove_clicked"			: self.on_tag_remove_clicked,
-		"on_tag_rename_clicked"			: self.on_tag_rename_clicked,
-		"on_tag_name_combo_changed"		: self.on_tag_name_combo_changed,
+		'on_tag_add_clicked'			: self.on_tag_add_clicked,
+		'on_tag_remove_clicked'			: self.on_tag_remove_clicked,
+		'on_tag_rename_clicked'			: self.on_tag_rename_clicked,
+		'on_tag_name_combo_changed'		: self.on_tag_name_combo_changed,
 		# audio codecs
-		"on_acodec_add_clicked"			: self.on_acodec_add_clicked,
-		"on_acodec_remove_clicked"		: self.on_acodec_remove_clicked,
-		"on_acodec_rename_clicked"		: self.on_acodec_rename_clicked,
-		"on_acodec_name_combo_changed"		: self.on_acodec_name_combo_changed,
+		'on_acodec_add_clicked'			: self.on_acodec_add_clicked,
+		'on_acodec_remove_clicked'		: self.on_acodec_remove_clicked,
+		'on_acodec_rename_clicked'		: self.on_acodec_rename_clicked,
+		'on_acodec_name_combo_changed'		: self.on_acodec_name_combo_changed,
 		# audio channels
-		"on_achannel_add_clicked"		: self.on_achannel_add_clicked,
-		"on_achannel_remove_clicked"		: self.on_achannel_remove_clicked,
-		"on_achannel_rename_clicked"		: self.on_achannel_rename_clicked,
-		"on_achannel_name_combo_changed"	: self.on_achannel_name_combo_changed,
+		'on_achannel_add_clicked'		: self.on_achannel_add_clicked,
+		'on_achannel_remove_clicked'		: self.on_achannel_remove_clicked,
+		'on_achannel_rename_clicked'		: self.on_achannel_rename_clicked,
+		'on_achannel_name_combo_changed'	: self.on_achannel_name_combo_changed,
 		# subtitle formats
-		"on_subformat_add_clicked"		: self.on_subformat_add_clicked,
-		"on_subformat_remove_clicked"		: self.on_subformat_remove_clicked,
-		"on_subformat_rename_clicked"		: self.on_subformat_rename_clicked,
-		"on_subformat_name_combo_changed"	: self.on_subformat_name_combo_changed,
+		'on_subformat_add_clicked'		: self.on_subformat_add_clicked,
+		'on_subformat_remove_clicked'		: self.on_subformat_remove_clicked,
+		'on_subformat_rename_clicked'		: self.on_subformat_rename_clicked,
+		'on_subformat_name_combo_changed'	: self.on_subformat_name_combo_changed,
 		# media
-		"on_medium_add_clicked"			: self.on_medium_add_clicked,
-		"on_medium_remove_clicked"		: self.on_medium_remove_clicked,
-		"on_medium_rename_clicked"		: self.on_medium_rename_clicked,
-		"on_medium_name_combo_changed"		: self.on_medium_name_combo_changed,
+		'on_medium_add_clicked'			: self.on_medium_add_clicked,
+		'on_medium_remove_clicked'		: self.on_medium_remove_clicked,
+		'on_medium_rename_clicked'		: self.on_medium_rename_clicked,
+		'on_medium_name_combo_changed'		: self.on_medium_name_combo_changed,
 		# video codecs
-		"on_vcodec_add_clicked"			: self.on_vcodec_add_clicked,
-		"on_vcodec_remove_clicked"		: self.on_vcodec_remove_clicked,
-		"on_vcodec_rename_clicked"		: self.on_vcodec_rename_clicked,
-		"on_vcodec_name_combo_changed"		: self.on_vcodec_name_combo_changed
+		'on_vcodec_add_clicked'			: self.on_vcodec_add_clicked,
+		'on_vcodec_remove_clicked'		: self.on_vcodec_remove_clicked,
+		'on_vcodec_rename_clicked'		: self.on_vcodec_rename_clicked,
+		'on_vcodec_name_combo_changed'		: self.on_vcodec_name_combo_changed
 	}
 	gladefile.signal_autoconnect(dic)
 
@@ -443,7 +446,7 @@ def connect_add_signals(self):
 
 	# connect signals
 
-	self.results_signal = self.results_select.connect("clicked", \
+	self.results_signal = self.results_select.connect('clicked', \
 			self.populate_dialog_with_results)
 	self.results_double_click = self.results_treeview.connect('button_press_event', \
 		self.on_results_button_press_event)
@@ -477,5 +480,5 @@ def connect_poster_signals(self, event, result, current_poster):
 		edit.get_poster_select_dc, self, result, current_poster)
 
 	self.poster_results_signal = \
-		self.results_select.connect("clicked", edit.get_poster_select, \
+		self.results_select.connect('clicked', edit.get_poster_select, \
 		self, result, current_poster)

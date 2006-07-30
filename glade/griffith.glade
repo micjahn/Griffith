@@ -11305,8 +11305,8 @@ Double Slim</property>
 
 <widget class="GtkWindow" id="w_people">
   <property name="border_width">2</property>
-  <property name="width_request">400</property>
-  <property name="height_request">400</property>
+  <property name="width_request">300</property>
+  <property name="height_request">300</property>
   <property name="title" translatable="yes">Manage People</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_CENTER</property>
@@ -11391,8 +11391,8 @@ Double Slim</property>
 	<widget class="GtkScrolledWindow" id="scrolledwindow5">
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
-	  <property name="hscrollbar_policy">GTK_POLICY_ALWAYS</property>
-	  <property name="vscrollbar_policy">GTK_POLICY_ALWAYS</property>
+	  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+	  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
 	  <property name="shadow_type">GTK_SHADOW_IN</property>
 	  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 

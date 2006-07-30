@@ -184,12 +184,18 @@ class GriffithSQL:
 			if int(self.loaned)==1:
 				debug.show("You can't remove loaned movie!")
 				return False
+			# FIXME:
+			#if len(self.tags)>0:
+			#	self.tags[0].mapper.mapped_table.delete(self.tags[0].c.movie_id==self.movie_id).execute()
+			#if len(self.languages)>0:
+			#	self.languages[0].mapper.mapped_table.delete(self.languages[0].c.movie_id==self.movie_id).execute()
 			for i in self.tags:
 				i.delete()
 			for i in self.languages:
 				i.delete()
 			self.delete()
-			self.flush()#}}}
+			self.flush()
+			return True#}}}
 
 	def __init__(self, config, gdebug, griffith_dir):	#{{{
 		from sqlalchemy.mods.threadlocal import assign_mapper
@@ -407,7 +413,7 @@ class GriffithSQL:
 	#}}}
 
 	# MOVIE ------------------------------------------------------------{{{
-	def clean_t_movies(self, t_movies):
+	def clean_t_movies(self, t_movies): # TODO: move outside GriffithSQL class
 		for i in t_movies.keys():
 			if t_movies[i] == '':
 				t_movies[i]=None
@@ -420,7 +426,7 @@ class GriffithSQL:
 		if t_movies.has_key('year') and (t_movies['year']==None or int(t_movies['year']) < 1886):
 			t_movies['year'] = None
 
-	def add_movie(self, t_movies, t_languages=None, t_tags=None):
+	def add_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
 		self.clean_t_movies(t_movies)
 		self.Movie.mapper.mapped_table.insert().execute(t_movies)
 		movie = self.Movie.get_by(number=t_movies['number'])
@@ -435,7 +441,7 @@ class GriffithSQL:
 				movie.tags.append(self.MovieTag(tag_id=tag))
 		movie.save_or_update()
 	
-	def update_movie(self, t_movies, t_languages=None, t_tags=None):
+	def update_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
 		movie_id = t_movies['movie_id']
 		if movie_id == None:
 			debug.show('Update movie: Movie ID is not set. Operation aborted!')
@@ -594,6 +600,7 @@ class GriffithSQL:
 			self.Movie.mapper.mapped_table.create()
 			self.Loan.mapper.mapped_table.create()
 			self.Lang.mapper.mapped_table.create()
+			self.Lang.mapper.mapped_table.insert().execute(name=_('English'))
 			self.MovieLang.mapper.mapped_table.create()
 			self.Tag.mapper.mapped_table.create()
 			self.Tag.mapper.mapped_table.insert().execute(name=_('Favourite'))

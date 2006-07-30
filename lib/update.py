@@ -109,24 +109,21 @@ def update(self):
 				t_tags[self.tags_ids[i]] = 1
 
 		# add movie data to database
-		self.db.update_movie(t_movies, t_languages, t_tags)
-
-		self.update_statusbar(_("Movie information has been updated"))
-		# update main treelist
-		treeselection = self.main_treeview.get_selection()
-		(tmp_model, tmp_iter) = treeselection.get_selected()
-		tmp_model.set_value(tmp_iter,3,self.e_original_title.get_text())
-		tmp_model.set_value(tmp_iter,4,self.e_title.get_text())
-		tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
-		tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
-		tmp_model.set_value(tmp_iter,1,'%004d' % int(number))
-
-		# update volume/collection combo
-		self.e_volume_combo.set_active(int(new_volume_id))
-		self.e_collection_combo.set_active(int(new_collection_id))
-
-		# refresh winbdow
-		self.treeview_clicked()
+		if self.db.update_movie(t_movies, t_languages, t_tags):
+			self.update_statusbar(_("Movie information has been updated"))
+			# update main treelist
+			treeselection = self.main_treeview.get_selection()
+			(tmp_model, tmp_iter) = treeselection.get_selected()
+			tmp_model.set_value(tmp_iter,3,self.e_original_title.get_text())
+			tmp_model.set_value(tmp_iter,4,self.e_title.get_text())
+			tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
+			tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
+			tmp_model.set_value(tmp_iter,1,'%004d' % int(number))
+			# update volume/collection combo
+			self.e_volume_combo.set_active(int(new_volume_id))
+			self.e_collection_combo.set_active(int(new_collection_id))
+			# refresh winbdow
+			self.treeview_clicked()
 	else:
 		gutils.error(self.w_results,_("You should fill the original title"))
 
