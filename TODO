@@ -2,7 +2,7 @@
 * Export to SQL, text
 * Possibility to search different fields from different sites (plugins)
 * More powerful command line interface
-* Possibility to use external database (PostgreSQL, MySQL, ...)
+* Possibility to use external database (PostgreSQL, MySQL, ...) - done in SVN
 * Advanced sort/filter criteria
 * Customising main list view
 * Probably much more than this :-D

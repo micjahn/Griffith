@@ -32,7 +32,8 @@ binary-indep: build install
 	dh_link usr/share/griffith/lib/griffith /usr/bin/griffith
 	dh_compress -i
 	dh_fixperms -i
-	dh_python -i
+	dh_pycentral -i
+	dh_python -i /usr/share/griffith/lib/ /usr/share/griffith/plugins/export /usr/share/griffith/plugins/movie
 	dh_installdeb -i
 	dh_gencontrol -i
 	dh_md5sums -i
@@ -41,8 +42,5 @@ binary-indep: build install
 binary-arch: build install
 
 binary: binary-indep binary-arch
-
-source: clean
-	DIR="`pwd`";DIR="$${DIR##*/}"; cd .. && dpkg-source -b "$$DIR" "$$DIR.orig.tar.gz"
 
 .PHONY: build clean binary-indep binary-arch binary install configure

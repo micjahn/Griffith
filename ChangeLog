@@ -4,11 +4,8 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
-2006-08-08 Piotr Ozarowski <ozarow@gmail.com>
-	* IMDb movie plugin updated.
-
-2006-08-05 Piotr Ozarowski <ozarow@gmail.com>
-	* FDb movie plugin updated.
+2006-08-15 Piotr Ozarowski <ozarow@gmail.com>
+	* Merged changes from 0.6.2
 
 2006-07-30 Piotr Ozarowski <ozarow@gmail.com>
 	* Selecting next/previous movie is now possible (new toolbar buttons)
@@ -16,6 +13,46 @@ Griffith ChangeLog
 2006-07-29 Piotr Ozarowski <ozarow@gmail.com>
 	* IMDb movie plugin adds new lines in "with" field again
 	* Draggable toolbar
+
+2006-05-02 Piotr Ozarowski <ozarow@gmail.com>
+	* Added MySQL support
+	* Server can be changed on the fly (see database tab in preferences)
+
+2006-04-28 Piotr Ozarowski <ozarow@gmail.com>
+	* SQLAlchemy transition started
+
+2006-04-26 Piotr Ozarowski <ozarow@gmail.com>
+	* Added database settings to preferences window
+
+2006-04-25 Piotr Ozarowski <ozarow@gmail.com>
+	* Added PostgreSQL support!
+	* Added merging data from .gri and .db files (still needs work)
+	* Fixed some minor bugs
+
+2006-04-23 Piotr Ozarowski <ozarow@gmail.com>
+	* SQLite2 database automatic conversion added
+	* ADOdb transition completed
+
+2006-04-22 Piotr Ozarowski <ozarow@gmail.com>
+	* Backup/restore function rewritten (smaller zipfile)
+	* Merge database function added (rewritten coffelius's patch)
+
+2006-04-21 Piotr Ozarowski <ozarow@gmail.com>
+	* Adding another numeric tag/lang/volume/collection is now not possible
+
+2006-04-20 Piotr Ozarowski <ozarow@gmail.com>
+	* ADOdb transition started
+
+---- 0.6.2 ---
+
+2006-08-08 Piotr Ozarowski <ozarow@gmail.com>
+	* IMDb movie plugin updated.
+
+2006-08-05 Piotr Ozarowski <ozarow@gmail.com>
+	* FDb movie plugin updated.
+
+2006-07-29 Piotr Ozarowski <ozarow@gmail.com>
+	* IMDb movie plugin adds new lines in "with" field again
 	* Update button moved to toolbar
 
 2006-07-27 Piotr Ozarowski <ozarow@gmail.com>
@@ -50,37 +87,10 @@ Griffith ChangeLog
 	* Cinematografo movie plugin updated.
 
 2006-05-02 Piotr Ozarowski <ozarow@gmail.com>
-	* Added MySQL support
-	* Server can be changed on the fly (see database tab in preferences)
 	* Some GtkComboBoxEntry widgets changed to GtkComboBox
-
-2006-04-28 Piotr Ozarowski <ozarow@gmail.com>
-	* SQLAlchemy transition started
-
-2006-04-26 Piotr Ozarowski <ozarow@gmail.com>
-	* Added database settings to preferences window
-
-2006-04-25 Piotr Ozarowski <ozarow@gmail.com>
-	* Added PostgreSQL support!
-	* Added merging data from .gri and .db files (still needs work)
-	* Fixed some minor bugs
 
 2006-04-25 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added italian translation (thanks to Diego Porcelli)
-
-2006-04-23 Piotr Ozarowski <ozarow@gmail.com>
-	* SQLite2 database automatic conversion added
-	* ADOdb transition completed
-
-2006-04-22 Piotr Ozarowski <ozarow@gmail.com>
-	* Backup/restore function rewritten (smaller zipfile)
-	* Merge database function added (rewritten coffelius's patch)
-
-2006-04-21 Piotr Ozarowski <ozarow@gmail.com>
-	* Adding another numeric tag/lang/volume/collection is now not possible
-
-2006-04-20 Piotr Ozarowski <ozarow@gmail.com>
-	* ADOdb transition started
 
 2006-04-17 Piotr Ozarowski <ozarow@gmail.com>
 	* Version changed to 0.6.1+svn

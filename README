@@ -1,7 +1,7 @@
-Griffith 0.6.1 README
+Griffith 0.6.2 README
 =====================
 
-This document was last updated on Sun Mar 05 2006.
+This document was last updated on Tue Aug 01 2006.
 Please see the file COPYING for licensing and warranty information.
 The latest version of this software is available at the following URL:
 http://griffith.vasconunes.net/
@@ -10,7 +10,6 @@ Table of Contents
 =================
 * Introduction
 * System Requirements
-* External databases
 * Installation
 * Reporting Bugs
 * TODO list
@@ -30,7 +29,7 @@ System Requirements
   GTK+            tested on 2.6.4
   pyGTK           tested on 2.6.1
   Python-glade2
-  Python-SQLite
+  Python-SQLite   1.x
   Python-Imaging
   Python-xml
   ReportLab       1.19 or higher     http://www.reportlab.org
