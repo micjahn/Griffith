@@ -52,15 +52,16 @@ import py2exe
 
 opts = { 
     "py2exe": { 
-        "includes": "cairo,pangocairo,cgi,PIL,sqlite,pysqlite2,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,adodb,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,smtplib,win32com,winshell", 
-        "dist_dir": "dist", 
+        "includes": "cairo,pangocairo,cgi,PIL,sqlite,pysqlite2,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,adodb,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,winshell", 
+        "optimize": 2,
+		"dist_dir": "dist", 
     } 
 } 
 
 setup(
     name = "Griffith",
     description = "Griffith",
-    version = "0.6.1+svn",
+    version = "0.6.2",
     console = [ 
         { 
             "script": "griffith", 
