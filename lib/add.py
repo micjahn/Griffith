@@ -29,6 +29,7 @@ import string
 import shutil
 import quick_filter
 import widgets
+import tempfile
 
 def add_movie(self):
 	quick_filter.clear_filter(self)
@@ -171,8 +172,9 @@ def add_movie_db(self, close):
 		# lets move poster from tmp to posters dir
 		tmp_dest = os.path.join(self.griffith_dir, "posters")
 
-		if self.windows:
-			temp_dir = "C:\\windows\\temp\\"
+		if os.name == 'nt' or os.name == 'win32':
+			temp_dir = tempfile.gettempdir()
+			temp_dir = temp_dir + "\\"
 		else:
 			temp_dir = "/tmp/"
 
