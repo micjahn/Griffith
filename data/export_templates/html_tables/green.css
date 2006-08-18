@@ -1,0 +1,97 @@
+body {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	background-color: #f4f2d3;
+	color: green;
+}
+
+table {
+	background-color: #e6f8a0;
+	margin: 1.5em;
+	padding: 1em;
+	border: 1px solid #c7ed30;
+	width:95%;
+}
+
+td {
+	padding-left: 10px;
+	text-align: left;
+	width:100%;
+}
+
+tr.title td {
+	font-style: oblique;
+	font-weight: bold;
+	font-family: 'Dolly', 'Georgia', 'Times New Roman', serif;
+	font-size: 2em;
+	background-color: #c7ed30;
+	color: #48a013;
+}
+
+tr.otitle td {
+	font-size: 1.5em;
+	margin-bottom: 5px;
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	color: #48a013;
+}
+
+th {
+	border-bottom: 1px solid #ccc;
+	text-align: center;
+	padding: 0px 0.5em;
+	background-color: #c7ed30;
+	color: #48a013;
+}
+
+th:after { content: ":"; }
+
+tr.plot td, tr.actors td, tr.notes td {
+	white-space: pre-wrap;
+	overflow: auto;
+	font-size: 0.9em;
+	border-bottom: 1px solid #ccc;
+}
+
+tr.image td {
+	vertical-align: top;
+	padding: 0px;
+	width: auto;
+}
+
+
+img {
+	border: 1px solid green;
+	margin-right: 10px;
+}
+
+a:link		{ color: green; text-decoration: none; }
+a:active	{ color: #c7ed30; text-decoration: none; }
+a:hover		{ color: #48a013 text-decoration: none; }
+a:visited	{ color: #163d5e; text-decoration: none; }
+
+h1 { color: #48a013; }
+
+/* Navigation bar */
+.navi, .copyright {
+	text-align: center;
+	font-size: 0.8em;
+}
+.navi p {
+	display: inline;
+	background-color: #e6f8a0;
+	border: 1px solid #c7ed30;
+	color: #e7b55f;
+}
+.navi p#current {
+	font-size: 1.1em;
+	background-color: #c7ed30;
+	color: green;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.copyright {
+	font-size: 0.7em;
+	margin-top: 5px;
+}

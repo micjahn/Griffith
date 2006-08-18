@@ -28,5 +28,11 @@ kazdy film w oddzielnej tabeli
 			<file>blue.css</file>
 			<preview>blue.jpg</preview>
 		</style>
+		<style>
+			<name>Green</name>
+			<name xml:lang="pl">Zielony</name>
+			<file>green.css</file>
+			<preview>green.jpg</preview>
+		</style>
 	</styles>
 </template>

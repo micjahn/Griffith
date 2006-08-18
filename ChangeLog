@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-08-18 Piotr Ozarowski <ozarow@gmail.com>
+	* Added green style to "html tables" template (HTML export plugin)
+
 2006-08-15 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* tempdir for posters is now writable by all users under win32 systems
 
