@@ -234,7 +234,7 @@ class GriffithSQL:
 		if config['db_type'] == 'sqlite':
 			url = "sqlite:///%s" % os.path.join(griffith_dir, config['default_db'])
 		elif config['db_type'] == 'postgres':
-			if not config.has_key('db_port'):
+			if not config.has_key('db_port') or config['db_port']==0:
 				config['db_port'] = 5432
 			url = "postgres://%s:%s@%s:%d/%s" % (
 				config['db_user'],
@@ -243,7 +243,7 @@ class GriffithSQL:
 				int(config['db_port']),
 				config['db_name'])
 		elif config['db_type'] == 'mysql':
-			if not config.has_key('db_port'):
+			if not config.has_key('db_port') or config['db_port']==0:
 				config['db_port'] = 3306
 			url = "mysql://%s:%s@%s:%d/%s" % (
 				config['db_user'],

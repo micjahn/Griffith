@@ -24,10 +24,6 @@ from gettext import gettext as _
 import gutils
 
 def change_filter(self):
-	try:
-		tmp = self.initialized
-	except:
-		print "not initialized" # TODO: return False
 	x = 0
 	self.all_movies.set_active(2)
 	col_id = self.collection_combo_ids[self.f_col.get_active()]

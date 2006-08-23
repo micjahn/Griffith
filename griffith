@@ -34,6 +34,7 @@ class Griffith:
 
 	Image = gtk.Image()
 	founded_results_id = None
+	initialized = False
 
 	def __init__(self):
 		"""main griffith application constructor"""	
@@ -97,7 +98,7 @@ class Griffith:
 		initialize.export_plugins(self)
 		initialize.people_treeview(self)
 		initialize.web_results(self)
-		self.initialized = 1
+		self.initialized = True
 
 	###########
 	# callbacks

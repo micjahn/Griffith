@@ -5,8 +5,8 @@ Griffith ChangeLog
 (c) 2005-2006 Vasco Nunes
 
 2006-08-23 Piotr Ozarowski <ozarow@gmail.com>
-	* Fixed problem with converting images on Windows (HTML
-	export plugin)
+	* Fixed problem with converting images on Windows (HTML export plugin)
+	* Fixed bug with "You have to fill language..." after updating language list
 
 2006-08-18 Piotr Ozarowski <ozarow@gmail.com>
 	* Added green style to "html tables" template (HTML export plugin)

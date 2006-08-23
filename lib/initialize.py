@@ -641,6 +641,11 @@ def create_language_hbox(self, widget, tab, default=None, type=None):
 	else:
 		from initialize import fill_language_combo
 		number = len(widget.get_children())	# new box number
+		if number == 1:	# possible "You have to fill..." text still inside
+			tmp = widget.get_children()[0]
+			if tmp.get_name() == 'GtkLabel':
+				tmp.destroy()
+				number = 0
 		tab.append({})				# creates new tab[number][]
 		box = gtk.HBox(spacing=2)
 		tab[number]['id'] = gtk.combo_box_new_text()

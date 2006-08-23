@@ -26,10 +26,8 @@ import os
 import gtk
 
 def treeview_clicked(self):
-	try:
-		tmp = self.initialized # if Griffith is not initialized, return false
-	except:
-		return
+	if self.initialized is False:
+		return False
 	if self.total:
 		self.clear_details()
 		treeselection = self.main_treeview.get_selection()
@@ -151,7 +149,7 @@ def treeview_clicked(self):
 				self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
 				pixbuf = self.Image.get_pixbuf()
 		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
-		if int(movie.loaned) == 1:
+		if movie.loaned is True:
 			data_loan = self.db.get_loan_info(collection_id=movie.collection_id, volume_id=movie.volume_id, movie_id=movie.movie_id)
 			data_person = self.db.Person.get_by(person_id=data_loan.person.person_id)
 			self.person_name = str(data_person.name)

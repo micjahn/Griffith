@@ -276,6 +276,7 @@ def save_preferences(self):
 		self.debug.show('DATABASE: connecting to new db server...')
 		# NEW DB CONNECTION
 		import sql
+		self.initialized = False
 		del self.db.metadata
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
 		self.debug.show("New database Engine: %s" % self.db.metadata.engine.name)
@@ -284,6 +285,7 @@ def save_preferences(self):
 		from initialize	import dictionaries, people_treeview
 		dictionaries(self)
 		people_treeview(self, False)
+		self.initialized = True
 	self.clear_details()
 	self.populate_treeview(self.db.Movie.select())
 	self.select_last_row(self.total)
