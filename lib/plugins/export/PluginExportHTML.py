@@ -499,8 +499,12 @@ class ExportPlugin(gtk.Window):
 		# where clause
 		if config['seen_only'] == 1:
 				statement.append_whereclause(self.db.Movie.c.seen==True)
+		elif config['seen_only'] == 2:
+				statement.append_whereclause(self.db.Movie.c.seen!=True)
 		if config['loaned_only'] == 1:
 				statement.append_whereclause(self.db.Movie.c.loaned==True)
+		elif config['loaned_only'] == 2:
+				statement.append_whereclause(self.db.Movie.c.loaned!=True)
 		
 		return statement.execute()
 	#}}}
@@ -596,7 +600,7 @@ class ExportPlugin(gtk.Window):
 		# select exported movies
 		exported_movies = self.select().fetchall()
 		number_of_exported_movies = len(exported_movies)
-		
+
 		if config['split_by'] == 1:	# split by number of movies per page
 			self.entries_per_page = config['split_num']
 		else:				# split by number of pagess
@@ -718,7 +722,6 @@ class ExportPlugin(gtk.Window):
 							im.save(os.path.join(posters_dir, row['image']) + '.' + config['poster_format'].lower(), config['poster_format'])
 						except:
 							self.debug.show("Can't convert %s" % image_file)
-							raise
 
 			# close file if last item
 			if ((page-1)*self.entries_per_page)+item == number_of_exported_movies:
