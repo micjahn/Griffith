@@ -132,15 +132,18 @@ class GriffithSQL:
 			if self.collection!=None:
 				self.movie.mapper.mapped_table.update(self.movie.c.collection_id==self.collection_id).execute(loaned=True)
 				self.collection.loaned = True
+				self.collection.update()
 			if self.volume!=None:
 				self.movie.mapper.mapped_table.update(self.movie.c.volume_id==self.volume_id).execute(loaned=True)
 				self.volume.loaned = True
+				self.volume.update()
 			self.movie.loaned = True
+			self.movie.update()
 			if self.date==None:
 				self.date = func.current_date()	# update loan date
 			self.return_date = None
 			self.save_or_update()
-			self.flush()
+			self.mapper.get_session().flush()
 			self.refresh()
 			return True
 		def set_returned(self):
@@ -163,14 +166,17 @@ class GriffithSQL:
 			if self.collection!=None:
 				self.movie.mapper.mapped_table.update(self.movie.c.collection_id==self.collection_id).execute(loaned=False)
 				self.collection.loaned = False
+				self.collection.update()
 			if self.volume_id!=None:
 				self.movie.mapper.mapped_table.update(self.movie.c.volume_id==self.volume_id).execute(loaned=False)
 				self.volume.loaned = False
+				self.volume.update()
 			self.movie.loaned = False
+			self.movie.update()
 			if self.return_date==None:
 				self.return_date = func.current_date()
 			self.save_or_update()
-			self.flush()
+			self.mapper.get_session().flush()
 			self.refresh()
 			return True
 			#}}}
@@ -350,13 +356,13 @@ class GriffithSQL:
 		# mappers -------------------------------------------------#{{{
 		assign_mapper(self.Configuration, configuration, is_primary=True)
 		assign_mapper(self.Volume,volumes, is_primary=True, properties={
-			'assigned_movies': relation(self.Movie)})
+			'assigned_movies': relation(self.Movie, backref='volume')})
 		assign_mapper(self.Collection, collections, is_primary=True, properties={
-			'assigned_movies': relation(self.Movie)})
+			'assigned_movies': relation(self.Movie, backref='collection')})
 		assign_mapper(self.Medium, media, is_primary=True, properties={
-			'assigned_movies': relation(self.Movie)})
+			'assigned_movies': relation(self.Movie, backref='medium')})
 		assign_mapper(self.VCodec, vcodecs, is_primary=True, properties={
-			'assigned_movies': relation(self.Movie)})
+			'assigned_movies': relation(self.Movie, backref='vcodec')})
 		assign_mapper(self.Person, people, is_primary=True)
 		assign_mapper(self.MovieLang, movie_lang, is_primary=True)
 		assign_mapper(self.ACodec, acodecs, is_primary=True, properties={
@@ -375,12 +381,8 @@ class GriffithSQL:
 			'volume'     : relation(self.Volume),
 			'collection' : relation(self.Collection)})
 		assign_mapper(self.Movie, movies, is_primary=True, order_by=movies.c.number , properties = {
-			'volume'     : relation(self.Volume),
-			'collection' : relation(self.Collection),
-			'medium'     : relation(self.Medium),
 			'languages'  : relation(self.MovieLang),
-			'tags'       : relation(self.MovieTag),
-			'vcodec'     : relation(self.VCodec)})#}}}
+			'tags'       : relation(self.MovieTag)})#}}}
 		
 		# check if database needs upgrade
 		try:
