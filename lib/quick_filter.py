@@ -34,17 +34,20 @@ def change_filter(self):
 	text = gutils.gescape(self.e_filter.get_text())
 	if(len(text)==0):
 		if col_id != 0:
-			movies = self.db.Movie.select(order_by="number ASC", collection_id=col_id)
+			movies = self.db.Movie.select(self.db.Movie.c.collection_id==col_id)
 		else:
-			movies = self.db.Movie.select(order_by="number ASC")
+			movies = self.db.Movie.select()
 	else:
+		from sqlalchemy import select
+		movies = select(self.db.Movie.c, order_by=[self.db.Movie.c.number])
 		criteria = self.sort_criteria[self.filter_criteria.get_active()]
-		if {"year":None, "runtime":None, "media_num":None, "rating":None}.has_key(criteria):
-			movies = self.db.Movie.select(self.db.Movie.c[criteria]==text, order_by="number ASC")
+		if {'year':None, 'runtime':None, 'media_num':None, 'rating':None}.has_key(criteria):
+			movies.append_whereclause(self.db.Movie.c[criteria]==text)
 		else:
-			movies = self.db.Movie.select(self.db.Movie.c[criteria].like('%'+text+'%'), order_by="number ASC")
+			movies.append_whereclause(self.db.Movie.c[criteria].like('%'+text+'%'))
 		if col_id != 0:
-			where_clause += " AND collection_id = '%s'" % col_id
+			movies.append_whereclause(self.db.Movie.c.collection_id==col_id)
+		movies = movies.execute().fetchall()
 	self.total_filter = len(movies)
 	self.populate_treeview(movies)
 	self.go_last()
