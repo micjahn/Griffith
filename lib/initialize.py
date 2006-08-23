@@ -85,26 +85,27 @@ def locations(self):
 		self.DIR = "%s\\i18n" % self.locations['exec']
 		gtk.rc_parse('%s\\gtkrc' % self.locations['exec'])
 		#some locations
-		self.locations['movie_plugins'] = "%s\\lib\\plugins\\movie" % self.locations['exec']
+		self.locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % self.locations['exec']
 		self.locations['export_plugins'] = "%s\\lib\\plugins\\export" % self.locations['exec']
-		self.locations['images'] = "%s\\images" % self.locations['exec']
-		self.locations['share'] = self.locations['images']
-		self.locations['desktop'] = ""
+		self.locations['images']         = "%s\\images" % self.locations['exec']
+		self.locations['share']          = self.locations['images']
+		self.locations['glade']          = "%s\\glade\\" % self.locations['exec']
+		self.locations['desktop']        = ""
 	elif self.posix:
-		self.locations['share'] = string.replace(self.locations['exec'], "/bin","/share/griffith")
-		self.locations['lib'] = self.locations['share'] + "/lib"
-		self.DIR = "/usr/share/locale"
-		sys.path.append('/usr/share') # for debian
+		self.locations['share'] = string.replace(self.locations['exec'], '/bin', '/share/griffith')
+		self.locations['glade'] = os.path.join(self.locations['share'], 'glade')
+		self.locations['lib']   = os.path.join(self.locations['share'], 'lib')
+		self.DIR                = os.path.join(self.locations['share'], '..', 'locale')
 		#some locations
-		self.locations['movie_plugins'] = self.locations['share'] + "/plugins/movie"
-		self.locations['export_plugins'] = self.locations['share'] + "/plugins/export"
-		self.locations['images'] = self.locations['share'] + "/images"
-		self.locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop')
+		self.locations['movie_plugins']  = os.path.join(self.locations['share'], 'plugins', 'movie')
+		self.locations['export_plugins'] = os.path.join(self.locations['share'], 'plugins', 'export')
+		self.locations['images']         = os.path.join(self.locations['share'], 'images')
+		self.locations['desktop']        = os.path.join(os.path.expanduser('~'), 'Desktop')
 	else:
-		print "Operating system not supported"
+		print 'Operating system not supported'
 		sys.exit()
 
-	# includes plugins in system path for easier impor		
+	# includes plugins in system path for easier importing
 	sys.path.append(self.locations['lib'])
 	sys.path.append(self.locations['movie_plugins'])
 	sys.path.append(self.locations['export_plugins'])
@@ -114,17 +115,14 @@ def locations(self):
 	gettext.bindtextdomain(self.APP, self.DIR)
 	gettext.textdomain(self.APP)
 	self._ = gettext.gettext
+	
+	# glade
 	gtk.glade.bindtextdomain(self.APP, self.DIR)
 	gtk.glade.textdomain(self.APP)
-
-	# glade
-	if self.windows:
-		gf = '%s\glade\griffith.glade' % self.locations['exec']
-	else:
-		gf = self.locations['share'] + "/glade/griffith.glade"
+	gf = os.path.join(self.locations['glade'], 'griffith.glade')
 	self.gladefile = gtk.glade.XML(gf)
-
 	widgets.define_widgets(self, self.gladefile)
+
 	self.pdf_reader = self.config.get('pdf_reader')
 
 def toolbar(self):

@@ -103,7 +103,7 @@ class GriffithSQL:
 		pass
 	class SubFormat(DBTable):
 		pass
-	class Tag(DBTable):#{{{
+	class Tag(DBTable):
 		pass
 	class VCodec(DBTable):
 		pass
