@@ -724,11 +724,10 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkComboBoxEntry" id="filter_criteria">
+	    <widget class="GtkComboBox" id="filter_criteria">
 	      <property name="visible">True</property>
 	      <property name="items" translatable="yes"></property>
 	      <property name="add_tearoffs">False</property>
-	      <property name="has_frame">True</property>
 	      <property name="focus_on_click">True</property>
 	      <signal name="changed" handler="on_filter_criteria_changed" last_modification_time="Wed, 27 Apr 2005 19:36:32 GMT"/>
 	    </widget>
@@ -765,11 +764,10 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkComboBoxEntry" id="f_col">
+	    <widget class="GtkComboBox" id="f_col">
 	      <property name="visible">True</property>
 	      <property name="items" translatable="yes"></property>
 	      <property name="add_tearoffs">False</property>
-	      <property name="has_frame">True</property>
 	      <property name="focus_on_click">True</property>
 	      <signal name="changed" handler="on_f_col_changed" last_modification_time="Sun, 09 Oct 2005 01:50:49 GMT"/>
 	    </widget>

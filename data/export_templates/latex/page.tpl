@@ -16,9 +16,9 @@
 		\item {@TITLE@: @DATA@}
 </@number><@title>
 		\item {@TITLE@: @DATA@}
-</@title><@original_title>
+</@title><@o_title>
 		\item {@TITLE@: @DATA@}
-</@original_title><@year>
+</@o_title><@year>
 		\item {@TITLE@: @DATA@}
 </@year><@director>
 		\item {@TITLE@: @DATA@}
@@ -30,15 +30,15 @@
 		\item {@TITLE@: @DATA@ min.}
 </@country><@genre>
 		\item {@TITLE@: @DATA@}
-</@genre><@imdb>
+</@genre><@site>
 		\item {@TITLE@: @DATA@}
-</@imdb><@site>
+</@site><@o_site>
 		\item {@TITLE@: @DATA@}
-</@site><@trailer>
+</@o_site><@trailer>
 		\item {@TITLE@: @DATA@}
-</@trailer><@media>
+</@trailer><@medium_id>
 		\item {@TITLE@: @DATA@}
-</@media><@seen>
+</@medium_id><@seen>
 		\item {@TITLE@: @DATA@}
 </@seen><@loaned>
 		\item {@TITLE@: @DATA@}
@@ -50,9 +50,9 @@
 		\item {@TITLE@: @DATA@}
 </@actors><@plot>
 		\item {@TITLE@: @DATA@}
-</@plot><@obs>
+</@plot><@notes>
 		\item {@TITLE@: @DATA@}
-</@obs>
+</@notes>
 \end{itemize}
 
 <!-- /ITEMS -->

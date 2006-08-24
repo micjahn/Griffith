@@ -20,11 +20,11 @@
 	<tr class="title">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@title><@original_title>
+	</tr></@title><@o_title>
 	<tr class="otitle">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@original_title><@number>
+	</tr></@o_title><@number>
 	<tr class="number">		
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
@@ -52,23 +52,23 @@
 	<tr class="genre">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@genre><@imdb>
+	</tr></@genre><@site>
 	<tr class="links">
 		<th>@TITLE@</th>
 		<td><a href="@DATA@">@DATA@</a></td>
-	</tr></@imdb><@site>
+	</tr></@site><@o_site>
 	<tr class="links">
 		<th>@TITLE@</th>
 		<td><a href="@DATA@">@DATA@</a></td>
-	</tr></@site><@trailer>
+	</tr></@o_site><@trailer>
 	<tr class="links">
 		<th>@TITLE@</th>
 		<td><a href="@DATA@">@DATA@</a></td>
-	</tr></@trailer><@media>
+	</tr></@trailer><@medium_id>
 	<tr class="media">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@media><@seen>
+	</tr></@medium_id><@seen>
 	<tr class="seen">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
@@ -92,11 +92,11 @@
 	<tr class="plot">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@plot><@obs>
+	</tr></@plot><@notes>
 	<tr class="notes">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@obs>
+	</tr></@notes>
 </table>
 <!-- /ITEMS -->
 

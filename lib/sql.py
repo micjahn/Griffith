@@ -190,11 +190,10 @@ class GriffithSQL:
 			if int(self.loaned)==1:
 				debug.show("You can't remove loaned movie!")
 				return False
-			# FIXME:
-			if len(self.tags)>0:
-				self.tags[0].mapper.mapped_table.delete(self.tags[0].c.movie_id==self.movie_id).execute()
-			if len(self.languages)>0:
-				self.languages[0].mapper.mapped_table.delete(self.languages[0].c.movie_id==self.movie_id).execute()
+			for i in self.tags:
+				i.delete()
+			for i in self.languages:
+				i.delete()
 			self.delete()
 			self.mapper.get_session().flush()
 			return True#}}}

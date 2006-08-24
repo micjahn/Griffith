@@ -189,27 +189,6 @@ def loans_treeview(self):
 	self.loan_history.append_column(self.loaner_column)
 
 def lang_treeview(self):
-	def on_combo_edited(widget, path, new_text, model, column):
-		model[path][column] = new_text
-		mymodel = widget.get_property('model')
-		if column == 1:	# type
-			for i in mymodel:
-				if i[1] == new_text:
-					my_type = i[0]
-			if my_type == 3:	# subtitles
-				model[path][2] = ''
-				model[path][3] = ''
-			else:
-				model[path][4] = ''
-		if column == 4:	# subtitle format
-			model[path][1] = _('subtitles')
-			model[path][2] = ''
-			model[path][3] = ''
-		if column in (2,3):
-			model[path][4] = ''
-			if model[path][1] == _('subtitles'):
-				model[path][1] = ''
-
 	treeview = self.lang['treeview']
 	self.lang['model'] = gtk.TreeStore(str, str, str, str, str)
 	treeview.set_model(self.lang['model'])
@@ -223,7 +202,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect('edited', on_combo_edited, self.lang['model'], 0)
+	combo.connect('edited', self.on_tv_lang_combo_edited, 0)
 	column=gtk.TreeViewColumn('Language', combo, text=0)
 	column.set_sort_column_id(0)
 	treeview.append_column(column)
@@ -238,7 +217,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect('edited', on_combo_edited, self.lang['model'], 1)
+	combo.connect('edited', self.on_tv_lang_combo_edited, 1)
 	column=gtk.TreeViewColumn('Type', combo, text=1)
 	column.set_sort_column_id(1)
 	treeview.append_column(column)
@@ -251,7 +230,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect('edited', on_combo_edited, self.lang['model'], 2)
+	combo.connect('edited', self.on_tv_lang_combo_edited, 2)
 	column=gtk.TreeViewColumn('Codec', combo, text=2)
 	column.set_sort_column_id(2)
 	treeview.append_column(column)
@@ -264,7 +243,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect('edited', on_combo_edited, self.lang['model'], 3)
+	combo.connect('edited', self.on_tv_lang_combo_edited, 3)
 	column=gtk.TreeViewColumn('Channels', combo, text=3)
 	column.set_sort_column_id(3)
 	treeview.append_column(column)
@@ -277,7 +256,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect('edited', on_combo_edited, self.lang['model'], 4)
+	combo.connect('edited', self.on_tv_lang_combo_edited, 4)
 	column=gtk.TreeViewColumn('Subtitle format', combo, text=4)
 	column.set_sort_column_id(4)
 	treeview.append_column(column)

@@ -217,7 +217,7 @@ class Griffith:
 	def z_poster(self, *args):
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
-		number = tmp_model.get_value(tmp_iter, 1)
+		number = tmp_model.get_value(tmp_iter, 0)
 		movie = self.db.Movie.get_by(number=number)
 		if movie != None:
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
@@ -348,7 +348,7 @@ class Griffith:
 
 	# languages -------------------------------------------------------{{{
 	def on_lang_treeview_button_press_event(self, widget, event):
-		"""add a right click menu to main tree"""
+		"""add a right click menu to lang tree"""
 		if event.button == 3:
 			x = int(event.x)
 			y = int(event.y)
@@ -382,6 +382,28 @@ class Griffith:
 		else:
 			self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], -1))
 	
+	def on_tv_lang_combo_edited(self, widget, path, new_text, column):
+		model = self.lang['model']
+		self.lang['model'][path][column] = new_text
+		mymodel = widget.get_property('model')
+		if column == 1:	# type
+			for i in mymodel:
+				if i[1] == new_text:
+					my_type = i[0]
+			if my_type == 3:	# subtitles
+				model[path][2] = ''
+				model[path][3] = ''
+			else:
+				model[path][4] = ''
+		if column == 4:	# subtitle format
+			model[path][1] = _('subtitles')
+			model[path][2] = ''
+			model[path][3] = ''
+		if column in (2,3):
+			model[path][4] = ''
+			if model[path][1] == _('subtitles'):
+				model[path][1] = ''
+
 	def on_e_lang_add_clicked(self, widget):
 		self.create_language_row()
 	def on_e_lang_remove_clicked(self, widget):
@@ -646,7 +668,7 @@ class Griffith:
 	def get_maintree_selection(self):
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
-		return tmp_model.get_value(tmp_iter, 1), tmp_iter
+		return tmp_model.get_value(tmp_iter, 0), tmp_iter
 
 	def select_last_row(self, rtotal):
 		if rtotal:
@@ -969,4 +991,4 @@ if __name__ == "__main__":
 	griffith = Griffith()
 	griffith.main()
 
-#vim: fdm=marker
+# vim: fdm=marker
