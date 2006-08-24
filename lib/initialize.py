@@ -189,7 +189,7 @@ def loans_treeview(self):
 	self.loan_history.append_column(self.loaner_column)
 
 def lang_treeview(self):
-	def on__combo__edited(widget, path, new_text, model, column):
+	def on_combo_edited(widget, path, new_text, model, column):
 		model[path][column] = new_text
 		mymodel = widget.get_property('model')
 		if column == 1:	# type
@@ -198,6 +198,7 @@ def lang_treeview(self):
 					my_type = i[0]
 			if my_type == 3:	# subtitles
 				model[path][2] = ''
+				model[path][3] = ''
 			else:
 				model[path][4] = ''
 		if column == 4:	# subtitle format
@@ -209,8 +210,7 @@ def lang_treeview(self):
 			if model[path][1] == _('subtitles'):
 				model[path][1] = ''
 
-	self.lang = {}
-	treeview = self.lang_treeview
+	treeview = self.lang['treeview']
 	self.lang['model'] = gtk.TreeStore(str, str, str, str, str)
 	treeview.set_model(self.lang['model'])
 	treeview.set_headers_visible(True)
@@ -223,7 +223,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect("edited", on__combo__edited, self.lang['model'], 0)
+	combo.connect('edited', on_combo_edited, self.lang['model'], 0)
 	column=gtk.TreeViewColumn('Language', combo, text=0)
 	column.set_sort_column_id(0)
 	treeview.append_column(column)
@@ -238,7 +238,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect("edited", on__combo__edited, self.lang['model'], 1)
+	combo.connect('edited', on_combo_edited, self.lang['model'], 1)
 	column=gtk.TreeViewColumn('Type', combo, text=1)
 	column.set_sort_column_id(1)
 	treeview.append_column(column)
@@ -251,7 +251,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect("edited", on__combo__edited, self.lang['model'], 2)
+	combo.connect('edited', on_combo_edited, self.lang['model'], 2)
 	column=gtk.TreeViewColumn('Codec', combo, text=2)
 	column.set_sort_column_id(2)
 	treeview.append_column(column)
@@ -264,7 +264,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect("edited", on__combo__edited, self.lang['model'], 3)
+	combo.connect('edited', on_combo_edited, self.lang['model'], 3)
 	column=gtk.TreeViewColumn('Channels', combo, text=3)
 	column.set_sort_column_id(3)
 	treeview.append_column(column)
@@ -277,7 +277,7 @@ def lang_treeview(self):
 	combo.set_property('text-column', 1)
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
-	combo.connect("edited", on__combo__edited, self.lang['model'], 4)
+	combo.connect('edited', on_combo_edited, self.lang['model'], 4)
 	column=gtk.TreeViewColumn('Subtitle format', combo, text=4)
 	column.set_sort_column_id(4)
 	treeview.append_column(column)
@@ -729,72 +729,6 @@ def vcodec_combos(self):
 		pos = gutils.findKey(old, self.vcodecs_ids)
 		if pos!=None:
 			self.e_vcodec.set_active(int(pos))
-
-def create_language_hbox(self, lang=None):
-	if len(self.languages_ids) == 0: # FIXME
-		return False
-
-	def get_text(model, id):
-		if id == -1:
-			return model[0][1]
-		else:
-			for i in model:
-				if i[0] == id:
-					return i[1]
-
-	myiter = self.lang['model'].append(None)
-	if lang:
-		self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], lang.lang_id))
-		self.lang['model'].set_value(myiter, 1, get_text(self.lang['type'], lang.type))
-		self.lang['model'].set_value(myiter, 2, get_text(self.lang['acodec'], lang.acodec_id))
-		self.lang['model'].set_value(myiter, 3, get_text(self.lang['achannel'], lang.achannel_id))
-		self.lang['model'].set_value(myiter, 4, get_text(self.lang['subformat'], lang.subformat_id))
-	else:
-		self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], -1))
-
-#        if len(self.languages_ids) == 1:
-#                if len(widget.get_children()) == 0:
-#                        widget.add(gtk.Label(_('You have to fill in languages list in preferences window')))
-#        else:
-#                from initialize import fill_language_combo
-#                number = len(widget.get_children())	# new box number
-#                if number == 1:	# possible "You have to fill..." text still inside
-#                        tmp = widget.get_children()[0]
-#                        if tmp.get_name() == 'GtkLabel':
-#                                tmp.destroy()
-#                                number = 0
-#                tab.append({})				# creates new tab[number][]
-#                box = gtk.HBox(spacing=2)
-#                tab[number]['id'] = gtk.combo_box_new_text()
-#                fill_language_combo(self, widget=tab[number]['id'], default=default)
-#                tab[number]['type'] = gtk.combo_box_new_text()
-#                tab[number]['type'].insert_text(0, '')
-#                tab[number]['type'].insert_text(1, _("lector"))
-#                tab[number]['type'].insert_text(2, _("dubbing"))
-#                tab[number]['type'].insert_text(3, _("subtitles"))
-#                if type != None:
-#                        tab[number]['type'].set_active(int(type))
-#                else:
-#                        tab[number]['type'].set_active(0)
-#                box.add(tab[number]['id'])
-#                box.add(tab[number]['type'])
-#                widget.pack_start(box, expand=False, fill=False, padding=1)
-#        widget.show_all()
-#def fill_language_combo(self, widget, default=None):
-#        try:
-#                widget.get_model().clear()
-#        except:
-#                pass
-#        for i in self.languages_ids:
-#                lang_id = self.languages_ids[i]
-#                if lang_id>0:
-#                        name = self.db.Lang.get_by(lang_id=lang_id).name
-#                else:
-#                        name = ''
-#                widget.insert_text(int(i), str(name))
-#        if default != None and default!=0:
-#                i = gutils.findKey(default, self.languages_ids)
-#                widget.set_active(int(i))
 
 def create_tag_vbox(self, widget, tab):
 	for i in widget.get_children():

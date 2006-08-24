@@ -93,15 +93,23 @@ def update(self):
 			t_movies['seen'] = True
 		else:
 			t_movies['seen'] = False
+
+		def get_id(model, text):
+			for i in model:
+				if i[1] == text:
+					return i[0]
+			return None
 		# languages
-		t_languages = {}
-		for i in self.e_languages:
-			if i['id'].get_active() > 0:
-				lang_id = self.languages_ids[i['id'].get_active()]
-				type = i['type'].get_active()
-				if not t_languages.has_key(lang_id):
-					t_languages[lang_id] = {}
-				t_languages[lang_id][type] = True
+		from sets import Set as set # for python2.3 compatibility
+		t_languages = set()
+		for row in self.lang['model']:
+			lang_id   = get_id(self.lang['lang'], row[0])
+			lang_type = get_id(self.lang['type'], row[1])
+			acodec    = get_id(self.lang['acodec'], row[2])
+			achannel  = get_id(self.lang['achannel'], row[3])
+			subformat = get_id(self.lang['subformat'], row[4])
+			t_languages.add((lang_id, lang_type, acodec, achannel, subformat))
+
 		# tags
 		t_tags = {}
 		for i in self.tags_ids:

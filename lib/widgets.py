@@ -235,10 +235,10 @@ def define_widgets(self, gladefile):
 	self.w_preferences.connect('delete_event', self.on_delete_event_p)
 
 	# languages
-	self.lang_name_combo = gladefile.get_widget('lang_name_combo')	# preferences window
-	self.e_lang_vbox     = gladefile.get_widget('e_lang_vbox')
-	self.am_lang_vbox    = gladefile.get_widget('am_lang_vbox')
-	self.lang_treeview   = gladefile.get_widget('lang_treeview')
+	self.lang_name_combo  = gladefile.get_widget('lang_name_combo')	# preferences window
+	self.lang['menu'] = gladefile.get_widget('lang_menu')
+	self.lang['treeview'] = gladefile.get_widget('lang_treeview')
+	self.lang['treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
 
 	# tags
 	self.tag_name_combo = gladefile.get_widget('tag_name_combo')	# preferences window
@@ -274,10 +274,8 @@ def define_widgets(self, gladefile):
 	self.zoom_poster.connect('clicked', self.z_poster)
 
 	self.main_window.connect('key_press_event', self.on_key_press_event)
-	self.main_treeview.connect('button_press_event', \
-		self.on_maintree_button_press_event)
-	self.p_treeview.connect('button_press_event', \
-		self.on_p_tree_button_press_event)
+	self.main_treeview.connect('button_press_event', self.on_maintree_button_press_event)
+	self.p_treeview.connect('button_press_event', self.on_p_tree_button_press_event)
 
 	# define handlers for general events
 
@@ -386,11 +384,9 @@ def define_widgets(self, gladefile):
 		'on_lang_add_clicked'			: self.on_lang_add_clicked,
 		'on_lang_remove_clicked'		: self.on_lang_remove_clicked,
 		'on_lang_rename_clicked'		: self.on_lang_rename_clicked,
-		'on_e_lang_add_clicked'			: self.on_e_lang_add_clicked,
-		'on_e_lang_remove_clicked'		: self.on_e_lang_remove_clicked,
-		'on_am_lang_add_clicked'		: self.on_am_lang_add_clicked,
-		'on_am_lang_remove_clicked'		: self.on_am_lang_remove_clicked,
 		'on_lang_name_combo_changed'		: self.on_lang_name_combo_changed,
+		'on_e_lang_add_clicked'		        : self.on_e_lang_add_clicked,
+		'on_e_lang_remove_clicked'		: self.on_e_lang_remove_clicked,
 		# tags
 		'on_tag_add_clicked'			: self.on_tag_add_clicked,
 		'on_tag_remove_clicked'			: self.on_tag_remove_clicked,

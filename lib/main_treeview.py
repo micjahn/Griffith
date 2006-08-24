@@ -186,9 +186,8 @@ def treeview_clicked(self):
 #		self.e_languages = []	# for language widgets
 		self.lang['model'].clear()
 		if len(movie.languages)>0:
-			from initialize import create_language_hbox
 			for i in movie.languages:
-				create_language_hbox(self, i)
+				self.create_language_row(i)
 		#tags
 		for tag in movie.tags:
 			i = gutils.findKey(tag.tag_id, self.tags_ids)

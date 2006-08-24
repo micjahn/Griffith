@@ -191,16 +191,12 @@ class GriffithSQL:
 				debug.show("You can't remove loaned movie!")
 				return False
 			# FIXME:
-			#if len(self.tags)>0:
-			#	self.tags[0].mapper.mapped_table.delete(self.tags[0].c.movie_id==self.movie_id).execute()
-			#if len(self.languages)>0:
-			#	self.languages[0].mapper.mapped_table.delete(self.languages[0].c.movie_id==self.movie_id).execute()
-			for i in self.tags:
-				i.delete()
-			for i in self.languages:
-				i.delete()
+			if len(self.tags)>0:
+				self.tags[0].mapper.mapped_table.delete(self.tags[0].c.movie_id==self.movie_id).execute()
+			if len(self.languages)>0:
+				self.languages[0].mapper.mapped_table.delete(self.languages[0].c.movie_id==self.movie_id).execute()
 			self.delete()
-			self.flush()
+			self.mapper.get_session().flush()
 			return True#}}}
 
 	def __init__(self, config, gdebug, griffith_dir):	#{{{
@@ -434,9 +430,9 @@ class GriffithSQL:
 		movie = self.Movie.get_by(number=t_movies['number'])
 		# languages
 		if t_languages != None:
-			for lang in t_languages.keys():
-				for type in t_languages[lang].keys():
-					movie.languages.append(self.MovieLang(lang_id=lang, type=type))
+			for lang in t_languages:
+				if lang[0]>0:
+					movie.languages.append(self.MovieLang(lang_id=lang[0], type=lang[1], acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4]))
 		# tags
 		if t_tags != None:
 			for tag in t_tags.keys():
@@ -455,9 +451,9 @@ class GriffithSQL:
 		movie = self.Movie.get_by(movie_id=movie_id)
 		# languages
 		if t_languages != None:
-			for lang in t_languages.keys():
-				for type in t_languages[lang].keys():
-					movie.languages.append(self.MovieLang(lang_id=lang, type=type))
+			for lang in t_languages:
+				if lang[0]>0:
+					movie.languages.append(self.MovieLang(lang_id=lang[0], type=lang[1], acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4]))
 		# tags
 		if t_tags != None:
 			for tag in t_tags.keys():

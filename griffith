@@ -35,6 +35,7 @@ class Griffith:
 	Image = gtk.Image()
 	founded_results_id = None
 	initialized = False
+	lang = {}
 
 	def __init__(self):
 		"""main griffith application constructor"""	
@@ -346,6 +347,51 @@ class Griffith:
 	#}}}
 
 	# languages -------------------------------------------------------{{{
+	def on_lang_treeview_button_press_event(self, widget, event):
+		"""add a right click menu to main tree"""
+		if event.button == 3:
+			x = int(event.x)
+			y = int(event.y)
+			time = event.time
+			pthinfo = self.lang['treeview'].get_path_at_pos(x, y)
+			if pthinfo != None:
+				path, col, cellx, celly = pthinfo
+				self.lang['treeview'].grab_focus()
+				self.lang['treeview'].set_cursor( path, col, 0)
+			self.lang['menu'].popup(None, None, None, event.button, time)
+	
+	def create_language_row(self, lang=None):
+		if len(self.languages_ids) == 1:
+			return False
+
+		def get_text(model, id):
+			if id == -1:
+				return model[0][1]
+			else:
+				for i in model:
+					if i[0] == id:
+						return i[1]
+
+		myiter = self.lang['model'].append(None)
+		if lang:
+			self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], lang.lang_id))
+			self.lang['model'].set_value(myiter, 1, get_text(self.lang['type'], lang.type))
+			self.lang['model'].set_value(myiter, 2, get_text(self.lang['acodec'], lang.acodec_id))
+			self.lang['model'].set_value(myiter, 3, get_text(self.lang['achannel'], lang.achannel_id))
+			self.lang['model'].set_value(myiter, 4, get_text(self.lang['subformat'], lang.subformat_id))
+		else:
+			self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], -1))
+	
+	def on_e_lang_add_clicked(self, widget):
+		self.create_language_row()
+	def on_e_lang_remove_clicked(self, widget):
+		treeselection = self.lang['treeview'].get_selection()
+		if treeselection:
+			(tmp_model, tmp_iter) = treeselection.get_selected()
+			if tmp_iter:
+				tmp_model.remove(tmp_iter)
+
+	# preferences
 	def on_lang_add_clicked(self, widget):
 		lang = self.db.Lang(name=self.lang_name_combo.get_active_text())
 		if lang and lang.add_to_db():
@@ -378,16 +424,6 @@ class Griffith:
 		active = self.lang_name_combo.get_active()
 		if active>-1:
 			self.lang_name_active = active
-
-	def on_e_lang_add_clicked(self, widget):
-		#initialize.create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
-		initialize.create_language_hbox(self)
-	def on_e_lang_remove_clicked(self, widget):
-		initialize.remove_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
-	def on_am_lang_add_clicked(self, widget):
-		initialize.create_language_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
-	def on_am_lang_remove_clicked(self, widget):
-		initialize.remove_hbox(self, widget=self.am_lang_vbox, tab=self.am_languages)
 	#}}}
 
 	# tags -------------------------------------------------------------{{{
@@ -858,7 +894,7 @@ You can't undo this operation."""), \
 			people.edit_person(self)
 
 	def on_maintree_button_press_event(self, widget, event):
-		"""add a left click menu to main tree"""				
+		"""add a left click menu to main tree"""
 		if event.button == 3:
 			x = int(event.x)
 			y = int(event.y)

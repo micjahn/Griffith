@@ -153,13 +153,13 @@ def add_movie_db(self, close):
 			t_movies['seen'] = False
 		# languages
 		t_languages = {}
-		for i in self.am_languages:
-			if i['id'].get_active() > 0:
-				lang_id = self.languages_ids[i['id'].get_active()]
-				type = i['type'].get_active()
-				if not t_languages.has_key(lang_id):
-					t_languages[lang_id] = {}
-				t_languages[lang_id][type] = True
+#		for i in self.am_languages:
+#			if i['id'].get_active() > 0:
+#				lang_id = self.languages_ids[i['id'].get_active()]
+#				type = i['type'].get_active()
+#				if not t_languages.has_key(lang_id):
+#					t_languages[lang_id] = {}
+#				t_languages[lang_id][type] = True
 		# tags
 		t_tags = {}
 		for i in self.tags_ids:
