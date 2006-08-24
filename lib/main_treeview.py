@@ -32,7 +32,7 @@ def treeview_clicked(self):
 		self.clear_details()
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
-		number = tmp_model.get_value(tmp_iter,1)
+		number = tmp_model.get_value(tmp_iter,0)
 		movie = self.db.Movie.get_by(number=number)
 		if movie == None:
 			self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
@@ -183,11 +183,12 @@ def treeview_clicked(self):
 		self.e_collection_combo.set_active(i)
 
 		#languages
-		self.e_languages = []	# for language widgets
+#		self.e_languages = []	# for language widgets
+		self.lang['model'].clear()
 		if len(movie.languages)>0:
 			from initialize import create_language_hbox
 			for i in movie.languages:
-				create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages, default=i.lang_id, type=i.type)
+				create_language_hbox(self, i)
 		#tags
 		for tag in movie.tags:
 			i = gutils.findKey(tag.tag_id, self.tags_ids)
@@ -197,7 +198,7 @@ def populate(self, movies):
 	self.treemodel.clear()
 	for movie in movies:
 		myiter = self.treemodel.append(None)
-		self.treemodel.set_value(myiter,1,'%004d' % int(movie.number))
+		self.treemodel.set_value(myiter,0,'%004d' % int(movie.number))
 
 		# check preferences to hide or show columns
 		if self.config.get('view_otitle') == 'True':
@@ -233,11 +234,11 @@ def populate(self, movies):
 					pixbuf = self.Image.get_pixbuf()
 			self.Image.set_from_file(image_path)
 			pixbuf = self.Image.get_pixbuf()
-			self.treemodel.set_value(myiter, 2, pixbuf)
+			self.treemodel.set_value(myiter, 1, pixbuf)
 
 		else:
 			# let's hide image column from main treeview since we don't want it to be visible
 			self.image_column.set_visible(False)
-		self.treemodel.set_value(myiter,3,movie.o_title)
-		self.treemodel.set_value(myiter,4,movie.title)
-		self.treemodel.set_value(myiter,5,movie.director)
+		self.treemodel.set_value(myiter,2,movie.o_title)
+		self.treemodel.set_value(myiter,3,movie.title)
+		self.treemodel.set_value(myiter,4,movie.director)

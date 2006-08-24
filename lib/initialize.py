@@ -132,36 +132,36 @@ def toolbar(self):
 		self.menu_toolbar.set_active(False)
 
 def treeview(self):
-	self.treemodel = gtk.TreeStore(gtk.gdk.Pixbuf, str, gtk.gdk.Pixbuf, str, str, str)
+	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
 	self.main_treeview.set_model(self.treemodel)
 	self.main_treeview.set_headers_visible(True)
 	# number column
 	renderer=gtk.CellRendererText()
-	column=gtk.TreeViewColumn(_("N."), renderer, text=1)
+	column=gtk.TreeViewColumn(_("N."), renderer, text=0)
 	column.set_resizable(True)
-	column.set_sort_column_id(1)
+	column.set_sort_column_id(0)
 	self.main_treeview.append_column(column)
 	# pic column
 	renderer=gtk.CellRendererPixbuf()
-	self.image_column=gtk.TreeViewColumn(_("Image"), renderer, pixbuf=2)
+	self.image_column=gtk.TreeViewColumn(_("Image"), renderer, pixbuf=1)
 	self.image_column.set_resizable(False)
 	self.main_treeview.append_column(self.image_column)
 	# original title column
 	renderer=gtk.CellRendererText()
-	self.otitle_column=gtk.TreeViewColumn(_("Original Title"), renderer, text=3)
+	self.otitle_column=gtk.TreeViewColumn(_("Original Title"), renderer, text=2)
 	self.otitle_column.set_resizable(True)
-	self.otitle_column.set_sort_column_id(3)
+	self.otitle_column.set_sort_column_id(2)
 	self.main_treeview.append_column(self.otitle_column)
 	# title column
 	renderer=gtk.CellRendererText()
-	self.title_column=gtk.TreeViewColumn(_("Title"), renderer, text=4)
+	self.title_column=gtk.TreeViewColumn(_("Title"), renderer, text=3)
 	self.title_column.set_resizable(True)
-	self.title_column.set_sort_column_id(4)
+	self.title_column.set_sort_column_id(3)
 	self.main_treeview.append_column(self.title_column)
 	# director column
 	renderer=gtk.CellRendererText()
-	self.director_column=gtk.TreeViewColumn(_("Director"), renderer, text=5)
-	self.director_column.set_sort_column_id(5)
+	self.director_column=gtk.TreeViewColumn(_("Director"), renderer, text=4)
+	self.director_column.set_sort_column_id(4)
 	self.director_column.set_resizable(True)
 	self.main_treeview.append_column(self.director_column)
 	# add data to treeview
@@ -187,6 +187,102 @@ def loans_treeview(self):
 	self.loaner_column=gtk.TreeViewColumn(_("Loaned To"), renderer, text=2)
 	self.loaner_column.set_resizable(True)
 	self.loan_history.append_column(self.loaner_column)
+
+def lang_treeview(self):
+	def on__combo__edited(widget, path, new_text, model, column):
+		model[path][column] = new_text
+		mymodel = widget.get_property('model')
+		if column == 1:	# type
+			for i in mymodel:
+				if i[1] == new_text:
+					my_type = i[0]
+			if my_type == 3:	# subtitles
+				model[path][2] = ''
+			else:
+				model[path][4] = ''
+		if column == 4:	# subtitle format
+			model[path][1] = _('subtitles')
+			model[path][2] = ''
+			model[path][3] = ''
+		if column in (2,3):
+			model[path][4] = ''
+			if model[path][1] == _('subtitles'):
+				model[path][1] = ''
+
+	self.lang = {}
+	treeview = self.lang_treeview
+	self.lang['model'] = gtk.TreeStore(str, str, str, str, str)
+	treeview.set_model(self.lang['model'])
+	treeview.set_headers_visible(True)
+
+	model = self.lang['lang'] = gtk.ListStore(int, str)
+	for i in self.db.Lang.select():
+		model.append([i.lang_id, i.name])
+	combo = gtk.CellRendererCombo()
+	combo.set_property('model', model)
+	combo.set_property('text-column', 1)
+	combo.set_property('editable', True)
+	combo.set_property('has-entry', False)
+	combo.connect("edited", on__combo__edited, self.lang['model'], 0)
+	column=gtk.TreeViewColumn('Language', combo, text=0)
+	column.set_sort_column_id(0)
+	treeview.append_column(column)
+	
+	model = self.lang['type'] = gtk.ListStore(int, str)
+	model.append([0, ''])
+	model.append([1, _("lector")])
+	model.append([2, _("dubbing")])
+	model.append([3, _("subtitles")])
+	combo = gtk.CellRendererCombo()
+	combo.set_property('model', model)
+	combo.set_property('text-column', 1)
+	combo.set_property('editable', True)
+	combo.set_property('has-entry', False)
+	combo.connect("edited", on__combo__edited, self.lang['model'], 1)
+	column=gtk.TreeViewColumn('Type', combo, text=1)
+	column.set_sort_column_id(1)
+	treeview.append_column(column)
+
+	model = self.lang['acodec'] = gtk.ListStore(int, str)
+	for i in self.db.ACodec.select():
+		model.append([i.acodec_id, i.name])
+	combo = gtk.CellRendererCombo()
+	combo.set_property('model', model)
+	combo.set_property('text-column', 1)
+	combo.set_property('editable', True)
+	combo.set_property('has-entry', False)
+	combo.connect("edited", on__combo__edited, self.lang['model'], 2)
+	column=gtk.TreeViewColumn('Codec', combo, text=2)
+	column.set_sort_column_id(2)
+	treeview.append_column(column)
+	
+	model = self.lang['achannel'] = gtk.ListStore(int, str)
+	for i in self.db.AChannel.select():
+		model.append([i.achannel_id, i.name])
+	combo = gtk.CellRendererCombo()
+	combo.set_property('model', model)
+	combo.set_property('text-column', 1)
+	combo.set_property('editable', True)
+	combo.set_property('has-entry', False)
+	combo.connect("edited", on__combo__edited, self.lang['model'], 3)
+	column=gtk.TreeViewColumn('Channels', combo, text=3)
+	column.set_sort_column_id(3)
+	treeview.append_column(column)
+	
+	model = self.lang['subformat'] = gtk.ListStore(int, str)
+	for i in self.db.SubFormat.select():
+		model.append([i.subformat_id, i.name])
+	combo = gtk.CellRendererCombo()
+	combo.set_property('model', model)
+	combo.set_property('text-column', 1)
+	combo.set_property('editable', True)
+	combo.set_property('has-entry', False)
+	combo.connect("edited", on__combo__edited, self.lang['model'], 4)
+	column=gtk.TreeViewColumn('Subtitle format', combo, text=4)
+	column.set_sort_column_id(4)
+	treeview.append_column(column)
+	
+	treeview.show_all()
 
 def movie_plugins(self):
 	"""
@@ -524,7 +620,7 @@ def fill_preferences_tags_combo(self):
 def language_combos(self):
 	self.lang_name_combo.get_model().clear()
 	self.languages_ids = {}
-	self.languages_ids[0] = 0	# empty one (to remove movie language)
+	self.languages_ids[0] = 0	# empty one
 	self.lang_name_combo.insert_text(0, '')
 	i = 1
 	for lang in self.db.Lang.select():
@@ -535,7 +631,7 @@ def language_combos(self):
 def acodec_combos(self):
 	self.acodec_name_combo.get_model().clear()
 	self.acodecs_ids = {}
-	self.acodecs_ids[0] = 0	# empty one (to remove movie language)
+	self.acodecs_ids[0] = 0	# empty one
 	self.acodec_name_combo.insert_text(0, '')
 	i = 1
 	for acodec in self.db.ACodec.select():
@@ -546,7 +642,7 @@ def acodec_combos(self):
 def achannel_combos(self):
 	self.achannel_name_combo.get_model().clear()
 	self.achannels_ids = {}
-	self.achannels_ids[0] = 0	# empty one (to remove movie language)
+	self.achannels_ids[0] = 0	# empty one
 	self.achannel_name_combo.insert_text(0, '')
 	i = 1
 	for achannel in self.db.AChannel.select():
@@ -557,7 +653,7 @@ def achannel_combos(self):
 def subformat_combos(self):
 	self.subformat_name_combo.get_model().clear()
 	self.subformats_ids = {}
-	self.subformats_ids[0] = 0	# empty one (to remove movie language)
+	self.subformats_ids[0] = 0	# empty one
 	self.subformat_name_combo.insert_text(0, '')
 	i = 1
 	for subformat in self.db.SubFormat.select():
@@ -634,50 +730,71 @@ def vcodec_combos(self):
 		if pos!=None:
 			self.e_vcodec.set_active(int(pos))
 
-def create_language_hbox(self, widget, tab, default=None, type=None):
-	if len(self.languages_ids) == 1:
-		if len(widget.get_children()) == 0:
-			widget.add(gtk.Label(_('You have to fill in languages list in preferences window')))
+def create_language_hbox(self, lang=None):
+	if len(self.languages_ids) == 0: # FIXME
+		return False
+
+	def get_text(model, id):
+		if id == -1:
+			return model[0][1]
+		else:
+			for i in model:
+				if i[0] == id:
+					return i[1]
+
+	myiter = self.lang['model'].append(None)
+	if lang:
+		self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], lang.lang_id))
+		self.lang['model'].set_value(myiter, 1, get_text(self.lang['type'], lang.type))
+		self.lang['model'].set_value(myiter, 2, get_text(self.lang['acodec'], lang.acodec_id))
+		self.lang['model'].set_value(myiter, 3, get_text(self.lang['achannel'], lang.achannel_id))
+		self.lang['model'].set_value(myiter, 4, get_text(self.lang['subformat'], lang.subformat_id))
 	else:
-		from initialize import fill_language_combo
-		number = len(widget.get_children())	# new box number
-		if number == 1:	# possible "You have to fill..." text still inside
-			tmp = widget.get_children()[0]
-			if tmp.get_name() == 'GtkLabel':
-				tmp.destroy()
-				number = 0
-		tab.append({})				# creates new tab[number][]
-		box = gtk.HBox(spacing=2)
-		tab[number]['id'] = gtk.combo_box_new_text()
-		fill_language_combo(self, widget=tab[number]['id'], default=default)
-		tab[number]['type'] = gtk.combo_box_new_text()
-		tab[number]['type'].insert_text(0, '')
-		tab[number]['type'].insert_text(1, _("lector"))
-		tab[number]['type'].insert_text(2, _("dubbing"))
-		tab[number]['type'].insert_text(3, _("subtitles"))
-		if type != None:
-			tab[number]['type'].set_active(int(type))
-		else:
-			tab[number]['type'].set_active(0)
-		box.add(tab[number]['id'])
-		box.add(tab[number]['type'])
-		widget.pack_start(box, expand=False, fill=False, padding=1)
-	widget.show_all()
-def fill_language_combo(self, widget, default=None):
-	try:
-		widget.get_model().clear()
-	except:
-		pass
-	for i in self.languages_ids:
-		lang_id = self.languages_ids[i]
-		if lang_id>0:
-			name = self.db.Lang.get_by(lang_id=lang_id).name
-		else:
-			name = ''
-		widget.insert_text(int(i), str(name))
-	if default != None and default!=0:
-		i = gutils.findKey(default, self.languages_ids)
-		widget.set_active(int(i))
+		self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], -1))
+
+#        if len(self.languages_ids) == 1:
+#                if len(widget.get_children()) == 0:
+#                        widget.add(gtk.Label(_('You have to fill in languages list in preferences window')))
+#        else:
+#                from initialize import fill_language_combo
+#                number = len(widget.get_children())	# new box number
+#                if number == 1:	# possible "You have to fill..." text still inside
+#                        tmp = widget.get_children()[0]
+#                        if tmp.get_name() == 'GtkLabel':
+#                                tmp.destroy()
+#                                number = 0
+#                tab.append({})				# creates new tab[number][]
+#                box = gtk.HBox(spacing=2)
+#                tab[number]['id'] = gtk.combo_box_new_text()
+#                fill_language_combo(self, widget=tab[number]['id'], default=default)
+#                tab[number]['type'] = gtk.combo_box_new_text()
+#                tab[number]['type'].insert_text(0, '')
+#                tab[number]['type'].insert_text(1, _("lector"))
+#                tab[number]['type'].insert_text(2, _("dubbing"))
+#                tab[number]['type'].insert_text(3, _("subtitles"))
+#                if type != None:
+#                        tab[number]['type'].set_active(int(type))
+#                else:
+#                        tab[number]['type'].set_active(0)
+#                box.add(tab[number]['id'])
+#                box.add(tab[number]['type'])
+#                widget.pack_start(box, expand=False, fill=False, padding=1)
+#        widget.show_all()
+#def fill_language_combo(self, widget, default=None):
+#        try:
+#                widget.get_model().clear()
+#        except:
+#                pass
+#        for i in self.languages_ids:
+#                lang_id = self.languages_ids[i]
+#                if lang_id>0:
+#                        name = self.db.Lang.get_by(lang_id=lang_id).name
+#                else:
+#                        name = ''
+#                widget.insert_text(int(i), str(name))
+#        if default != None and default!=0:
+#                i = gutils.findKey(default, self.languages_ids)
+#                widget.set_active(int(i))
 
 def create_tag_vbox(self, widget, tab):
 	for i in widget.get_children():

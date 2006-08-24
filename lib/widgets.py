@@ -238,6 +238,7 @@ def define_widgets(self, gladefile):
 	self.lang_name_combo = gladefile.get_widget('lang_name_combo')	# preferences window
 	self.e_lang_vbox     = gladefile.get_widget('e_lang_vbox')
 	self.am_lang_vbox    = gladefile.get_widget('am_lang_vbox')
+	self.lang_treeview   = gladefile.get_widget('lang_treeview')
 
 	# tags
 	self.tag_name_combo = gladefile.get_widget('tag_name_combo')	# preferences window

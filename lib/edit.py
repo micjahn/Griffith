@@ -126,8 +126,8 @@ def clear_details(self):
 	#self.e_picture.clear()
 	self.rating_slider.set_value(0)
 	# languages - remove old widgets
-	for i in self.e_lang_vbox.get_children():
-		i.destroy()
+#	for i in self.e_lang_vbox.get_children():
+#		i.destroy()
 	# tags - clear tag selection
 	for i in self.e_tag_vbox.get_children():
 		i.set_active(False)

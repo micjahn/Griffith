@@ -91,6 +91,7 @@ class Griffith:
 		initialize.toolbar(self)
 		initialize.treeview(self)
 		initialize.loans_treeview(self)
+		initialize.lang_treeview(self)
 		initialize.dictionaries(self)
 		initialize.combos(self)
 		initialize.preferences(self)
@@ -379,7 +380,8 @@ class Griffith:
 			self.lang_name_active = active
 
 	def on_e_lang_add_clicked(self, widget):
-		initialize.create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
+		#initialize.create_language_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
+		initialize.create_language_hbox(self)
 	def on_e_lang_remove_clicked(self, widget):
 		initialize.remove_hbox(self, widget=self.e_lang_vbox, tab=self.e_languages)
 	def on_am_lang_add_clicked(self, widget):

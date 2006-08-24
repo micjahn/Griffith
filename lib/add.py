@@ -89,12 +89,12 @@ def initialize_add_dialog(self):
 	self.am_source.set_active(self.d_plugin)
 	image = os.path.join(self.locations['images'], "default.png")
 	# languages - remove old widgets
-	for i in self.am_lang_vbox.get_children():
-		i.destroy()
-	self.am_languages = []
+#	for i in self.am_lang_vbox.get_children():
+#		i.destroy()
+#	self.am_languages = []
 	# tags - clear tag selection
-	for i in self.am_tag_vbox.get_children():
-		i.set_active(False)
+#	for i in self.am_tag_vbox.get_children():
+#		i.set_active(False)
 
 	handler = self.Image.set_from_file(image)
 	handler = self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
@@ -199,11 +199,11 @@ def add_movie_db(self, close):
 			image_path = os.path.join(self.locations['images'], "default.png")
 		handler = self.Image.set_from_file(image_path)
 		pixbuf = self.Image.get_pixbuf()
-		self.treemodel.set_value(myiter, 1, '%004d' % int(self.am_number.get_text()))
-		self.treemodel.set_value(myiter, 2, pixbuf.scale_simple(30,40,3))
-		self.treemodel.set_value(myiter, 3, str(self.am_original_title.get_text()))
-		self.treemodel.set_value(myiter, 4, str(self.am_title.get_text()))
-		self.treemodel.set_value(myiter, 5, str(self.am_director.get_text()))
+		self.treemodel.set_value(myiter, 0, '%004d' % int(self.am_number.get_text()))
+		self.treemodel.set_value(myiter, 1, pixbuf.scale_simple(30,40,3))
+		self.treemodel.set_value(myiter, 2, str(self.am_original_title.get_text()))
+		self.treemodel.set_value(myiter, 3, str(self.am_title.get_text()))
+		self.treemodel.set_value(myiter, 4, str(self.am_director.get_text()))
 		#update statusbar
 		self.total += 1
 		self.total_filter = self.total
