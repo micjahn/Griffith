@@ -668,7 +668,10 @@ class Griffith:
 	def get_maintree_selection(self):
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
-		return tmp_model.get_value(tmp_iter, 0), tmp_iter
+		if tmp_model and tmp_iter:
+			return tmp_model.get_value(tmp_iter, 0), tmp_iter
+		else:
+			return False
 
 	def select_last_row(self, rtotal):
 		if rtotal:
@@ -985,7 +988,6 @@ You can't undo this operation."""), \
 		if nextiter:
 			treeselection.select_iter(nextiter)
 			self.treeview_clicked()
-
 
 if __name__ == "__main__":
 	griffith = Griffith()

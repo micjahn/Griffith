@@ -194,6 +194,8 @@ class GriffithSQL:
 				i.delete()
 			for i in self.languages:
 				i.delete()
+			for i in self.loans:
+				i.delete()
 			self.delete()
 			self.mapper.get_session().flush()
 			return True#}}}
@@ -372,10 +374,10 @@ class GriffithSQL:
 		assign_mapper(self.Tag, tags, is_primary=True, properties={'assigned_movie_ids': relation(self.MovieTag)})
 		assign_mapper(self.Loan, loans, is_primary=True, properties = {
 			'person'     : relation(self.Person),
-			'movie'      : relation(self.Movie),
 			'volume'     : relation(self.Volume),
 			'collection' : relation(self.Collection)})
 		assign_mapper(self.Movie, movies, is_primary=True, order_by=movies.c.number , properties = {
+			'loans'      : relation(self.Loan, backref='movie'),
 			'languages'  : relation(self.MovieLang),
 			'tags'       : relation(self.MovieTag)})#}}}
 		
