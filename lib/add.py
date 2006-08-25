@@ -88,13 +88,6 @@ def initialize_add_dialog(self):
 	self.nb_add.set_current_page(0)
 	self.am_source.set_active(self.d_plugin)
 	image = os.path.join(self.locations['images'], "default.png")
-	# languages - remove old widgets
-#	for i in self.am_lang_vbox.get_children():
-#		i.destroy()
-#	self.am_languages = []
-	# tags - clear tag selection
-#	for i in self.am_tag_vbox.get_children():
-#		i.set_active(False)
 
 	handler = self.Image.set_from_file(image)
 	handler = self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
@@ -153,13 +146,6 @@ def add_movie_db(self, close):
 			t_movies['seen'] = False
 		# languages
 		t_languages = {}
-#		for i in self.am_languages:
-#			if i['id'].get_active() > 0:
-#				lang_id = self.languages_ids[i['id'].get_active()]
-#				type = i['type'].get_active()
-#				if not t_languages.has_key(lang_id):
-#					t_languages[lang_id] = {}
-#				t_languages[lang_id][type] = True
 		# tags
 		t_tags = {}
 		for i in self.tags_ids:
@@ -257,48 +243,64 @@ def populate_with_results(self):
 	plugin = __import__(plugin_name)
 	self.movie = plugin.Plugin(m_id)
 	self.movie.open_page(self.add_movie_window)
-	self.movie.parse_movie()
-	self.am_original_title.set_text(gutils.convert_entities(self.movie.original_title))
-	self.am_title.set_text(gutils.convert_entities(self.movie.title))
-	self.am_director.set_text(gutils.convert_entities(self.movie.director))
-	plot_buffer = self.am_plot.get_buffer()
-	plot_buffer.set_text(gutils.convert_entities(self.movie.plot))
-	with_buffer = self.am_with.get_buffer()
-	with_buffer.set_text(gutils.convert_entities(self.movie.with))
-	self.am_country.set_text(gutils.convert_entities(self.movie.country))
-	self.am_genre.set_text(gutils.convert_entities(self.movie.genre))
-	self.am_classification.set_text(gutils.convert_entities(self.movie.classification))
-	self.am_studio.set_text(gutils.convert_entities(self.movie.studio))
-	self.am_site.set_text(gutils.remove_accents(self.movie.site))
-	self.am_imdb.set_text(gutils.remove_accents(self.movie.imdb))
-	self.am_trailer.set_text(gutils.remove_accents(self.movie.trailer))
-	self.am_year.set_text(self.movie.year)
-	notes_buffer = self.am_obs.get_buffer()
-	notes_buffer.set_text(gutils.convert_entities(self.movie.notes))
-	self.am_runtime.set_text(self.movie.running_time)
-	if self.movie.rating:
+	self.movie.parse_movie(self.config)
+	if self.config.get('s_o_title'):
+		self.am_original_title.set_text(gutils.convert_entities(self.movie.original_title))
+	if self.config.get('s_title'):
+		self.am_title.set_text(gutils.convert_entities(self.movie.title))
+	if self.config.get('s_director'):
+		self.am_director.set_text(gutils.convert_entities(self.movie.director))
+	if self.config.get('s_plot'):
+		plot_buffer = self.am_plot.get_buffer()
+		plot_buffer.set_text(gutils.convert_entities(self.movie.plot))
+	if self.config.get('s_with'):
+		with_buffer = self.am_with.get_buffer()
+		with_buffer.set_text(gutils.convert_entities(self.movie.with))
+	if self.config.get('s_country'):
+		self.am_country.set_text(gutils.convert_entities(self.movie.country))
+	if self.config.get('s_genre'):
+		self.am_genre.set_text(gutils.convert_entities(self.movie.genre))
+	if self.config.get('s_classification'):
+		self.am_classification.set_text(gutils.convert_entities(self.movie.classification))
+	if self.config.get('s_studio'):
+		self.am_studio.set_text(gutils.convert_entities(self.movie.studio))
+	if self.config.get('s_o_site'):
+		self.am_site.set_text(gutils.remove_accents(self.movie.site))
+	if self.config.get('s_site'):
+		self.am_imdb.set_text(gutils.remove_accents(self.movie.imdb))
+	if self.config.get('s_trailer'):
+		self.am_trailer.set_text(gutils.remove_accents(self.movie.trailer))
+	if self.config.get('s_year'):
+		self.am_year.set_text(self.movie.year)
+	if self.config.get('s_notes'):
+		notes_buffer = self.am_obs.get_buffer()
+		notes_buffer.set_text(gutils.convert_entities(self.movie.notes))
+	if self.config.get('s_runtime'):
+		self.am_runtime.set_text(self.movie.running_time)
+	if self.config.get('s_rating') and self.movie.rating:
 		self.rating_slider_add.set_value(float(self.movie.rating))
 	# poster
 	if self.windows:
 		temp_dir = "C:\\windows\\temp\\"
 	else:
 		temp_dir = "/tmp/"
-	if self.movie.picture != "":
-		image = os.path.join(temp_dir, self.movie.picture)
-		try:
-			handler = self.Image.set_from_file(image)
-			pixbuf = self.Image.get_pixbuf()
-			self.am_picture.set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
-			self.am_picture_name.set_text(string.replace(self.movie.picture, ".jpg",""))
-		except:
+	if self.config.get('s_image'):
+		if self.movie.picture != "":
+			image = os.path.join(temp_dir, self.movie.picture)
+			try:
+				handler = self.Image.set_from_file(image)
+				pixbuf = self.Image.get_pixbuf()
+				self.am_picture.set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
+				self.am_picture_name.set_text(string.replace(self.movie.picture, ".jpg",""))
+			except:
+				image = os.path.join(self.locations['images'], "default.png")
+				handler = self.Image.set_from_file(image)
+				self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
+		else:
 			image = os.path.join(self.locations['images'], "default.png")
 			handler = self.Image.set_from_file(image)
-			self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
-	else:
-		image = os.path.join(self.locations['images'], "default.png")
-		handler = self.Image.set_from_file(image)
-		Pixbuf = self.Image.get_pixbuf()
-		self.am_picture.set_from_pixbuf(Pixbuf)
+			Pixbuf = self.Image.get_pixbuf()
+			self.am_picture.set_from_pixbuf(Pixbuf)
 
 def show_websearch_results(self):
 	total = self.founded_results_id = 0
@@ -416,10 +418,6 @@ def clone_movie(self):
 		t_tags[tag.tag_id] = 1
 	# languages
 	t_languages = {}
-	for lang in movie.languages:
-		if not t_languages.has_key(lang.lang_id):
-			t_languages[lang.lang_id] = {}
-		t_languages[lang.lang_id][lang.type] = True
 
 	self.db.add_movie(t_movies, t_languages, t_tags)
 

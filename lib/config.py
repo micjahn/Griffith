@@ -92,7 +92,7 @@ class Config:
 		self.config['spell_notes']          = "True"
 		self.config['spell_lang']           = "en"
 		self.config['default_movie_plugin'] = "IMDB"
-		self.config['rating']               = "0" # 0 = meter; 1 = stars
+		self.config['rating']               = "0" # 0       = meter; 1 = stars
 		self.config['color']                = "3" # N/A
 		self.config['layers']               = "4" # N/A
 		self.config['condition']            = "5" # N/A
@@ -111,4 +111,21 @@ class Config:
 		self.config['db_name']              = "griffith"
 		self.config['db_user']              = "griffith"
 		self.config['db_passwd']            = "gRiFiTh"
+		self.config['s_classification']     = True
+		self.config['s_country']            = True
+		self.config['s_director']           = True
+		self.config['s_genre']              = True
+		self.config['s_image']              = True
+		self.config['s_notes']              = True
+		self.config['s_o_site']             = True
+		self.config['s_o_title']            = True
+		self.config['s_plot']               = True
+		self.config['s_rating']             = True
+		self.config['s_runtime']            = True
+		self.config['s_site']               = True
+		self.config['s_studio']             = True
+		self.config['s_title']              = True
+		self.config['s_trailer']            = True
+		self.config['s_with']               = True
+		self.config['s_year']               = True
 		self.save()

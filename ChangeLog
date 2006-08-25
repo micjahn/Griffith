@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-08-25 Piotr Ozarowski <ozarow@gmail.com>
+	* Movie plugins are now fetching only selected data.
+
 2006-08-24 Piotr Ozarowski <ozarow@gmail.com>
 	* Language treeview now supports codec/channel/subtitle format data (still needs work)
 

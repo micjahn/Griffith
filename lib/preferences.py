@@ -82,6 +82,25 @@ def show_preferences(self):
 	if self.config.get('color'):
 		self.p_color.set_active(int(self.config.get('color')))
 
+	# search for:
+	self.p_s_classification.set_active(bool(self.config.get('s_classification')))
+	self.p_s_country.set_active(bool(self.config.get('s_country')))
+	self.p_s_director.set_active(bool(self.config.get('s_director')))
+	self.p_s_genre.set_active(bool(self.config.get('s_genre')))
+	self.p_s_image.set_active(bool(self.config.get('s_image')))
+	self.p_s_notes.set_active(bool(self.config.get('s_notes')))
+	self.p_s_o_site.set_active(bool(self.config.get('s_o_site')))
+	self.p_s_o_title.set_active(bool(self.config.get('s_o_title')))
+	self.p_s_plot.set_active(bool(self.config.get('s_plot')))
+	self.p_s_rating.set_active(bool(self.config.get('s_rating')))
+	self.p_s_runtime.set_active(bool(self.config.get('s_runtime')))
+	self.p_s_site.set_active(bool(self.config.get('s_site')))
+	self.p_s_studio.set_active(bool(self.config.get('s_studio')))
+	self.p_s_title.set_active(bool(self.config.get('s_title')))
+	self.p_s_trailer.set_active(bool(self.config.get('s_trailer')))
+	self.p_s_with.set_active(bool(self.config.get('s_with')))
+	self.p_s_year.set_active(bool(self.config.get('s_year')))
+	
 	plugins = gutils.read_plugins('PluginMovie', \
 		self.locations['movie_plugins'])
 	plugins.sort()
@@ -201,7 +220,26 @@ def save_preferences(self):
 	if self.default_plugin.get_active():
 		self.config['default_movie_plugin'] = \
 			gutils.on_combo_box_entry_changed(self.default_plugin)
-	mcounter = 0		
+	# search for:
+	self.config['s_classification'] = self.p_s_classification.get_active()
+	self.config['s_country'] = self.p_s_country.get_active()
+	self.config['s_director'] = self.p_s_director.get_active()
+	self.config['s_genre'] = self.p_s_genre.get_active()
+	self.config['s_image'] = self.p_s_image.get_active()
+	self.config['s_notes'] = self.p_s_notes.get_active()
+	self.config['s_o_site'] = self.p_s_o_site.get_active()
+	self.config['s_o_title'] = self.p_s_o_title.get_active()
+	self.config['s_plot'] = self.p_s_plot.get_active()
+	self.config['s_rating'] = self.p_s_rating.get_active()
+	self.config['s_runtime'] = self.p_s_runtime.get_active()
+	self.config['s_site'] = self.p_s_site.get_active()
+	self.config['s_studio'] = self.p_s_studio.get_active()
+	self.config['s_title'] = self.p_s_title.get_active()
+	self.config['s_trailer'] = self.p_s_trailer.get_active()
+	self.config['s_with'] = self.p_s_with.get_active()
+	self.config['s_year'] = self.p_s_year.get_active()
+	
+	mcounter = 0
 	for p in self.plugins:
 		plugin_module = os.path.basename(p).replace('.py','')
 		plugin_name = plugin_module.replace('PluginMovie','')
