@@ -4,9 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
-2006-08-18 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-27 Piotr Ozarowski <ozarow@gmail.com>
 	* Added new green style to "html tables" template (HTML export plugin)
 	  + old one renamed to "light green"
+	* Added some highlights for next version to NEWS file
 
 2006-08-25 Piotr Ozarowski <ozarow@gmail.com>
 	* Movie plugins are now fetching only selected data.

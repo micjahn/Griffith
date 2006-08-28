@@ -1,3 +1,23 @@
+Griffith <next_version>
+=======================
+* SQLAlchemy transition, i.e.
+  + MySQL support added
+  + PostgreSQL support added
+  + SQLite3 transition on Linux (pysqlite2 is now required)
+* New data:
+  + video codec
+  + audio codec
+  + audio channels
+  + subtitle format
+* Some GUI changes, i.e.
+  + languages data look changed
+  + draggable toolbar
+  + new "next" / "previous" buttons
+* Selectable search data in movie plugins (search only for data you want to download)
+* Merge database function added
+* Smaller backup zip files generation
+
+
 Griffith 0.6.2
 ==============
 This release updates some movie plugins. It's last release before
