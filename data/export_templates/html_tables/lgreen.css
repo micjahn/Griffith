@@ -1,15 +1,15 @@
 body {
 	font-family: verdana, geneva, arial, helvetica, sans-serif;
 	font-size: 12px;
-	background-color: #1f8a0a;
+	background-color: #f4f2d3;
 	color: green;
 }
 
 table {
-	background-color: #56bc24;
+	background-color: #e6f8a0;
 	margin: 1.5em;
 	padding: 1em;
-	border: 1px solid #6fe100;
+	border: 1px solid #c7ed30;
 	width:95%;
 }
 
@@ -20,13 +20,11 @@ td {
 }
 
 tr.title td {
-	border-bottom: 1px solid #1f8a0a;
-	border-right: 1px solid #1f8a0a;
 	font-style: oblique;
 	font-weight: bold;
 	font-family: 'Dolly', 'Georgia', 'Times New Roman', serif;
 	font-size: 2em;
-	background-color: #91d370;
+	background-color: #c7ed30;
 	color: #48a013;
 }
 
@@ -35,15 +33,15 @@ tr.otitle td {
 	margin-bottom: 5px;
 	font-family: arial, sans-serif;
 	font-weight: bold;
+	color: #48a013;
 }
 
 th {
-	border-top: 1px solid #48a013;
-	border-left: 1px solid #48a013;
-	text-align: right;
+	border-bottom: 1px solid #ccc;
+	text-align: center;
 	padding: 0px 0.5em;
-	background-color: #1f8a0a;
-	color: #6fe100;
+	background-color: #c7ed30;
+	color: #48a013;
 }
 
 th:after { content: ":"; }
@@ -52,7 +50,7 @@ tr.plot td, tr.actors td, tr.notes td {
 	white-space: pre-wrap;
 	overflow: auto;
 	font-size: 0.9em;
-	border-bottom: 1px dashed #1f8a0a;
+	border-bottom: 1px solid #ccc;
 }
 
 tr.image td {
@@ -68,7 +66,7 @@ img {
 }
 
 a:link		{ color: green; text-decoration: none; }
-a:active	{ color: #91d370; text-decoration: none; }
+a:active	{ color: #c7ed30; text-decoration: none; }
 a:hover		{ color: #48a013 text-decoration: none; }
 a:visited	{ color: #163d5e; text-decoration: none; }
 
@@ -81,13 +79,14 @@ h1 { color: #48a013; }
 }
 .navi p {
 	display: inline;
-	background-color: #91d370;
-	border: 1px solid #56bc24;
-	color: #6fe100;
+	background-color: #e6f8a0;
+	border: 1px solid #c7ed30;
+	color: #e7b55f;
 }
 .navi p#current {
 	font-size: 1.1em;
-	background-color: green;
+	background-color: #c7ed30;
+	color: green;
 	padding-left: 2px;
 	padding-right: 2px;
 }
@@ -95,5 +94,4 @@ h1 { color: #48a013; }
 .copyright {
 	font-size: 0.7em;
 	margin-top: 5px;
-	color: #56bc24;
 }
