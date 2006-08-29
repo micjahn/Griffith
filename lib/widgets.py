@@ -217,9 +217,10 @@ def define_widgets(self, gladefile):
 	self.results_cancel   = gladefile.get_widget('results_cancel')
 
 	# poster button related
-	self.open_poster   = gladefile.get_widget('open_poster')
-	self.fetch_poster  = gladefile.get_widget('fetch_poster')
-	self.delete_poster = gladefile.get_widget('delete_poster')
+	self.open_poster     = gladefile.get_widget('open_poster')
+	self.fetch_poster    = gladefile.get_widget('fetch_poster')
+	self.delete_poster   = gladefile.get_widget('delete_poster')
+	self.t_delete_poster = gladefile.get_widget('t_delete_poster')
 
 	self.poster_window = gladefile.get_widget('poster_window')
 	self.big_poster    = gladefile.get_widget('big_poster')

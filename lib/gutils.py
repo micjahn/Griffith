@@ -277,6 +277,8 @@ def file_chooser(title, action=None, buttons=None, name="", folder=os.path.expan
 		filename = dialog.get_filename()
 	elif response == gtk.RESPONSE_CANCEL:
 		filename = None
+	else:
+		return False
 	path = dialog.get_current_folder()
 	dialog.destroy()
 	return filename, path

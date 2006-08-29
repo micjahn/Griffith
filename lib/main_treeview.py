@@ -132,10 +132,12 @@ def treeview_clicked(self):
 		if movie.image and os.path.isfile(tmp_img2):
 			image_path = tmp_img
 			self.delete_poster.set_sensitive(True)
+			self.t_delete_poster.set_sensitive(True)
 			self.e_picture_button.set_sensitive(True)
 		else:
 			image_path = os.path.join(self.locations['images'], "default.png")
 			self.delete_poster.set_sensitive(False)
+			self.t_delete_poster.set_sensitive(False)
 			self.e_picture_button.set_sensitive(False)
 		# lets see if we have a scaled down medium image already created
 		if os.path.isfile(image_path):

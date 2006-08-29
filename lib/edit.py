@@ -73,6 +73,7 @@ def delete_poster(self):
 		self.update_statusbar(_("Image has been updated"))
 
 		self.delete_poster.set_sensitive(False)
+		self.t_delete_poster.set_sensitive(False)
 		self.e_picture_button.set_sensitive(False)
 		if old_image:
 			delete.delete_poster(self, old_image)
@@ -252,6 +253,8 @@ def get_poster(self, f, result, current_poster):
 				os.path.basename(file_to_copy)))
 			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(self.griffith_dir, "posters/m_%s"%os.path.basename(file_to_copy))))
 			delete.delete_poster(self, current_poster)
+			self.delete_poster.set_sensitive(True)
+			self.t_delete_poster.set_sensitive(True)
 
 		else:
 			self.debug.show("Reverting to previous poster and deleting new one from disk.")
