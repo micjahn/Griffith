@@ -371,7 +371,7 @@ def source_changed(self):
 def clone_movie(self):
 	treeselection = self.main_treeview.get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
-	number = tmp_model.get_value(tmp_iter, 1)
+	number = tmp_model.get_value(tmp_iter, 0)
 	movie = self.db.Movie.get_by(number=number)
 
 	if movie == None:

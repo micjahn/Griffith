@@ -122,11 +122,11 @@ def update(self):
 			# update main treelist
 			treeselection = self.main_treeview.get_selection()
 			(tmp_model, tmp_iter) = treeselection.get_selected()
-			tmp_model.set_value(tmp_iter,3,self.e_original_title.get_text())
-			tmp_model.set_value(tmp_iter,4,self.e_title.get_text())
-			tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
-			tmp_model.set_value(tmp_iter,5,self.e_director.get_text())
-			tmp_model.set_value(tmp_iter,1,'%004d' % int(number))
+			tmp_model.set_value(tmp_iter,0,'%004d' % int(number))
+			tmp_model.set_value(tmp_iter,2,self.e_original_title.get_text())
+			tmp_model.set_value(tmp_iter,3,self.e_title.get_text())
+			tmp_model.set_value(tmp_iter,4,self.e_director.get_text())
+			tmp_model.set_value(tmp_iter,4,self.e_director.get_text())
 			# update volume/collection combo
 			self.e_volume_combo.set_active(int(new_volume_id))
 			self.e_collection_combo.set_active(int(new_collection_id))
@@ -138,13 +138,9 @@ def update(self):
 def update_image(self,image,number):
 	movie = self.db.Movie.get_by(number=number)
 	movie.image = os.path.splitext(image)[0]
-	movie.commit()
-	self.update_statusbar(_("Image has been updated"))
-
-def clear_image(self,number):
-	movie = self.db.Movie.get_by(number=number)
-	movie.image = None
-	movie.commit()
+	movie.update()
+	movie.flush()
+	self.e_picture_button.set_sensitive(True)
 	self.update_statusbar(_("Image has been updated"))
 
 def update_volume_combo_ids(self):

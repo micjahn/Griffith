@@ -40,7 +40,7 @@ def change_poster(self):
 	"""
 	import shutil
 	picture = self.e_picture
-	m_id = self.get_maintree_selection()
+	number = self.get_maintree_selection()[0]
 	filename = gutils.file_chooser(_("Select image"), action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK), name="", folder=self.locations['desktop'], picture=True)
 	if filename[0]:
 		try:
@@ -49,25 +49,33 @@ def change_poster(self):
 			shutil.copyfile(filename[0],'%s/posters/%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
 			gutils.make_thumbnail(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
 			gutils.make_medium_image(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
-			update.update_image(self, os.path.splitext(file_to_copy)[0], m_id[0])
+			update.update_image(self, os.path.splitext(file_to_copy)[0], number)
 			update_tree_thumbnail(self, '%s/posters/t_%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
 		except:
 			gutils.error(self, _("Image not valid."), self.main_window)
 
 def delete_poster(self):
-	m_id, m_iter = self.get_maintree_selection()
-	poster = self.db.get_value(field="image", table="movies", where="number='%s'"%m_id)
+	movie = self.db.Movie.get_by(movie_id=self.e_movie_id.get_text())
+	if not movie:
+		self.debug.show("Can't delete unknown movie's poster!")
+		return False
 	response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.main_window)
 	if response==-8:
 		image_path = self.locations['images'] + "/default.png"
 		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 		gutils.garbage(handler)
 		update_tree_thumbnail(self, self.locations['images'] + "/default_thumbnail.png")
-		m_id = self.get_maintree_selection()
-		update.clear_image(self, m_id[0])
+		# update in database
+		old_image = movie.image # save fo later
+		movie.image = None
+		movie.update()
+		movie.flush()
+		self.update_statusbar(_("Image has been updated"))
+
 		self.delete_poster.set_sensitive(False)
-		self.zoom_poster.set_sensitive(False)
-		delete.delete_poster(self, poster)
+		self.e_picture_button.set_sensitive(False)
+		if old_image:
+			delete.delete_poster(self, old_image)
 	else:
 		pass
 
@@ -76,7 +84,7 @@ def update_tree_thumbnail(self, t_image_path):
 	(tmp_model, tmp_iter) = treeselection.get_selected()
 	self.Image.set_from_file(t_image_path)
 	pixbuf = self.Image.get_pixbuf()
-	self.treemodel.set_value(tmp_iter, 2, pixbuf)
+	self.treemodel.set_value(tmp_iter, 1, pixbuf)
 	gutils.garbage(pixbuf)
 
 def change_rating_from_slider(self):
@@ -176,7 +184,6 @@ def fetch_bigger_poster(self):
 
 		if (len(result[f].ImageUrlLarge)):
 			title = result[f].ProductName
-			self.debug.show(title)
 			myiter = self.treemodel_results.insert_before(None, None)
 			self.treemodel_results.set_value(myiter, 0, str(f))
 			self.treemodel_results.set_value(myiter, 1, title)

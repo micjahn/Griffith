@@ -4,6 +4,12 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-08-28 Piotr Ozarowski <ozarow@gmail.com>
+	* Some GUI changes mainly suggested by Alan Horkan:
+	  + menu reorganized
+	  + poster button now opens poster window
+	  + changed some icons to their stock equivalent
+
 2006-08-27 Piotr Ozarowski <ozarow@gmail.com>
 	* Added new green style to "html tables" template (HTML export plugin)
 	  + old one renamed to "light green"

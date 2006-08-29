@@ -217,7 +217,6 @@ def define_widgets(self, gladefile):
 	self.results_cancel   = gladefile.get_widget('results_cancel')
 
 	# poster button related
-	self.zoom_poster   = gladefile.get_widget('zoom_poster')
 	self.open_poster   = gladefile.get_widget('open_poster')
 	self.fetch_poster  = gladefile.get_widget('fetch_poster')
 	self.delete_poster = gladefile.get_widget('delete_poster')
@@ -281,14 +280,6 @@ def define_widgets(self, gladefile):
 	self.vcodec_name_combo = gladefile.get_widget('vcodec_name_combo')	# preferences window
 	self.e_vcodec_vbox     = gladefile.get_widget('e_vcodec_vbox')	# edit window
 	self.am_vcodec_vbox    = gladefile.get_widget('am_vcodec_vbox')	# add window
-
-	# poster events
-	# we need to add a little hack here to exclude macintosh/win32 from enter/leave events because this seems buggy on these ones
-	#if sys.platform != "darwin" and sys.platform != "win32":
-	#	self.zoom_poster.connect("enter", self.z_poster)
-	#	self.zoom_poster.connect("leave", self.z_poster_hide)
-	#else:
-	self.zoom_poster.connect('clicked', self.z_poster)
 
 	self.main_window.connect('key_press_event', self.on_key_press_event)
 	self.main_treeview.connect('button_press_event', self.on_maintree_button_press_event)
@@ -355,6 +346,7 @@ def define_widgets(self, gladefile):
 		# poster
 		'on_e_picture_clicked'                  : self.change_poster,
 		'on_open_poster_clicked'                : self.change_poster,
+		'on_zoom_poster_clicked'                : self.z_poster,
 		'on_delete_poster_clicked'              : self.del_poster,
 		'on_fetch_poster_clicked'               : self.get_poster,
 		'on_go_imdb_clicked'                    : self.go_imdb_site,
