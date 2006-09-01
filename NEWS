@@ -16,6 +16,9 @@ Griffith <next_version>
 * Selectable search data in movie plugins (search only for data you want to download)
 * Merge database function added
 * Smaller backup zip files generation
+* HTML export plugin changes:
+  + Fixed problem with posters conversion on Windows
+  + New green styles in exported HTML tables
 
 
 Griffith 0.6.2

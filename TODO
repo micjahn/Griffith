@@ -1,8 +1,19 @@
-* Nice PDF tabular report
-* Export to SQL, text
-* Possibility to search different fields from different sites (plugins)
-* More powerful command line interface
+next version
+============
 * Possibility to use external database (PostgreSQL, MySQL, ...) - done in SVN
+* Possibility to search different fields from different sites (plugins) - almost done (you can select fields to search in preferences dialog)
 * Advanced sort/filter criteria
+* Extended export templates (probably using jinja template engine)
+
+near future
+===========
+* Nice PDF tabular report
 * Customising main list view
+* Detecting audio/video parameters from file (mmpython will be used)
+
+far future
+==========
+* Export to SQL, text
+* More powerful command line interface
+* Curses version (text mode) (urwid may be handy)
 * Probably much more than this :-D
