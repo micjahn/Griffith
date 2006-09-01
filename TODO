@@ -1,15 +1,16 @@
 next version
 ============
-* Possibility to use external database (PostgreSQL, MySQL, ...) - done in SVN
 * Possibility to search different fields from different sites (plugins) - almost done (you can select fields to search in preferences dialog)
 * Advanced sort/filter criteria
 * Extended export templates (probably using jinja template engine)
+* Exporting data to Excel files (.xls) (pyExcelerator)
 
 near future
 ===========
 * Nice PDF tabular report
 * Customising main list view
 * Detecting audio/video parameters from file (mmpython will be used)
+* Importing data from CSV / Excel
 
 far future
 ==========
