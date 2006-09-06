@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-09-06 Piotr Ozarowski <ozarow@gmail.com>
+	* Fixed CSFD movie plugin (thanks to Ondra 'Kepi' Kudlík for patch #1449)
+
 2006-09-02 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed some UTF encoding problems in FDb, Filmweb, Onet and WP movie plugins
 
