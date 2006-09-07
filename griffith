@@ -23,7 +23,7 @@ __revision__ = '$Id$'
 
 import sys, os.path
 import gtk, gtk.glade
-assert gtk.pygtk_version >= (2, 4, 0), 'pygtk should be >= 2.4.0'
+assert gtk.pygtk_version >= (2, 6, 0), 'pygtk should be >= 2.6.0'
 import about, add, backup, config, cover, delete, edit, gconsole, gdebug
 import gemail, gglobals, gutils, initialize, loan, main_treeview
 import people, preferences, quick_filter, sql, update, version, view
