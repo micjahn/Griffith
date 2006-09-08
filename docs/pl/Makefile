@@ -1,3 +1,4 @@
+# $Id$
 .PHONY: all man
 MANPAGES_1= griffith.1
 MANPAGES_5= griffith-export-template.5

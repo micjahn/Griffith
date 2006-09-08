@@ -1,3 +1,4 @@
+# $Id$
 LANGUAGES = en pl pt
 .PHONY: man clean $(LANGUAGES) 
 

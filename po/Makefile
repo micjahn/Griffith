@@ -1,3 +1,4 @@
+# $Id$
 INSTALL ?= install
 
 PYFILES = ../griffith $(wildcard ../lib/*.py ../lib/plugins/movie/*.py ../lib/plugins/export/*.py) 
