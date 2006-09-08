@@ -5,7 +5,7 @@ Griffith ChangeLog
 (c) 2005-2006 Vasco Nunes
 
 2006-09-08 Piotr Ozarowski <ozarow@gmail.com>
-	* Fixed required PyGTK version whecheck during startup
+	* Fixed required PyGTK version
 	* Installation is now not required to run Griffith
 	  (move griffith file to lib directory and run "./lib/griffith")
 
