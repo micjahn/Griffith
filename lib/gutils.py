@@ -136,7 +136,7 @@ def on_combo_box_entry_changed(widget):
 		return 0
 
 def on_combo_box_entry_changed_name(widget):
-		return widget.get_active_text()
+	return widget.get_active_text()
 
 def convert_entities(text):
 	def conv(ents):

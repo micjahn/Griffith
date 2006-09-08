@@ -48,6 +48,7 @@ def locations(self):
 		self.windows = False
 	self.posix = (os.name == "posix")
 	self.locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0]))
+	self.locations['lib']  = os.path.dirname(__file__)
 
 	if os.name == 'nt' or os.name == 'win32':
 		# default to My Documents
@@ -81,7 +82,6 @@ def locations(self):
 	if self.windows:
 		#win32 platform, add the "lib" folder to the system path
 		os.environ['PATH'] += ";lib;"
-		self.locations['lib'] = "%s\\lib" % self.locations['exec']
 		self.DIR = "%s\\i18n" % self.locations['exec']
 		gtk.rc_parse('%s\\gtkrc' % self.locations['exec'])
 		#some locations
@@ -92,13 +92,16 @@ def locations(self):
 		self.locations['glade']          = "%s\\glade\\" % self.locations['exec']
 		self.locations['desktop']        = ""
 	elif self.posix:
-		self.locations['share'] = string.replace(self.locations['exec'], '/bin', '/share/griffith')
+		self.locations['share'] = os.path.join(self.locations['lib'], '..')
 		self.locations['glade'] = os.path.join(self.locations['share'], 'glade')
-		self.locations['lib']   = os.path.join(self.locations['share'], 'lib')
 		self.DIR                = os.path.join(self.locations['share'], '..', 'locale')
 		#some locations
-		self.locations['movie_plugins']  = os.path.join(self.locations['share'], 'plugins', 'movie')
-		self.locations['export_plugins'] = os.path.join(self.locations['share'], 'plugins', 'export')
+		if os.path.isdir(os.path.join(self.locations['share'], 'plugins')):
+			self.locations['movie_plugins']  = os.path.join(self.locations['share'], 'plugins', 'movie')
+			self.locations['export_plugins'] = os.path.join(self.locations['share'], 'plugins', 'export')
+		else:
+			self.locations['movie_plugins']  = os.path.join(self.locations['lib'], 'plugins', 'movie')
+			self.locations['export_plugins'] = os.path.join(self.locations['lib'], 'plugins', 'export')
 		self.locations['images']         = os.path.join(self.locations['share'], 'images')
 		self.locations['desktop']        = os.path.join(os.path.expanduser('~'), 'Desktop')
 	else:
