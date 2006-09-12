@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-09-12 Piotr Ozarowski <ozarow@gmail.com>
+	* "With" renamed to "Cast"
+	* Tiny changes in preferences window
+
 2006-09-08 Piotr Ozarowski <ozarow@gmail.com>
 	* Fixed required PyGTK version
 	* Installation is now not required to run Griffith

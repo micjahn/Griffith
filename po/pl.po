@@ -464,7 +464,7 @@ msgid "Year"
 msgstr "Rok"
 
 #: ../lib/initialize.py:389 ../glade/griffith.glade.h:145
-msgid "With"
+msgid "Cast"
 msgstr "Obsada"
 
 #: ../lib/initialize.py:390 ../glade/griffith.glade.h:24

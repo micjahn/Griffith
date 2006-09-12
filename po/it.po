@@ -567,7 +567,7 @@ msgid "Rating"
 msgstr "Grado"
 
 #: ../lib/quick_filter.py:44 ../glade/griffith.glade.h:154
-msgid "With"
+msgid "Cast"
 msgstr "Con"
 
 #: ../lib/sql.py:52
@@ -1082,7 +1082,7 @@ msgid ""
 "Director\n"
 "Genre\n"
 "Rating\n"
-"With\n"
+"Cast\n"
 "Year"
 msgstr ""
 "Numero\n"

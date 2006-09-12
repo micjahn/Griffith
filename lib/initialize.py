@@ -95,6 +95,8 @@ def locations(self):
 		self.locations['share'] = os.path.join(self.locations['lib'], '..')
 		self.locations['glade'] = os.path.join(self.locations['share'], 'glade')
 		self.DIR                = os.path.join(self.locations['share'], '..', 'locale')
+		if not os.path.isdir(self.DIR):
+			self.DIR = os.path.join(self.locations['share'], 'i18n')
 		#some locations
 		if os.path.isdir(os.path.join(self.locations['share'], 'plugins')):
 			self.locations['movie_plugins']  = os.path.join(self.locations['share'], 'plugins', 'movie')
@@ -452,7 +454,7 @@ def dictionaries(self):
 		"o_title"        : _("Original Title"),
 		"title"          : _("Title"),
 		"year"           : _("Year"),
-		"actors"         : _("With"),
+		"actors"         : _("Cast"),
 		"classification" : _("Classification"),
 		"country"        : _("Country"),
 		"genre"          : _("Genre"),

@@ -475,7 +475,7 @@ msgid "Year"
 msgstr "Година"
 
 #: ../lib/initialize.py:389 ../glade/griffith.glade.h:145
-msgid "With"
+msgid "Cast"
 msgstr "С участието на"
 
 #: ../lib/initialize.py:390 ../glade/griffith.glade.h:24
@@ -1647,7 +1647,7 @@ msgstr "Модул за пълен експорт на HTML"
 #~ "Director\n"
 #~ "Genre\n"
 #~ "Rating\n"
-#~ "With\n"
+#~ "Cast\n"
 #~ "Year"
 #~ msgstr ""
 #~ "Номер\n"

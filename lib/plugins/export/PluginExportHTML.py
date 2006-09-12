@@ -90,7 +90,7 @@ class ExportPlugin(gtk.Window):
 	}
 	
 	names = {
-		_('Actors')         : 'actors',
+		_('Cast')           : 'actors',
 		_('Classification') : 'classification',
 		_('Country')        : 'country',
 		_('Director')       : 'director',
