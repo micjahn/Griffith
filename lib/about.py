@@ -46,23 +46,26 @@ class AboutDialog:
 			"by Peek <peekpt@gmail.com>." + \
 			"\nPlease visit http://www.peekmambo.com/")])
 		dialog.set_translator_credits( \
-			_("Czech") + _(" by ") + \
-			"Blondak <blondak@neser.cz>" + \
-			"\n" + "Ondra 'Kepi' Kudlík <kepi@igloonet.cz>" + \
-			"\n" + _("Bulgarian") + _(" by ") + \
-			"Luchezar P. Petkov <luchezar.petkov@gmail.com>" + \
-			"\n" + _("French") + _(" by ") + \
-			"Pierre-Luc Lévy <pllevy@free.fr>" + \
-			"\n" + _("German") + _(" by ") + \
-			"Christian Sagmueller <christian@sagmueller.net>" + \
-			"\n" + _("Italian") + _(" by ") + \
-			"Diego Porcelli <diego.p77@gmail.com>" + \
-			"\n" + _("Polish") + _(" by ") + \
-			"Piotr Ozarowski <ozarow@gmail.com>" + \
-			"\n" + _("Portuguese") + _(" by ") + \
-			"Vasco Nunes <vasco.m.nunes@gmail.com>" + \
-			"\n" + _("Spanish") + _(" by ") + \
-			"Daniel Ucero <escaranbujo@gmail.com>" \
+			_("Bulgarian") + ":\n\t" + \
+				"Luchezar P. Petkov <luchezar.petkov@gmail.com>\n" + \
+			_("Czech") + ":\n\t" + \
+				"Blondak <blondak@neser.cz>,\n\t" + \
+				"Ondra 'Kepi' Kudlík <kepi@igloonet.cz>\n" + \
+			_("French") + ":\n\t" + \
+				"Pierre-Luc Lévy <pllevy@free.fr>\n" + \
+			_("German") + ":\n\t" + \
+				"Christian Sagmueller <christian@sagmueller.net>,\n\t" + \
+				"Malte Wiemann <ryan2057@gmx.de>\n" + \
+			_("Italian") + ":\n\t" + \
+				"Diego Porcelli <diego.p77@gmail.com>\n" + \
+			_("Polish") + ":\n\t" + \
+				"Piotr Ozarowski <ozarow@gmail.com>\n" + \
+			_("Portuguese") + ":\n\t" + \
+				"Vasco Nunes <vasco.m.nunes@gmail.com>\n" + \
+			_("Spanish") + ":\n\t" + \
+				"Daniel Ucero <escaranbujo@gmail.com>\n" + \
+			_("Swedish") + ":\n\t" + \
+				"Daniel Nylander <po@danielnylander.se>\n" \
 		)
 		if os.name == 'nt':
 			logo = gtk.gdk.pixbuf_new_from_file \

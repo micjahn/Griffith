@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-09-24 Piotr Ozarowski <ozarow@gmail.com>
+	* Added Swedish translation (thanks to Daniel Nylander)
+
 2006-09-20 Piotr Ozarowski <ozarow@gmail.com>
 	* AniDB movie plugin now supports gziped data (closes: #5685)
 
