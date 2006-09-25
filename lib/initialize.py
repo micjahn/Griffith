@@ -37,98 +37,113 @@ try:
 except:
 	spell_support = 0
 
-def locations(self):
-	self.locations = {}
+def locations(self=None):
+	if self:
+		debug = self.debug
+	else:
+		class Debug:
+			def show(text):
+				print text
+		debug = Debug()
+	locations = {}
+	locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
+	locations['lib']  = os.path.dirname(__file__)
+
+	if os.name == 'nt' or os.name == 'win32':
+		import winshell
+		mydocs = winshell.my_documents()
+		locations['home']           = os.path.join(mydocs, 'griffith')
+		locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
+		locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
+		locations['images']         = "%s\\images" % locations['exec']
+		locations['share']          = locations['images']
+		locations['glade']          = "%s\\glade\\" % locations['exec']
+		locations['desktop']        = ''
+		locations['i18n']           = "%s\\i18n" % locations['exec']
+		os.environ['PATH'] += ";lib;"
+	elif os.name == 'posix':
+		locations['home']  = os.path.join(os.path.expanduser('~'), ".griffith")
+		locations['share'] = os.path.abspath(os.path.join(locations['lib'], '..'))
+		locations['glade'] = os.path.join(locations['share'], 'glade')
+		locations['i18n']  = os.path.abspath(os.path.join(locations['share'], '..', 'locale'))
+		if not os.path.isdir(locations['i18n']):
+			locations['i18n'] = os.path.join(locations['share'], 'i18n')
+		#some locations
+		if os.path.isdir(os.path.join(locations['share'], 'plugins')):
+			locations['movie_plugins']  = os.path.join(locations['share'], 'plugins', 'movie')
+			locations['export_plugins'] = os.path.join(locations['share'], 'plugins', 'export')
+		else:
+			locations['movie_plugins']  = os.path.join(locations['lib'], 'plugins', 'movie')
+			locations['export_plugins'] = os.path.join(locations['lib'], 'plugins', 'export')
+		locations['images']  = os.path.join(locations['share'], 'images')
+		locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop')
+	else:
+		print 'Operating system not supported'
+		sys.exit()
+	
+	# force different home directory (last argument)
+	if len(sys.argv)>1:
+		last = sys.argv[len(sys.argv)-1]
+		if not last.startswith('-') and os.path.exists(last):
+			locations['home'] = sys.argv[len(sys.argv)-1]
+			del sys.argv[len(sys.argv)-1] # for gconsole.check_args
+
+	try:
+		if not os.path.exists(locations['home']):
+			debug.show('Creating %s' % locations['home'])
+			os.makedirs(locations['home'])
+		else:
+			debug.show("Using Griffith directory: %s" % locations['home'])
+	except OSError:
+		debug.show("Unable to create griffith directory.")
+		raise
+		sys.exit()
+
+	if not os.access(locations['home'], os.W_OK):
+		debug.show('Cannot write to griffith directory, %s' % locations['home'])
+		sys.exit()
+
+	if not os.path.exists(os.path.join(locations['home'], 'posters')):
+		debug.show('Creating poster directory')
+		os.makedirs(os.path.join(locations['home'], 'posters'))
+
+	# includes plugins in system path for easier importing
+	sys.path.append(locations['lib'])
+	sys.path.append(locations['movie_plugins'])
+	sys.path.append(locations['export_plugins'])
+	
+	if self:
+		self.locations = locations
+	else:
+		return locations
+
+def gui(self):
 	self._ = None
-	self.APP = "griffith"
 	self.debug.show("running on %s" % os.name)
+	
 	if os.name == "win32" or os.name == "nt":
 		self.windows = True
 	else:
 		self.windows = False
-	self.posix = (os.name == "posix")
-	self.locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0]))
-	self.locations['lib']  = os.path.dirname(__file__)
-
-	if os.name == 'nt' or os.name == 'win32':
-		# default to My Documents
-		import winshell
-		mydocs = winshell.my_documents()
-		griffith_dir = os.path.join(mydocs, 'griffith')
-
-	else:
-		griffith_dir = os.path.join(os.path.expanduser('~'), ".griffith")
-	try:
-		if not os.path.exists(griffith_dir):
-			self.debug.show('Creating %s' % griffith_dir)
-			os.makedirs(griffith_dir)
-		else:
-			self.debug.show('Using Griffith directory: %s'%griffith_dir)
-	except OSError:
-		self.debug.show("Unable to create griffith directory.")
-		raise
-		sys.exit()
-
-	if not os.access(griffith_dir, os.W_OK):
-		self.debug.show('Cannot write to griffith directory, %s' % griffith_dir)
-		sys.exit()
-
-	if not os.path.exists(os.path.join(griffith_dir, "posters")):
-		self.debug.show("Creating poster directory")
-		os.makedirs(os.path.join(griffith_dir, "posters"))
-
-	self.griffith_dir = griffith_dir
-
-	if self.windows:
-		#win32 platform, add the "lib" folder to the system path
-		os.environ['PATH'] += ";lib;"
-		self.DIR = "%s\\i18n" % self.locations['exec']
-		gtk.rc_parse('%s\\gtkrc' % self.locations['exec'])
-		#some locations
-		self.locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % self.locations['exec']
-		self.locations['export_plugins'] = "%s\\lib\\plugins\\export" % self.locations['exec']
-		self.locations['images']         = "%s\\images" % self.locations['exec']
-		self.locations['share']          = self.locations['images']
-		self.locations['glade']          = "%s\\glade\\" % self.locations['exec']
-		self.locations['desktop']        = ""
-	elif self.posix:
-		self.locations['share'] = os.path.join(self.locations['lib'], '..')
-		self.locations['glade'] = os.path.join(self.locations['share'], 'glade')
-		self.DIR                = os.path.join(self.locations['share'], '..', 'locale')
-		if not os.path.isdir(self.DIR):
-			self.DIR = os.path.join(self.locations['share'], 'i18n')
-		#some locations
-		if os.path.isdir(os.path.join(self.locations['share'], 'plugins')):
-			self.locations['movie_plugins']  = os.path.join(self.locations['share'], 'plugins', 'movie')
-			self.locations['export_plugins'] = os.path.join(self.locations['share'], 'plugins', 'export')
-		else:
-			self.locations['movie_plugins']  = os.path.join(self.locations['lib'], 'plugins', 'movie')
-			self.locations['export_plugins'] = os.path.join(self.locations['lib'], 'plugins', 'export')
-		self.locations['images']         = os.path.join(self.locations['share'], 'images')
-		self.locations['desktop']        = os.path.join(os.path.expanduser('~'), 'Desktop')
-	else:
-		print 'Operating system not supported'
-		sys.exit()
-
-	# includes plugins in system path for easier importing
-	sys.path.append(self.locations['lib'])
-	sys.path.append(self.locations['movie_plugins'])
-	sys.path.append(self.locations['export_plugins'])
-
-	#socket.setdefaulttimeout(30)
-
-	gettext.bindtextdomain(self.APP, self.DIR)
-	gettext.textdomain(self.APP)
-	self._ = gettext.gettext
+	self.posix = (os.name == 'posix')
 	
-	# glade
-	gtk.glade.bindtextdomain(self.APP, self.DIR)
-	gtk.glade.textdomain(self.APP)
+	self.griffith_dir = self.locations['home']	# deprecated
+	
+	if self.windows:
+		gtk.rc_parse('%s\\gtkrc' % self.locations['exec'])
+
+	# i18n
+	self._ = gettext.gettext
+	gettext.bindtextdomain('griffith', self.locations['i18n'])
+	gettext.textdomain('griffith')
+	gtk.glade.bindtextdomain('griffith', self.locations['i18n'])
+	gtk.glade.textdomain('griffith')
+
 	gf = os.path.join(self.locations['glade'], 'griffith.glade')
-	self.gladefile = gtk.glade.XML(gf)
-	widgets.define_widgets(self, self.gladefile)
+	widgets.define_widgets(self, gtk.glade.XML(gf))
 
 	self.pdf_reader = self.config.get('pdf_reader')
+
 
 def toolbar(self):
 	"""if toolbar is hide in config lets hide the widget"""

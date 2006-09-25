@@ -24,10 +24,9 @@ __revision__ = '$Id$'
 import os
 import os.path
 import pickle
-import gglobals
 
 class Config:
-	def __init__ (self, file=os.path.join(gglobals.griffith_dir, 'griffith.conf')):
+	def __init__ (self, file):
 		"""A basic class for handling preferences with pickle"""
 		self.file = file
 		self.config = {}

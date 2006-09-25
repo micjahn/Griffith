@@ -758,9 +758,11 @@ class GriffithSQL:
 
 # for debugging (run: ipython sql.py)
 if __name__ == '__main__':
-	import config, gdebug, gglobals
+	from initialize import locations
+	locations = locations()
+	import config, gdebug
 	import sys
-	db = GriffithSQL(config.Config(), gdebug.GriffithDebug(True), gglobals.griffith_dir)
+	db = GriffithSQL(config.Config(), gdebug.GriffithDebug(True), locations['home'])
 	if len(sys.argv)>1:
 		if sys.argv[1] == 'echo':
 			db.metadata.engine.echo = True # print SQL queries

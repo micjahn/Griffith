@@ -25,7 +25,7 @@ import sys, os.path
 import gtk, gtk.glade
 assert gtk.pygtk_version >= (2, 6, 0), 'pygtk should be >= 2.6.0'
 import about, add, backup, config, cover, delete, edit, gconsole, gdebug
-import gemail, gglobals, gutils, initialize, loan, main_treeview
+import gemail, gutils, initialize, loan, main_treeview
 import people, preferences, quick_filter, sql, update, version, view
 from gettext import gettext as _
 
@@ -44,10 +44,13 @@ class Griffith:
 		global debug
 		debug = gdebug.GriffithDebug()
 		self.debug = debug # deprecated
+		
+		initialize.locations(self)
+	
 		# Configuration
-		self.config = config.Config()
+		self.config = config.Config(file=os.path.join(self.locations['home'], 'griffith.conf'))
 		# create/connect db
-		self.db = sql.GriffithSQL(self.config, self.debug, gglobals.griffith_dir)
+		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
 
 		# let's check any console arguments to parse
 		gconsole.check_args(self)
@@ -88,7 +91,7 @@ class Griffith:
 		return 0
 
 	def initialize_griffith(self):
-		initialize.locations(self)
+		initialize.gui(self)
 		initialize.toolbar(self)
 		initialize.treeview(self)
 		initialize.loans_treeview(self)
@@ -220,7 +223,7 @@ class Griffith:
 		number = tmp_model.get_value(tmp_iter, 0)
 		movie = self.db.Movie.get_by(number=number)
 		if movie != None:
-			tmp_dest = os.path.join(self.griffith_dir, "posters")
+			tmp_dest = os.path.join(self.locations['home'], "posters")
 			tmp_img = os.path.join(tmp_dest, str(movie.image)+".jpg")
 			self.big_poster.set_from_file(tmp_img)
 			self.poster_window.show()

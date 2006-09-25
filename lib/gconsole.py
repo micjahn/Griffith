@@ -26,9 +26,7 @@ import sys
 import gutils
 
 def check_args(self):
-	self.args = map(lambda i: i.replace('--', '').replace('-',''), sys.argv)
-
-	if self.args:
+	if len(sys.argv)>1:
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], "hDco:s:d:w:y:",
 					['help', 'debug', 'sqlecho', 'clean', 'fix-db', 'search_original=', 'search_title=', 'director=', 'with=', 'year='])
@@ -39,27 +37,27 @@ def check_args(self):
 
 		where = {}
 		for o, a in opts:
-			if o in ("-h", "--help"):
+			if o in ('-h', '--help'):
 				con_usage()
 				sys.exit()
-			if o in ("-D", "--debug"):
+			if o in ('-D', '--debug'):
 				self.debug.set_debug()
-			if o in ("-c", "--clean"):
+			if o in ('-c', '--clean'):
 				gutils.clean_posters_dir(self)
 				sys.exit()
-			if o == "--fix-db":
+			if o == '--fix-db':
 				self.db.fix_old_data()
-			if o == "--sqlecho":
+			if o == '--sqlecho':
 				self.db.metadata.engine.echo = True
-			if o in ("-o", "--search_original"):
+			if o in ('-o', '--search_original'):
 				where['original_title'] = a
-			if o in ("-s", "--search_title"):
+			if o in ('-s', '--search_title'):
 				where['title'] = a
-			if o in ("-d", "--director"):
+			if o in ('-d', '--director'):
 				where['director'] = a
-			if o in ("-w", "--with"):
+			if o in ('-w', '--with'):
 				where['actors'] = a
-			if o in ("-y", "--year"):
+			if o in ('-y', '--year'):
 				where['year'] = str(int(a))
 		if len(where)>0:
 			con_search_movie(self, where)
@@ -82,7 +80,8 @@ def con_search_movie(self, where): # FIXME
 	sys.exit()
 
 def con_usage():
-	print "USAGE:", sys.argv[0], "[OPTIONS]"
+	print "USAGE:", sys.argv[0], "[OPTIONS] [HOMEDIR]"
+	print "\nHOMEDIR is optional home directory (if different than ~/.griffith)"
 	print "\nOPTION:"
 	print "-h, --help\tprints this screen"
 	print "-D, --debug\trun with more debug info"
