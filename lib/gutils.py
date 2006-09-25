@@ -342,16 +342,7 @@ def make_medium_image(self, file_name):
 		return 0
 
 def clean_posters_dir(self):
-	if os.name == 'nt' or os.name == 'win32':
-		# default to My Documents
-		import winshell
-		mydocs = winshell.my_documents()
-		griffith_dir = os.path.join(mydocs, 'griffith')
-	else:
-		griffith_dir = os.path.join(os.path.expanduser('~'), \
-			'.griffith')
-
-	posters_dir = os.path.join(griffith_dir, "posters")
+	posters_dir = os.path.join(self.locations['home'], 'posters')
 
 	counter = 0
 
