@@ -263,13 +263,13 @@ class GriffithSQL:
 		# prepare tables interface ---------------------------------{{{
 		movies = Table('movies', self.metadata,
 			Column('movie_id', Integer, primary_key = True),
-			Column('number', Integer, nullable=False, unique='movie_number_key'),
+			Column('number', Integer, nullable=False, unique=True),
 			Column('collection_id', Integer, ForeignKey('collections.collection_id'), default=None),
 			Column('volume_id', Integer, ForeignKey('volumes.volume_id'), default=None),
 			Column('medium_id', Smallinteger, ForeignKey('media.medium_id'), default=None),
 			Column('vcodec_id', Smallinteger, ForeignKey('vcodecs.vcodec_id'), default=None),
-			Column('loaned', Boolean, nullable=False, default=False, index='movie_loaned_idx'),
-			Column('seen', Boolean, nullable=False, default=False, index='movie_seen_idx'),
+			Column('loaned', Boolean, nullable=False, default=False),
+			Column('seen', Boolean, nullable=False, default=False),
 			Column('rating', Smallinteger(2), nullable=False, default=0),
 			Column('color', Smallinteger, default=3),
 			Column('cond', Smallinteger, default=5),	# MySQL will not accept name "condition"
@@ -302,38 +302,38 @@ class GriffithSQL:
 			Column('return_date', Date, nullable=True))
 		people = Table('people', self.metadata,
 			Column('person_id', Integer, primary_key=True),
-			Column('name', VARCHAR(255), nullable=False, unique='person_name_key'),
+			Column('name', VARCHAR(255), nullable=False, unique=True),
 			Column('email', VARCHAR(128)),
 			Column('phone', VARCHAR(64)))
 		volumes = Table('volumes', self.metadata,
 			Column('volume_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='volume_name_key'),
+			Column('name', VARCHAR(64), nullable=False, unique=True),
 			Column('loaned', Boolean, nullable=False, default=False))
 		collections = Table('collections', self.metadata,
 			Column('collection_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='collection_name_key'),
+			Column('name', VARCHAR(64), nullable=False, unique=True),
 			Column('loaned', Boolean, nullable=False, default=False))
 		media = Table('media', self.metadata,
 			Column('medium_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='medium_name_key'))
+			Column('name', VARCHAR(64), nullable=False, unique=True))
 		languages = Table('languages', self.metadata,
 			Column('lang_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='language_name_key'))
+			Column('name', VARCHAR(64), nullable=False, unique=True))
 		vcodecs = Table('vcodecs', self.metadata,
 			Column('vcodec_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='vcodec_name_key'))
+			Column('name', VARCHAR(64), nullable=False, unique=True))
 		acodecs = Table('acodecs', self.metadata,
 			Column('acodec_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='acodec_name_key'))
+			Column('name', VARCHAR(64), nullable=False, unique=True))
 		achannels = Table('achannels', self.metadata,
 			Column('achannel_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='achannel_name_key'))
+			Column('name', VARCHAR(64), nullable=False, unique=True))
 		subformats = Table('subformats', self.metadata,
 			Column('subformat_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='subformat_name_key'))
+			Column('name', VARCHAR(64), nullable=False, unique=True))
 		tags = Table('tags', self.metadata,
 			Column('tag_id', Integer, primary_key=True),
-			Column('name', VARCHAR(64), nullable=False, unique='tag_name_key'))
+			Column('name', VARCHAR(64), nullable=False, unique=True))
 		movie_lang = Table('movie_lang', self.metadata,
 			Column('ml_id', Integer, primary_key=True),
 			Column('type', Smallinteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle 
@@ -351,32 +351,32 @@ class GriffithSQL:
 			Column('value', VARCHAR(128), nullable=False))#}}}
 
 		# mappers -------------------------------------------------#{{{
-		assign_mapper(self.Configuration, configuration, is_primary=True)
-		assign_mapper(self.Volume,volumes, is_primary=True, properties={
+		assign_mapper(self.Configuration, configuration)
+		assign_mapper(self.Volume,volumes, properties={
 			'assigned_movies': relation(self.Movie, backref='volume')})
-		assign_mapper(self.Collection, collections, is_primary=True, properties={
+		assign_mapper(self.Collection, collections, properties={
 			'assigned_movies': relation(self.Movie, backref='collection')})
-		assign_mapper(self.Medium, media, is_primary=True, properties={
+		assign_mapper(self.Medium, media, properties={
 			'assigned_movies': relation(self.Movie, backref='medium')})
-		assign_mapper(self.VCodec, vcodecs, is_primary=True, properties={
+		assign_mapper(self.VCodec, vcodecs, properties={
 			'assigned_movies': relation(self.Movie, backref='vcodec')})
-		assign_mapper(self.Person, people, is_primary=True)
-		assign_mapper(self.MovieLang, movie_lang, is_primary=True)
-		assign_mapper(self.ACodec, acodecs, is_primary=True, properties={
+		assign_mapper(self.Person, people)
+		assign_mapper(self.MovieLang, movie_lang)
+		assign_mapper(self.ACodec, acodecs, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
-		assign_mapper(self.AChannel, achannels, is_primary=True, properties={
+		assign_mapper(self.AChannel, achannels, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
-		assign_mapper(self.SubFormat, subformats, is_primary=True, properties={
+		assign_mapper(self.SubFormat, subformats, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
-		assign_mapper(self.Lang, languages, is_primary=True, properties={
+		assign_mapper(self.Lang, languages, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
-		assign_mapper(self.MovieTag, movie_tag, is_primary=True)
-		assign_mapper(self.Tag, tags, is_primary=True, properties={'assigned_movie_ids': relation(self.MovieTag)})
-		assign_mapper(self.Loan, loans, is_primary=True, properties = {
+		assign_mapper(self.MovieTag, movie_tag)
+		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag)})
+		assign_mapper(self.Loan, loans, properties = {
 			'person'     : relation(self.Person),
 			'volume'     : relation(self.Volume),
 			'collection' : relation(self.Collection)})
-		assign_mapper(self.Movie, movies, is_primary=True, order_by=movies.c.number , properties = {
+		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
 			'loans'      : relation(self.Loan, backref='movie'),
 			'languages'  : relation(self.MovieLang),
 			'tags'       : relation(self.MovieTag)})#}}}

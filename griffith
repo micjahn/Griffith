@@ -773,8 +773,8 @@ You can't undo this operation."""), \
 
 	def count_statusbar(self):
 		text = str(self.total)
-		loaned = self.db.Movie.mapper.count_by(loaned=True)
-		not_seen = self.db.Movie.mapper.count_by(seen=False)
+		loaned = self.db.Movie.count_by(loaned=True)
+		not_seen = self.db.Movie.count_by(seen=False)
 		self.update_statusbar(str(text) + self._(' movie(s) in collection. ')
 			+ str(loaned) + self._(' movie(s) loaned. ')
 			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")

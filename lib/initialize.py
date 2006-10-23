@@ -185,7 +185,7 @@ def treeview(self):
 	self.director_column.set_resizable(True)
 	self.main_treeview.append_column(self.director_column)
 	# add data to treeview
-	self.total = int(self.db.Movie.mapper.count())
+	self.total = int(self.db.Movie.count())
 	self.main_treeview.show()
 
 def loans_treeview(self):
