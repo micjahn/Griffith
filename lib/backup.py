@@ -136,7 +136,7 @@ def restore(self):
 		# let's refresh the treeview
 		self.clear_details()
 		self.populate_treeview(self.db.Movie.select())
-		self.total = self.db.Movie.mapper.count()
+		self.total = self.db.Movie.count()
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()
@@ -192,7 +192,7 @@ def merge(self):
 		tmp_db = sql.GriffithSQL(tmp_config, self.debug, tmp_dir)
 
 		merged=0
-		movies = tmp_db.Movie.mapper.count()
+		movies = tmp_db.Movie.count()
 		for movie in tmp_db.Movie.select():
 			if self.db.Movie.get_by(o_title=movie.o_title) != None:
 				continue
@@ -228,7 +228,7 @@ def merge(self):
 		# let's refresh the treeview
 		self.clear_details()
 		self.populate_treeview(self.db.Movie.select())
-		self.total = self.db.Movie.mapper.count()
+		self.total = self.db.Movie.count()
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()

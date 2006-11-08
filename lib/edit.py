@@ -30,7 +30,6 @@ from urllib import urlcleanup
 import tempfile
 import movie
 import delete
-import widgets
 from PIL import Image
 
 def change_poster(self):
@@ -104,55 +103,6 @@ def change_rating_from_slider(self):
 	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
 	gutils.garbage(handler)
 
-def clear_details(self):
-	plot_buffer = self.e_plot.get_buffer()
-	obs_buffer = self.e_obs.get_buffer()
-	with_buffer = self.e_with.get_buffer()
-	self.e_number.set_text("")
-	self.e_original_title.set_text("")
-	self.e_title.set_text("")
-	self.e_director.set_text("")
-	plot_buffer.set_text("")
-	self.e_year.set_text("")
-	self.e_runtime.set_text("")
-	with_buffer.set_text("")
-	self.e_country.set_text("")
-	self.e_genre.set_text("")
-	self.e_classification.set_text("")
-	self.e_studio.set_text("")
-	self.e_site.set_text("")
-	obs_buffer.set_text("")
-	self.e_imdb.set_text("")
-	self.e_trailer.set_text("")
-	self.e_discs.set_text("1")
-	self.e_color.set_active(0)
-	self.e_condition.set_active(0)
-	self.e_layers.set_active(0)
-	self.e_region.set_active(0)
-	self.e_media.set_active(0)
-	self.e_volume_combo.set_active(0)
-	self.e_collection_combo.set_active(0)
-	#self.e_picture.clear()
-	self.rating_slider.set_value(0)
-	# languages - remove old widgets
-#	for i in self.e_lang_vbox.get_children():
-#		i.destroy()
-	# tags - clear tag selection
-	for i in self.e_tag_vbox.get_children():
-		i.set_active(False)
-
-	try:
-		rimage = int(str(self.config.get('rating_image')))
-	except:
-		rimage = 0
-	if rimage:
-		prefix = ""
-	else:
-		prefix = "meter"
-	image = self.locations['images'] + "/%s00.png"%prefix
-	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
-	gutils.garbage(handler)
-
 def fetch_bigger_poster(self):
 	match = 0
 	self.debug.show("fetching poster from amazon")
@@ -168,7 +118,8 @@ def fetch_bigger_poster(self):
 		gutils.warning(self, _("No posters found for this movie."))
 		return
 
-	widgets.connect_poster_signals(self, get_poster_select_dc, result, current_poster)
+	from widgets import connect_poster_signals
+	connect_poster_signals(self, get_poster_select_dc, result, current_poster)
 
 	if not len(result):
 		gutils.warning(self, _("No posters found for this movie."))

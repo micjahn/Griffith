@@ -56,7 +56,7 @@ def update(self):
 	obs_buffer = self.e_obs.get_buffer()
 	if self.e_original_title.get_text() != '':
 		t_movies = {
-			'actors'         : with_buffer.get_text(with_buffer.get_start_iter(),with_buffer.get_end_iter()),
+			'cast'           : with_buffer.get_text(with_buffer.get_start_iter(),with_buffer.get_end_iter()),
 			'classification' : self.e_classification.get_text(),
 			'collection_id'  : new_collection_id,
 			'color'          : self.e_color.get_active(),

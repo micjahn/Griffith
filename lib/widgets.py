@@ -27,7 +27,7 @@ import gtk
 import sys
 
 def define_widgets(self, gladefile):
-	self.e_movie_id = gladefile.get_widget('e_movie_id')
+	self.e_movie_id = gladefile.get_widget('m_movie_id')
 	#widgets
 	self.main_window = gladefile.get_widget('main_window')
 	self.toolbar     = gladefile.get_widget('toolbar1')
@@ -61,33 +61,42 @@ def define_widgets(self, gladefile):
 	self.main_treeview  = gladefile.get_widget('main_treeview')
 	self.confirm_delete = gladefile.get_widget('confirm_delete')
 	# main notebook
-	self.e_number         = gladefile.get_widget('e_number')
-	self.e_original_title = gladefile.get_widget('e_original_title')
-	self.e_title          = gladefile.get_widget('e_title')
-	self.e_director       = gladefile.get_widget('e_director')
-	self.e_plot           = gladefile.get_widget('e_plot')
-	self.e_picture        = gladefile.get_widget('e_picture_image')
-	self.e_picture_button = gladefile.get_widget('e_picture')
-	self.e_year           = gladefile.get_widget('e_year')
-	self.e_runtime        = gladefile.get_widget('e_runtime')
-	self.e_with           = gladefile.get_widget('e_with')
-	self.e_country        = gladefile.get_widget('e_country')
-	self.e_genre          = gladefile.get_widget('e_genre')
-	self.e_media          = gladefile.get_widget('e_media')
-	self.e_vcodec         = gladefile.get_widget('e_vcodec')
-	self.e_classification = gladefile.get_widget('e_classification')
-	self.e_studio         = gladefile.get_widget('e_studio')
-	self.e_site           = gladefile.get_widget('e_site')
-	self.e_imdb           = gladefile.get_widget('e_imdb')
-	self.e_trailer        = gladefile.get_widget('e_trailer')
-	self.e_discs          = gladefile.get_widget('e_discs')
-	self.e_obs            = gladefile.get_widget('e_obs')
-	self.loan_info        = gladefile.get_widget('loan_information')
+	self.cast           = gladefile.get_widget('m_cast')
+	self.classification = gladefile.get_widget('m_classification')
+	self.collection     = gladefile.get_widget('m_collection')
+	self.color          = gladefile.get_widget('m_color')
+	self.condition      = gladefile.get_widget('m_condition')
+	self.country        = gladefile.get_widget('m_country')
+	self.director       = gladefile.get_widget('m_director')
+	self.genre          = gladefile.get_widget('m_genre')
+	self.imdb           = gladefile.get_widget('m_imdb')
+	self.layers         = gladefile.get_widget('m_layers')
+	self.medium         = gladefile.get_widget('m_medium')
+	self.notes          = gladefile.get_widget('m_notes')
+	self.number         = gladefile.get_widget('m_number')
+	self.o_title        = gladefile.get_widget('m_o_title')
+	self.picture        = gladefile.get_widget('m_picture_image')
+	self.picture_button = gladefile.get_widget('m_picture')
+	self.plot           = gladefile.get_widget('m_plot')
+	self.region         = gladefile.get_widget('m_region')
+	self.runtime        = gladefile.get_widget('m_runtime')
+	self.loan_info      = gladefile.get_widget('loan_information')
+	self.site           = gladefile.get_widget('m_site')
+	self.studio         = gladefile.get_widget('m_studio')
+	self.title          = gladefile.get_widget('m_title')
+	self.trailer        = gladefile.get_widget('m_trailer')
+	self.vcodec         = gladefile.get_widget('m_vcodec')
+	self.volume         = gladefile.get_widget('m_volume')
+	self.year           = gladefile.get_widget('m_year')
+	self.seen_icon      = gladefile.get_widget('m_seen_icon')
+	self.loaned_icon    = gladefile.get_widget('m_loaned_icon')
+	self.e_tag_vbox     = gladefile.get_widget('e_tag_vbox')	# edit window
+	self.e_medium_vbox     = gladefile.get_widget('e_medium_vbox')	# edit window
+	self.e_vcodec_vbox     = gladefile.get_widget('e_vcodec_vbox')	# edit window
+	self.show_volume_button     = gladefile.get_widget('show_volume_entries_button')
+	self.show_collection_button = gladefile.get_widget('show_collection_entries_button')
+
 	# volumes/collections tab
-	self.e_volume_combo                 = gladefile.get_widget('e_volume_combo')
-	self.e_collection_combo             = gladefile.get_widget('e_collection_combo')
-	self.show_volume_entries_button     = gladefile.get_widget('show_volume_entries_button')
-	self.show_collection_entries_button = gladefile.get_widget('show_collection_entries_button')
 	self.am_volume_combo                = gladefile.get_widget('am_volume_combo')
 	self.am_collection_combo            = gladefile.get_widget('am_collection_combo')
 	# get from web
@@ -97,7 +106,7 @@ def define_widgets(self, gladefile):
 	# results
 	self.w_results        = gladefile.get_widget('results')
 	self.results_treeview = gladefile.get_widget('results_treeview')
-	self.update_button    = gladefile.get_widget('update_button')
+	#REMOVE:self.update_button    = gladefile.get_widget('update_button')
 	# statusbar
 	self.statusbar = gladefile.get_widget('statusbar')
 	# preferences
@@ -111,22 +120,22 @@ def define_widgets(self, gladefile):
 	self.p_db_passwd   = gladefile.get_widget('p_db_passwd')
 	self.p_db_details  = gladefile.get_widget('p_db_details')
 	self.p_s_classification = gladefile.get_widget('p_s_classification')
-	self.p_s_country = gladefile.get_widget('p_s_country')
-	self.p_s_director = gladefile.get_widget('p_s_director')
-	self.p_s_genre = gladefile.get_widget('p_s_genre')
-	self.p_s_image = gladefile.get_widget('p_s_image')
-	self.p_s_notes = gladefile.get_widget('p_s_notes')
-	self.p_s_o_site = gladefile.get_widget('p_s_o_site')
-	self.p_s_o_title = gladefile.get_widget('p_s_o_title')
-	self.p_s_plot = gladefile.get_widget('p_s_plot')
-	self.p_s_rating = gladefile.get_widget('p_s_rating')
-	self.p_s_runtime = gladefile.get_widget('p_s_runtime')
-	self.p_s_site = gladefile.get_widget('p_s_site')
-	self.p_s_studio = gladefile.get_widget('p_s_studio')
-	self.p_s_title = gladefile.get_widget('p_s_title')
-	self.p_s_trailer = gladefile.get_widget('p_s_trailer')
-	self.p_s_with = gladefile.get_widget('p_s_with')
-	self.p_s_year = gladefile.get_widget('p_s_year')
+	self.p_s_country   = gladefile.get_widget('p_s_country')
+	self.p_s_director  = gladefile.get_widget('p_s_director')
+	self.p_s_genre     = gladefile.get_widget('p_s_genre')
+	self.p_s_image     = gladefile.get_widget('p_s_image')
+	self.p_s_notes     = gladefile.get_widget('p_s_notes')
+	self.p_s_o_site    = gladefile.get_widget('p_s_o_site')
+	self.p_s_o_title   = gladefile.get_widget('p_s_o_title')
+	self.p_s_plot      = gladefile.get_widget('p_s_plot')
+	self.p_s_rating    = gladefile.get_widget('p_s_rating')
+	self.p_s_runtime   = gladefile.get_widget('p_s_runtime')
+	self.p_s_site      = gladefile.get_widget('p_s_site')
+	self.p_s_studio    = gladefile.get_widget('p_s_studio')
+	self.p_s_title     = gladefile.get_widget('p_s_title')
+	self.p_s_trailer   = gladefile.get_widget('p_s_trailer')
+	self.p_s_with      = gladefile.get_widget('p_s_with')
+	self.p_s_year      = gladefile.get_widget('p_s_year')
 	# cover print
 	self.w_print_cover_simple              = gladefile.get_widget('w_print_cover_simple')
 	self.w_print_cover_image               = gladefile.get_widget('w_print_cover_image')
@@ -181,15 +190,9 @@ def define_widgets(self, gladefile):
 	self.menu_toolbar      = gladefile.get_widget('menu_toolbar')
 	self.export_menu       = gladefile.get_widget('export_menu')
 
-	self.rating_slider     = gladefile.get_widget('rating_scale')
 	self.rating_slider_add = gladefile.get_widget('rating_scale_add')
 
 	#tech data
-	self.e_condition = gladefile.get_widget('e_condition')
-	self.e_color     = gladefile.get_widget('e_color')
-	self.e_region    = gladefile.get_widget('e_region')
-	self.e_layers    = gladefile.get_widget('e_layers')
-
 	self.am_condition = gladefile.get_widget('am_condition')
 	self.am_color     = gladefile.get_widget('am_color')
 	self.am_region    = gladefile.get_widget('am_region')
@@ -201,7 +204,6 @@ def define_widgets(self, gladefile):
 	self.spell_plot   = gladefile.get_widget('spell_plot')
 	self.spell_lang   = gladefile.get_widget('spell_lang')
 
-	self.e_seen           = gladefile.get_widget('e_seen')
 	self.am_seen          = gladefile.get_widget('am_seen')
 	self.b_email_reminder = gladefile.get_widget('b_email_reminder')
 	self.loan_history     = gladefile.get_widget('loan_history')
@@ -259,27 +261,18 @@ def define_widgets(self, gladefile):
 
 	# tags
 	self.tag_name_combo = gladefile.get_widget('tag_name_combo')	# preferences window
-	self.e_tag_vbox     = gladefile.get_widget('e_tag_vbox')	# edit window
 	self.am_tag_vbox    = gladefile.get_widget('am_tag_vbox')	# add window
 	# audio codecs
 	self.acodec_name_combo = gladefile.get_widget('acodec_name_combo')	# preferences window
-	self.e_acodec_vbox     = gladefile.get_widget('e_acodec_vbox')	# edit window
-	self.am_acodec_vbox    = gladefile.get_widget('am_acodec_vbox')	# add window
 	# audio channels
 	self.achannel_name_combo = gladefile.get_widget('achannel_name_combo')	# preferences window
-	self.e_achannel_vbox     = gladefile.get_widget('e_achannel_vbox')	# edit window
-	self.am_achannel_vbox    = gladefile.get_widget('am_achannel_vbox')	# add window
 	# subtitle formats
 	self.subformat_name_combo = gladefile.get_widget('subformat_name_combo')	# preferences window
-	self.e_subformat_vbox     = gladefile.get_widget('e_subformat_vbox')	# edit window
-	self.am_subformat_vbox    = gladefile.get_widget('am_subformat_vbox')	# add window
 	# media
 	self.medium_name_combo = gladefile.get_widget('medium_name_combo')	# preferences window
-	self.e_medium_vbox     = gladefile.get_widget('e_medium_vbox')	# edit window
 	self.am_medium_vbox    = gladefile.get_widget('am_medium_vbox')	# add window
 	# video codecs
 	self.vcodec_name_combo = gladefile.get_widget('vcodec_name_combo')	# preferences window
-	self.e_vcodec_vbox     = gladefile.get_widget('e_vcodec_vbox')	# edit window
 	self.am_vcodec_vbox    = gladefile.get_widget('am_vcodec_vbox')	# add window
 
 	self.main_window.connect('key_press_event', self.on_key_press_event)
@@ -372,18 +365,8 @@ def define_widgets(self, gladefile):
 		'on_popup_return_activate'              : self.return_loan,
 		'on_popup_email_activate'               : self.email_reminder,
 		# volumes/collections
-		'on_e_collection_combo_changed'         : self.on_e_collection_combo_changed,
-		'on_e_volume_combo_changed'             : self.on_e_volume_combo_changed,
 		'on_am_collection_combo_changed'        : self.on_am_collection_combo_changed,
 		'on_am_volume_combo_changed'            : self.on_am_volume_combo_changed,
-		'on_e_add_volume_button_clicked'        : self.add_volume,
-		'on_e_add_collection_button_clicked'    : self.add_collection,
-		'on_e_remove_volume_button_clicked'     : self.remove_volume,
-		'on_e_remove_collection_button_clicked' : self.remove_collection,
-		'on_e_rename_volume_button_clicked'     : self.e_rename_volume,
-		'on_e_rename_collection_button_clicked' : self.e_rename_collection,
-		'on_e_show_volume_button_clicked'       : self.e_show_volume,
-		'on_e_show_collection_button_clicked'   : self.e_show_collection,
 		'on_am_add_volume_button_clicked'       : self.add_volume,
 		'on_am_add_collection_button_clicked'   : self.add_collection,
 		'on_am_remove_volume_button_clicked'    : self.remove_volume,
@@ -395,8 +378,6 @@ def define_widgets(self, gladefile):
 		'on_lang_remove_clicked'		: self.on_lang_remove_clicked,
 		'on_lang_rename_clicked'		: self.on_lang_rename_clicked,
 		'on_lang_name_combo_changed'		: self.on_lang_name_combo_changed,
-		'on_e_lang_add_clicked'		        : self.on_e_lang_add_clicked,
-		'on_e_lang_remove_clicked'		: self.on_e_lang_remove_clicked,
 		# tags
 		'on_tag_add_clicked'			: self.on_tag_add_clicked,
 		'on_tag_remove_clicked'			: self.on_tag_remove_clicked,

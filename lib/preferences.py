@@ -315,10 +315,12 @@ def save_preferences(self):
 		# NEW DB CONNECTION
 		import sql
 		self.initialized = False
-		del self.db.metadata
+		self.db.metadata.clear()
+		from sqlalchemy.orm import clear_mappers
+		clear_mappers()
 		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
 		self.debug.show("New database Engine: %s" % self.db.metadata.engine.name)
-		self.total = int(self.db.Movie.mapper.count())
+		self.total = int(self.db.Movie.count())
 		self.count_statusbar()
 		from initialize	import dictionaries, people_treeview
 		dictionaries(self)

@@ -52,7 +52,14 @@ def commit_loan(self):
 	if person==None:
 		self.debug.show("commit_loan: person doesn't exist")
 		return False
-	movie = self.db.Movie.get_by(movie_id=self.e_movie_id.get_text())
+	if self._movie_id:
+		movie = self.db.Movie.get_by(movie_id=self._movie_id)
+		if not movie:
+			self.debug.show("commit_loan: wrong movie_id")
+			return False
+	else:
+		self.debug.show("commit_loan: movie not selected")
+		return False
 
 	# ask if user wants to loan whole collection
 	loan_whole_collection = False
@@ -73,9 +80,8 @@ def commit_loan(self):
 		self.treeview_clicked()
 
 def return_loan(self):
-	movie_id = self.e_movie_id.get_text()
-	if movie_id:
-		loan = self.db.Loan.get_by(movie_id=movie_id, return_date=None)
+	if self._movie_id:
+		loan = self.db.Loan.get_by(movie_id=self._movie_id, return_date=None)
 		if loan and loan.set_returned():
 			self.treeview_clicked()
 

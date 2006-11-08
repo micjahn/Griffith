@@ -28,7 +28,6 @@ import gtk
 import string
 import shutil
 import quick_filter
-import widgets
 import tempfile
 
 def add_movie(self):
@@ -92,7 +91,8 @@ def initialize_add_dialog(self):
 	handler = self.Image.set_from_file(image)
 	handler = self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
 	self.am_original_title.grab_focus()
-	widgets.connect_add_signals(self)
+	from widgets import connect_add_signals
+	connect_add_signals(self)
 
 def add_movie_db(self, close):
 	if  len(self.am_original_title.get_text()) or len(self.am_title.get_text()):
@@ -102,7 +102,7 @@ def add_movie_db(self, close):
 		number = self.am_number.get_text()
 		(filepath, filename) = os.path.split(self.am_picture_name.get_text())
 		t_movies = {
-			'actors'         : gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter())),
+			'cast'           : gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter())),
 			'classification' : gutils.gescape(self.am_classification.get_text()),
 			'color'          : self.am_color.get_active(),
 			'cond'           : self.am_condition.get_active(),
@@ -386,7 +386,7 @@ def clone_movie(self):
 	else:
 		seen = False
 	t_movies = {
-		'actors'         : movie.actors,
+		'cast'           : movie.cast,
 		'classification' : movie.classification,
 		'color'          : movie.color,
 		'cond'           : movie.cond,

@@ -37,133 +37,201 @@ def treeview_clicked(self):
 		if movie == None:
 			self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
 			return False
+		set_details(self,movie)
 
-		plot_buffer = self.e_plot.get_buffer()
-		obs_buffer = self.e_obs.get_buffer()
-		with_buffer = self.e_with.get_buffer()
-		with_iter = with_buffer.get_start_iter()
+def set_details(self, item=None):
+	if item==None:
+		item = {}
+	if item.has_key('movie_id') and item['movie_id']:
+		self._movie_id = item['movie_id']
+	else:
+		self._movie_id = None
 
-		self.e_movie_id.set_text(str(int(movie.movie_id)))
-		self.e_number.set_text(str(int(movie.number)))
-		self.e_original_title.set_text(str(movie.o_title))
-		if movie.title:
-			self.e_title.set_text(str(movie.title))
-		if movie.director:
-			self.e_director.set_text(str(movie.director))
-		if movie.plot:
-			plot_buffer.set_text(str(movie.plot))
-		if movie.media_num:
-			self.e_discs.set_value(int(movie.media_num))
-		if movie.year:
-			self.e_year.set_text(str(movie.year))
-		if movie.runtime:
-			self.e_runtime.set_text(str(int(movie.runtime)))
-		if movie.actors:
-			with_buffer.set_text(str(movie.actors))
-		if movie.country:
-			self.e_country.set_text(str(movie.country))
-		if movie.genre:
-			self.e_genre.set_text(str(movie.genre))
-		if movie.cond != None and movie.cond != '':
-			self.e_condition.set_active(int(str(movie.cond)))
-		else:
-			self.e_condition.set_active(5) # N/A
-		if movie.region != None and movie.region != '':
-			self.e_region.set_active(int(str(movie.region)))
-		else:
-			self.e_region.set_active(9) # N/A
-		if movie.layers != None and movie.layers != '':
-			self.e_layers.set_active(int(str(movie.layers)))
-		else:
-			self.e_layers.set_active(4) # N/A
-		if movie.color != None and movie.color != '':
-			self.e_color.set_active(int(str(movie.color)))
-		else:
-			self.e_color.set_active(3) # N/A
-		if movie.classification:
-			self.e_classification.set_text(str(movie.classification))
-		if movie.studio:
-			self.e_studio.set_text(str(movie.studio))
-		if movie.o_site:
-			self.e_site.set_text(str(movie.o_site))
-		if movie.site:
-			self.e_imdb.set_text(str(movie.site))
-		if movie.seen:
-			self.e_seen.set_active(True)
-		else:
-			self.e_seen.set_active(False)
-		if movie.rating:
-			self.image_rating.show()
-			self.rating_slider.set_value(int(movie.rating))
-		else:
-			self.image_rating.hide()
-		if movie.trailer:
-			self.e_trailer.set_text(str(movie.trailer))
-		if movie.notes<>None:
-			obs_buffer.set_text(str(movie.notes))
-		if movie.medium_id:
-			pos = gutils.findKey(movie.medium_id, self.media_ids)
-			self.e_media.set_active(int(pos))
-		if movie.vcodec_id:
-			pos = gutils.findKey(movie.vcodec_id, self.vcodecs_ids)
-			self.e_vcodec.set_active(int(pos))
+	plot_buffer = self.plot.get_buffer()
+	notes_buffer = self.notes.get_buffer()
+	cast_buffer = self.cast.get_buffer()
+	cast_iter = cast_buffer.get_start_iter()
 
-		# check loan status and adjust buttons and history box
-		if int(movie.loaned)==1:
-			self.popup_loan.set_sensitive(False)
-			self.popup_email.set_sensitive(True)
-			self.popup_return.set_sensitive(True)
-			self.loan_button.set_sensitive(False)
-			self.b_email_reminder.set_sensitive(True)
-			self.return_button.set_sensitive(True)
-		else:
-			self.popup_loan.set_sensitive(True)
-			self.popup_email.set_sensitive(False)
-			self.popup_return.set_sensitive(False)
-			self.return_button.set_sensitive(False)
-			self.b_email_reminder.set_sensitive(False)
-			self.loan_button.set_sensitive(True)
+	if item.has_key('number') and item['number']:
+		self.number.set_text(str(int(item['number'])))
+	else:
+		self.number.set_text('')
+	if item.has_key('title') and item['title']:
+		self.title.set_markup("<b><span size='large'>%s</span></b>" % str(item['title']))
+	else:
+		self.title.set_text('')
+	if item.has_key('o_title') and item['o_title']:
+		self.o_title.set_markup("<span size='medium'>%s</span>" % str(item.o_title))
+	else:
+		self.o_title.set_text('')
+	if item.has_key('director') and item['director']:
+		self.director.set_text(str(item['director']))
+	else:
+		self.director.set_text('')
+	if item.has_key('plot') and item['plot']:
+		plot_buffer.set_text(str(item['plot']))
+	else:
+		plot_buffer.set_text('')
+	if item.has_key('year') and item['year']:
+		self.year.set_text(str(item['year']))
+	else:
+		self.year.set_text('')
+	if item.has_key('runtime') and item['runtime']:
+		self.runtime.set_text(str(int(item['runtime'])))
+	else:
+		self.runtime.set_text('')
+	if item.has_key('cast') and item['cast']:
+		cast_buffer.set_text(str(item['cast']))
+	else:
+		cast_buffer.set_text('')
+	if item.has_key('country') and item['country']:
+		self.country.set_text(str(item['country']))
+	else:
+		self.country.set_text('')
+	if item.has_key('genre') and item['genre']:
+		self.genre.set_text(str(item['genre']))
+	else:
+		self.genre.set_text('')
+	if item.has_key('cond') and item['cond']:
+		self.condition.set_text(str(item['cond']))
+	else:
+		self.condition.set_text('') # FIXME: str(id==5)
+	if item.has_key('region') and item['region']:
+		self.region.set_text(str(item.region))
+#		self.region.set_text(self._regions[item.region])
+	else:
+		self.region.set_text('')
+#		self.region.set_text(self._regions[9]) # N/A
+	if item.has_key('layers') and item['layers']:
+		self.layers.set_text(self._layers[item['layers']])
+	else:
+		self.layers.set_text(self._layers[4]) # N/A
+	if item.has_key('color') and item['color']:
+		self.color.set_text(self._colors[item['color']])
+	else:
+		self.color.set_text(self._colors[3]) # N/A
+	if item.has_key('classification') and item['classification']:
+		self.classification.set_text(str(item.classification))
+	else:
+		self.classification.set_text('')
+	if item.has_key('studio') and item['studio']:
+		self.studio.set_text(str(item.studio))
+	else:
+		self.studio.set_text('')
+# FIXME:
+#	if item.has_key('o_site') and item['o_site']:
+#		self.site.set_text(str(item.o_site))
+#	else:
+#		self.o_site.set_text('')
+#	if item.has_key('site') and item['site']:
+#		self.imdb.set_text(str(item.site))
+#	else:
+#		self.site.set_text('')
+#	if item.has_key('trailer') and item['trailer']:
+#		self.trailer.set_text(str(item.trailer))
+#	else:
+#		self.trailer.set_text('')
+	if item.has_key('seen') and item['seen']:
+		self.seen_icon.set_from_stock('gtk-yes', 2)
+	else:
+		self.seen_icon.set_from_stock('gtk-no', 2)
+	if item.has_key('notes') and item['notes']:
+		notes_buffer.set_text(str(item.notes))
+	else:
+		notes_buffer.set_text('')
+	tmp = ''
+	if item.has_key('media_num') and item['media_num']:
+		tmp = str(item.media_num)
+	else:
+		tmp = '0'
+	if item.has_key('medium_id') and item['medium_id']:
+		try:
+			tmp += ' x ' + item['medium'].name
+		except:
+			pass
+	self.medium.set_text(tmp)
+	if item.has_key('vcodec_id'):
+		try:
+			self.vcodec.set_text(str(item['vcodec'].name))
+		except:
+			self.vcodec.set_text('')
+	else:
+		self.vcodec.set_text('')
 
-		# poster
-		tmp_dest = os.path.join(self.griffith_dir, "posters")
-		tmp_img = os.path.join(tmp_dest, "m_%s.jpg"%movie.image)
-		tmp_img2 = os.path.join(tmp_dest, "%s.jpg"%movie.image)
-
-		if movie.image and os.path.isfile(tmp_img2):
+	# poster
+	if item.has_key('image') and item['image']:
+		tmp_dest = os.path.join(self.griffith_dir, 'posters')
+		tmp_img = os.path.join(tmp_dest, "m_%s.jpg"%item['image'])
+		tmp_img2 = os.path.join(tmp_dest, "%s.jpg"%item['image'])
+		if os.path.isfile(tmp_img2):
 			image_path = tmp_img
 			self.delete_poster.set_sensitive(True)
 			self.t_delete_poster.set_sensitive(True)
-			self.e_picture_button.set_sensitive(True)
+			self.picture_button.set_sensitive(True)
 		else:
-			image_path = os.path.join(self.locations['images'], "default.png")
+			image_path = os.path.join(self.locations['images'], 'default.png')
 			self.delete_poster.set_sensitive(False)
 			self.t_delete_poster.set_sensitive(False)
-			self.e_picture_button.set_sensitive(False)
+			self.picture_button.set_sensitive(False)
 		# lets see if we have a scaled down medium image already created
 		if os.path.isfile(image_path):
 			pass
 		else:
 			# if not, lets make one for future use :D
-			original_image = os.path.join(tmp_dest, "%s.jpg"%movie.image)
+			original_image = os.path.join(tmp_dest, "%s.jpg"%item.image)
 			if os.path.isfile(original_image):
-				gutils.make_medium_image(self, "%s.jpg"%movie.image)
+				gutils.make_medium_image(self, "%s.jpg"%item.image)
 			else:
 				self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
 				pixbuf = self.Image.get_pixbuf()
-		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
-		if movie.loaned is True:
-			data_loan = self.db.get_loan_info(collection_id=movie.collection_id, volume_id=movie.volume_id, movie_id=movie.movie_id)
-			data_person = self.db.Person.get_by(person_id=data_loan.person.person_id)
-			self.person_name = str(data_person.name)
-			self.person_email = str(data_person.email)
-			self.loan_date = str(data_loan.date)
-			self.loan_info.set_label(self._("This movie has been loaned to ") + self.person_name + self._(" on ") + self.loan_date[:10])
-		else:
-			self.loan_info.set_label(self._("Movie not loaned"))
+		handler = self.picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
+	# ratig
+	try:
+		rimage = int(str(self.config.get('rating_image')))
+	except:
+		rimage = 0
+	if rimage:
+		prefix = ''
+	else:
+		prefix = 'meter'
+	if item.has_key('rating') and item['rating']:
+		rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, item['rating'])
+	else:
+		rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, 0)
+	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
+	gutils.garbage(handler)
+	
+	
+	# check loan status and adjust buttons and history box
+	if item.has_key('loaned') and item['loaned'] is True:
+		self.popup_loan.set_sensitive(False)
+		self.popup_email.set_sensitive(True)
+		self.popup_return.set_sensitive(True)
+		self.loan_button.set_sensitive(False)
+		self.b_email_reminder.set_sensitive(True)
+		self.return_button.set_sensitive(True)
+		
+		data_loan = self.db.get_loan_info(collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
+		data_person = self.db.Person.get_by(person_id=data_loan.person.person_id)
+		self.person_name = str(data_person.name)
+		self.person_email = str(data_person.email)
+		self.loan_date = str(data_loan.date)
+		self.loan_info.set_label(self._("This movie has been loaned to ") + self.person_name + self._(" on ") + self.loan_date[:10])
+		self.loaned_icon.set_from_stock('gtk-yes', 2)
+	else:
+		self.popup_loan.set_sensitive(True)
+		self.popup_email.set_sensitive(False)
+		self.popup_return.set_sensitive(False)
+		self.return_button.set_sensitive(False)
+		self.b_email_reminder.set_sensitive(False)
+		self.loan_button.set_sensitive(True)
+		self.loan_info.set_markup("<b>%s</b>" % self._("Movie not loaned"))
+		self.loaned_icon.set_from_stock('gtk-no', 2)
 
-		# loan history	
-		self.loans_treemodel.clear()
-		loans = self.db.get_loan_history(collection_id=movie.collection_id, volume_id=movie.volume_id, movie_id=movie.movie_id)
+	# loan history	
+	self.loans_treemodel.clear()
+	if item.has_key('collection_id') or item.has_key('volume_id') or item.has_key('movie_id'):
+		loans = self.db.get_loan_history(collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
 		for loan in loans:
 			myiter = self.loans_treemodel.append(None)
 			self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan.date)[:10])
@@ -174,24 +242,22 @@ def treeview_clicked(self):
 			person = self.db.Person.get_by(person_id=loan.person.person_id)
 			self.loans_treemodel.set_value(myiter, 2, person.name)
 
-		# volumes/collections
-		i = gutils.findKey(movie.volume_id, self.volume_combo_ids)
-		if not i:
-			i = 0
-		self.e_volume_combo.set_active(i)
-		i = gutils.findKey(movie.collection_id, self.collection_combo_ids)
-		if not i:
-			i = 0
-		self.e_collection_combo.set_active(i)
+	# volumes/collections
+	if item.has_key('volume_id') and item['volume_id']>0:
+		pass # FIXME
+	if item.has_key('collection_id') and item['collection_id']>0:
+		pass # FIXME
 
-		#languages
-#		self.e_languages = []	# for language widgets
-		self.lang['model'].clear()
-		if len(movie.languages)>0:
-			for i in movie.languages:
-				self.create_language_row(i)
-		#tags
-		for tag in movie.tags:
+	#languages
+#FIXME:
+##		self.e_languages = []	# for language widgets
+#	self.lang['model'].clear()
+#	if len(item.languages)>0:
+#		for i in item.languages:
+#			self.create_language_row(i)
+	#tags
+	if item.has_key('tags'):
+		for tag in item['tags']:
 			i = gutils.findKey(tag.tag_id, self.tags_ids)
 			self.e_tags[i].set_active(True)
 

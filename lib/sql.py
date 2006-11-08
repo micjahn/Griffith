@@ -186,6 +186,12 @@ class GriffithSQL:
 		def __init__(self):
 			# self.number = find_next_available() # TODO
 			pass
+		def __setitem__(self, key, value):
+			setattr(self,key,value)
+		def __getitem__(self, key):
+			return getattr(self,key)
+		def has_key(self, key):
+			return self.c.has_key(key)
 		def remove_from_db(self):
 			if int(self.loaned)==1:
 				debug.show("You can't remove loaned movie!")
@@ -250,6 +256,7 @@ class GriffithSQL:
 				config['db_name'])
 		self.metadata = BoundMetaData(url)
 		# try to establish a db connection
+		self.metadata.engine.connect()
 		try:
 			self.metadata.engine.connect()
 		except:
@@ -289,7 +296,7 @@ class GriffithSQL:
 			Column('image', VARCHAR(128)),
 			Column('studio', VARCHAR(128)),
 			Column('classification', VARCHAR(128)),
-			Column('actors', TEXT),
+			Column('cast', TEXT),
 			Column('plot', TEXT),
 			Column('notes', TEXT))
 		loans = Table('loans', self.metadata,
@@ -762,7 +769,7 @@ if __name__ == '__main__':
 	locations = locations()
 	import config, gdebug
 	import sys
-	db = GriffithSQL(config.Config(), gdebug.GriffithDebug(True), locations['home'])
+	db = GriffithSQL(config.Config(os.path.join(locations['home'], 'griffith.conf')), gdebug.GriffithDebug(True), locations['home'])
 	if len(sys.argv)>1:
 		if sys.argv[1] == 'echo':
 			db.metadata.engine.echo = True # print SQL queries

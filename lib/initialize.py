@@ -26,7 +26,6 @@ import sys
 import os
 import string
 import gtk
-import widgets
 import gutils
 import gobject
 import gettext
@@ -42,7 +41,7 @@ def locations(self=None):
 		debug = self.debug
 	else:
 		class Debug:
-			def show(text):
+			def show(self, text):
 				print text
 		debug = Debug()
 	locations = {}
@@ -95,7 +94,7 @@ def locations(self=None):
 		else:
 			debug.show("Using Griffith directory: %s" % locations['home'])
 	except OSError:
-		debug.show("Unable to create griffith directory.")
+		debug.show('Unable to create griffith directory.')
 		raise
 		sys.exit()
 
@@ -121,7 +120,7 @@ def gui(self):
 	self._ = None
 	self.debug.show("running on %s" % os.name)
 	
-	if os.name == "win32" or os.name == "nt":
+	if os.name == 'win32' or os.name == 'nt':
 		self.windows = True
 	else:
 		self.windows = False
@@ -140,14 +139,15 @@ def gui(self):
 	gtk.glade.textdomain('griffith')
 
 	gf = os.path.join(self.locations['glade'], 'griffith.glade')
-	widgets.define_widgets(self, gtk.glade.XML(gf))
+	from widgets import define_widgets
+	define_widgets(self, gtk.glade.XML(gf))
 
 	self.pdf_reader = self.config.get('pdf_reader')
 
 
 def toolbar(self):
 	"""if toolbar is hide in config lets hide the widget"""
-	if not self.config.get("view_toolbar"):
+	if not self.config.get('view_toolbar'):
 		self.toolbar.hide()
 		self.menu_toolbar.set_active(False)
 
@@ -157,30 +157,30 @@ def treeview(self):
 	self.main_treeview.set_headers_visible(True)
 	# number column
 	renderer=gtk.CellRendererText()
-	column=gtk.TreeViewColumn(_("N."), renderer, text=0)
+	column=gtk.TreeViewColumn(_('N.'), renderer, text=0)
 	column.set_resizable(True)
 	column.set_sort_column_id(0)
 	self.main_treeview.append_column(column)
 	# pic column
 	renderer=gtk.CellRendererPixbuf()
-	self.image_column=gtk.TreeViewColumn(_("Image"), renderer, pixbuf=1)
+	self.image_column=gtk.TreeViewColumn(_('Image'), renderer, pixbuf=1)
 	self.image_column.set_resizable(False)
 	self.main_treeview.append_column(self.image_column)
 	# original title column
 	renderer=gtk.CellRendererText()
-	self.otitle_column=gtk.TreeViewColumn(_("Original Title"), renderer, text=2)
+	self.otitle_column=gtk.TreeViewColumn(_('Original Title'), renderer, text=2)
 	self.otitle_column.set_resizable(True)
 	self.otitle_column.set_sort_column_id(2)
 	self.main_treeview.append_column(self.otitle_column)
 	# title column
 	renderer=gtk.CellRendererText()
-	self.title_column=gtk.TreeViewColumn(_("Title"), renderer, text=3)
+	self.title_column=gtk.TreeViewColumn(_('Title'), renderer, text=3)
 	self.title_column.set_resizable(True)
 	self.title_column.set_sort_column_id(3)
 	self.main_treeview.append_column(self.title_column)
 	# director column
 	renderer=gtk.CellRendererText()
-	self.director_column=gtk.TreeViewColumn(_("Director"), renderer, text=4)
+	self.director_column=gtk.TreeViewColumn(_('Director'), renderer, text=4)
 	self.director_column.set_sort_column_id(4)
 	self.director_column.set_resizable(True)
 	self.main_treeview.append_column(self.director_column)
@@ -193,18 +193,18 @@ def loans_treeview(self):
 	self.loan_history.set_headers_visible(True)
 	# loan date
 	renderer=gtk.CellRendererText()
-	self.date_column=gtk.TreeViewColumn(_("Loan Date"), renderer, text=0)
+	self.date_column=gtk.TreeViewColumn(_('Loan Date'), renderer, text=0)
 	self.date_column.set_resizable(True)
 	self.loan_history.append_column(self.date_column)
 	self.date_column.set_sort_column_id(0)
 	# return date
 	renderer=gtk.CellRendererText()
-	self.return_column=gtk.TreeViewColumn(_("Return Date"), renderer, text=1)
+	self.return_column=gtk.TreeViewColumn(_('Return Date'), renderer, text=1)
 	self.return_column.set_resizable(True)
 	self.loan_history.append_column(self.return_column)
 	# loan to
 	renderer=gtk.CellRendererText()
-	self.loaner_column=gtk.TreeViewColumn(_("Loaned To"), renderer, text=2)
+	self.loaner_column=gtk.TreeViewColumn(_('Loaned To'), renderer, text=2)
 	self.loaner_column.set_resizable(True)
 	self.loan_history.append_column(self.loaner_column)
 
@@ -229,9 +229,9 @@ def lang_treeview(self):
 	
 	model = self.lang['type'] = gtk.ListStore(int, str)
 	model.append([0, ''])
-	model.append([1, _("lector")])
-	model.append([2, _("dubbing")])
-	model.append([3, _("subtitles")])
+	model.append([1, _('lector')])
+	model.append([2, _('dubbing')])
+	model.append([3, _('subtitles')])
 	combo = gtk.CellRendererCombo()
 	combo.set_property('model', model)
 	combo.set_property('text-column', 1)
@@ -294,8 +294,8 @@ def movie_plugins(self):
 	self.d_plugin = 0
 	mcounter = 0
 	for p in self.plugins:
-		plugin_module = os.path.basename(p).replace(".py","")
-		plugin_name = plugin_module.replace("PluginMovie","")
+		plugin_module = os.path.basename(p).replace('.py','')
+		plugin_name = plugin_module.replace('PluginMovie','')
 		self.am_source.append_text(plugin_name)
 		self.default_plugin.append_text(plugin_name)
 		if self.config.get('default_movie_plugin') == plugin_name:
@@ -313,11 +313,11 @@ def export_plugins(self):
 		self.locations['export_plugins'])
 	plugins.sort()
 	for p in plugins:
-		plugin_module = os.path.basename(p).replace(".py", "")
-		plugin_name = plugin_module.replace("PluginExport", "")
+		plugin_module = os.path.basename(p).replace('.py', '')
+		plugin_name = plugin_module.replace('PluginExport', '')
 		menu_items = gtk.MenuItem(plugin_name)
 		self.export_menu.append(menu_items)
-		menu_items.connect("activate", self.on_export_activate, plugin_name)
+		menu_items.connect('activate', self.on_export_activate, plugin_name)
 		menu_items.show()
 
 def people_treeview(self, create=True):
@@ -329,112 +329,44 @@ def people_treeview(self, create=True):
 	if create==True:
 		# name column
 		renderer=gtk.CellRendererText()
-		column=gtk.TreeViewColumn(_("Name"), renderer, text=0)
+		column=gtk.TreeViewColumn(_('Name'), renderer, text=0)
 		column.set_resizable(True)
 		column.set_sort_column_id(0)
 		self.p_treeview.append_column(column)
 		# email column
 		renderer=gtk.CellRendererText()
-		column=gtk.TreeViewColumn(_("E-mail"),renderer, text=1)
+		column=gtk.TreeViewColumn(_('E-mail'),renderer, text=1)
 		column.set_resizable(True)
 		column.set_sort_column_id(1)
 		self.p_treeview.append_column(column)
 	# add data to treeview
 	self.p_treemodel.clear()
-	for person in self.db.Person.select(order_by="name ASC"):
+	for person in self.db.Person.select(order_by='name ASC'):
 		myiter = self.p_treemodel.insert_before(None, None)
 		self.p_treemodel.set_value(myiter, 0, str(person.name))
 		self.p_treemodel.set_value(myiter, 1, str(person.email))
 	self.p_treeview.show()
 
 def combos(self):
-	self.e_condition.insert_text(0, _("Damaged"))
-	self.e_condition.insert_text(1, _("Poor"))
-	self.e_condition.insert_text(2, _("Fair"))
-	self.e_condition.insert_text(3, _("Good"))
-	self.e_condition.insert_text(4, _("Excellent"))
-	self.e_condition.insert_text(5, _("N/A"))
-
-	self.p_condition.insert_text(0, _("Damaged"))
-	self.p_condition.insert_text(1, _("Poor"))
-	self.p_condition.insert_text(2, _("Fair"))
-	self.p_condition.insert_text(3, _("Good"))
-	self.p_condition.insert_text(4, _("Excellent"))
-	self.p_condition.insert_text(5, _("N/A"))
-
-	self.e_color.insert_text(0, _("Color"))
-	self.e_color.insert_text(1, _("Black and White"))
-	self.e_color.insert_text(2, _("Mixed"))
-	self.e_color.insert_text(3, _("N/A"))
-
-	self.p_color.insert_text(0, _("Color"))
-	self.p_color.insert_text(1, _("Black and White"))
-	self.p_color.insert_text(2, _("Mixed"))
-	self.p_color.insert_text(3, _("N/A"))
-
-	self.e_region.insert_text(0, _("Region 0 (No Region Coding)"))
-	self.e_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
-	self.e_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
-	self.e_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))
-	self.e_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
-	self.e_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
-	self.e_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
-	self.e_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
-	self.e_region.insert_text(8, _("Region 9 (Often used as region free)"))
-	self.e_region.insert_text(9, _("N/A"))
-
-	self.p_region.insert_text(0, _("Region 0 (No Region Coding)"))
-	self.p_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
-	self.p_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
-	self.p_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))
-	self.p_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
-	self.p_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
-	self.p_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
-	self.p_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
-	self.p_region.insert_text(8, _("Region 9 (Often used as region free)"))
-	self.p_region.insert_text(9, _("N/A"))
-
-	self.e_layers.insert_text(0, _("Single Side, Single Layer"))
-	self.e_layers.insert_text(1, _("Single Side, Dual Layer"))
-	self.e_layers.insert_text(2, _("Dual Side, Single Layer"))
-	self.e_layers.insert_text(3, _("Dual Side, Dual Layer"))
-	self.e_layers.insert_text(4, _("N/A"))
-
-	self.p_layers.insert_text(0, _("Single Side, Single Layer"))
-	self.p_layers.insert_text(1, _("Single Side, Dual Layer"))
-	self.p_layers.insert_text(2, _("Dual Side, Single Layer"))
-	self.p_layers.insert_text(3, _("Dual Side, Dual Layer"))
-	self.p_layers.insert_text(4, _("N/A"))
-
-	self.am_condition.insert_text(0, _("Damaged"))
-	self.am_condition.insert_text(1, _("Poor"))
-	self.am_condition.insert_text(2, _("Fair"))
-	self.am_condition.insert_text(3, _("Good"))
-	self.am_condition.insert_text(4, _("Excellent"))
-	self.am_condition.insert_text(5, _("N/A"))
-
-	self.am_color.insert_text(0, _("Color"))
-	self.am_color.insert_text(1, _("Black and White"))
-	self.am_color.insert_text(2, _("Mixed"))
-	self.am_color.insert_text(3, _("N/A"))
-
-	self.am_region.insert_text(0, _("Region 0 (No Region Coding)"))
-	self.am_region.insert_text(1, _("Region 1 (United States of America, Canada)"))
-	self.am_region.insert_text(2, _("Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)"))
-	self.am_region.insert_text(3, _("Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"))
-	self.am_region.insert_text(4, _("Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)"))
-	self.am_region.insert_text(5, _("Region 5 (India, Africa, Russia and former USSR countries)"))
-	self.am_region.insert_text(6, _("Region 6 (Popular Republic of China)"))
-	self.am_region.insert_text(7, _("Region 8 (Airlines/Cruise Ships)"))
-	self.am_region.insert_text(8, _("Region 9 (Often used as region free)"))
-	self.am_region.insert_text(9, _("N/A"))
-
-	self.am_layers.insert_text(0, _("Single Side, Single Layer"))
-	self.am_layers.insert_text(1, _("Single Side, Dual Layer"))
-	self.am_layers.insert_text(2, _("Dual Side, Single Layer"))
-	self.am_layers.insert_text(3, _("Dual Side, Dual Layer"))
-	self.am_layers.insert_text(4, _("N/A"))
-
+	i = 0
+	for cond in self._conditions:
+		self.p_condition.insert_text(i, cond)
+		self.am_condition.insert_text(i, cond)
+		i += 1
+	i = 0
+	for color in self._colors:
+		self.p_color.insert_text(i, color)
+		self.am_color.insert_text(i, color)
+		i += 1
+	i = 0
+	for region in self._regions:
+		self.p_region.insert_text(i, region)
+		self.am_region.insert_text(i, region)
+		i += 1
+	i = 0
+	for layer in self._layers:
+		self.p_layers.insert_text(i, layer)
+		i += 1
 	i = 0
 	for criteria in self.sort_criteria:
 		self.filter_criteria.insert_text(i, self.field_names[criteria])
@@ -444,8 +376,6 @@ def combos(self):
 def dictionaries(self):
 	"""initializes data filled dynamically by users"""
 	import initialize, update
-	self.e_languages = []
-	self.e_tags = {} # dictionary for tag CheckBoxes
 	self.am_tags = {} # dictionary for tag CheckBoxes
 	update.update_volume_combo_ids(self)
 	update.update_collection_combo_ids(self)
@@ -458,39 +388,51 @@ def dictionaries(self):
 	initialize.subformat_combos(self)
 	initialize.vcodec_combos(self)
 	initialize.media_combos(self)
-	initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 	self.sort_criteria = (
-		"o_title", "title", "number", "director",
-		"plot", "actors", "notes", "year", "runtime", "country",
-		"genre", "studio", "media_num", "rating")
+		'o_title', 'title', 'number', 'director',
+		'plot', 'cast', 'notes', 'year', 'runtime', 'country',
+		'genre', 'studio', 'media_num', 'rating')
 	self.field_names = {
-		"number"         : _("Number"),
-		"o_title"        : _("Original Title"),
-		"title"          : _("Title"),
-		"year"           : _("Year"),
-		"actors"         : _("Cast"),
-		"classification" : _("Classification"),
-		"country"        : _("Country"),
-		"genre"          : _("Genre"),
-		"director"       : _("Director"),
-		"o_site"         : _("Official site"),
-		"site"           : _("Site"),
-		"trailer"        : _("Trailer"),
-		"loaned"         : _("Loaned"),
-		"rating"         : _("Rating"),
-		"runtime"        : _("Runtime"),
-		"studio"         : _("Studio"),
-		"seen"           : _("Seen it"),
-		"region"         : _("Region"),
-		"layers"         : _("Layers"),
-		"cond"           : _("Condition"),
-		"color"          : _("Color"),
-		"volume_id"      : _("Volume"),
-		"collection_id"  : _("Collection"),
-		"plot"           : _("Plot"),
-		"media_num"      : _("Discs"),
-		"notes"          : _("Notes")}
+		'number'         : _('Number'),
+		'o_title'        : _('Original Title'),
+		'title'          : _('Title'),
+		'year'           : _('Year'),
+		'cast'           : _('Cast'),
+		'classification' : _('Classification'),
+		'country'        : _('Country'),
+		'genre'          : _('Genre'),
+		'director'       : _('Director'),
+		'o_site'         : _('Official site'),
+		'site'           : _('Site'),
+		'trailer'        : _('Trailer'),
+		'loaned'         : _('Loaned'),
+		'rating'         : _('Rating'),
+		'runtime'        : _('Runtime'),
+		'studio'         : _('Studio'),
+		'seen'           : _('Seen it'),
+		'region'         : _('Region'),
+		'layers'         : _('Layers'),
+		'cond'           : _('Condition'),
+		'color'          : _('Color'),
+		'volume_id'      : _('Volume'),
+		'collection_id'  : _('Collection'),
+		'plot'           : _('Plot'),
+		'media_num'      : _('Discs'),
+		'notes'          : _('Notes')}
+	self._conditions = [_('Damaged'), _('Poor'),  _('Fair'), _('Good'), _('Excellent'), _('N/A')]
+	self._colors = [_('Color'), _('Black and White'), _('Mixed'), _('N/A')]
+	self._layers = [_('Single Side, Single Layer'), _('Single Side, Dual Layer'), _('Dual Side, Single Layer'), _('Dual Side, Dual Layer'), _('N/A')]
+	self._regions = [_('Region 0 (No Region Coding)'),
+			_('Region 1 (United States of America, Canada)'),
+			_('Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)'),
+			_('Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)'),
+			_('Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)'),
+			_('Region 5 (India, Africa, Russia and former USSR countries)'),
+			_('Region 6 (Popular Republic of China)'),
+			_('Region 8 (Airlines/Cruise Ships)'),
+			_('Region 9 (Often used as region free)'),
+			_('N/A')]
 
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
@@ -516,13 +458,13 @@ def initialize_gtkspell(self):
 			if self.config.get('spell_notes', True) == 'True' and \
 				self.config.get('spell_lang')!='':
 				try:
-					self.obs_spell = gtkspell.Spell(self.e_obs, self.config.get('spell_lang'))
+					self.obs_spell = gtkspell.Spell(self.m_cast, self.config.get('spell_lang'))
 				except:
 					spell_error = True
 			if self.config.get('spell_plot', True)=='True' and \
 				self.config.get('spell_lang')!='':
 				try:
-					self.plot_spell = gtkspell.Spell(self.e_plot, self.config.get('spell_lang'))
+					self.plot_spell = gtkspell.Spell(self.m_plot, self.config.get('spell_lang'))
 				except:
 					spell_error = True
 			if spell_error:
@@ -530,27 +472,27 @@ def initialize_gtkspell(self):
 					"Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('spell_lang'), \
 					self.w_preferences)
 	else:
-		self.debug.show("Spellchecker is not available")
+		self.debug.show('Spellchecker is not available')
 
 def preferences(self):
-	self.p_db_type.insert_text(0,"SQLite3 (internal)")
-	self.p_db_type.insert_text(1,"PostgreSQL")
-	self.p_db_type.insert_text(2,"MySQL")
-	if self.config.has_key("db_host"):
-		self.p_db_host.set_text(self.config["db_host"])
-	if self.config.has_key("db_port"):
-		self.p_db_port.set_value(int(self.config["db_port"]))
-	if self.config.has_key("db_user"):
-		self.p_db_user.set_text(self.config["db_user"])
-	if self.config.has_key("db_passwd"):
-		self.p_db_passwd.set_text(self.config["db_passwd"])
-	if self.config.has_key("db_name"):
-		self.p_db_name.set_text(self.config["db_name"])
-	if self.config.has_key("db_type") and self.config["db_type"] != "sqlite":
+	self.p_db_type.insert_text(0,'SQLite3 (internal)')
+	self.p_db_type.insert_text(1,'PostgreSQL')
+	self.p_db_type.insert_text(2,'MySQL')
+	if self.config.has_key('db_host'):
+		self.p_db_host.set_text(self.config['db_host'])
+	if self.config.has_key('db_port'):
+		self.p_db_port.set_value(int(self.config['db_port']))
+	if self.config.has_key('db_user'):
+		self.p_db_user.set_text(self.config['db_user'])
+	if self.config.has_key('db_passwd'):
+		self.p_db_passwd.set_text(self.config['db_passwd'])
+	if self.config.has_key('db_name'):
+		self.p_db_name.set_text(self.config['db_name'])
+	if self.config.has_key('db_type') and self.config['db_type'] != 'sqlite':
 		self.p_db_details.set_sensitive(True)
-		if self.config["db_type"] == "postgres":
+		if self.config['db_type'] == 'postgres':
 			self.p_db_type.set_active(1)
-		elif self.config["db_type"] == "mysql":
+		elif self.config['db_type'] == 'mysql':
 			self.p_db_type.set_active(2)
 	else:
 		self.p_db_type.set_active(0)
@@ -558,7 +500,6 @@ def preferences(self):
 
 def fill_volumes_combo(self, prefix='e', default=0):
 	self.am_volume_combo.get_model().clear()
-	self.e_volume_combo.get_model().clear()
 	for i in self.volume_combo_ids:
 		vol_id = self.volume_combo_ids[i]
 		if vol_id>0:
@@ -566,22 +507,17 @@ def fill_volumes_combo(self, prefix='e', default=0):
 		else:
 			name = ''
 		self.am_volume_combo.insert_text(int(i), str(name))
-		self.e_volume_combo.insert_text(int(i), str(name))
 	self.am_volume_combo.show_all()
-	self.e_volume_combo.show_all()
 	i = gutils.findKey(default, self.volume_combo_ids)
 	if i!=None:
 		if prefix == 'e':
-			self.e_volume_combo.set_active(int(default))
 			self.am_volume_combo.set_active(0)
 		else:
 			self.am_volume_combo.set_active(int(i))
-	self.e_volume_combo.set_wrap_width(3)
 	self.am_volume_combo.set_wrap_width(3)
 
 def fill_collections_combo(self, prefix='e', default=0):
 	self.am_collection_combo.get_model().clear()
-	self.e_collection_combo.get_model().clear()
 	self.f_col.get_model().clear()
 	for i in self.collection_combo_ids:
 		col_id = self.collection_combo_ids[i]
@@ -590,20 +526,16 @@ def fill_collections_combo(self, prefix='e', default=0):
 		else:
 			name = ''
 		self.am_collection_combo.insert_text(int(i), str(name))
-		self.e_collection_combo.insert_text(int(i), str(name))
 		self.f_col.insert_text(int(i), str(name))
 	self.am_collection_combo.show_all()
-	self.e_collection_combo.show_all()
 	self.f_col.show_all()
 	self.f_col.set_active(0)
 	i = gutils.findKey(default, self.collection_combo_ids)
 	if i!=None:
 		if prefix == 'e':
-			self.e_collection_combo.set_active(int(i))
 			self.am_collection_combo.set_active(0)
 		else:
 			self.am_collection_combo.set_active(int(i))
-	self.e_collection_combo.set_wrap_width(2)
 	self.am_collection_combo.set_wrap_width(2)
 
 def fill_preferences_tags_combo(self):
@@ -662,13 +594,8 @@ def subformat_combos(self):
 	self.subformat_name_combo.show_all()
 
 def media_combos(self):
-	# remember old values
-	old = None
-	if self.e_media.get_active()>-1:
-		old = self.media_ids[self.e_media.get_active()]
 	# clear data
 	self.medium_name_combo.get_model().clear()
-	self.e_media.get_model().clear()
 	self.p_media.get_model().clear()
 	self.am_media.get_model().clear()
 	self.media_ids = {}
@@ -677,32 +604,21 @@ def media_combos(self):
 		self.media_ids[i] = medium.medium_id
 		self.medium_name_combo.insert_text(int(i), str(medium.name))
 		self.am_media.insert_text(int(i), str(medium.name))
-		self.e_media.insert_text(int(i), str(medium.name))
 		self.p_media.insert_text(int(i), str(medium.name))
 		i += 1
 	self.medium_name_combo.show_all()
 	self.am_media.show_all()
-	self.e_media.show_all()
 	self.p_media.show_all()
-	if self.config.has_key("media"):
-		pos = gutils.findKey(self.config["media"], self.media_ids)
+	if self.config.has_key('media'):
+		pos = gutils.findKey(self.config['media'], self.media_ids)
 		if pos !=None:
 			self.p_media.set_active(int(pos))
 		else:
 			self.p_media.set_active(0)
-	if old!=None:
-		pos = gutils.findKey(old, self.media_ids)
-		if pos !=None:
-			self.e_media.set_active(int(pos))
 
 def vcodec_combos(self):
-	# remember old values
-	old = None
-	if self.e_vcodec.get_active()>-1:
-		old = self.vcodecs_ids[self.e_vcodec.get_active()]
 	# clear data
 	self.vcodec_name_combo.get_model().clear()
-	self.e_vcodec.get_model().clear()
 	self.p_vcodec.get_model().clear()
 	self.am_vcodec.get_model().clear()
 	self.vcodecs_ids = {}
@@ -711,23 +627,17 @@ def vcodec_combos(self):
 		self.vcodecs_ids[i] = vcodec.vcodec_id
 		self.vcodec_name_combo.insert_text(int(i), str(vcodec.name))
 		self.am_vcodec.insert_text(int(i), str(vcodec.name))
-		self.e_vcodec.insert_text(int(i), str(vcodec.name))
 		self.p_vcodec.insert_text(int(i), str(vcodec.name))
 		i += 1
 	self.vcodec_name_combo.show_all()
 	self.am_vcodec.show_all()
-	self.e_vcodec.show_all()
 	self.p_vcodec.show_all()
-	if self.config.has_key("vcodec"):
-		pos = gutils.findKey(int(self.config["vcodec"]), self.vcodecs_ids)
+	if self.config.has_key('vcodec'):
+		pos = gutils.findKey(int(self.config['vcodec']), self.vcodecs_ids)
 		if pos!=None:
 			self.p_vcodec.set_active(int(pos))
 		else:
 			self.p_vcodec.set_active(0)
-	if old!=None:
-		pos = gutils.findKey(old, self.vcodecs_ids)
-		if pos!=None:
-			self.e_vcodec.set_active(int(pos))
 
 def create_tag_vbox(self, widget, tab):
 	for i in widget.get_children():
@@ -746,6 +656,6 @@ def remove_hbox(self, widget, tab):
 		tab.pop()
 		widget.remove(widget.get_children().pop())
 	except:
-		self.debug.show("List is empty")
+		self.debug.show('List is empty')
 	widget.show_all()
 

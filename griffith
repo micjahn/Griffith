@@ -201,7 +201,7 @@ class Griffith:
 		update.update(self)
 
 	def clear_details(self):
-		edit.clear_details(self)
+		main_treeview.set_details(self)
 
 	def loan_movie(self, *args):
 		loan.loan_movie(self)
