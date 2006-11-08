@@ -191,17 +191,21 @@ class GriffithSQL:
 		def __getitem__(self, key):
 			return getattr(self,key)
 		def has_key(self, key):
-			return self.c.has_key(key)
+			if key in ('volume', 'collection', 'medium', 'vcodec', 'loans', 'languages', 'tags'):
+				return True
+			else:
+				return self.c.has_key(key)
 		def remove_from_db(self):
 			if int(self.loaned)==1:
 				debug.show("You can't remove loaned movie!")
 				return False
-			for i in self.tags:
-				i.delete()
-			for i in self.languages:
-				i.delete()
-			for i in self.loans:
-				i.delete()
+			# TODO: remove this (see 'cascade="all, delete-orphan"')
+			#for i in self.tags:
+			#	i.delete()
+			#for i in self.languages:
+			#	i.delete()
+			#for i in self.loans:
+			#	i.delete()
 			self.delete()
 			self.mapper.get_session().flush()
 			return True#}}}
@@ -256,7 +260,6 @@ class GriffithSQL:
 				config['db_name'])
 		self.metadata = BoundMetaData(url)
 		# try to establish a db connection
-		self.metadata.engine.connect()
 		try:
 			self.metadata.engine.connect()
 		except:
@@ -378,15 +381,21 @@ class GriffithSQL:
 		assign_mapper(self.Lang, languages, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
 		assign_mapper(self.MovieTag, movie_tag)
-		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag)})
+		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag, backref='tag')})
 		assign_mapper(self.Loan, loans, properties = {
 			'person'     : relation(self.Person),
 			'volume'     : relation(self.Volume),
 			'collection' : relation(self.Collection)})
 		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
-			'loans'      : relation(self.Loan, backref='movie'),
-			'languages'  : relation(self.MovieLang),
-			'tags'       : relation(self.MovieTag)})#}}}
+			'loans'      : relation(self.Loan, backref='movie', cascade='all, delete-orphan'),
+			'languages'  : relation(self.MovieLang, cascade='all, delete-orphan'),
+#			'tags'       : relation(self.MovieTag, cascade='all, delete-orphan')})
+			'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
+					primaryjoin=movies.c.movie_id==movie_tag.c.movie_id,
+					secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id
+			)
+		})
+		#}}}
 		
 		# check if database needs upgrade
 		try:
@@ -414,7 +423,7 @@ class GriffithSQL:
 #				self.metadata.tables[table].select().execute()
 #		        except:
 #				self.metadata.tables[table].create()
-#				self.metadata.commit()
+#			self.metadata.commit()
 
 	#}}}
 

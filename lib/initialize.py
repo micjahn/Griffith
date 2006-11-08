@@ -468,9 +468,13 @@ def initialize_gtkspell(self):
 				except:
 					spell_error = True
 			if spell_error:
-				gutils.info(self, _("Dictionary not available. Spellcheck will be disabled. \n" + \
-					"Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('spell_lang'), \
-					self.w_preferences)
+				self.debug.show('Dictionary not available. Spellcheck will be disabled.')
+				if not self.config.get('spell_notify', False):
+					gutils.info(self, _("Dictionary not available. Spellcheck will be disabled. \n" + \
+						"Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('spell_lang'), \
+						self.w_preferences)
+					self.config['spell_notify'] = True
+					self.config.save()
 	else:
 		self.debug.show('Spellchecker is not available')
 

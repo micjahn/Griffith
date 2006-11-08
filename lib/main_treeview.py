@@ -256,10 +256,13 @@ def set_details(self, item=None):
 #		for i in item.languages:
 #			self.create_language_row(i)
 	#tags
+	for i in self.tag_vbox.get_children():	# clear previous tags
+		i.destroy()
 	if item.has_key('tags'):
 		for tag in item['tags']:
-			i = gutils.findKey(tag.tag_id, self.tags_ids)
-			self.e_tags[i].set_active(True)
+			widget = gtk.Label(str(tag.name))
+			self.tag_vbox.pack_start(widget)
+		self.tag_vbox.show_all()
 
 def populate(self, movies):
 	self.treemodel.clear()

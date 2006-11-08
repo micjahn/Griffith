@@ -90,9 +90,7 @@ def define_widgets(self, gladefile):
 	self.year           = gladefile.get_widget('m_year')
 	self.seen_icon      = gladefile.get_widget('m_seen_icon')
 	self.loaned_icon    = gladefile.get_widget('m_loaned_icon')
-	self.e_tag_vbox     = gladefile.get_widget('e_tag_vbox')	# edit window
-	self.e_medium_vbox     = gladefile.get_widget('e_medium_vbox')	# edit window
-	self.e_vcodec_vbox     = gladefile.get_widget('e_vcodec_vbox')	# edit window
+	self.tag_vbox       = gladefile.get_widget('m_tag_vbox')
 	self.show_volume_button     = gladefile.get_widget('show_volume_entries_button')
 	self.show_collection_button = gladefile.get_widget('show_collection_entries_button')
 
