@@ -456,7 +456,6 @@ class Griffith:
 		tag = self.db.Tag(name=self.tag_name_combo.get_active_text())
 		if tag and tag.add_to_db():
 			initialize.fill_preferences_tags_combo(self)
-			initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
 			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
 
 	def on_tag_remove_clicked(self, widget):

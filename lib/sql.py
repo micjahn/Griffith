@@ -453,8 +453,9 @@ class GriffithSQL:
 		# tags
 		if t_tags != None:
 			for tag in t_tags.keys():
-				movie.tags.append(self.MovieTag(tag_id=tag))
+				movie.tags.append(self.Tag(tag_id=tag))
 		movie.save_or_update()
+		movie.flush()
 	
 	def update_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
 		movie_id = t_movies['movie_id']
@@ -474,7 +475,7 @@ class GriffithSQL:
 		# tags
 		if t_tags != None:
 			for tag in t_tags.keys():
-				movie.tags.append(self.MovieTag(tag_id=tag))
+				movie.tags.append(self.Tag(tag_id=tag))
 		movie.update()
 		movie.flush()
 		movie.refresh()

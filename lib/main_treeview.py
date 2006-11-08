@@ -256,13 +256,12 @@ def set_details(self, item=None):
 #		for i in item.languages:
 #			self.create_language_row(i)
 	#tags
-	for i in self.tag_vbox.get_children():	# clear previous tags
-		i.destroy()
 	if item.has_key('tags'):
+		tmp = ''
 		for tag in item['tags']:
-			widget = gtk.Label(str(tag.name))
-			self.tag_vbox.pack_start(widget)
-		self.tag_vbox.show_all()
+			tmp += "%s, " % tag.name
+		tmp = tmp[:-2] # cut last comma
+		self.tags.set_text(tmp)
 
 def populate(self, movies):
 	self.treemodel.clear()
