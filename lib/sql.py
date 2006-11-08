@@ -191,7 +191,7 @@ class GriffithSQL:
 		def __getitem__(self, key):
 			return getattr(self,key)
 		def has_key(self, key):
-			if key in ('volume', 'collection', 'medium', 'vcodec', 'loans', 'languages', 'tags'):
+			if key in ('volume','collection','medium','vcodec','loans','tags','languages','lectors','dubbings','subtitles'):
 				return True
 			else:
 				return self.c.has_key(key)
@@ -371,7 +371,11 @@ class GriffithSQL:
 		assign_mapper(self.VCodec, vcodecs, properties={
 			'assigned_movies': relation(self.Movie, backref='vcodec')})
 		assign_mapper(self.Person, people)
-		assign_mapper(self.MovieLang, movie_lang)
+		assign_mapper(self.MovieLang, movie_lang, properties = {
+			'language' : relation(self.Lang),
+			'achannel' : relation(self.AChannel),
+			'acodec'   : relation(self.ACodec),
+			'subformat': relation(self.SubFormat)})
 		assign_mapper(self.ACodec, acodecs, properties={
 			'assigned_movie_ids': relation(self.MovieLang)})
 		assign_mapper(self.AChannel, achannels, properties={
@@ -388,14 +392,13 @@ class GriffithSQL:
 			'collection' : relation(self.Collection)})
 		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
 			'loans'      : relation(self.Loan, backref='movie', cascade='all, delete-orphan'),
-			'languages'  : relation(self.MovieLang, cascade='all, delete-orphan'),
-#			'tags'       : relation(self.MovieTag, cascade='all, delete-orphan')})
 			'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
 					primaryjoin=movies.c.movie_id==movie_tag.c.movie_id,
-					secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id
-			)
-		})
-		#}}}
+					secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id),
+			'languages'  : relation(self.MovieLang, cascade='all, delete-orphan', secondary=movie_lang,
+					primaryjoin=movies.c.movie_id==movie_lang.c.movie_id,
+					secondaryjoin=movie_lang.c.lang_id==languages.c.lang_id),
+			})#}}}
 		
 		# check if database needs upgrade
 		try:
@@ -464,15 +467,15 @@ class GriffithSQL:
 			return False
 		self.clean_t_movies(t_movies)
 		self.Movie.mapper.mapped_table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
-		self.MovieLang.mapper.mapped_table.delete(self.MovieLang.c.movie_id==movie_id).execute()
-		self.MovieTag.mapper.mapped_table.delete(self.MovieTag.c.movie_id==movie_id).execute()
 		movie = self.Movie.get_by(movie_id=movie_id)
 		# languages
+		movie.languages.clear()
 		if t_languages != None:
 			for lang in t_languages:
 				if lang[0]>0:
 					movie.languages.append(self.MovieLang(lang_id=lang[0], type=lang[1], acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4]))
 		# tags
+		movie.tags.clear()
 		if t_tags != None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.Tag(tag_id=tag))

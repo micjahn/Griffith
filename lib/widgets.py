@@ -91,8 +91,8 @@ def define_widgets(self, gladefile):
 	self.seen_icon      = gladefile.get_widget('m_seen_icon')
 	self.loaned_icon    = gladefile.get_widget('m_loaned_icon')
 	self.tags           = gladefile.get_widget('m_tags')
-	self.show_volume_button     = gladefile.get_widget('show_volume_entries_button')
-	self.show_collection_button = gladefile.get_widget('show_collection_entries_button')
+	self.show_volume_button     = gladefile.get_widget('m_show_volume_button')
+	self.show_collection_button = gladefile.get_widget('m_show_collection_button')
 
 	# volumes/collections tab
 	self.am_volume_combo                = gladefile.get_widget('am_volume_combo')
@@ -176,10 +176,10 @@ def define_widgets(self, gladefile):
 	self.p_layers      = gladefile.get_widget('p_layers')
 	self.p_font        = gladefile.get_widget('p_font')
 	#buttons
-	self.go_site    = gladefile.get_widget('go_site')
-	self.go_imdb    = gladefile.get_widget('go_imdb')
-	self.go_trailer = gladefile.get_widget('go_trailer')
-	self.new_db     = gladefile.get_widget('new_bt')
+	self.go_o_site_button   = gladefile.get_widget('go_o_site')
+	self.go_site_button     = gladefile.get_widget('go_site')
+	self.go_trailer_button  = gladefile.get_widget('go_trailer')
+	self.new_db      = gladefile.get_widget('new_bt')
 	#notebooks
 	self.nb_add = gladefile.get_widget('notebook_add')
 	#ratings
@@ -256,6 +256,8 @@ def define_widgets(self, gladefile):
 	self.lang['menu'] = gladefile.get_widget('lang_menu')
 	self.lang['treeview'] = gladefile.get_widget('lang_treeview')
 	self.lang['treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
+	self.audio_vbox = gladefile.get_widget('m_audio_vbox')
+	self.subtitle_vbox = gladefile.get_widget('m_subtitle_vbox')
 
 	# tags
 	self.tag_name_combo = gladefile.get_widget('tag_name_combo')	# preferences window
@@ -328,40 +330,42 @@ def define_widgets(self, gladefile):
 		'on_cover_choose_image_activate'        : self.print_cover_image,
 		'on_cancel_print_cover_image_clicked'   : self.print_cover_image_hide,
 		'on_b_print_cover_image_clicked'        : self.print_cover_image_process,
-		'on_go_site_clicked'                    : self.go_oficial_site,
 		'on_combo_source_changed'               : self.source_changed,
 		# toolbar
+		'on_view_toolbar_activate'              : self.toggle_toolbar,
 		'on_go_first_clicked'                   : self.go_first,
 		'on_go_last_clicked'                    : self.go_last,
 		'on_go_back_clicked'                    : self.go_prev,
 		'on_go_forward_clicked'                 : self.go_next,
+		'on_new_bt_clicked'                     : self.new_dbb,
+		'on_new_activate'                       : self.new_dbb,
 		# poster
 		'on_e_picture_clicked'                  : self.change_poster,
 		'on_open_poster_clicked'                : self.change_poster,
 		'on_zoom_poster_clicked'                : self.z_poster,
 		'on_delete_poster_clicked'              : self.del_poster,
 		'on_fetch_poster_clicked'               : self.get_poster,
-		'on_go_imdb_clicked'                    : self.go_imdb_site,
-		'on_go_trailer_clicked'                 : self.go_trailer_site,
+		# URLs
 		'on_goto_homepage_activate'             : self.on_goto_homepage_activate,
 		'on_goto_forum_activate'                : self.on_goto_forum_activate,
 		'on_goto_report_bug_activate'           : self.on_goto_report_bug_activate,
-		'on_new_bt_clicked'                     : self.new_dbb,
-		'on_new_activate'                       : self.new_dbb,
-		'on_view_toolbar_activate'              : self.toggle_toolbar,
+		'on_go_o_site_clicked'                  : self.go_oficial_site,
+		'on_go_site_clicked'                    : self.go_site,
+		'on_go_trailer_clicked'                 : self.go_trailer_site,
 		'on_seen_movies_activate'               : self.filter_not_seen,
 		'on_all_movies_activate'                : self.filter_all,
 		'on_rating_scale_value_changed'         : self.scale_rating_change,
 		'on_rating_scale_add_value_changed'     : self.scale_rating_change_add,
 		'on_sugest_activate'                    : self.sugest_movie,
-		'on_email_reminder_clicked'             : self.email_reminder,
 		'on_popup_delete_activate'              : self.delete_movie,
 		'on_popup_clone_activate'               : self.clone_movie,
 		'on_popup_simple_activate'              : self.print_cover_simple_show,
 		'on_popup_choose_image_activate'        : self.print_cover_image,
+		# loans
 		'on_popup_loan_activate'                : self.loan_movie,
 		'on_popup_return_activate'              : self.return_loan,
 		'on_popup_email_activate'               : self.email_reminder,
+		'on_email_reminder_clicked'             : self.email_reminder,
 		# volumes/collections
 		'on_am_collection_combo_changed'        : self.on_am_collection_combo_changed,
 		'on_am_volume_combo_changed'            : self.on_am_volume_combo_changed,

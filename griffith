@@ -876,16 +876,16 @@ You can't undo this operation."""), \
 		return True
 
 	def go_oficial_site(self, *args):
-		if self.e_site.get_text():
-			gutils.run_browser(self.e_site.get_text())
+		if self._o_site_url:
+			gutils.run_browser(self._o_site_url)
 
-	def go_imdb_site(self, *args):
-		if self.e_imdb.get_text():
-			gutils.run_browser(self.e_imdb.get_text())
+	def go_site(self, *args):
+		if self._site_url:
+			gutils.run_browser(self._site_url)
 
 	def go_trailer_site(self, *args):
-		if self.e_trailer.get_text():
-			gutils.run_browser(self.e_trailer.get_text())
+		if self._trailer_url:
+			gutils.run_browser(self._trailer_url)
 
 	def on_goto_homepage_activate(site, *args):
 		gutils.run_browser("http://griffith.vasconunes.net/")

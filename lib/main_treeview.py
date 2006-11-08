@@ -29,15 +29,13 @@ def treeview_clicked(self):
 	if self.initialized is False:
 		return False
 	if self.total:
-		self.clear_details()
 		treeselection = self.main_treeview.get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		number = tmp_model.get_value(tmp_iter,0)
 		movie = self.db.Movie.get_by(number=number)
 		if movie == None:
 			self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
-			return False
-		set_details(self,movie)
+		set_details(self, movie)
 
 def set_details(self, item=None):
 	if item==None:
@@ -61,7 +59,7 @@ def set_details(self, item=None):
 	else:
 		self.title.set_text('')
 	if item.has_key('o_title') and item['o_title']:
-		self.o_title.set_markup("<span size='medium'>%s</span>" % str(item.o_title))
+		self.o_title.set_markup("<span size='medium'>%s</span>" % str(item['o_title']))
 	else:
 		self.o_title.set_text('')
 	if item.has_key('director') and item['director']:
@@ -79,7 +77,7 @@ def set_details(self, item=None):
 	if item.has_key('runtime') and item['runtime']:
 		self.runtime.set_text(str(int(item['runtime'])))
 	else:
-		self.runtime.set_text('')
+		self.runtime.set_text('x')
 	if item.has_key('cast') and item['cast']:
 		cast_buffer.set_text(str(item['cast']))
 	else:
@@ -93,15 +91,15 @@ def set_details(self, item=None):
 	else:
 		self.genre.set_text('')
 	if item.has_key('cond') and item['cond']:
-		self.condition.set_text(str(item['cond']))
+		self.condition.set_text(self._conditions[item['cond']])
 	else:
-		self.condition.set_text('') # FIXME: str(id==5)
+		self.condition.set_text(self._conditions[5]) # 5 == N/A
 	if item.has_key('region') and item['region']:
-		self.region.set_text(str(item.region))
-#		self.region.set_text(self._regions[item.region])
+		self.region.set_text(str(item['region']))
+		self.tooltips.set_tip(self.region, self._regions[item['region']])
 	else:
 		self.region.set_text('')
-#		self.region.set_text(self._regions[9]) # N/A
+		self.tooltips.set_tip(self.region, self._regions[9]) # N/A
 	if item.has_key('layers') and item['layers']:
 		self.layers.set_text(self._layers[item['layers']])
 	else:
@@ -111,27 +109,32 @@ def set_details(self, item=None):
 	else:
 		self.color.set_text(self._colors[3]) # N/A
 	if item.has_key('classification') and item['classification']:
-		self.classification.set_text(str(item.classification))
+		self.classification.set_text(str(item['classification']))
 	else:
 		self.classification.set_text('')
 	if item.has_key('studio') and item['studio']:
-		self.studio.set_text(str(item.studio))
+		self.studio.set_text(str(item['studio']))
 	else:
 		self.studio.set_text('')
-# FIXME:
-#	if item.has_key('o_site') and item['o_site']:
-#		self.site.set_text(str(item.o_site))
-#	else:
-#		self.o_site.set_text('')
-#	if item.has_key('site') and item['site']:
-#		self.imdb.set_text(str(item.site))
-#	else:
-#		self.site.set_text('')
-#	if item.has_key('trailer') and item['trailer']:
-#		self.trailer.set_text(str(item.trailer))
-#	else:
-#		self.trailer.set_text('')
-	if item.has_key('seen') and item['seen']:
+	if item.has_key('o_site') and item['o_site']:
+		self._o_site_url = str(item['o_site'])
+		self.go_o_site_button.set_sensitive(True)
+	else:
+		self._o_site_url = None
+		self.go_o_site_button.set_sensitive(False)
+	if item.has_key('site') and item['site']:
+		self._site_url = str(item['site'])
+		self.go_site_button.set_sensitive(True)
+	else:
+		self._site_url = None
+		self.go_site_button.set_sensitive(False)
+	if item.has_key('trailer') and item['trailer']:
+		self._trailer_url = str(item.trailer)
+		self.go_trailer_button.set_sensitive(True)
+	else:
+		self._trailer_url = None
+		self.go_trailer_button.set_sensitive(False)
+	if item.has_key('seen') and item['seen'] == True:
 		self.seen_icon.set_from_stock('gtk-yes', 2)
 	else:
 		self.seen_icon.set_from_stock('gtk-no', 2)
@@ -200,10 +203,9 @@ def set_details(self, item=None):
 		rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, 0)
 	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
 	gutils.garbage(handler)
-	
-	
+
 	# check loan status and adjust buttons and history box
-	if item.has_key('loaned') and item['loaned'] is True:
+	if item.has_key('loaned') and item['loaned'] == True:
 		self.popup_loan.set_sensitive(False)
 		self.popup_email.set_sensitive(True)
 		self.popup_return.set_sensitive(True)
@@ -217,7 +219,7 @@ def set_details(self, item=None):
 		self.person_email = str(data_person.email)
 		self.loan_date = str(data_loan.date)
 		self.loan_info.set_label(self._("This movie has been loaned to ") + self.person_name + self._(" on ") + self.loan_date[:10])
-		self.loaned_icon.set_from_stock('gtk-yes', 2)
+		self.loaned_icon.set_from_stock('gtk-no', 2) # "is movie available?"
 	else:
 		self.popup_loan.set_sensitive(True)
 		self.popup_email.set_sensitive(False)
@@ -226,7 +228,7 @@ def set_details(self, item=None):
 		self.b_email_reminder.set_sensitive(False)
 		self.loan_button.set_sensitive(True)
 		self.loan_info.set_markup("<b>%s</b>" % self._("Movie not loaned"))
-		self.loaned_icon.set_from_stock('gtk-no', 2)
+		self.loaned_icon.set_from_stock('gtk-yes', 2) # "is movie available?"
 
 	# loan history	
 	self.loans_treemodel.clear()
@@ -244,17 +246,55 @@ def set_details(self, item=None):
 
 	# volumes/collections
 	if item.has_key('volume_id') and item['volume_id']>0:
-		pass # FIXME
+		if item.has_key('volume') and item['volume']:
+			self.volume.set_markup("<b>%s</b>" % item['volume'].name)
+			self.show_volume_button.set_sensitive(True)
+		else:
+			self.volume.set_text('')
+			self.show_volume_button.set_sensitive(False)
+	else:
+			self.volume.set_text('')
+			self.show_volume_button.set_sensitive(False)
 	if item.has_key('collection_id') and item['collection_id']>0:
-		pass # FIXME
+		if item.has_key('collection') and item['collection']:
+			self.collection.set_markup("<b>%s</b>" % item['collection'].name)
+			self.show_collection_button.set_sensitive(True)
+		else:
+			self.collection.set_text('')
+			self.show_collection_button.set_sensitive(False)
+	else:
+		self.collection.set_text('')
+		self.show_collection_button.set_sensitive(False)
 
-	#languages
-#FIXME:
-##		self.e_languages = []	# for language widgets
-#	self.lang['model'].clear()
-#	if len(item.languages)>0:
-#		for i in item.languages:
-#			self.create_language_row(i)
+	# languages
+	for i in self.audio_vbox.get_children():
+		i.destroy()
+	for i in self.subtitle_vbox.get_children():
+		i.destroy()
+	if item.has_key('languages') and len(item['languages'])>0:
+		for i in item['languages']:
+			if i.type == 3: # subtitles
+				if i.subformat:
+					tmp = "%s - %s" % (i.language.name, i.subformat.name)
+				else:
+					tmp = "%s" % i.language.name
+				self.subtitle_vbox.pack_start(gtk.Label(tmp))
+			else:
+				tmp = ''
+				if i.achannel:
+					tmp = i.achannel.name
+				if i.acodec:
+					if len(tmp)>0:
+						tmp += ", %s" % i.acodec.name
+					else:
+						tmp = i.acodec.name
+				if len(tmp)>0:
+					tmp = "%s (%s)" % (i.language.name, tmp)
+				else:
+					tmp = "%s" % i.language.name
+				self.audio_vbox.pack_start(gtk.Label(tmp))
+	self.audio_vbox.show_all()
+	self.subtitle_vbox.show_all()
 	#tags
 	if item.has_key('tags'):
 		tmp = ''
