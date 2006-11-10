@@ -112,36 +112,67 @@ class GriffithSQL:
 	class Loan(object):#{{{
 		def __repr__(self):
 			return "Loan:%s (movie:%s person:%s)" % (self.loan_id, self.movie_id, self.person_id)
+		def __setitem__(self, key, value):
+			if key == 'movie_id' and value:
+				if GriffithSQL.Movie.get_by(movie_id=value) is None:
+					debug.show('Loan: wrong movie_id')
+					return False
+			elif key == 'person_id' and value:
+				if GriffithSQL.Person.get_by(person_id=value) is None:
+					debug.show('Loan: wrong movie_id')
+					return False
+			self[key] = value
+		def _validate(self):
+			if self.movie_id is None:
+				debug.show('Loan: movie_id is not set')
+				return False
+			if self.person_id is None:
+				debug.show('Loan: person_id is not set')
+				return False
+			if self.movie is None:
+				self.movie = GriffithSQL.Movie.get_by(movie_id=self.movie_id)
+				if self.movie is None:
+					debug.show('Loan: wrong movie_id')
+					return False
+			if self.person is None:
+				self.person = GriffithSQL.Person.get_by(person_id=self.person_id)
+				if self.person is None:
+					debug.show('Loan: wrong person_id')
+					return False
+			if self.collection_id>0 and self.collection is None:
+				self.collection = GriffithSQL.Collection.get_by(collection_id=self.collection_id)
+				if self.collection is None:
+					debug.show("Loan: wrong collection_id")
+					return False
+			if self.volume_id>0 and self.volume is None:
+				self.volume = GriffithSQL.Volume.get_by(volume_id=self.volume_id)
+				if self.volume is None:
+					debug.show("Loan: wrong volume_id")
+					return False
+			return True
 		def set_loaned(self):
 			"""
 			Set loaned=True for all movies in volume/collection and for movie itself
 			Set loan's date to today's date
 			"""
-			if self.movie == None:
-				debug.show("Loan: wrong movie_id. Aborting")
+			if not self._validate():
 				return False
-			if self.person == None:
-				debug.show("Loan: wrong person_id. Aborting")
-				return False
-			if self.collection_id>0 and self.collection==None:
-				debug.show("Loan: wrong collection_id. Aborting")
-				return False
-			if self.volume_id>0 and self.volume==None:
-				debug.show("Loan: wrong volume_id. Aborting")
-				return False
-			if self.collection!=None:
+
+			if self.collection is not None:
 				self.movie.mapper.mapped_table.update(self.movie.c.collection_id==self.collection_id).execute(loaned=True)
 				self.collection.loaned = True
 				self.collection.update()
-			if self.volume!=None:
+			if self.volume is not None:
 				self.movie.mapper.mapped_table.update(self.movie.c.volume_id==self.volume_id).execute(loaned=True)
 				self.volume.loaned = True
 				self.volume.update()
+			if self.movie is None:
+				self.movie = Movie.get_by(movie_id=self.movie_id)
 			self.movie.loaned = True
 			self.movie.update()
-			if self.date==None:
+			if self.date is None:
 				self.date = func.current_date()	# update loan date
-			self.return_date = None
+			self.return_date is None
 			self.save_or_update()
 			self.mapper.get_session().flush()
 			self.refresh()
@@ -151,29 +182,18 @@ class GriffithSQL:
 			Set loaned=False for all movies in volume/collection and for movie itself.
 			Set return_date to today's date
 			"""
-			if self.movie == None:
-				debug.show("Loan: wrong movie_id. Aborting")
-				return False
-			if self.person == None:
-				debug.show("Loan: wrong person_id. Aborting")
-				return False
-			if self.collection_id>0 and self.collection==None:
-				debug.show("Loan: wrong collection_id. Aborting")
-				return False
-			if self.volume_id>0 and self.volume==None:
-				debug.show("Loan: wrong volume_id. Aborting")
-				return False
-			if self.collection!=None:
+			self._validate()
+			if self.collection is not None:
 				self.movie.mapper.mapped_table.update(self.movie.c.collection_id==self.collection_id).execute(loaned=False)
 				self.collection.loaned = False
 				self.collection.update()
-			if self.volume_id!=None:
+			if self.volume_id is not None:
 				self.movie.mapper.mapped_table.update(self.movie.c.volume_id==self.volume_id).execute(loaned=False)
 				self.volume.loaned = False
 				self.volume.update()
 			self.movie.loaned = False
 			self.movie.update()
-			if self.return_date==None:
+			if self.return_date is None:
 				self.return_date = func.current_date()
 			self.save_or_update()
 			self.mapper.get_session().flush()
@@ -196,18 +216,11 @@ class GriffithSQL:
 			else:
 				return self.c.has_key(key)
 		def remove_from_db(self):
-			if int(self.loaned)==1:
+			if self.loaned == True:
 				debug.show("You can't remove loaned movie!")
 				return False
-			# TODO: remove this (see 'cascade="all, delete-orphan"')
-			#for i in self.tags:
-			#	i.delete()
-			#for i in self.languages:
-			#	i.delete()
-			#for i in self.loans:
-			#	i.delete()
 			self.delete()
-			self.mapper.get_session().flush()
+			self.flush()
 			return True#}}}
 
 	def __init__(self, config, gdebug, griffith_dir):	#{{{
@@ -459,6 +472,7 @@ class GriffithSQL:
 				movie.tags.append(self.Tag(tag_id=tag))
 		movie.save_or_update()
 		movie.flush()
+		movie.refresh() # load default data as well
 	
 	def update_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
 		movie_id = t_movies['movie_id']
