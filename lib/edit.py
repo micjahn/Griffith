@@ -51,14 +51,14 @@ def change_poster(self):
 			update.update_image(self, os.path.splitext(file_to_copy)[0], number)
 			update_tree_thumbnail(self, '%s/posters/t_%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
 		except:
-			gutils.error(self, _("Image not valid."), self.main_window)
+			gutils.error(self, _("Image not valid."), self.widgets['window'])
 
 def delete_poster(self):
 	movie = self.db.Movie.get_by(movie_id=self.e_movie_id.get_text())
 	if not movie:
 		self.debug.show("Can't delete unknown movie's poster!")
 		return False
-	response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.main_window)
+	response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.widgets['window'])
 	if response==-8:
 		image_path = self.locations['images'] + "/default.png"
 		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
@@ -71,8 +71,8 @@ def delete_poster(self):
 		movie.flush()
 		self.update_statusbar(_("Image has been updated"))
 
-		self.delete_poster.set_sensitive(False)
-		self.t_delete_poster.set_sensitive(False)
+		self.widgets['add']['delete_poster'].set_sensitive(False)
+		self.widgets['menu']['delete_poster'].set_sensitive(False)
 		self.e_picture_button.set_sensitive(False)
 		if old_image:
 			delete.delete_poster(self, old_image)
@@ -80,7 +80,7 @@ def delete_poster(self):
 		pass
 
 def update_tree_thumbnail(self, t_image_path):
-	treeselection = self.main_treeview.get_selection()
+	treeselection = self.widgets['treeview'].get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
 	self.Image.set_from_file(t_image_path)
 	pixbuf = self.Image.get_pixbuf()
@@ -89,7 +89,7 @@ def update_tree_thumbnail(self, t_image_path):
 
 def change_rating_from_slider(self):
 	rating = int(self.rating_slider.get_value())
-	self.image_rating.show()
+	self.widgets['movie']['image_rating'].show()
 	try:
 		rimage = int(str(self.config.get('rating_image')))
 	except:
@@ -100,7 +100,7 @@ def change_rating_from_slider(self):
 		prefix = "meter"
 
 	rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, rating)
-	handler = self.image_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
+	handler = self.widgets['movie']['image_rating'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
 	gutils.garbage(handler)
 
 def fetch_bigger_poster(self):
@@ -111,7 +111,7 @@ def fetch_bigger_poster(self):
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 
 	try:
-		result = amazon.searchByKeyword(self.e_original_title.get_text(), \
+		result = amazon.searchByKeyword(self.widgets['movie']['o_title'].get_text(), \
 						type="lite", product_line="dvd")
 		self.debug.show("Posters found on amazon: %s posters" % len(result))
 	except:
@@ -126,7 +126,7 @@ def fetch_bigger_poster(self):
 		return
 
 	for f in range(len(result)):
-		if self.e_original_title.get_text() == result[f].ProductName:
+		if self.widgets['movie']['o_title'].get_text() == result[f].ProductName:
 			get_poster(self, f, result, current_poster)
 			return
 
@@ -152,7 +152,7 @@ def get_poster_select(self, mself, result, current_poster):
 
 def get_poster(self, f, result, current_poster):
 	if f == None:
-		treeselection = self.results_treeview.get_selection()
+		treeselection = self.widgets['results']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		f = int(tmp_model.get_value(tmp_iter, 0))
 		self.w_results.hide()
@@ -161,8 +161,8 @@ def get_poster(self, f, result, current_poster):
 		dir=os.path.join(self.griffith_dir, "posters"))
 	file_to_copy += ".jpg"
 	try:
-		progress = movie.Progress(self.main_window,_("Fetching poster"),_("Wait a moment"))
-		retriever = movie.Retriever(result[f].ImageUrlLarge, self.main_window, progress, file_to_copy)
+		progress = movie.Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
+		retriever = movie.Retriever(result[f].ImageUrlLarge, self.widgets['window'], progress, file_to_copy)
 		retriever.start()
 		while retriever.isAlive():
 			progress.pulse()
@@ -194,7 +194,7 @@ def get_poster(self, f, result, current_poster):
 		self.poster_window.move(0,0)
 		response = gutils.question(self, \
 				_("Do you want to use this poster instead?"), \
-				1, self.main_window)
+				1, self.widgets['window'])
 		if response == -8:
 			self.debug.show("Using new fetched poster, updating and removing old one from disk.")
 			update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
@@ -204,8 +204,8 @@ def get_poster(self, f, result, current_poster):
 				os.path.basename(file_to_copy)))
 			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(self.griffith_dir, "posters/m_%s"%os.path.basename(file_to_copy))))
 			delete.delete_poster(self, current_poster)
-			self.delete_poster.set_sensitive(True)
-			self.t_delete_poster.set_sensitive(True)
+			self.widgets['add']['delete_poster'].set_sensitive(True)
+			self.widgets['menu']['delete_poster'].set_sensitive(True)
 
 		else:
 			self.debug.show("Reverting to previous poster and deleting new one from disk.")

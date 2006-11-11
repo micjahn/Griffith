@@ -70,17 +70,17 @@ def show_preferences(self):
 
 	# pdf font
 	if self.config.get('font'):
-		self.p_font.set_filename(self.config.get('font'))
+		self.widgets['preferences']['font'].set_filename(self.config.get('font'))
 
 	# defaults (for static data only)
 	if self.config.get('condition'):
-		self.p_condition.set_active(int(self.config.get('condition')))
+		self.widgets['preferences']['condition'].set_active(int(self.config.get('condition')))
 	if self.config.get('region'):
-		self.p_region.set_active(int(self.config.get('region')))
+		self.widgets['preferences']['region'].set_active(int(self.config.get('region')))
 	if self.config.get('layers'):
-		self.p_layers.set_active(int(self.config.get('layers')))
+		self.widgets['preferences']['layers'].set_active(int(self.config.get('layers')))
 	if self.config.get('color'):
-		self.p_color.set_active(int(self.config.get('color')))
+		self.widgets['preferences']['color'].set_active(int(self.config.get('color')))
 
 	# search for:
 	self.p_s_classification.set_active(bool(self.config.get('s_classification')))
@@ -109,7 +109,7 @@ def show_preferences(self):
 		plugin_module = os.path.basename(p).replace('.py','')
 		plugin_name = plugin_module.replace('PluginMovie','')
 		if self.config.get('default_movie_plugin') == plugin_name:
-			self.default_plugin.set_active(mcounter)
+			self.widgets['preferences']['default_plugin'].set_active(mcounter)
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
 
@@ -177,8 +177,8 @@ def save_preferences(self):
 		self.config['view_director'] = 'False'
 
 	# pdf font
-	if self.p_font.get_filename():
-		self.config['font'] = self.p_font.get_filename()
+	if self.widgets['preferences']['font'].get_filename():
+		self.config['font'] = self.widgets['preferences']['font'].get_filename()
 
 	# spellchecker
 	if self.spellchecker.get_active():
@@ -198,12 +198,12 @@ def save_preferences(self):
 	self.config['rating_image'] = str(self.rating_image.get_active())
 
 	#defaults
-	self.config['media'] = self.media_ids[self.p_media.get_active()]
-	self.config['vcodec'] = self.vcodecs_ids[self.p_vcodec.get_active()]
-	self.config['condition'] = str(self.p_condition.get_active())
-	self.config['region'] = str(self.p_region.get_active())
-	self.config['layers'] = str(self.p_layers.get_active())
-	self.config['color'] = str(self.p_color.get_active())
+	self.config['media'] = self.media_ids[self.widgets['preferences']['media'].get_active()]
+	self.config['vcodec'] = self.vcodecs_ids[self.widgets['preferences']['vcodec'].get_active()]
+	self.config['condition'] = str(self.widgets['preferences']['condition'].get_active())
+	self.config['region'] = str(self.widgets['preferences']['region'].get_active())
+	self.config['layers'] = str(self.widgets['preferences']['layers'].get_active())
+	self.config['color'] = str(self.widgets['preferences']['color'].get_active())
 
 	# email reminder
 	if self.mail_use_auth.get_active():
@@ -217,9 +217,9 @@ def save_preferences(self):
 	self.config['mail_email'] = self.mail_email.get_text()
 
 	# default movie plugin
-	if self.default_plugin.get_active():
+	if self.widgets['preferences']['default_plugin'].get_active():
 		self.config['default_movie_plugin'] = \
-			gutils.on_combo_box_entry_changed(self.default_plugin)
+			gutils.on_combo_box_entry_changed(self.widgets['preferences']['default_plugin'])
 	# search for:
 	self.config['s_classification'] = self.p_s_classification.get_active()
 	self.config['s_country'] = self.p_s_country.get_active()
@@ -243,10 +243,10 @@ def save_preferences(self):
 	for p in self.plugins:
 		plugin_module = os.path.basename(p).replace('.py','')
 		plugin_name = plugin_module.replace('PluginMovie','')
-		if gutils.on_combo_box_entry_changed(self.default_plugin) == plugin_name:
+		if gutils.on_combo_box_entry_changed(self.widgets['preferences']['default_plugin']) == plugin_name:
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
-	self.am_source.set_active(self.d_plugin)
+	self.widgets['add']['source'].set_active(self.d_plugin)
 
 	if self.windows:
 		save_reader = ''
@@ -291,12 +291,12 @@ def save_preferences(self):
 	old['db_name']   = self.config['db_name']
 	old['db_user']   = self.config['db_user']
 	old['db_passwd'] = self.config['db_passwd']
-	self.config['db_host']   = self.p_db_host.get_text()
-	self.config['db_port']   = int(self.p_db_port.get_value())
-	self.config['db_name']   = self.p_db_name.get_text()
-	self.config['db_user']   = self.p_db_user.get_text()
-	self.config['db_passwd'] = self.p_db_passwd.get_text()
-	db_type = int(self.p_db_type.get_active())
+	self.config['db_host']   = self.widgets['preferences']['db_host'].get_text()
+	self.config['db_port']   = int(self.widgets['preferences']['db_port'].get_value())
+	self.config['db_name']   = self.widgets['preferences']['db_name'].get_text()
+	self.config['db_user']   = self.widgets['preferences']['db_user'].get_text()
+	self.config['db_passwd'] = self.widgets['preferences']['db_passwd'].get_text()
+	db_type = int(self.widgets['preferences']['db_type'].get_active())
 	if db_type == 1:
 		self.config['db_type'] = 'postgres'
 	elif db_type == 2:

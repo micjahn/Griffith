@@ -58,7 +58,7 @@ def add_person_db(self):
 
 def edit_person(self):
 	try:
-		treeselection = self.p_treeview.get_selection()
+		treeselection = self.widgets['preferences']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		name = tmp_model.get_value(tmp_iter,0)
 	except:
@@ -95,7 +95,7 @@ def delete_person(self):
 	has_history = False
 	has_history_msg = ''
 	try:
-		treeselection = self.p_treeview.get_selection()
+		treeselection = self.widgets['preferences']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		person = tmp_model.get_value(tmp_iter,0)
 	except:
@@ -105,17 +105,17 @@ def delete_person(self):
 		return False
 	data = self.db.Loan.select_by(person_id=person.person_id, return_date=None)
 	if len(data)>0:
-		gutils.info(self, _("This person has loaned films from you. Return them first."), self.main_window)
+		gutils.info(self, _("This person has loaned films from you. Return them first."), self.widgets['window'])
 		return False
 	data = self.db.Loan.select_by(person_id=person.person_id)
 	if len(data)>0:
 		has_history = True
 		has_history_msg = _("This person has data in the loan history. This data will be erased if you continue.")
 	response = gutils.question(self,_("%s\nAre you sure you want to delete this person?" % has_history_msg), \
-		1, self.main_window)
+		1, self.widgets['window'])
 
 	if response == -8:
-		treeselection = self.p_treeview.get_selection()
+		treeselection = self.widgets['preferences']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		if person.remove_from_db():
 			self.p_treemodel.remove(tmp_iter)

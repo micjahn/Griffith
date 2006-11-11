@@ -30,116 +30,252 @@ import shutil
 import quick_filter
 import tempfile
 
+def clear(self):
+	"""clears all fields in dialog"""
+	set_details(self, {})
+
 def add_movie(self):
 	quick_filter.clear_filter(self)
 	next_number = gutils.find_next_available(self)
-	initialize_add_dialog(self)
-	self.am_number.set_value(int(next_number))
-	self.add_movie_window.show()
-	self.active_plugin = ""
+	clear(self)
+	self.widgets['add']['number'].set_value(int(next_number))
+	self.widgets['add']['window'].show()
+	self.active_plugin = ''
 
-def initialize_add_dialog(self):
-	"""clears all fields in dialog"""
-	self.am_original_title.set_text("")
-	self.am_title.set_text("")
-	self.am_year.set_text("")
-	self.am_runtime.set_text("")
-	self.am_country.set_text("")
-	self.am_studio.set_text("")
-	self.am_site.set_text("")
-	self.am_director.set_text("")
-	self.am_imdb.set_text("")
-	self.am_trailer.set_text("")
-	self.am_title.set_text("")
-	self.am_picture.set_from_file("")
-	self.am_picture_name.set_text("")
-	with_buffer = self.am_with.get_buffer()
-	with_buffer.set_text("")
-	obs_buffer = self.am_obs.get_buffer()
-	obs_buffer.set_text("")
-	self.am_genre.set_text("")
-	self.am_discs.set_text("1")
-	# define defaults
-	self.rating_slider_add.set_value(0)
-	self.am_seen.set_active(False)
-	if self.config.has_key('media'):
-		pos = gutils.findKey(self.config["media"], self.media_ids)
-		if pos != None:
-			self.am_media.set_active(int(pos))
-	if self.config.has_key("vcodec"):
-		pos = gutils.findKey(self.config["vcodec"], self.vcodecs_ids)
-		if pos != None:
-			self.am_vcodec.set_active(int(pos))
-	if self.config.has_key('color'):
-		self.am_color.set_active(int(self.config.get('color')))
-	if self.config.has_key('layers'):
-		self.am_layers.set_active(int(self.config.get('layers')))
-	if self.config.has_key('region'):
-		self.am_region.set_active(int(self.config.get('region')))
-	if self.config.has_key('condition'):
-		self.am_condition.set_active(int(self.config.get('condition')))
-	self.am_volume_combo.set_active(0)
-	self.am_collection_combo.set_active(0)
-	plot_buffer = self.am_plot.get_buffer()
-	plot_buffer.set_text("")
-	self.am_original_title.grab_focus()
-	# ensure we are at the first page of the notebook
-	self.nb_add.set_current_page(0)
-	self.am_source.set_active(self.d_plugin)
-	image = os.path.join(self.locations['images'], "default.png")
+def set_details(self, item=None):
+	if item is None:
+		item = {}
+	if item.has_key('movie_id') and item['movie_id']:
+		self._movie_id = item['movie_id']
+	else:
+		self._movie_id = None
+	w = self.widgets['add']
 
-	handler = self.Image.set_from_file(image)
-	handler = self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
-	self.am_original_title.grab_focus()
+	cast_buffer = w['cast'].get_buffer()
+	notes_buffer = w['notes'].get_buffer()
+	plot_buffer = w['plot'].get_buffer()
+
+	if item.has_key('o_title') and item['o_title']:
+		w['o_title'].set_text(item['o_title'])
+	else:
+		w['o_title'].set_text('')
+	if item.has_key('title') and item['title']:
+		w['title'].set_text(item['title'])
+	else:
+		w['title'].set_text('')
+	if item.has_key('number') and item['number']:
+		w['number'].set_value(int(item['number']))
+	else:
+		w['number'].set_value(int(gutils.find_next_available(self)))
+	if item.has_key('title') and item['title']:
+		w['title'].set_text(item['title'])
+	if item.has_key('year') and item['year']:
+		w['year'].set_value(int(item['year']))
+	else:
+		w['year'].set_value(0)
+	if item.has_key('runtime') and item['runtime']:
+		w['runtime'].set_value(int(item['runtime']))
+	else:
+		w['runtime'].set_value(0)
+	if item.has_key('country') and item['country']:
+		w['country'].set_text(item['country'])
+	else:
+		w['country'].set_text('')
+	if item.has_key('classification') and item['classification']:
+		w['classification'].set_text(item['classification'])
+	else:
+		w['classification'].set_text('')
+	if item.has_key('studio') and item['studio']:
+		w['studio'].set_text(item['studio'])
+	else:
+		w['studio'].set_text('')
+	if item.has_key('o_site') and item['o_site']:
+		w['o_site'].set_text(item['o_site'])
+	else:
+		w['o_site'].set_text('')
+	if item.has_key('director') and item['director']:
+		w['director'].set_text(item['director'])
+	else:
+		w['director'].set_text('')
+	if item.has_key('site') and item['site']:
+		w['site'].set_text(item['site'])
+	else:
+		w['site'].set_text('')
+	if item.has_key('trailer') and item['trailer']:
+		w['trailer'].set_text(item['trailer'])
+	else:
+		w['trailer'].set_text('')
+	if item.has_key('title') and item['title']:
+		w['title'].set_text(item['title'])
+	else:
+		w['title'].set_text('')
+	if item.has_key('picture') and item['picture']:
+		w['picture'].set_from_file(item['picture'])
+	else:
+		w['picture'].set_from_file('')
+	if item.has_key('picture_name') and item['picture_name']:
+		w['picture_name'].set_text(item['picture_name'])
+	else:
+		w['picture_name'].set_text('')
+	if item.has_key('genre') and item['genre']:
+		w['genre'].set_text(item['genre'])
+	else:
+		w['genre'].set_text('')
+	if item.has_key('color') and item['color']:
+		w['color'].set_active(int(item['color']))
+	elif self.config.has_key('color'):
+		w['color'].set_active(int(self.config.get('color')))
+	else:
+		w['color'].set_active(3)
+	if item.has_key('layers') and item['layers']:
+		w['layers'].set_active(int(item['layers']))
+	elif self.config.has_key('layers'):
+		w['layers'].set_active(int(self.config.get('layers')))
+	else:
+		w['layers'].set_active(4)
+	if item.has_key('region') and item['region']:
+		w['region'].set_active(int(item['region']))
+	elif self.config.has_key('region'):
+		w['region'].set_active(int(self.config.get('region')))
+	else:
+		w['region'].set_active(9)
+	if item.has_key('cond') and item['cond']:
+		w['condition'].set_active(int(item['cond']))
+	elif self.config.has_key('condition'):
+		w['condition'].set_active(int(self.config.get('condition')))
+	else:
+		w['condition'].set_active(5)
+	if item.has_key('media_num') and item['media_num']:
+		w['discs'].set_value(int(item['media_num']))
+	else:
+		w['discs'].set_value(1)
+	if item.has_key('rating') and item['rating']:
+		w['rating_slider'].set_value(item['rating'])
+	else:
+		w['rating_slider'].set_value(0)
+	if item.has_key('seen') and item['seen'] is True:
+		w['seen'].set_active(True)
+	else:
+		w['seen'].set_active(False)
+	if item.has_key('cast') and item['cast']:
+		cast_buffer.set_text(item['cast'])
+	else:
+		cast_buffer.set_text('')
+	if item.has_key('notes') and item['notes']:
+		notes_buffer.set_text(item['notes'])
+	else:
+		notes_buffer.set_text('')
+	if item.has_key('plot') and item['plot']:
+		plot_buffer.set_text(item['plot'])
+	else:
+		plot_buffer.set_text('')
+	pos = 0
+	if item.has_key('medium_id') and item['medium_id']:
+		pos = gutils.findKey(item['medium_id'], self.media_ids)
+	elif self.config.has_key('media'):
+		pos = gutils.findKey(self.config['media'], self.media_ids)
+	if pos is not None:
+		w['media'].set_active(int(pos))
+	else:
+		w['media'].set_active(0)
+	pos = 0
+	if item.has_key('vcodec_id') and item['vcodec_id']:
+		pos = gutils.findKey(item['vcodec_id'], self.vcodecs_ids)
+	elif self.config.has_key('vcodec'):
+		pos = gutils.findKey(self.config['vcodec'], self.vcodecs_ids)
+	if pos is not None:
+		w['vcodec'].set_active(int(pos))
+	else:
+		w['vcodec'].set_active(0)
+	pos = 0
+	if item.has_key('volume_id') and item['volume_id']:
+		pos = gutils.findKey(item['volume_id'], self.volume_combo_ids)
+	if pos is not None:
+		w['volume'].set_active(int(pos))
+	else:
+		w['volume'].set_active(0)
+	pos = 0
+	if item.has_key('collection_id') and item['collection_id']:
+		pos = gutils.findKey(item['collection_id'], self.collection_combo_ids)
+	if pos is not None:
+		w['collection'].set_active(int(pos))
+	else:
+		w['volume'].set_active(0)
+	# tags
+	for tag in self.am_tags:
+		self.am_tags[tag].set_active(False)
+	if item.has_key('tags'):
+		for tag in item['tags']:
+			i = gutils.findKey(tag.tag_id, self.tags_ids)
+			self.am_tags[i].set_active(True)
+	# languages
+	w['lang_treeview'].get_model().clear()
+	if item.has_key('languages') and len(item['languages'])>0:
+		for i in item['languages']:
+			self.create_language_row(i)
+	# poster
+	if item.has_key('image') and item['image']:
+		image_path = os.path.join(self.locations['images'], item['image']+'.jpg')
+	else:
+		image_path = os.path.join(self.locations['images'], 'default.png')
+	if not os.path.isfile(image_path):
+		image_path = os.path.join(self.locations['images'], 'default.png')
+	handler = w['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
+	w['picture'].set_from_pixbuf(handler)
+	gutils.garbage(handler)
+	
+	w['notebook'].set_current_page(0)
+	w['source'].set_active(self.d_plugin)
+	w['o_title'].grab_focus()
 	from widgets import connect_add_signals
 	connect_add_signals(self)
 
 def add_movie_db(self, close):
-	if  len(self.am_original_title.get_text()) or len(self.am_title.get_text()):
-		plot_buffer = self.am_plot.get_buffer()
-		with_buffer = self.am_with.get_buffer()
-		obs_buffer = self.am_obs.get_buffer()
-		number = self.am_number.get_text()
-		(filepath, filename) = os.path.split(self.am_picture_name.get_text())
+	if  len(self.widgets['add']['o_title'].get_text()) or len(self.widgets['add']['title'].get_text()):
+		plot_buffer = self.widgets['add']['plot'].get_buffer()
+		cast_buffer = self.widgets['add']['cast'].get_buffer()
+		notes_buffer = self.widgets['add']['notes'].get_buffer()
+		number = self.widgets['add']['number'].get_text()
+		(filepath, filename) = os.path.split(self.widgets['add']['picture_name'].get_text())
 		t_movies = {
-			'cast'           : gutils.gescape(with_buffer.get_text(with_buffer.get_start_iter(), with_buffer.get_end_iter())),
+			'cast'           : gutils.gescape(cast_buffer.get_text(cast_buffer.get_start_iter(), cast_buffer.get_end_iter())),
 			'classification' : gutils.gescape(self.am_classification.get_text()),
-			'color'          : self.am_color.get_active(),
-			'cond'           : self.am_condition.get_active(),
-			'country'        : gutils.gescape(self.am_country.get_text()),
-			'director'       : gutils.gescape(self.am_director.get_text()),
-			'genre'          : gutils.gescape(self.am_genre.get_text()),
+			'color'          : self.widgets['add']['color'].get_active(),
+			'cond'           : self.widgets['add']['condition'].get_active(),
+			'country'        : gutils.gescape(self.widgets['add']['country'].get_text()),
+			'director'       : gutils.gescape(self.widgets['add']['director'].get_text()),
+			'genre'          : gutils.gescape(self.widgets['add']['genre'].get_text()),
 			'image'          : filename,
-			'layers'         : self.am_layers.get_active(),
+			'layers'         : self.widgets['add']['layers'].get_active(),
 			'loaned'         : False,
-			'media_num'      : self.am_discs.get_text(),
-			'notes'          : gutils.gescape(obs_buffer.get_text(obs_buffer.get_start_iter(), obs_buffer.get_end_iter())),
+			'media_num'      : self.widgets['add']['discs'].get_text(),
+			'notes'          : gutils.gescape(notes_buffer.get_text(notes_buffer.get_start_iter(), notes_buffer.get_end_iter())),
 			'number'         : number,
-			'o_site'         : self.am_site.get_text(),
-			'o_title'        : gutils.gescape(self.am_original_title.get_text()),
+			'o_site'         : self.widgets['add']['o_site'].get_text(),
+			'o_title'        : gutils.gescape(self.widgets['add']['o_title'].get_text()),
 			'plot'           : gutils.gescape(plot_buffer.get_text(plot_buffer.get_start_iter(), plot_buffer.get_end_iter())),
-			'rating'         : self.rating_slider_add.get_value(),
-			'region'         : self.am_region.get_active(),
-			'runtime'        : self.am_runtime.get_text(),
-			'site'           : self.am_imdb.get_text(),
-			'studio'         : gutils.gescape(self.am_studio.get_text()),
-			'title'          : gutils.gescape(self.am_title.get_text()),
-			'trailer'        : self.am_trailer.get_text(),
-			'year'           : self.am_year.get_text()
+			'rating'         : self.widgets['add']['rating_slider'].get_value(),
+			'region'         : self.widgets['add']['region'].get_active(),
+			'runtime'        : self.widgets['add']['runtime'].get_text(),
+			'site'           : self.widgets['add']['site'].get_text(),
+			'studio'         : gutils.gescape(self.widgets['add']['studio'].get_text()),
+			'title'          : gutils.gescape(self.widgets['add']['title'].get_text()),
+			'trailer'        : self.widgets['add']['trailer'].get_text(),
+			'year'           : self.widgets['add']['year'].get_text()
 		}
-		vol_id = self.am_volume_combo.get_active()
+		vol_id = self.widgets['add']['volume'].get_active()
 		if vol_id>0:
 			t_movies['volume_id'] = self.volume_combo_ids[vol_id]
-		col_id = self.am_collection_combo.get_active()
+		col_id = self.widgets['add']['collection'].get_active()
 		if col_id>0:
 			t_movies['collection_id'] = self.collection_combo_ids[col_id]
-		medium_id = self.am_media.get_active()
+		medium_id = self.widgets['add']['media'].get_active()
 		if medium_id>0:
 			t_movies['medium_id'] = self.media_ids[medium_id]
-		vcodec_id = self.am_vcodec.get_active()
+		vcodec_id = self.widgets['add']['vcodec'].get_active()
 		if vcodec_id>0:
 			t_movies['vcodec_id'] = self.vcodecs_ids[vcodec_id]
-		seen = int(self.am_seen.get_active())
+		seen = int(self.widgets['add']['seen'].get_active())
 		if seen == 1:
 			t_movies['seen'] = True
 		else:
@@ -164,19 +300,19 @@ def add_movie_db(self, close):
 		else:
 			temp_dir = "/tmp/"
 
-		pic = string.replace(self.am_picture_name.get_text()+".jpg",temp_dir,"")
+		pic = string.replace(self.widgets['add']['picture_name'].get_text()+".jpg",temp_dir,'')
 
-		if len(self.am_picture_name.get_text()):
+		if len(self.widgets['add']['picture_name'].get_text()):
 			if os.path.isfile(os.path.join(temp_dir, pic)):
 				shutil.move(os.path.join(temp_dir, pic), tmp_dest)
 
-		if int(self.am_number.get_text()) >= 2:
-			insert_after = self.treemodel.get_iter(int(self.am_number.get_text())-2)
+		if int(self.widgets['add']['number'].get_text()) >= 2:
+			insert_after = self.treemodel.get_iter(int(self.widgets['add']['number'].get_text())-2)
 		else:
 			insert_after = None
 		myiter = self.treemodel.insert_after(None, insert_after)
 
-		if len(self.am_picture_name.get_text()):
+		if len(self.widgets['add']['picture_name'].get_text()):
 			image_path = os.path.join(tmp_dest, pic)
 			#lets make the thumbnail and medium image from poster for future use
 			gutils.make_thumbnail(self, image_path)
@@ -185,42 +321,42 @@ def add_movie_db(self, close):
 			image_path = os.path.join(self.locations['images'], "default.png")
 		handler = self.Image.set_from_file(image_path)
 		pixbuf = self.Image.get_pixbuf()
-		self.treemodel.set_value(myiter, 0, '%004d' % int(self.am_number.get_text()))
+		self.treemodel.set_value(myiter, 0, '%004d' % int(self.widgets['add']['number'].get_text()))
 		self.treemodel.set_value(myiter, 1, pixbuf.scale_simple(30,40,3))
-		self.treemodel.set_value(myiter, 2, str(self.am_original_title.get_text()))
-		self.treemodel.set_value(myiter, 3, str(self.am_title.get_text()))
-		self.treemodel.set_value(myiter, 4, str(self.am_director.get_text()))
+		self.treemodel.set_value(myiter, 2, str(self.widgets['add']['o_title'].get_text()))
+		self.treemodel.set_value(myiter, 3, str(self.widgets['add']['title'].get_text()))
+		self.treemodel.set_value(myiter, 4, str(self.widgets['add']['director'].get_text()))
 		#update statusbar
 		self.total += 1
 		self.total_filter = self.total
 		self.count_statusbar()
 		#select new entry from main treelist
-		treeselection = self.main_treeview.get_selection()
+		treeselection = self.widgets['treeview'].get_selection()
 		treeselection.select_iter(myiter)
-		self.main_treeview.set_cursor(int(self.am_number.get_text())-1)
+		self.widgets['treeview'].set_cursor(int(self.widgets['add']['number'].get_text())-1)
 		self.treeview_clicked()
 		next_number=gutils.find_next_available(self)
-		initialize_add_dialog(self)
-		self.am_number.set_text(str(next_number))
+		clear(self)
+		self.widgets['add']['number'].set_text(str(next_number))
 
 		if close:
-			self.hide_add_movie()
+			self.hide_add_window()
 	else:
 		gutils.error(self.w_results, _("You should fill the original title\nor the movie title."))
 
 def change_rating_from_slider(self):
-	rating = int(self.rating_slider_add.get_value())
-	self.image_add_rating.show()
+	rating = int(self.widgets['add']['rating_slider'].get_value())
+	self.widgets['add']['image_rating'].show()
 	try:
 		rimage = int(str(self.config.get('rating_image')))
 	except:
 		rimage = 0
 	if rimage:
-		prefix = ""
+		prefix = ''
 	else:
 		prefix = "meter"
 	rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, rating)
-	handler = self.image_add_rating.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
+	handler = self.widgets['add']['image_rating'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
 
 def populate_with_results(self):
 	m_id = None
@@ -229,7 +365,7 @@ def populate_with_results(self):
 		m_id = self.founded_results_id
 	else:
 		self.founded_results_id = 0
-		treeselection = self.results_treeview.get_selection()
+		treeselection = self.widgets['results']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		m_id = tmp_model.get_value(tmp_iter, 0)
 	self.hide_results()
@@ -242,65 +378,65 @@ def populate_with_results(self):
 	plugin_name = 'PluginMovie' + self.active_plugin
 	plugin = __import__(plugin_name)
 	self.movie = plugin.Plugin(m_id)
-	self.movie.open_page(self.add_movie_window)
+	self.movie.open_page(self.widgets['add']['window'])
 	self.movie.parse_movie(self.config)
 	if self.config.get('s_o_title'):
-		self.am_original_title.set_text(gutils.convert_entities(self.movie.original_title))
+		self.widgets['add']['o_title'].set_text(gutils.convert_entities(self.movie.original_title))
 	if self.config.get('s_title'):
-		self.am_title.set_text(gutils.convert_entities(self.movie.title))
+		self.widgets['add']['title'].set_text(gutils.convert_entities(self.movie.title))
 	if self.config.get('s_director'):
-		self.am_director.set_text(gutils.convert_entities(self.movie.director))
+		self.widgets['add']['director'].set_text(gutils.convert_entities(self.movie.director))
 	if self.config.get('s_plot'):
-		plot_buffer = self.am_plot.get_buffer()
+		plot_buffer = self.widgets['add']['plot'].get_buffer()
 		plot_buffer.set_text(gutils.convert_entities(self.movie.plot))
 	if self.config.get('s_with'):
-		with_buffer = self.am_with.get_buffer()
-		with_buffer.set_text(gutils.convert_entities(self.movie.with))
+		cast_buffer = self.widgets['add']['cast'].get_buffer()
+		cast_buffer.set_text(gutils.convert_entities(self.movie.with))
 	if self.config.get('s_country'):
-		self.am_country.set_text(gutils.convert_entities(self.movie.country))
+		self.widgets['add']['country'].set_text(gutils.convert_entities(self.movie.country))
 	if self.config.get('s_genre'):
-		self.am_genre.set_text(gutils.convert_entities(self.movie.genre))
+		self.widgets['add']['genre'].set_text(gutils.convert_entities(self.movie.genre))
 	if self.config.get('s_classification'):
 		self.am_classification.set_text(gutils.convert_entities(self.movie.classification))
 	if self.config.get('s_studio'):
-		self.am_studio.set_text(gutils.convert_entities(self.movie.studio))
+		self.widgets['add']['studio'].set_text(gutils.convert_entities(self.movie.studio))
 	if self.config.get('s_o_site'):
-		self.am_site.set_text(gutils.remove_accents(self.movie.site))
+		self.widgets['add']['o_site'].set_text(gutils.remove_accents(self.movie.site))
 	if self.config.get('s_site'):
-		self.am_imdb.set_text(gutils.remove_accents(self.movie.imdb))
+		self.widgets['add']['site'].set_text(gutils.remove_accents(self.movie.imdb))
 	if self.config.get('s_trailer'):
-		self.am_trailer.set_text(gutils.remove_accents(self.movie.trailer))
+		self.widgets['add']['trailer'].set_text(gutils.remove_accents(self.movie.trailer))
 	if self.config.get('s_year'):
-		self.am_year.set_text(self.movie.year)
+		self.widgets['add']['year'].set_text(self.movie.year)
 	if self.config.get('s_notes'):
-		notes_buffer = self.am_obs.get_buffer()
+		notes_buffer = self.widgets['add']['notes'].get_buffer()
 		notes_buffer.set_text(gutils.convert_entities(self.movie.notes))
 	if self.config.get('s_runtime'):
-		self.am_runtime.set_text(self.movie.running_time)
+		self.widgets['add']['runtime'].set_text(self.movie.running_time)
 	if self.config.get('s_rating') and self.movie.rating:
-		self.rating_slider_add.set_value(float(self.movie.rating))
+		self.widgets['add']['rating_slider'].set_value(float(self.movie.rating))
 	# poster
 	if self.windows:
 		temp_dir = "C:\\windows\\temp\\"
 	else:
 		temp_dir = "/tmp/"
 	if self.config.get('s_image'):
-		if self.movie.picture != "":
+		if self.movie.picture != '':
 			image = os.path.join(temp_dir, self.movie.picture)
 			try:
 				handler = self.Image.set_from_file(image)
 				pixbuf = self.Image.get_pixbuf()
-				self.am_picture.set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
-				self.am_picture_name.set_text(string.replace(self.movie.picture, ".jpg",""))
+				self.widgets['add']['picture'].set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
+				self.widgets['add']['picture_name'].set_text(string.replace(self.movie.picture, ".jpg",''))
 			except:
 				image = os.path.join(self.locations['images'], "default.png")
 				handler = self.Image.set_from_file(image)
-				self.am_picture.set_from_pixbuf(self.Image.get_pixbuf())
+				self.widgets['add']['picture'].set_from_pixbuf(self.Image.get_pixbuf())
 		else:
 			image = os.path.join(self.locations['images'], "default.png")
 			handler = self.Image.set_from_file(image)
 			Pixbuf = self.Image.get_pixbuf()
-			self.am_picture.set_from_pixbuf(Pixbuf)
+			self.widgets['add']['picture'].set_from_pixbuf(Pixbuf)
 
 def show_websearch_results(self):
 	total = self.founded_results_id = 0
@@ -320,35 +456,35 @@ def show_websearch_results(self):
 				self.treemodel_results.set_value(myiter, 0, str(row))
 				self.treemodel_results.set_value(myiter, 1, title)
 			key +=1
-		self.results_treeview.show()
+		self.widgets['results']['treeview'].show()
 	elif total==1:
-		self.results_treeview.set_cursor(total-1)
+		self.widgets['results']['treeview'].set_cursor(total-1)
 		for row in self.search_movie.ids:
 			if ( str(row) != '' ):
 				self.founded_results_id = str(row)
 				populate_with_results(self)
 	else:
-		gutils.error(self.w_results, _("No results"), self.add_movie_window)
+		gutils.error(self.w_results, _("No results"), self.widgets['add']['window'])
 
 def get_from_web(self):
 	"""search the movie in web using the active plugin"""
-	if len(self.am_original_title.get_text()) \
-		or len(self.am_title.get_text()):
-		option = gutils.on_combo_box_entry_changed_name(self.am_source)
+	if len(self.widgets['add']['o_title'].get_text()) \
+		or len(self.widgets['add']['title'].get_text()):
+		option = gutils.on_combo_box_entry_changed_name(self.widgets['add']['source'])
 		self.active_plugin = option
 		plugin_name = 'PluginMovie%s' % option
 		plugin = __import__(plugin_name)
 		self.search_movie = plugin.SearchPlugin()
-		if len(self.am_original_title.get_text()):
+		if len(self.widgets['add']['o_title'].get_text()):
 			self.search_movie.url = self.search_movie.original_url_search
 			self.search_movie.title = \
-				gutils.remove_accents(self.am_original_title.get_text(), 'utf-8')
-		elif len(self.am_title.get_text()) \
-			and not len(self.am_original_title.get_text()):
+				gutils.remove_accents(self.widgets['add']['o_title'].get_text(), 'utf-8')
+		elif len(self.widgets['add']['title'].get_text()) \
+			and not len(self.widgets['add']['o_title'].get_text()):
 			self.search_movie.url = self.search_movie.translated_url_search
 			self.search_movie.title = \
-				gutils.remove_accents(self.am_title.get_text(), 'utf-8')
-		self.search_movie.search(self.add_movie_window)
+				gutils.remove_accents(self.widgets['add']['title'].get_text(), 'utf-8')
+		self.search_movie.search(self.widgets['add']['window'])
 		self.search_movie.get_searches()
 		self.show_search_results(self.search_movie)
 	else:
@@ -356,11 +492,11 @@ def get_from_web(self):
 			_("You should fill the original title\nor the movie title."))
 
 def source_changed(self):
-	option = gutils.on_combo_box_entry_changed_name(self.am_source)
+	option = gutils.on_combo_box_entry_changed_name(self.widgets['add']['source'])
 	self.active_plugin = option
 	plugin_name = 'PluginMovie' + option
 	plugin = __import__(plugin_name)
-	self.am_plugin_desc.set_text(plugin.plugin_name+"\n" \
+	self.widgets['add']['plugin_desc'].set_text(plugin.plugin_name+"\n" \
 		+plugin.plugin_description+"\n"+_("Url: ") \
 		+plugin.plugin_url+"\n"+_("Language: ")+plugin.plugin_language)
 	image = os.path.join(self.locations['images'], plugin_name + ".png")
@@ -369,12 +505,12 @@ def source_changed(self):
 		handler = self.am_plugin_image.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
 
 def clone_movie(self):
-	treeselection = self.main_treeview.get_selection()
+	treeselection = self.widgets['treeview'].get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
 	number = tmp_model.get_value(tmp_iter, 0)
 	movie = self.db.Movie.get_by(number=number)
 
-	if movie == None:
+	if movie is None:
 		return false
 
 	next_number = gutils.find_next_available(self)
@@ -424,7 +560,7 @@ def clone_movie(self):
 	# WARNING: loan problems (don't copy volume/collection data until resolved)
 
 	tmp_dest = os.path.join(self.griffith_dir, "posters")
-	if movie.image != None:
+	if movie.image is not None:
 		image_path = os.path.join(tmp_dest, str(movie.image)+".jpg")
 		clone_path = os.path.join(tmp_dest, new_image+".jpg")
 		# clone image
@@ -442,6 +578,6 @@ def clone_movie(self):
 	self.total_filter = self.total
 	self.count_statusbar()
 	self.populate_treeview(self.db.Movie.select())
-	self.main_treeview.set_cursor(next_number-1)
+	self.widgets['treeview'].set_cursor(next_number-1)
 	self.treeview_clicked()
 

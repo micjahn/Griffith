@@ -38,7 +38,7 @@ def backup(self):
 		if os.path.isfile(filename[0]):
 			response = gutils.question(self, \
 				_("File exists. Do you want to overwrite it?"), \
-				1, self.main_window)
+				1, self.widgets['window'])
 			if response == -8:
 				overwrite = True
 			else:
@@ -48,7 +48,7 @@ def backup(self):
 			try:
 				mzip = zipfile.ZipFile(filename[0], 'w')
 			except:
-				gutils.error(self, _("Error creating backup"), self.main_window)
+				gutils.error(self, _("Error creating backup"), self.widgets['window'])
 				return False
 			mzip.write(os.path.join(self.griffith_dir,'griffith.conf'))
 			if self.db.engine.name == "sqlite":
@@ -89,7 +89,7 @@ def backup(self):
 						except:
 							self.debug.show("Can't compress %s" % filename)
 			mzip.close()
-			gutils.info(self, _("Backup has been created"), self.main_window)
+			gutils.info(self, _("Backup has been created"), self.widgets['window'])
 
 def restore(self):
 	"""restores a griffith compressed backup"""
@@ -101,7 +101,7 @@ def restore(self):
 		try:
 			zip = zipfile.ZipFile(filename[0], 'r')
 		except:
-			gutils.error(self, _("Can't read backup file"), self.main_window)
+			gutils.error(self, _("Can't read backup file"), self.widgets['window'])
 			return False
 		mypath = os.path.join(self.griffith_dir,'posters')
 		for each in zip.namelist():
@@ -140,7 +140,7 @@ def restore(self):
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()
-		gutils.info(self, _("Backup restored"), self.main_window)
+		gutils.info(self, _("Backup restored"), self.widgets['window'])
 
 def merge(self):
 	"""
@@ -165,7 +165,7 @@ def merge(self):
 			try:
 				zip = zipfile.ZipFile(filename, 'r')
 			except:
-				gutils.error(self, _("Can't read backup file"), self.main_window)
+				gutils.error(self, _("Can't read backup file"), self.widgets['window'])
 				return False
 			for each in zip.namelist():
 				file_to_restore = os.path.split(each)
@@ -232,5 +232,5 @@ def merge(self):
 		self.select_last_row(self.total)
 		self.treeview_clicked()
 		self.count_statusbar()
-		gutils.info(self, _("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.main_window)
+		gutils.info(self, _("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
 

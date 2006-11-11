@@ -54,29 +54,29 @@ def update(self):
 	plot_buffer = self.e_plot.get_buffer()
 	with_buffer = self.e_with.get_buffer()
 	obs_buffer = self.e_obs.get_buffer()
-	if self.e_original_title.get_text() != '':
+	if self.widgets['movie']['o_title'].get_text() != '':
 		t_movies = {
 			'cast'           : with_buffer.get_text(with_buffer.get_start_iter(),with_buffer.get_end_iter()),
-			'classification' : self.e_classification.get_text(),
+			'classification' : self.widgets['movie']['classification'].get_text(),
 			'collection_id'  : new_collection_id,
-			'color'          : self.e_color.get_active(),
-			'cond'           : self.e_condition.get_active(),
-			'country'        : self.e_country.get_text(),
-			'director'       : self.e_director.get_text(),
-			'genre'          : self.e_genre.get_text(),
-			'site'           : self.e_imdb.get_text(),
-			'layers'         : self.e_layers.get_active(),
+			'color'          : self.widgets['movie']['color'].get_active(),
+			'cond'           : self.widgets['movie']['color'].get_active(),
+			'country'        : self.widgets['movie']['country'].get_text(),
+			'director'       : self.widgets['movie']['director'].get_text(),
+			'genre'          : self.widgets['movie']['genre'].get_text(),
+			'site'           : self.widgets['movie']['site'].get_text(),
+			'layers'         : self.widgets['movie']['layers'].get_active(),
 			'number'         : number,
-			'media_num'      : self.e_discs.get_text(),
+			'media_num'      : self.widgets['movie']['discs'].get_text(),
 			'notes'          : obs_buffer.get_text(obs_buffer.get_start_iter(),obs_buffer.get_end_iter()),
-			'o_title'        : self.e_original_title.get_text(),
+			'o_title'        : self.widgets['movie']['o_title'].get_text(),
 			'plot'           : plot_buffer.get_text(plot_buffer.get_start_iter(),plot_buffer.get_end_iter()),
 			'rating'         : self.rating_slider.get_value(),
 			'region'         : self.e_region.get_active(),
 			'runtime'        : self.e_runtime.get_text(),
-			'o_site'         : self.e_site.get_text(),
+			'o_site'         : self.widgets['movie']['o_site'].get_text(),
 			'studio'         : self.e_studio.get_text(),
-			'title'          : self.e_title.get_text(),
+			'title'          : self.widgets['movie']['title'].get_text(),
 			'trailer'        : self.e_trailer.get_text(),
 			'volume_id'      : new_volume_id,
 			'year'           : self.e_year.get_text(),
@@ -120,13 +120,12 @@ def update(self):
 		if self.db.update_movie(t_movies, t_languages, t_tags):
 			self.update_statusbar(_("Movie information has been updated"))
 			# update main treelist
-			treeselection = self.main_treeview.get_selection()
+			treeselection = self.widgets['treeview'].get_selection()
 			(tmp_model, tmp_iter) = treeselection.get_selected()
 			tmp_model.set_value(tmp_iter,0,'%004d' % int(number))
-			tmp_model.set_value(tmp_iter,2,self.e_original_title.get_text())
-			tmp_model.set_value(tmp_iter,3,self.e_title.get_text())
-			tmp_model.set_value(tmp_iter,4,self.e_director.get_text())
-			tmp_model.set_value(tmp_iter,4,self.e_director.get_text())
+			tmp_model.set_value(tmp_iter,2,self.widgets['movie']['o_title'].get_text())
+			tmp_model.set_value(tmp_iter,3,self.widgets['movie']['title'].get_text())
+			tmp_model.set_value(tmp_iter,4,self.widgets['movie']['director'].get_text())
 			# update volume/collection combo
 			self.e_volume_combo.set_active(int(new_volume_id))
 			self.e_collection_combo.set_active(int(new_collection_id))

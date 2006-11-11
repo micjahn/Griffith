@@ -115,10 +115,10 @@ class GriffithSQL:
 		def __setitem__(self, key, value):
 			if key == 'movie_id' and value:
 				if GriffithSQL.Movie.get_by(movie_id=value) is None:
-					raise Exception('Loan: wrong movie_id')
+					raise Exception('wrong movie_id')
 			elif key == 'person_id' and value:
 				if GriffithSQL.Person.get_by(person_id=value) is None:
-					raise Exception('Loan: wrong movie_id')
+					raise Exception('wrong movie_id')
 			self[key] = value
 		def _validate(self):
 			if self.movie_id is None:

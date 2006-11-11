@@ -25,9 +25,9 @@ import gutils
 
 def change_filter(self):
 	x = 0
-	self.all_movies.set_active(2)
-	col_id = self.collection_combo_ids[self.f_col.get_active()]
-	text = gutils.gescape(self.e_filter.get_text())
+	self.widgets['menu']['all_movies'].set_active(2)
+	col_id = self.collection_combo_ids[self.widgets['filter']['column'].get_active()]
+	text = gutils.gescape(self.widgets['filter']['text'].get_text())
 	if(len(text)==0):
 		if col_id != 0:
 			movies = self.db.Movie.select(self.db.Movie.c.collection_id==col_id)
@@ -36,7 +36,7 @@ def change_filter(self):
 	else:
 		from sqlalchemy import select
 		movies = select(self.db.Movie.c, order_by=[self.db.Movie.c.number])
-		criteria = self.sort_criteria[self.filter_criteria.get_active()]
+		criteria = self.sort_criteria[self.widgets['filter']['criteria'].get_active()]
 		if {'year':None, 'runtime':None, 'media_num':None, 'rating':None}.has_key(criteria):
 			movies.append_whereclause(self.db.Movie.c[criteria]==text)
 		else:
@@ -49,7 +49,7 @@ def change_filter(self):
 	self.go_last()
 
 def clear_filter(self):
-	self.e_filter.set_text("")
-	self.filter_criteria.set_active(0)
+	self.widgets['filter']['text'].set_text("")
+	self.widgets['filter']['criteria'].set_active(0)
 	self.total_filter = self.total
 	self.go_last()

@@ -37,7 +37,7 @@ def loan_movie(self):
 		self.loan_to.set_active(0)
 		self.w_loan_to.show()
 	else:
-		gutils.info(self, _("No person is defined yet."), self.main_window)
+		gutils.info(self, _("No person is defined yet."), self.widgets['window'])
 
 def cancel_loan(self):
 	self.w_loan_to.hide()
@@ -64,7 +64,7 @@ def commit_loan(self):
 	# ask if user wants to loan whole collection
 	loan_whole_collection = False
 	if movie.collection_id>0:
-		response = gutils.question(self, msg=_("Do you want to loan whole collection?"), parent=self.main_window)
+		response = gutils.question(self, msg=_("Do you want to loan whole collection?"), parent=self.widgets['window'])
 		if response == gtk.RESPONSE_YES:
 			loan_whole_collection = True
 		elif response == gtk.RESPONSE_CANCEL:

@@ -27,267 +27,267 @@ import gtk
 import sys
 
 def define_widgets(self, gladefile):
-	self.e_movie_id = gladefile.get_widget('m_movie_id')
-	#widgets
-	self.main_window = gladefile.get_widget('main_window')
-	self.toolbar     = gladefile.get_widget('toolbar1')
-	# add movie window
-	self.add_movie_window  = gladefile.get_widget('add_movie')
-	self.am_original_title = gladefile.get_widget('am_original_title')
-	self.am_title          = gladefile.get_widget('am_title')
-	self.am_number         = gladefile.get_widget('am_number')
-	self.am_director       = gladefile.get_widget('am_director')
-	self.am_plot           = gladefile.get_widget('am_plot')
-	self.am_picture        = gladefile.get_widget('am_image')
-	self.am_picture_name   = gladefile.get_widget('am_hide_image_name')
-	self.am_year           = gladefile.get_widget('am_year')
-	self.am_runtime        = gladefile.get_widget('am_runtime')
-	self.am_with           = gladefile.get_widget('am_with')
-	self.am_country        = gladefile.get_widget('am_country')
-	self.am_genre          = gladefile.get_widget('am_genre')
-	self.am_media          = gladefile.get_widget('am_media')
-	self.am_vcodec         = gladefile.get_widget('am_vcodec')
-	self.am_classification = gladefile.get_widget('am_classification')
-	self.am_studio         = gladefile.get_widget('am_studio')
-	self.am_site           = gladefile.get_widget('am_site')
-	self.am_imdb           = gladefile.get_widget('am_imdb')
-	self.am_trailer        = gladefile.get_widget('am_trailer')
-	self.am_discs          = gladefile.get_widget('am_discs')
-	self.am_source         = gladefile.get_widget('am_source')
-	self.am_obs            = gladefile.get_widget('am_obs')
-	self.am_plugin_desc    = gladefile.get_widget('am_plugin_desc')
-	self.am_plugin_image   = gladefile.get_widget('am_plugin_image')
-	# main treeview
-	self.main_treeview  = gladefile.get_widget('main_treeview')
-	self.confirm_delete = gladefile.get_widget('confirm_delete')
-	# main notebook
-	self.cast           = gladefile.get_widget('m_cast')
-	self.classification = gladefile.get_widget('m_classification')
-	self.collection     = gladefile.get_widget('m_collection')
-	self.color          = gladefile.get_widget('m_color')
-	self.condition      = gladefile.get_widget('m_condition')
-	self.country        = gladefile.get_widget('m_country')
-	self.director       = gladefile.get_widget('m_director')
-	self.genre          = gladefile.get_widget('m_genre')
-	self.imdb           = gladefile.get_widget('m_imdb')
-	self.layers         = gladefile.get_widget('m_layers')
-	self.medium         = gladefile.get_widget('m_medium')
-	self.notes          = gladefile.get_widget('m_notes')
-	self.number         = gladefile.get_widget('m_number')
-	self.o_title        = gladefile.get_widget('m_o_title')
-	self.picture        = gladefile.get_widget('m_picture_image')
-	self.picture_button = gladefile.get_widget('m_picture')
-	self.plot           = gladefile.get_widget('m_plot')
-	self.region         = gladefile.get_widget('m_region')
-	self.runtime        = gladefile.get_widget('m_runtime')
-	self.loan_info      = gladefile.get_widget('loan_information')
-	self.site           = gladefile.get_widget('m_site')
-	self.studio         = gladefile.get_widget('m_studio')
-	self.title          = gladefile.get_widget('m_title')
-	self.trailer        = gladefile.get_widget('m_trailer')
-	self.vcodec         = gladefile.get_widget('m_vcodec')
-	self.volume         = gladefile.get_widget('m_volume')
-	self.year           = gladefile.get_widget('m_year')
-	self.seen_icon      = gladefile.get_widget('m_seen_icon')
-	self.loaned_icon    = gladefile.get_widget('m_loaned_icon')
-	self.tags           = gladefile.get_widget('m_tags')
-	self.show_volume_button     = gladefile.get_widget('m_show_volume_button')
-	self.show_collection_button = gladefile.get_widget('m_show_collection_button')
-
-	# volumes/collections tab
-	self.am_volume_combo                = gladefile.get_widget('am_volume_combo')
-	self.am_collection_combo            = gladefile.get_widget('am_collection_combo')
-	# get from web
-	self.b_get_from_web = gladefile.get_widget('get_from_web')
-	self.c_web_source   = gladefile.get_widget('combo_source')
-	self.progressbar    = gladefile.get_widget('w_progress')
-	# results
-	self.w_results        = gladefile.get_widget('results')
-	self.results_treeview = gladefile.get_widget('results_treeview')
-	#REMOVE:self.update_button    = gladefile.get_widget('update_button')
-	# statusbar
-	self.statusbar = gladefile.get_widget('statusbar')
-	# preferences
-	self.w_preferences = gladefile.get_widget('w_preferences')
-	self.epdf_reader   = gladefile.get_widget('pdf_reader_entry')
-	self.p_db_type     = gladefile.get_widget('p_db_type')
-	self.p_db_host     = gladefile.get_widget('p_db_host')
-	self.p_db_port     = gladefile.get_widget('p_db_port')
-	self.p_db_name     = gladefile.get_widget('p_db_name')
-	self.p_db_user     = gladefile.get_widget('p_db_user')
-	self.p_db_passwd   = gladefile.get_widget('p_db_passwd')
-	self.p_db_details  = gladefile.get_widget('p_db_details')
-	self.p_s_classification = gladefile.get_widget('p_s_classification')
-	self.p_s_country   = gladefile.get_widget('p_s_country')
-	self.p_s_director  = gladefile.get_widget('p_s_director')
-	self.p_s_genre     = gladefile.get_widget('p_s_genre')
-	self.p_s_image     = gladefile.get_widget('p_s_image')
-	self.p_s_notes     = gladefile.get_widget('p_s_notes')
-	self.p_s_o_site    = gladefile.get_widget('p_s_o_site')
-	self.p_s_o_title   = gladefile.get_widget('p_s_o_title')
-	self.p_s_plot      = gladefile.get_widget('p_s_plot')
-	self.p_s_rating    = gladefile.get_widget('p_s_rating')
-	self.p_s_runtime   = gladefile.get_widget('p_s_runtime')
-	self.p_s_site      = gladefile.get_widget('p_s_site')
-	self.p_s_studio    = gladefile.get_widget('p_s_studio')
-	self.p_s_title     = gladefile.get_widget('p_s_title')
-	self.p_s_trailer   = gladefile.get_widget('p_s_trailer')
-	self.p_s_with      = gladefile.get_widget('p_s_with')
-	self.p_s_year      = gladefile.get_widget('p_s_year')
-	# cover print
-	self.w_print_cover_simple              = gladefile.get_widget('w_print_cover_simple')
-	self.w_print_cover_image               = gladefile.get_widget('w_print_cover_image')
-	self.cover_simple_size                 = gladefile.get_widget('cover_simple_size')
-	self.cover_simple_include_movie_number = gladefile.get_widget('cover_simple_include_movie_number')
-	self.cover_image_size                  = gladefile.get_widget('cover_image_size')
-	self.cover_image_number                = gladefile.get_widget('cover_image_number')
-	self.cover_simple_include_poster       = gladefile.get_widget('cover_simple_include_poster')
-	#people
-	self.w_people   = gladefile.get_widget('w_people')
-	self.ap_name    = gladefile.get_widget('ap_name')
-	self.ap_email   = gladefile.get_widget('ap_email')
-	self.ap_phone   = gladefile.get_widget('ap_phone')
-	self.ep_name    = gladefile.get_widget('ep_name')
-	self.ep_email   = gladefile.get_widget('ep_email')
-	self.ep_phone   = gladefile.get_widget('ep_phone')
-	self.ep_id      = gladefile.get_widget('ep_id')
-	self.p_treeview = gladefile.get_widget('p_treeview')
-	#filter
-	self.e_filter        = gladefile.get_widget('filter_txt')
-	self.filter_criteria = gladefile.get_widget('filter_criteria')
-	self.w_add_person    = gladefile.get_widget('w_add_person')
-	self.w_edit_person   = gladefile.get_widget('w_edit_person')
-	#loan
-	self.w_loan_to     = gladefile.get_widget('w_loan_to')
-	self.return_button = gladefile.get_widget('return_button')
-	self.loan_button   = gladefile.get_widget('loan_button')
-	self.loan_to       = gladefile.get_widget('loan_to')
-	self.list_loaned   = gladefile.get_widget('list_loaned_movies')
-	#prefs
-	self.view_image    = gladefile.get_widget('view_image')
-	self.view_otitle   = gladefile.get_widget('view_otitle')
-	self.view_title    = gladefile.get_widget('view_title')
-	self.view_director = gladefile.get_widget('view_director')
-	self.p_media       = gladefile.get_widget('p_media')
-	self.p_vcodec       = gladefile.get_widget('p_vcodec')
-	self.p_color       = gladefile.get_widget('p_color')
-	self.p_condition   = gladefile.get_widget('p_condition')
-	self.p_region      = gladefile.get_widget('p_region')
-	self.p_layers      = gladefile.get_widget('p_layers')
-	self.p_font        = gladefile.get_widget('p_font')
+	get = lambda x: gladefile.get_widget(x)
+	self.widgets = {}
+	
+	self.widgets['window'] = get('main_window')
+	self.widgets['window'].connect('key_press_event', self.on_key_press_event)
+	self.widgets['treeview'] = get('main_treeview')
+	self.widgets['treeview'].connect('button_press_event', self.on_maintree_button_press_event)
+	self.widgets['statusbar'] = get('statusbar')
+	self.widgets['progressbar']    = get('w_progress')	# get from web
 	#buttons
-	self.go_o_site_button   = gladefile.get_widget('go_o_site')
-	self.go_site_button     = gladefile.get_widget('go_site')
-	self.go_trailer_button  = gladefile.get_widget('go_trailer')
-	self.new_db      = gladefile.get_widget('new_bt')
-	#notebooks
-	self.nb_add = gladefile.get_widget('notebook_add')
-	#ratings
-	self.image_rating      = gladefile.get_widget('image_rating')
-	self.image_add_rating  = gladefile.get_widget('image_add_rating')
-	self.menu_toolbar      = gladefile.get_widget('menu_toolbar')
-	self.export_menu       = gladefile.get_widget('export_menu')
+	self.widgets['new_db']      = get('new_bt')
+	self.widgets['toolbar'] = get('toolbar1')
+	
 
-	self.rating_slider_add = gladefile.get_widget('rating_scale_add')
+	self.widgets['movie'] = {#{{{
+		'cast':			get('m_cast'),
+		'classification':	get('m_classification'),
+		'collection':		get('m_collection'),
+		'color':		get('m_color'),
+		'condition':		get('m_condition'),
+		'country':		get('m_country'),
+		'director':		get('m_director'),
+		'genre':		get('m_genre'),
+		'imdb':			get('m_imdb'),
+		'layers':		get('m_layers'),
+		'loan_info':		get('loan_information'),
+		'loaned_icon':		get('m_loaned_icon'),
+		'medium':		get('m_medium'),
+		'notes':		get('m_notes'),
+		'number':		get('m_number'),
+		'o_title':		get('m_o_title'),
+		'picture':		get('m_picture_image'),
+		'picture_button':	get('m_picture'),
+		'plot':			get('m_plot'),
+		'region':		get('m_region'),
+		'runtime':		get('m_runtime'),
+		'seen_icon':		get('m_seen_icon'),
+		'site':			get('m_site'),
+		'studio':		get('m_studio'),
+		'tags':			get('m_tags'),
+		'title':		get('m_title'),
+		'trailer':		get('m_trailer'),
+		'vcodec':		get('m_vcodec'),
+		'volume':		get('m_volume'),
+		'year':			get('m_year'),
+		'audio_vbox':		get('m_audio_vbox'),
+		'subtitle_vbox':	get('m_subtitle_vbox'),
+		'show_collection_button':get('m_show_collection_button'),
+		'show_volume_button':	get('m_show_volume_button'),
+		'go_o_site_button':	get('go_o_site'),
+		'go_site_button':	get('go_site'),
+		'go_trailer_button':	get('go_trailer'),
+		'return_button':	get('return_button'),
+		'loan_button':		get('loan_button'),
+		'loan_history':		get('loan_history'),
+		'loan_to':		get('loan_to'),
+		'email_reminder_button':get('b_email_reminder'),
+		'image_rating':		get('m_image_rating'),
+	}
+	#}}}
 
-	#tech data
-	self.am_condition = gladefile.get_widget('am_condition')
-	self.am_color     = gladefile.get_widget('am_color')
-	self.am_region    = gladefile.get_widget('am_region')
-	self.am_layers    = gladefile.get_widget('am_layers')
+	self.widgets['add'] = {#{{{
+		'window':	get('add_movie'),
+		'notebook':	get('notebook_add'),
+		'classification':get('am_classification'),
+		'collection':	get('am_collection_combo'),
+		'color':	get('am_color'),
+		'condition':	get('am_condition'),
+		'country':	get('am_country'),
+		'director':	get('am_director'),
+		'discs':	get('am_discs'),
+		'genre':	get('am_genre'),
+		'site':		get('am_imdb'),
+		'layers':	get('am_layers'),
+		'media':	get('am_media'),
+		'medium_vbox':	get('am_medium_vbox'),
+		'number':	get('am_number'),
+		'notes':	get('am_obs'),
+		'o_title':	get('am_original_title'),
+		'picture':	get('am_image'),
+		'picture_name':	get('am_hide_image_name'),
+		'plot':		get('am_plot'),
+		'plugin_desc':	get('am_plugin_desc'),
+		'plugin_image':	get('am_plugin_image'),
+		'region':	get('am_region'),
+		'runtime':	get('am_runtime'),
+		'seen':		get('am_seen'),
+		'o_site':	get('am_site'),
+		'source':	get('am_source'),
+		'studio':	get('am_studio'),
+		'tag_vbox':	get('am_tag_vbox'),
+		'title':	get('am_title'),
+		'trailer':	get('am_trailer'),
+		'vcodec':	get('am_vcodec'),
+		'vcodec_vbox':	get('am_vcodec_vbox'),
+		'volume':	get('am_volume_combo'),
+		'cast':		get('am_with'),
+		'year':		get('am_year'),
+		'image_rating': get('image_add_rating'),
+		'rating_slider':get('rating_scale_add'),
+		'lang_menu':	get('lang_menu'),
+		'lang_treeview':get('lang_treeview'),
+		'b_get_from_web':get('get_from_web'),
+		'c_web_source':	get('combo_source'), # c_web_source
 
-	#spellchecker
-	self.spellchecker = gladefile.get_widget('spellchecker_pref')
-	self.spell_notes  = gladefile.get_widget('spell_notes')
-	self.spell_plot   = gladefile.get_widget('spell_plot')
-	self.spell_lang   = gladefile.get_widget('spell_lang')
+		'delete_poster': get('delete_poster'),
+	}
+	self.widgets['add']['window'].connect('delete_event', self.on_delete_event_am)
+	self.widgets['add']['lang_treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
+	#}}}
 
-	self.am_seen          = gladefile.get_widget('am_seen')
-	self.b_email_reminder = gladefile.get_widget('b_email_reminder')
-	self.loan_history     = gladefile.get_widget('loan_history')
-	self.default_plugin   = gladefile.get_widget('default_plugin')
-	self.rating_image     = gladefile.get_widget('rating_image')
-	self.mail_smtp_server = gladefile.get_widget('mail_smtp_server')
-	self.mail_use_auth    = gladefile.get_widget('mail_use_auth')
-	self.mail_username    = gladefile.get_widget('mail_username')
-	self.mail_password    = gladefile.get_widget('mail_password')
-	self.mail_email       = gladefile.get_widget('mail_email')
-	self.all_movies       = gladefile.get_widget('all_movies')
-	self.results_select   = gladefile.get_widget('results_select')
-	self.results_cancel   = gladefile.get_widget('results_cancel')
+	self.widgets['preferences'] = {#{{{
+		'window':		get('w_preferences'),
+		'treeview':		get('p_treeview'),
+		'color':		get('p_color'),
+		'condition':		get('p_condition'),
+		'db_details':		get('p_db_details'),
+		'db_host':		get('p_db_host'),
+		'db_name':		get('p_db_name'),
+		'db_passwd':		get('p_db_passwd'),
+		'db_port':		get('p_db_port'),
+		'db_type':		get('p_db_type'),
+		'db_user':		get('p_db_user'),
+		'epdf_reader':		get('pdf_reader_entry'),
+		'font':			get('p_font'),
+		'layers':		get('p_layers'),
+		'media':		get('p_media'),
+		'region':		get('p_region'),
+		's_classification':	get('p_s_classification'),
+		's_country':		get('p_s_country'),
+		's_director':		get('p_s_director'),
+		's_genre':		get('p_s_genre'),
+		's_image':		get('p_s_image'),
+		's_notes':		get('p_s_notes'),
+		's_o_site':		get('p_s_o_site'),
+		's_o_title':		get('p_s_o_title'),
+		's_plot':		get('p_s_plot'),
+		's_rating':		get('p_s_rating'),
+		's_runtime':		get('p_s_runtime'),
+		's_site':		get('p_s_site'),
+		's_studio':		get('p_s_studio'),
+		's_title':		get('p_s_title'),
+		's_trailer':		get('p_s_trailer'),
+		's_with':		get('p_s_with'),
+		's_year':		get('p_s_year'),
+		'vcodec':		get('p_vcodec'),
+		'view_image':		get('view_image'),
+		'view_otitle':		get('view_otitle'),
+		'view_title':		get('view_title'),
+		'view_director':	get('view_director'),
+		'rating_image':		get('rating_image'),
+		'spellchecker':		get('spellchecker_pref'),
+		'spell_notes':		get('spell_notes'),
+		'spell_plot':		get('spell_plot'),
+		'spell_lang':		get('spell_lang'),
+		'default_plugin':	get('default_plugin'),
+		'mail_smtp_server':	get('mail_smtp_server'),
+		'mail_use_auth':	get('mail_use_auth'),
+		'mail_username':	get('mail_username'),
+		'mail_password':	get('mail_password'),
+		'mail_email':		get('mail_email'),
+		'lang_name':		get('lang_name_combo'),
+		'tag_name':		get('tag_name_combo'),
+		'acodec_name':		get('acodec_name_combo'),
+		'achannel_name':	get('achannel_name_combo'),
+		'subformat_name':	get('subformat_name_combo'),
+		'medium_name':		get('medium_name_combo'),
+		'vcodec_name':		get('vcodec_name_combo'),
+	}
+	self.widgets['preferences']['treeview'].connect('button_press_event', self.on_p_tree_button_press_event)
+	self.widgets['preferences']['window'].connect('delete_event', self.on_delete_event_p)
+	#}}}
 
-	# poster button related
-	self.open_poster     = gladefile.get_widget('open_poster')
-	self.fetch_poster    = gladefile.get_widget('fetch_poster')
-	self.delete_poster   = gladefile.get_widget('delete_poster')
-	self.t_delete_poster = gladefile.get_widget('t_delete_poster')
+	self.widgets['results'] = {#{{{
+		'window':	get('results'),
+		'treeview':	get('results_treeview'),
+		'select':	get('results_select'),
+		'cancel':	get('results_cancel'),
+	}
+	self.widgets['results']['window'].connect('delete_event', self.on_delete_event_r)
+	#}}}
 
-	self.poster_window = gladefile.get_widget('poster_window')
-	self.big_poster    = gladefile.get_widget('big_poster')
+	self.widgets['print_cover'] = {#{{{
+		# TODO: merge these two windows
+		'window_simple':	get('w_print_cover_simple'),
+		'window_image':		get('w_print_cover_image'),
+		'cs_size':		get('cover_simple_size'),
+		'cs_include_movie_number':get('cover_simple_include_movie_number'),
+		'cs_include_poster':	get('cover_simple_include_poster'),
+		'ci_size':		get('cover_image_size'),
+		'ci_number':		get('cover_image_number'),
+	}
+	self.widgets['print_cover']['window_simple'].connect('delete_event', self.on_delete_event_pcs)
+	self.widgets['print_cover']['window_image'].connect('delete_event', self.on_delete_event_pci)
+	#}}}
+	
+	self.widgets['people'] = {#{{{
+		'window':	get('w_people'),
+		'treeview':	get('p_treeview'),
+	}
+	self.widgets['people']['window'].connect('delete_event', self.on_delete_event_wp)
+	#}}}
+	
+	self.widgets['person'] = {#{{{
+		# TODO: merge these two windows
+		'window':	get('w_add_person'),
+		'e_window':	get('w_edit_person'),
+		'name':		get('ap_name'),
+		'email':	get('ap_email'),
+		'phone':	get('ap_phone'),
+		'e_name':	get('ep_name'),
+		'e_email':	get('ep_email'),
+		'e_phone':	get('ep_phone'),
+		'e_id':		get('ep_id'),
+	}
+	self.widgets['person']['window'].connect('delete_event', self.on_delete_event_ap)
+	self.widgets['person']['e_window'].connect('delete_event', self.on_delete_event_ep)
+	#}}}
 
-	#main popup menu
-	self.popup        = gladefile.get_widget('popup')
-	self.popup_loan   = gladefile.get_widget('popup_loan')
-	self.popup_return = gladefile.get_widget('popup_return')
-	self.popup_email  = gladefile.get_widget('popup_email')
-	self.f_col        = gladefile.get_widget('f_col')
+	self.widgets['filter'] = {#{{{
+		'text':		get('filter_txt'),
+		'criteria':	get('filter_criteria'),
+		'column':	get('f_col'),
+	}#}}}
+	
+	self.widgets['menu'] = {#{{{
+		'toolbar':	get('menu_toolbar'),
+		'export':	get('export_menu'),
+		'all_movies':	get('all_movies'),
+		'delete_poster': get('t_delete_poster'),
+	}#}}}
+	
+	self.widgets['popups'] = {#{{{
+		'main':		get('popup'),
+		'loan':		get('popup_loan'),
+		'return':	get('popup_return'),
+		'email':	get('popup_email'),
+	}#}}}
+	
+	self.widgets['w_loan_to']     = get('w_loan_to')
+	self.widgets['w_loan_to'].connect('delete_event', self.on_delete_event_lt)
+
+	self.widgets['poster_window'] = get('poster_window')
+	self.widgets['poster_window'].connect('delete_event', self.on_delete_event_pw)
+	self.widgets['big_poster']    = get('big_poster')
 
 	#add some tooltips
-	self.tooltips = gtk.Tooltips()
-	self.tooltips.set_tip(self.epdf_reader, _('Define here the PDF reader you want to use within Griffith. Popular choices are xpdf, gpdf, evince or kpdf. Make sure you have this program installed and working first.'))
-	self.tooltips.set_tip(self.spell_lang, _("Here you can define the desired language to use while spell checking some fields. Use you locale setting. For example, to use european portuguese spell checking enter 'pt'"))
-	self.tooltips.set_tip(self.mail_smtp_server, _("Use this entry to define the SMTP server you want to use to send e-mails. On *nix systems, 'localhost' should work. Alternatively, you can use your Internet Service Provider's SMTP server address."))
-	self.tooltips.set_tip(self.mail_email, _("This is the from e-mail address that should be used to all outgoing e-mail. You want to include your own e-mail address here probably."))
-
-	# add handlers for windows delete events
-	self.add_movie_window.connect('delete_event', self.on_delete_event_am)
-	self.w_results.connect('delete_event', self.on_delete_event_r)
-	self.w_people.connect('delete_event', self.on_delete_event_wp)
-	self.w_add_person.connect('delete_event', self.on_delete_event_ap)
-	self.w_edit_person.connect('delete_event', self.on_delete_event_ep)
-	self.w_loan_to.connect('delete_event', self.on_delete_event_lt)
-	self.w_print_cover_simple.connect('delete_event', self.on_delete_event_pcs)
-	self.w_print_cover_image.connect('delete_event', self.on_delete_event_pci)
-	self.poster_window.connect('delete_event', self.on_delete_event_pw)
-	self.w_preferences.connect('delete_event', self.on_delete_event_p)
-
-	# languages
-	self.lang_name_combo  = gladefile.get_widget('lang_name_combo')	# preferences window
-	self.lang['menu'] = gladefile.get_widget('lang_menu')
-	self.lang['treeview'] = gladefile.get_widget('lang_treeview')
-	self.lang['treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
-	self.audio_vbox = gladefile.get_widget('m_audio_vbox')
-	self.subtitle_vbox = gladefile.get_widget('m_subtitle_vbox')
-
-	# tags
-	self.tag_name_combo = gladefile.get_widget('tag_name_combo')	# preferences window
-	self.am_tag_vbox    = gladefile.get_widget('am_tag_vbox')	# add window
-	# audio codecs
-	self.acodec_name_combo = gladefile.get_widget('acodec_name_combo')	# preferences window
-	# audio channels
-	self.achannel_name_combo = gladefile.get_widget('achannel_name_combo')	# preferences window
-	# subtitle formats
-	self.subformat_name_combo = gladefile.get_widget('subformat_name_combo')	# preferences window
-	# media
-	self.medium_name_combo = gladefile.get_widget('medium_name_combo')	# preferences window
-	self.am_medium_vbox    = gladefile.get_widget('am_medium_vbox')	# add window
-	# video codecs
-	self.vcodec_name_combo = gladefile.get_widget('vcodec_name_combo')	# preferences window
-	self.am_vcodec_vbox    = gladefile.get_widget('am_vcodec_vbox')	# add window
-
-	self.main_window.connect('key_press_event', self.on_key_press_event)
-	self.main_treeview.connect('button_press_event', self.on_maintree_button_press_event)
-	self.p_treeview.connect('button_press_event', self.on_p_tree_button_press_event)
+	self.widgets['tooltips'] = gtk.Tooltips()
+	self.widgets['tooltips'].set_tip(self.widgets['preferences']['epdf_reader'], _('Define here the PDF reader you want to use within Griffith. Popular choices are xpdf, gpdf, evince or kpdf. Make sure you have this program installed and working first.'))
+	self.widgets['tooltips'].set_tip(self.widgets['preferences']['spell_lang'], _("Here you can define the desired language to use while spell checking some fields. Use you locale setting. For example, to use european portuguese spell checking enter 'pt'"))
+	self.widgets['tooltips'].set_tip(self.widgets['preferences']['mail_smtp_server'], _("Use this entry to define the SMTP server you want to use to send e-mails. On *nix systems, 'localhost' should work. Alternatively, you can use your Internet Service Provider's SMTP server address."))
+	self.widgets['tooltips'].set_tip(self.widgets['preferences']['mail_email'], _("This is the from e-mail address that should be used to all outgoing e-mail. You want to include your own e-mail address here probably."))
 
 	# define handlers for general events
-
-	dic = {
+	gladefile.signal_autoconnect({#{{{
 		'gtk_main_quit'                         : self.destroy,
 		'on_about1_activate'                    : self.about_dialog,
 		'on_quit1_activate'                     : self.destroy,
 		'on_toolbar_quit_clicked'               : self.destroy,
 		'on_toolbar_add_clicked'                : self.add_movie,
-		'on_cancel_add_movie_clicked'           : self.hide_add_movie,
+		'on_cancel_add_movie_clicked'           : self.hide_add_window,
 		'on_add1_activate'                      : self.add_movie,
 		'on_add_movie_clicked'                  : self.add_movie_db,
 		'on_add_movie_close_clicked'            : self.add_movie_close_db,
@@ -339,6 +339,7 @@ def define_widgets(self, gladefile):
 		'on_go_forward_clicked'                 : self.go_next,
 		'on_new_bt_clicked'                     : self.new_dbb,
 		'on_new_activate'                       : self.new_dbb,
+		'on_edit_button_clicked'		: self.edit_movie,
 		# poster
 		'on_e_picture_clicked'                  : self.change_poster,
 		'on_open_poster_clicked'                : self.change_poster,
@@ -378,6 +379,8 @@ def define_widgets(self, gladefile):
 		# languages
 		'on_lang_add_clicked'			: self.on_lang_add_clicked,
 		'on_lang_remove_clicked'		: self.on_lang_remove_clicked,
+		'on_am_lang_add_clicked'		: self.on_am_lang_add_clicked,
+		'on_am_lang_remove_clicked'		: self.on_am_lang_remove_clicked,
 		'on_lang_rename_clicked'		: self.on_lang_rename_clicked,
 		'on_lang_name_combo_changed'		: self.on_lang_name_combo_changed,
 		# tags
@@ -410,65 +413,65 @@ def define_widgets(self, gladefile):
 		'on_vcodec_remove_clicked'		: self.on_vcodec_remove_clicked,
 		'on_vcodec_rename_clicked'		: self.on_vcodec_rename_clicked,
 		'on_vcodec_name_combo_changed'		: self.on_vcodec_name_combo_changed
-	}
-	gladefile.signal_autoconnect(dic)
+	})#}}}
 
-def connect_add_signals(self):
+def connect_add_signals(self):#{{{
 	try:
-		self.results_select.disconnect(self.poster_results_signal)
+		self.widgets['results']['select'].disconnect(self.poster_results_signal)
 	except:
 		pass
 
 	try:
-		self.results_treeview.disconnect(self.results_poster_double_click)
+		self.widgets['results']['treeview'].disconnect(self.results_poster_double_click)
 	except:
 		pass
 
 	try:
-		self.results_select.disconnect(self.results_signal)
+		self.widgets['results']['select'].disconnect(self.widgets['results']['signal'])
 	except:
 		pass
 
 	try:
-		self.results_treeview.disconnect(self.results_double_click)
+		self.widgets['results']['treeview'].disconnect(self.results_double_click)
 	except:
 		pass
 
 	# connect signals
-
-	self.results_signal = self.results_select.connect('clicked', \
+	self.widgets['results']['signal'] = self.widgets['results']['select'].connect('clicked', \
 			self.populate_dialog_with_results)
-	self.results_double_click = self.results_treeview.connect('button_press_event', \
-		self.on_results_button_press_event)
+	self.results_double_click = self.widgets['results']['treeview'].connect('button_press_event', \
+		self.on_results_button_press_event)#}}}
 
-def connect_poster_signals(self, event, result, current_poster):
+def connect_poster_signals(self, event, result, current_poster):#{{{
 	import edit
 
 	try:
-		self.results_select.disconnect(self.poster_results_signal)
+		self.widgets['results']['select'].disconnect(self.poster_results_signal)
 	except:
 		pass
 
 	try:
-		self.results_treeview.disconnect(self.results_poster_double_click)
+		self.widgets['results']['treeview'].disconnect(self.results_poster_double_click)
 	except:
 		pass
 
 	try:
-		self.results_select.disconnect(self.results_signal)
+		self.widgets['results']['select'].disconnect(self.widgets['results']['signal'])
 	except:
 		pass
 
 	try:
-		self.results_treeview.disconnect(self.results_double_click)
+		self.widgets['results']['treeview'].disconnect(self.results_double_click)
 	except:
 		pass
 
 	# connect signals
 
-	self.results_poster_double_click = self.results_treeview.connect('button_press_event', \
+	self.results_poster_double_click = self.widgets['results']['treeview'].connect('button_press_event', \
 		edit.get_poster_select_dc, self, result, current_poster)
 
 	self.poster_results_signal = \
-		self.results_select.connect('clicked', edit.get_poster_select, \
+		self.widgets['results']['select'].connect('clicked', edit.get_poster_select, \
 		self, result, current_poster)
+	#}}}
+# vim: fdm=marker

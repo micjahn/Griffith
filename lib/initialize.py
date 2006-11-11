@@ -153,63 +153,63 @@ def toolbar(self):
 
 def treeview(self):
 	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
-	self.main_treeview.set_model(self.treemodel)
-	self.main_treeview.set_headers_visible(True)
+	self.widgets['treeview'].set_model(self.treemodel)
+	self.widgets['treeview'].set_headers_visible(True)
 	# number column
 	renderer=gtk.CellRendererText()
 	column=gtk.TreeViewColumn(_('N.'), renderer, text=0)
 	column.set_resizable(True)
 	column.set_sort_column_id(0)
-	self.main_treeview.append_column(column)
+	self.widgets['treeview'].append_column(column)
 	# pic column
 	renderer=gtk.CellRendererPixbuf()
 	self.image_column=gtk.TreeViewColumn(_('Image'), renderer, pixbuf=1)
 	self.image_column.set_resizable(False)
-	self.main_treeview.append_column(self.image_column)
+	self.widgets['treeview'].append_column(self.image_column)
 	# original title column
 	renderer=gtk.CellRendererText()
 	self.otitle_column=gtk.TreeViewColumn(_('Original Title'), renderer, text=2)
 	self.otitle_column.set_resizable(True)
 	self.otitle_column.set_sort_column_id(2)
-	self.main_treeview.append_column(self.otitle_column)
+	self.widgets['treeview'].append_column(self.otitle_column)
 	# title column
 	renderer=gtk.CellRendererText()
 	self.title_column=gtk.TreeViewColumn(_('Title'), renderer, text=3)
 	self.title_column.set_resizable(True)
 	self.title_column.set_sort_column_id(3)
-	self.main_treeview.append_column(self.title_column)
+	self.widgets['treeview'].append_column(self.title_column)
 	# director column
 	renderer=gtk.CellRendererText()
 	self.director_column=gtk.TreeViewColumn(_('Director'), renderer, text=4)
 	self.director_column.set_sort_column_id(4)
 	self.director_column.set_resizable(True)
-	self.main_treeview.append_column(self.director_column)
+	self.widgets['treeview'].append_column(self.director_column)
 	# add data to treeview
 	self.total = int(self.db.Movie.count())
-	self.main_treeview.show()
+	self.widgets['treeview'].show()
 
 def loans_treeview(self):
-	self.loan_history.set_model(self.loans_treemodel)
-	self.loan_history.set_headers_visible(True)
+	self.widgets['movie']['loan_history'].set_model(self.loans_treemodel)
+	self.widgets['movie']['loan_history'].set_headers_visible(True)
 	# loan date
 	renderer=gtk.CellRendererText()
 	self.date_column=gtk.TreeViewColumn(_('Loan Date'), renderer, text=0)
 	self.date_column.set_resizable(True)
-	self.loan_history.append_column(self.date_column)
+	self.widgets['movie']['loan_history'].append_column(self.date_column)
 	self.date_column.set_sort_column_id(0)
 	# return date
 	renderer=gtk.CellRendererText()
 	self.return_column=gtk.TreeViewColumn(_('Return Date'), renderer, text=1)
 	self.return_column.set_resizable(True)
-	self.loan_history.append_column(self.return_column)
+	self.widgets['movie']['loan_history'].append_column(self.return_column)
 	# loan to
 	renderer=gtk.CellRendererText()
 	self.loaner_column=gtk.TreeViewColumn(_('Loaned To'), renderer, text=2)
 	self.loaner_column.set_resizable(True)
-	self.loan_history.append_column(self.loaner_column)
+	self.widgets['movie']['loan_history'].append_column(self.loaner_column)
 
 def lang_treeview(self):
-	treeview = self.lang['treeview']
+	treeview = self.widgets['add']['lang_treeview']
 	self.lang['model'] = gtk.TreeStore(str, str, str, str, str)
 	treeview.set_model(self.lang['model'])
 	treeview.set_headers_visible(True)
@@ -300,13 +300,13 @@ def movie_plugins(self):
 	for p in self.plugins:
 		plugin_module = os.path.basename(p).replace('.py','')
 		plugin_name = plugin_module.replace('PluginMovie','')
-		self.am_source.append_text(plugin_name)
-		self.default_plugin.append_text(plugin_name)
+		self.widgets['add']['source'].append_text(plugin_name)
+		self.widgets['preferences']['default_plugin'].append_text(plugin_name)
 		if self.config.get('default_movie_plugin') == plugin_name:
-			self.default_plugin.set_active(mcounter)
+			self.widgets['preferences']['default_plugin'].set_active(mcounter)
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
-	self.am_source.set_active(self.d_plugin)
+	self.widgets['add']['source'].set_active(self.d_plugin)
 
 def export_plugins(self):
 	"""
@@ -320,15 +320,15 @@ def export_plugins(self):
 		plugin_module = os.path.basename(p).replace('.py', '')
 		plugin_name = plugin_module.replace('PluginExport', '')
 		menu_items = gtk.MenuItem(plugin_name)
-		self.export_menu.append(menu_items)
+		self.widgets['menu']['export'].append(menu_items)
 		menu_items.connect('activate', self.on_export_activate, plugin_name)
 		menu_items.show()
 
 def people_treeview(self, create=True):
 	row = None
 	self.p_treemodel = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
-	self.p_treeview.set_model(self.p_treemodel)
-	self.p_treeview.set_headers_visible(True)
+	self.widgets['preferences']['treeview'].set_model(self.p_treemodel)
+	self.widgets['preferences']['treeview'].set_headers_visible(True)
 
 	if create==True:
 		# name column
@@ -336,46 +336,47 @@ def people_treeview(self, create=True):
 		column=gtk.TreeViewColumn(_('Name'), renderer, text=0)
 		column.set_resizable(True)
 		column.set_sort_column_id(0)
-		self.p_treeview.append_column(column)
+		self.widgets['preferences']['treeview'].append_column(column)
 		# email column
 		renderer=gtk.CellRendererText()
 		column=gtk.TreeViewColumn(_('E-mail'),renderer, text=1)
 		column.set_resizable(True)
 		column.set_sort_column_id(1)
-		self.p_treeview.append_column(column)
+		self.widgets['preferences']['treeview'].append_column(column)
 	# add data to treeview
 	self.p_treemodel.clear()
 	for person in self.db.Person.select(order_by='name ASC'):
 		myiter = self.p_treemodel.insert_before(None, None)
 		self.p_treemodel.set_value(myiter, 0, str(person.name))
 		self.p_treemodel.set_value(myiter, 1, str(person.email))
-	self.p_treeview.show()
+	self.widgets['preferences']['treeview'].show()
 
 def combos(self):
 	i = 0
 	for cond in self._conditions:
-		self.p_condition.insert_text(i, cond)
-		self.am_condition.insert_text(i, cond)
+		self.widgets['preferences']['condition'].insert_text(i, cond)
+		self.widgets['add']['condition'].insert_text(i, cond)
 		i += 1
 	i = 0
 	for color in self._colors:
-		self.p_color.insert_text(i, color)
-		self.am_color.insert_text(i, color)
+		self.widgets['preferences']['color'].insert_text(i, color)
+		self.widgets['add']['color'].insert_text(i, color)
 		i += 1
 	i = 0
 	for region in self._regions:
-		self.p_region.insert_text(i, region)
-		self.am_region.insert_text(i, region)
+		self.widgets['preferences']['region'].insert_text(i, region)
+		self.widgets['add']['region'].insert_text(i, region)
 		i += 1
 	i = 0
 	for layer in self._layers:
-		self.p_layers.insert_text(i, layer)
+		self.widgets['preferences']['layers'].insert_text(i, layer)
+		self.widgets['add']['layers'].insert_text(i, layer)
 		i += 1
 	i = 0
 	for criteria in self.sort_criteria:
-		self.filter_criteria.insert_text(i, self.field_names[criteria])
+		self.widgets['filter']['criteria'].insert_text(i, self.field_names[criteria])
 		i += 1
-	self.filter_criteria.set_active(0)
+	self.widgets['filter']['criteria'].set_active(0)
 
 def dictionaries(self):
 	"""initializes data filled dynamically by users"""
@@ -392,7 +393,7 @@ def dictionaries(self):
 	initialize.subformat_combos(self)
 	initialize.vcodec_combos(self)
 	initialize.media_combos(self)
-	initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+	initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
 	self.sort_criteria = (
 		'o_title', 'title', 'number', 'director',
 		'plot', 'cast', 'notes', 'year', 'runtime', 'country',
@@ -441,19 +442,19 @@ def dictionaries(self):
 
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
-	self.results_treeview.set_model(self.treemodel_results)
-	self.results_treeview.set_headers_visible(False)
+	self.widgets['results']['treeview'].set_model(self.treemodel_results)
+	self.widgets['results']['treeview'].set_headers_visible(False)
 	# column ids
 	renderer=gtk.CellRendererText()
 	self.column1=gtk.TreeViewColumn(None, renderer, text=0)
 	self.column1.set_visible(False)
-	self.results_treeview.append_column(self.column1)
+	self.widgets['results']['treeview'].append_column(self.column1)
 	# column titles
 	renderer=gtk.CellRendererText()
 	self.column2=gtk.TreeViewColumn(None, renderer, text=1)
 	self.column2.set_resizable(True)
 	self.column2.set_sort_column_id(1)
-	self.results_treeview.append_column(self.column2)
+	self.widgets['results']['treeview'].append_column(self.column2)
 
 def initialize_gtkspell(self):
 	global spell_support
@@ -484,169 +485,169 @@ def initialize_gtkspell(self):
 		self.debug.show('Spellchecker is not available')
 
 def preferences(self):
-	self.p_db_type.insert_text(0,'SQLite3 (internal)')
-	self.p_db_type.insert_text(1,'PostgreSQL')
-	self.p_db_type.insert_text(2,'MySQL')
+	self.widgets['preferences']['db_type'].insert_text(0,'SQLite3 (internal)')
+	self.widgets['preferences']['db_type'].insert_text(1,'PostgreSQL')
+	self.widgets['preferences']['db_type'].insert_text(2,'MySQL')
 	if self.config.has_key('db_host'):
-		self.p_db_host.set_text(self.config['db_host'])
+		self.widgets['preferences']['db_host'].set_text(self.config['db_host'])
 	if self.config.has_key('db_port'):
-		self.p_db_port.set_value(int(self.config['db_port']))
+		self.widgets['preferences']['db_port'].set_value(int(self.config['db_port']))
 	if self.config.has_key('db_user'):
-		self.p_db_user.set_text(self.config['db_user'])
+		self.widgets['preferences']['db_user'].set_text(self.config['db_user'])
 	if self.config.has_key('db_passwd'):
-		self.p_db_passwd.set_text(self.config['db_passwd'])
+		self.widgets['preferences']['db_passwd'].set_text(self.config['db_passwd'])
 	if self.config.has_key('db_name'):
-		self.p_db_name.set_text(self.config['db_name'])
+		self.widgets['preferences']['db_name'].set_text(self.config['db_name'])
 	if self.config.has_key('db_type') and self.config['db_type'] != 'sqlite':
-		self.p_db_details.set_sensitive(True)
+		self.widgets['preferences']['db_details'].set_sensitive(True)
 		if self.config['db_type'] == 'postgres':
-			self.p_db_type.set_active(1)
+			self.widgets['preferences']['db_type'].set_active(1)
 		elif self.config['db_type'] == 'mysql':
-			self.p_db_type.set_active(2)
+			self.widgets['preferences']['db_type'].set_active(2)
 	else:
-		self.p_db_type.set_active(0)
-		self.p_db_details.set_sensitive(False)
+		self.widgets['preferences']['db_type'].set_active(0)
+		self.widgets['preferences']['db_details'].set_sensitive(False)
 
 def fill_volumes_combo(self, prefix='e', default=0):
-	self.am_volume_combo.get_model().clear()
+	self.widgets['add']['volume'].get_model().clear()
 	for i in self.volume_combo_ids:
 		vol_id = self.volume_combo_ids[i]
 		if vol_id>0:
 			name = self.db.Volume.get_by(volume_id=vol_id).name
 		else:
 			name = ''
-		self.am_volume_combo.insert_text(int(i), str(name))
-	self.am_volume_combo.show_all()
+		self.widgets['add']['volume'].insert_text(int(i), str(name))
+	self.widgets['add']['volume'].show_all()
 	i = gutils.findKey(default, self.volume_combo_ids)
 	if i!=None:
 		if prefix == 'e':
-			self.am_volume_combo.set_active(0)
+			self.widgets['add']['volume'].set_active(0)
 		else:
-			self.am_volume_combo.set_active(int(i))
-	self.am_volume_combo.set_wrap_width(3)
+			self.widgets['add']['volume'].set_active(int(i))
+	self.widgets['add']['volume'].set_wrap_width(3)
 
 def fill_collections_combo(self, prefix='e', default=0):
-	self.am_collection_combo.get_model().clear()
-	self.f_col.get_model().clear()
+	self.widgets['add']['collection'].get_model().clear()
+	self.widgets['filter']['column'].get_model().clear()
 	for i in self.collection_combo_ids:
 		col_id = self.collection_combo_ids[i]
 		if col_id>0:
 			name = self.db.Collection.get_by(collection_id=col_id).name
 		else:
 			name = ''
-		self.am_collection_combo.insert_text(int(i), str(name))
-		self.f_col.insert_text(int(i), str(name))
-	self.am_collection_combo.show_all()
-	self.f_col.show_all()
-	self.f_col.set_active(0)
+		self.widgets['add']['collection'].insert_text(int(i), str(name))
+		self.widgets['filter']['column'].insert_text(int(i), str(name))
+	self.widgets['add']['collection'].show_all()
+	self.widgets['filter']['column'].show_all()
+	self.widgets['filter']['column'].set_active(0)
 	i = gutils.findKey(default, self.collection_combo_ids)
 	if i!=None:
 		if prefix == 'e':
-			self.am_collection_combo.set_active(0)
+			self.widgets['add']['collection'].set_active(0)
 		else:
-			self.am_collection_combo.set_active(int(i))
-	self.am_collection_combo.set_wrap_width(2)
+			self.widgets['add']['collection'].set_active(int(i))
+	self.widgets['add']['collection'].set_wrap_width(2)
 
 def fill_preferences_tags_combo(self):
-	self.tag_name_combo.get_model().clear()
+	self.widgets['preferences']['tag_name'].get_model().clear()
 	self.tags_ids = {}
 	i = 0
 	for tag in self.db.Tag.select():
 		self.tags_ids[i] = tag.tag_id
-		self.tag_name_combo.insert_text(int(i), str(tag.name))
+		self.widgets['preferences']['tag_name'].insert_text(int(i), str(tag.name))
 		i += 1
-	self.tag_name_combo.show_all()
+	self.widgets['preferences']['tag_name'].show_all()
 
 def language_combos(self):
-	self.lang_name_combo.get_model().clear()
+	self.widgets['preferences']['lang_name'].get_model().clear()
 	self.languages_ids = {}
 	self.languages_ids[0] = 0	# empty one
-	self.lang_name_combo.insert_text(0, '')
+	self.widgets['preferences']['lang_name'].insert_text(0, '')
 	i = 1
 	for lang in self.db.Lang.select():
 		self.languages_ids[i] = lang.lang_id
-		self.lang_name_combo.insert_text(int(i), str(lang.name))
+		self.widgets['preferences']['lang_name'].insert_text(int(i), str(lang.name))
 		i += 1
-	self.lang_name_combo.show_all()
+	self.widgets['preferences']['lang_name'].show_all()
 def acodec_combos(self):
-	self.acodec_name_combo.get_model().clear()
+	self.widgets['preferences']['acodec_name'].get_model().clear()
 	self.acodecs_ids = {}
 	self.acodecs_ids[0] = 0	# empty one
-	self.acodec_name_combo.insert_text(0, '')
+	self.widgets['preferences']['acodec_name'].insert_text(0, '')
 	i = 1
 	for acodec in self.db.ACodec.select():
 		self.acodecs_ids[i] = acodec.acodec_id
-		self.acodec_name_combo.insert_text(int(i), str(acodec.name))
+		self.widgets['preferences']['acodec_name'].insert_text(int(i), str(acodec.name))
 		i += 1
-	self.acodec_name_combo.show_all()
+	self.widgets['preferences']['acodec_name'].show_all()
 def achannel_combos(self):
-	self.achannel_name_combo.get_model().clear()
+	self.widgets['preferences']['achannel_name'].get_model().clear()
 	self.achannels_ids = {}
 	self.achannels_ids[0] = 0	# empty one
-	self.achannel_name_combo.insert_text(0, '')
+	self.widgets['preferences']['achannel_name'].insert_text(0, '')
 	i = 1
 	for achannel in self.db.AChannel.select():
 		self.achannels_ids[i] = achannel.achannel_id
-		self.achannel_name_combo.insert_text(int(i), str(achannel.name))
+		self.widgets['preferences']['achannel_name'].insert_text(int(i), str(achannel.name))
 		i += 1
-	self.achannel_name_combo.show_all()
+	self.widgets['preferences']['achannel_name'].show_all()
 def subformat_combos(self):
-	self.subformat_name_combo.get_model().clear()
+	self.widgets['preferences']['subformat_name'].get_model().clear()
 	self.subformats_ids = {}
 	self.subformats_ids[0] = 0	# empty one
-	self.subformat_name_combo.insert_text(0, '')
+	self.widgets['preferences']['subformat_name'].insert_text(0, '')
 	i = 1
 	for subformat in self.db.SubFormat.select():
 		self.subformats_ids[i] = subformat.subformat_id
-		self.subformat_name_combo.insert_text(int(i), str(subformat.name))
+		self.widgets['preferences']['subformat_name'].insert_text(int(i), str(subformat.name))
 		i += 1
-	self.subformat_name_combo.show_all()
+	self.widgets['preferences']['subformat_name'].show_all()
 
 def media_combos(self):
 	# clear data
-	self.medium_name_combo.get_model().clear()
-	self.p_media.get_model().clear()
-	self.am_media.get_model().clear()
+	self.widgets['preferences']['medium_name'].get_model().clear()
+	self.widgets['preferences']['media'].get_model().clear()
+	self.widgets['add']['media'].get_model().clear()
 	self.media_ids = {}
 	i = 0
 	for medium in self.db.Medium.select():
 		self.media_ids[i] = medium.medium_id
-		self.medium_name_combo.insert_text(int(i), str(medium.name))
-		self.am_media.insert_text(int(i), str(medium.name))
-		self.p_media.insert_text(int(i), str(medium.name))
+		self.widgets['preferences']['medium_name'].insert_text(int(i), str(medium.name))
+		self.widgets['add']['media'].insert_text(int(i), str(medium.name))
+		self.widgets['preferences']['media'].insert_text(int(i), str(medium.name))
 		i += 1
-	self.medium_name_combo.show_all()
-	self.am_media.show_all()
-	self.p_media.show_all()
+	self.widgets['preferences']['medium_name'].show_all()
+	self.widgets['add']['media'].show_all()
+	self.widgets['preferences']['media'].show_all()
 	if self.config.has_key('media'):
 		pos = gutils.findKey(self.config['media'], self.media_ids)
 		if pos !=None:
-			self.p_media.set_active(int(pos))
+			self.widgets['preferences']['media'].set_active(int(pos))
 		else:
-			self.p_media.set_active(0)
+			self.widgets['preferences']['media'].set_active(0)
 
 def vcodec_combos(self):
 	# clear data
-	self.vcodec_name_combo.get_model().clear()
-	self.p_vcodec.get_model().clear()
-	self.am_vcodec.get_model().clear()
+	self.widgets['preferences']['vcodec_name'].get_model().clear()
+	self.widgets['preferences']['vcodec'].get_model().clear()
+	self.widgets['add']['vcodec'].get_model().clear()
 	self.vcodecs_ids = {}
 	i = 0
 	for vcodec in self.db.VCodec.select():
 		self.vcodecs_ids[i] = vcodec.vcodec_id
-		self.vcodec_name_combo.insert_text(int(i), str(vcodec.name))
-		self.am_vcodec.insert_text(int(i), str(vcodec.name))
-		self.p_vcodec.insert_text(int(i), str(vcodec.name))
+		self.widgets['preferences']['vcodec_name'].insert_text(int(i), str(vcodec.name))
+		self.widgets['add']['vcodec'].insert_text(int(i), str(vcodec.name))
+		self.widgets['preferences']['vcodec'].insert_text(int(i), str(vcodec.name))
 		i += 1
-	self.vcodec_name_combo.show_all()
-	self.am_vcodec.show_all()
-	self.p_vcodec.show_all()
+	self.widgets['preferences']['vcodec_name'].show_all()
+	self.widgets['add']['vcodec'].show_all()
+	self.widgets['preferences']['vcodec'].show_all()
 	if self.config.has_key('vcodec'):
 		pos = gutils.findKey(int(self.config['vcodec']), self.vcodecs_ids)
 		if pos!=None:
-			self.p_vcodec.set_active(int(pos))
+			self.widgets['preferences']['vcodec'].set_active(int(pos))
 		else:
-			self.p_vcodec.set_active(0)
+			self.widgets['preferences']['vcodec'].set_active(0)
 
 def create_tag_vbox(self, widget, tab):
 	for i in widget.get_children():

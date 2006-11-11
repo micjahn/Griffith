@@ -35,16 +35,16 @@ def mailto(self, server, auth, user, password, sender, to, subject, msg):
 			session.login(user, password)
 		except:
 			gutils.info(self, _("Error sending e-mail: %s")%"login failure", \
-				self.main_window)
+				self.widgets['window'])
 			return
 	headers = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" \
 		% (sender, to, subject)
 	try:
 		smtpresult = session.sendmail(sender, to, headers+msg)
-		gutils.info(self, _("E-mail sent sucessuly"), self.main_window)
+		gutils.info(self, _("E-mail sent sucessuly"), self.widgets['window'])
 		return
 	except:
-		gutils.info(self, _("Error sending e-mail: %s")%"", self.main_window)
+		gutils.info(self, _("Error sending e-mail: %s")%"", self.widgets['window'])
 
 def send_email(self):
 	if len(self.person_email):
@@ -59,8 +59,8 @@ def send_email(self):
 			_("Movie loan reminder"), _("Hi, %s!\n\nJust to reminder you " + \
 			"that I'm really needing the following movie I have loaned you " + \
 			"recently:\n\n%s (%s)\n\nLoaned on %s") \
-			%(self.person_name, self.e_original_title.get_text(), \
-			self.e_title.get_text(), self.loan_date[:10]))
+			%(self.person_name, self.widgets['movie']['o_title'].get_text(), \
+			self.widgets['movie']['title'].get_text(), self.loan_date[:10]))
 	else:
 		gutils.info(self, _("This person has no e-mail address defined."), \
-			self.main_window)
+			self.widgets['window'])

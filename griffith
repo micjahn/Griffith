@@ -23,7 +23,7 @@ __revision__ = '$Id$'
 
 import sys, os.path
 import gtk, gtk.glade
-assert gtk.pygtk_version >= (2, 6, 0), 'pygtk should be >= 2.6.0'
+assert gtk.pygtk_version >= (2, 6, 0), 'PyGTK should be >= 2.6.0'
 import about, add, backup, config, cover, delete, edit, gconsole, gdebug
 import gemail, gutils, initialize, loan, main_treeview
 import people, preferences, quick_filter, sql, update, version, view
@@ -67,11 +67,11 @@ class Griffith:
 
 		# adding some completion fields
 		self.completion = gtk.EntryCompletion()
-		self.am_original_title.set_completion(self.completion)
+		self.widgets['add']['o_title'].set_completion(self.completion)
 		self.completion.set_model(self.treemodel)
 		self.completion.set_text_column(3)
 		self.completion_t = gtk.EntryCompletion()
-		self.am_title.set_completion(self.completion_t)
+		self.widgets['add']['title'].set_completion(self.completion_t)
 		self.completion_t.set_model(self.treemodel)
 		self.completion_t.set_text_column(4)
 
@@ -79,9 +79,9 @@ class Griffith:
 
 		# add default folders to some select widgets
 		if self.windows:
-			self.p_font.set_current_folder("c:\\windows\\fonts\\") # TODO: use env var.
+			self.widgets['preferences']['font'].set_current_folder("c:\\windows\\fonts\\") # TODO: use env var.
 		else:
-			self.p_font.set_current_folder("/usr/share/fonts/")
+			self.widgets['preferences']['font'].set_current_folder("/usr/share/fonts/")
 
 	def main(self):
 		gtk.threads_init()
@@ -111,7 +111,7 @@ class Griffith:
 
 	def on_export_activate(self, menu_iter, plugin_name):
 		export_plugin = __import__('PluginExport%s' % plugin_name)
-		export_plugin.ExportPlugin(self.db, self.locations, self.main_window, self.debug)
+		export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], self.debug)
 
 	def destroy(self, widget, data=None):
 		self.save_state()
@@ -126,13 +126,15 @@ class Griffith:
 	# add movie -----------------------------------------------------------
 
 	def clear_add_dialog(self, *args):
-		add.initialize_add_dialog(self)
+		add.clear(self)
 
-	def hide_add_movie(self, *args):
-		self.add_movie_window.hide()
+	def edit_movie(self, *args):
+		movie = self.db.Movie.get_by(movie_id=self._movie_id)
+		add.set_details(self, movie)
+		self.widgets['add']['window'].show()
 
-	def hide_add(self, *args):
-		self.add_movie_window.hide()
+	def hide_add_window(self, *args):
+		self.widgets['add']['window'].hide()
 
 	def get_from_web(self, *args):
 		add.get_from_web(self)
@@ -143,8 +145,8 @@ class Griffith:
 	def hide_results(self, *args):
 		self.treemodel_results.clear()
 		try:
-			self.results_select.disconnect(self.poster_results_signal)
-			self.results_signal = self.results_select.connect("clicked", \
+			self.widgets['results']['select'].disconnect(self.poster_results_signal)
+			self.widgets['results']['signal'] = self.widgets['results']['select'].connect("clicked", \
 				self.populate_dialog_with_results)
 		except:
 			pass
@@ -171,17 +173,17 @@ class Griffith:
 	def on_p_db_type_changed(self, widget):
 		active = widget.get_active()
 		if active == 0:
-			self.p_db_details.set_sensitive(False)
+			self.widgets['preferences']['db_details'].set_sensitive(False)
 		elif active == 1:
 			# change port number IF previous one was MySQL's one
-			if self.p_db_port.get_value() == 3306:
-				self.p_db_port.set_value(5432)
-			self.p_db_details.set_sensitive(True)
+			if self.widgets['preferences']['db_port'].get_value() == 3306:
+				self.widgets['preferences']['db_port'].set_value(5432)
+			self.widgets['preferences']['db_details'].set_sensitive(True)
 		elif active == 2:
 			# change port number IF previous one was PostgreSQL's one
-			if self.p_db_port.get_value() == 5432:
-				self.p_db_port.set_value(3306)
-			self.p_db_details.set_sensitive(True)
+			if self.widgets['preferences']['db_port'].get_value() == 5432:
+				self.widgets['preferences']['db_port'].set_value(3306)
+			self.widgets['preferences']['db_details'].set_sensitive(True)
 
 	# movie related operations --------------------------------------------
 
@@ -218,7 +220,7 @@ class Griffith:
 		edit.delete_poster(self)
 
 	def z_poster(self, *args):
-		treeselection = self.main_treeview.get_selection()
+		treeselection = self.widgets['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		number = tmp_model.get_value(tmp_iter, 0)
 		movie = self.db.Movie.get_by(number=number)
@@ -251,18 +253,18 @@ class Griffith:
 		movies = self.db.Movie.select_by(seen=False)
 		subtotal = len(movies)
 		self.clear_filter()
-		self.all_movies.set_active(1)
+		self.widgets['menu']['all_movies'].set_active(1)
 		self.count_statusbar()
 		if subtotal > 0:
 			import random
 			movie = movies[random.randrange(subtotal)]
 			self.debug.show("suggested movie: %s"%movie.title)
-			self.main_treeview.set_cursor_on_cell(movie.number-1)
+			self.widgets['treeview'].set_cursor_on_cell(movie.number-1)
 			self.treeview_clicked()
 		else:
 			gutils.info(self, \
 				self._("You saw all movies in your collection!"), \
-				self.main_window)
+				self.widgets['window'])
 
 	# volumes/collections ----------------------------------------------{{{
 	def on_e_collection_combo_changed(self,widget):
@@ -356,12 +358,12 @@ class Griffith:
 			x = int(event.x)
 			y = int(event.y)
 			time = event.time
-			pthinfo = self.lang['treeview'].get_path_at_pos(x, y)
+			pthinfo = self.widgets['add']['lang_treeview'].get_path_at_pos(x, y)
 			if pthinfo != None:
 				path, col, cellx, celly = pthinfo
-				self.lang['treeview'].grab_focus()
-				self.lang['treeview'].set_cursor( path, col, 0)
-			self.lang['menu'].popup(None, None, None, event.button, time)
+				self.widgets['add']['lang_treeview'].grab_focus()
+				self.widgets['add']['lang_treeview'].set_cursor( path, col, 0)
+			self.widgets['add']['lang_menu'].popup(None, None, None, event.button, time)
 	
 	def create_language_row(self, lang=None):
 		if len(self.languages_ids) == 1:
@@ -375,19 +377,20 @@ class Griffith:
 					if i[0] == id:
 						return i[1]
 
-		myiter = self.lang['model'].append(None)
+		model = self.widgets['add']['lang_treeview'].get_model()
+		myiter = model.append(None)
 		if lang:
-			self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], lang.lang_id))
-			self.lang['model'].set_value(myiter, 1, get_text(self.lang['type'], lang.type))
-			self.lang['model'].set_value(myiter, 2, get_text(self.lang['acodec'], lang.acodec_id))
-			self.lang['model'].set_value(myiter, 3, get_text(self.lang['achannel'], lang.achannel_id))
-			self.lang['model'].set_value(myiter, 4, get_text(self.lang['subformat'], lang.subformat_id))
+			model.set_value(myiter, 0, get_text(self.lang['lang'], lang.lang_id))
+			model.set_value(myiter, 1, get_text(self.lang['type'], lang.type))
+			model.set_value(myiter, 2, get_text(self.lang['acodec'], lang.acodec_id))
+			model.set_value(myiter, 3, get_text(self.lang['achannel'], lang.achannel_id))
+			model.set_value(myiter, 4, get_text(self.lang['subformat'], lang.subformat_id))
 		else:
-			self.lang['model'].set_value(myiter, 0, get_text(self.lang['lang'], -1))
+			model.set_value(myiter, 0, get_text(self.lang['lang'], -1))
 	
 	def on_tv_lang_combo_edited(self, widget, path, new_text, column):
-		model = self.lang['model']
-		self.lang['model'][path][column] = new_text
+		model = self.widgets['add']['lang_treeview'].get_model()
+		model[path][column] = new_text
 		mymodel = widget.get_property('model')
 		if column == 1:	# type
 			for i in mymodel:
@@ -407,10 +410,10 @@ class Griffith:
 			if model[path][1] == _('subtitles'):
 				model[path][1] = ''
 
-	def on_e_lang_add_clicked(self, widget):
+	def on_am_lang_add_clicked(self, widget):
 		self.create_language_row()
-	def on_e_lang_remove_clicked(self, widget):
-		treeselection = self.lang['treeview'].get_selection()
+	def on_am_lang_remove_clicked(self, widget):
+		treeselection = self.widgets['add']['lang_treeview'].get_selection()
 		if treeselection:
 			(tmp_model, tmp_iter) = treeselection.get_selected()
 			if tmp_iter:
@@ -418,12 +421,12 @@ class Griffith:
 
 	# preferences
 	def on_lang_add_clicked(self, widget):
-		lang = self.db.Lang(name=self.lang_name_combo.get_active_text())
+		lang = self.db.Lang(name=self.widgets['preferences']['lang_name'].get_active_text())
 		if lang and lang.add_to_db():
 			initialize.language_combos(self)
 
 	def on_lang_remove_clicked(self, widget):
-		active = self.lang_name_combo.get_active()
+		active = self.widgets['preferences']['lang_name'].get_active()
 		if active>0:
 			lang_id = self.languages_ids[active]
 			lang = self.db.Lang.get_by(lang_id=lang_id)
@@ -441,32 +444,32 @@ class Griffith:
 		if lang_id>0:
 			lang = self.db.Lang.get_by(lang_id=lang_id)
 			if lang != None:
-				lang.name = self.lang_name_combo.get_active_text()
+				lang.name = self.widgets['preferences']['lang_name'].get_active_text()
 				if lang.update_in_db():
 					initialize.language_combos(self)
 
 	def on_lang_name_combo_changed(self, widget):
-		active = self.lang_name_combo.get_active()
+		active = self.widgets['preferences']['lang_name'].get_active()
 		if active>-1:
 			self.lang_name_active = active
 	#}}}
 
 	# tags -------------------------------------------------------------{{{
 	def on_tag_add_clicked(self, widget):
-		tag = self.db.Tag(name=self.tag_name_combo.get_active_text())
+		tag = self.db.Tag(name=self.widgets['preferences']['tag_name'].get_active_text())
 		if tag and tag.add_to_db():
 			initialize.fill_preferences_tags_combo(self)
-			initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+			initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
 
 	def on_tag_remove_clicked(self, widget):
-		active = self.tag_name_combo.get_active()
+		active = self.widgets['preferences']['tag_name'].get_active()
 		if active>-1:
 			tag_id = self.tags_ids[active]
 			tag = self.db.Tag.get_by(tag_id=tag_id)
 			if tag and tag.remove_from_db():
 				initialize.fill_preferences_tags_combo(self)
 				initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
-				initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+				initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
 		else:
 			self.debug.show("You have to select tag first")
 
@@ -478,26 +481,26 @@ class Griffith:
 		tag_id = self.tags_ids[active]
 		tag = self.db.Tag.get_by(tag_id=tag_id)
 		if tag != None:
-			tag.name = self.tag_name_combo.get_active_text()
+			tag.name = self.widgets['preferences']['tag_name'].get_active_text()
 			if tag.update_in_db():
 				initialize.fill_preferences_tags_combo(self)
 				initialize.create_tag_vbox(self, widget=self.e_tag_vbox, tab=self.e_tags)
-				initialize.create_tag_vbox(self, widget=self.am_tag_vbox, tab=self.am_tags)
+				initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
 
 	def on_tag_name_combo_changed(self, widget):
-		active = self.tag_name_combo.get_active()
+		active = self.widgets['preferences']['tag_name'].get_active()
 		if active>-1:
 			self.tag_name_active = active
 	# }}}
 
 	# audio codecs ------------------------------------------------------{{{
 	def on_acodec_add_clicked(self, widget):
-		acodec = self.db.ACodec(name=self.acodec_name_combo.get_active_text())
+		acodec = self.db.ACodec(name=self.widgets['preferences']['acodec_name'].get_active_text())
 		if acodec and acodec.add_to_db():
 			initialize.acodec_combos(self)
 
 	def on_acodec_remove_clicked(self, widget):
-		active = self.acodec_name_combo.get_active()
+		active = self.widgets['preferences']['acodec_name'].get_active()
 		if active>0:
 			acodec_id = self.acodecs_ids[active]
 			acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
@@ -514,24 +517,24 @@ class Griffith:
 		acodec_id = self.acodecs_ids[active]
 		acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
 		if acodec != None:
-			acodec.name = self.acodec_name_combo.get_active_text()
+			acodec.name = self.widgets['preferences']['acodec_name'].get_active_text()
 			if acodec.update_in_db():
 				initialize.acodec_combos(self)
 
 	def on_acodec_name_combo_changed(self, widget):
-		active = self.acodec_name_combo.get_active()
+		active = self.widgets['preferences']['acodec_name'].get_active()
 		if active>-1:
 			self.acodec_name_active = active
 	# }}}
 
 	# audio channels ----------------------------------------------------{{{
 	def on_achannel_add_clicked(self, widget):
-		achannel = self.db.AChannel(name=self.achannel_name_combo.get_active_text())
+		achannel = self.db.AChannel(name=self.widgets['preferences']['achannel_name'].get_active_text())
 		if achannel and achannel.add_to_db():
 			initialize.achannel_combos(self)
 
 	def on_achannel_remove_clicked(self, widget):
-		active = self.achannel_name_combo.get_active()
+		active = self.widgets['preferences']['achannel_name'].get_active()
 		if active>0:
 			achannel_id = self.achannels_ids[active]
 			achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
@@ -548,24 +551,24 @@ class Griffith:
 		achannel_id = self.achannels_ids[active]
 		achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
 		if achannel != None:
-			achannel.name = self.achannel_name_combo.get_active_text()
+			achannel.name = self.widgets['preferences']['achannel_name'].get_active_text()
 			if achannel.update_in_db():
 				initialize.achannel_combos(self)
 
 	def on_achannel_name_combo_changed(self, widget):
-		active = self.achannel_name_combo.get_active()
+		active = self.widgets['preferences']['achannel_name'].get_active()
 		if active>-1:
 			self.achannel_name_active = active
 	# }}}
 
 	# subformats -------------------------------------------------------------{{{
 	def on_subformat_add_clicked(self, widget):
-		subformat = self.db.SubFormat(name=self.subformat_name_combo.get_active_text())
+		subformat = self.db.SubFormat(name=self.widgets['preferences']['subformat_name'].get_active_text())
 		if subformat and subformat.add_to_db():
 			initialize.subformat_combos(self)
 
 	def on_subformat_remove_clicked(self, widget):
-		active = self.subformat_name_combo.get_active()
+		active = self.widgets['preferences']['subformat_name'].get_active()
 		if active>0:
 			subformat_id = self.subformats_ids[active]
 			subformat = self.db.SubFormat.get_by(subformat_id=subformat_id)
@@ -582,24 +585,24 @@ class Griffith:
 		subformat_id = self.subformats_ids[active]
 		subformat = self.db.SubFormat.get_by(subformat_id=subformat_id)
 		if subformat != None:
-			subformat.name = self.subformat_name_combo.get_active_text()
+			subformat.name = self.widgets['preferences']['subformat_name'].get_active_text()
 			if subformat.update_in_db():
 				initialize.subformat_combos(self)
 
 	def on_subformat_name_combo_changed(self, widget):
-		active = self.subformat_name_combo.get_active()
+		active = self.widgets['preferences']['subformat_name'].get_active()
 		if active>-1:
 			self.subformat_name_active = active
 	# }}}
 
 	# media ------------------------------------------------------------{{{
 	def on_medium_add_clicked(self, widget):
-		medium = self.db.Medium(name=self.medium_name_combo.get_active_text())
+		medium = self.db.Medium(name=self.widgets['preferences']['medium_name'].get_active_text())
 		if medium and medium.add_to_db():
 			initialize.media_combos(self)
 
 	def on_medium_remove_clicked(self, widget):
-		active = self.medium_name_combo.get_active()
+		active = self.widgets['preferences']['medium_name'].get_active()
 		if active>-1:
 			medium_id = self.media_ids[active]
 			medium = self.db.Medium.get_by(medium_id=medium_id)
@@ -616,24 +619,24 @@ class Griffith:
 		medium_id = self.media_ids[active]
 		medium = self.db.Medium.get_by(medium_id=medium_id)
 		if medium != None:
-			medium.name = self.medium_name_combo.get_active_text()
+			medium.name = self.widgets['preferences']['medium_name'].get_active_text()
 			if medium.update_in_db():
 				initialize.media_combos(self)
 
 	def on_medium_name_combo_changed(self, widget):
-		active = self.medium_name_combo.get_active()
+		active = self.widgets['preferences']['medium_name'].get_active()
 		if active>-1:
 			self.medium_name_active = active
 	# }}}
 
 	# vcodecs -------------------------------------------------------------{{{
 	def on_vcodec_add_clicked(self, widget):
-		vcodec = self.db.VCodec(name=self.vcodec_name_combo.get_active_text())
+		vcodec = self.db.VCodec(name=self.widgets['preferences']['vcodec_name'].get_active_text())
 		if vcodec and vcodec.add_to_db():
 			initialize.vcodec_combos(self)
 
 	def on_vcodec_remove_clicked(self, widget):
-		active = self.vcodec_name_combo.get_active()
+		active = self.widgets['preferences']['vcodec_name'].get_active()
 		if active>-1:
 			vcodec_id = self.vcodecs_ids[active]
 			vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
@@ -650,12 +653,12 @@ class Griffith:
 		vcodec_id = self.vcodecs_ids[active]
 		vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
 		if vcodec != None:
-			vcodec.name = self.vcodec_name_combo.get_active_text()
+			vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text()
 			if vcodec.update_in_db():
 				initialize.vcodec_combos(self)
 
 	def on_vcodec_name_combo_changed(self, widget):
-		active = self.vcodec_name_combo.get_active()
+		active = self.widgets['preferences']['vcodec_name'].get_active()
 		if active>-1:
 			self.vcodec_name_active = active
 	# }}}
@@ -668,7 +671,7 @@ class Griffith:
 		main_treeview.populate(self, cursor)
 
 	def get_maintree_selection(self):
-		treeselection = self.main_treeview.get_selection()
+		treeselection = self.widgets['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		if tmp_model and tmp_iter:
 			return tmp_model.get_value(tmp_iter, 0), tmp_iter
@@ -677,7 +680,7 @@ class Griffith:
 
 	def select_last_row(self, rtotal):
 		if rtotal:
-			self.main_treeview.set_cursor_on_cell(int(rtotal)-1)
+			self.widgets['treeview'].set_cursor_on_cell(int(rtotal)-1)
 
 	# backup/restore ------------------------------------------------------	
 
@@ -689,7 +692,7 @@ class Griffith:
 			self._("""Are you sure you want to restore?
 Your current movie collection will be replaced.
 You can't undo this operation."""), \
-			1, self.main_window)
+			1, self.widgets['window'])
 		if response == gtk.RESPONSE_YES:
 			backup.restore(self)
 
@@ -698,7 +701,7 @@ You can't undo this operation."""), \
 			self._("""Are you sure you want to mix?
 Your current movie collection will be mixed with a backup.
 You can't undo this operation."""), \
-			1, self.main_window)
+			1, self.widgets['window'])
 		if response == gtk.RESPONSE_YES:
 			backup.merge(self)
 
@@ -780,8 +783,8 @@ You can't undo this operation."""), \
 		)
 
 	def update_statusbar(self, text):
-		context_id = self.statusbar.get_context_id(text)
-		message_id = self.statusbar.push(context_id, text)
+		context_id = self.widgets['statusbar'].get_context_id(text)
+		message_id = self.widgets['statusbar'].push(context_id, text)
 
 	# quick filter operations ---------------------------------------------
 
@@ -803,7 +806,7 @@ You can't undo this operation."""), \
 		view.filter_all(self)
 
 	def on_delete_event_am(self, *args):
-		self.add_movie_window.hide()
+		self.widgets['add']['window'].hide()
 		return True
 
 	def on_delete_event_pw(self, *args):
@@ -820,8 +823,8 @@ You can't undo this operation."""), \
 
 	def save_state(self):
 		"""Saves main window state"""
-		pos = self.main_window.get_position()
-		size = self.main_window.get_size()
+		pos = self.widgets['window'].get_position()
+		size = self.widgets['window'].get_size()
 		self.config["width"] = size[0]
 		self.config["height"] = size[1]
 		self.config["left"] = pos[0]
@@ -833,11 +836,11 @@ You can't undo this operation."""), \
 		if self.config.get("left") == "None":
 			pass
 		else:
-			self.main_window.move(int(self.config.get("left")), \
+			self.widgets['window'].move(int(self.config.get("left")), \
 				int(self.config.get("top")))
-			self.main_window.resize(int(self.config.get("width")), \
+			self.widgets['window'].resize(int(self.config.get("width")), \
 				int(self.config.get("height")))
-		self.main_window.show()
+		self.widgets['window'].show()
 
 	def on_delete_event_r(self, *args):
 		self.w_results.hide()
@@ -912,7 +915,7 @@ You can't undo this operation."""), \
 	def on_key_press_event(self, widget, event):
 		"""some key events actions"""
 		keyname = gtk.gdk.keyval_name(event.keyval)
-		if keyname == 'Delete' and self.main_treeview.is_focus() == True:
+		if keyname == 'Delete' and self.widgets['treeview'].is_focus() == True:
 			self.delete_movie()
 
 	def on_p_tree_button_press_event(self, widget, event):
@@ -926,11 +929,11 @@ You can't undo this operation."""), \
 			x = int(event.x)
 			y = int(event.y)
 			time = event.time
-			pthinfo = self.main_treeview.get_path_at_pos(x, y)
+			pthinfo = self.widgets['treeview'].get_path_at_pos(x, y)
 			if pthinfo != None:
 				path, col, cellx, celly = pthinfo
-				self.main_treeview.grab_focus()
-				self.main_treeview.set_cursor( path, col, 0)
+				self.widgets['treeview'].grab_focus()
+				self.widgets['treeview'].set_cursor( path, col, 0)
 				self.popup.popup( None, None, None, event.button, time)
 			return 1
 
@@ -946,13 +949,13 @@ You can't undo this operation."""), \
 	
 	# -=[ treeview ]=------------------------------------------------------
 	def go_first(self, *args):
-		self.click_on(self.main_treeview, 'first')
+		self.click_on(self.widgets['treeview'], 'first')
 	def go_last(self, *args):
-		self.click_on(self.main_treeview, 'last')
+		self.click_on(self.widgets['treeview'], 'last')
 	def go_prev(self, *args):
-		self.click_on(self.main_treeview, 'prev')
+		self.click_on(self.widgets['treeview'], 'prev')
 	def go_next(self, *args):
-		self.click_on(self.main_treeview, 'next')
+		self.click_on(self.widgets['treeview'], 'next')
 	# TODO: remove total_filter var.
 	
 	def click_on(self, treeview, direction):
