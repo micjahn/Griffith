@@ -59,11 +59,11 @@ def set_details(self, item=None):
 	else:
 		self.title.set_text('')
 	if item.has_key('o_title') and item['o_title']:
-		self.o_title.set_markup("<span size='medium'>%s</span>" % str(item['o_title']))
+		self.o_title.set_markup("<span size='medium'><i>%s</i></span>" % str(item['o_title']))
 	else:
 		self.o_title.set_text('')
 	if item.has_key('director') and item['director']:
-		self.director.set_text(str(item['director']))
+		self.director.set_markup("<i>%s</i>" % str(item['director']))
 	else:
 		self.director.set_text('')
 	if item.has_key('plot') and item['plot']:
@@ -83,37 +83,37 @@ def set_details(self, item=None):
 	else:
 		cast_buffer.set_text('')
 	if item.has_key('country') and item['country']:
-		self.country.set_text(str(item['country']))
+		self.country.set_markup("<i>%s</i>" % str(item['country']))
 	else:
 		self.country.set_text('')
 	if item.has_key('genre') and item['genre']:
-		self.genre.set_text(str(item['genre']))
+		self.genre.set_markup("<i>%s</i>" % str(item['genre']))
 	else:
 		self.genre.set_text('')
 	if item.has_key('cond') and item['cond']:
-		self.condition.set_text(self._conditions[item['cond']])
+		self.condition.set_markup("<i>%s</i>" % self._conditions[item['cond']])
 	else:
-		self.condition.set_text(self._conditions[5]) # 5 == N/A
+		self.condition.set_markup("<i>%s</i>" % self._conditions[5]) # 5 == N/A
 	if item.has_key('region') and item['region']:
-		self.region.set_text(str(item['region']))
+		self.region.set_markup("<i>%s</i>" % str(item['region']))
 		self.tooltips.set_tip(self.region, self._regions[item['region']])
 	else:
 		self.region.set_text('')
 		self.tooltips.set_tip(self.region, self._regions[9]) # N/A
 	if item.has_key('layers') and item['layers']:
-		self.layers.set_text(self._layers[item['layers']])
+		self.layers.set_markup("<i>%s</i>" % self._layers[item['layers']])
 	else:
-		self.layers.set_text(self._layers[4]) # N/A
+		self.layers.set_markup("<i>%s</i>" % self._layers[4]) # N/A
 	if item.has_key('color') and item['color']:
-		self.color.set_text(self._colors[item['color']])
+		self.color.set_markup("<i>%s</i>" % self._colors[item['color']])
 	else:
-		self.color.set_text(self._colors[3]) # N/A
+		self.color.set_markup("<i>%s</i>" % self._colors[3]) # N/A
 	if item.has_key('classification') and item['classification']:
-		self.classification.set_text(str(item['classification']))
+		self.classification.set_markup("<i>%s</i>" % str(item['classification']))
 	else:
 		self.classification.set_text('')
 	if item.has_key('studio') and item['studio']:
-		self.studio.set_text(str(item['studio']))
+		self.studio.set_markup("<i>%s</i>" % str(item['studio']))
 	else:
 		self.studio.set_text('')
 	if item.has_key('o_site') and item['o_site']:
@@ -152,10 +152,10 @@ def set_details(self, item=None):
 			tmp += ' x ' + item['medium'].name
 		except:
 			pass
-	self.medium.set_text(tmp)
+	self.medium.set_markup("<i>%s</i>" % tmp)
 	if item.has_key('vcodec_id'):
 		try:
-			self.vcodec.set_text(str(item['vcodec'].name))
+			self.vcodec.set_markup("<i>%s</i>" % str(item['vcodec'].name))
 		except:
 			self.vcodec.set_text('')
 	else:
@@ -280,6 +280,9 @@ def set_details(self, item=None):
 					tmp = "%s" % i.language.name
 				self.subtitle_vbox.pack_start(gtk.Label(tmp))
 			else:
+				language = i.language.name
+				if i.type is not None:
+					language += " <i>%s</i>" % self._lang_types[i.type]
 				tmp = ''
 				if i.achannel:
 					tmp = i.achannel.name
@@ -289,10 +292,12 @@ def set_details(self, item=None):
 					else:
 						tmp = i.acodec.name
 				if len(tmp)>0:
-					tmp = "%s (%s)" % (i.language.name, tmp)
+					tmp = "%s (%s)" % (language, tmp)
 				else:
-					tmp = "%s" % i.language.name
-				self.audio_vbox.pack_start(gtk.Label(tmp))
+					tmp = language
+				widget = gtk.Label(tmp)
+				widget.set_use_markup(True)
+				self.audio_vbox.pack_start(widget)
 	self.audio_vbox.show_all()
 	self.subtitle_vbox.show_all()
 	#tags

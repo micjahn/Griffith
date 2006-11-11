@@ -228,6 +228,10 @@ def lang_treeview(self):
 	treeview.append_column(column)
 	
 	model = self.lang['type'] = gtk.ListStore(int, str)
+	#i = 0
+	#for land_type in self._lang_types:
+	#	model.append([i, land_type])
+	#	i += 1
 	model.append([0, ''])
 	model.append([1, _('lector')])
 	model.append([2, _('dubbing')])
@@ -420,10 +424,11 @@ def dictionaries(self):
 		'plot'           : _('Plot'),
 		'media_num'      : _('Discs'),
 		'notes'          : _('Notes')}
-	self._conditions = [_('Damaged'), _('Poor'),  _('Fair'), _('Good'), _('Excellent'), _('N/A')]
-	self._colors = [_('Color'), _('Black and White'), _('Mixed'), _('N/A')]
-	self._layers = [_('Single Side, Single Layer'), _('Single Side, Dual Layer'), _('Dual Side, Single Layer'), _('Dual Side, Dual Layer'), _('N/A')]
-	self._regions = [_('Region 0 (No Region Coding)'),
+	self._conditions = (_('Damaged'), _('Poor'),  _('Fair'), _('Good'), _('Excellent'), _('N/A'))
+	self._colors = (_('Color'), _('Black and White'), _('Mixed'), _('N/A'))
+	self._lang_types = ('', _('lector'), _('dubbing'), _('subtitles'))
+	self._layers = (_('Single Side, Single Layer'), _('Single Side, Dual Layer'), _('Dual Side, Single Layer'), _('Dual Side, Dual Layer'), _('N/A'))
+	self._regions = (_('Region 0 (No Region Coding)'),
 			_('Region 1 (United States of America, Canada)'),
 			_('Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)'),
 			_('Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)'),
@@ -432,7 +437,7 @@ def dictionaries(self):
 			_('Region 6 (Popular Republic of China)'),
 			_('Region 8 (Airlines/Cruise Ships)'),
 			_('Region 9 (Often used as region free)'),
-			_('N/A')]
+			_('N/A'))
 
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)

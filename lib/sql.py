@@ -31,11 +31,11 @@ class DBTable(object):
 	def __repr__(self):
 		return "%s:%s" % (self.__class__.__name__, self.name)
 	def add_to_db(self):
-		if self.name==None or len(self.name)==0:
+		if self.name is None or len(self.name)==0:
 			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
 		# check if achannel already exists
-		if self.get_by(name=self.name) != None:
+		if self.get_by(name=self.name) is not None:
 			debug.show("%s: '%s' already exists" % (self.__class__.__name__, self.name))
 			return False
 		debug.show("%s: adding '%s' to database..." % (self.__class__.__name__, self.name))
@@ -66,17 +66,17 @@ class DBTable(object):
 		if dbtable_id<1:
 			debug.show("%s: none selected => none updated" % self.__class__.__name__)
 			return False
-		if self.name==None or len(self.name)==0:
+		if self.name is None or len(self.name)==0:
 			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
-		if self.get_by(name=self.name) != None:
+		if self.get_by(name=self.name) is not None:
 			gutils.warning(self, msg=_("This name is already in use!"))
 			return False
 		self.update()
 		self.flush()
 		self.refresh()
 		return True
-	
+
 class GriffithSQL:
 	version = 2	# database format version, incrase after any changes in data structures
 	metadata = None
@@ -115,48 +115,39 @@ class GriffithSQL:
 		def __setitem__(self, key, value):
 			if key == 'movie_id' and value:
 				if GriffithSQL.Movie.get_by(movie_id=value) is None:
-					debug.show('Loan: wrong movie_id')
-					return False
+					raise Exception('Loan: wrong movie_id')
 			elif key == 'person_id' and value:
 				if GriffithSQL.Person.get_by(person_id=value) is None:
-					debug.show('Loan: wrong movie_id')
-					return False
+					raise Exception('Loan: wrong movie_id')
 			self[key] = value
 		def _validate(self):
 			if self.movie_id is None:
-				debug.show('Loan: movie_id is not set')
-				return False
+				raise Exception('movie_id is not set')
 			if self.person_id is None:
-				debug.show('Loan: person_id is not set')
-				return False
+				raise Exception('person_id is not set')
 			if self.movie is None:
 				self.movie = GriffithSQL.Movie.get_by(movie_id=self.movie_id)
 				if self.movie is None:
-					debug.show('Loan: wrong movie_id')
-					return False
+					raise Exception('wrong movie_id')
 			if self.person is None:
 				self.person = GriffithSQL.Person.get_by(person_id=self.person_id)
 				if self.person is None:
-					debug.show('Loan: wrong person_id')
-					return False
+					raise Exception('wrong person_id')
 			if self.collection_id>0 and self.collection is None:
 				self.collection = GriffithSQL.Collection.get_by(collection_id=self.collection_id)
 				if self.collection is None:
-					debug.show("Loan: wrong collection_id")
-					return False
+					raise Exception('wrong collection_id')
 			if self.volume_id>0 and self.volume is None:
 				self.volume = GriffithSQL.Volume.get_by(volume_id=self.volume_id)
 				if self.volume is None:
-					debug.show("Loan: wrong volume_id")
-					return False
+					raise Exception('wrong volume_id')
 			return True
 		def set_loaned(self):
 			"""
 			Set loaned=True for all movies in volume/collection and for movie itself
 			Set loan's date to today's date
 			"""
-			if not self._validate():
-				return False
+			self._validate()
 
 			if self.collection is not None:
 				self.movie.mapper.mapped_table.update(self.movie.c.collection_id==self.collection_id).execute(loaned=True)
@@ -428,7 +419,7 @@ class GriffithSQL:
 				v=0
 			except:
 				raise
-		if v!=None and v>1:
+		if v is not None and v>1:
 			v = v.value
 		if v<self.version:
 			self.upgrade_database(v)
@@ -452,9 +443,9 @@ class GriffithSQL:
 			if t_movies.has_key(i) and t_movies[i] == -1:
 				t_movies[i]=None
 		for i in ['volume_id','collection_id', 'runtime']:
-			if t_movies.has_key(i) and (t_movies[i]==None or int(t_movies[i]) == 0):
+			if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
 				t_movies[i] = None
-		if t_movies.has_key('year') and (t_movies['year']==None or int(t_movies['year']) < 1886):
+		if t_movies.has_key('year') and (t_movies['year'] is None or int(t_movies['year']) < 1886):
 			t_movies['year'] = None
 
 	def add_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
@@ -462,12 +453,12 @@ class GriffithSQL:
 		self.Movie.mapper.mapped_table.insert().execute(t_movies)
 		movie = self.Movie.get_by(number=t_movies['number'])
 		# languages
-		if t_languages != None:
+		if t_languages is not None:
 			for lang in t_languages:
 				if lang[0]>0:
 					movie.languages.append(self.MovieLang(lang_id=lang[0], type=lang[1], acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4]))
 		# tags
-		if t_tags != None:
+		if t_tags is not None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.Tag(tag_id=tag))
 		movie.save_or_update()
@@ -476,21 +467,20 @@ class GriffithSQL:
 	
 	def update_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
 		movie_id = t_movies['movie_id']
-		if movie_id == None:
-			debug.show('Update movie: Movie ID is not set. Operation aborted!')
-			return False
+		if movie_id is None:
+			raise Exception('movie_id is not set')
 		self.clean_t_movies(t_movies)
 		self.Movie.mapper.mapped_table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
 		movie = self.Movie.get_by(movie_id=movie_id)
 		# languages
 		movie.languages.clear()
-		if t_languages != None:
+		if t_languages is not None:
 			for lang in t_languages:
 				if lang[0]>0:
 					movie.languages.append(self.MovieLang(lang_id=lang[0], type=lang[1], acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4]))
 		# tags
 		movie.tags.clear()
-		if t_tags != None:
+		if t_tags is not None:
 			for tag in t_tags.keys():
 				movie.tags.append(self.Tag(tag_id=tag))
 		movie.update()
@@ -500,7 +490,7 @@ class GriffithSQL:
 
 	# DATABASE ---------------------------------------------------------{{{
 	def new_db(self, parent):
-		"""initializes a new griffith database file"""
+		"""initializes a new Griffith Database file"""
 		response = gutils.question(self, \
 			_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
 			1, parent.main_window)
@@ -514,7 +504,7 @@ class GriffithSQL:
 				# NOTE: only used images are removed (posters are shared between various db)
 				debug.show('NEW DB: Removing old images...')
 				for movie in self.Movie.select():
-					if movie.image != None:
+					if movie.image is not None:
 						name = movie.image.encode('utf-8')
 						p_file = os.path.join(posters_dir, name+'.jpg')
 						m_file = os.path.join(posters_dir, 'm_'+name+'.jpg')
@@ -642,8 +632,7 @@ class GriffithSQL:
 			#self.metadata.commit()
 			return True
 		if version == 1:	# fix changes between v1 and v2
-			print 'not implemented yet'
-			return False
+			raise Exception('not implemented yet')
 			# TODO:
 			# * ranames in movie table:
 			#   + media => media_id
@@ -748,7 +737,7 @@ class GriffithSQL:
 				query = query[:len(query)-1]
 				query += ') VALUES ('
 				for value in row:
-					if value == None:
+					if value is None:
 						query += 'NULL,'
 					else:
 						query += "'%s'"%gutils.gescape(str(value)) + ','
