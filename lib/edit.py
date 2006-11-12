@@ -38,7 +38,7 @@ def change_poster(self):
 	showing a file chooser dialog to select it
 	"""
 	import shutil
-	picture = self.e_picture
+	picture = self.widgets['movie']['picture']
 	number = self.get_maintree_selection()[0]
 	filename = gutils.file_chooser(_("Select image"), action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK), name="", folder=self.locations['desktop'], picture=True)
 	if filename[0]:
@@ -54,14 +54,14 @@ def change_poster(self):
 			gutils.error(self, _("Image not valid."), self.widgets['window'])
 
 def delete_poster(self):
-	movie = self.db.Movie.get_by(movie_id=self.e_movie_id.get_text())
+	movie = self.db.Movie.get_by(movie_id=self._movie_id)
 	if not movie:
 		self.debug.show("Can't delete unknown movie's poster!")
 		return False
 	response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.widgets['window'])
 	if response==-8:
 		image_path = self.locations['images'] + "/default.png"
-		handler = self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
+		handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 		gutils.garbage(handler)
 		update_tree_thumbnail(self, self.locations['images'] + "/default_thumbnail.png")
 		# update in database
@@ -73,7 +73,7 @@ def delete_poster(self):
 
 		self.widgets['add']['delete_poster'].set_sensitive(False)
 		self.widgets['menu']['delete_poster'].set_sensitive(False)
-		self.e_picture_button.set_sensitive(False)
+		self.widgets['movie']['picture_button'].set_sensitive(False)
 		if old_image:
 			delete.delete_poster(self, old_image)
 	else:
@@ -106,7 +106,7 @@ def change_rating_from_slider(self):
 def fetch_bigger_poster(self):
 	match = 0
 	self.debug.show("fetching poster from amazon")
-	movie = self.db.Movie.get_by(movie_id=self.e_movie_id.get_text())
+	movie = self.db.Movie.get_by(movie_id=self._movie_id)
 	current_poster = movie.image
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 
@@ -140,8 +140,8 @@ def fetch_bigger_poster(self):
 			self.treemodel_results.set_value(myiter, 0, str(f))
 			self.treemodel_results.set_value(myiter, 1, title)
 
-	self.w_results.show()
-	self.w_results.set_keep_above(True)
+	self.widgets['results']['window'].show()
+	self.widgets['results']['window'].set_keep_above(True)
 
 def get_poster_select_dc(self, event, mself, result, current_poster):
 	if event.type == gtk.gdk._2BUTTON_PRESS:
@@ -155,9 +155,9 @@ def get_poster(self, f, result, current_poster):
 		treeselection = self.widgets['results']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		f = int(tmp_model.get_value(tmp_iter, 0))
-		self.w_results.hide()
+		self.widgets['results']['window'].hide()
 
-	file_to_copy = tempfile.mktemp(suffix=self.e_number.get_text(), prefix='poster_', \
+	file_to_copy = tempfile.mktemp(suffix=self.widgets['movie']['number'].get_text(), prefix='poster_', \
 		dir=os.path.join(self.griffith_dir, "posters"))
 	file_to_copy += ".jpg"
 	try:
@@ -178,7 +178,7 @@ def get_poster(self, f, result, current_poster):
 	self.debug.show(file_to_copy)
 
 	if  os.path.isfile(file_to_copy):
-		handler = self.big_poster.set_from_file(file_to_copy)
+		handler = self.widgets['big_poster'].set_from_file(file_to_copy)
 		gutils.garbage(handler)
 
 		try:
@@ -190,19 +190,19 @@ def get_poster(self, f, result, current_poster):
 				gutils.warning(self, _("Sorry. This poster image format is not supported."))
 				os.remove(file_to_copy)
 				return
-		self.poster_window.show()
-		self.poster_window.move(0,0)
+		self.widgets['poster_window'].show()
+		self.widgets['poster_window'].move(0,0)
 		response = gutils.question(self, \
 				_("Do you want to use this poster instead?"), \
 				1, self.widgets['window'])
 		if response == -8:
 			self.debug.show("Using new fetched poster, updating and removing old one from disk.")
-			update.update_image(self, os.path.basename(file_to_copy), self.e_number.get_text())
+			update.update_image(self, os.path.basename(file_to_copy), self.widgets['movie']['number'].get_text())
 			gutils.make_thumbnail(self, '%s' % os.path.basename(file_to_copy))
 			gutils.make_medium_image(self, '%s' % os.path.basename(file_to_copy))
 			update_tree_thumbnail(self, '%s/posters/t_%s' % (self.griffith_dir, \
 				os.path.basename(file_to_copy)))
-			self.e_picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(self.griffith_dir, "posters/m_%s"%os.path.basename(file_to_copy))))
+			self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(self.griffith_dir, "posters/m_%s"%os.path.basename(file_to_copy))))
 			delete.delete_poster(self, current_poster)
 			self.widgets['add']['delete_poster'].set_sensitive(True)
 			self.widgets['menu']['delete_poster'].set_sensitive(True)
@@ -214,7 +214,7 @@ def get_poster(self, f, result, current_poster):
                         except:
                             self.debug.show("no permission for %s"%file_to_copy)
 
-		self.poster_window.hide()
+		self.widgets['poster_window'].hide()
 	else:
 		gutils.warning(self, _("Sorry. This movie is listed but have no poster available at Amazon.com."))
 

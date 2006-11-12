@@ -493,11 +493,11 @@ class GriffithSQL:
 		"""initializes a new Griffith Database file"""
 		response = gutils.question(self, \
 			_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
-			1, parent.main_window)
+			1, parent.widgets['window'])
 		if response == gtk.RESPONSE_YES:
 			response_sec = gutils.question(self, \
 				_('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
-				1, parent.main_window)
+				1, parent.widgets['window'])
 			if response_sec == gtk.RESPONSE_YES:
 				# delete images
 				posters_dir = os.path.join(self.griffith_dir, 'posters')

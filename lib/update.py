@@ -26,13 +26,13 @@ import gutils
 import os
 
 def update(self):
-	movie_id = self.e_movie_id.get_text()
+	movie_id = self._movie_id()
 	movie = self.db.Movie.get_by(movie_id=movie_id)
 	if movie == None:
 		self.debug.show('Trying to update not existing movie. Aborting')
 		return False
 
-	number = self.e_number.get_text()
+	number = self.widgets['movie']['number'].get_text()
 	if number == None or number == '':
 		gutils.error(self, msg=_('Number is not set!'))
 		return False
@@ -132,14 +132,14 @@ def update(self):
 			# refresh winbdow
 			self.treeview_clicked()
 	else:
-		gutils.error(self.w_results,_("You should fill the original title"))
+		gutils.error(self.widgets['results']['window'],_("You should fill the original title"))
 
 def update_image(self,image,number):
 	movie = self.db.Movie.get_by(number=number)
 	movie.image = os.path.splitext(image)[0]
 	movie.update()
 	movie.flush()
-	self.e_picture_button.set_sensitive(True)
+	self.widgets['movie']['picture_button'].set_sensitive(True)
 	self.update_statusbar(_("Image has been updated"))
 
 def update_volume_combo_ids(self):

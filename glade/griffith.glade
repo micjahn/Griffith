@@ -7784,7 +7784,7 @@ Stars</property>
 			  </child>
 
 			  <child>
-			    <widget class="GtkCheckButton" id="p_s_with">
+			    <widget class="GtkCheckButton" id="p_s_cast">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Cast</property>

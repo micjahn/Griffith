@@ -342,7 +342,7 @@ def add_movie_db(self, close):
 		if close:
 			self.hide_add_window()
 	else:
-		gutils.error(self.w_results, _("You should fill the original title\nor the movie title."))
+		gutils.error(self.widgets['results']['window'], _("You should fill the original title\nor the movie title."))
 
 def change_rating_from_slider(self):
 	rating = int(self.widgets['add']['rating_slider'].get_value())
@@ -444,8 +444,8 @@ def show_websearch_results(self):
 		if ( str(g) != '' ):
 			total += 1
 	if total > 1:
-		self.w_results.show()
-		self.w_results.set_keep_above(True)
+		self.widgets['results']['window'].show()
+		self.widgets['results']['window'].set_keep_above(True)
 		row = None	
 		key = 0
 		self.treemodel_results.clear()
@@ -464,7 +464,7 @@ def show_websearch_results(self):
 				self.founded_results_id = str(row)
 				populate_with_results(self)
 	else:
-		gutils.error(self.w_results, _("No results"), self.widgets['add']['window'])
+		gutils.error(self.widgets['results']['window'], _("No results"), self.widgets['add']['window'])
 
 def get_from_web(self):
 	"""search the movie in web using the active plugin"""
@@ -488,7 +488,7 @@ def get_from_web(self):
 		self.search_movie.get_searches()
 		self.show_search_results(self.search_movie)
 	else:
-		gutils.error(self.w_results, \
+		gutils.error(self.widgets['results']['window'], \
 			_("You should fill the original title\nor the movie title."))
 
 def source_changed(self):

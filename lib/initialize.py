@@ -148,8 +148,8 @@ def gui(self):
 def toolbar(self):
 	"""if toolbar is hide in config lets hide the widget"""
 	if not self.config.get('view_toolbar'):
-		self.toolbar.hide()
-		self.menu_toolbar.set_active(False)
+		self.widgets['toolbar'].hide()
+		self.widgets['menu']['toolbar'].set_active(False)
 
 def treeview(self):
 	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
@@ -464,13 +464,13 @@ def initialize_gtkspell(self):
 			if self.config.get('spell_notes', True) == 'True' and \
 				self.config.get('spell_lang')!='':
 				try:
-					self.obs_spell = gtkspell.Spell(self.m_cast, self.config.get('spell_lang'))
+					self.notes_spell = gtkspell.Spell(self.widgets['add']['cast'], self.config.get('spell_lang'))
 				except:
 					spell_error = True
 			if self.config.get('spell_plot', True)=='True' and \
 				self.config.get('spell_lang')!='':
 				try:
-					self.plot_spell = gtkspell.Spell(self.m_plot, self.config.get('spell_lang'))
+					self.plot_spell = gtkspell.Spell(self.widgets['add']['plot'], self.config.get('spell_lang'))
 				except:
 					spell_error = True
 			if spell_error:
@@ -478,7 +478,7 @@ def initialize_gtkspell(self):
 				if not self.config.get('spell_notify', False):
 					gutils.info(self, _("Dictionary not available. Spellcheck will be disabled. \n" + \
 						"Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('spell_lang'), \
-						self.w_preferences)
+						self.widgets['preferences']['window'])
 					self.config['spell_notify'] = True
 					self.config.save()
 	else:

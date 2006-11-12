@@ -32,21 +32,21 @@ def loan_movie(self):
 	if len(people)>0:
 		for person in people:
 			model.append([person.name])
-		self.loan_to.set_model(model)
-		self.loan_to.set_text_column(0)
-		self.loan_to.set_active(0)
-		self.w_loan_to.show()
+		self.widgets['movie']['loan_to'].set_model(model)
+		self.widgets['movie']['loan_to'].set_text_column(0)
+		self.widgets['movie']['loan_to'].set_active(0)
+		self.widgets['w_loan_to'].show()
 	else:
 		gutils.info(self, _("No person is defined yet."), self.widgets['window'])
 
 def cancel_loan(self):
-	self.w_loan_to.hide()
+	self.widgets['w_loan_to'].hide()
 
 def commit_loan(self):
-	person_name = gutils.on_combo_box_entry_changed(self.loan_to)
+	person_name = gutils.on_combo_box_entry_changed(self.widgets['movie']['loan_to'])
 	if person_name == '' or person_name == None:
 		return False
-	self.w_loan_to.hide()
+	self.widgets['w_loan_to'].hide()
 
 	person = self.db.Person.get_by(name=person_name)
 	if person==None:
