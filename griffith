@@ -120,8 +120,7 @@ class Griffith:
 	# about dialog	-------------------------------------------------------			
 
 	def about_dialog(self, *args):
-		about_dialog = about.AboutDialog()
-		about_dialog.icon = self.locations['images']
+		about_dialog = about.AboutDialog(self.locations['images'])
 
 	# add movie -----------------------------------------------------------
 
@@ -717,27 +716,27 @@ You can't undo this operation."""), \
 	# cover ---------------------------------------------------------------
 
 	def print_cover_simple_show(self, *args):
-		self.cover_simple_size.set_active(0)
-		self.w_print_cover_simple.show()
+		self.widgets['print_cover']['cs_size'].set_active(0)
+		self.widgets['print_cover']['window_simple'].show()
 
 	def print_cover_simple_hide(self, *args):
-		self.w_print_cover_simple.hide()
+		self.widgets['print_cover']['window_simple'].hide()
 
 	def print_cover_simple_process(self, *args):
 		movie_id, movie_iter = self.get_maintree_selection()
 		cover.cover_simple(self, movie_id)
 
 	def print_cover_image(self, *args):
-		self.cover_image_size.set_active(0)
-		self.w_print_cover_image.show()
+		self.widgets['print_cover']['ci_size'].set_active(0)
+		self.widgets['print_cover']['window_image'].show()
 
 	def print_cover_image_process(self, *args):
-		self.w_print_cover_image.hide()
+		self.widgets['print_cover']['window_image'].hide()
 		movie_id, movie_iter = self.get_maintree_selection()
 		cover.cover_image(self, movie_id)
 
 	def print_cover_image_hide(self, *args):
-		self.w_print_cover_image.hide()
+		self.widgets['print_cover']['window_image'].hide()
 
 	# loans management ----------------------------------------------------	
 
@@ -876,11 +875,11 @@ You can't undo this operation."""), \
 		return True
 
 	def on_delete_event_pcs(self, *args):
-		self.w_print_cover_simple.hide()
+		self.widgets['print_cover']['window_simple'].hide()
 		return True
 
 	def on_delete_event_pci(self, *args):
-		self.w_print_cover_image.hide()
+		self.widgets['print_cover']['window_image'].hide()
 		return True
 
 	def on_delete_event_p(self, *args):

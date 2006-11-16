@@ -29,7 +29,7 @@ import sys
 
 class AboutDialog:
 	"""Shows a gtk about dialog"""
-	def __init__(self):
+	def __init__(self, images_dir):
 		dialog = gtk.AboutDialog()
 		dialog.set_name(version.pname)
 		dialog.set_version(version.pversion)
@@ -67,14 +67,8 @@ class AboutDialog:
 			_("Swedish") + ":\n\t" + \
 				"Daniel Nylander <po@danielnylander.se>\n" \
 		)
-		if os.name == 'nt':
-			logo = gtk.gdk.pixbuf_new_from_file \
-				("%s/images/griffith.png"%os.path.abspath \
-				(os.path.dirname(sys.argv[0])))
-		else:
-			logo_file = os.path.abspath(os.path.dirname(sys.argv[0]))
-			logo = gtk.gdk.pixbuf_new_from_file(logo_file.replace \
-				("/bin", "/share/griffith/images") + "/griffith.png")
+		logo_file = os.path.abspath(os.path.join(images_dir, 'griffith.png'))
+		logo = gtk.gdk.pixbuf_new_from_file(logo_file)
 		dialog.set_logo(logo)
 		dialog.set_license(_("This program is released under the GNU" + \
 			"General Public License.\n" + \

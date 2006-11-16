@@ -47,8 +47,8 @@ def cover_image(self,id):
 		cover_image_process(self, filename[0], id)
 
 def cover_image_process(self, filename, id):
-	size = self.cover_image_size.get_active()
-	number = self.cover_image_number.get_active()
+	size = self.widgets['print_cover']['ci_size'].get_active()
+	number = self.widgets['print_cover']['ci_number'].get_active()
 
 	if self.config.get('font', '')!='':
 		fontName = "custom_font"
@@ -103,7 +103,7 @@ def cover_image_process(self, filename, id):
 
 	c.showPage()
 	c.save()
-	self.w_print_cover_simple.hide()
+	self.widgets['print_cover']['window_simple'].hide()
 	cover_file = os.path.join(self.griffith_dir, "cover.pdf")
 	if self.windows:
 		os.popen3("\"" + cover_file + "\"")
@@ -111,9 +111,9 @@ def cover_image_process(self, filename, id):
 		os.popen3(self.pdf_reader + " " + cover_file)
 
 def cover_simple(self, id):
-	size = self.cover_simple_size.get_active()
-	number = self.cover_simple_include_movie_number.get_active()
-	poster = self.cover_simple_include_poster.get_active()
+	size = self.widgets['print_cover']['cs_size'].get_active()
+	number = self.widgets['print_cover']['cs_include_movie_number'].get_active()
+	poster = self.widgets['print_cover']['cs_include_poster'].get_active()
 
 	if self.config.get('font', '')!='':
 		fontName = "custom_font"
@@ -188,7 +188,7 @@ def cover_simple(self, id):
 			c.drawImage(image, x=(pageWidth-(pageWidth-cover_x)-235), y=(pageHeight/2)-125, width=180, height=250)
 	c.showPage()
 	c.save()
-	self.w_print_cover_simple.hide()
+	self.widgets['print_cover']['window_simple'].hide()
 	cover_file = os.path.join(self.griffith_dir, "cover.pdf")
 	if self.windows:
 		os.popen3("\"" + cover_file + "\"")

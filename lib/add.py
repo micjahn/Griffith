@@ -607,41 +607,40 @@ def clone_movie(self):
 		seen = True
 	else:
 		seen = False
-	t_movies = {
-		'cast'           : movie.cast,
-		'classification' : movie.classification,
-		'color'          : movie.color,
-		'cond'           : movie.cond,
-		'country'        : movie.country,
-		'director'       : movie.director,
-		'genre'          : movie.genre,
-		'image'          : new_image,
-		'site'           : movie.site,
-		'layers'         : movie.layers,
-		'medium_id'      : movie.medium_id,
-		'number'         : next_number,
-		'media_num'      : movie.media_num,
-		'notes'          : movie.notes,
-		'o_title'        : movie.o_title,
-		'plot'           : movie.plot,
-		'rating'         : movie.rating,
-		'region'         : movie.region,
-		'runtime'        : movie.runtime,
-		'seen'           : seen,
-		'o_site'         : movie.o_site,
-		'studio'         : movie.studio,
-		'title'          : movie.title,
-		'trailer'        : movie.trailer,
-		'year'           : movie.year
-	}
-	# tags
-	t_tags = {}
-	for tag in movie.tags:
-		t_tags[tag.tag_id] = 1
-	# languages
-	t_languages = {}
-
-	self.db.add_movie(t_movies, t_languages, t_tags)
+	new_movie = self.db.Movie()
+	
+	new_movie.cast = movie.cast
+	new_movie.classification = movie.classification
+	new_movie.color = movie.color
+	new_movie.cond = movie.cond
+	new_movie.country = movie.country
+	new_movie.director = movie.director
+	new_movie.genre = movie.genre
+	new_movie.image = new_image
+	new_movie.site = movie.site
+	new_movie.layers = movie.layers
+	new_movie.medium_id = movie.medium_id
+	new_movie.number = next_number
+	new_movie.media_num = movie.media_num
+	new_movie.notes = movie.notes
+	new_movie.o_title = movie.o_title
+	new_movie.plot = movie.plot
+	new_movie.rating = movie.rating
+	new_movie.region = movie.region
+	new_movie.runtime = movie.runtime
+	new_movie.seen = seen
+	new_movie.o_site = movie.o_site
+	new_movie.studio = movie.studio
+	new_movie.title = movie.title
+	new_movie.trailer = movie.trailer
+	new_movie.year = movie.year
+	
+	new_movie.tags = movie.tags
+	new_movie.languages = movie.languages
+	
+	# save
+	new_movie.save()
+	new_movie.flush()
 
 	# WARNING: loan problems (don't copy volume/collection data until resolved)
 
