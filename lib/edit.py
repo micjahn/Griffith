@@ -41,7 +41,7 @@ def change_poster(self):
 	picture = self.widgets['movie']['picture']
 	number = self.get_maintree_selection()[0]
 	filename = gutils.file_chooser(_("Select image"), action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK), name="", folder=self.locations['desktop'], picture=True)
-	if filename[0]:
+	if filename and filename[0]:
 		try:
 			picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(filename[0]).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
 			file_to_copy = os.path.basename(filename[0])
@@ -88,7 +88,7 @@ def update_tree_thumbnail(self, t_image_path):
 	gutils.garbage(pixbuf)
 
 def change_rating_from_slider(self):
-	rating = int(self.rating_slider.get_value())
+	rating = int(self.widgets['add']['rating_slider'].get_value())
 	self.widgets['movie']['image_rating'].show()
 	try:
 		rimage = int(str(self.config.get('rating_image')))

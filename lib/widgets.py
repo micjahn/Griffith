@@ -121,7 +121,6 @@ def define_widgets(self, gladefile):
 		'title':	get('am_title'),
 		'trailer':	get('am_trailer'),
 		'vcodec':	get('am_vcodec'),
-		'vcodec_vbox':	get('am_vcodec_vbox'),
 		'volume':	get('am_volume_combo'),
 		'cast':		get('am_with'),
 		'year':		get('am_year'),
@@ -131,8 +130,11 @@ def define_widgets(self, gladefile):
 		'lang_treeview':get('lang_treeview'),
 		'b_get_from_web':get('get_from_web'),
 		'c_web_source':	get('combo_source'), # c_web_source
-
 		'delete_poster': get('delete_poster'),
+		'add_button':	get('am_add_button'),
+		'add_close_button':get('am_add_close_button'),
+		'clear_button':	get('am_clear_button'),
+		'save_button':	get('am_save_button'),
 	}
 	self.widgets['add']['window'].connect('delete_event', self.on_delete_event_am)
 	self.widgets['add']['lang_treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
@@ -309,6 +311,7 @@ def define_widgets(self, gladefile):
 		'on_cancel_print_cover_simple_clicked'  : self.print_cover_simple_hide,
 		'on_b_print_cover_simple_clicked'       : self.print_cover_simple_process,
 		'on_add_clear_clicked'                  : self.clear_add_dialog,
+		'on_am_save_button_clicked'             : self.update_movie,
 		'on_people_activate'                    : self.show_people_window,
 		'on_cancel_people_clicked'              : self.hide_people_window,
 		'on_filter_txt_changed'                 : self.filter_txt,

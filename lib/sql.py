@@ -49,10 +49,10 @@ class DBTable(object):
 			debug.show("%s: none selected => none removed" % self.__class__.__name__)
 			return False
 		tmp = None
-		if hasattr(self,'assigned_movie_ids'):
-			tmp = getattr(self,'assigned_movie_ids')
-		elif hasattr(self,'assigned_movies'):
-			tmp = getattr(self,'assigned_movies')
+		if hasattr(self,'movies'):
+			tmp = getattr(self,'movies')
+		elif hasattr(self,'movielangs'):
+			tmp = getattr(self,'movielangs')
 		if tmp and len(tmp)>0:
 			gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
 			return False
@@ -104,7 +104,11 @@ class GriffithSQL:
 	class SubFormat(DBTable):
 		pass
 	class Tag(DBTable):
-		pass
+		def remove_from_db(self):
+			if len(self.movietags) > 0:
+				gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+				return False
+			return DBTable.remove_from_db(self)
 	class VCodec(DBTable):
 		pass
 	class Volume(DBTable):
@@ -212,7 +216,32 @@ class GriffithSQL:
 				return False
 			self.delete()
 			self.flush()
-			return True#}}}
+			return True
+		def update_in_db(self, t_movies=None):
+			if self.movie_id < 1:
+				raise Exception('movie_id is not set')
+			if t_movies is not None:
+				t_tags = t_movies.pop('tags')
+				t_languages = t_movies.pop('languages')
+				self.mapper.mapped_table.update(self.c.movie_id==t_movies['movie_id']).execute(t_movies)
+			# languages
+			self.languages.clear()
+			if t_languages is not None:
+				for lang in t_languages:
+					if lang[0]>0:
+						ml = GriffithSQL.MovieLang(lang_id=lang[0], type=lang[1],
+							acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4])
+						self.languages.append(ml)
+			# tags
+			self.tags.clear()
+			if t_tags is not None:
+				for tag in t_tags.keys():
+					self.tags.append(GriffithSQL.Tag(tag_id=tag))
+			self.update()
+			self.flush()
+			self.refresh()
+			return True
+		#}}}
 
 	def __init__(self, config, gdebug, griffith_dir):	#{{{
 		from sqlalchemy.mods.threadlocal import assign_mapper
@@ -367,29 +396,30 @@ class GriffithSQL:
 		# mappers -------------------------------------------------#{{{
 		assign_mapper(self.Configuration, configuration)
 		assign_mapper(self.Volume,volumes, properties={
-			'assigned_movies': relation(self.Movie, backref='volume')})
+			'movies': relation(self.Movie, backref='volume')})
 		assign_mapper(self.Collection, collections, properties={
-			'assigned_movies': relation(self.Movie, backref='collection')})
+			'movies': relation(self.Movie, backref='collection')})
 		assign_mapper(self.Medium, media, properties={
-			'assigned_movies': relation(self.Movie, backref='medium')})
+			'movies': relation(self.Movie, backref='medium')})
 		assign_mapper(self.VCodec, vcodecs, properties={
-			'assigned_movies': relation(self.Movie, backref='vcodec')})
+			'movies': relation(self.Movie, backref='vcodec')})
 		assign_mapper(self.Person, people)
-		assign_mapper(self.MovieLang, movie_lang, properties = {
-			'language' : relation(self.Lang),
+		assign_mapper(self.MovieLang, movie_lang, primary_key=[movie_lang.c.ml_id], properties = {
+			'movie'    : relation(self.Movie, lazy=False),
+			'language' : relation(self.Lang, lazy=False),
 			'achannel' : relation(self.AChannel),
 			'acodec'   : relation(self.ACodec),
 			'subformat': relation(self.SubFormat)})
 		assign_mapper(self.ACodec, acodecs, properties={
-			'assigned_movie_ids': relation(self.MovieLang)})
+			'movielangs': relation(self.MovieLang, lazy=False)})
 		assign_mapper(self.AChannel, achannels, properties={
-			'assigned_movie_ids': relation(self.MovieLang)})
+			'movielangs': relation(self.MovieLang, lazy=False)})
 		assign_mapper(self.SubFormat, subformats, properties={
-			'assigned_movie_ids': relation(self.MovieLang)})
+			'movielangs': relation(self.MovieLang, lazy=False)})
 		assign_mapper(self.Lang, languages, properties={
-			'assigned_movie_ids': relation(self.MovieLang)})
+			'movielangs': relation(self.MovieLang, lazy=False)})
 		assign_mapper(self.MovieTag, movie_tag)
-		assign_mapper(self.Tag, tags, properties={'assigned_movie_ids': relation(self.MovieTag, backref='tag')})
+		assign_mapper(self.Tag, tags, properties={'movietags': relation(self.MovieTag, backref='tag')})
 		assign_mapper(self.Loan, loans, properties = {
 			'person'     : relation(self.Person),
 			'volume'     : relation(self.Volume),
@@ -399,10 +429,7 @@ class GriffithSQL:
 			'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
 					primaryjoin=movies.c.movie_id==movie_tag.c.movie_id,
 					secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id),
-			'languages'  : relation(self.MovieLang, cascade='all, delete-orphan', secondary=movie_lang,
-					primaryjoin=movies.c.movie_id==movie_lang.c.movie_id,
-					secondaryjoin=movie_lang.c.lang_id==languages.c.lang_id),
-			})#}}}
+			'languages'  : relation(self.MovieLang, cascade='all, delete-orphan')})#}}}
 		
 		# check if database needs upgrade
 		try:
@@ -435,19 +462,6 @@ class GriffithSQL:
 	#}}}
 
 	# MOVIE ------------------------------------------------------------{{{
-	def clean_t_movies(self, t_movies): # TODO: move outside GriffithSQL class
-		for i in t_movies.keys():
-			if t_movies[i] == '':
-				t_movies[i]=None
-		for i in ['color','cond','layers','region', 'media', 'vcodec']:
-			if t_movies.has_key(i) and t_movies[i] == -1:
-				t_movies[i]=None
-		for i in ['volume_id','collection_id', 'runtime']:
-			if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
-				t_movies[i] = None
-		if t_movies.has_key('year') and (t_movies['year'] is None or int(t_movies['year']) < 1886):
-			t_movies['year'] = None
-
 	def add_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
 		self.clean_t_movies(t_movies)
 		self.Movie.mapper.mapped_table.insert().execute(t_movies)
@@ -465,27 +479,6 @@ class GriffithSQL:
 		movie.flush()
 		movie.refresh() # load default data as well
 	
-	def update_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
-		movie_id = t_movies['movie_id']
-		if movie_id is None:
-			raise Exception('movie_id is not set')
-		self.clean_t_movies(t_movies)
-		self.Movie.mapper.mapped_table.update(self.Movie.c.movie_id==movie_id).execute(t_movies)
-		movie = self.Movie.get_by(movie_id=movie_id)
-		# languages
-		movie.languages.clear()
-		if t_languages is not None:
-			for lang in t_languages:
-				if lang[0]>0:
-					movie.languages.append(self.MovieLang(lang_id=lang[0], type=lang[1], acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4]))
-		# tags
-		movie.tags.clear()
-		if t_tags is not None:
-			for tag in t_tags.keys():
-				movie.tags.append(self.Tag(tag_id=tag))
-		movie.update()
-		movie.flush()
-		movie.refresh()
 	# }}}
 
 	# DATABASE ---------------------------------------------------------{{{

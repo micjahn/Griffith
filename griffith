@@ -131,6 +131,10 @@ class Griffith:
 	def edit_movie(self, *args):
 		movie = self.db.Movie.get_by(movie_id=self._movie_id)
 		add.set_details(self, movie)
+		self.widgets['add']['add_button'].hide()
+		self.widgets['add']['add_close_button'].hide()
+		self.widgets['add']['clear_button'].hide()
+		self.widgets['add']['save_button'].show()
 		self.widgets['add']['window'].show()
 
 	def hide_add_window(self, *args):
@@ -188,6 +192,10 @@ class Griffith:
 	# movie related operations --------------------------------------------
 
 	def add_movie(self, *args):
+		self.widgets['add']['add_button'].show()
+		self.widgets['add']['add_close_button'].show()
+		self.widgets['add']['clear_button'].show()
+		self.widgets['add']['save_button'].hide()
 		add.add_movie(self)
 
 	def add_movie_db(self, *args):
@@ -200,7 +208,21 @@ class Griffith:
 		delete.delete_movie(self)
 
 	def update_movie(self, *args):
-		update.update(self)
+		movie = self.db.Movie.get_by(movie_id=self._movie_id)
+		details = add.get_details(self)
+		if movie.update_in_db(details):
+			self.update_statusbar(_('Movie information has been updated'))
+			# update main treelist
+			treeselection = self.widgets['treeview'].get_selection()
+			(tmp_model, tmp_iter) = treeselection.get_selected()
+			tmp_model.set_value(tmp_iter,0,'%004d' % int(movie.number))
+			tmp_model.set_value(tmp_iter,2, movie.o_title)
+			tmp_model.set_value(tmp_iter,3,	movie.title)
+			tmp_model.set_value(tmp_iter,4, movie.director)
+			# close add window
+			self.widgets['add']['window'].hide()
+			# refresh
+			self.treeview_clicked()
 
 	def clear_details(self):
 		main_treeview.set_details(self)
@@ -267,84 +289,74 @@ class Griffith:
 				self.widgets['window'])
 
 	# volumes/collections ----------------------------------------------{{{
-	def on_e_collection_combo_changed(self,widget):
-		if widget.get_active()!=-1:
-			self.e_selected_collection = self.collection_combo_ids[widget.get_active()]
-	def on_e_volume_combo_changed(self,widget):
-		if widget.get_active()!=-1:
-			self.e_selected_volume = self.volume_combo_ids[widget.get_active()]
 	def on_am_collection_combo_changed(self,widget):
 		if widget.get_active()!=-1:
-			self.am_selected_collection = self.collection_combo_ids[widget.get_active()]
+			self._selected_collection = self.collection_combo_ids[widget.get_active()]
 	def on_am_volume_combo_changed(self,widget):
 		if widget.get_active()!=-1:
-			self.am_selected_volume = self.volume_combo_ids[widget.get_active()]
+			self._selected_volume = self.volume_combo_ids[widget.get_active()]
 
 	def add_volume(self, widget):
-		prefix = gutils.before(widget.get_name(), "_")
-		name = eval("self.%s_volume_combo.get_active_text()"%prefix)
+		name = self.widgets['add']['volume'].get_active_text()
 		vol = self.db.Volume(name=name)
 		if vol and vol.add_to_db():
 			update.update_volume_combo_ids(self)
-			initialize.fill_volumes_combo(self, prefix, id)
+			initialize.fill_volumes_combo(self, id)
 
 	def add_collection(self, widget):
-		prefix = gutils.before(widget.get_name(), "_")
-		name = eval("self.%s_collection_combo.get_active_text()"%prefix)
+		name = self.widgets['add']['collection'].get_active_text()
 		col = self.db.Collection(name=name)
 		if col and col.add_to_db():
 			update.update_collection_combo_ids(self)
-			initialize.fill_collections_combo(self, prefix, id)
+			initialize.fill_collections_combo(self, id)
 
 	def remove_volume(self, widget):
-		prefix = gutils.before(widget.get_name(), "_")
-		vol_id = eval("self.%s_selected_volume"%prefix)
+		vol_id = self._selected_volume
 		vol = self.db.Volume.get_by(volume_id=vol_id)
 		if vol and vol.remove_from_db():
 			update.update_volume_combo_ids(self)
-			initialize.fill_volumes_combo(self, prefix, id)
+			initialize.fill_volumes_combo(self, id)
 
 	def remove_collection(self, widget):
-		prefix = gutils.before(widget.get_name(), "_")
-		col_id = eval("self.%s_selected_collection"%prefix)
+		col_id = self._selected_collection
 		col = self.db.Collection.get_by(collection_id=col_id)
 		if col and col.remove_from_db():
 			update.update_collection_combo_ids(self)
-			initialize.fill_collections_combo(self, prefix, id)
+			initialize.fill_collections_combo(self, id)
 
-	def e_rename_volume(self, widget):
-		vol_id = self.e_selected_volume
+	def rename_volume(self, widget):
+		vol_id = self._selected_volume
 		if vol_id != 0:
-			new_name = self.e_volume_combo.get_active_text()
+			new_name = self.widgets['add']['volume'].get_active_text()
 			vol = self.db.Volume.get_by(volume_id=vol_id)
 			if vol:
 				vol.name=new_name
 				if vol.update_in_db():
-					initialize.fill_volumes_combo(self, prefix='e', default=vol_id)
+					initialize.fill_volumes_combo(self, default=vol_id)
 
-	def e_rename_collection(self, widget):
+	def rename_collection(self, widget):
 		col_id = self.e_selected_collection
 		if col_id != 0:
-			new_name = self.e_collection_combo.get_active_text()
+			new_name = self.widgets['add']['collection'].get_active_text()
 			col = self.db.Collection.get_by(collection_id=col_id)
 			if col != None:
 				col.name=new_name
 				if col.update_in_db():
-					initialize.fill_collections_combo(self, prefix='e', default=col_id)
+					initialize.fill_collections_combo(self, default=col_id)
 
-	def e_show_volume(self, widget):
+	def show_volume(self, widget):
 		vol_id=0
-		if self.e_volume_combo.get_active():
-			vol_id = self.volume_combo_ids[self.e_volume_combo.get_active()]
+		if self.widgets['add']['volume'].get_active():
+			vol_id = self.volume_combo_ids[self.widgets['add']['volume'].get_active()]
 		if vol_id==0:
 			view.filter_all(self)
 		else:
 			view.filter_by_volume(self, vol_id)
 
-	def e_show_collection(self, widget):
+	def show_collection(self, widget):
 		col_id=0
-		if self.e_collection_combo.get_active():
-			col_id = self.collection_combo_ids[self.e_collection_combo.get_active()]
+		if self.widgets['add']['collection'].get_active():
+			col_id = self.collection_combo_ids[self.widgets['add']['collection'].get_active()]
 		if col_id==0:
 			view.filter_all(self)
 		else:

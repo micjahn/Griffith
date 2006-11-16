@@ -49,9 +49,10 @@ def locations(self=None):
 	locations['lib']  = os.path.dirname(__file__)
 
 	if os.name == 'nt' or os.name == 'win32':
-		import winshell
-		mydocs = winshell.my_documents()
-		locations['home']           = os.path.join(mydocs, 'griffith')
+		#import winshell
+		#mydocs = winshell.my_documents()
+		#locations['home']           = os.path.join(mydocs, 'griffith')
+		locations['home']           = os.path.join(os.path.expanduser('~'), 'griffith')
 		locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
 		locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
 		locations['images']         = "%s\\images" % locations['exec']
@@ -508,7 +509,7 @@ def preferences(self):
 		self.widgets['preferences']['db_type'].set_active(0)
 		self.widgets['preferences']['db_details'].set_sensitive(False)
 
-def fill_volumes_combo(self, prefix='e', default=0):
+def fill_volumes_combo(self, default=0):
 	self.widgets['add']['volume'].get_model().clear()
 	for i in self.volume_combo_ids:
 		vol_id = self.volume_combo_ids[i]
@@ -519,14 +520,11 @@ def fill_volumes_combo(self, prefix='e', default=0):
 		self.widgets['add']['volume'].insert_text(int(i), str(name))
 	self.widgets['add']['volume'].show_all()
 	i = gutils.findKey(default, self.volume_combo_ids)
-	if i!=None:
-		if prefix == 'e':
-			self.widgets['add']['volume'].set_active(0)
-		else:
-			self.widgets['add']['volume'].set_active(int(i))
+	if i is not None:
+		self.widgets['add']['volume'].set_active(int(i))
 	self.widgets['add']['volume'].set_wrap_width(3)
 
-def fill_collections_combo(self, prefix='e', default=0):
+def fill_collections_combo(self, default=0):
 	self.widgets['add']['collection'].get_model().clear()
 	self.widgets['filter']['column'].get_model().clear()
 	for i in self.collection_combo_ids:
@@ -541,11 +539,8 @@ def fill_collections_combo(self, prefix='e', default=0):
 	self.widgets['filter']['column'].show_all()
 	self.widgets['filter']['column'].set_active(0)
 	i = gutils.findKey(default, self.collection_combo_ids)
-	if i!=None:
-		if prefix == 'e':
-			self.widgets['add']['collection'].set_active(0)
-		else:
-			self.widgets['add']['collection'].set_active(int(i))
+	if i is not None:
+		self.widgets['add']['collection'].set_active(int(i))
 	self.widgets['add']['collection'].set_wrap_width(2)
 
 def fill_preferences_tags_combo(self):
@@ -621,7 +616,7 @@ def media_combos(self):
 	self.widgets['preferences']['media'].show_all()
 	if self.config.has_key('media'):
 		pos = gutils.findKey(self.config['media'], self.media_ids)
-		if pos !=None:
+		if pos  is not None:
 			self.widgets['preferences']['media'].set_active(int(pos))
 		else:
 			self.widgets['preferences']['media'].set_active(0)
@@ -644,7 +639,7 @@ def vcodec_combos(self):
 	self.widgets['preferences']['vcodec'].show_all()
 	if self.config.has_key('vcodec'):
 		pos = gutils.findKey(int(self.config['vcodec']), self.vcodecs_ids)
-		if pos!=None:
+		if pos is not None:
 			self.widgets['preferences']['vcodec'].set_active(int(pos))
 		else:
 			self.widgets['preferences']['vcodec'].set_active(0)

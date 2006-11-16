@@ -42,18 +42,18 @@ def add_movie(self):
 	self.widgets['add']['window'].show()
 	self.active_plugin = ''
 
-def set_details(self, item=None):
+def set_details(self, item=None):#{{{
 	if item is None:
 		item = {}
 	if item.has_key('movie_id') and item['movie_id']:
-		self._movie_id = item['movie_id']
+		self._am_movie_id = item['movie_id']
 	else:
-		self._movie_id = None
+		self._am_movie_id = None
 	w = self.widgets['add']
 
-	cast_buffer = w['cast'].get_buffer()
+	cast_buffer  = w['cast'].get_buffer()
 	notes_buffer = w['notes'].get_buffer()
-	plot_buffer = w['plot'].get_buffer()
+	plot_buffer  = w['plot'].get_buffer()
 
 	if item.has_key('o_title') and item['o_title']:
 		w['o_title'].set_text(item['o_title'])
@@ -229,6 +229,91 @@ def set_details(self, item=None):
 	w['o_title'].grab_focus()
 	from widgets import connect_add_signals
 	connect_add_signals(self)
+	#}}}
+
+def get_details(self): #{{{
+	w = self.widgets['add']
+	
+	cast_buffer  = w['cast'].get_buffer()
+	notes_buffer = w['notes'].get_buffer()
+	plot_buffer  = w['plot'].get_buffer()
+	
+	t_movies = {
+		'classification' : w['classification'].get_text(),
+		'color'          : w['color'].get_active(),
+		'cond'           : w['color'].get_active(),
+		'country'        : w['country'].get_text(),
+		'director'       : w['director'].get_text(),
+		'genre'          : w['genre'].get_text(),
+		'layers'         : w['layers'].get_active(),
+		'media_num'      : w['discs'].get_text(),
+		'number'         : w['number'].get_value(),
+		'o_site'         : w['o_site'].get_text(),
+		'o_title'        : w['o_title'].get_text(),
+		'rating'         : w['rating_slider'].get_value(),
+		'region'         : w['region'].get_active(),
+		'runtime'        : w['runtime'].get_text(),
+		'site'           : w['site'].get_text(),
+		'studio'         : w['studio'].get_text(),
+		'title'          : w['title'].get_text(),
+		'trailer'        : w['trailer'].get_text(),
+		'year'           : w['year'].get_text(),
+		'collection_id'  : self.collection_combo_ids[w['collection'].get_active()],
+		'volume_id'      : self.volume_combo_ids[w['volume'].get_active()],
+		'cast'           : cast_buffer.get_text(cast_buffer.get_start_iter(),cast_buffer.get_end_iter()),
+		'notes'          : notes_buffer.get_text(notes_buffer.get_start_iter(),notes_buffer.get_end_iter()),
+		'plot'           : plot_buffer.get_text(plot_buffer.get_start_iter(),plot_buffer.get_end_iter()),
+	}
+	if self._am_movie_id is not None:
+		t_movies['movie_id'] = self._am_movie_id
+
+	medium_id = w['media'].get_active()
+	if medium_id>0:
+		t_movies['medium_id'] = self.media_ids[medium_id]
+	vcodec_id = w['vcodec'].get_active()
+	if vcodec_id>0:
+		t_movies['vcodec_id'] = self.vcodecs_ids[vcodec_id]
+	if w['seen'].get_active():
+		t_movies['seen'] = True
+	else:
+		t_movies['seen'] = False
+
+	def get_id(model, text):
+		for i in model:
+			if i[1] == text:
+				return i[0]
+		return None
+	# languages
+	from sets import Set as set # for python2.3 compatibility
+	t_movies['languages'] = set()
+	for row in self.lang['model']:
+		lang_id   = get_id(self.lang['lang'], row[0])
+		lang_type = get_id(self.lang['type'], row[1])
+		acodec    = get_id(self.lang['acodec'], row[2])
+		achannel  = get_id(self.lang['achannel'], row[3])
+		subformat = get_id(self.lang['subformat'], row[4])
+		t_movies['languages'].add((lang_id, lang_type, acodec, achannel, subformat))
+
+	# tags
+	t_movies['tags'] = {}
+	for i in self.tags_ids:
+		if self.am_tags[i].get_active() == True:
+			t_movies['tags'][self.tags_ids[i]] = 1
+		
+	# validate data -------------------------------------------------------
+	for i in t_movies.keys():
+		if t_movies[i] == '':
+			t_movies[i] = None
+	for i in ['color','cond','layers','region', 'media', 'vcodec']:
+		if t_movies.has_key(i) and t_movies[i] == -1:
+			t_movies[i]=None
+	for i in ['volume_id','collection_id', 'runtime']:
+		if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
+			t_movies[i] = None
+	if t_movies.has_key('year') and (t_movies['year'] is None or int(t_movies['year']) < 1886):
+		t_movies['year'] = None
+
+	return t_movies	#}}}
 
 def add_movie_db(self, close):
 	if  len(self.widgets['add']['o_title'].get_text()) or len(self.widgets['add']['title'].get_text()):
@@ -239,7 +324,7 @@ def add_movie_db(self, close):
 		(filepath, filename) = os.path.split(self.widgets['add']['picture_name'].get_text())
 		t_movies = {
 			'cast'           : gutils.gescape(cast_buffer.get_text(cast_buffer.get_start_iter(), cast_buffer.get_end_iter())),
-			'classification' : gutils.gescape(self.am_classification.get_text()),
+			'classification' : gutils.gescape(self.widgets['add']['classification'].get_text()),
 			'color'          : self.widgets['add']['color'].get_active(),
 			'cond'           : self.widgets['add']['condition'].get_active(),
 			'country'        : gutils.gescape(self.widgets['add']['country'].get_text()),
@@ -307,6 +392,7 @@ def add_movie_db(self, close):
 				shutil.move(os.path.join(temp_dir, pic), tmp_dest)
 
 		if int(self.widgets['add']['number'].get_text()) >= 2:
+			# FIXME: what if number-2 doesn't exist? (TODO: search for nearest number)
 			insert_after = self.treemodel.get_iter(int(self.widgets['add']['number'].get_text())-2)
 		else:
 			insert_after = None
@@ -397,7 +483,7 @@ def populate_with_results(self):
 	if self.config.get('s_genre'):
 		self.widgets['add']['genre'].set_text(gutils.convert_entities(self.movie.genre))
 	if self.config.get('s_classification'):
-		self.am_classification.set_text(gutils.convert_entities(self.movie.classification))
+		self.widgets['add']['classification'].set_text(gutils.convert_entities(self.movie.classification))
 	if self.config.get('s_studio'):
 		self.widgets['add']['studio'].set_text(gutils.convert_entities(self.movie.studio))
 	if self.config.get('s_o_site'):
@@ -581,3 +667,4 @@ def clone_movie(self):
 	self.widgets['treeview'].set_cursor(next_number-1)
 	self.treeview_clicked()
 
+# vim: fdm=marker

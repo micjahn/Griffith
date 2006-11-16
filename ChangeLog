@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-11-16 Piotr Ozarowski <ozarow@gmail.com>
+	* "Add movie" window is now used for editing movie details
+
 2006-09-25 Piotr Ozarowski <ozarow@gmail.com>
 	* Added possibility to change Griffith's home directory
 

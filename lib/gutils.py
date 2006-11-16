@@ -366,19 +366,11 @@ def clean_posters_dir(self):
 		print "No orphan files found."
 
 def decompress(data):
-	import gzip
-	from tempfile import mktemp
-	from os import remove
-
-	# zlib.decompress(data) doesn't work :-(
-	# workaround:
-	tmpfile_name = mktemp()
-	tmpfile = open(tmpfile_name, 'w')
-	tmpfile.write(data)
-	tmpfile.close()
+	import gzip, StringIO
 	try:
-		data = gzip.open(tmpfile_name).read()
-		remove(tmpfile_name)
+		compressedStream = StringIO.StringIO(data)
+		gzipper = gzip.GzipFile(fileobj=compressedStream)
+		data = gzipper.read()
 	except:
-		remove(tmpfile_name)
+		pass
 	return data
