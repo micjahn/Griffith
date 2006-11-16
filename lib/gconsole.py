@@ -28,55 +28,89 @@ import gutils
 def check_args(self):
 	if len(sys.argv)>1:
 		try:
-			opts, args = getopt.getopt(sys.argv[1:], "hDco:s:d:w:y:",
-					['help', 'debug', 'sqlecho', 'clean', 'fix-db', 'search_original=', 'search_title=', 'director=', 'with=', 'year='])
+			opts, args = getopt.getopt(sys.argv[1:], 'hDCo:t:d:c:y:s:',
+				('help', 'debug', 'sqlecho', 'clean', 'fix-db',	'original_title=',
+					'title=', 'director=', 'cast=', 'year=', 'sort=', 'seen=',
+					'loaned=', 'number=', 'runtime=', 'rating='))
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
 			sys.exit(2)
 
+		sort = None
 		where = {}
 		for o, a in opts:
 			if o in ('-h', '--help'):
 				con_usage()
 				sys.exit()
-			if o in ('-D', '--debug'):
+			elif o in ('-D', '--debug'):
 				self.debug.set_debug()
-			if o in ('-c', '--clean'):
+			elif o in ('-C', '--clean'):
 				gutils.clean_posters_dir(self)
 				sys.exit()
-			if o == '--fix-db':
+			elif o == '--fix-db':
 				self.db.fix_old_data()
-			if o == '--sqlecho':
+			elif o == '--sqlecho':
 				self.db.metadata.engine.echo = True
-			if o in ('-o', '--search_original'):
-				where['original_title'] = a
-			if o in ('-s', '--search_title'):
+			elif o in ('-s', '--sort'):
+				sort = a
+			elif o in ('-o', '--original_title'):
+				where['o_title'] = a
+			elif o in ('-t', '--title'):
 				where['title'] = a
-			if o in ('-d', '--director'):
+			elif o in ('-d', '--director'):
 				where['director'] = a
-			if o in ('-w', '--with'):
-				where['actors'] = a
-			if o in ('-y', '--year'):
+			elif o in ('-c', '--cast'):
+				where['cast'] = a
+			elif o in ('-y', '--year'):
 				where['year'] = str(int(a))
-		if len(where)>0:
-			con_search_movie(self, where)
+			elif o == '--seen':
+				where['seen'] = a
+			elif o == '--loaned':
+				where['loaned'] = a
+			elif o == '--number':
+				where['number'] = a
+			elif o == '--runtime':
+				where['runtime'] = a
+			elif o == '--rating':
+				where['rating'] = a
+		if where:
+			con_search_movie(self, where, sort)
 
-def con_search_movie(self, where): # FIXME
-	query = ''
+def con_search_movie(self, where, sort=None):
+	# for search function
+	from sqlalchemy import select
+	col = lambda x: self.db.Movie.c[x]
+	columns = (col('number'), col('title'), col('o_title'), col('director'), col('year'))
+	
+	sort_columns = []
+	if sort:
+		for i in sort.split(','):
+			if self.db.Movie.c.has_key(i):
+				sort_columns.append(col(i))
+	else:
+		sort_columns = [col('number')]
+
+	statement = select(columns=columns, order_by=sort_columns)
+
 	for i in where:
-		query += i + " LIKE '%" + where[i] + "%' AND "
-	query = query[:len(query)-5] # cut last " AND "
+		if i in ('seen', 'loaned'):	# force boolean
+			if where[i].lower() in ('0', 'no', 'n'):
+				where[i] = False
+			else:
+				where[i] = True
+		if i in ('year', 'number', 'runtime', 'seen', 'loaned', 'rating'):
+			statement.append_whereclause(col(i)==where[i])
+		else:
+			statement.append_whereclause(col(i).like('%' + where[i] + '%' ))
 
-	cursor = self.db.get_all_data(table_name="movies", order_by="number ASC", where=query,
-			what='number, title, original_title, year, director')
-	if cursor.EOF:
+	movies = statement.execute().fetchall()
+	if not movies:
 		print _("No movie found")
-	while not cursor.EOF:
-		row = cursor.GetRowAssoc(0)
-		print "\033[31;1m[%s]\033[0m\t\033[38m%s\033[0m (%s), %s - \033[32m%s\033[0m"%(row['number'],row['title'], \
-			row['original_title'], row['year'], row['director'])
-		cursor.MoveNext()
+	else:
+		for movie in movies:
+			print "\033[31;1m[%s]\033[0m\t\033[38m%s\033[0m (\033[35m%s\033[0m), %s - \033[32m%s\033[0m" % \
+				(movie.number, movie.title, movie.o_title, movie.year, movie.director)
 	sys.exit()
 
 def con_usage():
@@ -85,13 +119,14 @@ def con_usage():
 	print "\nOPTION:"
 	print "-h, --help\tprints this screen"
 	print "-D, --debug\trun with more debug info"
-	print "-c, --clean\tfind and delete orphan files in poster's directory"
+	print "-C, --clean\tfind and delete orphan files in posters directory"
 	print "--fix-db\tfix old database"
 	print "--sqlecho\tprint SQL queries"
 	print "\n printing movie list:"
+	print "-c <expr>, --cast=<expr>"
 	print "-d <expr>, --director=<expr>"
 	print "-o <expr>, --original_title=<expr>"
-	print "-s <expr>, --search_title=<expr>"
-	print "-w <expr>, --with=<expr>"
-	print "-y <expr>, --year=<expr>"
+	print "-t <expr>, --title=<expr>"
+	print "-y <number>, --year=<number>"
+	print "-s <columns>, --sort=<columns>"
 

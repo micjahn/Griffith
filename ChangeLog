@@ -5,7 +5,14 @@ Griffith ChangeLog
 (c) 2005-2006 Vasco Nunes
 
 2006-11-16 Piotr Ozarowski <ozarow@gmail.com>
-	* "Add movie" window is now used for editing movie details
+	* "Edit movie details in 'Add movie' window" transition finished
+	* Show right window after editing person's details
+	* Added more options to command line
+	* GNOME HIG related changes in Glade file (still needs work)
+
+2006-11-08 Piotr Ozarowski <ozarow@gmail.com>
+	* "Edit movie details in 'Add movie' window" transition started
+	  + Keep widgets in Griffith.widgets dictionary
 
 2006-09-25 Piotr Ozarowski <ozarow@gmail.com>
 	* Added possibility to change Griffith's home directory

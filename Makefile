@@ -8,7 +8,7 @@
 PACKAGE=griffith
 LANGUAGES=$(shell find i18n/ -maxdepth 1 -mindepth 1 -type d -printf "%f ")
 VERSION=$(shell grep "^pversion" lib/version.py | cut -d \"  -f 2)
-TEMPLATES= $(shell cd data/export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^\.svn]*" -print)
+TEMPLATES= $(shell cd export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^\.svn]*" -print)
 
 .PHONY: help clean freshmeat gnomefiles install
 
@@ -72,7 +72,7 @@ install:
 	# installing export templates:
 	for dir in $(TEMPLATES); do \
 		${INSTALL} -m 755 -d  ${TPLDIR}/$$dir; \
-		${FIND} data/export_templates/$$dir -maxdepth 1 -type f \
+		${FIND} export_templates/$$dir -maxdepth 1 -type f \
 			-exec ${INSTALL} -m 644 '{}' ${TPLDIR}/$$dir \;; \
 	done
 	

@@ -31,7 +31,7 @@ plugin_name = "CSV"
 plugin_description = _("Full CSV list export plugin")
 plugin_author = "Vasco Nunes"
 plugin_author_email = "<vasco.m.nunes@gmail.com>"
-plugin_version = "0.1"
+plugin_version = "0.2"
 
 class ExportPlugin:
 
@@ -54,13 +54,12 @@ class ExportPlugin:
                     overwrite = False
                     
             if overwrite == True or overwrite == None:
-                writer = csv.writer(file(filename[0], "w"), dialect=csv.excel)
-                cursor = self.db.get_all_data(order_by="number ASC")
-		while not cursor.EOF:
-                    row = cursor.GetRowAssoc(0)
+                writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
+		for movie in self.db.Movie.select():
                     t = []
-                    for s in row:
-                        t.append(row[s])
+                    for s in ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
+                            'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',
+                            'plot', 'cast', 'notes','image'):
+                        t.append(movie[s])
                     writer.writerow(t)
-                    cursor.MoveNext()
                 gutils.info(self, _("%s file has been created.")%"CSV", self.parent)

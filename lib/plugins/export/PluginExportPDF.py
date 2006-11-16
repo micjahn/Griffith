@@ -44,7 +44,7 @@ plugin_name = "PDF"
 plugin_description = _("PDF export plugin")
 plugin_author = "Vasco Nunes"
 plugin_author_email = "<vasco.m.nunes@gmail.com>"
-plugin_version = "0.2"
+plugin_version = "0.3"
 
 class ExportPlugin:
     def __init__(self, database, locations, parent, debug):
@@ -58,7 +58,7 @@ class ExportPlugin:
     def export_simple_pdf(self):
         """exports a simple movie list to a pdf file"""
         
-        myconfig = config.Config()
+        myconfig = config.Config(os.path.join(self.locations['home'], 'griffith.conf'))
         if myconfig.get('font', '')!='':
                 self.fontName = "custom_font"
                 pdfmetrics.registerFont(TTFont(self.fontName, myconfig.get('font', '')))
@@ -80,7 +80,7 @@ class ExportPlugin:
                 style = self.styles["Normal"]
                 Story = [Spacer(1,2*inch)]
                 # define some custom stylesheetfont
-                total = self.db.Movie.mapper.count()
+                total = self.db.Movie.count()
                 p = Paragraph("<font name='" + self.fontName +"' size=\"18\">" + saxutils.escape((_("List of films")).encode('utf-8')) + '</font>', self.styles["Heading1"] )
                 Story.append(p)
                 Story.append(Paragraph(" ",style))

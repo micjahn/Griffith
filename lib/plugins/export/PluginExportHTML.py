@@ -3,7 +3,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ plugin_name         = 'HTML'
 plugin_description  = _('Plugin exports data using templates')
 plugin_author       = 'Piotr Ozarowski'
 plugin_author_email = 'ozarow@gmail.com'
-plugin_version      = '3.6'
+plugin_version      = '3.7'
 
 class ExportPlugin(gtk.Window):
 	#==[ configuration - default values ]==========={{{
@@ -60,7 +60,7 @@ class ExportPlugin(gtk.Window):
 		'poster_format'     : 'jpg'
 	}
 	fields = {
-		'actors'         : False,
+		'cast'         : False,
 		'classification' : False,
 		'country'        : True,
 		'genre'          : True,
@@ -80,7 +80,7 @@ class ExportPlugin(gtk.Window):
 		'seen'           : True,
 		'title'          : True,
 		'year'           : True,
-		'notes'            : False,
+		'notes'          : False,
 #		'region'         : False,
 #		'layers'         : False,
 #		'condition'      : False,
@@ -90,7 +90,7 @@ class ExportPlugin(gtk.Window):
 	}
 	
 	names = {
-		_('Cast')           : 'actors',
+		_('Cast')           : 'cast',
 		_('Classification') : 'classification',
 		_('Country')        : 'country',
 		_('Director')       : 'director',
@@ -123,7 +123,7 @@ class ExportPlugin(gtk.Window):
 	def __init__(self, database, locations, parent, debug):#{{{
 		self.db = database
 		self.debug = debug
-		self.share_dir = locations['share']
+		self.locations = locations
 		self.widgets = {}
 		self.style_list = {}
 		self.templates = self.make_template_list()
@@ -133,7 +133,7 @@ class ExportPlugin(gtk.Window):
 		self.fill_widgets()
 	#}}}
 
-	def get_node_value_by_language(self, parent, name, language="en"):#{{{
+	def get_node_value_by_language(self, parent, name, language='en'):#{{{
 		nodes = parent.getElementsByTagName(name)
 		for node in nodes:
 			if node.parentNode != parent:
@@ -141,7 +141,7 @@ class ExportPlugin(gtk.Window):
 			elif node.attributes.get('xml:lang') is not None:
 				if node.attributes.get('xml:lang').value == language:
 					return node.firstChild.nodeValue
-			else:	# if node has no xml:lang attribute - it must be default value
+			else:	# set default value in case node has no xml:lang attribute
 				value = node.firstChild.nodeValue
 		return value
 	#}}}		
@@ -152,11 +152,11 @@ class ExportPlugin(gtk.Window):
 			language = os.environ['LANG'][:2]
 		templates = {}
 		j=0 # number of templates
-		dir = os.path.join(self.share_dir, 'export_templates')
-		for i in os.listdir(dir):
-			fileName = os.path.join(dir, i)
+		dirName = os.path.join(self.locations['share'], 'export_templates')
+		for i in os.listdir(dirName):
+			fileName = os.path.join(dirName, i)
 			if not os.path.islink(fileName) and os.path.isdir(fileName):
-				# delete previous values
+				# clear previous data
 				doc = None; styles = {};
 				tpl_name=None; tpl_author=None; tpl_email=None; tpl_version=None; tpl_ext=None; tpl_desc=None
 				try:
@@ -208,41 +208,43 @@ class ExportPlugin(gtk.Window):
 
 	#==[ widgets ]=================================={{{
 	def define_widgets(self, glade_file):
-		# main window
-		self.widgets['w_eh']                  = glade_file.get_widget('w_eh')
-		self.widgets['fcw']                   = glade_file.get_widget('fcw')
-		self.widgets['box_include_1']         = glade_file.get_widget('box_include_1')
-		self.widgets['box_include_2']         = glade_file.get_widget('box_include_2')
-		self.widgets['box_include_3']         = glade_file.get_widget('box_include_3')
-		self.widgets['sb_split_num']          = glade_file.get_widget('sb_split_num')
-		self.widgets['rb_split_files']        = glade_file.get_widget('rb_split_files')
-		self.widgets['rb_split_movies']       = glade_file.get_widget('rb_split_movies')
-		self.widgets['rb_seen']               = glade_file.get_widget('rb_seen')
-		self.widgets['rb_seen_only']          = glade_file.get_widget('rb_seen_only')
-		self.widgets['rb_seen_only_n']        = glade_file.get_widget('rb_seen_only_n')
-		self.widgets['rb_loaned']             = glade_file.get_widget('rb_loaned')
-		self.widgets['rb_loaned_only']        = glade_file.get_widget('rb_loaned_only')
-		self.widgets['rb_loaned_only_n']      = glade_file.get_widget('rb_loaned_only_n')
-		self.widgets['entry_header']          = glade_file.get_widget('entry_header')
-		self.widgets['cb_custom_style']       = glade_file.get_widget('cb_custom_style')
-		self.widgets['cb_reverse']            = glade_file.get_widget('cb_reverse')
-		self.widgets['combo_style']           = glade_file.get_widget('combo_style')
-		self.widgets['combo_sortby']          = glade_file.get_widget('combo_sortby')
-		self.widgets['combo_theme']           = glade_file.get_widget('combo_theme')
-		self.widgets['fcb_custom_style_file'] = glade_file.get_widget('fcb_custom_style_file')
-		self.widgets['l_tpl_author']          = glade_file.get_widget('l_tpl_author')
-		self.widgets['l_tpl_email']           = glade_file.get_widget('l_tpl_email')
-		self.widgets['l_tpl_version']         = glade_file.get_widget('l_tpl_version')
-		self.widgets['l_tpl_desc']            = glade_file.get_widget('l_tpl_desc')
-		self.widgets['image_preview']         = glade_file.get_widget('image_preview')
-		self.widgets['vb_posters']            = glade_file.get_widget('vb_posters')
-		self.widgets['sb_height']             = glade_file.get_widget('sb_height')
-		self.widgets['sb_width']              = glade_file.get_widget('sb_width')
-		self.widgets['cb_black']              = glade_file.get_widget('cb_black')
-		self.widgets['combo_format']          = glade_file.get_widget('combo_format')
+		get = lambda x: glade_file.get_widget(x)
+		self.widgets = {
+			'window'                : get('w_eh'),
+			'fcw'                   : get('fcw'),
+			'box_include_1'         : get('box_include_1'),
+			'box_include_2'         : get('box_include_2'),
+			'box_include_3'         : get('box_include_3'),
+			'sb_split_num'          : get('sb_split_num'),
+			'rb_split_files'        : get('rb_split_files'),
+			'rb_split_movies'       : get('rb_split_movies'),
+			'rb_seen'               : get('rb_seen'),
+			'rb_seen_only'          : get('rb_seen_only'),
+			'rb_seen_only_n'        : get('rb_seen_only_n'),
+			'rb_loaned'             : get('rb_loaned'),
+			'rb_loaned_only'        : get('rb_loaned_only'),
+			'rb_loaned_only_n'      : get('rb_loaned_only_n'),
+			'entry_header'          : get('entry_header'),
+			'cb_custom_style'       : get('cb_custom_style'),
+			'cb_reverse'            : get('cb_reverse'),
+			'combo_style'           : get('combo_style'),
+			'combo_sortby'          : get('combo_sortby'),
+			'combo_theme'           : get('combo_theme'),
+			'fcb_custom_style_file' : get('fcb_custom_style_file'),
+			'l_tpl_author'          : get('l_tpl_author'),
+			'l_tpl_email'           : get('l_tpl_email'),
+			'l_tpl_version'         : get('l_tpl_version'),
+			'l_tpl_desc'            : get('l_tpl_desc'),
+			'image_preview'         : get('image_preview'),
+			'vb_posters'            : get('vb_posters'),
+			'sb_height'             : get('sb_height'),
+			'sb_width'              : get('sb_width'),
+			'cb_black'              : get('cb_black'),
+			'combo_format'          : get('combo_format'),
+		}
 
 		# define handlers for general events
-		dic = {
+		glade_file.signal_autoconnect({
 			'on_export_button_clicked'           : self.export_data,
 			'on_rb_split_files_toggled'          : self.on_rb_split_files_toggled,
 			'on_rb_split_movies_toggled'         : self.on_rb_split_movies_toggled,
@@ -259,14 +261,12 @@ class ExportPlugin(gtk.Window):
 			'on_combo_style_changed'             : self.on_combo_style_changed,
 			'on_combo_theme_changed'             : self.on_combo_theme_changed,
 			'on_cb_convert_toggled'              : self.on_cb_convert_toggled,
-		}
-		glade_file.signal_autoconnect(dic)
+		})
 
 	def fill_widgets(self):
 		# themes
-		#self.combo_theme = {}	# to recognize entry later
 		for i in self.templates:
-			self.widgets['combo_theme'].insert_text(i, self.templates[i]['name'])	# template name
+			self.widgets['combo_theme'].insert_text(i, self.templates[i]['name'])
 
 		# sortby combo
 		for i in self.names:
@@ -280,15 +280,15 @@ class ExportPlugin(gtk.Window):
 			j = j + 1
 			field = self.names[i]
 			self.widgets['cb_'+field] = gtk.CheckButton(i)
-			self.widgets['cb_'+field].set_name('cb_'+field)
-			self.widgets['cb_'+field].connect("toggled", self.on_cb_data_toggled)
+			self.widgets['cb_'+field].set_name("cb_%s" % field)
+			self.widgets['cb_'+field].connect('toggled', self.on_cb_data_toggled)
 			self.widgets['cb_'+field].set_active(self.fields[field])
 			if j <= k:
-				self.widgets['box_include_1'].add(self.widgets['cb_'+field])
+				self.widgets['box_include_1'].add(self.widgets["cb_%s" % field])
 			elif j<= 2*k:
-				self.widgets['box_include_2'].add(self.widgets['cb_'+field])
+				self.widgets['box_include_2'].add(self.widgets["cb_%s" % field])
 			else:
-				self.widgets['box_include_3'].add(self.widgets['cb_'+field])
+				self.widgets['box_include_3'].add(self.widgets["cb_%s" % field])
 		self.widgets['box_include_1'].show_all()
 		self.widgets['box_include_2'].show_all()
 		self.widgets['box_include_3'].show_all()
@@ -327,7 +327,7 @@ class ExportPlugin(gtk.Window):
 	#==[ callbacks ]================================{{{
 	# buttons:
 	def on_quit(self, widget=None):
-		self.widgets['w_eh'].destroy()
+		self.widgets['window'].destroy()
 
 	# data tab -------------------------------------#{{{
 	def on_rb_split_files_toggled(self, widget):
@@ -381,15 +381,15 @@ class ExportPlugin(gtk.Window):
 		tpl_id = widget.get_active()
 		self.config['template'] = tpl_id
 		# fill authors data
-		self.widgets['l_tpl_author'].set_markup('<i>'+self.templates[tpl_id]['author']+'</i>')
-		self.widgets['l_tpl_email'].set_markup('<i>'+self.templates[tpl_id]['email']+'</i>')
+		self.widgets['l_tpl_author'].set_markup("<i>%s</i>" % self.templates[tpl_id]['author'])
+		self.widgets['l_tpl_email'].set_markup("<i>%s</i>" % self.templates[tpl_id]['email'])
 		self.widgets['l_tpl_email'].set_selectable(True)
-		self.widgets['l_tpl_version'].set_markup('<i>'+self.templates[tpl_id]['version']+'</i>')
-		self.widgets['l_tpl_desc'].set_markup('<i>'+self.templates[tpl_id]['desc']+'</i>')
+		self.widgets['l_tpl_version'].set_markup("<i>%s</i>" % self.templates[tpl_id]['version'])
+		self.widgets['l_tpl_desc'].set_markup("<i>%s</i>" % self.templates[tpl_id]['desc'])
 		# remove old style list
 		self.widgets['combo_style'].get_model().clear()
 		# ... and add new
-		if self.templates[tpl_id]['styles'] != None:
+		if self.templates[tpl_id]['styles'] is not None:
 			for i in self.templates[tpl_id]['styles']:
 				self.widgets['combo_style'].insert_text(i, self.templates[tpl_id]['styles'][i]['name'])	# template name
 			self.widgets['combo_style'].set_active(0)
@@ -402,15 +402,15 @@ class ExportPlugin(gtk.Window):
 		self.widgets['cb_custom_style'].set_active(False)
 
 		tpl_id = self.config['template']
-		template_dir = os.path.join(self.share_dir, 'export_templates', self.templates[tpl_id]['dir'])
+		template_dir = os.path.join(self.locations['share'], 'export_templates', self.templates[tpl_id]['dir'])
 		preview_file = self.templates[self.config['template']]['styles'][self.config['style']]['preview']
-		if preview_file != None:
+		if preview_file is not None:
 			preview_file = os.path.join(template_dir, preview_file)
-		if preview_file != None and not os.path.isfile(preview_file):
+		if preview_file is not None and not os.path.isfile(preview_file):
 			preview_file = os.path.join(template_dir, 'preview.jpg')	# try default preview image
 			if not os.path.isfile(preview_file):
 				preview_file = None
-		if preview_file != None:
+		if preview_file is not None:
 			self.widgets['image_preview'].set_from_file(preview_file)
 		else:
 			self.widgets['image_preview'].set_from_stock(gtk.STOCK_MISSING_IMAGE, gtk.ICON_SIZE_LARGE_TOOLBAR)
@@ -427,32 +427,31 @@ class ExportPlugin(gtk.Window):
 	def on_fcb_custom_style_file_activated(self, widget):
 		self.config['custom_style_file'] = widget.get_filename()
 		self.widgets['cb_custom_style'].set_active(True)
-	#}}}
-	#}}}
+	#}}} }}}
 
 	def make_navigation(self, pages, current):#{{{
-		if pages > 1:				# navigation needed
+		if pages > 1:	# navigation needed
 			tpl_id = self.config['template']
 			t = '<div class="navi">\n\t<p id="prev">'
 			if current > 1:
-				t +='<a href="./page_' + str(current-1) + '.' + \
-					self.templates[tpl_id]['ext'] + '">' + _('previous') + '</a>'
-			else:				# first page
+				t += '<a href="./page_%s.%s">%s</a>' % \
+					(str(current-1), self.templates[tpl_id]['ext'], _('previous'))
+			else:	# first page
 				t += _('previous')
-			t += '</p>\n'
+			t += "</p>\n"
 			for i in range(1, pages+1):
 				if i == current:
-					t +='\t<p id="current">' + str(i) + '</p>\n'
+					t +='\t<p id="current">%s</p>\n' % str(i)
 				else:
-					t +='\t<p><a href="./page_' + str(i) + '.' + \
-						self.templates[tpl_id]['ext'] + '">' + str(i) + '</a></p>\n'
+					t +='\t<p><a href="./page_%s.%s">%s</a></p>\n' % \
+						(str(i), self.templates[tpl_id]['ext'], str(i))
 			t += '\t<p id="next">'
 			if pages > current:
-				t +='<a href="./page_' + str(current+1) + '.' + \
-						self.templates[tpl_id]['ext'] + '">' + _('next') + '</a>'
-			else:				# last page
+				t +='<a href="./page_%s.%s">%s</a>' % \
+						(str(current+1), self.templates[tpl_id]['ext'], _('next'))
+			else:	# last page
 				t += _('next')
-			t +='</p>\n</div>'
+			t += "</p>\n</div>"
 			return t
 		else:
 			return ''
@@ -498,20 +497,20 @@ class ExportPlugin(gtk.Window):
 
 		# where clause
 		if config['seen_only'] == 1:
-				statement.append_whereclause(self.db.Movie.c.seen==True)
+			statement.append_whereclause(self.db.Movie.c.seen==True)
 		elif config['seen_only'] == 2:
-				statement.append_whereclause(self.db.Movie.c.seen!=True)
+			statement.append_whereclause(self.db.Movie.c.seen!=True)
 		if config['loaned_only'] == 1:
-				statement.append_whereclause(self.db.Movie.c.loaned==True)
+			statement.append_whereclause(self.db.Movie.c.loaned==True)
 		elif config['loaned_only'] == 2:
-				statement.append_whereclause(self.db.Movie.c.loaned!=True)
+			statement.append_whereclause(self.db.Movie.c.loaned!=True)
 		
 		return statement.execute()
 	#}}}
 
 	#==[ main function ]============================{{{
 	def export_data(self, widget):
-		'''Main exporting function'''
+		"""Main exporting function"""
 
 		config = self.config
 		fields = self.fields
@@ -548,7 +547,6 @@ class ExportPlugin(gtk.Window):
 
 		if fields['image']:
 			# import modules needed later
-			import gglobals
 			if config['poster_convert']:
 				from PIL import Image
 				# py2exe problem workaround:
@@ -578,7 +576,7 @@ class ExportPlugin(gtk.Window):
 				return 5
 
 		if config['custom_style']:
-			if config['custom_style_file']!=None and os.path.isfile(config['custom_style_file']):
+			if config['custom_style_file'] is not None and os.path.isfile(config['custom_style_file']):
 				try:
 					shutil.copy(config['custom_style_file'],config['exported_dir'])
 				except:
@@ -589,9 +587,9 @@ class ExportPlugin(gtk.Window):
 				config['custom_style'] = False
 
 
-		if config['style'] != None and config['custom_style']==False:
+		if config['style'] is not None and config['custom_style']==False:
 			style = self.templates[tid]['styles'][config['style']]['file']
-			style_path = os.path.join(self.share_dir, 'export_templates', self.templates[tid]['dir'], style)
+			style_path = os.path.join(self.locations['share'], 'export_templates', self.templates[tid]['dir'], style)
 			try:
 				shutil.copy(style_path,config['exported_dir'])
 			except:
@@ -612,7 +610,7 @@ class ExportPlugin(gtk.Window):
 		# calculate number of files to be created (pages)
 		self.pages = int(math.ceil(float(number_of_exported_movies) / self.entries_per_page))
 
-		template_dir = os.path.join(self.share_dir, 'export_templates', self.templates[tid]['dir'])
+		template_dir = os.path.join(self.locations['share'], 'export_templates', self.templates[tid]['dir'])
 		try:
 			filename = 'page.tpl'
 			tpl_header = file(os.path.join(template_dir,filename), "r").read()
@@ -708,8 +706,8 @@ class ExportPlugin(gtk.Window):
 			
 			# copy poster
 			if fields['image']:
-				if row['image'] != None:
-					image_file = os.path.join(gglobals.griffith_dir, 'posters', str(row['image']) + '.jpg')
+				if row['image'] is not None:
+					image_file = os.path.join(self.locations['home'], 'posters', str(row['image']) + '.jpg')
 					if not config['poster_convert']:	# copy file
 						try:
 							shutil.copy(image_file,	posters_dir)

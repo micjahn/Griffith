@@ -61,17 +61,20 @@ class ExportPlugin:
 				root = doc.documentElement
 				
 				# create object
-				cursor = self.db.get_all_data(order_by="number ASC")
-				while not cursor.EOF:
-					row = cursor.GetRowAssoc(0)
+				for movie in self.db.Movie.select():
 					e = doc.createElement('movie')
 					root.appendChild(e)
-					for key,value in row.items():
+					for key in movie.c.keys():
 						e2 = doc.createElement(key)
-						t = doc.createTextNode(str(value))
+						if movie[key] is None:
+							value = ''
+						elif movie[key] in (True, False):
+							value = str(int(movie[key]))
+						else:
+							value = str(movie[key])
+						t = doc.createTextNode(value)
 						e2.appendChild(t)
 						e.appendChild(e2)
-					cursor.MoveNext()
 					
 				# write XML to file
 				fp = open(filename[0], "w")
