@@ -87,22 +87,6 @@ def update_tree_thumbnail(self, t_image_path):
 	self.treemodel.set_value(tmp_iter, 1, pixbuf)
 	gutils.garbage(pixbuf)
 
-def change_rating_from_slider(self):
-	rating = int(self.widgets['add']['rating_slider'].get_value())
-	self.widgets['movie']['image_rating'].show()
-	try:
-		rimage = int(str(self.config.get('rating_image')))
-	except:
-		rimage = 0
-	if rimage:
-		prefix = ""
-	else:
-		prefix = "meter"
-
-	rating_file = "%s/%s0%d.png" % (self.locations['images'], prefix, rating)
-	handler = self.widgets['movie']['image_rating'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(rating_file))
-	gutils.garbage(handler)
-
 def fetch_bigger_poster(self):
 	match = 0
 	self.debug.show("fetching poster from amazon")

@@ -261,9 +261,6 @@ class Griffith:
 
 	# rating --------------------------------------------------------------
 
-	def scale_rating_change(self, *args):
-		edit.change_rating_from_slider(self)
-
 	def scale_rating_change_add(self, *args):
 		add.change_rating_from_slider(self)
 
