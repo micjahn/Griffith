@@ -92,10 +92,12 @@ def trim(text,key1,key2):
 	return text[p1:p2]
 
 def after(text,key):
-	return text.split(key, 1)[1]
+	p1 = string.find(text,key)
+	return text[p1+len(key):]
 
 def before(text,key):
-	return text.split(key, 1)[0]
+	p1 = string.find(text,key)
+	return text[:p1]
 
 def gescape(text):
 	text=string.replace(text,"'", "''")
