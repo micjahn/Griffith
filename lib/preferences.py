@@ -102,6 +102,10 @@ def show_preferences(self):
 	w['s_cast'].set_active(bool(self.config.get('s_with')))
 	w['s_year'].set_active(bool(self.config.get('s_year')))
 	
+	if self.config.get('sortby'):
+		tmp = self.sort_criteria.index(self.config.get('sortby'))
+		w['sortby'].set_active(tmp)
+	
 	plugins = gutils.read_plugins('PluginMovie', \
 		self.locations['movie_plugins'])
 	plugins.sort()
@@ -176,6 +180,15 @@ def save_preferences(self):
 		self.config['view_director'] = 'True'
 	else:
 		self.config['view_director'] = 'False'
+	
+	# sortby
+	if w['sortby'].get_active():
+		field = self.sort_criteria[w['sortby'].get_active()]
+		if field:
+			self.config['sortby'] = field
+	else:
+		self.config['sortby'] = 'number'
+	
 
 	# pdf font
 	if w['font'].get_filename():

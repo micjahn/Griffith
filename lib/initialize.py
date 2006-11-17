@@ -374,10 +374,16 @@ def combos(self):
 		self.widgets['add']['layers'].insert_text(i, layer)
 		i += 1
 	i = 0
-	for criteria in self.sort_criteria:
+	for criteria in self.search_criteria:
 		self.widgets['filter']['criteria'].insert_text(i, self.field_names[criteria])
 		i += 1
 	self.widgets['filter']['criteria'].set_active(0)
+	i = 0
+	for field in self.sort_criteria:
+		self.widgets['preferences']['sortby'].insert_text(i, self.field_names[field])
+		i += 1
+	self.widgets['preferences']['sortby'].set_wrap_width(3)
+	self.widgets['preferences']['sortby'].set_active(0) # Number
 
 def dictionaries(self):
 	"""initializes data filled dynamically by users"""
@@ -395,7 +401,10 @@ def dictionaries(self):
 	initialize.vcodec_combos(self)
 	initialize.media_combos(self)
 	initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-	self.sort_criteria = (
+	self.sort_criteria = [ # "[]" because of index() 
+		'number', 'o_title', 'title', 'director', 'year', 'runtime', 'country',
+		'genre', 'studio', 'media_num', 'rating']
+	self.search_criteria = (
 		'o_title', 'title', 'number', 'director',
 		'plot', 'cast', 'notes', 'year', 'runtime', 'country',
 		'genre', 'studio', 'media_num', 'rating')

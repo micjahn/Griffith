@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-11-17 Piotr Ozarowski <ozarow@gmail.com>
+	* Default sort column can be set in preferences
+
 2006-11-16 Piotr Ozarowski <ozarow@gmail.com>
 	* "Edit movie details in 'Add movie' window" transition finished
 	* Show right window after editing person's details

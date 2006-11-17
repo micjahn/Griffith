@@ -28,15 +28,23 @@ def change_filter(self):
 	self.widgets['menu']['all_movies'].set_active(2)
 	col_id = self.collection_combo_ids[self.widgets['filter']['column'].get_active()]
 	text = gutils.gescape(self.widgets['filter']['text'].get_text())
+	
+	# sort column
+	sort_column_name = self.config.get('sortby', 'number')
+	if self.db.Movie.c.has_key(sort_column_name):
+		order_column = self.db.Movie.c[sort_column_name]
+	else:
+		order_column = self.db.Movie.c.number
+	
 	if(len(text)==0):
 		if col_id != 0:
-			movies = self.db.Movie.select(self.db.Movie.c.collection_id==col_id)
+			movies = self.db.Movie.select(self.db.Movie.c.collection_id==col_id, order_by=[order_column])
 		else:
-			movies = self.db.Movie.select()
+			movies = self.db.Movie.select(order_by=[order_column])
 	else:
 		from sqlalchemy import select
-		movies = select(self.db.Movie.c, order_by=[self.db.Movie.c.number])
-		criteria = self.sort_criteria[self.widgets['filter']['criteria'].get_active()]
+		movies = select(self.db.Movie.c, order_by=[order_column])
+		criteria = self.search_criteria[self.widgets['filter']['criteria'].get_active()]
 		if {'year':None, 'runtime':None, 'media_num':None, 'rating':None}.has_key(criteria):
 			movies.append_whereclause(self.db.Movie.c[criteria]==text)
 		else:

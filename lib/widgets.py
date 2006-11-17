@@ -197,6 +197,8 @@ def define_widgets(self, gladefile):
 		'subformat_name':	get('subformat_name_combo'),
 		'medium_name':		get('medium_name_combo'),
 		'vcodec_name':		get('vcodec_name_combo'),
+		'sortby':		get('p_sortby'),
+		'sortby_reverse':	get('p_sortby_reverse'),
 	}
 	self.widgets['preferences']['treeview'].connect('button_press_event', self.on_p_tree_button_press_event)
 	self.widgets['preferences']['window'].connect('delete_event', self.on_delete_event_p)

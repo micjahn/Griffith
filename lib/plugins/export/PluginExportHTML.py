@@ -97,7 +97,7 @@ class ExportPlugin(gtk.Window):
 		_('Genre')          : 'genre',
 		_('Image')          : 'image',
 		_('Official site')  : 'o_site',
-		_('IMDb page')      : 'site',
+		_('Site')           : 'site',
 		_('Trailer')        : 'trailer',
 		_('Loaned')         : 'loaned',
 		_('Media')          : 'medium_id',
