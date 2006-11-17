@@ -215,14 +215,12 @@ def set_details(self, item=None):#{{{
 			self.create_language_row(i)
 	# poster
 	if item.has_key('image') and item['image']:
-		image_path = os.path.join(self.locations['images'], item['image']+'.jpg')
+		image_path = os.path.join(self.locations['home'], 'posters', "m_%s.jpg"%item['image'])
 	else:
 		image_path = os.path.join(self.locations['images'], 'default.png')
 	if not os.path.isfile(image_path):
 		image_path = os.path.join(self.locations['images'], 'default.png')
-	handler = w['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
-	w['picture'].set_from_pixbuf(handler)
-	gutils.garbage(handler)
+	w['picture'].set_from_file(image_path)
 	
 	w['notebook'].set_current_page(0)
 	w['source'].set_active(self.d_plugin)

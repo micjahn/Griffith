@@ -299,15 +299,6 @@ def run_browser(url):
 	webbrowser._tryorder.append('open')
 	webbrowser.open(url)
 
-def get_media_list_index(media):
-	media_desc = {"DVD":0,"DVD-R":1, "DVD-RW":2, "DVD+R":3, "DVD+RW":4, \
-		"DVD-RAM":5, "VHS":6, "BETACAM":7, "WMV":8, "DIVX":9, "XVID":10, \
-		"VCD":11, "SVCD":12 }
-	for k, v in media_desc.items():
-		if media == k:
-			return v
-	return 0
-
 def read_plugins(prefix,directory):
 	"""returns available plugins"""
 	import glob

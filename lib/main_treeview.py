@@ -177,9 +177,7 @@ def set_details(self, item=None):
 			self.widgets['menu']['delete_poster'].set_sensitive(False)
 			w['picture_button'].set_sensitive(False)
 		# lets see if we have a scaled down medium image already created
-		if os.path.isfile(image_path):
-			pass
-		else:
+		if not os.path.isfile(image_path):
 			# if not, lets make one for future use :D
 			original_image = os.path.join(tmp_dest, "%s.jpg"%item.image)
 			if os.path.isfile(original_image):
@@ -187,8 +185,7 @@ def set_details(self, item=None):
 			else:
 				self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
 				pixbuf = self.Image.get_pixbuf()
-		handler = w['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
-		gutils.garbage(handler)
+		w['picture'].set_from_file(image_path)
 	# ratig
 	try:
 		rimage = int(str(self.config.get('rating_image')))
