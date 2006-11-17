@@ -345,22 +345,13 @@ class Griffith:
 					initialize.fill_collections_combo(self, default=col_id)
 
 	def show_volume(self, widget):
-		vol_id=0
-		if self.widgets['add']['volume'].get_active():
-			vol_id = self.volume_combo_ids[self.widgets['add']['volume'].get_active()]
-		if vol_id==0:
-			view.filter_all(self)
-		else:
-			view.filter_by_volume(self, vol_id)
+		vol_id = self.db.Movie.get_by(movie_id=self._movie_id).volume_id
+		view.filter_by_volume(self, vol_id)
 
 	def show_collection(self, widget):
-		col_id=0
-		if self.widgets['add']['collection'].get_active():
-			col_id = self.collection_combo_ids[self.widgets['add']['collection'].get_active()]
-		if col_id==0:
-			view.filter_all(self)
-		else:
-			view.filter_by_collection(self, col_id)
+		col_id = self.db.Movie.get_by(movie_id=self._movie_id).collection_id
+		pos = gutils.findKey(col_id, self.collection_combo_ids)
+		self.widgets['filter']['collection'].set_active(pos)
 	#}}}
 
 	# languages -------------------------------------------------------{{{

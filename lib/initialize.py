@@ -535,7 +535,7 @@ def fill_volumes_combo(self, default=0):
 
 def fill_collections_combo(self, default=0):
 	self.widgets['add']['collection'].get_model().clear()
-	self.widgets['filter']['column'].get_model().clear()
+	self.widgets['filter']['collection'].get_model().clear()
 	for i in self.collection_combo_ids:
 		col_id = self.collection_combo_ids[i]
 		if col_id>0:
@@ -543,10 +543,10 @@ def fill_collections_combo(self, default=0):
 		else:
 			name = ''
 		self.widgets['add']['collection'].insert_text(int(i), str(name))
-		self.widgets['filter']['column'].insert_text(int(i), str(name))
+		self.widgets['filter']['collection'].insert_text(int(i), str(name))
 	self.widgets['add']['collection'].show_all()
-	self.widgets['filter']['column'].show_all()
-	self.widgets['filter']['column'].set_active(0)
+	self.widgets['filter']['collection'].show_all()
+	self.widgets['filter']['collection'].set_active(0)
 	i = gutils.findKey(default, self.collection_combo_ids)
 	if i is not None:
 		self.widgets['add']['collection'].set_active(int(i))

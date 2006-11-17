@@ -323,7 +323,7 @@ def populate(self, movies=None, where=None):#{{{
 			if not_seen_only:
 				movies.append_whereclause(self.db.Movie.c.seen==False)
 			# collection
-			col_id = self.collection_combo_ids[self.widgets['filter']['column'].get_active()]
+			col_id = self.collection_combo_ids[self.widgets['filter']['collection'].get_active()]
 			if col_id > 0:
 				movies.append_whereclause(self.db.Movie.c.collection_id==col_id)
 		

@@ -253,7 +253,7 @@ def define_widgets(self, gladefile):
 	self.widgets['filter'] = {#{{{
 		'text':		get('filter_txt'),
 		'criteria':	get('filter_criteria'),
-		'column':	get('f_col'),
+		'collection':	get('f_col'),
 	}#}}}
 	
 	self.widgets['menu'] = {#{{{
@@ -334,6 +334,8 @@ def define_widgets(self, gladefile):
 		'on_loan_ok_clicked'                    : self.commit_loan,
 		'on_return_button_clicked'              : self.return_loan,
 		'on_list_loaned_movies_activate'        : self.filter_loaned,
+		'on_m_show_volume_button_clicked'	: self.show_volume,
+		'on_m_show_collection_button_clicked'	: self.show_collection,
 		'on_cover_choose_image_activate'        : self.print_cover_image,
 		'on_cancel_print_cover_image_clicked'   : self.print_cover_image_hide,
 		'on_b_print_cover_image_clicked'        : self.print_cover_image_process,

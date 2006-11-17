@@ -42,5 +42,5 @@ def change_filter(self):
 def clear_filter(self):
 	self.widgets['filter']['text'].set_text('')
 	self.widgets['filter']['criteria'].set_active(0)
-	self.widgets['filter']['column'].set_active(0)
+	self.widgets['filter']['collection'].set_active(0)
 	self.go_last()
