@@ -85,8 +85,8 @@ def locations(self=None):
 	if len(sys.argv)>1:
 		last = sys.argv[len(sys.argv)-1]
 		if not last.startswith('-') and os.path.exists(last):
-			locations['home'] = sys.argv[len(sys.argv)-1]
-			del sys.argv[len(sys.argv)-1] # for gconsole.check_args
+			locations['home'] = sys.argv[-1]
+			del sys.argv[-1] # for gconsole.check_args
 
 	try:
 		if not os.path.exists(locations['home']):
@@ -230,8 +230,8 @@ def lang_treeview(self):
 	
 	model = self.lang['type'] = gtk.ListStore(int, str)
 	#i = 0
-	#for land_type in self._lang_types:
-	#	model.append([i, land_type])
+	#for lang_type in self._lang_types:
+	#	model.append([i, lang_type])
 	#	i += 1
 	model.append([0, ''])
 	model.append([1, _('lector')])
@@ -387,20 +387,20 @@ def combos(self):
 
 def dictionaries(self):
 	"""initializes data filled dynamically by users"""
-	import initialize, update
+	import update
 	self.am_tags = {} # dictionary for tag CheckBoxes
 	update.update_volume_combo_ids(self)
 	update.update_collection_combo_ids(self)
-	initialize.fill_volumes_combo(self)
-	initialize.fill_collections_combo(self)
-	initialize.fill_preferences_tags_combo(self)
-	initialize.language_combos(self)
-	initialize.acodec_combos(self)
-	initialize.achannel_combos(self)
-	initialize.subformat_combos(self)
-	initialize.vcodec_combos(self)
-	initialize.media_combos(self)
-	initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
+	fill_volumes_combo(self)
+	fill_collections_combo(self)
+	fill_preferences_tags_combo(self)
+	language_combos(self)
+	acodec_combos(self)
+	achannel_combos(self)
+	subformat_combos(self)
+	vcodec_combos(self)
+	media_combos(self)
+	create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
 	self.sort_criteria = [ # "[]" because of index() 
 		'number', 'o_title', 'title', 'director', 'year', 'runtime', 'country',
 		'genre', 'studio', 'media_num', 'rating']
@@ -573,6 +573,10 @@ def language_combos(self):
 		self.widgets['preferences']['lang_name'].insert_text(int(i), str(lang.name))
 		i += 1
 	self.widgets['preferences']['lang_name'].show_all()
+	# add movie languages treeview
+	self.lang['lang'].clear()
+	for i in self.db.Lang.select():
+		self.lang['lang'].append([i.lang_id, i.name])
 def acodec_combos(self):
 	self.widgets['preferences']['acodec_name'].get_model().clear()
 	self.acodecs_ids = {}
@@ -584,6 +588,10 @@ def acodec_combos(self):
 		self.widgets['preferences']['acodec_name'].insert_text(int(i), str(acodec.name))
 		i += 1
 	self.widgets['preferences']['acodec_name'].show_all()
+	# add movie languages treeview
+	self.lang['acodec'].clear()
+	for i in self.db.ACodec.select():
+		self.lang['acodec'].append([i.acodec_id, i.name])
 def achannel_combos(self):
 	self.widgets['preferences']['achannel_name'].get_model().clear()
 	self.achannels_ids = {}
@@ -595,6 +603,10 @@ def achannel_combos(self):
 		self.widgets['preferences']['achannel_name'].insert_text(int(i), str(achannel.name))
 		i += 1
 	self.widgets['preferences']['achannel_name'].show_all()
+	# add movie languages treeview
+	self.lang['achannel'].clear()
+	for i in self.db.AChannel.select():
+		self.lang['achannel'].append([i.achannel_id, i.name])
 def subformat_combos(self):
 	self.widgets['preferences']['subformat_name'].get_model().clear()
 	self.subformats_ids = {}
@@ -606,6 +618,10 @@ def subformat_combos(self):
 		self.widgets['preferences']['subformat_name'].insert_text(int(i), str(subformat.name))
 		i += 1
 	self.widgets['preferences']['subformat_name'].show_all()
+	# add movie languages treeview
+	self.lang['subformat'].clear()
+	for i in self.db.SubFormat.select():
+		self.lang['subformat'].append([i.subformat_id, i.name])
 
 def media_combos(self):
 	# clear data
