@@ -463,7 +463,6 @@ class GriffithSQL:
 
 	# MOVIE ------------------------------------------------------------{{{
 	def add_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
-		self.clean_t_movies(t_movies)
 		self.Movie.mapper.mapped_table.insert().execute(t_movies)
 		movie = self.Movie.get_by(number=t_movies['number'])
 		# languages
