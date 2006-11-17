@@ -317,11 +317,11 @@ def populate(self, movies=None, where=None):#{{{
 		if not where: # because of possible 'seen', 'loaned', 'collection_id' in where
 			# seen / loaned
 			loaned_only = self.widgets['menu']['loaned_movies'].get_active()
-			seen_only = self.widgets['menu']['seen_movies'].get_active()
+			not_seen_only = self.widgets['menu']['not_seen_movies'].get_active()
 			if loaned_only:
 				movies.append_whereclause(self.db.Movie.c.loaned==True)
-			if seen_only:
-				movies.append_whereclause(self.db.Movie.c.seen==True)
+			if not_seen_only:
+				movies.append_whereclause(self.db.Movie.c.seen==False)
 			# collection
 			col_id = self.collection_combo_ids[self.widgets['filter']['column'].get_active()]
 			if col_id > 0:

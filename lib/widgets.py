@@ -259,7 +259,7 @@ def define_widgets(self, gladefile):
 	self.widgets['menu'] = {#{{{
 		'toolbar':	get('menu_toolbar'),
 		'export':	get('export_menu'),
-		'seen_movies':	get('seen_movies'),
+		'not_seen_movies':	get('seen_movies'),
 		'loaned_movies':get('loaned_movies'),
 		'all_movies':	get('all_movies'),
 		'delete_poster': get('t_delete_poster'),
