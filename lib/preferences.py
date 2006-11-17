@@ -341,5 +341,5 @@ def save_preferences(self):
 		people_treeview(self, False)
 		self.initialized = True
 	self.clear_details()
-	self.populate_treeview(self.db.Movie.select())
-	self.select_last_row(self.total)
+	self.populate_treeview()
+	self.go_last()

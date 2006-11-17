@@ -67,7 +67,7 @@ class Griffith:
 		self.restore_state()
 		self.clear_details()
 		self.count_statusbar()
-		self.select_last_row(self.total)
+		self.go_last()
 
 		# adding some completion fields
 		self.completion = gtk.EntryCompletion()
@@ -679,8 +679,8 @@ class Griffith:
 	def treeview_clicked(self, *args):
 		main_treeview.treeview_clicked(self)
 
-	def populate_treeview(self, cursor):
-		main_treeview.populate(self, cursor)
+	def populate_treeview(self, statement=None, where=None):
+		main_treeview.populate(self, statement, where)
 
 	def get_maintree_selection(self):
 		treeselection = self.widgets['treeview'].get_selection()
@@ -689,10 +689,6 @@ class Griffith:
 			return tmp_model.get_value(tmp_iter, 0), tmp_iter
 		else:
 			return False
-
-	def select_last_row(self, rtotal):
-		if rtotal:
-			self.widgets['treeview'].set_cursor_on_cell(int(rtotal)-1)
 
 	# backup/restore ------------------------------------------------------	
 

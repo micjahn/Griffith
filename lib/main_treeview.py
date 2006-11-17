@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -37,7 +37,7 @@ def treeview_clicked(self):
 			self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
 		set_details(self, movie)
 
-def set_details(self, item=None):
+def set_details(self, item=None):#{{{
 	if item is None:
 		item = {}
 	if item.has_key('movie_id') and item['movie_id']:
@@ -305,8 +305,44 @@ def set_details(self, item=None):
 			tmp += "%s, " % tag.name
 		tmp = tmp[:-2] # cut last comma
 		w['tags'].set_text(tmp)
+	#}}}
 
-def populate(self, movies):
+def populate(self, movies=None, where=None):#{{{
+	from sqlalchemy import Select
+	
+	if movies is None:
+		movies = Select(self.db.Movie.c)
+
+	if isinstance(movies, Select):
+		if not where: # because of possible 'seen', 'loaned', 'collection_id' in where
+			# seen / loaned
+			loaned_only = self.widgets['menu']['loaned_movies'].get_active()
+			seen_only = self.widgets['menu']['seen_movies'].get_active()
+			if loaned_only:
+				movies.append_whereclause(self.db.Movie.c.loaned==True)
+			if seen_only:
+				movies.append_whereclause(self.db.Movie.c.seen==True)
+			# collection
+			col_id = self.collection_combo_ids[self.widgets['filter']['column'].get_active()]
+			if col_id > 0:
+				movies.append_whereclause(self.db.Movie.c.collection_id==col_id)
+		
+		# select sort column
+		sort_column_name = self.config.get('sortby', 'number')
+		sort_columns = []
+		for i in sort_column_name.split(','):
+			if self.db.Movie.c.has_key(i):
+				sort_columns.append(self.db.Movie.c[i])
+		movies.order_by = sort_columns
+		
+		# additional whereclause (volume_id, collection_id, ...)
+		if where:
+			for i in where:
+				if self.db.Movie.c.has_key(i):
+					movies.append_whereclause(self.db.Movie.c[i]==where[i])
+		movies = movies.execute().fetchall()
+
+	self.total = len(movies)
 	self.treemodel.clear()
 	for movie in movies:
 		myiter = self.treemodel.append(None)
@@ -327,22 +363,22 @@ def populate(self, movies):
 			self.director_column.set_visible(False)
 		if self.config['view_image'] == 'True':
 			self.image_column.set_visible(True)
-			tmp_dest = os.path.join(self.griffith_dir, "posters")
-			tmp_img = os.path.join(tmp_dest, "t_"+str(movie.image)+".jpg")
+			tmp_dest = os.path.join(self.griffith_dir, 'posters')
+			tmp_img = os.path.join(tmp_dest, "t_%s.jpg" % str(movie.image))
 			if movie.image and os.path.isfile(tmp_img):
 				image_path = tmp_img
 			else:
-				image_path = os.path.join(self.locations['images'], "default_thumbnail.png")
+				image_path = os.path.join(self.locations['images'], 'default_thumbnail.png')
 			# lets see if we have a scaled down thumbnail already created
-			if os.path.isfile(os.path.join(tmp_dest, "t_"+str(movie.image)+".jpg")):
+			if os.path.isfile(os.path.join(tmp_dest, "t_%s.jpg" % str(movie.image))):
 				pass
 			else:
 				# if not, lets make one for future use :D
-				original_image = os.path.join(tmp_dest, "%s.jpg"%movie.image)
+				original_image = os.path.join(tmp_dest, "%s.jpg" % movie.image)
 				if os.path.isfile(original_image):
-					gutils.make_thumbnail(self, "%s.jpg"%movie.image)
+					gutils.make_thumbnail(self, "%s.jpg" % movie.image)
 				else:
-					self.Image.set_from_file("%s/default_thumbnail.png"%self.locations['images'])
+					self.Image.set_from_file("%s/default_thumbnail.png" % self.locations['images'])
 					pixbuf = self.Image.get_pixbuf()
 			self.Image.set_from_file(image_path)
 			pixbuf = self.Image.get_pixbuf()
@@ -354,3 +390,6 @@ def populate(self, movies):
 		self.treemodel.set_value(myiter,2,movie.o_title)
 		self.treemodel.set_value(myiter,3,movie.title)
 		self.treemodel.set_value(myiter,4,movie.director)
+#}}}
+
+# vim: fmd=marker

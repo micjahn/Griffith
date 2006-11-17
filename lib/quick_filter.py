@@ -25,39 +25,22 @@ import gutils
 
 def change_filter(self):
 	x = 0
-	self.widgets['menu']['all_movies'].set_active(2)
-	col_id = self.collection_combo_ids[self.widgets['filter']['column'].get_active()]
 	text = gutils.gescape(self.widgets['filter']['text'].get_text())
 	
-	# sort column
-	sort_column_name = self.config.get('sortby', 'number')
-	if self.db.Movie.c.has_key(sort_column_name):
-		order_column = self.db.Movie.c[sort_column_name]
-	else:
-		order_column = self.db.Movie.c.number
+	from sqlalchemy import select
+	statement = select(self.db.Movie.c)
 	
-	if(len(text)==0):
-		if col_id != 0:
-			movies = self.db.Movie.select(self.db.Movie.c.collection_id==col_id, order_by=[order_column])
-		else:
-			movies = self.db.Movie.select(order_by=[order_column])
-	else:
-		from sqlalchemy import select
-		movies = select(self.db.Movie.c, order_by=[order_column])
+	if text:
 		criteria = self.search_criteria[self.widgets['filter']['criteria'].get_active()]
 		if {'year':None, 'runtime':None, 'media_num':None, 'rating':None}.has_key(criteria):
-			movies.append_whereclause(self.db.Movie.c[criteria]==text)
+			statement.append_whereclause(self.db.Movie.c[criteria]==text)
 		else:
-			movies.append_whereclause(self.db.Movie.c[criteria].like('%'+text+'%'))
-		if col_id != 0:
-			movies.append_whereclause(self.db.Movie.c.collection_id==col_id)
-		movies = movies.execute().fetchall()
-	self.total_filter = len(movies)
-	self.populate_treeview(movies)
+			statement.append_whereclause(self.db.Movie.c[criteria].like('%'+text+'%'))
+	self.populate_treeview(statement)
 	self.go_last()
 
 def clear_filter(self):
-	self.widgets['filter']['text'].set_text("")
+	self.widgets['filter']['text'].set_text('')
 	self.widgets['filter']['criteria'].set_active(0)
-	self.total_filter = self.total
+	self.widgets['filter']['column'].set_active(0)
 	self.go_last()

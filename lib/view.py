@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,39 +24,33 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 
 def filter_not_seen(self):
-	movies = self.db.Movie.select_by(seen=False)
+	self.populate_treeview()
 	self.update_statusbar(_("Filter activated. Showing only not seen movies."))
-	self.populate_treeview(movies)
-	self.total_filter = len(movies)
 	self.go_last()
 
 def filter_loaned(self):
-	movies = self.db.Movie.select_by(loaned=True)
+	self.populate_treeview()
 	self.update_statusbar(_("Filter activated. Showing only loaned movies."))
-	self.populate_treeview(movies)
-	self.total_filter = len(movies)
 	self.go_last()
 
 def filter_all(self):
-	movies = self.db.Movie.select()
+	self.populate_treeview()
 	self.count_statusbar()
-	self.populate_treeview(movies)
-	self.total_filter = len(movies)
 	self.go_last()
 
 def filter_by_volume(self, volume_id):
-	movies = self.db.Movie.select_by(volume_id=volume_id)
+	from quick_filter import clear_filter
+	clear_filter(self)
+	self.populate_treeview(where={'volume_id':volume_id})
 	volume_name = self.db.Volume.get_by(volume_id=volume_id).name
 	self.update_statusbar(_("Filter activated. Showing only movies from volume: %s")%volume_name)
-	self.populate_treeview(movies)
-	self.total_filter = len(movies)
 	self.go_last()
 
 def filter_by_collection(self, collection_id):
-	movies = self.db.Movie.select_by(collection_id=collection_id)
+	from quick_filter import clear_filter
+	clear_filter(self)
+	self.populate_treeview(where={'collection_id':collection_id})
 	collection_name = self.db.Collection.get_by(collection_id=collection_id).name
 	self.update_statusbar(_("Filter activated. Showing only movies from collection: %s")%collection_name)
-	self.populate_treeview(movies)
-	self.total_filter = len(movies)
 	self.go_last()
 
