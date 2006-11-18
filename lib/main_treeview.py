@@ -332,8 +332,7 @@ def populate(self, movies=None, where=None):#{{{
 		sort_columns = []
 		for i in sort_column_name.split(','):
 			if self.db.Movie.c.has_key(i):
-				sort_columns.append(self.db.Movie.c[i])
-		movies.order_by = sort_columns
+				movies.order_by_clause.append(self.db.Movie.c[i])
 		
 		# additional whereclause (volume_id, collection_id, ...)
 		if where:
