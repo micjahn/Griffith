@@ -2408,18 +2408,18 @@
 
 		  <child>
 		    <widget class="GtkScrolledWindow" id="scrolledwindow_plot">
+		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
 		      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		      <property name="shadow_type">GTK_SHADOW_IN</property>
+		      <property name="shadow_type">GTK_SHADOW_NONE</property>
 		      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		      <child>
 			<widget class="GtkViewport" id="viewport7">
-			  <property name="border_width">1</property>
 			  <property name="visible">True</property>
-			  <property name="shadow_type">GTK_SHADOW_OUT</property>
+			  <property name="shadow_type">GTK_SHADOW_IN</property>
 
 			  <child>
 			    <widget class="GtkLabel" id="m_plot">
@@ -2433,8 +2433,8 @@
 			      <property name="selectable">True</property>
 			      <property name="xalign">0</property>
 			      <property name="yalign">0</property>
-			      <property name="xpad">4</property>
-			      <property name="ypad">4</property>
+			      <property name="xpad">2</property>
+			      <property name="ypad">2</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -2475,18 +2475,18 @@
 
 		  <child>
 		    <widget class="GtkScrolledWindow" id="scrolledwindow_cast">
+		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
 		      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		      <property name="shadow_type">GTK_SHADOW_IN</property>
+		      <property name="shadow_type">GTK_SHADOW_NONE</property>
 		      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		      <child>
 			<widget class="GtkViewport" id="viewport8">
-			  <property name="border_width">1</property>
 			  <property name="visible">True</property>
-			  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+			  <property name="shadow_type">GTK_SHADOW_IN</property>
 
 			  <child>
 			    <widget class="GtkLabel" id="m_cast">
@@ -2500,8 +2500,8 @@
 			      <property name="selectable">True</property>
 			      <property name="xalign">0</property>
 			      <property name="yalign">0</property>
-			      <property name="xpad">4</property>
-			      <property name="ypad">4</property>
+			      <property name="xpad">2</property>
+			      <property name="ypad">2</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -2542,18 +2542,18 @@
 
 		  <child>
 		    <widget class="GtkScrolledWindow" id="scrolledwindow_notes">
+		      <property name="border_width">6</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
 		      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		      <property name="shadow_type">GTK_SHADOW_IN</property>
+		      <property name="shadow_type">GTK_SHADOW_NONE</property>
 		      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		      <child>
 			<widget class="GtkViewport" id="viewport9">
-			  <property name="border_width">1</property>
 			  <property name="visible">True</property>
-			  <property name="shadow_type">GTK_SHADOW_ETCHED_OUT</property>
+			  <property name="shadow_type">GTK_SHADOW_IN</property>
 
 			  <child>
 			    <widget class="GtkLabel" id="m_notes">
@@ -2567,8 +2567,8 @@
 			      <property name="selectable">True</property>
 			      <property name="xalign">0</property>
 			      <property name="yalign">0</property>
-			      <property name="xpad">4</property>
-			      <property name="ypad">4</property>
+			      <property name="xpad">2</property>
+			      <property name="ypad">2</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
