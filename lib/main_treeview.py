@@ -46,10 +46,6 @@ def set_details(self, item=None):#{{{
 		self._movie_id = None
 	w = self.widgets['movie']
 
-	cast_buffer = w['cast'].get_buffer()
-	notes_buffer = w['notes'].get_buffer()
-	plot_buffer = w['plot'].get_buffer()
-
 	if item.has_key('number') and item['number']:
 		w['number'].set_text(str(int(item['number'])))
 	else:
@@ -67,9 +63,9 @@ def set_details(self, item=None):#{{{
 	else:
 		w['director'].set_text('')
 	if item.has_key('plot') and item['plot']:
-		plot_buffer.set_text(str(item['plot']))
+		w['plot'].set_text(str(item['plot']))
 	else:
-		plot_buffer.set_text('')
+		w['plot'].set_text('')
 	if item.has_key('year') and item['year']:
 		w['year'].set_text(str(item['year']))
 	else:
@@ -79,9 +75,9 @@ def set_details(self, item=None):#{{{
 	else:
 		w['runtime'].set_text('x')
 	if item.has_key('cast') and item['cast']:
-		cast_buffer.set_text(str(item['cast']))
+		w['cast'].set_text(str(item['cast']))
 	else:
-		cast_buffer.set_text('')
+		w['cast'].set_text('')
 	if item.has_key('country') and item['country']:
 		w['country'].set_markup("<i>%s</i>" % str(item['country']))
 	else:
@@ -139,9 +135,9 @@ def set_details(self, item=None):#{{{
 	else:
 		w['seen_icon'].set_from_stock('gtk-no', 2)
 	if item.has_key('notes') and item['notes']:
-		notes_buffer.set_text(str(item.notes))
+		w['notes'].set_text(str(item.notes))
 	else:
-		notes_buffer.set_text('')
+		w['notes'].set_text('')
 	tmp = ''
 	if item.has_key('media_num') and item['media_num']:
 		tmp = str(item.media_num)
