@@ -211,21 +211,7 @@ class Griffith:
 		delete.delete_movie(self)
 
 	def update_movie(self, *args):
-		movie = self.db.Movie.get_by(movie_id=self._movie_id)
-		details = add.get_details(self)
-		if movie.update_in_db(details):
-			self.update_statusbar(_('Movie information has been updated'))
-			# update main treelist
-			treeselection = self.widgets['treeview'].get_selection()
-			(tmp_model, tmp_iter) = treeselection.get_selected()
-			tmp_model.set_value(tmp_iter,0,'%004d' % int(movie.number))
-			tmp_model.set_value(tmp_iter,2, movie.o_title)
-			tmp_model.set_value(tmp_iter,3,	movie.title)
-			tmp_model.set_value(tmp_iter,4, movie.director)
-			# close add window
-			self.widgets['add']['window'].hide()
-			# refresh
-			self.treeview_clicked()
+		add.update_movie(self)
 
 	def clear_details(self):
 		main_treeview.set_details(self)

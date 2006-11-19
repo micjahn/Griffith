@@ -307,6 +307,35 @@ def get_details(self): #{{{
 
 	return t_movies	#}}}
 
+def update_movie(self):
+	movie = self.db.Movie.get_by(movie_id=self._movie_id)
+	old_image = movie.image
+	details = get_details(self)
+	if movie.update_in_db(details):
+		if details['image'] and details['image'] != old_image:
+			# TODO: fetch poster from amazon / load from disk
+			image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
+			if os.path.isfile(image_path):
+				import delete
+				delete.delete_poster(self, old_image)
+				new_image_path = os.path.join(self.locations['posters'], "%s.jpg" % details['image'])
+				shutil.move(image_path, new_image_path)
+				#lets make the thumbnail and medium image from poster for future use
+				gutils.make_thumbnail(self, "%s.jpg"%details['image'])
+				gutils.make_medium_image(self, "%s.jpg"%details['image'])
+		self.update_statusbar(_('Movie information has been updated'))
+		# update main treelist
+		treeselection = self.widgets['treeview'].get_selection()
+		(tmp_model, tmp_iter) = treeselection.get_selected()
+		tmp_model.set_value(tmp_iter,0,'%004d' % int(movie.number))
+		tmp_model.set_value(tmp_iter,2, movie.o_title)
+		tmp_model.set_value(tmp_iter,3,	movie.title)
+		tmp_model.set_value(tmp_iter,4, movie.director)
+		# close add window
+		self.widgets['add']['window'].hide()
+		# refresh
+		self.treeview_clicked()
+
 def add_movie_db(self, close):
 	details = get_details(self)
 	if not details['o_title'] and not details['title']:
