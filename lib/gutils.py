@@ -313,27 +313,27 @@ def garbage(handler):
 	pass
 
 def make_thumbnail(self, file_name):
-	source = os.path.join(self.griffith_dir, "posters/%s"%file_name)
+	source = os.path.join(self.locations['posters'], file_name)
 	if os.path.isfile(source):
 		self.Image.set_from_file(source)
 		pixbuf = self.Image.get_pixbuf()
 		pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
-		save_pixmap(self, pixbuf, os.path.join(self.griffith_dir, "posters/t_%s"%file_name))
+		save_pixmap(self, pixbuf, os.path.join(self.locations['posters'], "t_%s"%file_name))
 	else:
 		return 0
 
 def make_medium_image(self, file_name):
-	source = os.path.join(self.griffith_dir, "posters/%s"%file_name)
+	source = os.path.join(self.locations['posters'], file_name)
 	if os.path.isfile(source):
 		self.Image.set_from_file(source)
 		pixbuf = self.Image.get_pixbuf()
 		pixbuf = pixbuf.scale_simple(100, 140, 'bilinear')
-		save_pixmap(self, pixbuf, os.path.join(self.griffith_dir, "posters/m_%s"%file_name))
+		save_pixmap(self, pixbuf, os.path.join(self.locations['posters'], "m_%s"%file_name))
 	else:
 		return 0
 
 def clean_posters_dir(self):
-	posters_dir = os.path.join(self.locations['home'], 'posters')
+	posters_dir = self.locations['posters']
 
 	counter = 0
 

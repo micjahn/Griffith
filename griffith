@@ -250,7 +250,7 @@ class Griffith:
 		number = tmp_model.get_value(tmp_iter, 0)
 		movie = self.db.Movie.get_by(number=number)
 		if movie != None:
-			tmp_dest = os.path.join(self.locations['home'], "posters")
+			tmp_dest = self.locations['posters']
 			tmp_img = os.path.join(tmp_dest, str(movie.image)+".jpg")
 			self.widgets['big_poster'].set_from_file(tmp_img)
 			self.widgets['poster_window'].show()

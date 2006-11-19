@@ -45,11 +45,11 @@ def change_poster(self):
 		try:
 			picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(filename[0]).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
 			file_to_copy = os.path.basename(filename[0])
-			shutil.copyfile(filename[0],'%s/posters/%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
+			shutil.copyfile(filename[0], os.path.join(self.locations['posters'], '%s.jpg' % os.path.splitext(file_to_copy)[0]))
 			gutils.make_thumbnail(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
 			gutils.make_medium_image(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
 			update.update_image(self, os.path.splitext(file_to_copy)[0], number)
-			update_tree_thumbnail(self, '%s/posters/t_%s.jpg' % (self.griffith_dir,  os.path.splitext(file_to_copy)[0]))
+			update_tree_thumbnail(self, os.path.join(self.locations['posters'], 't_%s.jpg' % os.path.splitext(file_to_copy)[0]))
 		except:
 			gutils.error(self, _("Image not valid."), self.widgets['window'])
 
@@ -63,9 +63,9 @@ def delete_poster(self):
 		image_path = self.locations['images'] + "/default.png"
 		handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 		gutils.garbage(handler)
-		update_tree_thumbnail(self, self.locations['images'] + "/default_thumbnail.png")
+		update_tree_thumbnail(self, os.path.join(self.locations['images'], 'default_thumbnail.png'))
 		# update in database
-		old_image = movie.image # save fo later
+		old_image = movie.image
 		movie.image = None
 		movie.update()
 		movie.flush()
@@ -96,7 +96,7 @@ def fetch_bigger_poster(self):
 
 	try:
 		result = amazon.searchByKeyword(self.widgets['movie']['o_title'].get_text(), \
-						type="lite", product_line="dvd")
+						type="lite", product_line="dvd", locale=self.config.get('amazon_locale'))
 		self.debug.show("Posters found on amazon: %s posters" % len(result))
 	except:
 		gutils.warning(self, _("No posters found for this movie."))
@@ -141,8 +141,8 @@ def get_poster(self, f, result, current_poster):
 		f = int(tmp_model.get_value(tmp_iter, 0))
 		self.widgets['results']['window'].hide()
 
-	file_to_copy = tempfile.mktemp(suffix=self.widgets['movie']['number'].get_text(), prefix='poster_', \
-		dir=os.path.join(self.griffith_dir, "posters"))
+	file_to_copy = tempfile.mktemp(suffix=self.widgets['movie']['number'].get_text(), \
+		dir=self.locations['posters'])
 	file_to_copy += ".jpg"
 	try:
 		progress = movie.Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
@@ -158,8 +158,6 @@ def get_poster(self, f, result, current_poster):
 		urlcleanup()
 	except:
 		gutils.warning(self, _("Sorry. A connection error was occurred."))
-
-	self.debug.show(file_to_copy)
 
 	if  os.path.isfile(file_to_copy):
 		handler = self.widgets['big_poster'].set_from_file(file_to_copy)
@@ -184,9 +182,8 @@ def get_poster(self, f, result, current_poster):
 			update.update_image(self, os.path.basename(file_to_copy), self.widgets['movie']['number'].get_text())
 			gutils.make_thumbnail(self, '%s' % os.path.basename(file_to_copy))
 			gutils.make_medium_image(self, '%s' % os.path.basename(file_to_copy))
-			update_tree_thumbnail(self, '%s/posters/t_%s' % (self.griffith_dir, \
-				os.path.basename(file_to_copy)))
-			self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(self.griffith_dir, "posters/m_%s"%os.path.basename(file_to_copy))))
+			update_tree_thumbnail(self, os.path.join(self.locations['posters'], 't_%s' % os.path.basename(file_to_copy)))
+			self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(self.locations['posters'], "m_%s" % os.path.basename(file_to_copy))))
 			delete.delete_poster(self, current_poster)
 			self.widgets['add']['delete_poster'].set_sensitive(True)
 			self.widgets['menu']['delete_poster'].set_sensitive(True)

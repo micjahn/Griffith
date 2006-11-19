@@ -47,7 +47,7 @@ def locations(self=None):
 	locations = {}
 	locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
 	locations['lib']  = os.path.dirname(__file__)
-
+	
 	if os.name == 'nt' or os.name == 'win32':
 		#import winshell
 		#mydocs = winshell.my_documents()
@@ -81,6 +81,9 @@ def locations(self=None):
 		print 'Operating system not supported'
 		sys.exit()
 	
+	from tempfile import gettempdir
+	locations['temp'] = gettempdir()
+	
 	# force different home directory (last argument)
 	if len(sys.argv)>1:
 		last = sys.argv[len(sys.argv)-1]
@@ -99,13 +102,15 @@ def locations(self=None):
 		raise
 		sys.exit()
 
+	locations['posters']  = os.path.join(locations['home'], 'posters')
+
 	if not os.access(locations['home'], os.W_OK):
 		debug.show('Cannot write to griffith directory, %s' % locations['home'])
 		sys.exit()
 
-	if not os.path.exists(os.path.join(locations['home'], 'posters')):
+	if not os.path.exists(locations['posters']):
 		debug.show('Creating poster directory')
-		os.makedirs(os.path.join(locations['home'], 'posters'))
+		os.makedirs(locations['posters'])
 
 	# includes plugins in system path for easier importing
 	sys.path.append(locations['lib'])

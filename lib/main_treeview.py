@@ -163,7 +163,7 @@ def set_details(self, item=None):#{{{
 
 	# poster
 	if item.has_key('image') and item['image']:
-		tmp_dest = os.path.join(self.griffith_dir, 'posters')
+		tmp_dest = self.locations['posters']
 		tmp_img = os.path.join(tmp_dest, "m_%s.jpg"%item['image'])
 		tmp_img2 = os.path.join(tmp_dest, "%s.jpg"%item['image'])
 		if os.path.isfile(tmp_img2):
@@ -311,7 +311,7 @@ def populate(self, movies=None, where=None):#{{{
 	from sqlalchemy import Select
 	
 	if movies is None:
-		movies = Select(self.db.Movie.c)
+		movies = Select([self.db.Movie.c.number, self.db.Movie.c.o_title,self.db.Movie.c.title,self.db.Movie.c.director])
 
 	if isinstance(movies, Select):
 		if not where: # because of possible 'seen', 'loaned', 'collection_id' in where
@@ -329,7 +329,6 @@ def populate(self, movies=None, where=None):#{{{
 		
 		# select sort column
 		sort_column_name = self.config.get('sortby', 'number')
-		sort_columns = []
 		for i in sort_column_name.split(','):
 			if self.db.Movie.c.has_key(i):
 				movies.order_by_clause.append(self.db.Movie.c[i])
@@ -362,7 +361,7 @@ def populate(self, movies=None, where=None):#{{{
 			self.director_column.set_visible(False)
 		if self.config['view_image'] == 'True':
 			self.image_column.set_visible(True)
-			tmp_dest = os.path.join(self.griffith_dir, 'posters')
+			tmp_dest = self.locations['posters']
 			tmp_img = os.path.join(tmp_dest, "t_%s.jpg" % str(movie.image))
 			if movie.image and os.path.isfile(tmp_img):
 				image_path = tmp_img
@@ -391,4 +390,4 @@ def populate(self, movies=None, where=None):#{{{
 		self.treemodel.set_value(myiter,4,movie.director)
 #}}}
 
-# vim: fmd=marker
+# vim: fdm=marker

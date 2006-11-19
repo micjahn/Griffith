@@ -125,6 +125,6 @@ class Config:
 		self.config['s_studio']             = True
 		self.config['s_title']              = True
 		self.config['s_trailer']            = True
-		self.config['s_with']               = True
+		self.config['s_cast']               = True
 		self.config['s_year']               = True
 		self.save()

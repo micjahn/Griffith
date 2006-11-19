@@ -221,22 +221,28 @@ class GriffithSQL:
 			if self.movie_id < 1:
 				raise Exception('movie_id is not set')
 			if t_movies is not None:
+				self.languages.clear()
+				self.tags.clear()
+				#self.mapper.mapped_table.update(self.c.movie_id==t_movies['movie_id']).execute(t_movies)
+			return self.add_to_db(t_movies)
+		def add_to_db(self, t_movies=None):
+			if t_movies is not None:
 				t_tags = t_movies.pop('tags')
 				t_languages = t_movies.pop('languages')
-				self.mapper.mapped_table.update(self.c.movie_id==t_movies['movie_id']).execute(t_movies)
-			# languages
-			self.languages.clear()
-			if t_languages is not None:
-				for lang in t_languages:
-					if lang[0]>0:
-						ml = GriffithSQL.MovieLang(lang_id=lang[0], type=lang[1],
-							acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4])
-						self.languages.append(ml)
-			# tags
-			self.tags.clear()
-			if t_tags is not None:
-				for tag in t_tags.keys():
-					self.tags.append(GriffithSQL.Tag(tag_id=tag))
+				for i in self.c.keys():
+					if t_movies.has_key(i):
+						self[i] = t_movies[i]
+				# languages
+				if t_languages is not None:
+					for lang in t_languages:
+						if lang[0]>0:
+							ml = GriffithSQL.MovieLang(lang_id=lang[0], type=lang[1],
+								acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4])
+							self.languages.append(ml)
+				# tags
+				if t_tags is not None:
+					for tag in t_tags.keys():
+						self.tags.append(GriffithSQL.Tag(tag_id=tag))
 			self.update()
 			self.flush()
 			self.refresh()
@@ -461,25 +467,6 @@ class GriffithSQL:
 
 	#}}}
 
-	# MOVIE ------------------------------------------------------------{{{
-	def add_movie(self, t_movies, t_languages=None, t_tags=None): # TODO: move to Movie class
-		self.Movie.mapper.mapped_table.insert().execute(t_movies)
-		movie = self.Movie.get_by(number=t_movies['number'])
-		# languages
-		if t_languages is not None:
-			for lang in t_languages:
-				if lang[0]>0:
-					movie.languages.append(self.MovieLang(lang_id=lang[0], type=lang[1], acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4]))
-		# tags
-		if t_tags is not None:
-			for tag in t_tags.keys():
-				movie.tags.append(self.Tag(tag_id=tag))
-		movie.save_or_update()
-		movie.flush()
-		movie.refresh() # load default data as well
-	
-	# }}}
-
 	# DATABASE ---------------------------------------------------------{{{
 	def new_db(self, parent):
 		"""initializes a new Griffith Database file"""
@@ -492,7 +479,7 @@ class GriffithSQL:
 				1, parent.widgets['window'])
 			if response_sec == gtk.RESPONSE_YES:
 				# delete images
-				posters_dir = os.path.join(self.griffith_dir, 'posters')
+				posters_dir = self.locations['posters']
 				# NOTE: only used images are removed (posters are shared between various db)
 				debug.show('NEW DB: Removing old images...')
 				for movie in self.Movie.select():

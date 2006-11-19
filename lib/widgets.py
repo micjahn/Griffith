@@ -107,7 +107,7 @@ def define_widgets(self, gladefile):
 		'notes':	get('am_obs'),
 		'o_title':	get('am_original_title'),
 		'picture':	get('am_image'),
-		'picture_name':	get('am_hide_image_name'),
+		'image':	get('am_hide_image_name'),
 		'plot':		get('am_plot'),
 		'plugin_desc':	get('am_plugin_desc'),
 		'plugin_image':	get('am_plugin_image'),
