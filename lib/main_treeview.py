@@ -182,10 +182,9 @@ def set_details(self, item=None):#{{{
 			original_image = os.path.join(tmp_dest, "%s.jpg"%item.image)
 			if os.path.isfile(original_image):
 				gutils.make_medium_image(self, "%s.jpg"%item.image)
-			else:
-				self.Image.set_from_file(os.path.join(self.locations['images'], "default.png"))
-				pixbuf = self.Image.get_pixbuf()
-		w['picture'].set_from_file(image_path)
+	else:
+		image_path = os.path.join(self.locations['images'], 'default.png')
+	w['picture'].set_from_file(image_path)
 	# ratig
 	try:
 		rimage = int(str(self.config.get('rating_image')))
