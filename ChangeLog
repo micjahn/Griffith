@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-11-20 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added Brasilian Portuguese translation (thanks to Fábio Nogueira)
+
 2006-11-17 Piotr Ozarowski <ozarow@gmail.com>
 	* Default sort column can be set in preferences
 	* Menu's show seen/loaned movies only is now used more widely

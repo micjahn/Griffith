@@ -48,6 +48,8 @@ class AboutDialog:
 		dialog.set_translator_credits( \
 			_("Bulgarian") + ":\n\t" + \
 				"Luchezar P. Petkov <luchezar.petkov@gmail.com>\n" + \
+			_("Brasilian Portuguese") + ":\n\t" + \
+				"Fábio Nogueira <deb-user-ba@ubuntu.com>\n" + \
 			_("Czech") + ":\n\t" + \
 				"Blondak <blondak@neser.cz>,\n\t" + \
 				"Ondra 'Kepi' Kudlík <kepi@igloonet.cz>\n" + \
