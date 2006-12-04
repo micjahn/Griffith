@@ -368,86 +368,114 @@ def decompress(data):
 		pass
 	return data
 
-def missing_dependencies():
-	missing = []
+def get_dependencies():
+	depend = []
 	try:
 		import gtk
-		# TODO: check version
+		version	= '.'.join([str(i) for i in gtk.pygtk_version])
+		if gtk.pygtk_version <= (2, 6, 0):
+			version = '-%s' % version
+			raise
 	except:
-		missing.append({'module': 'gtk',
-			'module_version': '2.6', # >=
-			'module_url'	: 'http://www.pygtk.org/',
-			'debian'	: 'python-gtk2',
-			'debian_version': '2.8.6-1'
-			# TODO: 'fedora', 'suse', etc.
-		})
+		version = False
+	depend.append({'module': 'gtk',
+		'version'	: version,
+		'module_req'	: '2.6',
+		'url'		: 'http://www.pygtk.org/',
+		'debian'	: 'python-gtk2',
+		'debian_req'	: '2.8.6-1'
+		# TODO: 'fedora', 'suse', etc.
+	})
 	try:
 		import gtk.glade
+		# (version == gtk.pygtk_version)
 	except:
-		missing.append({'module': 'gtk.glade',
-			'module_version': '2.6',
-			'module_url'	: 'http://www.pygtk.org/',
-			'debian'	: 'python-glade2',
-			'debian_version': '2.8.6-1'
-		})
+		version = False
+	depend.append({'module': 'gtk.glade',
+		'version'	: version,
+		'module_req'	: '2.6',
+		'url'		: 'http://www.pygtk.org/',
+		'debian'	: 'python-glade2',
+		'debian_req'	: '2.8.6-1'
+	})
 	try:
 		import sqlalchemy
+		version = True
 	except:
-		missing.append({'module': 'sqlalchemy',
-			'module_version': '0.3',
-			'module_url'	: 'http://www.sqlalchemy.org/',
-			'debian'	: 'python-sqlalchemy',
-			'debian_version': '0.3.0-1'
-		})
+		version = False
+	depend.append({'module': 'sqlalchemy',
+		'version'	: version,
+		'module_req'	: '0.3',
+		'url'		: 'http://www.sqlalchemy.org/',
+		'debian'	: 'python-sqlalchemy',
+		'debian_req'	: '0.3.0-1'
+	})
 	try:
 		import pysqlite2
+		version = True
 		# TODO: check if "pysqlite" is in version >= 2
 	except:
-		missing.append({'module': 'pysqlite2',
-			'module_version': None,
-			'module_url'		: 'http://initd.org/tracker/pysqlite',
-			'debian'	: 'python-pysqlite2',
-			'debian_version': '2.3.0-1'
-		})
+		version = False
+	depend.append({'module': 'pysqlite2',
+		'version'	: version,
+		'url'		: 'http://initd.org/tracker/pysqlite',
+		'debian'	: 'python-pysqlite2',
+		'debian_req'	: '2.3.0-1'
+	})
 	try:
 		import reportlab
+		version = reportlab.Version
 	except:
-		missing.append({'module': 'reportlab',
-			'module_url'	: 'http://www.reportlab.org/',
-			'debian'	: 'python-reportlab',
-			'debian_version': '1.20debian-6'
-		})
+		version = False
+	depend.append({'module': 'reportlab',
+		'version'	: version,
+		'url'		: 'http://www.reportlab.org/',
+		'debian'	: 'python-reportlab',
+		'debian_req'	: '1.20debian-6'
+	})
 	try:
 		import PIL
+		version = True
 	except:
-		missing.append({'module': 'PIL',
-			'module_url'	: 'http://www.pythonware.com/products/pil/',
-			'debian'	: 'python-imaging',
-			'debian_version': '1.1.5-6'
-		})
+		version = False
+	depend.append({'module': 'PIL',
+		'version'	: version,
+		'url'		: 'http://www.pythonware.com/products/pil/',
+		'debian'	: 'python-imaging',
+		'debian_req'	: '1.1.5-6'
+	})
 	try:
 		import xml
+		version	= '.'.join([str(i) for i in xml.version_info])
 	except:
-		missing.append({'module': 'xml',
-			'module_url'	: 'http://pyxml.sf.net/',
-			'debian'	: 'python-xml'
-		})
+		version = False
+	depend.append({'module': 'xml',
+		'version'	: version,
+		'url'		: 'http://pyxml.sf.net/',
+		'debian'	: 'python-xml'
+	})
 	# extra dependencies:
-	extra_missing = []
+	optional = []
 	try:
 		import psycopg2
+		version = psycopg2.__version__
 	except:
-		extra_missing.append({'module': 'psycopg2',
-			'module_url'	: 'http://initd.org/tracker/psycopg/wiki/PsycopgTwo',
-			'debian'	: 'python-psycopg2',
-			'debian_version': '1.1.21-6'
-		})
+		version = False
+	optional.append({'module': 'psycopg2',
+		'version'	: version,
+		'url'		: 'http://initd.org/tracker/psycopg/wiki/PsycopgTwo',
+		'debian'	: 'python-psycopg2',
+		'debian_req'	: '1.1.21-6'
+	})
 	try:
 		import MySQLdb
+		version	= '.'.join([str(i) for i in MySQLdb.version_info])
 	except:
-		extra_missing.append({'module': 'MySQLdb',
-			'module_url'	: 'http://sourceforge.net/projects/mysql-python',
-			'debian'	: 'python-mysqldb',
-			'debian_version': '1.2.1-p2-2'
-		})
-	return missing, extra_missing
+		version = False
+	optional.append({'module': 'MySQLdb',
+		'version'	: version,
+		'url'		: 'http://sourceforge.net/projects/mysql-python',
+		'debian'	: 'python-mysqldb',
+		'debian_req'	: '1.2.1-p2-2'
+	})
+	return depend, optional

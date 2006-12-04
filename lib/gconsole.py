@@ -29,9 +29,9 @@ def check_args(self):
 	if len(sys.argv)>1:
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], 'hDCo:t:d:c:y:s:',
-				('help', 'debug', 'sqlecho', 'clean', 'check-dep', 'fix-db',
-					'original_title=', 'title=', 'director=', 'cast=', 'year=',
-					'sort=', 'seen=', 'loaned=', 'number=', 'runtime=',
+				('help', 'debug', 'sqlecho', 'clean', 'check-dep', 'show-dep',
+					'fix-db', 'original_title=', 'title=', 'director=', 'cast=',
+					'year=', 'sort=', 'seen=', 'loaned=', 'number=', 'runtime=',
 					'rating='))
 		except getopt.GetoptError:
 			# print help information and exit:
@@ -51,6 +51,9 @@ def check_args(self):
 				sys.exit()
 			elif o == '--check-dep':
 				check_dependencies()
+				sys.exit()
+			elif o == '--show-dep':
+				show_dependencies()
 				sys.exit()
 			elif o == '--fix-db':
 				self.db.fix_old_data()
@@ -122,32 +125,51 @@ def check_dependencies():
 	if sys.version.rfind('Debian'):
 		ostype = 'debian'
 
-	(missing, extra) = gutils.missing_dependencies()
+	(missing, extra) = gutils.get_dependencies()
 
 	def __print_missing(modules):
-		for i in missing:
-			tmp = None
-			if ostype is not None:
-				if ostype == 'debian' and i.has_key('debian'):
-					tmp = "%s package is missing" % i['debian']
-					if i.has_key('debian_version') and i['debian_version'] is not None:
-						tmp += "\n\tminimum required version: %s" % i['debian_version']
-			if tmp is None:
-				tmp = "%s module is missing" % i['module']
-				if i.has_key('module_version') and i['module_version'] is not None:
-					tmp += "\n\tminimum required version: %s" % i['module_version']
-				if i.has_key('module_url'):
-					tmp += "\n\tURL: %s" % i['module_url']
-			print tmp
+		import string
+		missing = ''
+		for i in modules:
+			if i['version']==False or (not isinstance(i['version'], bool) and i['version'].startswith('-')):
+				tmp = None
+				if ostype is not None:
+					if ostype == 'debian' and i.has_key('debian'):
+						tmp = "\n%s package" % i['debian']
+						if i.has_key('debian_req') and i['debian_req'] is not None:
+							tmp += "\n\tminimum required package version: %s" % i['debian_req']
+				if tmp is None:
+					tmp = "\n%s module" % i['module']
+					if i.has_key('module_req') and i['module_req'] is not None:
+						tmp += "\n\tminimum required module version: %s" % i['module_req']
+					if i.has_key('url'):
+						tmp += "\n\tURL: %s" % i['url']
+				if i['version'] is not False and i['version'].startswith('-'):
+					tmp += "\n\tavailable module version: %s" % i['version'][1:]
+				if tmp is not None:
+					missing += tmp
+		if missing == '':
+			return None
+		else:
+			return missing
 
-	if missing:
+	tmp = __print_missing(missing)
+	if tmp is not None:
 		print 'Dependencies missing:'
-		print '^^^^^^^^^^^^^^^^^^^^^'
-		__print_missing(missing)
-	if extra:
-		print '\nOptional dependencies missing:'
-		print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
-		__print_missing(extra)
+		print '===================='
+		print tmp
+	tmp = __print_missing(extra)
+	if tmp is not None:
+		print '\n\nOptional dependencies missing:'
+		print '============================='
+		print tmp, "\n"
+
+def show_dependencies():
+	(missing, extra) = gutils.get_dependencies()
+	for i in missing:
+		print "%(module)s :: %(version)s" % i
+	for i in extra:
+		print "%(module)s :: %(version)s" % i
 
 def con_usage():
 	print "USAGE:", sys.argv[0], "[OPTIONS] [HOMEDIR]"
@@ -157,6 +179,7 @@ def con_usage():
 	print "-D, --debug\trun with more debug info"
 	print "-C, --clean\tfind and delete orphan files in posters directory"
 	print "--check-dep\tcheck dependencies"
+	print "--show-dep\tshow dependencies"
 	print "--fix-db\tfix old database"
 	print "--sqlecho\tprint SQL queries"
 	print "\n printing movie list:"
