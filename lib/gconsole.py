@@ -118,7 +118,6 @@ def con_search_movie(self, where, sort=None):
 	sys.exit()
 
 def check_dependencies():
-	import sys
 	ostype = None
 	if sys.version.rfind('Debian'):
 		ostype = 'debian'

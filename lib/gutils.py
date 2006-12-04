@@ -425,6 +425,13 @@ def missing_dependencies():
 			'debian'	: 'python-imaging',
 			'debian_version': '1.1.5-6'
 		})
+	try:
+		import xml
+	except:
+		missing.append({'module': 'xml',
+			'module_url'	: 'http://pyxml.sf.net/',
+			'debian'	: 'python-xml'
+		})
 	# extra dependencies:
 	extra_missing = []
 	try:
