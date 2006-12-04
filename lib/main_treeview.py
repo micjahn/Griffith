@@ -306,7 +306,9 @@ def populate(self, movies=None, where=None):#{{{
 	from sqlalchemy import Select
 	
 	if movies is None:
-		movies = Select([self.db.Movie.c.number, self.db.Movie.c.o_title,self.db.Movie.c.title,self.db.Movie.c.director])
+		movies = Select([self.db.Movie.c.number,
+			self.db.Movie.c.o_title, self.db.Movie.c.title,
+			self.db.Movie.c.director, self.db.Movie.c.image])
 
 	if isinstance(movies, Select):
 		if not where: # because of possible 'seen', 'loaned', 'collection_id' in where
