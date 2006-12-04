@@ -29,9 +29,10 @@ def check_args(self):
 	if len(sys.argv)>1:
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], 'hDCo:t:d:c:y:s:',
-				('help', 'debug', 'sqlecho', 'clean', 'fix-db',	'original_title=',
-					'title=', 'director=', 'cast=', 'year=', 'sort=', 'seen=',
-					'loaned=', 'number=', 'runtime=', 'rating='))
+				('help', 'debug', 'sqlecho', 'clean', 'check-dep', 'fix-db',
+					'original_title=', 'title=', 'director=', 'cast=', 'year=',
+					'sort=', 'seen=', 'loaned=', 'number=', 'runtime=',
+					'rating='))
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
@@ -47,6 +48,9 @@ def check_args(self):
 				self.debug.set_debug()
 			elif o in ('-C', '--clean'):
 				gutils.clean_posters_dir(self)
+				sys.exit()
+			elif o == '--check-dep':
+				check_dependencies()
 				sys.exit()
 			elif o == '--fix-db':
 				self.db.fix_old_data()
@@ -113,6 +117,39 @@ def con_search_movie(self, where, sort=None):
 				(movie.number, movie.title, movie.o_title, movie.year, movie.director)
 	sys.exit()
 
+def check_dependencies():
+	import sys
+	ostype = None
+	if sys.version.rfind('Debian'):
+		ostype = 'debian'
+
+	(missing, extra) = gutils.missing_dependencies()
+
+	def __print_missing(modules):
+		for i in missing:
+			tmp = None
+			if ostype is not None:
+				if ostype == 'debian' and i.has_key('debian'):
+					tmp = "%s package is missing" % i['debian']
+					if i.has_key('debian_version') and i['debian_version'] is not None:
+						tmp += "\n\tminimum required version: %s" % i['debian_version']
+			if tmp is None:
+				tmp = "%s module is missing" % i['module']
+				if i.has_key('module_version') and i['module_version'] is not None:
+					tmp += "\n\tminimum required version: %s" % i['module_version']
+				if i.has_key('module_url'):
+					tmp += "\n\tURL: %s" % i['module_url']
+			print tmp
+
+	if missing:
+		print 'Dependencies missing:'
+		print '^^^^^^^^^^^^^^^^^^^^^'
+		__print_missing(missing)
+	if extra:
+		print '\nOptional dependencies missing:'
+		print '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
+		__print_missing(extra)
+
 def con_usage():
 	print "USAGE:", sys.argv[0], "[OPTIONS] [HOMEDIR]"
 	print "\nHOMEDIR is optional home directory (if different than ~/.griffith)"
@@ -120,6 +157,7 @@ def con_usage():
 	print "-h, --help\tprints this screen"
 	print "-D, --debug\trun with more debug info"
 	print "-C, --clean\tfind and delete orphan files in posters directory"
+	print "--check-dep\tcheck dependencies"
 	print "--fix-db\tfix old database"
 	print "--sqlecho\tprint SQL queries"
 	print "\n printing movie list:"

@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
+2006-12-04 Piotr Ozarowski <ozarow@gmail.com>
+	* Added --check-dep command line option
+
 2006-11-20 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added Brasilian Portuguese translation (thanks to Fábio Nogueira)
 

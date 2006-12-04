@@ -367,3 +367,80 @@ def decompress(data):
 	except:
 		pass
 	return data
+
+def missing_dependencies():
+	missing = []
+	try:
+		import gtk
+		# TODO: check version
+	except:
+		missing.append({'module': 'gtk',
+			'module_version': '2.6', # >=
+			'module_url'	: 'http://www.pygtk.org/',
+			'debian'	: 'python-gtk2',
+			'debian_version': '2.8.6-1'
+			# TODO: 'fedora', 'suse', etc.
+		})
+	try:
+		import gtk.glade
+	except:
+		missing.append({'module': 'gtk.glade',
+			'module_version': '2.6',
+			'module_url'	: 'http://www.pygtk.org/',
+			'debian'	: 'python-glade2',
+			'debian_version': '2.8.6-1'
+		})
+	try:
+		import sqlalchemy
+	except:
+		missing.append({'module': 'sqlalchemy',
+			'module_version': '0.3',
+			'module_url'	: 'http://www.sqlalchemy.org/',
+			'debian'	: 'python-sqlalchemy',
+			'debian_version': '0.3.0-1'
+		})
+	try:
+		import pysqlite2
+		# TODO: check if "pysqlite" is in version >= 2
+	except:
+		missing.append({'module': 'pysqlite2',
+			'module_version': None,
+			'module_url'		: 'http://initd.org/tracker/pysqlite',
+			'debian'	: 'python-pysqlite2',
+			'debian_version': '2.3.0-1'
+		})
+	try:
+		import reportlab
+	except:
+		missing.append({'module': 'reportlab',
+			'module_url'	: 'http://www.reportlab.org/',
+			'debian'	: 'python-reportlab',
+			'debian_version': '1.20debian-6'
+		})
+	try:
+		import PIL
+	except:
+		missing.append({'module': 'PIL',
+			'module_url'	: 'http://www.pythonware.com/products/pil/',
+			'debian'	: 'python-imaging',
+			'debian_version': '1.1.5-6'
+		})
+	# extra dependencies:
+	extra_missing = []
+	try:
+		import psycopg2
+	except:
+		extra_missing.append({'module': 'psycopg2',
+			'module_url'	: 'http://initd.org/tracker/psycopg/wiki/PsycopgTwo',
+			'debian'	: 'python-psycopg2',
+			'debian_version': '1.1.21-6'
+		})
+	try:
+		import MySQLdb
+	except:
+		extra_missing.append({'module': 'MySQLdb',
+			'module_url'	: 'http://sourceforge.net/projects/mysql-python',
+			'debian'	: 'python-mysqldb',
+			'debian_version': '1.2.1-p2-2'
+		})
+	return missing, extra_missing
