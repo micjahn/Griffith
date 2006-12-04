@@ -99,7 +99,7 @@ def show_preferences(self):
 	w['s_studio'].set_active(bool(self.config.get('s_studio')))
 	w['s_title'].set_active(bool(self.config.get('s_title')))
 	w['s_trailer'].set_active(bool(self.config.get('s_trailer')))
-	w['s_cast'].set_active(bool(self.config.get('s_with')))
+	w['s_cast'].set_active(bool(self.config.get('s_cast')))
 	w['s_year'].set_active(bool(self.config.get('s_year')))
 	
 	if self.config.get('sortby'):
@@ -250,7 +250,7 @@ def save_preferences(self):
 	self.config['s_studio'] = w['s_studio'].get_active()
 	self.config['s_title'] = w['s_title'].get_active()
 	self.config['s_trailer'] = w['s_trailer'].get_active()
-	self.config['s_with'] = w['s_cast'].get_active()
+	self.config['s_cast'] = w['s_cast'].get_active()
 	self.config['s_year'] = w['s_year'].get_active()
 	
 	mcounter = 0
