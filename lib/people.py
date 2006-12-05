@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ def edit_person_cancel(self):
 
 def update_person(self):
 	p = self.db.Person.get_by(person_id=self.widgets['person']['e_id'].get_text())
-	if p == None:
+	if p is None:
 		return False
 	p.name = self.widgets['person']['e_name'].get_text()
 	p.email = self.widgets['person']['e_email'].get_text()

@@ -2,7 +2,8 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
+
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -135,7 +136,7 @@ def get_poster_select(self, mself, result, current_poster):
 	get_poster(mself, None, result, current_poster)
 
 def get_poster(self, f, result, current_poster):
-	if f == None:
+	if f is None:
 		treeselection = self.widgets['results']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		f = int(tmp_model.get_value(tmp_iter, 0))

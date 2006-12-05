@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ def cover_image_process(self, filename, id):
 
 	# get movie information from db
 	movie = self.db.Movie.get_by(number=id)
-	if movie != None:
+	if movie is not None:
 		c.drawImage(filename, pos_x, pos_y, cover_x, cover_y)
 		if number == True:
 			c.setFillColor(colors.white)
@@ -155,7 +155,7 @@ def cover_simple(self, id):
 
 	# get movie information from db
 	movie = self.db.Movie.get_by(number=id)
-	if movie != None:
+	if movie is not None:
 		if number == True:
 			c.setFont(fontName, 10)
 			c.drawCentredString(pageWidth/2, 530, id)
@@ -164,7 +164,7 @@ def cover_simple(self, id):
 		c.rotate(90)
 		c.drawString(60, (-pageWidth/2)-8, movie.o_title.encode('utf-8'))
 		c.rotate(-90)
-		if movie.image != None:
+		if movie.image is not None:
 			tmp_dest = os.path.join(self.griffith_dir, "posters")
 			image = os.path.join(tmp_dest, str(movie.image)+".jpg")
 			c.drawImage(image, x=(pageWidth-30)/2, y=470, width=30, height=50)
@@ -184,7 +184,7 @@ def cover_simple(self, id):
 		textObject.textLine("")
 		c.drawText(textObject)
 		# draw bigger poster image
-		if poster == True and movie.image != None:
+		if poster == True and movie.image is not None:
 			c.drawImage(image, x=(pageWidth-(pageWidth-cover_x)-235), y=(pageHeight/2)-125, width=180, height=250)
 	c.showPage()
 	c.save()

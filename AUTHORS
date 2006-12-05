@@ -1,16 +1,11 @@
 Vasco Nunes <vasco.m.nunes@gmail.com>
 * Main author
 
+Piotr Ozarowski <ozarow+griffith@gmail.com>
+* Main author
+
 Peek <peekpt@gmail.com>
 * Logo, icon and general artwork
-
-Piotr Ozarowski <ozarow@gmail.com>
-* Stopklatka, Wirtualna Polska (WP), FDb, Filmweb, Onet, Filmweb, Anime Database (AniDB), Tanuki Anime movie plugins
-* HTML export plugin
-* Debian package/repository
-* Volumes/Collections feature
-* Languages/Tags feature
-* SQLAlchemy transition
 
 Christian Sagmueller <christian@sagmueller.net>
 * OFDb movie plugin

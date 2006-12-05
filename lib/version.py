@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 pname        = "Griffith"
 pversion     = "0.6.2+svn"
-pauthor      = "Vasco Nunes <vasco.m.nunes@gmail.com>"
+pauthor      = "Vasco Nunes <vasco.m.nunes@gmail.com>, Piotr Ożarowski <ozarow+griffith@gmail.com>"
 pyear        = "2005-2006"
 pwebsite     = "http://griffith.vasconunes.net/"
 pdescription = _("Griffith is a film collection manager.")

@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ class ExportPlugin:
 				else:
 					overwrite = False
 					
-			if overwrite == True or overwrite == None:
+			if overwrite == True or overwrite is None:
 				# create document
 				impl = xml.dom.minidom.getDOMImplementation()
 				doc  = impl.createDocument(None, "root", None)

@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ class ExportPlugin:
                 else:
                     overwrite = False
                     
-            if overwrite == True or overwrite == None:
+            if overwrite == True or overwrite is None:
                 writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
 		for movie in self.db.Movie.select():
                     t = []

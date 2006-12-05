@@ -35,7 +35,7 @@ from gettext import gettext as _
 plugin_name         = 'HTML'
 plugin_description  = _('Plugin exports data using templates')
 plugin_author       = 'Piotr Ozarowski'
-plugin_author_email = 'ozarow@gmail.com'
+plugin_author_email = 'ozarow+griffith@gmail.com'
 plugin_version      = '3.7'
 
 class ExportPlugin(gtk.Window):

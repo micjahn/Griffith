@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,12 +44,12 @@ def cancel_loan(self):
 
 def commit_loan(self):
 	person_name = gutils.on_combo_box_entry_changed(self.widgets['movie']['loan_to'])
-	if person_name == '' or person_name == None:
+	if person_name == '' or person_name is None:
 		return False
 	self.widgets['w_loan_to'].hide()
 
 	person = self.db.Person.get_by(name=person_name)
-	if person==None:
+	if person is None:
 		self.debug.show("commit_loan: person doesn't exist")
 		return False
 	if self._movie_id:

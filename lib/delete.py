@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ def delete_movie(self):
 		1, self.widgets['window'])
 	if response == -8:	# gtk.RESPONSE_YES == -8
 		# try to delete poster image as well
-		if movie.image != None:
+		if movie.image is not None:
 			delete_poster(self, movie.image)
 		if movie.remove_from_db():
 			# update main treelist

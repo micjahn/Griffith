@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -65,14 +65,14 @@ def find_next_available(self):
 	movies = self.db.Movie.select(order_by="number ASC")
 	for movie in movies:
 		second = int(movie.number)
-		if second == None:
+		if second is None:
 			second = 0
 		if (second>first+1):
 			break
 		first = second
 		a += a
 
-	if first == None:
+	if first is None:
 		return 1
 	else:
 		number = first+1

@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2006 Vasco Nunes
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,11 +33,12 @@ class AboutDialog:
 		dialog = gtk.AboutDialog()
 		dialog.set_name(version.pname)
 		dialog.set_version(version.pversion)
-		dialog.set_copyright("Copyright © 2005-2006 Vasco Nunes")
+		dialog.set_copyright("Copyright © 2005-2006 Vasco Nunes. Piotr Ożarowski")
 		dialog.set_website(version.pwebsite)
-		dialog.set_authors([_("Main Author") + ", " + _("Programmer")+":\n"+ \
-			version.pauthor + "\n",
-			'%s:\nPiotr Ozarowski <ozarow@gmail.com>\n'%_("Programmer") +"\n"+ \
+		dialog.set_authors([_("Main Authors") + ":\n"+ \
+			version.pauthor.replace(', ', '\n') + "\n",
+			'%s:\nJessica Katharina Parth <deepfly@gmx.net>\n'%_("Programmer") +"\n"+ \
+
 			_('Contributors:'),
 			'Christian Sagmueller <christian@sagmueller.net>\n' \
 			'Arjen Schwarz <arjen.schwarz@gmail.com>' \
@@ -61,7 +62,7 @@ class AboutDialog:
 			_("Italian") + ":\n\t" + \
 				"Diego Porcelli <diego.p77@gmail.com>\n" + \
 			_("Polish") + ":\n\t" + \
-				"Piotr Ozarowski <ozarow@gmail.com>\n" + \
+				"Piotr Ozarowski <ozarow+griffith@gmail.com>\n" + \
 			_("Portuguese") + ":\n\t" + \
 				"Vasco Nunes <vasco.m.nunes@gmail.com>\n" + \
 			_("Spanish") + ":\n\t" + \
