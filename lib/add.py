@@ -339,7 +339,21 @@ def update_movie(self):
 def add_movie_db(self, close):
 	details = get_details(self)
 	if not details['o_title'] and not details['title']:
-		gutils.error(self.widgets['results']['window'], _("You should fill the original title\nor the movie title."))
+		gutils.error(self.widgets['results']['window'], _("You should fill the original title\nor the movie title."), parent=self.widgets['add']['window'])
+		return False
+
+	if details['o_title']:
+		tmp_movie = self.db.Movie.get_by(o_title=details['o_title'])
+		if tmp_movie is not None:
+			response = gutils.question(self, msg=_('Movie with that title already exists, are you sure you want to add?'), cancel=0, parent=self.widgets['add']['window'])
+			if response == gtk.RESPONSE_NO:
+				return False
+	if details['title']:
+		tmp_movie = self.db.Movie.get_by(title=details['title'])
+		if tmp_movie is not None:
+			response = gutils.question(self, msg=_('Movie with that title already exists, are you sure you want to add?'), cancel=0, parent=self.widgets['add']['window'])
+			if response == gtk.RESPONSE_NO:
+				return False
 
 	movie = self.db.Movie()
 	movie.add_to_db(details)
@@ -347,6 +361,7 @@ def add_movie_db(self, close):
 	# lets move poster from tmp to posters dir
 	tmp_dest = self.locations['posters']
 
+	image_path = ''
 	if details['image']:
 		image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
 		if os.path.isfile(image_path):

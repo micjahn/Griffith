@@ -327,7 +327,7 @@ class GriffithSQL:
 			Column('media_num', Smallinteger),
 			Column('runtime', Integer),
 			Column('year', Integer),
-			Column('o_title', VARCHAR(255), nullable=False),
+			Column('o_title', VARCHAR(255)),
 			Column('title', VARCHAR(255)),
 			Column('director', VARCHAR(255)),
 			Column('o_site', VARCHAR(255)),
