@@ -227,8 +227,10 @@ class GriffithSQL:
 			return self.add_to_db(t_movies)
 		def add_to_db(self, t_movies=None):
 			if t_movies is not None:
-				t_tags = t_movies.pop('tags')
-				t_languages = t_movies.pop('languages')
+				if t_movies.has_key('tags'):
+					t_tags = t_movies.pop('tags')
+				if t_movies.has_key('languages'):
+					t_languages = t_movies.pop('languages')
 				for i in self.c.keys():
 					if t_movies.has_key(i):
 						self[i] = t_movies[i]
