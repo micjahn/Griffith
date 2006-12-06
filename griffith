@@ -130,7 +130,7 @@ class Griffith:
 				% (ip.name, ip.imported), self.widgets['window'])
 			ip.clear()
 			self.populate_treeview()
-		
+
 	def destroy(self, widget, data=None):
 		self.save_state()
 		gtk.main_quit()

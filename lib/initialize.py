@@ -339,16 +339,59 @@ def import_plugins(self):
 	dinamically finds the available import plugins
 	and fills the import menu entry
 	"""
+	# glade
+	
+	if self.widgets.has_key('import'):
+		self.debug('Import plugins already initialized')
+		return False
+
+	glade_file = gtk.glade.XML(os.path.join(self.locations['glade'], 'import.glade'))
+	get = lambda x: glade_file.get_widget(x)
+	
+	w = self.widgets['import'] = {'common': {}, 'csv': {}}
+	w['common'] = {
+		'window'	: get('dialog_import'),
+		'fcw'		: get('fcw'),
+		'notebook'	: get('notebook'),
+		'plugin'	: get('combo_plugin'),
+		'author'	: get('l_author'),
+		'email'		: get('l_email'),
+		'version'	: get('l_version'),
+		'description'	: get('l_description'),
+	}
+	w['csv'] = {
+		'dialect'		: get('combo_csv_dialect'),
+		'delimeter'		: get('entry_csv_delimeter'),
+		'quotechar'		: get('entry_csv_quotechar'),
+		'escapechar'		: get('entry_csv_escapechar'),
+		'line_terminator'	: get('entry_csv_line_terminator'),
+		'doublequote'		: get('cb_csv_doublequote'),
+		'skipinitialspace'	: get('cb_csv_skipinitialspace'),
+		'available'		: get('tv_csv_available'),
+		'selected'		: get('tv_csv_selected'),
+	}
+
+	# TODO:
+#	glade_file.signal_autoconnect({
+#		'on_import_button_clicked'           : ,
+#		'on_cances_button_clicked'           : ,
+#	})
+	
 	plugins = gutils.read_plugins('PluginImport', \
 		self.locations['import_plugins'])
 	plugins.sort()
 	for p in plugins:
 		plugin_module = os.path.basename(p).replace('.py', '')
 		plugin_name = plugin_module.replace('PluginImport', '')
-		menu_items = gtk.MenuItem(plugin_name)
-		self.widgets['menu']['import'].append(menu_items)
-		menu_items.connect('activate', self.on_import_activate, plugin_name)
-		menu_items.show()
+		w['common']['plugin'].append_text(plugin_name)
+	w['common']['plugin'].set_active(0)
+	import csv
+	for i in csv.list_dialects():
+		w['csv']['dialect'].append_text(i)
+	w['csv']['dialect'].set_active(1) # Excell
+#	for i in self.field_names:
+#		# add row
+	
 
 def people_treeview(self, create=True):
 	row = None
