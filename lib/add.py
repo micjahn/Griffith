@@ -306,21 +306,23 @@ def get_details(self): #{{{
 	for i in self.tags_ids:
 		if self.am_tags[i].get_active() == True:
 			t_movies['tags'][self.tags_ids[i]] = 1
-		
-	# validate data -------------------------------------------------------
+	
+	validate_details(t_movies)
+
+	return t_movies	#}}}
+
+def validate_details(t_movies):
 	for i in t_movies.keys():
 		if t_movies[i] == '':
 			t_movies[i] = None
 	for i in ['color','cond','layers','region', 'media', 'vcodec']:
-		if t_movies.has_key(i) and t_movies[i] == -1:
+		if t_movies.has_key(i) and t_movies[i] < 0:
 			t_movies[i]=None
 	for i in ['volume_id','collection_id', 'runtime']:
 		if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
 			t_movies[i] = None
 	if t_movies.has_key('year') and (t_movies['year'] is None or int(t_movies['year']) < 1886):
 		t_movies['year'] = None
-
-	return t_movies	#}}}
 
 def update_movie(self):
 	movie = self.db.Movie.get_by(movie_id=self._movie_id)

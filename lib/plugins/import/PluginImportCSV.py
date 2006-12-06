@@ -18,6 +18,7 @@ import movie, string
 import re
 import codecs
 from gettext import gettext as _
+from add import validate_details
 
 import plugin
 
@@ -72,6 +73,7 @@ class ImportPlugin(plugin.ImportPlugin):
 			'rating'         : None,
 			'region'         : None,
 			'runtime'        : digits_only(item[3]),
+			'seen'           : bool(0),
 			'site'           : None,
 			'studio'         : None,
 			'title'          : item[1],
@@ -83,47 +85,24 @@ class ImportPlugin(plugin.ImportPlugin):
 			'notes'          : None,
 			'plot'           : item[5],
 		}
-#		t_movies['movie_id'] = 
-	
-		medium_id = 0
-		if medium_id>0:
-			t_movies['medium_id'] = self.media_ids[medium_id]
-		vcodec_id = 0
-		if vcodec_id>0:
-			t_movies['vcodec_id'] = self.vcodecs_ids[vcodec_id]
-		if item[x]:
-			t_movies['seen'] = True
-		else:
-			t_movies['seen'] = False
 		
 		# languages
-		from sets import Set as set # for python2.3 compatibility
-		t_movies['languages'] = set()
+#		from sets import Set as set # for python2.3 compatibility
+#		t_movies['languages'] = set()
 #		for lang in item[x]:
-#			lang_id   = get_id(item[x], lang[0])
-#			lang_type = get_id(item[x], lang[1])
-#			acodec    = get_id(item[x], lang[2])
-#			achannel  = get_id(item[x], lang[3])
-#			subformat = get_id(item[x], lang[4])
+#			lang_id   = item[x]
+#			lang_type = item[x]
+#			acodec    = item[x]
+#			achannel  = item[x]
+#			subformat = item[x]
 #			t_movies['languages'].add((lang_id, lang_type, acodec, achannel, subformat))
 	
 		# tags
-		t_movies['tags'] = {}
-		if item[x] == True:
-			t_movies['tags'][0] = 1
-			
-		# validate data
-		for i in t_movies.keys():
-			if t_movies[i] == '':
-				t_movies[i] = None
-		for i in ['color','cond','layers','region', 'media', 'vcodec']:
-			if t_movies.has_key(i) and t_movies[i] == -1:
-				t_movies[i]=None
-		for i in ['volume_id','collection_id', 'runtime']:
-			if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
-				t_movies[i] = None
-		if t_movies.has_key('year') and (t_movies['year'] is None or int(t_movies['year']) < 1886):
-			t_movies['year'] = None
-	
+#		t_movies['tags'] = {}
+#		if item[x] == True:
+#			t_movies['tags'][0] = 1
+		
+		validate_details(t_movies)
+
 		return t_movies
 	
