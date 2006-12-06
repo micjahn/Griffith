@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
@@ -55,6 +55,7 @@ def locations(self=None):
 		locations['home']           = os.path.join(os.path.expanduser('~'), 'griffith')
 		locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
 		locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
+		locations['import_plugins'] = "%s\\lib\\plugins\\import" % locations['exec']
 		locations['images']         = "%s\\images" % locations['exec']
 		locations['share']          = locations['images']
 		locations['glade']          = "%s\\glade\\" % locations['exec']
@@ -72,9 +73,11 @@ def locations(self=None):
 		if os.path.isdir(os.path.join(locations['share'], 'plugins')):
 			locations['movie_plugins']  = os.path.join(locations['share'], 'plugins', 'movie')
 			locations['export_plugins'] = os.path.join(locations['share'], 'plugins', 'export')
+			locations['import_plugins'] = os.path.join(locations['share'], 'plugins', 'import')
 		else:
 			locations['movie_plugins']  = os.path.join(locations['lib'], 'plugins', 'movie')
 			locations['export_plugins'] = os.path.join(locations['lib'], 'plugins', 'export')
+			locations['import_plugins'] = os.path.join(locations['lib'], 'plugins', 'import')
 		locations['images']  = os.path.join(locations['share'], 'images')
 		locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop')
 	else:
@@ -116,6 +119,7 @@ def locations(self=None):
 	sys.path.append(locations['lib'])
 	sys.path.append(locations['movie_plugins'])
 	sys.path.append(locations['export_plugins'])
+	sys.path.append(locations['import_plugins'])
 	
 	if self:
 		self.locations = locations
@@ -328,6 +332,22 @@ def export_plugins(self):
 		menu_items = gtk.MenuItem(plugin_name)
 		self.widgets['menu']['export'].append(menu_items)
 		menu_items.connect('activate', self.on_export_activate, plugin_name)
+		menu_items.show()
+		
+def import_plugins(self):
+	"""
+	dinamically finds the available import plugins
+	and fills the import menu entry
+	"""
+	plugins = gutils.read_plugins('PluginImport', \
+		self.locations['import_plugins'])
+	plugins.sort()
+	for p in plugins:
+		plugin_module = os.path.basename(p).replace('.py', '')
+		plugin_name = plugin_module.replace('PluginImport', '')
+		menu_items = gtk.MenuItem(plugin_name)
+		self.widgets['menu']['import'].append(menu_items)
+		menu_items.connect('activate', self.on_import_activate, plugin_name)
 		menu_items.show()
 
 def people_treeview(self, create=True):

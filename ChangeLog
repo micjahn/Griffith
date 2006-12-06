@@ -4,44 +4,51 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes
 
-2006-12-04 Piotr Ozarowski <ozarow@gmail.com>
+2006-12-06 Piotr Ożarowski <ozarow@gmail.com>
+	* Ask before adding movie which title is already in database
+	* New import plugin system (thanks for help, Jessica)
+	* CSV import plugin added (thanks to Jessica)
+	* IMDb movie plugin updated (thanks to Frank)
+	* Added myself to main authors and changed email address
+
+2006-12-04 Piotr Ożarowski <ozarow@gmail.com>
 	* Added --check-dep and --show-dep command line options
 	* OFDb movie plugin updated (thanks to Jessica)
 
 2006-11-20 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added Brasilian Portuguese translation (thanks to Fábio Nogueira)
 
-2006-11-17 Piotr Ozarowski <ozarow@gmail.com>
+2006-11-17 Piotr Ożarowski <ozarow@gmail.com>
 	* Default sort column can be set in preferences
 	* Menu's show seen/loaned movies only is now used more widely
 
-2006-11-16 Piotr Ozarowski <ozarow@gmail.com>
+2006-11-16 Piotr Ożarowski <ozarow@gmail.com>
 	* "Edit movie details in 'Add movie' window" transition finished
 	* Show right window after editing person's details
 	* Added more options to command line
 	* GNOME HIG related changes in Glade file (still needs work)
 
-2006-11-08 Piotr Ozarowski <ozarow@gmail.com>
+2006-11-08 Piotr Ożarowski <ozarow@gmail.com>
 	* "Edit movie details in 'Add movie' window" transition started
 	  + Keep widgets in Griffith.widgets dictionary
 
-2006-09-25 Piotr Ozarowski <ozarow@gmail.com>
+2006-09-25 Piotr Ożarowski <ozarow@gmail.com>
 	* Added possibility to change Griffith's home directory
 
-2006-09-24 Piotr Ozarowski <ozarow@gmail.com>
+2006-09-24 Piotr Ożarowski <ozarow@gmail.com>
 	* Added Swedish translation (thanks to Daniel Nylander)
 
-2006-09-20 Piotr Ozarowski <ozarow@gmail.com>
+2006-09-20 Piotr Ożarowski <ozarow@gmail.com>
 	* AniDB movie plugin now supports gziped data (closes: #5685)
 
-2006-09-15 Piotr Ozarowski <ozarow@gmail.com>
+2006-09-15 Piotr Ożarowski <ozarow@gmail.com>
 	* Updated German translation (thanks to Malte Wiemann)
 
-2006-09-12 Piotr Ozarowski <ozarow@gmail.com>
+2006-09-12 Piotr Ożarowski <ozarow@gmail.com>
 	* "With" renamed to "Cast"
 	* Tiny changes in preferences window
 
-2006-09-08 Piotr Ozarowski <ozarow@gmail.com>
+2006-09-08 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed required PyGTK version
 	* Installation is now not required to run Griffith
 	  (move griffith file to lib directory and run "./lib/griffith")
@@ -49,145 +56,145 @@ Griffith ChangeLog
 2006-09-07 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Updated Czech translation (thanks to Ondra 'Kepi' Kudlík)
 
-2006-09-06 Piotr Ozarowski <ozarow@gmail.com>
+2006-09-06 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed CSFD movie plugin (thanks to Ondra 'Kepi' Kudlík for patch #1449)
 
-2006-09-02 Piotr Ozarowski <ozarow@gmail.com>
+2006-09-02 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed some UTF encoding problems in FDb, Filmweb, Onet and WP movie plugins
 
-2006-08-28 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-28 Piotr Ożarowski <ozarow@gmail.com>
 	* Some GUI changes mainly suggested by Alan Horkan:
 	  + menu reorganized
 	  + poster button now opens poster window
 	  + changed some icons to their stock equivalent
 
-2006-08-27 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-27 Piotr Ożarowski <ozarow@gmail.com>
 	* Added new green style to "html tables" template (HTML export plugin)
 	  + old one renamed to "light green"
 	* Added some highlights for next version to NEWS file
 
-2006-08-25 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-25 Piotr Ożarowski <ozarow@gmail.com>
 	* Movie plugins are now fetching only selected data.
 
-2006-08-24 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-24 Piotr Ożarowski <ozarow@gmail.com>
 	* Language treeview now supports codec/channel/subtitle format data (still needs work)
 
-2006-08-23 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-23 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed problem with converting images on Windows (HTML export plugin)
 	* Fixed bug with "You have to fill language..." after updating language list
 
-2006-08-18 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-18 Piotr Ożarowski <ozarow@gmail.com>
 	* Added green style to "html tables" template (HTML export plugin)
 
 2006-08-15 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* tempdir for posters is now writable by all users under win32 systems
 
-2006-08-15 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-15 Piotr Ożarowski <ozarow@gmail.com>
 	* Merged changes from 0.6.2
 
-2006-07-30 Piotr Ozarowski <ozarow@gmail.com>
+2006-07-30 Piotr Ożarowski <ozarow@gmail.com>
 	* Selecting next/previous movie is now possible (new toolbar buttons)
 
-2006-07-29 Piotr Ozarowski <ozarow@gmail.com>
+2006-07-29 Piotr Ożarowski <ozarow@gmail.com>
 	* IMDb movie plugin adds new lines in "with" field again
 	* Draggable toolbar
 
-2006-05-02 Piotr Ozarowski <ozarow@gmail.com>
+2006-05-02 Piotr Ożarowski <ozarow@gmail.com>
 	* Added MySQL support
 	* Server can be changed on the fly (see database tab in preferences)
 
-2006-04-28 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-28 Piotr Ożarowski <ozarow@gmail.com>
 	* SQLAlchemy transition started
 
-2006-04-26 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-26 Piotr Ożarowski <ozarow@gmail.com>
 	* Added database settings to preferences window
 
-2006-04-25 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-25 Piotr Ożarowski <ozarow@gmail.com>
 	* Added PostgreSQL support!
 	* Added merging data from .gri and .db files (still needs work)
 	* Fixed some minor bugs
 
-2006-04-23 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-23 Piotr Ożarowski <ozarow@gmail.com>
 	* SQLite2 database automatic conversion added
 	* ADOdb transition completed
 
-2006-04-22 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-22 Piotr Ożarowski <ozarow@gmail.com>
 	* Backup/restore function rewritten (smaller zipfile)
 	* Merge database function added (rewritten coffelius's patch)
 
-2006-04-21 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-21 Piotr Ożarowski <ozarow@gmail.com>
 	* Adding another numeric tag/lang/volume/collection is now not possible
 
-2006-04-20 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-20 Piotr Ożarowski <ozarow@gmail.com>
 	* ADOdb transition started
 
 ---- 0.6.2 ---
 
-2006-08-08 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-08 Piotr Ożarowski <ozarow@gmail.com>
 	* IMDb movie plugin updated.
 
-2006-08-05 Piotr Ozarowski <ozarow@gmail.com>
+2006-08-05 Piotr Ożarowski <ozarow@gmail.com>
 	* FDb movie plugin updated.
 
-2006-07-29 Piotr Ozarowski <ozarow@gmail.com>
+2006-07-29 Piotr Ożarowski <ozarow@gmail.com>
 	* IMDb movie plugin adds new lines in "with" field again
 	* Update button moved to toolbar
 
-2006-07-27 Piotr Ozarowski <ozarow@gmail.com>
+2006-07-27 Piotr Ożarowski <ozarow@gmail.com>
 	* Makefile for po files updated
 	  - use `cd po && make XX.po` to create new translation
 
-2006-07-21 Piotr Ozarowski <ozarow@gmail.com>
+2006-07-21 Piotr Ożarowski <ozarow@gmail.com>
 	* Updated Free Software Foundation address.
 	* FDb movie plugin updated.
 	* Filmweb movie plugin updated.
 
-2006-07-20 Piotr Ozarowski <ozarow@gmail.com>
+2006-07-20 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed media handling while exporting to HTML.
 
-2006-06-29 Piotr Ozarowski <ozarow@gmail.com>
+2006-06-29 Piotr Ożarowski <ozarow@gmail.com>
 	* German translation updated (thanks to Malte Wiemann)
 
 2006-05-27 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Italian translation updated.
 
-2006-05-19 Piotr Ozarowski <ozarow@gmail.com>
+2006-05-19 Piotr Ożarowski <ozarow@gmail.com>
 	* Added FDb movie plugin
 
-2006-05-18 Piotr Ozarowski <ozarow@gmail.com>
+2006-05-18 Piotr Ożarowski <ozarow@gmail.com>
 	* Movie plugins code cleanups
 	* Added FilmeVonAZ movie plugin (thanks to Michael Jahn)
 
-2006-05-17 Piotr Ozarowski <ozarow@gmail.com>
+2006-05-17 Piotr Ożarowski <ozarow@gmail.com>
 	* Added Kino.de movie plugin (thanks to Michael Jahn)
 
-2006-05-08 Piotr Ozarowski <ozarow@gmail.com>
+2006-05-08 Piotr Ożarowski <ozarow@gmail.com>
 	* Cinematografo movie plugin updated.
 
-2006-05-02 Piotr Ozarowski <ozarow@gmail.com>
+2006-05-02 Piotr Ożarowski <ozarow@gmail.com>
 	* Some GtkComboBoxEntry widgets changed to GtkComboBox
 
 2006-04-25 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added italian translation (thanks to Diego Porcelli)
 
-2006-04-17 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-17 Piotr Ożarowski <ozarow@gmail.com>
 	* Version changed to 0.6.1+svn
 	* Minor fixes in doc files
 	* Added watch file for Debian package
 
 ---- 0.6.1 ---
 
-2006-04-14 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-14 Piotr Ożarowski <ozarow@gmail.com>
 	* Updated some docs (translation README and INSTALL notes)
 	* Fixed some typos
 	* Polish translation updated
 
-2006-04-11 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-11 Piotr Ożarowski <ozarow@gmail.com>
 	* Filter function rewritten
 	  + new fields added
 	  + it should work on Windows now
 
-2006-04-08 Piotr Ozarowski <ozarow@gmail.com>
+2006-04-08 Piotr Ożarowski <ozarow@gmail.com>
 	* First tag can now be renamed
 
 2006-04-08 Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -199,7 +206,7 @@ Griffith ChangeLog
 2006-04-05 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Some changes to winsetup.py
 
-2006-03-11 Piotr Ozarowski <ozarow@gmail.com>
+2006-03-11 Piotr Ożarowski <ozarow@gmail.com>
 	* Makefile fixes:
 	 + Manpages are now uninstalled as well
 	 + Code cleanups
@@ -222,7 +229,7 @@ Griffith ChangeLog
 	* Added a new feature to find and delete orphaned files in poster's directory. For now, it's a console only tool.
 	  'griffith -c' or 'griffith --clean'. Griffith should not produce orphans anymore but this is useful for cleaning old ones.
 
-2006-03-05 Piotr Ozarowski <ozarow@gmail.com>
+2006-03-05 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed bug when searching movie titles containing polish characters
 	* Update volume/collection data after creating new database
 
@@ -233,7 +240,7 @@ Griffith ChangeLog
 	* Quick filter not always working as expected. This is fixed now.
 	* When loaning/returning a movie wrong row is selected. Fixed.
 
-2006-03-04 Piotr Ozarowski <ozarow@gmail.com>
+2006-03-04 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed displaing movie info before initialization (tags problem)
 	* Fixed wrong poster path in cloned movie
 	* Clone movie function copies tag/lang data now
@@ -247,7 +254,7 @@ Griffith ChangeLog
 	* Added custom fonts selection for PDF reports.
 	* Fixed bug when adding new collections.
 
-2006-03-03 Piotr Ozarowski <ozarow@gmail.com>
+2006-03-03 Piotr Ożarowski <ozarow@gmail.com>
 	* New tag/language/volume/collection name must be unique
 	* Volume/collection ids dictionary is filled only if needed
 	* Changed behaviour of poster preview and add movie window
@@ -260,38 +267,38 @@ Griffith ChangeLog
 	* French and portuguese translations updated to match current revision
 	* Added a new french movie plugin - Allocine (Thanks to Pierre-Luc Lévy)
 
-2006-02-28 Piotr Ozarowski <ozarow@gmail.com>
+2006-02-28 Piotr Ożarowski <ozarow@gmail.com>
 	* All *\.py files moved to usr/share/ directory
 
 2006-02-28 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added french translation (Thanks to Pierre-Luc Lévy)
 
-2006-02-26 Piotr Ozarowski <ozarow@gmail.com>
+2006-02-26 Piotr Ożarowski <ozarow@gmail.com>
 	* Movie now can't be deleted while it is loaned
 
 2006-02-25 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Fixed problem under macosx and safari not opening websites fired up by griffith
 	* Removed loan flag from the main treeview.
 
-2006-02-21 Piotr Ozarowski <ozarow@gmail.com>
+2006-02-21 Piotr Ożarowski <ozarow@gmail.com>
 	* New entries in help menu
 	* Worning if languages list is not filled
 
-2006-02-20 Piotr Ozarowski <ozarow@gmail.com>
+2006-02-20 Piotr Ożarowski <ozarow@gmail.com>
 	* New 'tag' feature is now complete
 
-2006-02-19 Piotr Ozarowski <ozarow@gmail.com>
+2006-02-19 Piotr Ożarowski <ozarow@gmail.com>
 	* Language/tag renaming in preferences window is finally working
 
-2006-02-18 Piotr Ozarowski <ozarow@gmail.com>
+2006-02-18 Piotr Ożarowski <ozarow@gmail.com>
 	* All language types are now saved
 	* Code cleanups
 
-2006-02-17 Piotr Ozarowski <ozarow@gmail.com>
+2006-02-17 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed saving languages
 	* Polish translation updated
 
-2006-02-12 Piotr Ozarowski <ozarow@gmail.com>
+2006-02-12 Piotr Ożarowski <ozarow@gmail.com>
 	* Onet movie plugin updated
 	* Some crashes while showing debug info fixed
 
@@ -312,24 +319,24 @@ Griffith ChangeLog
 	* Debug functions moved to own class
 	* Added basic searching by original title on the console (griffith -s movie_title)
 
-2006-01-28 Piotr Ozarowski <ozarow@gmail.com>
+2006-01-28 Piotr Ożarowski <ozarow@gmail.com>
 	* Movie number is now editable
 	* Some language feature fixes
 
-2006-01-28 Piotr Ozarowski <ozarow@gmail.com>
+2006-01-28 Piotr Ożarowski <ozarow@gmail.com>
 	* Added languages feature (beta version)
 	* Added tags feature (alpha version)
 
 2006-01-24 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Fixed bug with spellchecker initialization when an aspell word list is not installed.
 
-2006-01-14 Piotr Ozarowski <ozarow@gmail.com>
+2006-01-14 Piotr Ożarowski <ozarow@gmail.com>
 	* Filmweb movie plugin updated
 
-2006-01-08 Piotr Ozarowski <ozarow@gmail.com>
+2006-01-08 Piotr Ożarowski <ozarow@gmail.com>
 	* CSV template updated (still needs some work)
 
-2006-01-07 Piotr Ozarowski <ozarow@gmail.com>
+2006-01-07 Piotr Ożarowski <ozarow@gmail.com>
 	* [Bug #5685] AnimeDB plugin really works again
 
 2006-01-06 Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -343,16 +350,16 @@ Griffith ChangeLog
 2006-01-04 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Main treeview being populated twice on startup. Fixed.
 
-2006-01-04 Piotr Ozarowski <ozarow@gmail.com>
+2006-01-04 Piotr Ożarowski <ozarow@gmail.com>
 	* AnimeDB plugin works again
 
-2006-01-03 Piotr Ozarowski <ozarow@gmail.com>
+2006-01-03 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed bad vol./col. ID in ComboBox after adding new entry
 
 2006-01-02 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* [Bug #5999] Encoding problem with E-Pipoca movie plugin
 
-2005-12-28 Piotr Ozarowski <ozarow@gmail.com>
+2005-12-28 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed crash when volume or collection name wasn't string
 
 2005-12-28 Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -362,15 +369,15 @@ Griffith ChangeLog
 2005-12-27 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added spanish translation (thanks to Daniel Ucero)
 
-2005-12-05 Piotr Ozarowski <ozarow@gmail.com>
+2005-12-05 Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed aspell related problems
 
-2005-11-30 Piotr Ozarowski <ozarow@gmail.com>
+2005-11-30 Piotr Ożarowski <ozarow@gmail.com>
 	* XML template updated (HTML export plugin)
 
 ---- 0.5.1 ----
 
-2005-11-26 Piotr Ozarowski <ozarow@gmail.com>
+2005-11-26 Piotr Ożarowski <ozarow@gmail.com>
 	* Updated polish translation
 
 2005-11-22 Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -383,7 +390,7 @@ Griffith ChangeLog
 	* Added a win32 installer custom image.
 	* Added portuguese, polish, german and czech translations to win32 installer.
 
-2005-11-21 Piotr Ozarowski <ozarow@gmail.com>
+2005-11-21 Piotr Ożarowski <ozarow@gmail.com>
 	* Added simple style to table template (HTML export plugin)
 	* [Bug #5686] Coll. & vol. remembers selection after adding a movie
 	* [Bug #5631] wrong language/locale with 0.5
@@ -394,15 +401,15 @@ Griffith ChangeLog
 	  + Fixed layer dropdown list entries
 	  + 'Excellent' mispelled in condition dropdown list
 
-2005-11-15 Piotr Ozarowski <ozarow@gmail.com>
+2005-11-15 Piotr Ożarowski <ozarow@gmail.com>
 	* Try to use Psyco if available
 
-2005-11-12 Piotr Ozarowski <ozarow@gmail.com>
+2005-11-12 Piotr Ożarowski <ozarow@gmail.com>
 	* HTML export plugin updated to v3.4 (added posters conversion)
 
 ---- 0.5 ----
 
-2005-11-11 Piotr Ozarowski <ozarow@gmail.com>
+2005-11-11 Piotr Ożarowski <ozarow@gmail.com>
 	* HTML export plugin updated to v3.3
 	* Updated polish translation
 
@@ -421,7 +428,7 @@ Griffith ChangeLog
 2005-11-07 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Big posters fetched from Amazon are now previewed on built-in poster viewer.
 
-2005-11-05 Piotr Ozarowski <ozarow@gmail.com>
+2005-11-05 Piotr Ożarowski <ozarow@gmail.com>
 	* Media names are now stored in database
 	* Updated polish translation
 
@@ -439,7 +446,7 @@ Griffith ChangeLog
 	* Added some minor changes for win32 compatibility
 	* Now Griffith's dir defaults to localized 'My Documents' dir on win32 environments
 
-2005-10-27 Piotr Ozarowski <ozarow@gmail.com>
+2005-10-27 Piotr Ożarowski <ozarow@gmail.com>
 	* Volume/collection renaming is now possible
 	* Volume/collection can now be selected in "add movie" window
 	* Minor changes in volume/collection related code
@@ -447,15 +454,15 @@ Griffith ChangeLog
 2005-10-26 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added a winsetup.py file to be used by py2exe
 
-2005-10-25 Piotr Ozarowski <ozarow@gmail.com>
+2005-10-25 Piotr Ożarowski <ozarow@gmail.com>
 	* Correct loans history is now displayed if movie belongs to
 	collection
 
-2005-10-24 Piotr Ozarowski <ozarow@gmail.com>
+2005-10-24 Piotr Ożarowski <ozarow@gmail.com>
 	* Loans are finally working correctly
 	* Crush when no media is selected in add movie function - fixed
 
-2005-10-20 Piotr Ozarowski <ozarow@gmail.com>
+2005-10-20 Piotr Ożarowski <ozarow@gmail.com>
 	* WP movie plugin updated
 	* Onet movie plugin updated
 
@@ -465,22 +472,22 @@ Griffith ChangeLog
 2005-10-15  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added preferences defaults to media, layers, condition, color and region
 
-2005-10-14  Piotr Ozarowski <ozarow@gmail.com>
+2005-10-14  Piotr Ożarowski <ozarow@gmail.com>
 	* [Bug #5344] fixed wrong encoding in IMDb movie plugin (thanks to dieterv)
 
-2005-10-13  Piotr Ozarowski <ozarow@gmail.com>
+2005-10-13  Piotr Ożarowski <ozarow@gmail.com>
 	* Updated WP movie plugin (webpage was changed)
 	* Debian menu icon was in wrong format
 	* Removing poster images when deleting movie feature added
 
-2005-10-10  Piotr Ozarowski <ozarow@gmail.com>
+2005-10-10  Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed crash when poster file is not present
 
 2005-10-09  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* [Bug #5306] Last toolbar button not working as expected
 	* Added a 'by collection' quick filter
 
-2005-10-05  Piotr Ozarowski <ozarow@gmail.com>
+2005-10-05  Piotr Ożarowski <ozarow@gmail.com>
 	* Polish translation updated
 
 2005-10-05  Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -488,7 +495,7 @@ Griffith ChangeLog
 	* Delete/Zoom poster buttons are now sensitive to poster existence
 	* Portuguese translation updated
 
-2005-10-04  Piotr Ozarowski <ozarow@gmail.com>
+2005-10-04  Piotr Ożarowski <ozarow@gmail.com>
 	* Griffith now asks if you want to loan whole collection
 
 2005-10-01  Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -496,7 +503,7 @@ Griffith ChangeLog
 	* Added some tooltips to preferences widgets
 	* Added some new tools to operate with posters (initial support)
 
-2005-09-30  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-30  Piotr Ożarowski <ozarow@gmail.com>
 	* Volumes / Collections feature now in beta2 version (loaning is
 	  working, some bugfixes)
 	* Some cleanups in Debian files
@@ -504,11 +511,11 @@ Griffith ChangeLog
 2005-09-26  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added bulgarian translation (thanks to Luchezar P. Petkov)
 
-2005-09-27  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-27  Piotr Ożarowski <ozarow@gmail.com>
 	* Volumes / Collections feature now in beta version (filtering is
 	  working, minor bugfixes)
 
-2005-09-26  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-26  Piotr Ożarowski <ozarow@gmail.com>
 	* Volumes / Collections feature added (alpha version)
 
 2005-09-26  Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -520,7 +527,7 @@ Griffith ChangeLog
 2005-09-23  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* DVDZone2 plugin renamed to Mediadis according to new company service and website. Some enhancement to this plugin implemented.
 
-2005-09-21  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-21  Piotr Ożarowski <ozarow@gmail.com>
 	* Added Tanuki-Anime movie plugin.
 	* Minor changes in add and main window.
 	* Makefile update. Closes: #1324
@@ -529,10 +536,10 @@ Griffith ChangeLog
 	* Added experimental support for Microsoft Windows 2000, Millenium and Windows 98 systems
 	* [Bug #1313] Film fields with & or < break the PDF export plugin
 
-2005-09-20  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-20  Piotr Ożarowski <ozarow@gmail.com>
 	* Some fixes in Makefile (for MacOSX users)
 
-2005-09-19  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-19  Piotr Ożarowski <ozarow@gmail.com>
 	* UseTemplates export plugin update:
 	* [Bug #1314] LANG environment variable no longer required
 	* [Bug #1315] Added extra warning dialog when deleting directry
@@ -541,10 +548,10 @@ Griffith ChangeLog
 	* Added Moviefone (America online) movie plugin.
 	* [Bug #1312] notes not empty after adding a movie
 
-2005-09-14  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-14  Piotr Ożarowski <ozarow@gmail.com>
 	* Small main window changes
 
-2005-09-13  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-13  Piotr Ożarowski <ozarow@gmail.com>
 	* Movie plugins update ("with" entry updated to use multiline, minor bugs fixed)
 	* Gery movie plugin removed - webpage is not working
 	* movie.py: capwords() should be used only if needed
@@ -555,10 +562,10 @@ Griffith ChangeLog
 	  that was using an incorrect date/time format and another fixing some english spell errors found in language file.
 	* Color, condition, layers info and region defaults now to 'n/a' when adding a new movie.
 
-2005-09-12  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-12  Piotr Ożarowski <ozarow@gmail.com>
 	* UseTemplates export plugin update
 
-2005-09-11  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-11  Piotr Ożarowski <ozarow@gmail.com>
 	* Updated Anime Database and Filmweb movie plugins
 	* Add movie window reorganization
 
@@ -571,10 +578,10 @@ Griffith ChangeLog
 	* Moved some old orphan debugging lines to use new debug method
 	* Fixed encoding bug in built in debug method
 
-2005-09-09  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-09  Piotr Ożarowski <ozarow@gmail.com>
 	* Added english and polish griffith-export-template manpage
 
-2005-09-08  Piotr Ozarowski <ozarow@gmail.com>
+2005-09-08  Piotr Ożarowski <ozarow@gmail.com>
 	* HTML export plugin renamed to "Use Templates" and updated to version 3.2
 	  (now uses non-english language data from config files)
 	* Polish translation updated
@@ -593,21 +600,21 @@ Griffith ChangeLog
 2005-08-31  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added portuguese manpages
 
-2005-08-29  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-29  Piotr Ożarowski <ozarow@gmail.com>
 	* Some Makefiles changed/added
 
-2005-08-28  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-28  Piotr Ożarowski <ozarow@gmail.com>
 	* Added english and polish manpages
 	* Added debug and usage command line options
 
-2005-08-27  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-27  Piotr Ożarowski <ozarow@gmail.com>
 	* HTML export plugin updated to v3.1 - templates have now XML config
 	  files, styles can have preview images
 
-2005-08-24  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-24  Piotr Ożarowski <ozarow@gmail.com>
 	* HTML export plugin updated to v3.1-beta
 
-2005-08-23  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-23  Piotr Ożarowski <ozarow@gmail.com>
 	* Updated HTML export plugin (v3.0)
 	* Updated polish translation
 	* Minor changes in Debian package generation files
@@ -615,7 +622,7 @@ Griffith ChangeLog
 2005-08-22  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* [Bug #1261] number disk is 0.
 
-2005-08-21  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-21  Piotr Ożarowski <ozarow@gmail.com>
 	* HTML export plugin now uses templates! (version 3.0-rc1)
 
 2005-08-20  Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -634,7 +641,7 @@ Griffith ChangeLog
 	* When quick filter is changed movie details should be blank because no movie is selected. Fixed.
 	* Password characters in email reminder preferences are now hidden
 
-2005-08-18  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-18  Piotr Ożarowski <ozarow@gmail.com>
 	* Navigation bar update (HTML export plugin)
 
 2005-08-17  Vasco Nunes <vasco.m.nunes@gmail.com>
@@ -655,13 +662,13 @@ Griffith ChangeLog
 2005-08-15  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Added some artwork contributed by Peek
 
-2005-08-14  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-14  Piotr Ożarowski <ozarow@gmail.com>
 	* Debian package generation files - initial import
 
 2005-08-14  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* [Bug #1250] Random Crashes. Fixed.
 
-2005-08-13  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-13  Piotr Ożarowski <ozarow@gmail.com>
 	* Fixed bug #1246 (database upgrade when needed) 
 	* HTML export plugin update (added header entry)
 
@@ -670,7 +677,7 @@ Griffith ChangeLog
 	* Fixed some bugs in e-mail loan reminder feature.
 	* Some more code cleaning
 
-2005-08-12  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-12  Piotr Ożarowski <ozarow@gmail.com>
 	* Some fixes in HTML export plugin and polish movie plugins
 	* Fixed problems with AniDB movie plugin (changed gdecode method in gutils)
 
@@ -680,7 +687,7 @@ Griffith ChangeLog
 	* Merged some duplicated language strings.
 	* Added favorite movie plugin to preferences to be used by default when fetching web data 
 
-2005-08-11  Piotr Ozarowski <ozarow@gmail.com>
+2005-08-11  Piotr Ożarowski <ozarow@gmail.com>
 	* HTML export plugin updated to 2.3beta1
 	* Some new arguments added to get_all_data() function in sql.py
 
@@ -694,7 +701,7 @@ Griffith ChangeLog
 	* Fixed a couple of bugs when adding/cloning movies in empty movie positions. Now the main treeview is always sorted.
 	* Updated polish translation
 	* Updated all polish movie plugins
-	* Added AniDB (english) movie plugin (contributed by Piotr Ozarowski)
+	* Added AniDB (english) movie plugin (contributed by Piotr Ożarowski)
 	* Added ClubeMyDVD (portuguese) movie plugin
 	* New method for movie plugins available - movie notes (optional). This field could be used to fetch and store misc information/details about the entry.
 	* Fixed bug in movie entry clone feature. Some fields were not being escaped as expected.
@@ -757,7 +764,7 @@ Griffith ChangeLog
 
 2005-07-15  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Old export filters changed to plugins
-	* Included Piotr Ozarowski's HTML export plugin v2.0beta
+	* Included Piotr Ożarowski's HTML export plugin v2.0beta
 
 2005-07-14  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Created a 'plugins' directory. Moved all movie plugins to this new 
@@ -772,7 +779,7 @@ Griffith ChangeLog
 	* Griffith now stores window size and position on exit.
 
 2005-07-06  Vasco Nunes <vasco.m.nunes@gmail.com>
-	* Added simple html list exporting. (thanks to Piotr Ozarowski)
+	* Added simple html list exporting. (thanks to Piotr Ożarowski)
 
 2005-07-05  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* [Bug #1194] Filter drop menu not working. Fixed.
@@ -799,14 +806,14 @@ Griffith ChangeLog
 	* Added some menu shortcuts
 	* Added view menu
 	* Another portuguese/polish translation update
-	* All polish plugins now include rating capability (thanks to Piotr Ozarowski)
+	* All polish plugins now include rating capability (thanks to Piotr Ożarowski)
 
 2005-06-30  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Changed plugin detection function to use glob module instead
 	* all file operations changed to use shutil module instead
 	* General code cleaning
-	* [Bug] Before function in gutils returning incorrect string. Fixed. (thanks to Piotr Ozarowski)
-	* added Onnet Film (polish) plugin (thanks to Piotr Ozarowski).
+	* [Bug] Before function in gutils returning incorrect string. Fixed. (thanks to Piotr Ożarowski)
+	* added Onnet Film (polish) plugin (thanks to Piotr Ożarowski).
 	* polish translation updated
 	* portuguese translation updated
 	* Added film ratings
@@ -828,15 +835,15 @@ Griffith ChangeLog
 
 2005-06-23  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* new update to polish translation.
-	* added FilmWeb (polish) plugin (thanks to Piotr Ozarowski).
-	* added WP (polish) plugin (thanks to Piotr Ozarowski).
+	* added FilmWeb (polish) plugin (thanks to Piotr Ożarowski).
+	* added WP (polish) plugin (thanks to Piotr Ożarowski).
 	* added csv export filter
 	* added initial support for gtkspell under *nix systems. new dependency: python-gnome-extras (optional).
 	  will not be used if not available
 	* main poster changed to a button widget allowing now to select a custom poster image.
 
 2005-06-22  Vasco Nunes <vasco.m.nunes@gmail.com>
-	* added Gery Film (polish) plugin (thanks to Piotr Ozarowski).
+	* added Gery Film (polish) plugin (thanks to Piotr Ożarowski).
 	* [Bug] Fixed bug with null year and runtime display
 	* [Bug] Fixed some bugs related with single quote problems
 	* Implemented a new field to write custom notes
@@ -850,12 +857,12 @@ Griffith ChangeLog
 
 2005-06-20  Vasco Nunes <vasco.m.nunes@gmail.com>
 	* true plugin system implemented.
-	* included stopklatka.pl (polish) plugin (thanks to Piotr Ozarowski).
+	* included stopklatka.pl (polish) plugin (thanks to Piotr Ożarowski).
 	* [Bug #] bug with year and running time not filled when image is not available. Fixed.
 	* updated polish translation.
 
 2005-06-19  Vasco Nunes <vasco.m.nunes@gmail.com>
-	* added polish translation (thanks to Piotr Ozarowski).
+	* added polish translation (thanks to Piotr Ożarowski).
 
 ---- 0.1 ----
 

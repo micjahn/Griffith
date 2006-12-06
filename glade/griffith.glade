@@ -124,6 +124,35 @@
 		    </widget>
 		  </child>
 
+		  
+		  <child>
+		    <widget class="GtkImageMenuItem" id="import">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">I_mport</property>
+		      <property name="use_underline">True</property>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image564">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-convert</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenu" id="import_menu">
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+		  
+		  
+		  
+
 		  <child>
 		    <widget class="GtkSeparatorMenuItem" id="separator2">
 		      <property name="visible">True</property>

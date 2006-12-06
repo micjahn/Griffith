@@ -33,13 +33,28 @@ def clear(self):
 	"""clears all fields in dialog"""
 	set_details(self, {})
 
-def add_movie(self):
-	quick_filter.clear_filter(self)
-	next_number = gutils.find_next_available(self)
-	clear(self)
-	self.widgets['add']['number'].set_value(int(next_number))
-	self.widgets['add']['window'].show()
+def add_movie(self, details={}):
+	quick_filter.clear_filter(self)	 # FIXME: remove this line
+	if not details.has_key('number'):
+		details['number'] = gutils.find_next_available(self)
+	set_details(self, details)
+	
 	self.active_plugin = ''
+	self.widgets['add']['add_button'].show()
+	self.widgets['add']['add_close_button'].show()
+	self.widgets['add']['clear_button'].show()
+	self.widgets['add']['save_button'].hide()
+	self.widgets['add']['window'].show()
+
+def edit_movie(self, details={}):
+	if not details.has_key('number'):
+		details['number'] = gutils.find_next_available(self)
+	set_details(self, details)
+	self.widgets['add']['add_button'].hide()
+	self.widgets['add']['add_close_button'].hide()
+	self.widgets['add']['clear_button'].hide()
+	self.widgets['add']['save_button'].show()
+	self.widgets['add']['window'].show()
 
 def set_details(self, item=None):#{{{
 	if item is None:

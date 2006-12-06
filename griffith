@@ -106,6 +106,7 @@ class Griffith:
 		initialize.preferences(self)
 		initialize.movie_plugins(self)
 		initialize.export_plugins(self)
+		initialize.import_plugins(self)
 		initialize.people_treeview(self)
 		initialize.web_results(self)
 		self.initialized = True
@@ -118,6 +119,18 @@ class Griffith:
 		export_plugin = __import__('PluginExport%s' % plugin_name)
 		export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], self.debug)
 
+	def on_import_activate(self, menu_iter, plugin_name):
+		ip = __import__('PluginImport%s' % plugin_name)
+		ip = ip.ImportPlugin(self)
+		if ip.initialize():
+			total = ip.count_movies()
+			# TODO: show progres bar
+			ip.run()
+			gutils.info(self, _("%s file has been imported. %s movies added.") \
+				% (ip.name, ip.imported), self.widgets['window'])
+			ip.clear()
+			self.populate_treeview()
+		
 	def destroy(self, widget, data=None):
 		self.save_state()
 		gtk.main_quit()
@@ -134,12 +147,7 @@ class Griffith:
 
 	def edit_movie(self, *args):
 		movie = self.db.Movie.get_by(movie_id=self._movie_id)
-		add.set_details(self, movie)
-		self.widgets['add']['add_button'].hide()
-		self.widgets['add']['add_close_button'].hide()
-		self.widgets['add']['clear_button'].hide()
-		self.widgets['add']['save_button'].show()
-		self.widgets['add']['window'].show()
+		add.edit_movie(self, movie)
 
 	def hide_add_window(self, *args):
 		self.widgets['add']['window'].hide()
@@ -196,10 +204,6 @@ class Griffith:
 	# movie related operations --------------------------------------------
 
 	def add_movie(self, *args):
-		self.widgets['add']['add_button'].show()
-		self.widgets['add']['add_close_button'].show()
-		self.widgets['add']['clear_button'].show()
-		self.widgets['add']['save_button'].hide()
 		add.add_movie(self)
 
 	def add_movie_db(self, *args):
