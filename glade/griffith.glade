@@ -80,7 +80,7 @@
 		      <signal name="activate" handler="on_merge_activate" last_modification_time="Tue, 19 Apr 2005 11:58:23 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image560">
+			<widget class="GtkImage" id="image567">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-open</property>
 			  <property name="icon_size">1</property>
@@ -106,7 +106,7 @@
 		      <property name="use_underline">True</property>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image561">
+			<widget class="GtkImage" id="image568">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-convert</property>
 			  <property name="icon_size">1</property>
@@ -116,7 +116,6 @@
 			  <property name="ypad">0</property>
 			</widget>
 		      </child>
-
 		      <child>
 			<widget class="GtkMenu" id="export_menu">
 			</widget>
@@ -130,9 +129,10 @@
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">I_mport</property>
 		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_import_activate" last_modification_time="Wed, 06 Dec 2006 20:39:22 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image564">
+			<widget class="GtkImage" id="image569">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-convert</property>
 			  <property name="icon_size">1</property>
@@ -142,16 +142,8 @@
 			  <property name="ypad">0</property>
 			</widget>
 		      </child>
-
-		      <child>
-			<widget class="GtkMenu" id="import_menu">
-			</widget>
-		      </child>
 		    </widget>
 		  </child>
-		  
-		  
-		  
 
 		  <child>
 		    <widget class="GtkSeparatorMenuItem" id="separator2">
@@ -207,7 +199,7 @@
 		      <signal name="activate" handler="on_clone_activate" last_modification_time="Fri, 29 Apr 2005 15:04:29 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image562">
+			<widget class="GtkImage" id="image570">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-copy</property>
 			  <property name="icon_size">1</property>
@@ -279,7 +271,7 @@
 		      <property name="use_underline">True</property>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image563">
+			<widget class="GtkImage" id="image571">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-print</property>
 			  <property name="icon_size">1</property>

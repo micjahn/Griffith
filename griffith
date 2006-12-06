@@ -106,7 +106,6 @@ class Griffith:
 		initialize.preferences(self)
 		initialize.movie_plugins(self)
 		initialize.export_plugins(self)
-		initialize.import_plugins(self)
 		initialize.people_treeview(self)
 		initialize.web_results(self)
 		self.initialized = True
@@ -119,7 +118,20 @@ class Griffith:
 		export_plugin = __import__('PluginExport%s' % plugin_name)
 		export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], self.debug)
 
-	def on_import_activate(self, menu_iter, plugin_name):
+	def on_import_activate(self, *args):
+		initialize.import_plugins(self)
+
+	def on_import_plugin_changed(self, *args):
+		w = self.widgets['import']
+		plugin_name = w['plugin'].get_active_text()
+		ip = __import__('PluginImport%s' % plugin_name)
+		w['author'].set_text(ip.ImportPlugin.author)
+		w['email'].set_text(ip.ImportPlugin.email)
+		w['version'].set_text(ip.ImportPlugin.version)
+		w['description'].set_text(ip.ImportPlugin.description)
+	
+	def on_import_button_clicked(self, *args):
+		plugin_name = self.widgets['import']['plugin'].get_active_text()
 		ip = __import__('PluginImport%s' % plugin_name)
 		ip = ip.ImportPlugin(self)
 		if ip.initialize():
@@ -130,6 +142,8 @@ class Griffith:
 				% (ip.name, ip.imported), self.widgets['window'])
 			ip.clear()
 			self.populate_treeview()
+	def on_cancel_button_clicked(self, *args):
+		self.widgets['import']['window'].hide()
 
 	def destroy(self, widget, data=None):
 		self.save_state()
