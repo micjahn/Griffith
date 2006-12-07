@@ -37,7 +37,7 @@ class AboutDialog:
 		dialog.set_website(version.pwebsite)
 		dialog.set_authors([_("Main Authors") + ":\n"+ \
 			version.pauthor.replace(', ', '\n') + "\n",
-			'%s:\nJessica Katharina Parth <deepfly@gmx.net>\n'%_("Programmer") +"\n"+ \
+			'%s:\nJessica Katharina Parth <Jessica.K.P@women-at-work.org>\n'%_("Programmer") +"\n"+ \
 
 			_('Contributors:'),
 			'Christian Sagmueller <christian@sagmueller.net>\n' \

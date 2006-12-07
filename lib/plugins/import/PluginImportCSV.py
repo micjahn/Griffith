@@ -4,7 +4,7 @@ __revision__ = '$Id$'
 
 ###########################################################################
 #    Copyright (C) 2006 by Jessica Katharina Parth                         
-#    <skorpion@slyclan.de>                                                 
+#    <Jessica.K.P@women-at-work.org>                                                 
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -34,7 +34,7 @@ class ImportPlugin(plugin.ImportPlugin):
 	name = "CSV"
 	description = _("Full CSV list import plugin")
 	author = "Jessica Katharina Parth"
-	author_email = "deepfly@gmx.net"
+	email = "Jessica.K.P@women-at-work.org"
 	version = "0.1"
 
 	def initialize(self):
