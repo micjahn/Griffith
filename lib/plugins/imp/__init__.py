@@ -163,11 +163,13 @@ def on_import_button_clicked(button, self, *args):
 	plugin_name = self.widgets['import']['plugin'].get_active_text()
 	filename = self.widgets['import']['fcw'].get_filename() # TODO: multiple files
 	
-	fields = []
+	fields = {}
 	w = self.widgets['import']['fields']
 	for i in w:
 		if w[i].get_active():
-			fields.append(i)
+			fields[i] = True
+		else:
+			fields[i] = False
 
 	__import__("plugins.imp.%s" % plugin_name)
 	ip = eval("plugins.imp.%s.ImportPlugin(self, fields)" % plugin_name)

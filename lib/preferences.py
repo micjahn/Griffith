@@ -330,7 +330,9 @@ def save_preferences(self):
 		import sql
 		self.initialized = False
 		self.db.metadata.clear()
-		self.db = sql.GriffithSQL(self.config, self.debug, self.griffith_dir)
+		from sqlalchemy.orm import clear_mappers
+		clear_mappers()
+		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
 		self.debug.show("New database Engine: %s" % self.db.metadata.engine.name)
 		self.total = int(self.db.Movie.count())
 		self.count_statusbar()

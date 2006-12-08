@@ -32,11 +32,11 @@ class ImportPlugin(ImportPlugin):
 			'application/excel', 'application/vnd.ms-excel', 'application/vnd.msexcel')
 
 	def initialize(self):
-		import gtk, gutils
-		# TODO: configure csv.reader
+		# build window, initialize widgets, source _independent_ initialization
 		return True
 
 	def set_source(self, name):
+		# source _dependent_ initialization goes here
 		import csv, codecs, os
 		if name is None or not os.path.isfile(name):
 			return False
