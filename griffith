@@ -89,10 +89,10 @@ class Griffith:
 			self.widgets['preferences']['font'].set_current_folder("/usr/share/fonts/")
 
 	def main(self):
-		gtk.threads_init()
-		gtk.threads_enter()
+		gtk.gdk.threads_init()
+		gtk.gdk.threads_enter()
 		gtk.main()
-		gtk.threads_leave()
+		gtk.gdk.threads_leave()
 		return 0
 
 	def initialize_griffith(self):
