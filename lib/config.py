@@ -49,7 +49,10 @@ class Config:
 		for hook in self.set_hooks: hook(k, v)
 
 	def __getitem__ (self, k):
-		return self.config[k]
+		if not self.config.has_key(k):
+			return None
+		else:
+			return self.config[k]
 
 	def keys (self):
 		return self.config.keys()
@@ -102,6 +105,7 @@ class Config:
 		self.config['mail_password']        = ""
 		self.config['mail_email']           = "griffith"
 		self.config['media']                = "1"
+		self.config['posters']              = "posters"
 		self.config['vcodec']               = "2"
 		self.config['font']                 = ""
 		self.config['db_type']              = "sqlite"
