@@ -917,8 +917,10 @@ You can't undo this operation."""), \
 				path, col, cellx, celly = pthinfo
 				self.widgets['treeview'].grab_focus()
 				self.widgets['treeview'].set_cursor( path, col, 0)
-				self.popup.popup( None, None, None, event.button, time)
+				self.widgets['popups']['main'].popup( None, None, None, event.button, time)
 			return 1
+		elif event.type == gtk.gdk._2BUTTON_PRESS:
+			self.edit_movie()
 
 	def on_results_button_press_event(self, widget, event):
 		"""add a double click event to add movie results"""
