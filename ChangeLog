@@ -2,7 +2,11 @@
 
 Griffith ChangeLog
 ------------------
-(c) 2005-2006 Vasco Nunes
+(c) 2005-2006 Vasco Nunes, Piotr Ożarowski
+
+2006-12-08 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* ClubeMyDVD movie plugin removed (site no longer exists)
+	* Added new portuguese movie plugin (Cineteka)
 
 2006-12-06 Piotr Ożarowski <ozarow@gmail.com>
 	* Ask before adding movie which title is already in database
