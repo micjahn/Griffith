@@ -1,64 +1,48 @@
-# Czech translation of Griffith 0.6.2 
-# Copyright (C) 2006 Vasco Nunes <vasco.m.nunes@gmail.com>
-# This file is distributed under the same license as the griffith package.
-# Ondra 'Kepi' Kudlík <kepi@igloonet.cz>, 2006.
-# Blondak <blondak@neser.cz>, 2006. (0.5 version)
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Blondak <blondak@neser.cz>, 2005.
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.6.2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-04 11:22+0100\n"
-"PO-Revision-Date: 2006-09-03 18:30+0200\n"
-"Last-Translator: Ondra 'Kepi' Kudlík <kepi@igloonet.cz>\n"
-"Language-Team: Gnome Czech <gnome-cs-list@gnome.org>\n"
+"Project-Id-Version: Griffith-0.6.2\n"
+"Report-Msgid-Bugs-To: Blondak <blondak@neser.cz>\n"
+"POT-Creation-Date: 2006-08-07 11:32+0200\n"
+"PO-Revision-Date: 2006-12-08 09:24+0200\n"
+"Last-Translator: Blondak <blondak@neser.cz>\n"
+"Language-Team: CS <cs@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:274
+#: ../griffith:226
 msgid "You saw all movies in your collection!"
 msgstr "Viděli jste všechny filmy v kolekci!"
 
-#: ../griffith:394 ../griffith:399 ../lib/initialize.py:244
-#: ../lib/initialize.py:445
-msgid "subtitles"
-msgstr "titulky"
-
-#: ../griffith:677
+#: ../griffith:408
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
 "You can't undo this operation."
 msgstr ""
-"Jste si jisti, že chcete obnovit zálohu?\n"
-"Vaše současná sbírka filmů bude nahrazena.\n"
-"Tuto operaci nelze vrátit."
+"Jste si jistý, že chcete obnovu?\n"
+"Vaše stávající kolekce bude nahrazena.\n"
+"Tato operace ne nezvratná."
 
-#: ../griffith:686
-#, fuzzy
-msgid ""
-"Are you sure you want to mix?\n"
-"Your current movie collection will be mixed with a backup.\n"
-"You can't undo this operation."
-msgstr ""
-"Jste si jisti, že chcete obnovit zálohu?\n"
-"Vaše současná sbírka filmů bude nahrazena.\n"
-"Tuto operaci nelze vrátit."
-
-#: ../griffith:765
+#: ../griffith:489
 msgid " movie(s) in collection. "
 msgstr " film(ů) v kolekci. "
 
-#: ../griffith:766
+#: ../griffith:490
 msgid " movie(s) loaned. "
 msgstr " film(ů) půjčeno. "
 
-#: ../griffith:767
+#: ../griffith:491
 msgid "You haven't seen "
 msgstr "Neviděl jste "
 
-#: ../griffith:767
+#: ../griffith:491
 msgid " movie(s)"
 msgstr "film(y)"
 
@@ -72,41 +56,53 @@ msgstr "Programátor"
 
 #: ../lib/about.py:41
 msgid "Contributors:"
-msgstr "Přispěvatelé:"
+msgstr "Přispěvovateé"
 
 #: ../lib/about.py:45
 msgid "Logo, icon and general artwork "
-msgstr "Logo, ikona a celkový vzhled"
+msgstr "Logo, icona a celkový vzhled"
 
-#: ../lib/about.py:49
-msgid "Bulgarian"
-msgstr "Bulharsky"
+#: ../lib/about.py:46
+msgid "by Peek <peekpt@gmail.com>."
+msgstr "by Peek <peekpt@gmail.com>."
 
-#: ../lib/about.py:51
-#, fuzzy
-msgid "Brasilian Portuguese"
-msgstr "Brazilsko portugalsky"
+#: ../lib/about.py:47
+msgid ""
+"\n"
+"Please visit http://www.peekmambo.com/"
+msgstr ""
+"\n"
+"Prosím navštivte http://peekmambo.com/"
 
-#: ../lib/about.py:53 ../lib/plugins/movie/PluginMovieCSFD.py:31
+#: ../lib/about.py:49 ../lib/plugins/movie/PluginMovieCSFD.py:30
 msgid "Czech"
 msgstr "Česky"
 
-#: ../lib/about.py:56 ../lib/plugins/movie/PluginMovieAllocine.py:32
+#: ../lib/about.py:49 ../lib/about.py:51 ../lib/about.py:53 ../lib/about.py:55
+#: ../lib/about.py:57 ../lib/about.py:59 ../lib/about.py:61 ../lib/about.py:63
+msgid " by "
+msgstr " od "
+
+#: ../lib/about.py:51
+msgid "Bulgarian"
+msgstr "Buhlarsky"
+
+#: ../lib/about.py:53 ../lib/plugins/movie/PluginMovieAllocine.py:32
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:31
 msgid "French"
-msgstr "Francouzsky"
+msgstr "Francouzština"
 
-#: ../lib/about.py:58 ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:32
+#: ../lib/about.py:55 ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:32
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:32
 #: ../lib/plugins/movie/PluginMovieOFDb.py:13
 msgid "German"
 msgstr "Německy"
 
-#: ../lib/about.py:61 ../lib/plugins/movie/PluginMovieCinematografo.py:30
+#: ../lib/about.py:57 ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
-msgstr "Italsky"
+msgstr "Italština"
 
-#: ../lib/about.py:63 ../lib/plugins/movie/PluginMovieFDb.py:33
+#: ../lib/about.py:59 ../lib/plugins/movie/PluginMovieFDb.py:33
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:29
 #: ../lib/plugins/movie/PluginMovieOnet.py:29
 #: ../lib/plugins/movie/PluginMovieStopklatka.py:29
@@ -115,29 +111,29 @@ msgstr "Italsky"
 msgid "Polish"
 msgstr "Polsky"
 
-#: ../lib/about.py:65 ../lib/plugins/movie/PluginMovie7arte.py:32
+#: ../lib/about.py:61 ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieClubeMyDVD.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr "Portugalsky"
 
-#: ../lib/about.py:67
+#: ../lib/about.py:63
 msgid "Spanish"
 msgstr "Španělsky"
-
-#: ../lib/about.py:69
-msgid "Swedish"
-msgstr ""
 
 #: ../lib/about.py:75
 msgid "This program is released under the GNU"
 msgstr "Program je uvolněn pod licencí GNU"
 
-#: ../lib/add.py:326
-msgid "Movie information has been updated"
-msgstr "Informace o filmu byly upraveny"
+#: ../lib/about.py:76
+msgid "General Public License.\n"
+msgstr "General Public License.\n"
 
-#: ../lib/add.py:342 ../lib/add.py:526
+#: ../lib/about.py:77
+msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
+msgstr "Pro detaily navštivte http://www.gnu.org/copyleft/gpl.html ."
+
+#: ../lib/add.py:155 ../lib/add.py:286
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
@@ -145,156 +141,143 @@ msgstr ""
 "Musíte vyplnit originální název\n"
 "nebo název filmu."
 
-#: ../lib/add.py:503
+#: ../lib/add.py:261
 msgid "No results"
 msgstr "Žádné výsledky"
 
-#: ../lib/add.py:534
+#: ../lib/add.py:294
 msgid "Url: "
 msgstr "Url: "
 
-#: ../lib/add.py:535
+#: ../lib/add.py:295
 msgid "Language: "
 msgstr "Jazyk: "
 
-#: ../lib/backup.py:32
+#: ../lib/backup.py:33
 msgid "Save Griffith backup"
 msgstr "Uložit zálohu Griffithu"
 
-#: ../lib/backup.py:40 ../lib/plugins/export/PluginExportCSV.py:50
+#: ../lib/backup.py:42 ../lib/plugins/export/PluginExportCSV.py:50
 #: ../lib/plugins/export/PluginExportPDF.py:72
 #: ../lib/plugins/export/PluginExportXML.py:51
 msgid "File exists. Do you want to overwrite it?"
 msgstr "Soubor existuje. Chtete jej přepsat?"
 
-#: ../lib/backup.py:51
+#: ../lib/backup.py:52
 msgid "Error creating backup"
 msgstr "Chyba při vytváření zálohy"
 
-#: ../lib/backup.py:92
+#: ../lib/backup.py:54
 msgid "Backup has been created"
 msgstr "Záloha byla vytvořena"
 
-#: ../lib/backup.py:96 ../lib/backup.py:151
+#: ../lib/backup.py:58
 msgid "Restore Griffith backup"
 msgstr "Obnovit Griffith ze zálohy"
 
-#: ../lib/backup.py:104 ../lib/backup.py:167
+#: ../lib/backup.py:65
 msgid "Can't read backup file"
 msgstr "Nemohu přečíst záložní soubor"
 
-#: ../lib/backup.py:142
+#: ../lib/backup.py:71
 msgid "Backup restored"
 msgstr "Záloha obnovena"
 
-#: ../lib/backup.py:234
-#, python-format
-msgid ""
-"Databases merged!\n"
-"\n"
-"Processed movies: %s\n"
-"Merged movies: %s"
-msgstr ""
-
-#: ../lib/cover.py:42 ../lib/edit.py:43
+#: ../lib/cover.py:42 ../lib/edit.py:44
 msgid "Select image"
 msgstr "Vyberte obrázek"
 
-#: ../lib/cover.py:86 ../lib/cover.py:149
+#: ../lib/cover.py:86 ../lib/cover.py:150
 msgid "Cover generated by Griffith v"
 msgstr "Obal generován Griffithem v"
 
-#: ../lib/cover.py:88 ../lib/cover.py:151
-#: ../lib/plugins/export/PluginExportHTML.py:628
-#: ../lib/plugins/export/PluginExportPDF.py:119
+#: ../lib/cover.py:88 ../lib/cover.py:152
+#: ../lib/plugins/export/PluginExportHTML.py:617
+#: ../lib/plugins/export/PluginExportPDF.py:124
 msgid "Released Under the GNU/GPL License"
 msgstr "Uvolněno pod licencí GNU/GPL"
 
-#: ../lib/cover.py:176 ../lib/initialize.py:177 ../lib/initialize.py:418
-#: ../lib/plugins/export/PluginExportHTML.py:105 ../glade/griffith.glade.h:91
+#: ../lib/cover.py:177 ../lib/initialize.py:153 ../lib/initialize.py:385
+#: ../lib/plugins/export/PluginExportHTML.py:105 ../glade/griffith.glade.h:82
 msgid "Original Title"
 msgstr "Originální název"
 
-#: ../lib/cover.py:177 ../lib/initialize.py:183 ../lib/initialize.py:419
-#: ../lib/plugins/export/PluginExportHTML.py:111 ../glade/griffith.glade.h:143
+#: ../lib/cover.py:178 ../lib/initialize.py:159 ../lib/initialize.py:386
+#: ../lib/plugins/export/PluginExportHTML.py:111 ../glade/griffith.glade.h:134
 msgid "Title"
 msgstr "Název"
 
-#: ../lib/cover.py:179 ../lib/initialize.py:189 ../lib/initialize.py:425
-#: ../lib/plugins/export/PluginExportHTML.py:96 ../glade/griffith.glade.h:44
+#: ../lib/cover.py:180 ../lib/initialize.py:165 ../lib/initialize.py:392
+#: ../lib/plugins/export/PluginExportHTML.py:96 ../glade/griffith.glade.h:36
 msgid "Director"
 msgstr "Režisér"
 
-#: ../lib/cover.py:181
+#: ../lib/cover.py:182
 msgid "Running Time"
 msgstr "Délka"
 
-#: ../lib/cover.py:181
+#: ../lib/cover.py:182
 msgid " min"
 msgstr " min"
 
-#: ../lib/cover.py:182 ../lib/initialize.py:423
-#: ../lib/plugins/export/PluginExportHTML.py:95 ../glade/griffith.glade.h:38
+#: ../lib/cover.py:183 ../lib/initialize.py:390
+#: ../lib/plugins/export/PluginExportHTML.py:95 ../glade/griffith.glade.h:30
 msgid "Country"
 msgstr "Země"
 
-#: ../lib/cover.py:183 ../lib/initialize.py:424
-#: ../lib/plugins/export/PluginExportHTML.py:97 ../glade/griffith.glade.h:57
+#: ../lib/cover.py:184 ../lib/initialize.py:391
+#: ../lib/plugins/export/PluginExportHTML.py:97 ../glade/griffith.glade.h:47
 msgid "Genre"
 msgstr "Styl"
 
-#: ../lib/delete.py:33
+#: ../lib/delete.py:32
 msgid "You can't delete movie while it is loaned."
-msgstr "Pokud je film vypůjčen, nelze smazat!"
+msgstr "Nemůžete smazat film, pokud je vypůjčen!"
 
-#: ../lib/delete.py:35
+#: ../lib/delete.py:34
 msgid "Are you sure you want to delete this movie?"
-msgstr "Opravdu chcete smazat tento film?"
+msgstr "Jste si jit, že chcete smazat tento film?"
 
-#: ../lib/edit.py:54
+#: ../lib/edit.py:55
 msgid "Image not valid."
 msgstr "Chybný obrázek"
 
-#: ../lib/edit.py:61
+#: ../lib/edit.py:60
 msgid "Are you sure you want to delete this poster?"
-msgstr "Opravdu chcete smazat tento plakát?"
+msgstr "Jste ji jist, že chcete smazat tento plakát?"
 
-#: ../lib/edit.py:72 ../lib/update.py:34
-msgid "Image has been updated"
-msgstr "Obrázek byl upraven"
-
-#: ../lib/edit.py:102 ../lib/edit.py:109
+#: ../lib/edit.py:171 ../lib/edit.py:177
 msgid "No posters found for this movie."
 msgstr "Žádné plakáty pro tento film."
 
-#: ../lib/edit.py:148 ../lib/movie.py:91
+#: ../lib/edit.py:217 ../lib/movie.py:98
 msgid "Fetching poster"
 msgstr "Stahuji plakát"
 
-#: ../lib/edit.py:148 ../lib/movie.py:69 ../lib/movie.py:91
-#: ../lib/movie.py:219
+#: ../lib/edit.py:217 ../lib/movie.py:69 ../lib/movie.py:98
+#: ../lib/movie.py:201
 msgid "Wait a moment"
 msgstr "Moment prosím"
 
-#: ../lib/edit.py:160
+#: ../lib/edit.py:229
 msgid "Sorry. A connection error was occurred."
 msgstr "Je mi líto, ale nastala chyba spojení. "
 
-#: ../lib/edit.py:172
+#: ../lib/edit.py:243
 msgid "Sorry. This poster image format is not supported."
 msgstr "Je mi líto, ale formát obrázku není podporován."
 
-#: ../lib/edit.py:178
+#: ../lib/edit.py:250
 msgid "Do you want to use this poster instead?"
 msgstr "Chtete použít tento plakát místo stávajícího?"
 
-#: ../lib/edit.py:200
+#: ../lib/edit.py:271
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
 msgstr "Je mi líto, ale na Amazon.com nenalezen žádný plakát."
 
-#: ../lib/gconsole.py:109
+#: ../lib/gconsole.py:76
 msgid "No movie found"
-msgstr "Nenalezen žádný film"
+msgstr " Žádný film nenalezen "
 
 #: ../lib/gemail.py:37 ../lib/gemail.py:47
 #, python-format
@@ -303,7 +286,7 @@ msgstr "Chyba při odesílání e-mailu: %s"
 
 #: ../lib/gemail.py:44
 msgid "E-mail sent sucessuly"
-msgstr "E-mail úspěšně odeslán"
+msgstr "E-mail odeslán úspěšně"
 
 #: ../lib/gemail.py:59
 msgid "Movie loan reminder"
@@ -316,217 +299,120 @@ msgid ""
 "\n"
 "Just to reminder you "
 msgstr ""
-"Ahoj, %s!\n"
+"Čau, %s!\n"
 "\n"
 "Jen jsem tě chtěl upozornit "
+
+#: ../lib/gemail.py:60
+msgid "that I'm really needing the following movie I have loaned you "
+msgstr ", že opravdu potřebuji film, který máš pujčený "
+
+#: ../lib/gemail.py:61
+#, python-format
+msgid ""
+"recently:\n"
+"\n"
+"%s (%s)\n"
+"\n"
+"Loaned on %s"
+msgstr ""
+"nově:\n"
+"\n"
+"%s (%s)\n"
+"\n"
+"Vypůjčeno %s"
 
 #: ../lib/gemail.py:65
 msgid "This person has no e-mail address defined."
 msgstr "Tato osoba nemá definovanou e-mailovou adresu."
 
-#: ../lib/gutils.py:259
+#: ../lib/gutils.py:303
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../lib/gutils.py:270
+#: ../lib/gutils.py:314
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../lib/initialize.py:166
+#: ../lib/initialize.py:142
 msgid "N."
 msgstr "Č."
 
-#: ../lib/initialize.py:172 ../lib/plugins/export/PluginExportHTML.py:98
-#: ../glade/griffith.glade.h:63
+#: ../lib/initialize.py:148 ../lib/plugins/export/PluginExportHTML.py:98
+#: ../glade/griffith.glade.h:54
 msgid "Image"
 msgstr "Obrázek"
 
-#: ../lib/initialize.py:202
+#: ../lib/initialize.py:178
 msgid "Loan Date"
 msgstr "Datum výpůjčky"
 
-#: ../lib/initialize.py:208
+#: ../lib/initialize.py:184
 msgid "Return Date"
 msgstr "Datum vrácení"
 
-#: ../lib/initialize.py:213
+#: ../lib/initialize.py:189
 msgid "Loaned To"
 msgstr "Vypůjčeno"
 
-#: ../lib/initialize.py:242 ../lib/initialize.py:445
-msgid "lector"
-msgstr "lektor"
-
-#: ../lib/initialize.py:243 ../lib/initialize.py:445
-msgid "dubbing"
-msgstr "dabing"
-
-#: ../lib/initialize.py:342 ../glade/griffith.glade.h:84
+#: ../lib/initialize.py:241 ../glade/griffith.glade.h:73
 msgid "Name"
 msgstr "Jméno"
 
-#: ../lib/initialize.py:348 ../glade/exporthtml.glade.h:17
-#: ../glade/griffith.glade.h:46
+#: ../lib/initialize.py:247 ../glade/exporthtml.glade.h:17
+#: ../glade/griffith.glade.h:38
 msgid "E-mail"
 msgstr "E-mail"
 
-#: ../lib/initialize.py:417 ../lib/plugins/export/PluginExportHTML.py:104
-#: ../glade/griffith.glade.h:88
-msgid "Number"
-msgstr "Číslo"
-
-#: ../lib/initialize.py:420 ../lib/plugins/export/PluginExportHTML.py:112
-#: ../glade/griffith.glade.h:157
-msgid "Year"
-msgstr "Rok"
-
-#: ../lib/initialize.py:421 ../lib/plugins/export/PluginExportHTML.py:93
-#: ../glade/griffith.glade.h:30
-msgid "Cast"
-msgstr "Hrají"
-
-#: ../lib/initialize.py:422 ../lib/plugins/export/PluginExportHTML.py:94
-#: ../glade/griffith.glade.h:32
-msgid "Classification"
-msgstr "Klasifikace"
-
-#: ../lib/initialize.py:426 ../lib/plugins/export/PluginExportHTML.py:99
-#: ../glade/griffith.glade.h:90
-msgid "Official site"
-msgstr "Oficiální stránky"
-
-#: ../lib/initialize.py:427 ../lib/plugins/export/PluginExportHTML.py:100
-#: ../glade/griffith.glade.h:131
-#, fuzzy
-msgid "Site"
-msgstr "Velkost"
-
-#: ../lib/initialize.py:428 ../lib/plugins/export/PluginExportHTML.py:101
-#: ../glade/griffith.glade.h:145
-msgid "Trailer"
-msgstr "Trailer"
-
-#: ../lib/initialize.py:429 ../lib/plugins/export/PluginExportHTML.py:102
-msgid "Loaned"
-msgstr "Vypůjčeno"
-
-#: ../lib/initialize.py:430 ../lib/plugins/export/PluginExportHTML.py:107
-#: ../glade/griffith.glade.h:107
-msgid "Rating"
-msgstr "Hodnocení"
-
-#: ../lib/initialize.py:431 ../lib/plugins/export/PluginExportHTML.py:108
-#: ../glade/griffith.glade.h:117
-msgid "Runtime"
-msgstr "Délka"
-
-#: ../lib/initialize.py:432 ../lib/plugins/export/PluginExportHTML.py:109
-#: ../glade/griffith.glade.h:138
-msgid "Studio"
-msgstr "Studio"
-
-#: ../lib/initialize.py:433 ../lib/plugins/export/PluginExportHTML.py:110
-#: ../glade/griffith.glade.h:120
-msgid "Seen it"
-msgstr "Viděno"
-
-#: ../lib/initialize.py:434 ../glade/griffith.glade.h:109
-msgid "Region"
-msgstr "Region"
-
-#: ../lib/initialize.py:435 ../glade/griffith.glade.h:67
-msgid "Layers"
-msgstr "Vrstvy"
-
-#: ../lib/initialize.py:436 ../glade/griffith.glade.h:37
-msgid "Condition"
-msgstr "Stav"
-
-#: ../lib/initialize.py:437 ../lib/initialize.py:444
-#: ../glade/griffith.glade.h:36
-msgid "Color"
-msgstr "Barva"
-
-#: ../lib/initialize.py:438 ../glade/griffith.glade.h:155
-msgid "Volume"
-msgstr "Svazek"
-
-#: ../lib/initialize.py:439 ../glade/griffith.glade.h:35
-msgid "Collection"
-msgstr "Kolekce"
-
-#: ../lib/initialize.py:440 ../lib/plugins/export/PluginExportHTML.py:106
-#: ../glade/griffith.glade.h:99
-msgid "Plot"
-msgstr "Osnova"
-
-#: ../lib/initialize.py:441 ../glade/griffith.glade.h:45
-msgid "Discs"
-msgstr "Disků"
-
-#: ../lib/initialize.py:442 ../lib/plugins/export/PluginExportHTML.py:113
-#: ../glade/griffith.glade.h:87
-msgid "Notes"
-msgstr "Poznámky"
-
-#: ../lib/initialize.py:443
+#: ../lib/initialize.py:263 ../lib/initialize.py:270 ../lib/initialize.py:321
 msgid "Damaged"
 msgstr "Poškozeno"
 
-#: ../lib/initialize.py:443
+#: ../lib/initialize.py:264 ../lib/initialize.py:271 ../lib/initialize.py:322
 msgid "Poor"
-msgstr "Ubohý"
+msgstr "Ubohé"
 
-#: ../lib/initialize.py:443
+#: ../lib/initialize.py:265 ../lib/initialize.py:272 ../lib/initialize.py:323
 msgid "Fair"
-msgstr "Pěkný"
+msgstr "Pěkné"
 
-#: ../lib/initialize.py:443
+#: ../lib/initialize.py:266 ../lib/initialize.py:273 ../lib/initialize.py:324
 msgid "Good"
-msgstr "Dobrý"
+msgstr "Dobré"
 
-#: ../lib/initialize.py:443
+#: ../lib/initialize.py:267 ../lib/initialize.py:274 ../lib/initialize.py:325
 msgid "Excellent"
-msgstr "Výborný"
+msgstr "Výborné"
 
-#: ../lib/initialize.py:443 ../lib/initialize.py:444 ../lib/initialize.py:446
-#: ../lib/initialize.py:456
+#: ../lib/initialize.py:268 ../lib/initialize.py:275 ../lib/initialize.py:280
+#: ../lib/initialize.py:285 ../lib/initialize.py:296 ../lib/initialize.py:307
+#: ../lib/initialize.py:313 ../lib/initialize.py:319 ../lib/initialize.py:326
+#: ../lib/initialize.py:331 ../lib/initialize.py:342 ../lib/initialize.py:348
 msgid "N/A"
-msgstr "Neznámý"
+msgstr "N/A"
 
-#: ../lib/initialize.py:444
+#: ../lib/initialize.py:277 ../lib/initialize.py:282 ../lib/initialize.py:328
+#: ../lib/initialize.py:404 ../glade/griffith.glade.h:28
+msgid "Color"
+msgstr "Barva"
+
+#: ../lib/initialize.py:278 ../lib/initialize.py:283 ../lib/initialize.py:329
 msgid "Black and White"
 msgstr "Černobílé"
 
-#: ../lib/initialize.py:444
+#: ../lib/initialize.py:279 ../lib/initialize.py:284 ../lib/initialize.py:330
 msgid "Mixed"
 msgstr "Smíšené"
 
-#: ../lib/initialize.py:446
-msgid "Single Side, Single Layer"
-msgstr "Jednostranné, jednovrstvé"
-
-#: ../lib/initialize.py:446
-msgid "Single Side, Dual Layer"
-msgstr "Jednostranné, dvouvrstvé"
-
-#: ../lib/initialize.py:446
-msgid "Dual Side, Single Layer"
-msgstr "Dvoustranné, jednovrstvé"
-
-#: ../lib/initialize.py:446
-msgid "Dual Side, Dual Layer"
-msgstr "Dvoustranné, dvouvrstvé"
-
-#: ../lib/initialize.py:447
+#: ../lib/initialize.py:287 ../lib/initialize.py:298 ../lib/initialize.py:333
 msgid "Region 0 (No Region Coding)"
 msgstr "Region 0 (nekódované)"
 
-#: ../lib/initialize.py:448
+#: ../lib/initialize.py:288 ../lib/initialize.py:299 ../lib/initialize.py:334
 msgid "Region 1 (United States of America, Canada)"
 msgstr "Region 1 (Spojené státy Americké, Kanada)"
 
-#: ../lib/initialize.py:449
+#: ../lib/initialize.py:289 ../lib/initialize.py:300 ../lib/initialize.py:335
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
@@ -534,57 +420,193 @@ msgstr ""
 "Region 2 (Evropa, včetně Francie, Řecka, Turecka, Egyptu, Arábie, Japonska a "
 "Jižní Afriky)"
 
-#: ../lib/initialize.py:450
+#: ../lib/initialize.py:290 ../lib/initialize.py:301 ../lib/initialize.py:336
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
 msgstr "Region 3 (Korea, Thaisko, Vietnam, Borneo a Indonésie)"
 
-#: ../lib/initialize.py:451
+#: ../lib/initialize.py:291 ../lib/initialize.py:302 ../lib/initialize.py:337
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
 msgstr "Region 4 (Austálie a Nový Zéland, Mexiko, Karibik a Jižní amerika)"
 
-#: ../lib/initialize.py:452
+#: ../lib/initialize.py:292 ../lib/initialize.py:303 ../lib/initialize.py:338
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
 msgstr "Region 5 (Indie, Afrika, Rusko a bývalé sovětské země)"
 
-#: ../lib/initialize.py:453
+#: ../lib/initialize.py:293 ../lib/initialize.py:304 ../lib/initialize.py:339
 msgid "Region 6 (Popular Republic of China)"
 msgstr "Region 6 (Čína)"
 
-#: ../lib/initialize.py:454
+#: ../lib/initialize.py:294 ../lib/initialize.py:305 ../lib/initialize.py:340
 msgid "Region 8 (Airlines/Cruise Ships)"
 msgstr "Region 8 (Aerolinky, víletní lodě)"
 
-#: ../lib/initialize.py:455
+#: ../lib/initialize.py:295 ../lib/initialize.py:306 ../lib/initialize.py:341
 msgid "Region 9 (Often used as region free)"
 msgstr "Region 9 (Často použito jako bez omezení)"
 
-#: ../lib/initialize.py:494
+#: ../lib/initialize.py:309 ../lib/initialize.py:315 ../lib/initialize.py:344
+msgid "Single Side, Single Layer"
+msgstr "Jednostranné, jednovrstvé"
+
+#: ../lib/initialize.py:310 ../lib/initialize.py:316 ../lib/initialize.py:345
+msgid "Single Side, Dual Layer"
+msgstr "Jednostranné, dvouvrstvé"
+
+#: ../lib/initialize.py:311 ../lib/initialize.py:317 ../lib/initialize.py:346
+msgid "Dual Side, Single Layer"
+msgstr "Dvoustranné, jendovrstvé"
+
+#: ../lib/initialize.py:312 ../lib/initialize.py:318 ../lib/initialize.py:347
+msgid "Dual Side, Dual Layer"
+msgstr "Dvoustrannoé, dvouvrstvé"
+
+#: ../lib/initialize.py:384 ../lib/plugins/export/PluginExportHTML.py:104
+#: ../glade/griffith.glade.h:77
+msgid "Number"
+msgstr "Číslo"
+
+#: ../lib/initialize.py:387 ../lib/plugins/export/PluginExportHTML.py:112
+#: ../glade/griffith.glade.h:147
+msgid "Year"
+msgstr "Rok"
+
+#: ../lib/initialize.py:388 ../glade/griffith.glade.h:146
+msgid "With"
+msgstr "Hrají"
+
+#: ../lib/initialize.py:389 ../lib/plugins/export/PluginExportHTML.py:94
+#: ../glade/griffith.glade.h:24
+msgid "Classification"
+msgstr "Klasifikace"
+
+#: ../lib/initialize.py:393 ../lib/plugins/export/PluginExportHTML.py:99
+#: ../glade/griffith.glade.h:79
+msgid "Official site"
+msgstr "Oficiální stránky"
+
+#: ../lib/initialize.py:394 ../lib/plugins/export/PluginExportHTML.py:100
+#: ../glade/griffith.glade.h:53
+msgid "IMDb page"
+msgstr "Stránka IMDB"
+
+#: ../lib/initialize.py:395 ../lib/plugins/export/PluginExportHTML.py:101
+#: ../glade/griffith.glade.h:136
+msgid "Trailer"
+msgstr "Trailer"
+
+#: ../lib/initialize.py:396 ../lib/plugins/export/PluginExportHTML.py:102
+msgid "Loaned"
+msgstr "Vypůjčeno"
+
+#: ../lib/initialize.py:397 ../lib/plugins/export/PluginExportHTML.py:107
+#: ../glade/griffith.glade.h:96
+msgid "Rating"
+msgstr "Hodnocení"
+
+#: ../lib/initialize.py:398 ../lib/plugins/export/PluginExportHTML.py:108
+#: ../glade/griffith.glade.h:108
+msgid "Runtime"
+msgstr "Délka"
+
+#: ../lib/initialize.py:399 ../lib/plugins/export/PluginExportHTML.py:109
+#: ../glade/griffith.glade.h:128
+msgid "Studio"
+msgstr "Studio"
+
+#: ../lib/initialize.py:400 ../lib/plugins/export/PluginExportHTML.py:110
+#: ../glade/griffith.glade.h:113
+msgid "Seen it"
+msgstr "Viděno"
+
+#: ../lib/initialize.py:401 ../glade/griffith.glade.h:98
+msgid "Region"
+msgstr "Region"
+
+#: ../lib/initialize.py:402 ../glade/griffith.glade.h:58
+msgid "Layers"
+msgstr "Vrstvy"
+
+#: ../lib/initialize.py:403 ../glade/griffith.glade.h:29
+msgid "Condition"
+msgstr "Stav"
+
+#: ../lib/initialize.py:405 ../glade/griffith.glade.h:144
+msgid "Volume"
+msgstr "Svazek"
+
+#: ../lib/initialize.py:406 ../glade/griffith.glade.h:27
+msgid "Collection"
+msgstr "Kolekce"
+
+#: ../lib/initialize.py:407 ../lib/plugins/export/PluginExportHTML.py:106
+#: ../glade/griffith.glade.h:90
+msgid "Plot"
+msgstr "Osnova"
+
+#: ../lib/initialize.py:408 ../glade/griffith.glade.h:37
+msgid "Discs"
+msgstr "Disků"
+
+#: ../lib/initialize.py:409 ../lib/plugins/export/PluginExportHTML.py:113
+#: ../glade/griffith.glade.h:76
+msgid "Notes"
+msgstr "Poznámky"
+
+#: ../lib/initialize.py:445
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr "Slovník není dostupný. Kontrola bude nedostupná. \n"
+
+#: ../lib/initialize.py:446
+#, python-format
+msgid ""
+"Please install the aspell-%s package or adjust the spellchekcer preferences."
+msgstr ""
+"Prosím nainstalujte balíček aspell-%s nebo upravte nastavení kontroly "
+"pravopisu."
+
+#: ../lib/initialize.py:526
+msgid "You have to fill in languages list in preferences window"
+msgstr "Měl by jste vyplnit jazyk v okně předvoleb"
+
+#: ../lib/initialize.py:536
+msgid "lector"
+msgstr "Lektor"
+
+#: ../lib/initialize.py:537
+msgid "dubbing"
+msgstr "dabing"
+
+#: ../lib/initialize.py:538
+msgid "subtitles"
+msgstr "titulky"
 
 #: ../lib/loan.py:40
 msgid "No person is defined yet."
 msgstr "Není definována žádné osoba."
 
-#: ../lib/loan.py:67
+#: ../lib/loan.py:60
 msgid "Do you want to loan whole collection?"
 msgstr "Chcete půjčit celou kolekci?"
 
-#: ../lib/loan.py:79
+#: ../lib/loan.py:80
 msgid "Movie loaned"
 msgstr "Film půjčen"
 
-#: ../lib/main_treeview.py:214
+#: ../lib/loan.py:126
+msgid "Movie returned"
+msgstr "Film vrácen"
+
+#: ../lib/main_treeview.py:139
 msgid "This movie has been loaned to "
 msgstr "Film byl půjčen "
 
-#: ../lib/main_treeview.py:214
+#: ../lib/main_treeview.py:139
 msgid " on "
 msgstr " "
 
-#: ../lib/main_treeview.py:223
+#: ../lib/main_treeview.py:141
 msgid "Movie not loaned"
 msgstr "Filmy nebyl půjčen"
 
@@ -592,33 +614,32 @@ msgstr "Filmy nebyl půjčen"
 msgid "Fetching data"
 msgstr "Stahuji data"
 
-#: ../lib/movie.py:219
+#: ../lib/movie.py:201
 msgid "Searching"
 msgstr "Hledám"
 
-#: ../lib/movie.py:257
+#: ../lib/movie.py:239
 msgid "Connection error"
 msgstr "Chyba spojení"
 
-#: ../lib/movie.py:281 ../glade/exporthtml.glade.h:11
-#: ../glade/griffith.glade.h:29
+#: ../lib/movie.py:263 ../glade/exporthtml.glade.h:11
+#: ../glade/griffith.glade.h:22
 msgid "Cancel"
 msgstr "Storno"
 
-#: ../lib/people.py:59
+#: ../lib/people.py:58
 msgid "You should fill the person name"
 msgstr "Musíte vyplnit jméno osoby"
 
-#: ../lib/people.py:88
+#: ../lib/people.py:81
 msgid "Record updated"
 msgstr "Záznam upraven"
 
-#: ../lib/people.py:111
-#, fuzzy
-msgid "This person has loaned films from you. Return them first."
+#: ../lib/people.py:107
+msgid "This person has loaned films from you. First return them."
 msgstr "Tato osoba má vypůjčeny filmy. Nejdřív je musí vrátit."
 
-#: ../lib/people.py:116
+#: ../lib/people.py:114
 msgid ""
 "This person has data in the loan history. This data will be erased if you "
 "continue."
@@ -626,7 +647,7 @@ msgstr ""
 "Tato osoba má data ve výpůjční historii. Pokud budete pokračovat, budou "
 "smazána."
 
-#: ../lib/people.py:117
+#: ../lib/people.py:116
 #, python-format
 msgid ""
 "%s\n"
@@ -635,24 +656,7 @@ msgstr ""
 "%s\n"
 "jste si jist, že chcete smazat tuto osobu?"
 
-#: ../lib/sql.py:57 ../lib/sql.py:109
-msgid ""
-"This item is in use.\n"
-"Operation aborted!"
-msgstr ""
-
-#: ../lib/sql.py:73
-#, fuzzy
-msgid "This name is already in use!"
-msgstr ""
-"Toto číslo je již přiřazeno k: \n"
-" %s!"
-
-#: ../lib/sql.py:305
-msgid "Database connection failed."
-msgstr ""
-
-#: ../lib/sql.py:474
+#: ../lib/sql.py:52
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -660,7 +664,7 @@ msgstr ""
 "Jste si jist, že chcete vytvořit novou databázi?\n"
 "Příjdete o VŠECHNA svá data!"
 
-#: ../lib/sql.py:478
+#: ../lib/sql.py:56
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -669,46 +673,62 @@ msgstr ""
 "Poslední šance!\n"
 "Potvrdíte, že chcete přijít o všechna stávající data?"
 
-#: ../lib/sql.py:605 ../lib/plugins/movie/PluginMovieAdultMovies.py:32
-#: ../lib/plugins/movie/PluginMovieAniDB.py:30
-#: ../lib/plugins/movie/PluginMovieIMDB.py:32
-#: ../lib/plugins/movie/PluginMovieMediadis.py:16
-#: ../lib/plugins/movie/PluginMovieMoviefone.py:16
-msgid "English"
-msgstr "Anglicky"
-
-#: ../lib/sql.py:608
+#: ../lib/sql.py:244
 msgid "Favourite"
-msgstr "Oblíbený"
+msgstr ""
 
-#: ../lib/sql.py:609
-#, fuzzy
-msgid "To buy"
-msgstr " od "
+#: ../lib/update.py:39
+#, python-format
+msgid ""
+"This number is already assigned to:\n"
+" %s!"
+msgstr ""
+"Toto číslo je již přiřazeno k: \n"
+" %s!"
+
+#: ../lib/update.py:48
+msgid "You can't change collection while it is loaned!"
+msgstr "Nemůžete měnit kolekci, pokud je vypůjčena!"
+
+#: ../lib/update.py:51
+msgid "You can't change volume while it is loaned!"
+msgstr "Nemůžete měnit svazek, pokud je vypůjčen!"
+
+#: ../lib/update.py:116
+msgid "Movie information has been updated"
+msgstr "Informace o filmu byly upraveny"
+
+#: ../lib/update.py:137
+msgid "You should fill the original title"
+msgstr "Musíte vyplnit originální název"
+
+#: ../lib/update.py:144 ../lib/update.py:150
+msgid "Image has been updated"
+msgstr "Obrázek byl upraven"
 
 #: ../lib/version.py:30
 msgid "Griffith is a film collection manager."
-msgstr "Griffith je správce filmových sbírek"
+msgstr "Griffith je manager filmových sbírek"
 
 #: ../lib/view.py:28
 msgid "Filter activated. Showing only not seen movies."
 msgstr "Filtr aktivován. Zobrazuji pouze neshlédnuté filmy."
 
-#: ../lib/view.py:33
+#: ../lib/view.py:35
 msgid "Filter activated. Showing only loaned movies."
 msgstr "Filtr aktivován, Zobrazuji pouze vypůjčené filmy."
 
-#: ../lib/view.py:46
+#: ../lib/view.py:51
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
 msgstr "Filtr aktivován. Zobrazuji pouze filmy ze svazku: %s"
 
-#: ../lib/view.py:54
+#: ../lib/view.py:60
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr "Filtr aktivován. Zobrazuji pouze filmy z kolekce: %s"
 
-#: ../lib/widgets.py:284
+#: ../lib/widgets.py:212
 msgid ""
 "Define here the PDF reader you want to use within Griffith. Popular choices "
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
@@ -718,7 +738,7 @@ msgstr ""
 "gpdf, evince nebo kpdf. Nejdříve se ale ujistěte, zda je program instalován "
 "a funkční"
 
-#: ../lib/widgets.py:285
+#: ../lib/widgets.py:213
 msgid ""
 "Here you can define the desired language to use while spell checking some "
 "fields. Use you locale setting. For example, to use european portuguese "
@@ -727,7 +747,7 @@ msgstr ""
 "Zde můžete nadefinovat jazyk, který chcete použít pro kontrolku pravopisu. "
 "Použijte nastavení z locales. Například pro češtinu vložte 'cs'"
 
-#: ../lib/widgets.py:286
+#: ../lib/widgets.py:214
 msgid ""
 "Use this entry to define the SMTP server you want to use to send e-mails. On "
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
@@ -737,7 +757,7 @@ msgstr ""
 "poštu.Na *nixových systémech by mohlo fungovat 'localhost'. Alternativně "
 "použijte SMTP server Vašeho poskytovatele připojení k internetu."
 
-#: ../lib/widgets.py:287
+#: ../lib/widgets.py:215
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
@@ -745,26 +765,33 @@ msgstr ""
 "Toto je e-mailová adresa, která bude použita pro odchozí poštu. Zřejmě by "
 "jste sem měl zadat vlastní adresu."
 
+#: ../lib/plugins/movie/PluginMovieAniDB.py:30
+#: ../lib/plugins/movie/PluginMovieIMDB.py:32
+#: ../lib/plugins/movie/PluginMovieMediadis.py:16
+#: ../lib/plugins/movie/PluginMovieMoviefone.py:16
+msgid "English"
+msgstr "Angličtina"
+
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:94
 #: ../lib/plugins/movie/PluginMovieFDb.py:93
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:78
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:96
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:97
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:103
-#: ../lib/plugins/movie/PluginMovieIMDB.py:80
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:137
+#: ../lib/plugins/movie/PluginMovieIMDB.py:76
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:135
 #: ../lib/plugins/movie/PluginMovieOnet.py:98
-#: ../lib/plugins/movie/PluginMovieWP.py:88
+#: ../lib/plugins/movie/PluginMovieWP.py:86
 msgid " as "
 msgstr " jako "
 
 #: ../lib/plugins/movie/PluginMovieE-Pipoca.py:30
 msgid "Brazilian Portuguese"
-msgstr "Brazilsko portugalsky"
+msgstr "Brazilská portugalština"
 
 #: ../lib/plugins/export/PluginExportCSV.py:31
 msgid "Full CSV list export plugin"
-msgstr "Plný CSV exportní plugin"
+msgstr "Plný CSV exportní plug-in"
 
 #: ../lib/plugins/export/PluginExportCSV.py:45
 #: ../lib/plugins/export/PluginExportXML.py:46
@@ -772,8 +799,8 @@ msgstr "Plný CSV exportní plugin"
 msgid "Export a %s document"
 msgstr "Exportovat dokument %s"
 
-#: ../lib/plugins/export/PluginExportCSV.py:65
-#: ../lib/plugins/export/PluginExportXML.py:83
+#: ../lib/plugins/export/PluginExportCSV.py:67
+#: ../lib/plugins/export/PluginExportXML.py:78
 #, python-format
 msgid "%s file has been created."
 msgstr "Soubor %s byl vytvořen."
@@ -786,28 +813,32 @@ msgstr "Plugin exportuje data pomocí šablon"
 msgid "Griffith's movies list"
 msgstr "Griffithův seznam filmů"
 
-#: ../lib/plugins/export/PluginExportHTML.py:103 ../glade/griffith.glade.h:77
+#: ../lib/plugins/export/PluginExportHTML.py:93
+msgid "Actors"
+msgstr "Herci"
+
+#: ../lib/plugins/export/PluginExportHTML.py:103 ../glade/griffith.glade.h:68
 msgid "Media"
 msgstr "Médium"
 
-#: ../lib/plugins/export/PluginExportHTML.py:438
-#: ../lib/plugins/export/PluginExportHTML.py:440
+#: ../lib/plugins/export/PluginExportHTML.py:442
+#: ../lib/plugins/export/PluginExportHTML.py:444
 msgid "previous"
 msgstr "Předchozí"
 
-#: ../lib/plugins/export/PluginExportHTML.py:451
-#: ../lib/plugins/export/PluginExportHTML.py:453
+#: ../lib/plugins/export/PluginExportHTML.py:455
+#: ../lib/plugins/export/PluginExportHTML.py:457
 msgid "next"
 msgstr "Následující"
 
-#: ../lib/plugins/export/PluginExportHTML.py:545
-#: ../lib/plugins/export/PluginExportHTML.py:575
-#: ../lib/plugins/export/PluginExportHTML.py:668
+#: ../lib/plugins/export/PluginExportHTML.py:516
+#: ../lib/plugins/export/PluginExportHTML.py:538
+#: ../lib/plugins/export/PluginExportHTML.py:710
 #, python-format
 msgid "Can't create %s!"
 msgstr "Nemohu vytvořit %s!"
 
-#: ../lib/plugins/export/PluginExportHTML.py:564
+#: ../lib/plugins/export/PluginExportHTML.py:527
 #, python-format
 msgid ""
 "Directory %s already exists.\n"
@@ -816,42 +847,42 @@ msgstr ""
 "Adresář %s již existuje.\n"
 "Chtete jej přepsat?"
 
-#: ../lib/plugins/export/PluginExportHTML.py:568
+#: ../lib/plugins/export/PluginExportHTML.py:531
 #, python-format
 msgid "Can't remove %s!"
 msgstr "Nemohu smazat %s!"
 
-#: ../lib/plugins/export/PluginExportHTML.py:583
-#: ../lib/plugins/export/PluginExportHTML.py:596
+#: ../lib/plugins/export/PluginExportHTML.py:546
+#: ../lib/plugins/export/PluginExportHTML.py:559
 #, python-format
 msgid "Can't copy %s!"
 msgstr "Nemohu kopírovat %s!"
 
-#: ../lib/plugins/export/PluginExportHTML.py:618
+#: ../lib/plugins/export/PluginExportHTML.py:607
 #, python-format
 msgid "Can't open %s!"
 msgstr "Nemohu otevřít %s!"
 
-#: ../lib/plugins/export/PluginExportHTML.py:626
-#: ../lib/plugins/export/PluginExportPDF.py:117
+#: ../lib/plugins/export/PluginExportHTML.py:615
+#: ../lib/plugins/export/PluginExportPDF.py:122
 msgid "Document generated by Griffith v"
-msgstr "Dokument generován Griggithem v"
+msgstr "Document generován Griggithem v"
 
-#: ../lib/plugins/export/PluginExportHTML.py:689
-msgid "Yes"
-msgstr "Ano"
-
-#: ../lib/plugins/export/PluginExportHTML.py:691
+#: ../lib/plugins/export/PluginExportHTML.py:677
 msgid "No"
 msgstr "Ne"
 
-#: ../lib/plugins/export/PluginExportHTML.py:743
+#: ../lib/plugins/export/PluginExportHTML.py:678
+msgid "Yes"
+msgstr "Ano"
+
+#: ../lib/plugins/export/PluginExportHTML.py:775
 msgid "Document has been generated."
-msgstr "Dokument byl vytvořen."
+msgstr "Doument byl vytvořen."
 
 #: ../lib/plugins/export/PluginExportPDF.py:44
 msgid "PDF export plugin"
-msgstr "PDF exportní plugin"
+msgstr "PDF exportní plug-in"
 
 #: ../lib/plugins/export/PluginExportPDF.py:68
 msgid "Export a PDF"
@@ -866,18 +897,18 @@ msgstr "Seznam filmů"
 msgid "Total Movies: %s"
 msgstr "Celkem filmů: %s"
 
-#: ../lib/plugins/export/PluginExportPDF.py:110
+#: ../lib/plugins/export/PluginExportPDF.py:115
 msgid "PDF has been created."
 msgstr "PDF bylo vytvořeno"
 
-#: ../lib/plugins/export/PluginExportPDF.py:115
+#: ../lib/plugins/export/PluginExportPDF.py:120
 #, python-format
 msgid "Page %d"
 msgstr "Strana %d"
 
 #: ../lib/plugins/export/PluginExportXML.py:32
 msgid "Full XML list export plugin"
-msgstr "Plný XML exportní plugin"
+msgstr "Plný XML exportní plug-in"
 
 #: ../glade/exporthtml.glade.h:1
 msgid "<b>Example</b>"
@@ -895,7 +926,7 @@ msgstr "<b>Hlavička</b>"
 msgid "<b>Limits</b>"
 msgstr "<b>Limity</b>"
 
-#: ../glade/exporthtml.glade.h:5 ../glade/griffith.glade.h:13
+#: ../glade/exporthtml.glade.h:5
 msgid "<b>Sort by</b>"
 msgstr "<b>Setřídit podle</b>"
 
@@ -963,7 +994,7 @@ msgstr "Maximální šířka"
 msgid "Posters"
 msgstr "Plakáty"
 
-#: ../glade/exporthtml.glade.h:24 ../glade/griffith.glade.h:116
+#: ../glade/exporthtml.glade.h:24
 msgid "Reverse"
 msgstr "Pozpátku"
 
@@ -1008,274 +1039,222 @@ msgid "unseen only"
 msgstr "pouze neshlédnuté"
 
 #: ../glade/griffith.glade.h:1
-msgid "<b>Audio channels</b>"
-msgstr ""
-
-#: ../glade/griffith.glade.h:2
-msgid "<b>Audio codecs</b>"
-msgstr ""
-
-#: ../glade/griffith.glade.h:3
-#, fuzzy
-msgid "<b>Audio</b>"
-msgstr "<b>Export</b>"
-
-#: ../glade/griffith.glade.h:4
 msgid "<b>Collection</b>"
 msgstr "<b>Kolekce</b>"
 
-#: ../glade/griffith.glade.h:5
+#: ../glade/griffith.glade.h:2
 msgid "<b>Defaults</b>"
 msgstr "<b>Výchozí</b>"
 
-#: ../glade/griffith.glade.h:6
+#: ../glade/griffith.glade.h:3
 msgid "<b>E-mail reminder</b>"
 msgstr "<b>E-mailový upozorňovač</b>"
 
-#: ../glade/griffith.glade.h:7
+#: ../glade/griffith.glade.h:4
 msgid "<b>Languages</b>"
 msgstr "<b>Jazyky</b>"
 
-#: ../glade/griffith.glade.h:8
+#: ../glade/griffith.glade.h:5
 msgid "<b>Loan History</b>"
 msgstr "<b>Historie výpůjček</b>"
 
-#: ../glade/griffith.glade.h:9
-#, fuzzy
-msgid "<b>Media</b>"
-msgstr "<b>Hlavička</b>"
-
-#: ../glade/griffith.glade.h:10
-#, fuzzy
-msgid "<b>Search for:</b>"
-msgstr "<b>Hlavička</b>"
-
-#: ../glade/griffith.glade.h:11
-msgid "<b>Select database to use</b>"
-msgstr ""
-
-#: ../glade/griffith.glade.h:12
+#: ../glade/griffith.glade.h:6
 msgid "<b>Show only the following columns</b>"
 msgstr "<b>Zobrazit pouze následující sloupce</b>"
 
-#: ../glade/griffith.glade.h:14
-#, fuzzy
-msgid "<b>Subtitle formats</b>"
-msgstr "<b>Výchozí</b>"
-
-#: ../glade/griffith.glade.h:15
-#, fuzzy
-msgid "<b>Subtitles</b>"
-msgstr "<b>Styl</b>"
-
-#: ../glade/griffith.glade.h:16
+#: ../glade/griffith.glade.h:7
 msgid "<b>Tags</b>"
 msgstr "<b>Značky</b>"
 
-#: ../glade/griffith.glade.h:17
+#: ../glade/griffith.glade.h:8
 msgid "<b>Use spell checking on the following fields:</b>"
 msgstr "<b>Použijte kontrolu pravopisu na nádledující položky:</b>"
 
-#: ../glade/griffith.glade.h:18
-#, fuzzy
-msgid "<b>Video codecs</b>"
-msgstr "<b>Hlavička</b>"
-
-#: ../glade/griffith.glade.h:19
+#: ../glade/griffith.glade.h:9
 msgid "<b>Volume</b>"
 msgstr "<b>Svazek</b>"
 
-#: ../glade/griffith.glade.h:20
+#: ../glade/griffith.glade.h:10
 msgid "Add"
 msgstr "Přidat"
 
-#: ../glade/griffith.glade.h:21
+#: ../glade/griffith.glade.h:11
 msgid "Add a new movie"
 msgstr "Přidat nový film"
 
-#: ../glade/griffith.glade.h:22
+#: ../glade/griffith.glade.h:12
 msgid "Add a new person"
 msgstr "Přidat novou osobu"
 
-#: ../glade/griffith.glade.h:23
+#: ../glade/griffith.glade.h:13
+msgid "Add language"
+msgstr "Přidat jazyk"
+
+#: ../glade/griffith.glade.h:14
 msgid "Add movie"
 msgstr "Přidat film"
 
-#: ../glade/griffith.glade.h:24
+#: ../glade/griffith.glade.h:15
 msgid "Add movie and close"
 msgstr "Přidat film a zavřít"
 
-#: ../glade/griffith.glade.h:25
+#: ../glade/griffith.glade.h:16
+msgid "Add new language entry"
+msgstr "Přidat nový jazyk"
+
+#: ../glade/griffith.glade.h:17
 msgid "Add new movie"
 msgstr "Přidat nový film"
 
-#: ../glade/griffith.glade.h:26
+#: ../glade/griffith.glade.h:18
 msgid "Add person"
 msgstr "Přidat osobu"
 
-#: ../glade/griffith.glade.h:27
+#: ../glade/griffith.glade.h:19
 msgid "All Movies"
 msgstr "Všechny filmy"
 
-#: ../glade/griffith.glade.h:28
+#: ../glade/griffith.glade.h:20
+msgid "Backup"
+msgstr "Záloha"
+
+#: ../glade/griffith.glade.h:21
 msgid "By Collection"
 msgstr "podle kolekce"
 
-#: ../glade/griffith.glade.h:31
+#: ../glade/griffith.glade.h:23
 msgid "Choose Image"
 msgstr "Zvolte obrázek"
 
-#: ../glade/griffith.glade.h:33
+#: ../glade/griffith.glade.h:25
 msgid "Clears filter"
-msgstr "Vyčistit filtry"
+msgstr ""
 
-#: ../glade/griffith.glade.h:34
+#: ../glade/griffith.glade.h:26
 msgid "Clone"
 msgstr "Klonovat"
 
-#: ../glade/griffith.glade.h:39
-#, fuzzy
-msgid "DVD layers"
+#: ../glade/griffith.glade.h:31
+msgid "DVD Layers"
 msgstr "Vrstev"
 
-#: ../glade/griffith.glade.h:40
-#, fuzzy
-msgid "DVD region"
+#: ../glade/griffith.glade.h:32
+msgid "DVD Region"
 msgstr "Region DVD"
 
-#: ../glade/griffith.glade.h:41
-#, fuzzy
-msgid "Database"
-msgstr "Data"
+#: ../glade/griffith.glade.h:33
+msgid "Delete"
+msgstr "Smazat"
 
-#: ../glade/griffith.glade.h:42
+#: ../glade/griffith.glade.h:34
 msgid "Details"
 msgstr "Detaily"
 
-#: ../glade/griffith.glade.h:43
+#: ../glade/griffith.glade.h:35
 msgid "Dictionaries"
 msgstr "Slovníky"
 
-#: ../glade/griffith.glade.h:47
+#: ../glade/griffith.glade.h:39
 msgid "E-mail reminder"
 msgstr "E-mailový upozorňovač"
 
-#: ../glade/griffith.glade.h:48
+#: ../glade/griffith.glade.h:40
 msgid "E_xport"
 msgstr "E_xport"
 
-#: ../glade/griffith.glade.h:49
+#: ../glade/griffith.glade.h:41
 msgid "Edit a person"
 msgstr "Editovat osobu"
 
-#: ../glade/griffith.glade.h:50
-#, fuzzy
-msgid "Edit movie details"
-msgstr "Detaily filmu"
-
-#: ../glade/griffith.glade.h:51
+#: ../glade/griffith.glade.h:42
 msgid "Favorite Movie Plugin"
-msgstr "Oblíbený filmový plugin"
+msgstr "Oblíbená filmová plug-ina"
 
-#: ../glade/griffith.glade.h:52
-msgid "Fetch from Amazon"
-msgstr ""
-
-#: ../glade/griffith.glade.h:53
+#: ../glade/griffith.glade.h:43
 msgid "Filter "
 msgstr "Filtr "
 
-#: ../glade/griffith.glade.h:54
+#: ../glade/griffith.glade.h:44
 msgid "Font for reports"
 msgstr "Písmo pro výstupy"
 
-#: ../glade/griffith.glade.h:55
+#: ../glade/griffith.glade.h:45
 msgid "Forum"
 msgstr "Fórum"
 
-#: ../glade/griffith.glade.h:56
+#: ../glade/griffith.glade.h:46
 msgid "Found Results"
 msgstr "Nalezené výsledky"
 
-#: ../glade/griffith.glade.h:58
+#: ../glade/griffith.glade.h:48
 msgid "Get from web"
 msgstr "Stáhnout z webu"
 
-#: ../glade/griffith.glade.h:59
+#: ../glade/griffith.glade.h:49
 msgid "Get movie data from:"
 msgstr "Stáhnout data z:"
 
-#: ../glade/griffith.glade.h:60
+#: ../glade/griffith.glade.h:50
 msgid "Griffith"
 msgstr "Griffith"
 
-#: ../glade/griffith.glade.h:61
+#: ../glade/griffith.glade.h:51
 msgid "Homepage"
 msgstr "Domovská stránka"
 
-#: ../glade/griffith.glade.h:62
-msgid "Host"
-msgstr ""
+#: ../glade/griffith.glade.h:52
+msgid "IMDB page"
+msgstr "Stránka IMDB"
 
-#: ../glade/griffith.glade.h:64
+#: ../glade/griffith.glade.h:55
 msgid "Include Front Image"
 msgstr "Včetně předního obrázku"
 
-#: ../glade/griffith.glade.h:65
+#: ../glade/griffith.glade.h:56
 msgid "Include movie number"
 msgstr "Včetně čísla filmu"
 
-#: ../glade/griffith.glade.h:66
+#: ../glade/griffith.glade.h:57
 msgid "Languages"
-msgstr "Jazyky"
+msgstr "Jazyky "
 
-#: ../glade/griffith.glade.h:68
+#: ../glade/griffith.glade.h:59
 msgid "Load poster from disk"
-msgstr "Nahrát plakát z disku"
+msgstr ""
 
-#: ../glade/griffith.glade.h:69
+#: ../glade/griffith.glade.h:60
 msgid "Loan"
 msgstr "Vypůjčit"
 
-#: ../glade/griffith.glade.h:70
+#: ../glade/griffith.glade.h:61
 msgid "Loan Management"
-msgstr "Správce výpůjček"
+msgstr "Management výpůjček"
 
-#: ../glade/griffith.glade.h:71
+#: ../glade/griffith.glade.h:62
 msgid "Loan movie"
 msgstr "Vypůjčit film"
 
-#: ../glade/griffith.glade.h:72
+#: ../glade/griffith.glade.h:63
 msgid "Loan to"
 msgstr "Vypůjčeno "
 
-#: ../glade/griffith.glade.h:73
+#: ../glade/griffith.glade.h:64
 msgid "Loaned Movies"
 msgstr "Vypůjčené filmy"
 
-#: ../glade/griffith.glade.h:74
+#: ../glade/griffith.glade.h:65
 msgid "Loans"
 msgstr "Výpůjčky"
 
-#: ../glade/griffith.glade.h:75
+#: ../glade/griffith.glade.h:66
 msgid "Main list"
 msgstr "Hlavní seznam"
 
-#: ../glade/griffith.glade.h:76
+#: ../glade/griffith.glade.h:67
 msgid "Manage People"
 msgstr "Správy lidí"
 
-#: ../glade/griffith.glade.h:78
-#, fuzzy
-msgid "Medium"
-msgstr "Médium"
-
-#: ../glade/griffith.glade.h:79
-#, fuzzy
-msgid "Merge"
-msgstr "Styl"
-
-#: ../glade/griffith.glade.h:80
+#: ../glade/griffith.glade.h:69
 msgid ""
 "Meter\n"
 "Stars"
@@ -1283,177 +1262,183 @@ msgstr ""
 "Metr\n"
 "Hvězdičky"
 
-#: ../glade/griffith.glade.h:82
+#: ../glade/griffith.glade.h:71
 msgid "Movie details"
 msgstr "Detaily filmu"
 
-#: ../glade/griffith.glade.h:83
+#: ../glade/griffith.glade.h:72
 msgid "Movie information"
 msgstr "Informace o filmu"
 
-#: ../glade/griffith.glade.h:85
+#: ../glade/griffith.glade.h:74
 msgid "Needs authentication"
 msgstr "Požaduje autentifikaci"
 
-#: ../glade/griffith.glade.h:86
+#: ../glade/griffith.glade.h:75
 msgid "Not Seen Movies"
 msgstr "Neshlédnuté filmy"
 
-#: ../glade/griffith.glade.h:89
+#: ../glade/griffith.glade.h:78
 msgid "OK"
 msgstr "OK"
 
-#: ../glade/griffith.glade.h:92
+#: ../glade/griffith.glade.h:80
+msgid "Oficial Site"
+msgstr "Oficiální stránky"
+
+#: ../glade/griffith.glade.h:81
+msgid "Open image in poster window"
+msgstr ""
+
+#: ../glade/griffith.glade.h:83
 msgid "Original title"
 msgstr "Originální název"
 
-#: ../glade/griffith.glade.h:93
+#: ../glade/griffith.glade.h:84
 msgid "PDF"
 msgstr "PDF"
 
-#: ../glade/griffith.glade.h:94
+#: ../glade/griffith.glade.h:85
 msgid "PDF reader"
 msgstr "PDF čtečka"
 
-#: ../glade/griffith.glade.h:95
+#: ../glade/griffith.glade.h:86
 msgid "Password"
 msgstr "Heslo"
 
-#: ../glade/griffith.glade.h:96
+#: ../glade/griffith.glade.h:87
 msgid "People"
 msgstr "Lidé"
 
-#: ../glade/griffith.glade.h:97
+#: ../glade/griffith.glade.h:88
 msgid "Phone"
 msgstr "Telefon"
 
-#: ../glade/griffith.glade.h:98
+#: ../glade/griffith.glade.h:89
 msgid "Please wait a moment..."
 msgstr "Čekejte prosím"
 
-#: ../glade/griffith.glade.h:100
+#: ../glade/griffith.glade.h:91
 msgid "Plugins"
-msgstr "Pluginy"
+msgstr "Plug-iny"
 
-#: ../glade/griffith.glade.h:101
-#, fuzzy
-msgid "Port"
-msgstr "Ubohý"
-
-#: ../glade/griffith.glade.h:102
-#, fuzzy
-msgid "Poster image"
-msgstr "Prohlížeč plakátů"
-
-#: ../glade/griffith.glade.h:103
+#: ../glade/griffith.glade.h:92
 msgid "Poster viewer"
 msgstr "Prohlížeč plakátů"
 
-#: ../glade/griffith.glade.h:104
+#: ../glade/griffith.glade.h:93
 msgid "Preferences"
 msgstr "Předvolby"
 
-#: ../glade/griffith.glade.h:105
+#: ../glade/griffith.glade.h:94
 msgid "Print Cover"
 msgstr "Tisknout obal"
 
-#: ../glade/griffith.glade.h:106
+#: ../glade/griffith.glade.h:95
 msgid "Print cover"
 msgstr "Tisknout obal"
 
-#: ../glade/griffith.glade.h:108
+#: ../glade/griffith.glade.h:97
 msgid "Rating image"
 msgstr "Hodnotící obrázek"
 
-#: ../glade/griffith.glade.h:110
+#: ../glade/griffith.glade.h:99
 msgid "Remove"
 msgstr "Odstranit"
 
-#: ../glade/griffith.glade.h:111
+#: ../glade/griffith.glade.h:100
+msgid "Remove language"
+msgstr "Odebrat jazyk"
+
+#: ../glade/griffith.glade.h:101
+msgid "Remove last language entry"
+msgstr "Odebrat poslední jazyk"
+
+#: ../glade/griffith.glade.h:102
 msgid "Remove selected movie"
 msgstr "Odstranit zvolený film"
 
-#: ../glade/griffith.glade.h:112
+#: ../glade/griffith.glade.h:103
 msgid "Removes poster"
 msgstr "Odstranit plakát"
 
-#: ../glade/griffith.glade.h:113
+#: ../glade/griffith.glade.h:104
 msgid "Rename"
 msgstr "Přejmenovat"
 
-#: ../glade/griffith.glade.h:114
+#: ../glade/griffith.glade.h:105
 msgid "Report bug"
 msgstr "Nahlásit chybu"
 
-#: ../glade/griffith.glade.h:115
+#: ../glade/griffith.glade.h:106
+msgid "Restore"
+msgstr "Obnovit"
+
+#: ../glade/griffith.glade.h:107
 msgid "Return"
 msgstr "Vrátit"
 
-#: ../glade/griffith.glade.h:118
+#: ../glade/griffith.glade.h:109
 msgid "SMTP server"
 msgstr "SMTP server"
 
-#: ../glade/griffith.glade.h:119
+#: ../glade/griffith.glade.h:110
+msgid "Save all changes made in selected movie"
+msgstr "Uložit všechny změny ve zvoleném filmu"
+
+#: ../glade/griffith.glade.h:111
+msgid "Save preferences"
+msgstr "Uložit předvolby"
+
+#: ../glade/griffith.glade.h:112
 msgid "Searching on the web"
 msgstr "Hledám na webu"
 
-#: ../glade/griffith.glade.h:121
+#: ../glade/griffith.glade.h:114
 msgid "Select"
 msgstr "Zvolte"
 
-#: ../glade/griffith.glade.h:122
+#: ../glade/griffith.glade.h:115
 msgid "Select A File"
 msgstr "Vyberte soubor"
 
-#: ../glade/griffith.glade.h:123
+#: ../glade/griffith.glade.h:116
 msgid "Select first movie"
-msgstr "Vyberte první film"
+msgstr "Vyber první film"
 
-#: ../glade/griffith.glade.h:124
+#: ../glade/griffith.glade.h:117
 msgid "Select last movie"
-msgstr "Vyberte poslední film"
+msgstr "Vyber poslední film"
 
-#: ../glade/griffith.glade.h:125
-#, fuzzy
-msgid "Select next movie"
-msgstr "Vyberte poslední film"
-
-#: ../glade/griffith.glade.h:126
-#, fuzzy
-msgid "Select previous movie"
-msgstr "Vyberte první film"
-
-#: ../glade/griffith.glade.h:127
+#: ../glade/griffith.glade.h:118
 msgid "Sender E-mail address"
 msgstr "Zvolte e-mailovou adresu"
 
-#: ../glade/griffith.glade.h:128
-#, fuzzy
-msgid "Show other movies in this collection"
+#: ../glade/griffith.glade.h:119
+msgid "Show movies in selected collection"
 msgstr "Zobrazit filmy ve zvolené kolekci"
 
-#: ../glade/griffith.glade.h:129
-#, fuzzy
-msgid "Show other movies in this volume"
-msgstr "Zobrazit filmy ve zvoleném svazku"
+#: ../glade/griffith.glade.h:120
+msgid "Show movies in selected volume"
+msgstr "Zobrazit filmy ve vybraném svazku"
 
-#: ../glade/griffith.glade.h:130
+#: ../glade/griffith.glade.h:121
 msgid "Simple"
 msgstr "Jednoduchý"
 
-#: ../glade/griffith.glade.h:132
+#: ../glade/griffith.glade.h:122
 msgid "Size"
 msgstr "Velkost"
 
-#: ../glade/griffith.glade.h:133
+#: ../glade/griffith.glade.h:123
 msgid "Spell Checker"
 msgstr "Kontrola pravopisu"
 
-#: ../glade/griffith.glade.h:134
+#: ../glade/griffith.glade.h:124
 msgid "Spell check the following language"
 msgstr "Kontrola pravopisu následujícího jazyku"
 
-#: ../glade/griffith.glade.h:135
+#: ../glade/griffith.glade.h:125
 msgid ""
 "Standard\n"
 "Slim\n"
@@ -1463,261 +1448,202 @@ msgstr ""
 "Tenký\n"
 "Dvojitý tenký"
 
-#: ../glade/griffith.glade.h:139
+#: ../glade/griffith.glade.h:129
 msgid "Suggest an unseen movie"
 msgstr "Navrhnout neshlédnutý film"
 
-#: ../glade/griffith.glade.h:140
+#: ../glade/griffith.glade.h:130
 msgid "Tags"
 msgstr "Značky"
 
-#: ../glade/griffith.glade.h:141
+#: ../glade/griffith.glade.h:131
+msgid "Technical info"
+msgstr "Technické info"
+
+#: ../glade/griffith.glade.h:132
 msgid "Technical information"
 msgstr "Technické informace"
 
-#: ../glade/griffith.glade.h:142
+#: ../glade/griffith.glade.h:133
 msgid "This movie is part of..."
 msgstr "Tento film je částí ..."
 
-#: ../glade/griffith.glade.h:144
+#: ../glade/griffith.glade.h:135
 msgid "Toolbar"
 msgstr "Nástrojová lišta"
 
-#: ../glade/griffith.glade.h:146
+#: ../glade/griffith.glade.h:137
 msgid "Try to fetch a big poster from Amazon services website"
 msgstr "Zkouším stáhnout velký plakát ze stránek Amazon"
 
-#: ../glade/griffith.glade.h:147
-msgid "Type"
-msgstr ""
-
-#: ../glade/griffith.glade.h:148
+#: ../glade/griffith.glade.h:138
 msgid ""
 "Type in the original film tile, select source and choose <i>Get from web</"
 "i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
-"Zde zadejte originální název filmu, vyberte zdroj a <i>Stáhnout z webu</i>. "
+"Zde zadejte originální název filmu, vyberte zdroj a <i>Stáhnou z webu</i>. "
 "Griffith se pokusí stáhnout informace z internetu."
 
-#: ../glade/griffith.glade.h:149
+#: ../glade/griffith.glade.h:139
 msgid "Update"
 msgstr "Upravit"
 
-#: ../glade/griffith.glade.h:150
+#: ../glade/griffith.glade.h:140
 msgid "Use Spellchecker"
-msgstr "Používat kontrolu pravopisu"
+msgstr "Používat Spellchecker"
 
-#: ../glade/griffith.glade.h:151
+#: ../glade/griffith.glade.h:141
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: ../glade/griffith.glade.h:152
-msgid "Video codec"
-msgstr ""
+#: ../glade/griffith.glade.h:142
+msgid "Visit the Internet Movie Database (IMDB) related page"
+msgstr "Navštívit stránky IMDB"
 
-#: ../glade/griffith.glade.h:153
-#, fuzzy
-msgid "Visit movie web site"
-msgstr "Navštívit oficiální stránky"
-
-#: ../glade/griffith.glade.h:154
+#: ../glade/griffith.glade.h:143
 msgid "Visit the oficial web site"
 msgstr "Navštívit oficiální stránky"
 
-#: ../glade/griffith.glade.h:156
+#: ../glade/griffith.glade.h:145
 msgid "Watch the trailer"
 msgstr "Sledovat trailer"
 
-#: ../glade/griffith.glade.h:158
+#: ../glade/griffith.glade.h:148
 msgid "_Edit"
 msgstr "_Upravit"
 
-#: ../glade/griffith.glade.h:159
+#: ../glade/griffith.glade.h:149
 msgid "_File"
 msgstr "_Soubor"
 
-#: ../glade/griffith.glade.h:160
+#: ../glade/griffith.glade.h:150
 msgid "_Help"
 msgstr "_Nápověda"
 
-#: ../glade/griffith.glade.h:161
+#: ../glade/griffith.glade.h:151
 msgid "_Loans"
 msgstr "_Výpůjčky"
 
-#: ../glade/griffith.glade.h:162
-#, fuzzy
-msgid "_Tools"
-msgstr "Nástrojová lišta"
+#: ../glade/griffith.glade.h:152
+msgid "_Movies"
+msgstr "_Filmy"
 
-#: ../glade/griffith.glade.h:163
+#: ../glade/griffith.glade.h:153
 msgid "_View"
 msgstr "_Zobrazit"
 
-#: ../glade/griffith.glade.h:164
+#: ../glade/griffith.glade.h:154
 msgid "add entered name to collections list"
 msgstr "přidat vložený název do seznamu kolekcí"
 
-#: ../glade/griffith.glade.h:165
+#: ../glade/griffith.glade.h:155
+msgid "add entered name to languages list"
+msgstr "přidat vložený název do seznamu jazyků"
+
+#: ../glade/griffith.glade.h:156
 msgid "add entered name to volumes list"
 msgstr "přidat vložený název do seznamu svazků"
 
-#: ../glade/griffith.glade.h:166
-#, fuzzy
-msgid "classification"
-msgstr "Klasifikace"
-
-#: ../glade/griffith.glade.h:167
+#: ../glade/griffith.glade.h:157
 msgid "click here if movie was returned"
 msgstr "klikněte zde, zda byl film vrácen"
 
-#: ../glade/griffith.glade.h:168
-#, fuzzy
-msgid "collection details"
-msgstr "Detaily filmu"
-
-#: ../glade/griffith.glade.h:169
+#: ../glade/griffith.glade.h:158
 msgid "loans movie or volume"
 msgstr "půjčit film nebo svazek"
 
-#: ../glade/griffith.glade.h:170
+#: ../glade/griffith.glade.h:159
 msgid "min."
 msgstr "min."
 
-#: ../glade/griffith.glade.h:171
-msgid "minutes"
-msgstr ""
-
-#: ../glade/griffith.glade.h:172
+#: ../glade/griffith.glade.h:160
 msgid "remove selected collection"
 msgstr "odstranit zvolenou kolekci"
 
-#: ../glade/griffith.glade.h:173
+#: ../glade/griffith.glade.h:161
+msgid "remove selected language"
+msgstr "odstranit zvolený jazyk"
+
+#: ../glade/griffith.glade.h:162
 msgid "remove selected volume"
 msgstr "odstranit zvolený svazek"
 
-#: ../glade/griffith.glade.h:174
+#: ../glade/griffith.glade.h:163
+msgid "rename collection assigned to movie"
+msgstr "přejmenovat kolekci připojenou k filmu"
+
+#: ../glade/griffith.glade.h:164
+msgid "rename selected language"
+msgstr "odstranit zvolený jazyk"
+
+#: ../glade/griffith.glade.h:165
+msgid "rename volume assigned to movie"
+msgstr "přejmenovat svazek připojený k filmu"
+
 #, fuzzy
-msgid "tags"
-msgstr "Značky"
-
-#: ../glade/griffith.glade.h:175
-#, fuzzy
-msgid "volume details"
-msgstr "Detaily filmu"
-
-#~ msgid "by Peek <peekpt@gmail.com>."
-#~ msgstr "Peek <peekpt@gmail.com>."
-
-#~ msgid ""
-#~ "\n"
-#~ "Please visit http://www.peekmambo.com/"
-#~ msgstr ""
-#~ "\n"
-#~ "Prosím navštivte http://peekmambo.com/"
-
-#~ msgid "General Public License.\n"
-#~ msgstr "General Public License.\n"
-
-#~ msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-#~ msgstr "Pro detaily navštivte http://www.gnu.org/copyleft/gpl.html ."
-
-#~ msgid "that I'm really needing the following movie I have loaned you "
-#~ msgstr ", že opravdu potřebuji film, který máš pujčený "
-
-#~ msgid ""
-#~ "recently:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Loaned on %s"
-#~ msgstr ""
-#~ "nově:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Vypůjčeno %s"
-
-#~ msgid "IMDb page"
-#~ msgstr "Stránka IMDB"
-
-#~ msgid ""
-#~ "Please install the aspell-%s package or adjust the spellchekcer "
-#~ "preferences."
-#~ msgstr ""
-#~ "Prosím nainstalujte balíček aspell-%s nebo upravte nastavení kontroly "
-#~ "pravopisu."
-
-#~ msgid "You have to fill in languages list in preferences window"
-#~ msgstr "Je třeba vyplnit jazyk v okně předvoleb"
-
-#~ msgid "Movie returned"
-#~ msgstr "Film vrácen"
-
-#~ msgid "You can't change collection while it is loaned!"
-#~ msgstr "Nemůžete měnit kolekci, pokud je vypůjčena!"
-
-#~ msgid "You can't change volume while it is loaned!"
-#~ msgstr "Nemůžete měnit svazek, pokud je vypůjčen!"
-
-#~ msgid "You should fill the original title"
-#~ msgstr "Musíte vyplnit originální název"
-
-#~ msgid "Add language"
-#~ msgstr "Přidat jazyk"
-
-#~ msgid "Add new language entry"
-#~ msgstr "Přidat nový jazyk"
-
-#~ msgid "Backup"
-#~ msgstr "Záloha"
-
-#~ msgid "Delete"
-#~ msgstr "Smazat"
-
-#~ msgid "IMDB page"
-#~ msgstr "Stránka IMDB"
-
-#~ msgid "Oficial Site"
+#~ msgid "Oficial site"
 #~ msgstr "Oficiální stránky"
 
-#~ msgid "Open image in poster window"
-#~ msgstr "Otevřít obrázek v okně plakátu"
+#, fuzzy
+#~ msgid "IMDb"
+#~ msgstr "Stránka IMDB"
 
-#~ msgid "Remove language"
-#~ msgstr "Odebrat jazyk"
+#, fuzzy
+#~ msgid "Seen"
+#~ msgstr "Viděno"
 
-#~ msgid "Remove last language entry"
-#~ msgstr "Odebrat poslední jazyk"
+#~ msgid "Seen It"
+#~ msgstr "Viděno"
 
-#~ msgid "Restore"
-#~ msgstr "Obnovit"
+#, fuzzy
+#~ msgid "Site"
+#~ msgstr "Velkost"
 
-#~ msgid "Save preferences"
-#~ msgstr "Uložit předvolby"
+#~ msgid "Official Site"
+#~ msgstr "Oficiální stránky"
 
-#~ msgid "Technical info"
-#~ msgstr "Technické info"
+#~ msgid "Are you sure you want to restore?\n"
+#~ msgstr "Opravdu chcete obnovit?\n"
 
-#~ msgid "Visit the Internet Movie Database (IMDB) related page"
-#~ msgstr "Navštívit stránky IMDB"
+#~ msgid "You can't undo this operation."
+#~ msgstr "Tuto operaci nelze vzít zpět."
 
-#~ msgid "_Movies"
-#~ msgstr "_Filmy"
+#~ msgid "<b>Preview</b>"
+#~ msgstr "<b>Náhled</b>"
 
-#~ msgid "add entered name to languages list"
-#~ msgstr "přidat zadané jméno do seznamu jazyků"
+#~ msgid ""
+#~ "Number\n"
+#~ "Original Title\n"
+#~ "Title\n"
+#~ "Director\n"
+#~ "Genre\n"
+#~ "Rating\n"
+#~ "With\n"
+#~ "Year"
+#~ msgstr ""
+#~ "Číslo\n"
+#~ "Originalní název\n"
+#~ "Název\n"
+#~ "Režiséř\n"
+#~ "Žánr\n"
+#~ "Hodnocení\n"
+#~ "Hrají\n"
+#~ "Rok"
 
-#~ msgid "remove selected language"
-#~ msgstr "odstranit vybraný jazyk"
+#~ msgid "The Wizard of OZ :)"
+#~ msgstr "Kouzelník ze země OZ"
 
-#~ msgid "rename collection assigned to movie"
-#~ msgstr "přejmenovat kolekci připojenou k filmu"
+#~ msgid "Language not available. Defaulting to english."
+#~ msgstr "Jazyk není dostupný. Výchozí angličtina."
 
-#~ msgid "rename selected language"
-#~ msgstr "odstranit vybraný jazyk"
+#~ msgid "Create a new Griffith document"
+#~ msgstr "Vytvořit nový dokument Griffith"
 
-#~ msgid "rename volume assigned to movie"
-#~ msgstr "přejmenovat svazek připojený k filmu"
+#~ msgid "Internet"
+#~ msgstr "Internet"
 
-#~ msgid "Actors"
-#~ msgstr "Herci"
+#~ msgid "Summary"
+#~ msgstr "Souhrn"
+
+#~ msgid "_About"
+#~ msgstr "_O aplikaci"
