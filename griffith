@@ -891,7 +891,49 @@ You can't undo this operation."""), \
 		self.config.save()
 
 	def new_dbb(self, *args):
-		self.db.new_db(self)
+		"""initializes a new Griffith Database file"""
+		response = gutils.question(self, \
+			_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
+			1, self.widgets['window'])
+		if response == gtk.RESPONSE_YES:
+			response_sec = gutils.question(self, \
+				_('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
+				1, self.widgets['window'])
+			if response_sec == gtk.RESPONSE_YES:
+				from sqlalchemy import Select
+				from sql import GriffithSQL
+				# delete images
+				posters_dir = self.locations['posters']
+				# NOTE: only used images are removed (posters are shared between various db)
+				debug.show('NEW DB: Removing old images...')
+				
+				movies = Select([self.db.Movie.c.image]).execute().fetchall()
+				for movie in movies:
+					if movie.image is not None:
+						name = movie.image.encode('utf-8')
+						p_file = os.path.join(posters_dir, name+'.jpg')
+						m_file = os.path.join(posters_dir, 'm_'+name+'.jpg')
+						t_file = os.path.join(posters_dir, 't_'+name+'jpg')
+						try:
+							os.remove(p_file)
+							os.remove(m_file)
+							os.remove(t_file)
+						except:
+							pass
+				self.db.drop_database()
+				if self.config['db_type'] == 'sqlite':
+					os.unlink(os.path.join(self.locations['home'],self.config.get('default_db')))
+					if self.config['default_db'] == 'griffith.gri':
+						self.config['default_db'] = 'griffith.db'
+				# create/connect db
+				self.db = GriffithSQL(self.config, debug, self.griffith_dir)
+				self.clear_details()
+				self.total = 0
+				self.count_statusbar()
+				self.treemodel.clear()
+				from initialize	import dictionaries, people_treeview
+				dictionaries(self)
+				people_treeview(self)
 
 	# key events ----------------------------------------------------------
 

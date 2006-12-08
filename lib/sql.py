@@ -403,42 +403,49 @@ class GriffithSQL:
 			Column('value', VARCHAR(128), nullable=False))#}}}
 
 		# mappers -------------------------------------------------#{{{
-		assign_mapper(self.Configuration, configuration)
-		assign_mapper(self.Volume,volumes, properties={
-			'movies': relation(self.Movie, backref='volume')})
-		assign_mapper(self.Collection, collections, properties={
-			'movies': relation(self.Movie, backref='collection')})
-		assign_mapper(self.Medium, media, properties={
-			'movies': relation(self.Movie, backref='medium')})
-		assign_mapper(self.VCodec, vcodecs, properties={
-			'movies': relation(self.Movie, backref='vcodec')})
-		assign_mapper(self.Person, people)
-		assign_mapper(self.MovieLang, movie_lang, primary_key=[movie_lang.c.ml_id], properties = {
-			'movie'    : relation(self.Movie, lazy=False),
-			'language' : relation(self.Lang, lazy=False),
-			'achannel' : relation(self.AChannel),
-			'acodec'   : relation(self.ACodec),
-			'subformat': relation(self.SubFormat)})
-		assign_mapper(self.ACodec, acodecs, properties={
-			'movielangs': relation(self.MovieLang, lazy=False)})
-		assign_mapper(self.AChannel, achannels, properties={
-			'movielangs': relation(self.MovieLang, lazy=False)})
-		assign_mapper(self.SubFormat, subformats, properties={
-			'movielangs': relation(self.MovieLang, lazy=False)})
-		assign_mapper(self.Lang, languages, properties={
-			'movielangs': relation(self.MovieLang, lazy=False)})
-		assign_mapper(self.MovieTag, movie_tag)
-		assign_mapper(self.Tag, tags, properties={'movietags': relation(self.MovieTag, backref='tag')})
-		assign_mapper(self.Loan, loans, properties = {
-			'person'     : relation(self.Person),
-			'volume'     : relation(self.Volume),
-			'collection' : relation(self.Collection)})
-		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
-			'loans'      : relation(self.Loan, backref='movie', cascade='all, delete-orphan'),
-			'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
-					primaryjoin=movies.c.movie_id==movie_tag.c.movie_id,
-					secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id),
-			'languages'  : relation(self.MovieLang, cascade='all, delete-orphan')})#}}}
+		try:
+			self.Movie.mapper
+			m = True
+
+		except:
+			m = False
+		if m is False:
+			assign_mapper(self.Configuration, configuration)
+			assign_mapper(self.Volume,volumes, properties={
+				'movies': relation(self.Movie, backref='volume')})
+			assign_mapper(self.Collection, collections, properties={
+				'movies': relation(self.Movie, backref='collection')})
+			assign_mapper(self.Medium, media, properties={
+				'movies': relation(self.Movie, backref='medium')})
+			assign_mapper(self.VCodec, vcodecs, properties={
+				'movies': relation(self.Movie, backref='vcodec')})
+			assign_mapper(self.Person, people)
+			assign_mapper(self.MovieLang, movie_lang, primary_key=[movie_lang.c.ml_id], properties = {
+				'movie'    : relation(self.Movie, lazy=False),
+				'language' : relation(self.Lang, lazy=False),
+				'achannel' : relation(self.AChannel),
+				'acodec'   : relation(self.ACodec),
+				'subformat': relation(self.SubFormat)})
+			assign_mapper(self.ACodec, acodecs, properties={
+				'movielangs': relation(self.MovieLang, lazy=False)})
+			assign_mapper(self.AChannel, achannels, properties={
+				'movielangs': relation(self.MovieLang, lazy=False)})
+			assign_mapper(self.SubFormat, subformats, properties={
+				'movielangs': relation(self.MovieLang, lazy=False)})
+			assign_mapper(self.Lang, languages, properties={
+				'movielangs': relation(self.MovieLang, lazy=False)})
+			assign_mapper(self.MovieTag, movie_tag)
+			assign_mapper(self.Tag, tags, properties={'movietags': relation(self.MovieTag, backref='tag')})
+			assign_mapper(self.Loan, loans, properties = {
+				'person'     : relation(self.Person),
+				'volume'     : relation(self.Volume),
+				'collection' : relation(self.Collection)})
+			assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
+				'loans'      : relation(self.Loan, backref='movie', cascade='all, delete-orphan'),
+				'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
+						primaryjoin=movies.c.movie_id==movie_tag.c.movie_id,
+						secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id),
+				'languages'  : relation(self.MovieLang, cascade='all, delete-orphan')})#}}}
 		
 		# check if database needs upgrade
 		try:
@@ -471,47 +478,6 @@ class GriffithSQL:
 	#}}}
 
 	# DATABASE ---------------------------------------------------------{{{
-	def new_db(self, parent):
-		"""initializes a new Griffith Database file"""
-		response = gutils.question(self, \
-			_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
-			1, parent.widgets['window'])
-		if response == gtk.RESPONSE_YES:
-			response_sec = gutils.question(self, \
-				_('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
-				1, parent.widgets['window'])
-			if response_sec == gtk.RESPONSE_YES:
-				# delete images
-				posters_dir = self.locations['posters']
-				# NOTE: only used images are removed (posters are shared between various db)
-				debug.show('NEW DB: Removing old images...')
-				for movie in self.Movie.select():
-					if movie.image is not None:
-						name = movie.image.encode('utf-8')
-						p_file = os.path.join(posters_dir, name+'.jpg')
-						m_file = os.path.join(posters_dir, 'm_'+name+'.jpg')
-						t_file = os.path.join(posters_dir, 't_'+name+'jpg')
-						try:
-							os.remove(p_file)
-							os.remove(m_file)
-							os.remove(t_file)
-						except:
-							pass
-				parent.db.drop_database()
-				if self.config['db_type'] == 'sqlite':
-					os.unlink(os.path.join(self.griffith_dir,self.config.get('default_db')))
-					if self.config['default_db'] == 'griffith.gri':
-						self.config['default_db'] = 'griffith.db'
-				# create/connect db
-				parent.db = GriffithSQL(self.config, debug, self.griffith_dir)
-				parent.clear_details()
-				parent.total = 0
-				parent.count_statusbar()
-				parent.treemodel.clear()
-				from initialize	import dictionaries, people_treeview
-				dictionaries(parent)
-				people_treeview(parent)
-
 	def drop_database(self):
 		if self.metadata.name == 'postgres':
 			self.metadata.execute('DROP TABLE loans CASCADE;')
@@ -548,6 +514,7 @@ class GriffithSQL:
 			self.MovieLang.mapper.mapped_table.drop()
 			self.Tag.mapper.mapped_table.drop()
 			#objectstore.commit()
+
 
 	def upgrade_database(self, version):
 		"""Create new db or update existing one to current format"""
