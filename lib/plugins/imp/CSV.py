@@ -51,6 +51,7 @@ class ImportPlugin(ImportPlugin):
 		from add import validate_details
 		x = 0
 		
+		# TODO: make use of self.fields_to_import
 		t_movies = {
 			'classification' : item[8],
 			'color'          : None,
@@ -96,7 +97,7 @@ class ImportPlugin(ImportPlugin):
 #		if item[x] == True:
 #			t_movies['tags'][0] = 1
 		
-		validate_details(t_movies)
+		validate_details(t_movies, self.fields_to_import)
 
 		return t_movies
 	

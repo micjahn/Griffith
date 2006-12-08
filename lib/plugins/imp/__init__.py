@@ -43,12 +43,16 @@ class ImportPlugin:
 	data = None
 
 	def __init__(self, parent, fields_to_import):
-		self.db = parent.db
-		self.locations = parent.locations
-		self.parent = parent
+		self.db		= parent.db
+		self.debug	= parent.debug
+		self.locations	= parent.locations
+		self.fields	= parent.field_names
+		self.conditions	= parent._conditions
+		self.colors	= parent._colors
+		self.lang_types	= parent._lang_types
+		self.layers	= parent._layers
+		self.regions	= parent._regions
 		self.fields_to_import = fields_to_import
-		global debug
-		debug = self.debug = self.parent.debug
 
 	def initialize(self, filename):
 		"""
@@ -87,7 +91,7 @@ class ImportPlugin:
 			from gutils import find_next_available
 		
 		if not self.set_source(name):
-			debug.show("Can't read data from file %s" % name)
+			self.debug.show("Can't read data from file %s" % name)
 			return False
 		
 		for item in self.data:
@@ -98,12 +102,12 @@ class ImportPlugin:
 				if details['o_title']:
 					tmp_movie = self.db.Movie.get_by(o_title=details['o_title'])
 					if tmp_movie is not None:
-						debug.show("movie already exists (o_title=%s)" % details['o_title'])
+						self.debug.show("movie already exists (o_title=%s)" % details['o_title'])
 						continue
 				if details['title']:
 					tmp_movie = self.db.Movie.get_by(title=details['title'])
 					if tmp_movie is not None:
-						debug.show("movie already exists (title=%s)" % details['title'])
+						self.debug.show("movie already exists (title=%s)" % details['title'])
 						continue
 				if details.has_key('number') and self.fields_to_import.has_key('number') is True:
 					details['number'] = None
@@ -116,7 +120,7 @@ class ImportPlugin:
 					movie.add_to_db(details)
 				self.imported += 1 # FIXME: what about cancel button in edit window
 			else:
-				debug('skipping movie without title or original title')
+				self.debug('skipping movie without title or original title')
 		return True
 
 	def clear(self):

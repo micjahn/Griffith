@@ -311,7 +311,7 @@ def get_details(self): #{{{
 
 	return t_movies	#}}}
 
-def validate_details(t_movies):
+def validate_details(t_movies, allow_only=None):
 	for i in t_movies.keys():
 		if t_movies[i] == '':
 			t_movies[i] = None
@@ -323,6 +323,10 @@ def validate_details(t_movies):
 			t_movies[i] = None
 	if t_movies.has_key('year') and (t_movies['year'] is None or int(t_movies['year']) < 1886):
 		t_movies['year'] = None
+	if allow_only is not None:
+		for i in t_movies:
+			if allow_only[i] is False:
+				t_movies.pop(i)
 
 def update_movie(self):
 	movie = self.db.Movie.get_by(movie_id=self._movie_id)
