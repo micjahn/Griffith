@@ -55,7 +55,6 @@ def locations(self=None):
 		locations['home']           = os.path.join(os.path.expanduser('~'), 'griffith')
 		locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
 		locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
-		locations['import_plugins'] = "%s\\lib\\plugins\\import" % locations['exec']
 		locations['images']         = "%s\\images" % locations['exec']
 		locations['share']          = locations['images']
 		locations['glade']          = "%s\\glade\\" % locations['exec']
@@ -73,11 +72,9 @@ def locations(self=None):
 		if os.path.isdir(os.path.join(locations['share'], 'plugins')):
 			locations['movie_plugins']  = os.path.join(locations['share'], 'plugins', 'movie')
 			locations['export_plugins'] = os.path.join(locations['share'], 'plugins', 'export')
-			locations['import_plugins'] = os.path.join(locations['share'], 'plugins', 'import')
 		else:
 			locations['movie_plugins']  = os.path.join(locations['lib'], 'plugins', 'movie')
 			locations['export_plugins'] = os.path.join(locations['lib'], 'plugins', 'export')
-			locations['import_plugins'] = os.path.join(locations['lib'], 'plugins', 'import')
 		locations['images']  = os.path.join(locations['share'], 'images')
 		locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop')
 	else:
@@ -105,26 +102,34 @@ def locations(self=None):
 		raise
 		sys.exit()
 
-	locations['posters']  = os.path.join(locations['home'], 'posters')
-
 	if not os.access(locations['home'], os.W_OK):
 		debug.show('Cannot write to griffith directory, %s' % locations['home'])
 		sys.exit()
-
-	if not os.path.exists(locations['posters']):
-		debug.show('Creating poster directory')
-		os.makedirs(locations['posters'])
 
 	# includes plugins in system path for easier importing
 	sys.path.append(locations['lib'])
 	sys.path.append(locations['movie_plugins'])
 	sys.path.append(locations['export_plugins'])
-	sys.path.append(locations['import_plugins'])
 	
 	if self:
 		self.locations = locations
 	else:
 		return locations
+
+def location_posters(locations, config):
+	if config['posters'] is not None:
+		locations['posters']  = os.path.join(locations['home'], config['posters'])
+	if config['db_type'] == 'sqlite':
+		config['posters'] = 'posters'
+		locations['posters'] = os.path.join(locations['home'], 'posters')
+		config.save()
+	else:
+		config['posters'] = "posters_%(db_type)s_%(db_host)s_%(db_port)s_%(db_name)s_%(db_user)s" % config
+		locations['posters'] = os.path.join(locations['home'], config['posters'])
+		config.save()
+	# check if posters dir exists
+	if not os.path.isdir(locations['posters']):
+		os.makedirs(locations['posters'])
 
 def gui(self):
 	self._ = None

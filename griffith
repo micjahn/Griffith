@@ -47,13 +47,13 @@ class Griffith:
 
 		# debug object
 		global debug
-		debug = gdebug.GriffithDebug()
-		self.debug = debug # deprecated
+		debug = self.debug = gdebug.GriffithDebug()
 		
 		initialize.locations(self)
 	
 		# Configuration
 		self.config = config.Config(file=os.path.join(self.locations['home'], 'griffith.conf'))
+		initialize.location_posters(self.locations, self.config)
 		# create/connect db
 		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
 

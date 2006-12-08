@@ -165,7 +165,7 @@ def cover_simple(self, id):
 		c.drawString(60, (-pageWidth/2)-8, movie.o_title.encode('utf-8'))
 		c.rotate(-90)
 		if movie.image is not None:
-			tmp_dest = os.path.join(self.griffith_dir, "posters")
+			tmp_dest = self.locations['posters']
 			image = os.path.join(tmp_dest, str(movie.image)+".jpg")
 			c.drawImage(image, x=(pageWidth-30)/2, y=470, width=30, height=50)
 		# print movie info

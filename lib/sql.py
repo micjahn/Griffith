@@ -723,11 +723,13 @@ class GriffithSQL:
 
 # for debugging (run: ipython sql.py)
 if __name__ == '__main__':
-	from initialize import locations
-	locations = locations()
-	import config, gdebug
 	import sys
-	db = GriffithSQL(config.Config(os.path.join(locations['home'], 'griffith.conf')), gdebug.GriffithDebug(True), locations['home'])
+	import config, gdebug
+	from initialize import locations, location_posters
+	locations = locations()
+	conf = config.Config(os.path.join(locations['home'], 'griffith.conf'))
+	location_posters(locations, conf)
+	db = GriffithSQL(conf, gdebug.GriffithDebug(True), locations['home'])
 	if len(sys.argv)>1:
 		if sys.argv[1] == 'echo':
 			db.metadata.engine.echo = True # print SQL queries

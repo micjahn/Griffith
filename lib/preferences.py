@@ -147,111 +147,112 @@ def show_preferences(self):
 
 def save_preferences(self):
 	w = self.widgets['preferences']
+	c = self.config
 	global spell_support
 
 	was_false = notes_was_false = plot_was_false = 1	
 
-	if self.config.get('use_gtkspell', 'False') == 'True':
+	if c.get('use_gtkspell', 'False') == 'True':
 		was_false = 0
 
-	if self.config.get('spell_notes', 'False') == 'True':
+	if c.get('spell_notes', 'False') == 'True':
 		notes_was_false = 0
 
-	if self.config.get('spell_plot', 'False') == 'True':
+	if c.get('spell_plot', 'False') == 'True':
 		plot_was_false = 0
 
 	# image
 	if w['view_image'].get_active():
-		self.config['view_image'] = 'True'
+		c['view_image'] = 'True'
 	else:
-		self.config['view_image'] = 'False'
+		c['view_image'] = 'False'
 	# original title
 	if w['view_o_title'].get_active():
-		self.config['view_otitle'] = 'True'
+		c['view_otitle'] = 'True'
 	else:
-		self.config['view_otitle'] = 'False'
+		c['view_otitle'] = 'False'
 	# title
 	if w['view_title'].get_active():
-		self.config['view_title'] = 'True'
+		c['view_title'] = 'True'
 	else:
-		self.config['view_title'] = 'False'
+		c['view_title'] = 'False'
 	# director
 	if w['view_director'].get_active():
-		self.config['view_director'] = 'True'
+		c['view_director'] = 'True'
 	else:
-		self.config['view_director'] = 'False'
+		c['view_director'] = 'False'
 	
 	# sortby
 	if w['sortby'].get_active():
 		field = self.sort_criteria[w['sortby'].get_active()]
 		if field:
-			self.config['sortby'] = field
+			c['sortby'] = field
 	else:
-		self.config['sortby'] = 'number'
+		c['sortby'] = 'number'
 	
 
 	# pdf font
 	if w['font'].get_filename():
-		self.config['font'] = w['font'].get_filename()
+		c['font'] = w['font'].get_filename()
 
 	# spellchecker
 	if w['spellchecker'].get_active():
-		self.config['use_gtkspell'] = 'True'
+		c['use_gtkspell'] = 'True'
 	else:
-		self.config['use_gtkspell'] = 'False'		
+		c['use_gtkspell'] = 'False'		
 	if w['spell_notes'].get_active():
-		self.config['spell_notes'] = 'True'
+		c['spell_notes'] = 'True'
 	else:
-		self.config['spell_notes'] = 'False'
+		c['spell_notes'] = 'False'
 	if w['spell_plot'].get_active():
-		self.config['spell_plot'] = 'True'
+		c['spell_plot'] = 'True'
 	else:
-		self.config['spell_plot'] = 'False'
+		c['spell_plot'] = 'False'
 
 	# rating image
-	self.config['rating_image'] = str(w['rating_image'].get_active())
+	c['rating_image'] = str(w['rating_image'].get_active())
 
 	#defaults
-	self.config['media'] = self.media_ids[w['media'].get_active()]
-	self.config['vcodec'] = self.vcodecs_ids[w['vcodec'].get_active()]
-	self.config['condition'] = str(w['condition'].get_active())
-	self.config['region'] = str(w['region'].get_active())
-	self.config['layers'] = str(w['layers'].get_active())
-	self.config['color'] = str(w['color'].get_active())
+	c['media'] = self.media_ids[w['media'].get_active()]
+	c['vcodec'] = self.vcodecs_ids[w['vcodec'].get_active()]
+	c['condition'] = str(w['condition'].get_active())
+	c['region'] = str(w['region'].get_active())
+	c['layers'] = str(w['layers'].get_active())
+	c['color'] = str(w['color'].get_active())
 
 	# email reminder
 	if w['mail_use_auth'].get_active():
-		self.config['mail_use_auth'] = 'True'
+		c['mail_use_auth'] = 'True'
 	else:
-		self.config['mail_use_auth'] = 'False'
+		c['mail_use_auth'] = 'False'
 
-	self.config['mail_smtp_server'] = w['mail_smtp_server'].get_text()
-	self.config['mail_username'] = w['mail_username'].get_text()
-	self.config['mail_password'] = w['mail_password'].get_text()
-	self.config['mail_email'] = w['mail_email'].get_text()
+	c['mail_smtp_server'] = w['mail_smtp_server'].get_text()
+	c['mail_username'] = w['mail_username'].get_text()
+	c['mail_password'] = w['mail_password'].get_text()
+	c['mail_email'] = w['mail_email'].get_text()
 
 	# default movie plugin
 	if w['default_plugin'].get_active():
-		self.config['default_movie_plugin'] = \
+		c['default_movie_plugin'] = \
 			gutils.on_combo_box_entry_changed(w['default_plugin'])
 	# search for:
-	self.config['s_classification'] = w['s_classification'].get_active()
-	self.config['s_country'] = w['s_country'].get_active()
-	self.config['s_director'] = w['s_director'].get_active()
-	self.config['s_genre'] = w['s_genre'].get_active()
-	self.config['s_image'] = w['s_image'].get_active()
-	self.config['s_notes'] = w['s_notes'].get_active()
-	self.config['s_o_site'] = w['s_o_site'].get_active()
-	self.config['s_o_title'] = w['s_o_title'].get_active()
-	self.config['s_plot'] = w['s_plot'].get_active()
-	self.config['s_rating'] = w['s_rating'].get_active()
-	self.config['s_runtime'] = w['s_runtime'].get_active()
-	self.config['s_site'] = w['s_site'].get_active()
-	self.config['s_studio'] = w['s_studio'].get_active()
-	self.config['s_title'] = w['s_title'].get_active()
-	self.config['s_trailer'] = w['s_trailer'].get_active()
-	self.config['s_cast'] = w['s_cast'].get_active()
-	self.config['s_year'] = w['s_year'].get_active()
+	c['s_classification'] = w['s_classification'].get_active()
+	c['s_country'] = w['s_country'].get_active()
+	c['s_director'] = w['s_director'].get_active()
+	c['s_genre'] = w['s_genre'].get_active()
+	c['s_image'] = w['s_image'].get_active()
+	c['s_notes'] = w['s_notes'].get_active()
+	c['s_o_site'] = w['s_o_site'].get_active()
+	c['s_o_title'] = w['s_o_title'].get_active()
+	c['s_plot'] = w['s_plot'].get_active()
+	c['s_rating'] = w['s_rating'].get_active()
+	c['s_runtime'] = w['s_runtime'].get_active()
+	c['s_site'] = w['s_site'].get_active()
+	c['s_studio'] = w['s_studio'].get_active()
+	c['s_title'] = w['s_title'].get_active()
+	c['s_trailer'] = w['s_trailer'].get_active()
+	c['s_cast'] = w['s_cast'].get_active()
+	c['s_year'] = w['s_year'].get_active()
 	
 	mcounter = 0
 	for p in self.plugins:
@@ -267,79 +268,85 @@ def save_preferences(self):
 	else:
 		save_reader = w['epdf_reader'].get_text()
 
-	self.config['spell_lang'] = w['spell_lang'].get_text()
-	self.config['pdf_reader'] = save_reader
+	c['spell_lang'] = w['spell_lang'].get_text()
+	c['pdf_reader'] = save_reader
 	
 	if spell_support:
-		if self.config.get('use_gtkspell', 'False') == 'False' and not was_false:
+		if c.get('use_gtkspell', 'False') == 'False' and not was_false:
 			self.notes_spell.detach()
 			self.plot_spell.detach()
-		elif self.config.get('use_gtkspell', 'False') == 'True' and was_false:
+		elif c.get('use_gtkspell', 'False') == 'True' and was_false:
 			initialize.initialize_gtkspell(self)
 		else:
 			pass
 
-		if self.config.get('use_gtkspell', 'False') == 'True':
-			if self.config.get('spell_plot', 'True') == 'False' and not plot_was_false:
+		if c.get('use_gtkspell', 'False') == 'True':
+			if c.get('spell_plot', 'True') == 'False' and not plot_was_false:
 				self.plot_spell.detach()
-			elif self.config.get('spell_plot', 'True') == 'True' and plot_was_false:
+			elif c.get('spell_plot', 'True') == 'True' and plot_was_false:
 				self.plot_spell = gtkspell.Spell(self.widgets['add']['plot'])
-				self.plot_spell.set_language(self.config.get('spell_lang', 'en'))
+				self.plot_spell.set_language(c.get('spell_lang', 'en'))
 			else:
 				pass
 
-			if self.config.get('spell_notes', 'True') == 'False' and not notes_was_false:
+			if c.get('spell_notes', 'True') == 'False' and not notes_was_false:
 				self.notes_spell.detach()
-			elif self.config.get('spell_notes', 'True') == 'True' and notes_was_false:
+			elif c.get('spell_notes', 'True') == 'True' and notes_was_false:
 				self.notes_spell = gtkspell.Spell(self.widgets['add']['notes'])
-				self.notes_spell.set_language(self.config.get('spell_lang', 'en'))
+				self.notes_spell.set_language(c.get('spell_lang', 'en'))
 			else:
 				pass
 	self.pdf_reader = save_reader
 
 	# database
-	old = {}
-	old['db_type']   = self.config['db_type']
-	old['db_host']   = self.config['db_host']
-	old['db_port']   = self.config['db_port']
-	old['db_name']   = self.config['db_name']
-	old['db_user']   = self.config['db_user']
-	old['db_passwd'] = self.config['db_passwd']
-	self.config['db_host']   = w['db_host'].get_text()
-	self.config['db_port']   = int(w['db_port'].get_value())
-	self.config['db_name']   = w['db_name'].get_text()
-	self.config['db_user']   = w['db_user'].get_text()
-	self.config['db_passwd'] = w['db_passwd'].get_text()
+	old = {
+		'db_type':   c['db_type'],
+		'db_host':   c['db_host'],
+		'db_port':   c['db_port'],
+		'db_name':   c['db_name'],
+		'db_user':   c['db_user'],
+		'db_passwd': c['db_passwd'],
+	}
+	c['db_host']   = w['db_host'].get_text()
+	c['db_port']   = int(w['db_port'].get_value())
+	c['db_name']   = w['db_name'].get_text()
+	c['db_user']   = w['db_user'].get_text()
+	c['db_passwd'] = w['db_passwd'].get_text()
 	db_type = int(w['db_type'].get_active())
 	if db_type == 1:
-		self.config['db_type'] = 'postgres'
+		c['db_type'] = 'postgres'
 	elif db_type == 2:
-		self.config['db_type'] = 'mysql'
+		c['db_type'] = 'mysql'
 	else:
-		self.config['db_type'] = 'sqlite'
-	self.config.save()
+		c['db_type'] = 'sqlite'
 
-	if old['db_type'] != self.config['db_type'] or (old['db_type']!='sqlite' and (\
-			old['db_host'] != self.config['db_host'] or \
-			old['db_port'] != self.config['db_port'] or \
-			old['db_name'] != self.config['db_name'] or \
-			old['db_user'] != self.config['db_user'] or \
-			old['db_passwd'] != self.config['db_passwd'])):
+	if old['db_type'] != c['db_type'] or (old['db_type']!='sqlite' and (\
+			old['db_host'] != c['db_host'] or \
+			old['db_port'] != c['db_port'] or \
+			old['db_name'] != c['db_name'] or \
+			old['db_user'] != c['db_user'] or \
+			old['db_passwd'] != c['db_passwd'])):
 		self.debug.show('DATABASE: connecting to new db server...')
-		# NEW DB CONNECTION
+		
+		# new database connection
 		import sql
 		self.initialized = False
 		self.db.metadata.clear()
 		from sqlalchemy.orm import clear_mappers
 		clear_mappers()
-		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
+		self.db = sql.GriffithSQL(c, self.debug, self.locations['home'])
 		self.debug.show("New database Engine: %s" % self.db.metadata.engine.name)
+		
+		# initialize new database
 		self.total = int(self.db.Movie.count())
 		self.count_statusbar()
-		from initialize	import dictionaries, people_treeview
+		from initialize	import dictionaries, people_treeview, location_posters
+		c['posters'] = None # force update
+		location_posters(self.locations, self.config)
 		dictionaries(self)
 		people_treeview(self, False)
 		self.initialized = True
 	self.clear_details()
 	self.populate_treeview()
 	self.go_last()
+	c.save()

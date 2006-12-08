@@ -52,7 +52,7 @@ def delete_poster(self, poster):
 	if not poster:
 		self.debug.show('Delete poster: no poster to delete')
 		return False
-	posters_dir = os.path.join(self.griffith_dir, "posters")
+	posters_dir = os.path.join(self.locations['posters'])
 	image_thumbnail = os.path.join(posters_dir, "t_" + poster + ".jpg")
 	image_mini = os.path.join(posters_dir, "m_" + poster + ".jpg")
 	image_full = os.path.join(posters_dir, poster + ".jpg")
