@@ -921,6 +921,8 @@ You can't undo this operation."""), \
 						except:
 							pass
 				self.db.drop_database()
+				from sqlalchemy.orm import clear_mappers
+				clear_mappers()
 				if self.config['db_type'] == 'sqlite':
 					os.unlink(os.path.join(self.locations['home'],self.config.get('default_db')))
 					if self.config['default_db'] == 'griffith.gri':
