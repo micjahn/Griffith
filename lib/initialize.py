@@ -339,58 +339,49 @@ def import_plugins(self):
 	dinamically finds the available import plugins
 	and fills the import menu entry
 	"""
-	# glade
 	
-	if self.widgets.has_key('import'):
-		self.debug('Import plugins already initialized')
-		return False
-
+	import plugins.imp, math
+	# glade
 	glade_file = gtk.glade.XML(os.path.join(self.locations['glade'], 'import.glade'))
 	get = lambda x: glade_file.get_widget(x)
 	
 	w = self.widgets['import'] = {
 		'window'	: get('dialog_import'),
 		'fcw'		: get('fcw'),
-		'notebook'	: get('notebook'),
 		'plugin'	: get('combo_plugin'),
 		'author'	: get('l_author'),
 		'email'		: get('l_email'),
 		'version'	: get('l_version'),
 		'description'	: get('l_description'),
-		'available'	: get('tv_csv_available'),
-		'selected'	: get('tv_csv_selected'),
-		'csv'		: {
-			'dialect'		: get('combo_csv_dialect'),
-			'delimeter'		: get('entry_csv_delimeter'),
-			'quotechar'		: get('entry_csv_quotechar'),
-			'escapechar'		: get('entry_csv_escapechar'),
-			'line_terminator'	: get('entry_csv_line_terminator'),
-			'doublequote'		: get('cb_csv_doublequote'),
-			'skipinitialspace'	: get('cb_csv_skipinitialspace'),
-		}
+		'box_import_1'	: get('box_import_1'),
+		'box_import_2'	: get('box_import_2'),
+		'box_import_3'	: get('box_import_3'),
+		'fields'	: {},
 	}
+	get('cancel_button').connect('clicked', lambda x: w['window'].hide())
+	get('import_button').connect('clicked', plugins.imp.on_import_button_clicked, self)
+	w['plugin'].connect('changed', plugins.imp.on_import_plugin_changed, w)
 	
-	# TODO:
-	glade_file.signal_autoconnect({
-		'on_import_button_clicked'	: self.on_import_button_clicked,
-		'on_cancel_button_clicked'	: self.on_cancel_button_clicked,
-		'on_import_plugin_changed'	: self.on_import_plugin_changed,
-	})
-	
-	plugins = gutils.read_plugins('PluginImport', \
-		self.locations['import_plugins'])
-	plugins.sort()
-	for p in plugins:
-		plugin_module = os.path.basename(p).replace('.py', '')
-		plugin_name = plugin_module.replace('PluginImport', '')
-		w['plugin'].append_text(plugin_name)
+	for name in plugins.imp.__all__:
+		w['plugin'].append_text(name)
 	w['plugin'].set_active(0)
-	import csv
-	for i in csv.list_dialects():
-		w['csv']['dialect'].append_text(i)
-	w['csv']['dialect'].set_active(1) # Excell
-#	for i in self.field_names:
-#		# add row
+	
+	# fields to import
+	j = 0
+	k = math.ceil( len(self.field_names) / float(3) )
+	for i in self.field_names:
+		j = j + 1
+		w['fields'][i] = gtk.CheckButton(self.field_names[i])
+		w['fields'][i].set_active(True) # TODO: get from config
+		if j <= k:
+			w['box_import_1'].add(w['fields'][i])
+		elif j<= 2*k:
+			w['box_import_2'].add(w['fields'][i])
+		else:
+			w['box_import_3'].add(w['fields'][i])
+	w['box_import_1'].show_all()
+	w['box_import_2'].show_all()
+	w['box_import_3'].show_all()
 	
 
 def people_treeview(self, create=True):

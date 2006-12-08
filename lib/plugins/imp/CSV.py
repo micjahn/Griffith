@@ -10,19 +10,11 @@ __revision__ = '$Id$'
 #
 ###########################################################################
 
-import csv
-import gtk
-import gutils
-import os
-import movie, string
-import re
-import codecs
 from gettext import gettext as _
-from add import validate_details
-
-import plugin
+from plugins.imp import ImportPlugin
 
 def digits_only(s):
+	import string, re
 	_match = re.compile(r"\d+")
 	try:
 		s = reduce( string.join, _match.findall(s) )
@@ -30,31 +22,33 @@ def digits_only(s):
 		s = '0'
 	return s
 	
-class ImportPlugin(plugin.ImportPlugin):
-	name = "CSV"
-	description = _("Full CSV list import plugin")
-	author = "Jessica Katharina Parth"
-	email = "Jessica.K.P@women-at-work.org"
-	version = "0.1"
+class ImportPlugin(ImportPlugin):
+	description	= _("Full CSV list import plugin")
+	author		= "Jessica Katharina Parth"
+	email		= "Jessica.K.P@women-at-work.org"
+	version		= "0.1"
+	file_filters	= '*.[cC][sS][vV]'
+	mime_types	= ('text/comma-separated-values', 'text/csv', 'application/csv',
+			'application/excel', 'application/vnd.ms-excel', 'application/vnd.msexcel')
 
 	def initialize(self):
+		import gtk, gutils
 		# TODO: configure csv.reader
-		filename = gutils.file_chooser(_("Import a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_OPEN, \
-			buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK),name='')
-		if filename[0]:
-			self.set_source(filename[0])
-		else:
-			return False
 		return True
 
 	def set_source(self, name):
+		import csv, codecs, os
+		if name is None or not os.path.isfile(name):
+			return False
 		self.__source_name = name
 		self.data = csv.reader(codecs.open(name, 'r', 'iso-8859-1'), dialect='excel', quotechar='"', delimiter=',')
+		return True
 
 	def count_movies(self):
-		return len(open(self.__source_name).readlines())
+		return len(open(self.__source_name).readlines()) # FIXME
 	
 	def get_movie_details(self, item):
+		from add import validate_details
 		x = 0
 		
 		t_movies = {
