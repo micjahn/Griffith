@@ -254,22 +254,12 @@ class GriffithSQL:
 
 	def __init__(self, config, gdebug, griffith_dir):	#{{{
 		from sqlalchemy.mods.threadlocal import assign_mapper
-		self.griffith_dir = griffith_dir
-		self.config = config
 		global debug
 		debug = gdebug
 		if not config.has_key('db_type'):
 			config['db_type'] = 'sqlite'
 
-		# detect SQLite2 and convert to SQLite3
-		if config['db_type'] == 'sqlite':
-			filename = os.path.join(griffith_dir, config['default_db'])
-			if os.path.isfile(filename) and open(filename).readline()[:47] == '** This file contains an SQLite 2.1 database **':
-				debug.show('SQLite2 database format detected. Converting...')
-				if self.convert_from_sqlite2(filename, os.path.join(griffith_dir, 'griffith.db')):
-					self.config['default_db'] = 'griffith.db'
-					self.config.save()
-		else:
+		if config['db_type'] != 'sqlite':
 			if not config.has_key('db_host'):
 				config['db_host'] = '127.0.0.1'
 			if not config.has_key('db_user'):
@@ -435,7 +425,8 @@ class GriffithSQL:
 			'collection' : relation(self.Collection)})
 		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
 			'loans'      : relation(self.Loan, backref='movie', cascade='all, delete-orphan'),
-			'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
+			#'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
+			'tags'       : relation(self.Tag, secondary=movie_tag,
 					primaryjoin=movies.c.movie_id==movie_tag.c.movie_id,
 					secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id),
 			'languages'  : relation(self.MovieLang, cascade='all, delete-orphan')})#}}}
@@ -453,12 +444,11 @@ class GriffithSQL:
 				self.Person.select().execute()
 			except exceptions.SQLError:	# table doesn't exist
 				v=0
-			except:
-				raise
 		if v is not None and v>1:
 			v = v.value
 		if v<self.version:
-			self.upgrade_database(v)
+			from dbupgrade import upgrade_database
+			upgrade_database(self, v)
 		
 		# check if all tables exists
 #		for table in self.metadata.tables.keys():
@@ -507,121 +497,10 @@ class GriffithSQL:
 			self.MovieLang.mapper.mapped_table.drop()
 			self.Tag.mapper.mapped_table.drop()
 			#objectstore.commit()
-
-
-	def upgrade_database(self, version):
-		"""Create new db or update existing one to current format"""
-		if version == 0:
-			debug.show('Creating tables...')
-			self.Configuration.mapper.mapped_table.create()
-			self.Configuration.mapper.mapped_table.insert().execute(param='version', value=self.version)
-			self.Volume.mapper.mapped_table.create()
-			self.Collection.mapper.mapped_table.create()
-			self.Medium.mapper.mapped_table.create()
-			self.Medium.mapper.mapped_table.insert().execute(name='DVD')
-			self.Medium.mapper.mapped_table.insert().execute(name='DVD-R')
-			self.Medium.mapper.mapped_table.insert().execute(name='DVD-RW')
-			self.Medium.mapper.mapped_table.insert().execute(name='DVD+R')
-			self.Medium.mapper.mapped_table.insert().execute(name='DVD+RW')
-			self.Medium.mapper.mapped_table.insert().execute(name='DVD-RAM')
-			self.Medium.mapper.mapped_table.insert().execute(name='CD')
-			self.Medium.mapper.mapped_table.insert().execute(name='CD-RW')
-			self.Medium.mapper.mapped_table.insert().execute(name='VCD')
-			self.Medium.mapper.mapped_table.insert().execute(name='SVCD')
-			self.Medium.mapper.mapped_table.insert().execute(name='VHS')
-			self.Medium.mapper.mapped_table.insert().execute(name='BETACAM')
-			self.Medium.mapper.mapped_table.insert().execute(name='LaserDisc')
-			self.ACodec.mapper.mapped_table.create()
-			self.ACodec.mapper.mapped_table.insert().execute(name='AC-3 Dolby audio')
-			self.ACodec.mapper.mapped_table.insert().execute(name='OGG')
-			self.ACodec.mapper.mapped_table.insert().execute(name='MP3')
-			self.ACodec.mapper.mapped_table.insert().execute(name='MPEG-1')
-			self.ACodec.mapper.mapped_table.insert().execute(name='MPEG-2')
-			self.ACodec.mapper.mapped_table.insert().execute(name='AAC')
-			self.ACodec.mapper.mapped_table.insert().execute(name='Windows Media Audio')
-			self.VCodec.mapper.mapped_table.create()
-			self.VCodec.mapper.mapped_table.insert().execute(name='MPEG-1')
-			self.VCodec.mapper.mapped_table.insert().execute(name='MPEG-2')
-			self.VCodec.mapper.mapped_table.insert().execute(name='XviD')
-			self.VCodec.mapper.mapped_table.insert().execute(name='DivX')
-			self.VCodec.mapper.mapped_table.insert().execute(name='H.264')
-			self.VCodec.mapper.mapped_table.insert().execute(name='RealVideo')
-			self.VCodec.mapper.mapped_table.insert().execute(name='QuickTime')
-			self.VCodec.mapper.mapped_table.insert().execute(name='Windows Media Video')
-			self.AChannel.mapper.mapped_table.create()
-			self.AChannel.mapper.mapped_table.insert().execute(name='mono')
-			self.AChannel.mapper.mapped_table.insert().execute(name='stereo')
-			self.AChannel.mapper.mapped_table.insert().execute(name='5.1')
-			self.AChannel.mapper.mapped_table.insert().execute(name='7.1')
-			self.SubFormat.mapper.mapped_table.create()
-			self.SubFormat.mapper.mapped_table.insert().execute(name='DVD VOB')
-			self.SubFormat.mapper.mapped_table.insert().execute(name='MPL2 (.txt)')
-			self.SubFormat.mapper.mapped_table.insert().execute(name='MicroDVD (.sub)')
-			self.SubFormat.mapper.mapped_table.insert().execute(name='SubRip (.srt)')
-			self.SubFormat.mapper.mapped_table.insert().execute(name='SubViewer2 (.sub)')
-			self.SubFormat.mapper.mapped_table.insert().execute(name='Sub Station Alpha (.ssa)')
-			self.SubFormat.mapper.mapped_table.insert().execute(name='Advanced Sub Station Alpha (.ssa)')
-			self.Person.mapper.mapped_table.create()
-			self.Movie.mapper.mapped_table.create()
-			self.Loan.mapper.mapped_table.create()
-			self.Lang.mapper.mapped_table.create()
-			self.Lang.mapper.mapped_table.insert().execute(name=_('English'))
-			self.MovieLang.mapper.mapped_table.create()
-			self.Tag.mapper.mapped_table.create()
-			self.Tag.mapper.mapped_table.insert().execute(name=_('Favourite'))
-			self.Tag.mapper.mapped_table.insert().execute(name=_('To buy'))
-			self.MovieTag.mapper.mapped_table.create()
-			#self.metadata.commit()
-			return True
-		if version == 1:	# fix changes between v1 and v2
-			raise Exception('not implemented yet')
-			# TODO:
-			# * ranames in movie table:
-			#   + media => media_id
-			#   + obs => notes
-			#   + site => o_site
-			#   + imdb => site
-			#   + original_title => o_title
-			# * upgrade media table (media_id = media +1 )
-			# * upgrade old media if needed
-			version+=1
-			#self.Configuration.get_by(param='version').value = version
-		#if version == 2:	# fix changes between v2 and v3
-		#	version+=1
-		#	self.Configuration.get_by(param='version').value = version
-
-	def update_old_media(self):
-		debug.show('Upgrading old media values...')
-		self.metadata.execute("UPDATE movies SET media = '1' WHERE media = 'DVD';")
-		self.metadata.execute("UPDATE movies SET media = '2' WHERE media = 'DVD-R';")
-		self.metadata.execute("UPDATE movies SET media = '3' WHERE media = 'DVD-RW';")
-		self.metadata.execute("UPDATE movies SET media = '4' WHERE media = 'DVD+R';")
-		self.metadata.execute("UPDATE movies SET media = '5' WHERE media = 'DVD+RW';")
-		self.metadata.execute("UPDATE movies SET media = '6' WHERE media = 'DVD-RAM';")
-		self.metadata.execute("UPDATE movies SET media = '7' WHERE media = 'DivX';")
-		self.metadata.execute("UPDATE movies SET media = '7' WHERE media = 'DIVX';")
-		self.metadata.execute("UPDATE movies SET media = '7' WHERE media = 'XviD';")
-		self.metadata.execute("UPDATE movies SET media = '7' WHERE media = 'XVID';")
-		self.metadata.execute("UPDATE movies SET media = '7' WHERE media = 'WMV';")
-		self.metadata.execute("UPDATE movies SET media = '7' WHERE media = 'WMV';")
-		self.metadata.execute("UPDATE movies SET media = '9' WHERE media = 'VCD';")
-		self.metadata.execute("UPDATE movies SET media = '10' WHERE media = 'SVCD'; 	")
-		self.metadata.execute("UPDATE movies SET media = '11' WHERE media = 'VHS';")
-		self.metadata.execute("UPDATE movies SET media = '12' WHERE media = 'BETACAM';")
-
-	def fix_old_data(self):
-		self.metadata.execute("UPDATE movies SET collection_id=NULL WHERE collection_id=''")
-		self.metadata.execute("UPDATE movies SET volume_id=NULL WHERE volume_id=''")
-		self.metadata.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
-		self.metadata.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2020")
-		self.metadata.execute("UPDATE movies SET rating=0 WHERE rating ISNULL")
-		try:
-			self.update_old_media()
-		except:
-			pass
 	#}}}
 
 	# LOANS ------------------------------------------------------------{{{
+	# TODO: move to loan.py
 	def get_loan_info(self, movie_id, volume_id=None, collection_id=None):
 		"""Returns current collection/volume/movie loan data"""
 		if collection_id>0 and volume_id>0:
@@ -660,66 +539,6 @@ class GriffithSQL:
 		else:
 			return self.Loan.select_by(self.Loan.c.movie_id==movie_id,not_(self.Loan.c.return_date==None))
 	# }}}
-
-	# ---------------------------------------------------------------------
-	def convert_from_sqlite2(self, source_file, destination_file):	#{{{ FIXME
-		try:
-			import sqlite
-		except:
-			debug.show("SQLite2 conversion: please install pysqlite legacy (v1.0)")
-			return False
-
-		def copy_table(sqlite2_cursor, adodb_engine, table_name):
-			sqlite2_cursor.execute("SELECT * FROM %s"%table_name)
-			data = sqlite2_cursor.fetchall()
-			for row in data:
-				query = "INSERT INTO %s("%table_name
-				for column in row.keys():
-					query += column+','
-				query = query[:len(query)-1]
-				query += ') VALUES ('
-				for value in row:
-					if value is None:
-						query += 'NULL,'
-					else:
-						query += "'%s'"%gutils.gescape(str(value)) + ','
-				query = query[:len(query)-1] + ');'
-				adodb_engine.execute(query)
-
-		from tempfile import mkdtemp
-		from shutil import rmtree, move
-		tmp_dir=mkdtemp()
-
-		sqlite2_con = sqlite.connect(source_file,autocommit=1)
-		sqlite2_cursor = sqlite2_con.cursor()
-
-		new_db = GriffithSQL(self.config, debug, tmp_dir)
-		# remove default values
-		new_db.engine.execute('DELETE FROM volumes')
-		new_db.engine.execute('DELETE FROM collections')
-		new_db.engine.execute('DELETE FROM media')
-		new_db.engine.execute('DELETE FROM languages')
-		new_db.engine.execute('DELETE FROM tags')
-
-		copy_table(sqlite2_cursor, new_db.engine, 'movies')
-		copy_table(sqlite2_cursor, new_db.engine, 'people')
-		copy_table(sqlite2_cursor, new_db.engine, 'media')
-		copy_table(sqlite2_cursor, new_db.engine, 'loans')
-		try:
-			copy_table(sqlite2_cursor, new_db.engine, 'volumes')
-			copy_table(sqlite2_cursor, new_db.engine, 'collections')
-			copy_table(sqlite2_cursor, new_db.engine, 'languages')
-			copy_table(sqlite2_cursor, new_db.engine, 'movie_lang')
-			copy_table(sqlite2_cursor, new_db.engine, 'movie_tag')
-			copy_table(sqlite2_cursor, new_db.engine, 'tags')
-		except:
-			pass
-
-		move(os.path.join(tmp_dir,self.config['default_db']), destination_file)
-		debug.show("SQLite2 conversion: file %s created" % destination_file)
-		new_db.engine.Close();
-		rmtree(tmp_dir)
-		return True	#}}}
 
 # for debugging (run: ipython sql.py)
 if __name__ == '__main__':

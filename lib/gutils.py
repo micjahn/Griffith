@@ -478,4 +478,14 @@ def get_dependencies():
 		'debian'	: 'python-mysqldb',
 		'debian_req'	: '1.2.1-p2-2'
 	})
+	try:
+		import sqlite
+		version	= sqlite.version
+	except:
+		version = False
+	optional.append({'module': 'sqlite',
+		'version'	: version,
+		'url'		: 'http://initd.org/tracker/pysqlite',
+		'debian'	: 'python-sqlite'
+	})
 	return depend, optional
