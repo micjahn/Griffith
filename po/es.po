@@ -1,9 +1,8 @@
-p# SPANISH translation of Griffith.
+# SPANISH translation of Griffith.
 # Copyright (C) 2005 Vasco Nunes
 # This file is distributed under the same license as Griffith package.
-# escaranbujo@gmail.comvasco <EMAIL@ADDRESS>, 2005.
-# 
-# 
+# Daniel Ucero <escaranbujo@gmail.comvasco>, 2006.
+
 msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.5.2\n"
