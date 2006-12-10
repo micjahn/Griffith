@@ -53,7 +53,7 @@ def is_number(x):
 	except:
 		return False
 
-def find_next_available(self):
+def find_next_available(db):
 	"""
 	finds next available movie number.
 	This is the first empty position.
@@ -62,7 +62,7 @@ def find_next_available(self):
 	a = first = 0
 	row = None
 
-	movies = self.db.Movie.select(order_by="number ASC")
+	movies = db.Movie.select(order_by="number ASC")
 	for movie in movies:
 		second = int(movie.number)
 		if second is None:

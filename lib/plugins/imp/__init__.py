@@ -115,7 +115,7 @@ class ImportPlugin:
 					edit_movie(self.parent, details)	# FIXME: wait until save or cancel button pressed
 				else:
 					if details['number'] is None:
-						details['number'] = find_next_available(self.parent)
+						details['number'] = find_next_available(self.db)
 					movie = self.db.Movie()
 					movie.add_to_db(details)
 				self.imported += 1 # FIXME: what about cancel button in edit window
