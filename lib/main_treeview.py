@@ -39,6 +39,7 @@ def treeview_clicked(self):
 		set_details(self, movie)
 
 def set_details(self, item=None):#{{{
+	from loan import get_loan_info, get_loan_history
 	if item is None:
 		item = {}
 	if item.has_key('movie_id') and item['movie_id']:
@@ -207,7 +208,7 @@ def set_details(self, item=None):#{{{
 		w['email_reminder_button'].set_sensitive(True)
 		w['return_button'].set_sensitive(True)
 		
-		data_loan = self.db.get_loan_info(collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
+		data_loan = get_loan_info(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
 		data_person = self.db.Person.get_by(person_id=data_loan.person.person_id)
 		self.person_name = str(data_person.name)
 		self.person_email = str(data_person.email)
@@ -227,7 +228,7 @@ def set_details(self, item=None):#{{{
 	# loan history	
 	self.loans_treemodel.clear()
 	if item.has_key('collection_id') or item.has_key('volume_id') or item.has_key('movie_id'):
-		loans = self.db.get_loan_history(collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
+		loans = get_loan_history(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
 		for loan in loans:
 			myiter = self.loans_treemodel.append(None)
 			self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan.date)[:10])

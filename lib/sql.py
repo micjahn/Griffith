@@ -27,7 +27,7 @@ import os.path
 import gutils
 import gtk
 
-class DBTable(object):
+class DBTable(object):#{{{
 	def __repr__(self):
 		return "%s:%s" % (self.__class__.__name__, self.name)
 	def add_to_db(self):
@@ -75,10 +75,10 @@ class DBTable(object):
 		self.update()
 		self.flush()
 		self.refresh()
-		return True
+		return True#}}}
 
 class GriffithSQL:
-	version = 2	# database format version, incrase after any changes in data structures
+	version = 1	# database format version, incrase after any changes in data structures
 	metadata = None
 	class Configuration(object):
 		def __repr__(self):
@@ -252,7 +252,7 @@ class GriffithSQL:
 			return True
 		#}}}
 
-	def __init__(self, config, gdebug, griffith_dir):	#{{{
+	def __init__(self, config, gdebug, griffith_dir):
 		from sqlalchemy.mods.threadlocal import assign_mapper
 		global debug
 		debug = gdebug
@@ -458,87 +458,6 @@ class GriffithSQL:
 #				self.metadata.tables[table].create()
 #			self.metadata.commit()
 
-	#}}}
-
-	# DATABASE ---------------------------------------------------------{{{
-	def drop_database(self):
-		if self.metadata.name == 'postgres':
-			self.metadata.execute('DROP TABLE loans CASCADE;')
-			self.metadata.execute('DROP TABLE people CASCADE;')
-			self.metadata.execute('DROP TABLE configuration CASCADE;')
-			self.metadata.execute('DROP TABLE languages CASCADE;')
-			self.metadata.execute('DROP TABLE movies CASCADE;')
-			self.metadata.execute('DROP TABLE vcodecs CASCADE;')
-			self.metadata.execute('DROP TABLE volumes CASCADE;')
-			self.metadata.execute('DROP TABLE media CASCADE;')
-			self.metadata.execute('DROP TABLE collections CASCADE;')
-			self.metadata.execute('DROP TABLE acodecs CASCADE;')
-			self.metadata.execute('DROP TABLE achannels CASCADE;')
-			self.metadata.execute('DROP TABLE subformats CASCADE;')
-			self.metadata.execute('DROP TABLE movie_tag CASCADE;')
-			self.metadata.execute('DROP TABLE movie_lang CASCADE;')
-			self.metadata.execute('DROP TABLE tags CASCADE;')
-		else:
-#			for table in self.metadata.tables.keys():
-#				self.metadata.tables[table].drop()
-			self.Loan.mapper.mapped_table.drop()
-			self.Person.mapper.mapped_table.drop()
-			self.Configuration.mapper.mapped_table.drop()
-			self.VCodec.mapper.mapped_table.drop()
-			self.ACodec.mapper.mapped_table.drop()
-			self.AChannel.mapper.mapped_table.drop()
-			self.SubFormat.mapper.mapped_table.drop()
-			self.Medium.mapper.mapped_table.drop()
-			self.Lang.mapper.mapped_table.drop()
-			self.Volume.mapper.mapped_table.drop()
-			self.Collection.mapper.mapped_table.drop()
-			self.Movie.mapper.mapped_table.drop()
-			self.MovieTag.mapper.mapped_table.drop()
-			self.MovieLang.mapper.mapped_table.drop()
-			self.Tag.mapper.mapped_table.drop()
-			#objectstore.commit()
-	#}}}
-
-	# LOANS ------------------------------------------------------------{{{
-	# TODO: move to loan.py
-	def get_loan_info(self, movie_id, volume_id=None, collection_id=None):
-		"""Returns current collection/volume/movie loan data"""
-		if collection_id>0 and volume_id>0:
-			return self.Loan.get_by(
-					and_(or_(self.Loan.c.collection_id==collection_id,
-							self.Loan.c.volume_id==volume_id,
-							self.Loan.c.movie_id==movie_id),
-						self.Loan.c.return_date==None))
-		elif collection_id>0:
-			return self.Loan.get_by(
-					and_(or_(self.Loan.c.collection_id==collection_id,
-							self.Loan.c.movie_id==movie_id)),
-						self.Loan.c.return_date==None)
-		elif volume_id>0:
-			return self.Loan.get_by(and_(or_(self.Loan.c.volume_id==volume_id,
-								self.Loan.c.movie_id==movie_id)),
-							self.Loan.c.return_date==None)
-		else:
-			return self.Loan.get_by(self.Loan.c.movie_id==movie_id,self.Loan.c.return_date==None)
-
-	def get_loan_history(self, movie_id, volume_id=None, collection_id=None):
-		"""Returns collection/volume/movie loan history"""
-		if collection_id>0 and volume_id>0:
-			return self.Loan.select_by(and_(or_(self.Loan.c.collection_id==collection_id,
-								self.Loan.c.volume_id==volume_id,
-								self.Loan.c.movie_id==movie_id),
-							not_(self.Loan.c.return_date==None)))
-		elif collection_id>0:
-			return self.Loan.select_by(and_(or_(self.Loan.c.collection_id==collection_id,
-								self.Loan.c.movie_id==movie_id),
-							not_(self.Loan.c.return_date==None)))
-		elif volume_id>0:
-			return self.Loan.select_by(and_(or_(self.Loan.c.volume_id==volume_id,
-								self.Loan.c.movie_id==movie_id),
-							not_(self.Loan.c.return_date==None)))
-		else:
-			return self.Loan.select_by(self.Loan.c.movie_id==movie_id,not_(self.Loan.c.return_date==None))
-	# }}}
 
 # for debugging (run: ipython sql.py)
 if __name__ == '__main__':

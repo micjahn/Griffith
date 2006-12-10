@@ -85,3 +85,43 @@ def return_loan(self):
 		if loan and loan.set_returned():
 			self.treeview_clicked()
 
+def get_loan_info(db, movie_id, volume_id=None, collection_id=None):
+	"""Returns current collection/volume/movie loan data"""
+	from sqlalchemy import and_, or_
+	if collection_id>0 and volume_id>0:
+		return db.Loan.get_by(
+				and_(or_(db.Loan.c.collection_id==collection_id,
+						db.Loan.c.volume_id==volume_id,
+						db.Loan.c.movie_id==movie_id),
+					db.Loan.c.return_date==None))
+	elif collection_id>0:
+		return db.Loan.get_by(
+				and_(or_(db.Loan.c.collection_id==collection_id,
+						db.Loan.c.movie_id==movie_id)),
+					db.Loan.c.return_date==None)
+	elif volume_id>0:
+		return db.Loan.get_by(and_(or_(db.Loan.c.volume_id==volume_id,
+							db.Loan.c.movie_id==movie_id)),
+						db.Loan.c.return_date==None)
+	else:
+		return db.Loan.get_by(db.Loan.c.movie_id==movie_id,db.Loan.c.return_date==None)
+
+def get_loan_history(db, movie_id, volume_id=None, collection_id=None):
+	"""Returns collection/volume/movie loan history"""
+	from sqlalchemy import and_, or_, not_
+	if collection_id>0 and volume_id>0:
+		return db.Loan.select_by(and_(or_(db.Loan.c.collection_id==collection_id,
+							db.Loan.c.volume_id==volume_id,
+							db.Loan.c.movie_id==movie_id),
+						not_(db.Loan.c.return_date==None)))
+	elif collection_id>0:
+		return db.Loan.select_by(and_(or_(db.Loan.c.collection_id==collection_id,
+							db.Loan.c.movie_id==movie_id),
+						not_(db.Loan.c.return_date==None)))
+	elif volume_id>0:
+		return db.Loan.select_by(and_(or_(db.Loan.c.volume_id==volume_id,
+							db.Loan.c.movie_id==movie_id),
+						not_(db.Loan.c.return_date==None)))
+	else:
+		return db.Loan.select_by(db.Loan.c.movie_id==movie_id,not_(db.Loan.c.return_date==None))
+

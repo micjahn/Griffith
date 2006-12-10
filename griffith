@@ -57,7 +57,7 @@ class Griffith:
 
 		# convert old database (remove this in version 0.8+1)
 		filename = os.path.join(self.locations['home'], self.config['default_db'])
-		if os.path.isfile(filename) and open(filename).readline()[:47] == '** This file contains an SQLite 2.1 database **':
+		if self.config['default_db'].endswith('.gri'):
 			debug.show('SQLite2 database format detected. Converting...')
 			from dbupgrade import convert_from_old_db
 			if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
@@ -929,7 +929,7 @@ You can't undo this operation."""), \
 							os.remove(t_file)
 						except:
 							pass
-				self.db.drop_database()
+				self.db.metadata.drop_all()
 				from sqlalchemy.orm import clear_mappers
 				clear_mappers()
 				if self.config['db_type'] == 'sqlite':
