@@ -116,6 +116,7 @@
 			  <property name="ypad">0</property>
 			</widget>
 		      </child>
+
 		      <child>
 			<widget class="GtkMenu" id="export_menu">
 			</widget>
@@ -123,7 +124,6 @@
 		    </widget>
 		  </child>
 
-		  
 		  <child>
 		    <widget class="GtkImageMenuItem" id="import">
 		      <property name="visible">True</property>
@@ -4532,7 +4532,7 @@
 		      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 		      <property name="snap_to_ticks">False</property>
 		      <property name="wrap">False</property>
-		      <property name="adjustment">0 0 100 1 10 10</property>
+		      <property name="adjustment">0 0 0 1 10 10</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>

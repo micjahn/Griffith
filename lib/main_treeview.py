@@ -57,7 +57,7 @@ def set_details(self, item=None):#{{{
 	else:
 		w['title'].set_text('')
 	if item.has_key('o_title') and item['o_title']:
-		w['o_title'].set_markup("<span size='medium'><i>%s</i></span>" % str(item['o_title']))
+		w['o_title'].set_markup("<span size='medium'><i>%s</i></span>" % str(item['o_title']).replace('&', '&amp;'))
 	else:
 		w['o_title'].set_text('')
 	if item.has_key('director') and item['director']:
