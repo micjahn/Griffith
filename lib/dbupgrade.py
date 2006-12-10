@@ -148,18 +148,21 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET rating=10 WHERE rating>10")
 	old_cursor.execute("UPDATE movies SET rating=0 WHERE rating<0")
 	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
+	old_cursor.execute("DELETE FROM loans WHERE date='' OR date ISNULL")
 	#old_cursor.commit()
 	old_cursor.execute("UPDATE movies SET region=NULL WHERE region='' OR region='2' OR region<0 OR region>8")
 	old_cursor.execute("UPDATE movies SET condition=NULL WHERE condition='' OR condition='3'")
 	old_cursor.execute("UPDATE movies SET color=NULL WHERE color='' OR color='0'")
 	old_cursor.execute("UPDATE movies SET layers=NULL WHERE layers='' OR layers='4'")
+	old_cursor.execute("DELETE FROM volumes WHERE name = ''")
+	old_cursor.execute("DELETE FROM collections WHERE name = ''")
 
 	self.config['dbtype'] = 'sqlite'
 	self.config['default_db'] = 'griffith.db'
 	new_db = GriffithSQL(self.config, self.debug, self.locations['home'])
 
 	# collections
-	collection_mapper = {}
+	collection_mapper = {0:None}
 	old_cursor.execute("SELECT id, name, loaned FROM collections;")
 	for i in old_cursor.fetchall():
 		o = new_db.Collection(name=i[1], loaned=bool(i[2]))
@@ -167,7 +170,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		collection_mapper[i[0]] = o.collection_id
 	
 	# volumes
-	volume_mapper = {}
+	volume_mapper = {0:None}
 	old_cursor.execute("SELECT id, name, loaned FROM volumes;")
 	for i in old_cursor.fetchall():
 		o = new_db.Volume(name=i[1], loaned=bool(i[2]))
@@ -283,18 +286,21 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			m.save(); m.flush()
 
 	# loans
-#	old_cursor.execute("SELECT person_id, movie_id, volume_id, collection_id, date, return_date FROM loans;")
-#	for i in old_cursor.fetchall():
-#		m = new_db.Movie.get_by(movie_id=movie_mapper[i[1]])
-#		o = new_db.Loan()
-#		o.person_id = person_mapper[i[0]]
-#		o.volume_id = volume_mapper[i[2]]
-#		o.collection_id = collection_mapper[i[3]]
-#		o.date = i[4] # FIXME
-#		o.return_date = i[5] # FIXME
-#		o.save();
-#		m.loans.append(o)
-#		m.flush()
+	old_cursor.execute("SELECT person_id, movie_id, volume_id, collection_id, date, return_date FROM loans;")
+	for i in old_cursor.fetchall():
+		m = new_db.Movie.get_by(movie_id=movie_mapper[i[1]])
+		o = new_db.Loan()
+		o.person_id = person_mapper[i[0]]
+		o.volume_id = volume_mapper[i[2]]
+		o.collection_id = collection_mapper[i[3]]
+		o.date = str(i[4])[:10]
+		if i[5] is not None:
+			o.return_date = str(i[5])[:10]
+		else:
+			m.loaned = True
+		o.save();
+		m.loans.append(o)
+		m.flush()
 	clear_mappers()
 	return True
 #}}}
