@@ -1,4 +1,4 @@
-# SPANISH translation of Griffith.
+p# SPANISH translation of Griffith.
 # Copyright (C) 2005 Vasco Nunes
 # This file is distributed under the same license as Griffith package.
 # escaranbujo@gmail.comvasco <EMAIL@ADDRESS>, 2005.
@@ -482,7 +482,7 @@ msgstr "Colección"
 #: ../lib/initialize.py:499 ../lib/plugins/export/PluginExportHTML.py:106
 #: ../glade/griffith.glade.h:99
 msgid "Plot"
-msgstr "Plotear"
+msgstr "Resumen"
 
 #: ../lib/initialize.py:500 ../glade/griffith.glade.h:45
 msgid "Discs"
