@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2006-12-10 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added three new movie plugins for spanish users -
+	  IMDB espana, Culturalia and Film Affinity (thanks to Pedro D. Sánchez)
+
 2006-12-08 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Updated CSFD Plugin to use new website interface (thanks to Blonďák)
 	* Updated Czech translation (thanks to Blonďák)
