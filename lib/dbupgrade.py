@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id:$'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
@@ -116,7 +116,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		return False
 
 	if os.path.isfile(destination_file):
-		# rename destination_file is it already exist
+		# rename destination_file if it already exist
 		i = 1
 		while True:
 			if os.path.isfile("%s_%s" % (destination_file, i)):
@@ -206,7 +206,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			o.save(); o.flush()
 			medium_mapper[i[0]] = o.medium_id
 	
-#	# tags
+	# tags
 	tag_mapper = {}
 	old_cursor.execute("SELECT id, name FROM tags;")
 	for i in old_cursor.fetchall():
@@ -226,12 +226,9 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			genre, studio, site, imdb, actors, trailer, rating, loaned,
 			media, num_media, obs, seen, region, condition, color, layers
 		FROM movies ORDER BY number;""")
-	j = 1
 	for i in old_cursor.fetchall():
 		o = new_db.Movie()
-		#o.number = digits_only(i[6])
-		o.number = j
-		j += 1
+		o.number = digits_only(i[6])
 		o.volume_id = volume_mapper[i[1]]
 		o.collection_id = collection_mapper[i[2]]
 		o.o_title = i[3][:255]
@@ -252,7 +249,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		o.rating = digits_only(i[19])
 		o.loaned = bool(i[20])
 		o.medium_id = medium_mapper[int(i[21])]
-		o.num_media = digits_only(i[22])
+		o.media_num = digits_only(i[22])
 		o.notes = i[23]
 		o.seen = bool(i[24])
 		o.region = digits_only(i[25])
@@ -269,7 +266,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		o = new_db.MovieTag.get_by(movie_id=movie_mapper[i[0]], tag_id=tag_mapper[i[1]])
 		if o is None:
 			m = new_db.Movie.get_by(movie_id=movie_mapper[i[0]])
-			t = new_db.MovieTag(tag_id=tag_mapper[i[1]])
+			t = new_db.Tag.get_by(tag_id=tag_mapper[i[1]])
 			t.save()
 			m.tags.append(t)
 			m.save(); m.flush()
@@ -306,7 +303,7 @@ def digits_only(s, maximum=None):
 	import string, re
 	match = re.compile(r"\d+")
 	try:
-		s = int(reduce( string.join, match.findall(s)))
+		s = int(reduce( string.join, match.findall(str(s))))
 	except:
 		s = 0
 	if maximum is None:

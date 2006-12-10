@@ -206,7 +206,7 @@ def merge(self):
 				t_movies[column] = eval("movie.%s"%column)
 
 			# replace number with new one
-			t_movies["number"] = gutils.find_next_available(self)
+			t_movies["number"] = gutils.find_next_available(self.db)
 
 			# don't restore volume/collection/tag/language/loan data (it's dangerous)
 			t_movies.pop('movie_id')

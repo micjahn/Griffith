@@ -36,7 +36,7 @@ def clear(self):
 def add_movie(self, details={}):
 	quick_filter.clear_filter(self)	 # FIXME: remove this line
 	if not details.has_key('number'):
-		details['number'] = gutils.find_next_available(self)
+		details['number'] = gutils.find_next_available(self.db)
 	set_details(self, details)
 	
 	self.active_plugin = ''
@@ -48,7 +48,7 @@ def add_movie(self, details={}):
 
 def edit_movie(self, details={}):
 	if not details.has_key('number'):
-		details['number'] = gutils.find_next_available(self)
+		details['number'] = gutils.find_next_available(self.db)
 	set_details(self, details)
 	self.widgets['add']['add_button'].hide()
 	self.widgets['add']['add_close_button'].hide()
@@ -80,7 +80,7 @@ def set_details(self, item=None):#{{{
 	if item.has_key('number') and item['number']:
 		w['number'].set_value(int(item['number']))
 	else:
-		w['number'].set_value(int(gutils.find_next_available(self)))
+		w['number'].set_value(int(gutils.find_next_available(self.db)))
 	if item.has_key('title') and item['title']:
 		w['title'].set_text(item['title'])
 	if item.has_key('year') and item['year']:
@@ -583,7 +583,7 @@ def clone_movie(self):
 	if movie is None:
 		return false
 
-	next_number = gutils.find_next_available(self)
+	next_number = gutils.find_next_available(self.db)
 	new_image = str(movie.image) + '_' + str(next_number)
 	
 	# integer problem workaround

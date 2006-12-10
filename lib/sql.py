@@ -95,7 +95,8 @@ class GriffithSQL:
 		pass
 	class MovieLang(object):
 		def __repr__(self):
-			return "MovieLang:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)" % (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id, self.subformat_id)
+			return "MovieLang:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)" % \
+				(self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id, self.subformat_id)
 	class MovieTag(object):
 		def __repr__(self):
 			return "MovieTag:%s-%s" % (self.movie_id, self.tag_id)
@@ -435,29 +436,13 @@ class GriffithSQL:
 		try:
 			v = self.Configuration.get_by(param='version')	# returns None if table exists && param ISNULL
 		except exceptions.SQLError:	# table doesn't exist
-			v = 1
+			v = 0
 
-		if v==1:
-			#self.Person.select().execute()
-			try:
-				# NOTE: "people" table is common for all versions
-				self.Person.select().execute()
-			except exceptions.SQLError:	# table doesn't exist
-				v=0
 		if v is not None and v>1:
 			v = v.value
 		if v<self.version:
 			from dbupgrade import upgrade_database
 			upgrade_database(self, v)
-		
-		# check if all tables exists
-#		for table in self.metadata.tables.keys():
-#		        try:
-#				self.metadata.tables[table].select().execute()
-#		        except:
-#				self.metadata.tables[table].create()
-#			self.metadata.commit()
-
 
 # for debugging (run: ipython sql.py)
 if __name__ == '__main__':
