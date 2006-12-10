@@ -53,15 +53,15 @@ def set_details(self, item=None):#{{{
 	else:
 		w['number'].set_text('')
 	if item.has_key('title') and item['title']:
-		w['title'].set_markup("<b><span size='large'>%s</span></b>" % str(item['title']))
+		w['title'].set_markup("<b><span size='large'>%s</span></b>" % gutils.html_encode(item['title']))
 	else:
 		w['title'].set_text('')
 	if item.has_key('o_title') and item['o_title']:
-		w['o_title'].set_markup("<span size='medium'><i>%s</i></span>" % str(item['o_title']).replace('&', '&amp;'))
+		w['o_title'].set_markup("<span size='medium'><i>%s</i></span>" % gutils.html_encode(item['o_title']))
 	else:
 		w['o_title'].set_text('')
 	if item.has_key('director') and item['director']:
-		w['director'].set_markup("<i>%s</i>" % str(item['director']))
+		w['director'].set_markup("<i>%s</i>" % gutils.html_encode(item['director']))
 	else:
 		w['director'].set_text('')
 	if item.has_key('plot') and item['plot']:
@@ -81,11 +81,11 @@ def set_details(self, item=None):#{{{
 	else:
 		w['cast'].set_text('')
 	if item.has_key('country') and item['country']:
-		w['country'].set_markup("<i>%s</i>" % str(item['country']))
+		w['country'].set_markup("<i>%s</i>" % gutils.html_encode(item['country']))
 	else:
 		w['country'].set_text('')
 	if item.has_key('genre') and item['genre']:
-		w['genre'].set_markup("<i>%s</i>" % str(item['genre']))
+		w['genre'].set_markup("<i>%s</i>" % gutils.html_encode(item['genre']))
 	else:
 		w['genre'].set_text('')
 	if item.has_key('cond') and item['cond']:
@@ -93,7 +93,7 @@ def set_details(self, item=None):#{{{
 	else:
 		w['condition'].set_markup("<i>%s</i>" % self._conditions[5]) # 5 == N/A
 	if item.has_key('region') and item['region']:
-		w['region'].set_markup("<i>%s</i>" % str(item['region']))
+		w['region'].set_markup("<i>%s</i>" % gutils.html_encode(item['region']))
 		self.widgets['tooltips'].set_tip(w['region'], self._regions[item['region']])
 	else:
 		w['region'].set_text('')
@@ -107,11 +107,11 @@ def set_details(self, item=None):#{{{
 	else:
 		w['color'].set_markup("<i>%s</i>" % self._colors[3]) # N/A
 	if item.has_key('classification') and item['classification']:
-		w['classification'].set_markup("<i>%s</i>" % str(item['classification']))
+		w['classification'].set_markup("<i>%s</i>" % gutils.html_encode(item['classification']))
 	else:
 		w['classification'].set_text('')
 	if item.has_key('studio') and item['studio']:
-		w['studio'].set_markup("<i>%s</i>" % str(item['studio']))
+		w['studio'].set_markup("<i>%s</i>" % gutils.html_encode(item['studio']))
 	else:
 		w['studio'].set_text('')
 	if item.has_key('o_site') and item['o_site']:
@@ -150,10 +150,10 @@ def set_details(self, item=None):#{{{
 			tmp += ' x ' + item['medium'].name
 		except:
 			pass
-	w['medium'].set_markup("<i>%s</i>" % tmp)
+	w['medium'].set_markup("<i>%s</i>" % gutils.html_encode(tmp))
 	if item.has_key('vcodec_id'):
 		try:
-			w['vcodec'].set_markup("<i>%s</i>" % str(item['vcodec'].name))
+			w['vcodec'].set_markup("<i>%s</i>" % gutils.html_encode(item['vcodec'].name))
 		except:
 			w['vcodec'].set_text('')
 	else:
@@ -242,7 +242,7 @@ def set_details(self, item=None):#{{{
 	# volumes/collections
 	if item.has_key('volume_id') and item['volume_id']>0:
 		if item.has_key('volume') and item['volume']:
-			w['volume'].set_markup("<b>%s</b>" % item['volume'].name)
+			w['volume'].set_markup("<b>%s</b>" % gutils.html_encode(item['volume'].name))
 			w['show_volume_button'].set_sensitive(True)
 		else:
 			w['volume'].set_text('')
@@ -252,7 +252,7 @@ def set_details(self, item=None):#{{{
 			w['show_volume_button'].set_sensitive(False)
 	if item.has_key('collection_id') and item['collection_id']>0:
 		if item.has_key('collection') and item['collection']:
-			w['collection'].set_markup("<b>%s</b>" % item['collection'].name)
+			w['collection'].set_markup("<b>%s</b>" % gutils.html_encode(item['collection'].name))
 			w['show_collection_button'].set_sensitive(True)
 		else:
 			w['collection'].set_text('')

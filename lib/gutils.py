@@ -48,10 +48,7 @@ def remove_accents(txt, encoding='iso-8859-1'):
 	return unicode(txt, encoding).translate(d)
 
 def is_number(x):
-	try:
-		return(x==x-0)
-	except:
-		return False
+	return isinstance(x, int)
 
 def find_next_available(db):
 	"""
@@ -489,3 +486,13 @@ def get_dependencies():
 		'debian'	: 'python-sqlite'
 	})
 	return depend, optional
+
+
+def html_encode(s):
+	if not isinstance(s, str):
+		s = str(s)
+	s = s.replace('&', '&amp;')
+	s = s.replace('<', '&lt;')
+	s = s.replace('>', '&gt;')
+	s = s.replace('=', '&quot;')
+	return s
