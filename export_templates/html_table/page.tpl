@@ -30,8 +30,8 @@
 			<th>@TITLE@</th></@seen><@loaned>
 			<th>@TITLE@</th></@loaned><@classification>
 			<th>@TITLE@</th></@classification><@studio>
-			<th>@TITLE@</th></@studio><@actors>
-			<th>@TITLE@</th></@actors><@plot>
+			<th>@TITLE@</th></@studio><@cast>
+			<th>@TITLE@</th></@cast><@plot>
 			<th>@TITLE@</th></@plot><@notes>
 			<th>@TITLE@</th></@notes>
 		</tr>
@@ -56,8 +56,8 @@
 		<td class="seen">@DATA@</td></@seen><@loaned>
 		<td class="loaned">@DATA@</td></@loaned><@classification>
 		<td class="classification">@DATA@</td></@classification><@studio>
-		<td class="studio">@DATA@</td></@studio><@actors>
-		<td class="actors">@DATA@</td></@actors><@plot>
+		<td class="studio">@DATA@</td></@studio><@cast>
+		<td class="cast">@DATA@</td></@cast><@plot>
 		<td class="plot">@DATA@</td></@plot><@notes>
 		<td class="notes">@DATA@</td></@notes>
 	</tr>

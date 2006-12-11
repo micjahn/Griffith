@@ -710,6 +710,8 @@ def media_combos(self):
 			self.widgets['preferences']['media'].set_active(int(pos))
 		else:
 			self.widgets['preferences']['media'].set_active(0)
+	else:
+		self.widgets['preferences']['media'].set_active(0)
 
 def vcodec_combos(self):
 	# clear data
@@ -733,6 +735,8 @@ def vcodec_combos(self):
 			self.widgets['preferences']['vcodec'].set_active(int(pos))
 		else:
 			self.widgets['preferences']['vcodec'].set_active(0)
+	else:
+		self.widgets['preferences']['vcodec'].set_active(0)
 
 def create_tag_vbox(self, widget, tab):
 	for i in widget.get_children():

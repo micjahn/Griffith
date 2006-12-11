@@ -41,9 +41,9 @@ td.plot {
 	white-space: pre-wrap;
 	overflow: auto;
 }
-td.plot, td.actors, td.notes { display: none; }
+td.plot, td.cast, td.notes { display: none; }
 
-tr:hover td.plot, tr:hover td.actors, tr:hover td.notes {
+tr:hover td.plot, tr:hover td.cast, tr:hover td.notes {
 	content: normal;
 	position: absolute; 
         width: 200px;
@@ -60,7 +60,7 @@ tr:hover td.plot, tr:hover td.actors, tr:hover td.notes {
 }
 
 tr:hover td.plot { left: 5px; }
-tr:hover td.actors { left: 207px; }
+tr:hover td.cast { left: 207px; }
 tr:hover td.notes { left: 409px; }
 
 a:link		{ color: #ecbe35; text-decoration: none; }

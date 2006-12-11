@@ -135,6 +135,8 @@ def restore(self):
 				return False
 
 		self.db.metadata.engine.dispose() # close DB
+		from sqlalchemy.orm import clear_mappers
+		clear_mappers()
 		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
 		from initialize	import dictionaries, people_treeview
 		dictionaries(self)

@@ -84,10 +84,17 @@ def upgrade_database(self, version):
 		self.Loan.mapper.mapped_table.create()
 		self.Lang.mapper.mapped_table.create()
 		self.Lang.mapper.mapped_table.insert().execute(name=_('English'))
+		#self.Lang.mapper.mapped_table.insert().execute(name=_('Brazilian Portuguese'))
+		#self.Lang.mapper.mapped_table.insert().execute(name=_('Czech'))
+		#self.Lang.mapper.mapped_table.insert().execute(name=_('French'))
+		#self.Lang.mapper.mapped_table.insert().execute(name=_('German'))
+		#self.Lang.mapper.mapped_table.insert().execute(name=_('Italian'))
+		#self.Lang.mapper.mapped_table.insert().execute(name=_('Portuguese'))
+		#self.Lang.mapper.mapped_table.insert().execute(name=_('Polish'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Spanish'))
 		self.MovieLang.mapper.mapped_table.create()
 		self.Tag.mapper.mapped_table.create()
 		self.Tag.mapper.mapped_table.insert().execute(name=_('Favourite'))
-		self.Tag.mapper.mapped_table.insert().execute(name=_('To buy'))
 		self.MovieTag.mapper.mapped_table.create()
 		#self.metadata.commit()
 		return True # upgrade process finished
@@ -156,6 +163,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET layers=NULL WHERE layers='' OR layers='4'")
 	old_cursor.execute("DELETE FROM volumes WHERE name = ''")
 	old_cursor.execute("DELETE FROM collections WHERE name = ''")
+	old_cursor.execute("DELETE FROM languages WHERE name = ''")
 
 	self.config['dbtype'] = 'sqlite'
 	self.config['default_db'] = 'griffith.db'

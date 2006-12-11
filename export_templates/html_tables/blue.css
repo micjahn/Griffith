@@ -34,7 +34,7 @@ td {
 	border-bottom: 1px dashed #1f3048;
 }
 
-tr.plot td, tr.actors td, tr.notes td {
+tr.plot td, tr.cast td, tr.notes td {
 	white-space: pre-wrap;
 	font-size: 0.9em;
 	overflow: auto;

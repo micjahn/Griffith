@@ -84,11 +84,11 @@
 	<tr class="studio">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@studio><@actors>
-	<tr class="actors">
+	</tr></@studio><@cast>
+	<tr class="cast">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@actors><@plot>
+	</tr></@cast><@plot>
 	<tr class="plot">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>

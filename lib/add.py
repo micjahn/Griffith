@@ -457,7 +457,7 @@ def populate_with_results(self):
 	self.movie.open_page(w['window'])
 	self.movie.parse_movie(self.config)
 	if self.config.get('s_o_title'):
-		w['o_title'].set_text(gutils.convert_entities(self.movie.original_title))
+		w['o_title'].set_text(gutils.convert_entities(self.movie.o_title))
 	if self.config.get('s_title'):
 		w['title'].set_text(gutils.convert_entities(self.movie.title))
 	if self.config.get('s_director'):
@@ -467,7 +467,7 @@ def populate_with_results(self):
 		plot_buffer.set_text(gutils.convert_entities(self.movie.plot))
 	if self.config.get('s_cast'):
 		cast_buffer = w['cast'].get_buffer()
-		cast_buffer.set_text(gutils.convert_entities(self.movie.with))
+		cast_buffer.set_text(gutils.convert_entities(self.movie.cast))
 	if self.config.get('s_country'):
 		w['country'].set_text(gutils.convert_entities(self.movie.country))
 	if self.config.get('s_genre'):
@@ -477,9 +477,9 @@ def populate_with_results(self):
 	if self.config.get('s_studio'):
 		w['studio'].set_text(gutils.convert_entities(self.movie.studio))
 	if self.config.get('s_o_site'):
-		w['o_site'].set_text(gutils.remove_accents(self.movie.site))
+		w['o_site'].set_text(gutils.remove_accents(self.movie.o_site))
 	if self.config.get('s_site'):
-		w['site'].set_text(gutils.remove_accents(self.movie.imdb))
+		w['site'].set_text(gutils.remove_accents(self.movie.site))
 	if self.config.get('s_trailer'):
 		w['trailer'].set_text(gutils.remove_accents(self.movie.trailer))
 	if self.config.get('s_year'):
@@ -488,18 +488,18 @@ def populate_with_results(self):
 		notes_buffer = w['notes'].get_buffer()
 		notes_buffer.set_text(gutils.convert_entities(self.movie.notes))
 	if self.config.get('s_runtime'):
-		w['runtime'].set_text(self.movie.running_time)
+		w['runtime'].set_text(self.movie.runtime)
 	if self.config.get('s_rating') and self.movie.rating:
 		w['rating_slider'].set_value(float(self.movie.rating))
 	# poster
 	if self.config.get('s_image'):
-		if self.movie.picture:
-			image = os.path.join(self.locations['temp'], "poster_%s.jpg" % self.movie.picture)
+		if self.movie.image:
+			image = os.path.join(self.locations['temp'], "poster_%s.jpg" % self.movie.image)
 			try:
 				handler = self.Image.set_from_file(image)
 				pixbuf = self.Image.get_pixbuf()
 				w['picture'].set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
-				w['image'].set_text(self.movie.picture)
+				w['image'].set_text(self.movie.image)
 			except:
 				image = os.path.join(self.locations['images'], 'default.png')
 				handler = self.Image.set_from_file(image)

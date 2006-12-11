@@ -46,9 +46,9 @@
 		\item {@TITLE@: @DATA@}
 </@classification><@studio>
 		\item {@TITLE@: @DATA@}
-</@studio><@actors>
+</@studio><@cast>
 		\item {@TITLE@: @DATA@}
-</@actors><@plot>
+</@cast><@plot>
 		\item {@TITLE@: @DATA@}
 </@plot><@notes>
 		\item {@TITLE@: @DATA@}

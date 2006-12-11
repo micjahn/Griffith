@@ -20,8 +20,8 @@
 		<seen>@DATA@</seen></@seen><@loaned>
 		<loaned>@DATA@</loaned></@loaned><@classification>
 		<classification>@DATA@</classification></@classification><@studio>
-		<studio>@DATA@</studio></@studio><@actors>
-		<actors>@DATA@</actors></@actors><@plot>
+		<studio>@DATA@</studio></@studio><@cast>
+		<cast>@DATA@</cast></@cast><@plot>
 		<plot>@DATA@</plot></@plot><@notes>
 		<notes>@DATA@</notes></@notes>
 	</movie>

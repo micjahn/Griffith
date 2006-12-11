@@ -170,6 +170,8 @@ def convert_entities(text):
 		return ctext
 
 def strip_tags(text):
+	if text is None:
+		return ''
 	finished = 0
 	while not finished:
 		finished = 1
