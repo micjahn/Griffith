@@ -91,7 +91,7 @@ def upgrade_database(self, version):
 		#self.Lang.mapper.mapped_table.insert().execute(name=_('Italian'))
 		#self.Lang.mapper.mapped_table.insert().execute(name=_('Portuguese'))
 		#self.Lang.mapper.mapped_table.insert().execute(name=_('Polish'))
-		self.Lang.mapper.mapped_table.insert().execute(name=_('Spanish'))
+		#self.Lang.mapper.mapped_table.insert().execute(name=_('Spanish'))
 		self.MovieLang.mapper.mapped_table.create()
 		self.Tag.mapper.mapped_table.create()
 		self.Tag.mapper.mapped_table.insert().execute(name=_('Favourite'))
