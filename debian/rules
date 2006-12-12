@@ -33,7 +33,6 @@ binary-indep: build install
 	dh_compress -i
 	dh_fixperms -i
 	dh_pycentral -i
-	dh_python -i /usr/share/griffith/lib/ /usr/share/griffith/plugins/export /usr/share/griffith/plugins/movie
 	dh_installdeb -i
 	dh_gencontrol -i
 	dh_md5sums -i

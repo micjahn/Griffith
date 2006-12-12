@@ -1,9 +1,9 @@
-griffith (0.6.2+svn-1) UNRELEASED; urgency=low
+griffith (0.8~pre1-1) UNRELEASED; urgency=low
 
-  * NOT RELEASED YET
+  * Added XS-Vcs-Svn field
   * Dependencies updated
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Tue, 15 Aug 2006 01:42:35 +0200
+ -- Piotr Ozarowski <ozarow@gmail.com>  Tue, 12 Dec 2006 22:04:25 +0100
 
 griffith (0.6.2-1) unstable; urgency=low
 

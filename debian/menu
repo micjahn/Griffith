@@ -2,7 +2,7 @@
 	section="Apps/Databases" \
 	hints="Gnome" \
 	title="Griffith" \
-	longtitle="A film collection manager" \
+	longtitle="Film collection manager" \
 	command="/usr/bin/griffith" \
 	icon="/usr/share/pixmaps/griffith.xpm"
 
