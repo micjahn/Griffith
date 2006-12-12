@@ -27,8 +27,8 @@ class GriffithDebug:
 	def __init__(self, mode=False):
 		self.debug_mode = mode
 
-	def set_debug(self):
-		self.debug_mode = True
+	def set_debug(self, mode=True):
+		self.debug_mode = mode
 
 	def show(self, txt):
 		if self.debug_mode:

@@ -84,13 +84,13 @@ def upgrade_database(self, version):
 		self.Loan.mapper.mapped_table.create()
 		self.Lang.mapper.mapped_table.create()
 		self.Lang.mapper.mapped_table.insert().execute(name=_('English'))
-		#self.Lang.mapper.mapped_table.insert().execute(name=_('Brazilian Portuguese'))
-		#self.Lang.mapper.mapped_table.insert().execute(name=_('Czech'))
-		#self.Lang.mapper.mapped_table.insert().execute(name=_('French'))
-		#self.Lang.mapper.mapped_table.insert().execute(name=_('German'))
-		#self.Lang.mapper.mapped_table.insert().execute(name=_('Italian'))
-		#self.Lang.mapper.mapped_table.insert().execute(name=_('Portuguese'))
-		#self.Lang.mapper.mapped_table.insert().execute(name=_('Polish'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Brazilian Portuguese'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Czech'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('French'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('German'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Italian'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Portuguese'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Polish'))
 		#self.Lang.mapper.mapped_table.insert().execute(name=_('Spanish'))
 		self.MovieLang.mapper.mapped_table.create()
 		self.Tag.mapper.mapped_table.create()
@@ -112,6 +112,7 @@ def upgrade_database(self, version):
 # ---------------------------------------------------
 
 def convert_from_old_db(self, source_file, destination_file):	#{{{
+	# TODO: table.insert().execute({'number':1, 'o_title':'test1'}, {'number':2, 'title: 'test2'}) is faster!
 	print 'Converting old database - it can take several minutes...'
 	from sqlalchemy.orm import clear_mappers
 	from sql import GriffithSQL

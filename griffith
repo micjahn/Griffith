@@ -49,13 +49,17 @@ class Griffith:
 		global debug
 		debug = self.debug = gdebug.GriffithDebug()
 		
+		gconsole.check_args(self)
 		initialize.locations(self)
+		
+		initialize.i18n(self, self.locations['i18n'])
+		self.posix = (os.name == 'posix')
 	
 		# Configuration
 		self.config = config.Config(file=os.path.join(self.locations['home'], 'griffith.conf'))
 		initialize.location_posters(self.locations, self.config)
 
-		# convert old database (remove this in version 0.8+1)
+		# convert old database
 		filename = os.path.join(self.locations['home'], self.config['default_db'])
 		if self.config['default_db'].lower().endswith('.gri'):
 			debug.show('SQLite2 database format detected. Converting...')
@@ -68,13 +72,25 @@ class Griffith:
 		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
 
 		# let's check any console arguments to parse
-		gconsole.check_args(self)
+		gconsole.check_args_with_db(self)
 
 		gtk.window_set_auto_startup_notification(True)
 		self.Image = gtk.Image()
 		self.filter_l = False
-		self.loans_treemodel = gtk.TreeStore(str, str, str)
-		self.initialize_griffith()
+		initialize.gui(self)
+		initialize.toolbar(self)
+		initialize.treeview(self)
+		initialize.loans_treeview(self)
+		initialize.lang_treeview(self)
+		initialize.dictionaries(self)
+		initialize.combos(self)
+		initialize.preferences(self)
+		initialize.movie_plugins(self)
+		initialize.export_plugins(self)
+		initialize.people_treeview(self)
+		initialize.web_results(self)
+		self.initialized = True
+
 		self.restore_state()
 		self.clear_details()
 		self.count_statusbar()
@@ -89,8 +105,8 @@ class Griffith:
 		self.widgets['add']['title'].set_completion(self.completion_t)
 		self.completion_t.set_model(self.treemodel)
 		self.completion_t.set_text_column(4)
-
-		initialize.initialize_gtkspell(self)
+		
+		initialize.gtkspell(self)
 
 		# add default folders to some select widgets
 		if self.windows:
@@ -104,21 +120,6 @@ class Griffith:
 		gtk.main()
 		gtk.gdk.threads_leave()
 		return 0
-
-	def initialize_griffith(self):
-		initialize.gui(self)
-		initialize.toolbar(self)
-		initialize.treeview(self)
-		initialize.loans_treeview(self)
-		initialize.lang_treeview(self)
-		initialize.dictionaries(self)
-		initialize.combos(self)
-		initialize.preferences(self)
-		initialize.movie_plugins(self)
-		initialize.export_plugins(self)
-		initialize.people_treeview(self)
-		initialize.web_results(self)
-		self.initialized = True
 
 	###########
 	# callbacks
@@ -279,7 +280,7 @@ class Griffith:
 			self.treeview_clicked()
 		else:
 			gutils.info(self, \
-				self._("You saw all movies in your collection!"), \
+				_("You saw all movies in your collection!"), \
 				self.widgets['window'])
 
 	# volumes/collections ----------------------------------------------{{{
@@ -682,7 +683,7 @@ class Griffith:
 
 	def restore(self, *args):
 		response = gutils.question(self, \
-			self._("""Are you sure you want to restore?
+			_("""Are you sure you want to restore?
 Your current movie collection will be replaced.
 You can't undo this operation."""), \
 			1, self.widgets['window'])
@@ -691,7 +692,7 @@ You can't undo this operation."""), \
 
 	def merge(self, *args):
 		response = gutils.question(self, \
-			self._("""Are you sure you want to mix?
+			_("""Are you sure you want to mix?
 Your current movie collection will be mixed with a backup.
 You can't undo this operation."""), \
 			1, self.widgets['window'])
@@ -770,9 +771,9 @@ You can't undo this operation."""), \
 		text = str(self.total)
 		loaned = self.db.Movie.count_by(loaned=True)
 		not_seen = self.db.Movie.count_by(seen=False)
-		self.update_statusbar(str(text) + self._(' movie(s) in collection. ')
-			+ str(loaned) + self._(' movie(s) loaned. ')
-			+ self._('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
+		self.update_statusbar(str(text) + _(' movie(s) in collection. ')
+			+ str(loaned) + _(' movie(s) loaned. ')
+			+ _('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
 		)
 
 	def update_statusbar(self, text):

@@ -84,12 +84,9 @@ def locations(self=None):
 	from tempfile import gettempdir
 	locations['temp'] = gettempdir()
 	
-	# force different home directory (last argument)
-	if len(sys.argv)>1:
-		last = sys.argv[len(sys.argv)-1]
-		if not last.startswith('-') and os.path.exists(last):
-			locations['home'] = sys.argv[-1]
-			del sys.argv[-1] # for gconsole.check_args
+	if self._tmp_home is not None: # see gconsole.check_args
+		locations['home'] = self._tmp_home
+		del self._tmp_home
 
 	try:
 		if not os.path.exists(locations['home']):
@@ -139,19 +136,12 @@ def gui(self):
 		self.windows = True
 	else:
 		self.windows = False
-	self.posix = (os.name == 'posix')
 	
 	self.griffith_dir = self.locations['home']	# deprecated
 	
 	if self.windows:
 		gtk.rc_parse('%s\\gtkrc' % self.locations['exec'])
 
-	# i18n
-	self._ = gettext.gettext
-	gettext.bindtextdomain('griffith', self.locations['i18n'])
-	gettext.textdomain('griffith')
-	gtk.glade.bindtextdomain('griffith', self.locations['i18n'])
-	gtk.glade.textdomain('griffith')
 
 	gf = os.path.join(self.locations['glade'], 'griffith.glade')
 	from widgets import define_widgets
@@ -159,6 +149,11 @@ def gui(self):
 
 	self.pdf_reader = self.config.get('pdf_reader')
 
+def i18n(self, location):
+	gettext.bindtextdomain('griffith', location)
+	gettext.textdomain('griffith')
+	gtk.glade.bindtextdomain('griffith', location)
+	gtk.glade.textdomain('griffith')
 
 def toolbar(self):
 	"""if toolbar is hide in config lets hide the widget"""
@@ -204,6 +199,7 @@ def treeview(self):
 	self.widgets['treeview'].show()
 
 def loans_treeview(self):
+	self.loans_treemodel = gtk.TreeStore(str, str, str) # move to self.widgets
 	self.widgets['movie']['loan_history'].set_model(self.loans_treemodel)
 	self.widgets['movie']['loan_history'].set_headers_visible(True)
 	# loan date
@@ -531,7 +527,7 @@ def web_results(self):
 	self.column2.set_sort_column_id(1)
 	self.widgets['results']['treeview'].append_column(self.column2)
 
-def initialize_gtkspell(self):
+def gtkspell(self):
 	global spell_support
 	spell_error = False
 	if self.posix and spell_support:
