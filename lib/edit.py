@@ -95,9 +95,19 @@ def fetch_bigger_poster(self):
 	current_poster = movie.image
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 
+	locale = self.config.get('amazon_locale', 0)
+	if locale == 1:
+		locale = 'uk'
+	elif locale == 2:
+		locale = 'de'
+	elif locale == 3:
+		locale = 'uk'
+	else:
+		locale = None
+
 	try:
 		result = amazon.searchByKeyword(self.widgets['movie']['o_title'].get_text(), \
-						type="lite", product_line="dvd", locale=self.config.get('amazon_locale'))
+						type="lite", product_line="dvd", locale=locale)
 		self.debug.show("Posters found on amazon: %s posters" % len(result))
 	except:
 		gutils.warning(self, _("No posters found for this movie."))

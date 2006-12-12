@@ -199,6 +199,7 @@ def define_widgets(self, gladefile):
 		'vcodec_name':		get('vcodec_name_combo'),
 		'sortby':		get('p_sortby'),
 		'sortby_reverse':	get('p_sortby_reverse'),
+		'amazon_locale':	get('cb_amazon_locale'),
 	}
 	self.widgets['preferences']['treeview'].connect('button_press_event', self.on_p_tree_button_press_event)
 	self.widgets['preferences']['window'].connect('delete_event', self.on_delete_event_p)

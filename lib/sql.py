@@ -40,7 +40,11 @@ class DBTable(object):#{{{
 			return False
 		debug.show("%s: adding '%s' to database..." % (self.__class__.__name__, self.name))
 		self.save()
-		self.flush()
+		try:
+			self.flush()
+		except exceptions.SQLError, e:
+			debug.show("%s: add_to_db: %s" % (self.__class__.__name__, e))
+			return False
 		self.refresh()
 		return True
 	def remove_from_db(self):
@@ -58,7 +62,11 @@ class DBTable(object):#{{{
 			return False
 		debug.show("%s: removing '%s' (id=%s) from database..."%(self.__class__.__name__, self.name, dbtable_id))
 		self.delete()
-		self.flush()
+		try:
+			self.flush()
+		except exceptions.SQLError, e:
+			debug.show("%s: remove_from_db: %s" % (self.__class__.__name__, e))
+			return False
 		#self.refresh()
 		return True
 	def update_in_db(self):
@@ -73,7 +81,11 @@ class DBTable(object):#{{{
 			gutils.warning(self, msg=_("This name is already in use!"))
 			return False
 		self.update()
-		self.flush()
+		try:
+			self.flush()
+		except exceptions.SQLError, e:
+			debug.show("%s: update_in_db: %s" % (self.__class__.__name__, e))
+			return False
 		self.refresh()
 		return True#}}}
 
@@ -170,8 +182,12 @@ class GriffithSQL:
 				self.date = func.current_date()	# update loan date
 			self.return_date is None
 			self.save_or_update()
-			self.mapper.get_session().flush()
-			self.refresh()
+			try:
+				self.mapper.get_session().flush()
+				self.refresh()
+			except exceptions.SQLError, e:
+				debug.show("set_loaned: %s" % e)
+				return False
 			return True
 		def set_returned(self):
 			"""
@@ -192,16 +208,17 @@ class GriffithSQL:
 			if self.return_date is None:
 				self.return_date = func.current_date()
 			self.save_or_update()
-			self.mapper.get_session().flush()
-			self.refresh()
+			try:
+				self.mapper.get_session().flush()
+				self.refresh()
+			except exceptions.SQLError, e:
+				debug.show("set_returned: %s" % e)
+				return False
 			return True
 			#}}}
 	class Movie(object):#{{{
 		def __repr__(self):
 			return "Movie:%s (number=%s)" % (self.movie_id, self.number)
-		def __init__(self):
-			# self.number = find_next_available() # TODO
-			pass
 		def __setitem__(self, key, value):
 			setattr(self,key,value)
 		def __getitem__(self, key):
@@ -216,7 +233,11 @@ class GriffithSQL:
 				debug.show("You can't remove loaned movie!")
 				return False
 			self.delete()
-			self.flush()
+			try:
+				self.flush()
+			except exceptions.SQLError, e:
+				debug.show("remove_from_db: %s" % e)
+				return False
 			return True
 		def update_in_db(self, t_movies=None):
 			if self.movie_id < 1:
@@ -248,7 +269,13 @@ class GriffithSQL:
 					for tag in t_tags.keys():
 						self.tags.append(GriffithSQL.Tag(tag_id=tag))
 			self.update()
-			self.flush()
+			try:
+				self.flush()
+			except exceptions.SQLError, e:
+				debug.show("add_to_db: %s" % e)
+				if e.args[0][:16] == '(IntegrityError)':
+					gutils.error(None, _('Column "%s" is not unique') % _('Number'))
+				return False
 			self.refresh()
 			return True
 		#}}}

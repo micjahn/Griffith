@@ -144,6 +144,8 @@ def show_preferences(self):
 
 	w['spell_lang'].set_text(str(self.config.get('spell_lang', 'en')))
 
+	w['amazon_locale'].set_active(self.config.get('amazon_locale', 0))
+
 	w['window'].show()
 
 def save_preferences(self):
@@ -272,6 +274,8 @@ def save_preferences(self):
 
 	c['spell_lang'] = w['spell_lang'].get_text()
 	c['pdf_reader'] = save_reader
+
+	c['amazon_locale'] = w['amazon_locale'].get_active()
 	
 	if spell_support:
 		if c.get('use_gtkspell', 'False') == 'False' and not was_false:
