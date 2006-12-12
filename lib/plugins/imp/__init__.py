@@ -52,6 +52,7 @@ class ImportPlugin:
 		self.lang_types	= parent._lang_types
 		self.layers	= parent._layers
 		self.regions	= parent._regions
+		self.widgets	= parent.widgets['import']
 		self.fields_to_import = fields_to_import
 
 	def initialize(self, filename):
