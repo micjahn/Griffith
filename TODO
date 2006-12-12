@@ -1,20 +1,18 @@
 next version
 ============
-* Possibility to search different fields from different sites (plugins)
 * Advanced sort/filter criteria
 * Extended export templates (probably using jinja template engine)
-* Exporting data to Excel files (.xls) (pyExcelerator)
+* Exporting data to Excel files (.xls) (pyExcelerator?)
 
 near future
 ===========
 * Nice PDF tabular report
 * Customising main list view
-* Detecting audio/video parameters from file (mmpython will be used)
-* Importing data from CSV / Excel
+* Detecting audio/video parameters from file (mmpython?)
 
 far future
 ==========
 * Export to SQL, text
 * More powerful command line interface
-* Curses version (text mode) (urwid may be handy)
+* Curses version (text mode) (urwid?)
 * Probably much more than this :-D

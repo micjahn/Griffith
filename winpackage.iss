@@ -3,8 +3,8 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.6.1
-AppPublisher=Vasco Nunes
+AppVerName=Griffith 0.8
+AppPublisher=Vasco Nunes, Piotr Ozarowski
 AppPublisherURL=http://griffith.vasconunes.net/
 AppSupportURL=http://griffith.vasconunes.net/
 AppUpdatesURL=http://griffith.vasconunes.net/

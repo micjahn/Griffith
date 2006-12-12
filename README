@@ -1,10 +1,11 @@
-Griffith 0.6.2 README
-=====================
+Griffith 0.8 README
+===================
 
-This document was last updated on Tue Aug 01 2006.
+This document was last updated on Tue Dev 12 2006.
 Please see the file COPYING for licensing and warranty information.
 The latest version of this software is available at the following URL:
 http://griffith.vasconunes.net/
+
 
 Table of Contents
 =================
@@ -15,34 +16,47 @@ Table of Contents
 * TODO list
 * About the Authors
 
+
 Introduction
 ============
 
 Griffith is a film collection manager, released under the GNU/GPL License.
 
+
 System Requirements
 ===================
 
-  Name            Min Version        URL
-  ----            -----------        ---
-  Python          2.3 or higher
-  GTK+            tested on 2.6.4
-  pyGTK           tested on 2.6.1
-  Python-glade2
-  Python-SQLite   1.x
-  Python-Imaging
-  Python-xml
-  ReportLab       1.19 or higher     http://www.reportlab.org
+  Name			Minimum version		URL
+  ----			---------------		---
+  * Python		2.3 or higher		http://www.python.org/
+  * GTK+		tested on 2.6.4		http://www.gtk.org/
+  * PyGTK (with glade2)	tested on 2.6.1		http://www.pygtk.org/
+  * SQLAlchemy		0.3.0			http://www.sqlalchemy.org/
+  * pysqlite2		2			http://initd.org/tracker/pysqlite
+  * PIL						http://www.pythonware.com/products/pil/
+  * PyXML					http://pyxml.sf.net/
+  * ReportLab		1.19			http://www.reportlab.org
 	
   Other dependencies (optional):
-  - Gtkspell (included in python-gnome-extras)
-  - A PDF reader for covers and reports support
+  ------------------------------
+  PostgreSQL support:
+  * Psycopg2		2			http://initd.org/tracker/psycopg/wiki/PsycopgTwo
+  MySQL support:
+  * MySQLDb					http://sourceforge.net/projects/mysql-python
+  Upgrading from Griffith <=0.6.2:
+  * sqlite		1.0 (and not 2.x)	http://initd.org/tracker/pysqlite
+  Gtkspell:
+  * python-gnome-extras
+  Covers and reports support:
+  * PDF reader
   
-Windows installer includes all the needed requirements. A gtk+ runtime is not necessary when using this installer.
+Windows installer includes all the needed requirements.
+A GTK+ runtime is not necessary when using this installer.
 
 
 External databases
 ==================
+
 You need to prepare a new database and a new user by yourself
 
   PostgreSQL
@@ -74,10 +88,12 @@ If you want to help or report any bugs founded please visit:
 or
   http://developer.berlios.de/bugs/?group_id=4891
 
+
 TODO
 ====
 
 See TODO file
+
 
 About the Authors
 =================

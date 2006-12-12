@@ -1,15 +1,17 @@
-Griffith <next_version>
-=======================
+Griffith 0.8 (NOT RELEASED YET)
+===============================
 * SQLAlchemy transition, i.e.
   + MySQL support added
   + PostgreSQL support added
   + SQLite3 transition on Linux (pysqlite2 is now required)
+* First import plugin (CSV)
 * New data:
   + video codec
   + audio codec
   + audio channels
   + subtitle format
-* Some GUI changes, i.e.
+* GUI changes:
+  + editing movie details moved to "Add" window
   + languages data look changed
   + draggable toolbar
   + new "next" / "previous" buttons
@@ -19,7 +21,9 @@ Griffith <next_version>
 * HTML export plugin changes:
   + Fixed problem with posters conversion on Windows
   + New green styles in exported HTML tables
-
+* Fetch details from different movie plugins
+* Configurable main list's default sorting criteria
+* Lots of bugs fixed (some new added ;)
 
 Griffith 0.6.2
 ==============

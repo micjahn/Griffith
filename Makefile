@@ -1,8 +1,7 @@
 # Griffith makefile
-
-# (c) 2005 Vasco Nunes
 #
-
+# (c) 2005-2006 Vasco Nunes, Piotr Ozarowski
+#
 # $Id$
 
 PACKAGE=griffith
