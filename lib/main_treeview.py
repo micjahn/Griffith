@@ -204,6 +204,9 @@ def set_details(self, item=None):#{{{
 		self.widgets['popups']['loan'].set_sensitive(False)
 		self.widgets['popups']['email'].set_sensitive(True)
 		self.widgets['popups']['return'].set_sensitive(True)
+		self.widgets['menu']['loan'].set_sensitive(False)
+		self.widgets['menu']['email'].set_sensitive(True)
+		self.widgets['menu']['return'].set_sensitive(True)
 		w['loan_button'].set_sensitive(False)
 		w['email_reminder_button'].set_sensitive(True)
 		w['return_button'].set_sensitive(True)
@@ -219,6 +222,9 @@ def set_details(self, item=None):#{{{
 		self.widgets['popups']['loan'].set_sensitive(True)
 		self.widgets['popups']['email'].set_sensitive(False)
 		self.widgets['popups']['return'].set_sensitive(False)
+		self.widgets['menu']['loan'].set_sensitive(True)
+		self.widgets['menu']['email'].set_sensitive(False)
+		self.widgets['menu']['return'].set_sensitive(False)
 		w['return_button'].set_sensitive(False)
 		w['email_reminder_button'].set_sensitive(False)
 		w['loan_button'].set_sensitive(True)
@@ -305,7 +311,7 @@ def set_details(self, item=None):#{{{
 	#}}}
 
 def populate(self, movies=None, where=None):#{{{
-	from sqlalchemy import Select
+	from sqlalchemy import Select, desc
 	
 	if movies is None:
 		movies = Select([self.db.Movie.c.number,
@@ -328,9 +334,13 @@ def populate(self, movies=None, where=None):#{{{
 		
 		# select sort column
 		sort_column_name = self.config.get('sortby', 'number')
+		sort_reverse = self.config.get('sortby_reverse', False)
 		for i in sort_column_name.split(','):
 			if self.db.Movie.c.has_key(i):
-				movies.order_by_clause.append(self.db.Movie.c[i])
+				if sort_reverse:
+					movies.order_by_clause.append(desc(self.db.Movie.c[i]))
+				else:
+					movies.order_by_clause.append(self.db.Movie.c[i])
 		
 		# additional whereclause (volume_id, collection_id, ...)
 		if where:

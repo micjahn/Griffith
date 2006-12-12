@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2006 Vasco Nunes, Piotr OÅ¼arowski
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr O¿arowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -165,8 +165,9 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("DELETE FROM collections WHERE name = ''")
 	old_cursor.execute("DELETE FROM languages WHERE name = ''")
 
-	self.config['dbtype'] = 'sqlite'
+	self.config['db_type'] = 'sqlite'
 	self.config['default_db'] = 'griffith.db'
+	self.config['posters'] = 'posters'
 	new_db = GriffithSQL(self.config, self.debug, self.locations['home'])
 
 	# collections

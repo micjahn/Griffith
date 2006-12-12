@@ -105,6 +105,7 @@ def show_preferences(self):
 	if self.config.get('sortby'):
 		tmp = self.sort_criteria.index(self.config.get('sortby'))
 		w['sortby'].set_active(tmp)
+	w['sortby_reverse'].set_active(bool(self.config.get('sortby_reverse', False)))
 	
 	plugins = gutils.read_plugins('PluginMovie', \
 		self.locations['movie_plugins'])
@@ -189,6 +190,7 @@ def save_preferences(self):
 			c['sortby'] = field
 	else:
 		c['sortby'] = 'number'
+	c['sortby_reverse'] = w['sortby_reverse'].get_active()
 	
 
 	# pdf font

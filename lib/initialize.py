@@ -119,7 +119,7 @@ def locations(self=None):
 def location_posters(locations, config):
 	if config['posters'] is not None:
 		locations['posters']  = os.path.join(locations['home'], config['posters'])
-	if config['db_type'] == 'sqlite':
+	elif config['db_type'] == 'sqlite':
 		config['posters'] = 'posters'
 		locations['posters'] = os.path.join(locations['home'], 'posters')
 		config.save()

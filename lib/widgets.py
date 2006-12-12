@@ -264,6 +264,9 @@ def define_widgets(self, gladefile):
 		'loaned_movies':get('loaned_movies'),
 		'all_movies':	get('all_movies'),
 		'delete_poster': get('t_delete_poster'),
+		'loan':		get('loan1'),
+		'email':	get('return1'),
+		'return':	get('e-mail_reminder1'),
 	}#}}}
 	
 	self.widgets['popups'] = {#{{{
