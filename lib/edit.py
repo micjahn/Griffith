@@ -38,21 +38,50 @@ def change_poster(self):
 	changes movie poster image to a custom one
 	showing a file chooser dialog to select it
 	"""
-	import shutil
 	picture = self.widgets['movie']['picture']
 	number = self.get_maintree_selection()[0]
 	filename = gutils.file_chooser(_("Select image"), action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK), name="", folder=self.locations['desktop'], picture=True)
 	if filename and filename[0]:
-		try:
-			picture.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(filename[0]).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
-			file_to_copy = os.path.basename(filename[0])
-			shutil.copyfile(filename[0], os.path.join(self.locations['posters'], '%s.jpg' % os.path.splitext(file_to_copy)[0]))
-			gutils.make_thumbnail(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
-			gutils.make_medium_image(self, '%s.jpg' % os.path.splitext(file_to_copy)[0])
-			update.update_image(self, os.path.splitext(file_to_copy)[0], number)
-			update_tree_thumbnail(self, os.path.join(self.locations['posters'], 't_%s.jpg' % os.path.splitext(file_to_copy)[0]))
-		except:
-			gutils.error(self, _("Image not valid."), self.widgets['window'])
+		filename = filename[0]
+		update_image(self, number, filename)
+
+def update_image(self, number, file_path):
+	import shutil
+	try:
+		self.widgets['movie']['picture'].set_from_pixbuf(\
+				gtk.gdk.pixbuf_new_from_file(file_path).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+	except Exception, e:
+		self.debug.show(str(e))
+		gutils.error(self, _("Image not valid."), self.widgets['window'])
+	
+	filename = os.path.basename(file_path)
+	new_image = os.path.splitext(filename)[0]
+	if self.db.Movie.get_by(image=new_image) is not None:
+		i = 0
+		while True:
+			i += 1
+			if self.db.Movie.get_by(image="%s_%s" % (new_image, i)) is None:
+				new_image = "%s_%s" % (new_image, i)
+				break
+	
+	movie = self.db.Movie.get_by(number=number)
+	old_image = os.path.join(self.locations['posters'], "%s.jpg" % movie.image)
+	delete.delete_poster(self, old_image)
+	movie.image = new_image
+	movie.update()
+	movie.flush()
+
+	shutil.copyfile(file_path, os.path.join(self.locations['posters'], "%s.jpg" % new_image))
+	
+	gutils.make_thumbnail(self, '%s.jpg' % new_image)
+	gutils.make_medium_image(self, '%s.jpg' % new_image)
+	update_tree_thumbnail(self, os.path.join(self.locations['posters'], 't_%s.jpg' % new_image))
+			
+	self.widgets['movie']['picture_button'].set_sensitive(True)
+	self.widgets['add']['delete_poster'].set_sensitive(True)
+	self.widgets['menu']['delete_poster'].set_sensitive(True)
+	
+	self.update_statusbar(_("Image has been updated"))
 
 def delete_poster(self):
 	movie = self.db.Movie.get_by(movie_id=self._movie_id)
@@ -61,7 +90,7 @@ def delete_poster(self):
 		return False
 	response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.widgets['window'])
 	if response==-8:
-		image_path = self.locations['images'] + "/default.png"
+		image_path = os.path.join(self.locations['images'], 'default.png')
 		handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
 		gutils.garbage(handler)
 		update_tree_thumbnail(self, os.path.join(self.locations['images'], 'default_thumbnail.png'))
@@ -86,7 +115,6 @@ def update_tree_thumbnail(self, t_image_path):
 	self.Image.set_from_file(t_image_path)
 	pixbuf = self.Image.get_pixbuf()
 	self.treemodel.set_value(tmp_iter, 1, pixbuf)
-	gutils.garbage(pixbuf)
 
 def fetch_bigger_poster(self):
 	match = 0
@@ -189,16 +217,8 @@ def get_poster(self, f, result, current_poster):
 				_("Do you want to use this poster instead?"), \
 				1, self.widgets['window'])
 		if response == -8:
-			self.debug.show("Using new fetched poster, updating and removing old one from disk.")
-			update.update_image(self, os.path.basename(file_to_copy), self.widgets['movie']['number'].get_text())
-			gutils.make_thumbnail(self, '%s' % os.path.basename(file_to_copy))
-			gutils.make_medium_image(self, '%s' % os.path.basename(file_to_copy))
-			update_tree_thumbnail(self, os.path.join(self.locations['posters'], 't_%s' % os.path.basename(file_to_copy)))
-			self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(os.path.join(self.locations['posters'], "m_%s" % os.path.basename(file_to_copy))))
-			delete.delete_poster(self, current_poster)
-			self.widgets['add']['delete_poster'].set_sensitive(True)
-			self.widgets['menu']['delete_poster'].set_sensitive(True)
-
+			self.debug.show("Using fetched poster, updating and removing old one from disk.")
+			update_image(self, self.widgets['movie']['number'].get_text(), file_to_copy)
 		else:
 			self.debug.show("Reverting to previous poster and deleting new one from disk.")
 			try:

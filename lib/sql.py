@@ -476,13 +476,20 @@ if __name__ == '__main__':
 	import sys
 	import config, gdebug
 	from initialize import locations, location_posters
-	locations = locations()
-	conf = config.Config(os.path.join(locations['home'], 'griffith.conf'))
-	location_posters(locations, conf)
-	db = GriffithSQL(conf, gdebug.GriffithDebug(True), locations['home'])
-	if len(sys.argv)>1:
-		if sys.argv[1] == 'echo':
-			db.metadata.engine.echo = True # print SQL queries
+	from gconsole import check_args, check_args_with_db
+	
+	class Tmp:
+		def __init__(self):
+			self.debug = gdebug.GriffithDebug(True)
+	tmp = Tmp()
+	check_args(tmp)
+	locations(tmp)
+	tmp.config = config.Config(os.path.join(tmp.locations['home'], 'griffith.conf'))
+	location_posters(tmp.locations, tmp.config)
+	
+	db = GriffithSQL(tmp.config, tmp.debug, tmp.locations['home'])
+	check_args_with_db(tmp)
+	
 	print '\nGriffithSQL test drive\n======================'
 	print "Engine: %s" % (db.metadata.engine.name)
 	print 'Database object name: db\n'

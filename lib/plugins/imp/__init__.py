@@ -55,7 +55,7 @@ class ImportPlugin:
 		self.widgets	= parent.widgets['import']
 		self.fields_to_import = fields_to_import
 
-	def initialize(self, filename):
+	def initialize(self):
 		"""
 		Initializes plugin (get all parameters from user, etc.)
 		"""
@@ -65,8 +65,6 @@ class ImportPlugin:
 	def set_source(self, name):
 		"""
 		Prepare source (open file, etc.)
-
-		this function will prepare self.data for processing
 		"""
 
 	def count_movies(self):
@@ -75,9 +73,9 @@ class ImportPlugin:
 		"""
 		pass
 
-	def get_movie_details(self, item):
+	def get_movie_details(self):
 		"""
-		Returns dictionary with movie details (process data item)
+		Returns dictionary with movie details
 		"""
 		pass
 
@@ -85,6 +83,7 @@ class ImportPlugin:
 		"""
 		Import movies
 		"""
+		from add import validate_details
 		
 		if self.edit is True:
 			from add import edit_movie
@@ -95,8 +94,11 @@ class ImportPlugin:
 			self.debug.show("Can't read data from file %s" % name)
 			return False
 		
-		for item in self.data:
-			details = self.get_movie_details(item)
+		while True:
+			details = self.get_movie_details()
+			if details is None:
+				break
+			validate_details(details, self.fields_to_import)
 			if details is None:
 				continue
 			if (details.has_key('o_title') and details['o_title']) or (details.has_key('title') and details['title']):
@@ -113,14 +115,16 @@ class ImportPlugin:
 				if details.has_key('number') and 'number' in self.fields_to_import:
 					details['number'] = None
 				if self.edit is True:
-					edit_movie(self.parent, details)	# FIXME: wait until save or cancel button pressed
+					response = edit_movie(self.parent, details)	# FIXME: wait until save or cancel button pressed
+					if response == 1:
+						self.imported += 1
 				else:
 					if not details.has_key('number') or (details.has_key('number') and details['number'] is None):
 						details['number'] = find_next_available(self.db)
-					movie = self.db.Movie()
-					movie.add_to_db(details)
-					#self.db.Movie.mapper.mapped_table.insert().execute(details) # faster, but details are not checked
-				self.imported += 1 # FIXME: what about cancel button in edit window
+					#movie = self.db.Movie()
+					#movie.add_to_db(details)
+					self.db.Movie.mapper.mapped_table.insert().execute(details)
+					self.imported += 1
 			else:
 				self.debug.show('skipping movie without title or original title')
 		return True

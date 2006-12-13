@@ -11,7 +11,7 @@ __revision__ = '$Id$'
 ###########################################################################
 
 from gettext import gettext as _
-from plugins.imp import ImportPlugin
+from plugins.imp import ImportPlugin as IP
 import gtk
 import gtk.glade
 import os
@@ -39,7 +39,7 @@ def letters_only(s):
 		s = s
 	return s
 	
-class ImportPlugin(ImportPlugin):
+class ImportPlugin(IP):
 	description	= _("Full CSV list import plugin")
 	author		= "Jessica Katharina Parth"
 	email		= "Jessica.K.P@women-at-work.org"
@@ -49,6 +49,8 @@ class ImportPlugin(ImportPlugin):
 			'application/excel', 'application/vnd.ms-excel', 'application/vnd.msexcel')
 
 	def initialize(self):
+		if not IP.initialize(self):
+			return False
 		# glade
 		gf = os.path.join(self.locations['glade'], 'importcsv.glade')
 		# try to open the glade file
@@ -173,11 +175,6 @@ class ImportPlugin(ImportPlugin):
 			# add information for the import tabelle
 			self.ls_assigned.set_value(iterator, 1, self.selected_griffith )
 			self.ls_assigned.set_value(iterator, 2, str(self.csv_header.index(self.selected_csv)) )
-			# FIXME delete obsolete code after verifying the .index makes a difference between title and o_title
-#			for i in range(len(self.csv_header)):
-#				if self.selected_csv == self.csv_header[i]:
-#					self.ls_assigned.set_value(iterator, 2, "%s" % str(i) )
-#					break
 			self.ls_griffith.remove(self.iter_griffith)
 			self.selected_griffith = None
 			
@@ -203,14 +200,12 @@ class ImportPlugin(ImportPlugin):
 			self.iter_griffith = self.ls_griffith.get_iter(path)
 		
 			if self.iter_griffith:
-#				self.selected_griffith = ( path[0], self.ls_griffith.get_value(iter,0) )
 				self.selected_griffith = self.ls_griffith.get_value(self.iter_griffith,0)
 		
 		if treeview == self.tv_csv:
 			iter = self.ls_csv.get_iter(path)
 		
 			if iter:
-#				self.selected_csv = ( path[0], self.ls_csv.get_value(iter,0) )
 				self.selected_csv = self.ls_csv.get_value(iter,0)
 				
 		# enable add button if both lists have a selected item
@@ -311,85 +306,52 @@ class ImportPlugin(ImportPlugin):
 			return False
 
 	def count_movies(self):
-		return len(open(self.__source_name).readlines()) # FIXME
+		i = 0
+		try:
+			data = open(self.__source_name)
+			while data.next():
+				i += 1
+		except:
+			return i
 	
-	def get_movie_details(self, item):
-		from add import validate_details
-	
+	def get_movie_details(self):
+		try:
+			item = self.data.next()
+		except:
+			return None
+		if item is None:
+			return None
+		import copy
 		# start with the right line
 		self.current_csv_row += 1
 		if (self.current_csv_row ) < self.start_row:
 			return None
 		
 		# assign the keys
-#		t_movies = self.import_table
+		t_movies = copy.deepcopy(self.import_table)
 
-		# default values
-		# only necessary till pox accepts missing fields
-		t_movies = {
-			'classification' : None,
-			'color'          : None,
-			'cond'           : None,
-			'country'        : None,
-			'director'       : None,
-			'genre'          : None,
-			'image'          : None,
-			'layers'         : None,
-			'media_num'      : 0,
-			'number'         : None,
-			'o_site'         : None,
-			'o_title'        : None,
-			'rating'         : None,
-			'region'         : None,
-			'runtime'        : None,
-			'seen'           : None,
-			'site'           : None,
-			'studio'         : None,
-			'title'          : None,
-			'trailer'        : None,
-			'year'           : None,
-			'collection_id'  : None,
-			'volume_id'      : None,
-			'cast'           : None,
-			'notes'          : None,
-			'plot'           : None,
-		}
-				
 		# values are overwritten here with the imports
-		for fields in self.import_table:
+		for field in self.import_table:
 			try:
 				# some minor fixes to the import so it fits the griffith variable types
-				if fields == 'year' or fields == 'runtime':
-					t_movies[fields] = digits_only( item[ int(self.import_table[fields]) ] )
-					continue
-				if fields == 'media_num':
-					t_movies[fields] = int( digits_only( item[ int(self.import_table[fields]) ] ) )
-					continue
-				if fields == 'seen':
-					t_movies[fields] = bool( item[ int(self.import_table[fields]) ] )
-					continue
-				if fields == 'country':
-					t_movies[fields] = letters_only( item[ int(self.import_table[fields]) ] )
-					continue
-				if fields == 'cast':
+				if field == 'year' or field == 'runtime' or field == 'media_num':
+					t_movies[field] = int( digits_only( item[ int(self.import_table[field]) ] ) )
+				elif field == 'seen':
+					t_movies[field] = bool( item[ int(self.import_table[field]) ] )
+				elif field == 'country':
+					t_movies[field] = letters_only( item[ int(self.import_table[field]) ] )
+				elif field == 'cast':
 					try:
-						if item[ int(self.import_table[fields]) ].index(", ") != -1:
-							t_movies[fields] = string.replace( item[ int(self.import_table[fields]) ], ", ", "\n" )
+						if item[ int(self.import_table[field]) ].index(", ") != -1:
+							t_movies[field] = string.replace( item[ int(self.import_table[field]) ], ", ", "\n" )
 					except:
-						t_movies[fields] = string.replace( item[ int(self.import_table[fields]) ], ",", "\n" )
-					continue
-				# 1:1 import
-				t_movies[fields] = item[ int(self.import_table[fields]) ]
+						t_movies[field] = string.replace( item[ int(self.import_table[field]) ], ",", "\n" )
+				else:
+					# 1:1 import
+					t_movies[field] = item[ int(self.import_table[field]) ]
 			except:
 				# error field can't be imported
-				t_movies[fields] = None
+				t_movies.pop(field)
 		
-		validate_details(t_movies, self.fields_to_import)
-		
-		# update progress bar
-		# FIXME
-		self.status.set_text( 'Row %s of %s lines imported' % (self.current_csv_row,self.lines) )
-		self.bar1.set_fraction( self.current_csv_row / self.lines )
-
 		return t_movies
 	

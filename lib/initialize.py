@@ -36,14 +36,7 @@ try:
 except:
 	spell_support = 0
 
-def locations(self=None):
-	if self:
-		debug = self.debug
-	else:
-		class Debug:
-			def show(self, text):
-				print text
-		debug = Debug()
+def locations(self):
 	locations = {}
 	locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
 	locations['lib']  = os.path.dirname(__file__)
@@ -90,17 +83,17 @@ def locations(self=None):
 
 	try:
 		if not os.path.exists(locations['home']):
-			debug.show('Creating %s' % locations['home'])
+			self.debug.show('Creating %s' % locations['home'])
 			os.makedirs(locations['home'])
 		else:
-			debug.show("Using Griffith directory: %s" % locations['home'])
+			self.debug.show("Using Griffith directory: %s" % locations['home'])
 	except OSError:
-		debug.show('Unable to create griffith directory.')
+		self.debug.show('Unable to create griffith directory.')
 		raise
 		sys.exit()
 
 	if not os.access(locations['home'], os.W_OK):
-		debug.show('Cannot write to griffith directory, %s' % locations['home'])
+		self.debug.show('Cannot write to griffith directory, %s' % locations['home'])
 		sys.exit()
 
 	# includes plugins in system path for easier importing
@@ -108,10 +101,8 @@ def locations(self=None):
 	sys.path.append(locations['movie_plugins'])
 	sys.path.append(locations['export_plugins'])
 	
-	if self:
-		self.locations = locations
-	else:
-		return locations
+	self.locations = locations
+	return locations
 
 def location_posters(locations, config):
 	if config['posters'] is not None:

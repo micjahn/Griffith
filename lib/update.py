@@ -25,14 +25,6 @@ from gettext import gettext as _
 import gutils
 import os
 
-def update_image(self,image,number):
-	movie = self.db.Movie.get_by(number=number)
-	movie.image = os.path.splitext(image)[0]
-	movie.update()
-	movie.flush()
-	self.widgets['movie']['picture_button'].set_sensitive(True)
-	self.update_statusbar(_("Image has been updated"))
-
 def update_volume_combo_ids(self):
 	self.volume_combo_ids = {}
 	self.volume_combo_ids[0] = 0
