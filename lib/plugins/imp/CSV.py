@@ -185,12 +185,12 @@ class ImportPlugin(ImportPlugin):
 		
 		if widget == self.b_del:
 			# re-add field to griffith
-			assigned = self.ls_assigned.get_value(self.iter_assigned,0)
-			pos1 = string.find(assigned, ">") +2
-			assigned = assigned[pos1:len(assigned)]
-			#print "debug : new: %s     pos1: %s" % (new,pos1)
+			field_name = self.ls_assigned.get_value(self.iter_assigned,1)
+
 			iterator = self.ls_griffith.append()
-			self.ls_griffith.set_value(iterator, 0, assigned)
+			self.ls_griffith.set_value(iterator, 0, field_name)
+			self.ls_griffith.set_value(iterator, 1, self.fields[field_name])
+			
 			# remove assigned row
 			self.ls_assigned.remove(self.iter_assigned)
 			
