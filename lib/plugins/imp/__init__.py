@@ -122,7 +122,7 @@ class ImportPlugin:
 					#self.db.Movie.mapper.mapped_table.insert().execute(details) # faster, but details are not checked
 				self.imported += 1 # FIXME: what about cancel button in edit window
 			else:
-				self.debug('skipping movie without title or original title')
+				self.debug.show('skipping movie without title or original title')
 		return True
 
 	def clear(self):
