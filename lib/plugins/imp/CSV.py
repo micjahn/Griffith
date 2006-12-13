@@ -3,8 +3,8 @@
 __revision__ = '$Id$'
 
 ###########################################################################
-#    Copyright (C) 2006 by Jessica Katharina Parth
-#    <Jessica.K.P@women-at-work.org>
+#    Copyright (C) 2006 by Jessica Katharina Parth                         
+#    <Jessica.K.P@women-at-work.org>                                       
 #
 # Copyright: See COPYING file that comes with this distribution
 #
@@ -169,10 +169,10 @@ class ImportPlugin(ImportPlugin):
 						
 		if widget == self.b_add:
 			iterator = self.ls_assigned.append()
-			self.ls_assigned.set_value(iterator, 0, "%s > %s" % (self.selected_csv, self.selected_griffith) )
+			self.ls_assigned.set_value(iterator, 0, "%s > %s" % (self.selected_csv, self.fields[self.selected_griffith]) )
 			# add information for the import tabelle
-			self.ls_assigned.set_value(iterator, 1, "%s" % (self.selected_griffith) )
-			self.ls_assigned.set_value(iterator, 2, "%s" % str(self.csv_header.index(self.selected_csv)) )
+			self.ls_assigned.set_value(iterator, 1, self.selected_griffith )
+			self.ls_assigned.set_value(iterator, 2, str(self.csv_header.index(self.selected_csv)) )
 			# FIXME delete obsolete code after verifying the .index makes a difference between title and o_title
 #			for i in range(len(self.csv_header)):
 #				if self.selected_csv == self.csv_header[i]:
