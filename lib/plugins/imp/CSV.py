@@ -278,7 +278,7 @@ class ImportPlugin(IP):
 				self.ls_csv.set_value(iterator, 0, name)
 			return True
 		except:
-			gutils.info(self.gtk, "Can't open the file %s" %(self.__source_name), self.gtk.get_widget('d_import') )
+			gutils.info(self.gtk, _("Can't open the file %s" % self.__source_name), self.gtk.get_widget('d_import') )
 			return False
 			
 

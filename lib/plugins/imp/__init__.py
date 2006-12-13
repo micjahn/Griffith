@@ -144,6 +144,8 @@ class ImportPlugin:
 				update_on.pop(update_on.index(self.imported))
 				self.widgets['progressbar'].set_fraction(float(self.imported)/float(count))
 				gtk.main_iteration()
+		self.widgets['progressbar'].set_text("%s/%s" % (str(self.imported), str(count)))
+		self.widgets['progressbar'].set_fraction(1)
 		print 'end_time=', time.localtime() # FIXME: remove it
 		return True
 
@@ -208,6 +210,6 @@ def on_import_button_clicked(button, self, *args):
 				% (plugin_name, ip.imported), self.widgets['window'])
 			self.populate_treeview()
 		ip.clear()
-		self.widgets['import']['pimport']['window'].hide()
+		self.widgets['import']['pwindow'].hide()
 		self.widgets['window'].set_sensitive(True)
 
