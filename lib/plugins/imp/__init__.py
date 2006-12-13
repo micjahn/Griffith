@@ -93,7 +93,7 @@ class ImportPlugin:
 			return False
 		
 		import time # DEBUG
-		print 'time=', time.localtime()
+		print 'start_time=', time.localtime() # FIXME: remove it
 		
 		self.widgets['pwindow'].show()
 		gtk.main_iteration()
@@ -141,8 +141,10 @@ class ImportPlugin:
 			self.widgets['progressbar'].set_text("%s/%s" % (str(self.imported), str(count)))
 			gtk.main_iteration()
 			if self.imported in update_on:
-				self.widgets['progressbar'].set_fraction(self.imported/count)
+				update_on.pop(update_on.index(self.imported))
+				self.widgets['progressbar'].set_fraction(float(self.imported)/float(count))
 				gtk.main_iteration()
+		print 'end_time=', time.localtime() # FIXME: remove it
 		return True
 
 	def clear(self):
@@ -206,6 +208,6 @@ def on_import_button_clicked(button, self, *args):
 				% (plugin_name, ip.imported), self.widgets['window'])
 			self.populate_treeview()
 		ip.clear()
-		self.widgets['pimport']['window'].hide()
+		self.widgets['import']['pimport']['window'].hide()
 		self.widgets['window'].set_sensitive(True)
 
