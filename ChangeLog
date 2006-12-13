@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2006-12-13 Piotr Ożarowski <ozarow@gmail.com>
+	* Import CSV plugin updated (thanks to Jessica)
+
 2006-12-12 Piotr Ożarowski <ozarow@gmail.com>
 	* Debian files updated
 	* Docs updated

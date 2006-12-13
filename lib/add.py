@@ -325,7 +325,7 @@ def validate_details(t_movies, allow_only=None):
 		t_movies['year'] = None
 	if allow_only is not None:
 		for i in t_movies:
-			if allow_only[i] is False:
+			if not i in allow_only:
 				t_movies.pop(i)
 
 def update_movie(self):
