@@ -99,13 +99,13 @@ class ImportPlugin:
 			details = self.get_movie_details(item)
 			if details is None:
 				continue
-			if details['o_title'] or details['title']:
-				if details['o_title']:
+			if (details.has_key('o_title') and details['o_title']) or (details.has_key('title') and details['title']):
+				if details.has_key('o_title') and details['o_title']:
 					tmp_movie = self.db.Movie.get_by(o_title=details['o_title'])
 					if tmp_movie is not None:
 						self.debug.show("movie already exists (o_title=%s)" % details['o_title'])
 						continue
-				if details['title']:
+				if details.has_key('title') and details['title']:
 					tmp_movie = self.db.Movie.get_by(title=details['title'])
 					if tmp_movie is not None:
 						self.debug.show("movie already exists (title=%s)" % details['title'])
@@ -115,10 +115,11 @@ class ImportPlugin:
 				if self.edit is True:
 					edit_movie(self.parent, details)	# FIXME: wait until save or cancel button pressed
 				else:
-					if details['number'] is None:
+					if not details.has_key('number') or (details.has_key('number') and details['number'] is None):
 						details['number'] = find_next_available(self.db)
 					movie = self.db.Movie()
 					movie.add_to_db(details)
+					#self.db.Movie.mapper.mapped_table.insert().execute(details) # faster, but details are not checked
 				self.imported += 1 # FIXME: what about cancel button in edit window
 			else:
 				self.debug('skipping movie without title or original title')
