@@ -98,7 +98,6 @@ class ImportPlugin(IP):
 		# hide tabs
 		self.nb_pages = self.gtk.get_widget('nb_pages')
 		self.nb_pages.get_nth_page(1).hide()
-		self.nb_pages.get_nth_page(2).hide()
 		
 		# Events
 		# Buttons
@@ -155,16 +154,7 @@ class ImportPlugin(IP):
 						self.create_import_table()
 							
 						# hide everything
-						self.nb_pages.get_nth_page(2).show()
-						self.nb_pages.get_nth_page(0).hide()
-						self.nb_pages.get_nth_page(1).hide()
-						self.b_next.set_sensitive(False)
-						self.nb_pages.next_page()
-						# set progress bar up
-						self.status    = self.gtk.get_widget('l_status')
-						self.bar1      = self.gtk.get_widget('pb_one')
-						self.lines     = self.count_movies()
-						# lets continue
+						self.gtk.get_widget('d_import').hide()
 						self.gtk.get_widget('d_import').response(gtk.RESPONSE_OK)
 					else:
 						gutils.info(self.gtk, _("Please assign at least one field first!"), self.gtk.get_widget('d_import') )
@@ -308,7 +298,8 @@ class ImportPlugin(IP):
 	def count_movies(self):
 		i = 0
 		try:
-			data = open(self.__source_name)
+			import csv
+			data = csv.reader(open(self.__source_name))
 			while data.next():
 				i += 1
 		except:
@@ -354,4 +345,7 @@ class ImportPlugin(IP):
 				t_movies.pop(field)
 		
 		return t_movies
-	
+
+	def clear(self):
+		IP.clear(self)
+		self.gtk.get_widget('d_import').destroy()

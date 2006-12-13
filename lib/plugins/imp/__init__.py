@@ -83,37 +83,48 @@ class ImportPlugin:
 		"""
 		Import movies
 		"""
-		from add import validate_details
-		
-		if self.edit is True:
-			from add import edit_movie
-		else:
-			from gutils import find_next_available
+		from add import validate_details, edit_movie
+		from gutils import find_next_available
+		from sqlalchemy import Select
+		import gtk
 		
 		if not self.set_source(name):
 			self.debug.show("Can't read data from file %s" % name)
 			return False
 		
+		import time # DEBUG
+		print 'time=', time.localtime()
+		
+		self.widgets['pwindow'].show()
+		gtk.main_iteration()
+
+		# progressbar
+		update_on = []
+		count = self.count_movies()
+		if count > 0:
+			for i in range(0,100):
+				update_on.append(int(float(i)/100*count))
+
+		statement = Select(self.db.Movie.c)
+
 		while True:
 			details = self.get_movie_details()
 			if details is None:
 				break
-			validate_details(details, self.fields_to_import)
-			if details is None:
-				continue
 			if (details.has_key('o_title') and details['o_title']) or (details.has_key('title') and details['title']):
 				if details.has_key('o_title') and details['o_title']:
-					tmp_movie = self.db.Movie.get_by(o_title=details['o_title'])
-					if tmp_movie is not None:
+					statement.whereclause = self.db.Movie.c.o_title==details['o_title']
+					tmp = statement.execute().fetchone()
+					if tmp is not None:
 						self.debug.show("movie already exists (o_title=%s)" % details['o_title'])
 						continue
 				if details.has_key('title') and details['title']:
-					tmp_movie = self.db.Movie.get_by(title=details['title'])
-					if tmp_movie is not None:
+					statement.whereclause = self.db.Movie.c.o_title==details['o_title']
+					tmp = statement.execute().fetchone()
+					if tmp is not None:
 						self.debug.show("movie already exists (title=%s)" % details['title'])
 						continue
-				if details.has_key('number') and 'number' in self.fields_to_import:
-					details['number'] = None
+				validate_details(details, self.fields_to_import)
 				if self.edit is True:
 					response = edit_movie(self.parent, details)	# FIXME: wait until save or cancel button pressed
 					if response == 1:
@@ -127,6 +138,11 @@ class ImportPlugin:
 					self.imported += 1
 			else:
 				self.debug.show('skipping movie without title or original title')
+			self.widgets['progressbar'].set_text("%s/%s" % (str(self.imported), str(count)))
+			gtk.main_iteration()
+			if self.imported in update_on:
+				self.widgets['progressbar'].set_fraction(self.imported/count)
+				gtk.main_iteration()
 		return True
 
 	def clear(self):
@@ -182,12 +198,14 @@ def on_import_button_clicked(button, self, *args):
 	__import__("plugins.imp.%s" % plugin_name)
 	ip = eval("plugins.imp.%s.ImportPlugin(self, fields)" % plugin_name)
 	if ip.initialize():
-		# TODO: show progres bar
+		self.widgets['window'].set_sensitive(False)
+		self.widgets['import']['window'].hide()
 		# for file in selected_files:
 		if ip.run(filename):
 			gutils.info(self, _("%s file has been imported. %s movies added.") \
 				% (plugin_name, ip.imported), self.widgets['window'])
 			self.populate_treeview()
-			self.widgets['import']['window'].hide()
 		ip.clear()
+		self.widgets['pimport']['window'].hide()
+		self.widgets['window'].set_sensitive(True)
 

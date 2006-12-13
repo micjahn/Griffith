@@ -339,6 +339,7 @@ def import_plugins(self):
 	
 	w = self.widgets['import'] = {
 		'window'	: get('dialog_import'),
+		'pwindow'	: get('dialog_progress'),
 		'fcw'		: get('fcw'),
 		'plugin'	: get('combo_plugin'),
 		'author'	: get('l_author'),
@@ -348,11 +349,15 @@ def import_plugins(self):
 		'box_import_1'	: get('box_import_1'),
 		'box_import_2'	: get('box_import_2'),
 		'box_import_3'	: get('box_import_3'),
+		'progress'	: get('l_progress'),
+		'progressbar'	: get('progressbar'),
 		'fields'	: {},
 	}
 	get('cancel_button').connect('clicked', lambda x: w['window'].hide())
 	get('import_button').connect('clicked', plugins.imp.on_import_button_clicked, self)
 	w['plugin'].connect('changed', plugins.imp.on_import_plugin_changed, w)
+	w['window'].set_transient_for(self.widgets['window'])
+	w['pwindow'].set_transient_for(w['window'])
 	
 	for name in plugins.imp.__all__:
 		w['plugin'].append_text(name)
