@@ -149,7 +149,7 @@ class ImportPlugin(IP):
 			else:
 				if self.nb_pages.get_current_page() == 1:
 					# test if at least one field is assigned
-					if self.ls_assigned.get_iter_first() <> None:
+					if self.ls_assigned.get_iter_first() != None:
 						# prepare tabelle for import
 						self.create_import_table()
 							
@@ -199,7 +199,7 @@ class ImportPlugin(IP):
 				self.selected_csv = self.ls_csv.get_value(iter,0)
 				
 		# enable add button if both lists have a selected item
-		if self.selected_griffith <> None and self.selected_csv <> None:
+		if self.selected_griffith != None and self.selected_csv != None:
 			self.b_add.set_sensitive(True)
 		else:
 			self.b_add.set_sensitive(False)
@@ -230,7 +230,7 @@ class ImportPlugin(IP):
 				self.b_del.set_sensitive(False)
 				
 		# enable add button if both lists have a selected item
-		if self.selected_griffith <> None and self.selected_csv <> None:
+		if self.selected_griffith != None and self.selected_csv != None:
 			self.b_add.set_sensitive(True)
 		else:
 			self.b_add.set_sensitive(False)
