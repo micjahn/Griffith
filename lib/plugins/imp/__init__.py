@@ -109,6 +109,8 @@ class ImportPlugin:
 		number = statement.execute().fetchone()[0]
 		if number is None:
 			number = 1
+		else:
+			number += 1
 
 		statement = Select(self.db.Movie.c)
 
