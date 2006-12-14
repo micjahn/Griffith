@@ -181,7 +181,7 @@ def get_poster(self, f, result, current_poster):
 		self.widgets['results']['window'].hide()
 
 	file_to_copy = tempfile.mktemp(suffix=self.widgets['movie']['number'].get_text(), \
-		dir=self.locations['posters'])
+		dir=self.locations['temp'])
 	file_to_copy += ".jpg"
 	try:
 		progress = movie.Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
