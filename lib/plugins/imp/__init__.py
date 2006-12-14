@@ -85,7 +85,7 @@ class ImportPlugin:
 		"""
 		from add import validate_details, edit_movie
 		from gutils import find_next_available
-		from sqlalchemy import Select
+		from sqlalchemy import Select, func
 		import gtk
 		
 		if not self.set_source(name):
@@ -104,6 +104,11 @@ class ImportPlugin:
 		if count > 0:
 			for i in range(0,100):
 				update_on.append(int(float(i)/100*count))
+
+		statement = Select( [ func.max(self.db.Movie.c.number) ] )
+		number = statement.execute().fetchone()[0]
+		if number is None:
+			number = 1
 
 		statement = Select(self.db.Movie.c)
 
@@ -131,7 +136,9 @@ class ImportPlugin:
 						self.imported += 1
 				else:
 					if not details.has_key('number') or (details.has_key('number') and details['number'] is None):
-						details['number'] = find_next_available(self.db)
+						#details['number'] = find_next_available(self.db)
+						details['number'] = number
+						number += 1
 					#movie = self.db.Movie()
 					#movie.add_to_db(details)
 					self.db.Movie.mapper.mapped_table.insert().execute(details)
