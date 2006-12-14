@@ -1024,9 +1024,9 @@ You can't undo this operation."""), \
 		elif direction == 'first':
 			nextiter = treemodel.get_iter_first()
 		elif direction == 'last':
-			rows = len(treemodel)-1
+			rows = len(treemodel)
 			if rows>0:
-				nextiter = treemodel.get_iter(rows)	# last
+				nextiter = treemodel.get_iter(rows-1)	# last
 		else:
 			logger.warning("Bad direction: %s"%direction)
 		# select new iter

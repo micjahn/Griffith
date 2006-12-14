@@ -324,7 +324,7 @@ class GriffithSQL:
 			self.metadata.engine.connect()
 		except:
 			gutils.error(self, _('Database connection failed.'))
-			self.config['db_type'] = 'sqlite'
+			config['db_type'] = 'sqlite'
 			url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
 			self.metadata = BoundMetaData(url)
 			self.metadata.engine.connect()

@@ -38,7 +38,7 @@ UNIX systems
 	You can test Griffith without installing it:
 
 		$ cd griffith-version
-		$ ./griffith
+		$ ./griffith --home /tmp/griffith
 
 1.2 Installing from downloaded package
 

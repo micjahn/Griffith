@@ -92,9 +92,6 @@ class ImportPlugin:
 			self.debug.show("Can't read data from file %s" % name)
 			return False
 		
-		import time # DEBUG
-		print 'start_time=', time.localtime() # FIXME: remove it
-		
 		self.widgets['pwindow'].show()
 		gtk.main_iteration()
 
@@ -143,8 +140,11 @@ class ImportPlugin:
 						number += 1
 					#movie = self.db.Movie()
 					#movie.add_to_db(details)
-					self.db.Movie.mapper.mapped_table.insert().execute(details)
-					self.imported += 1
+					try:
+						self.db.Movie.mapper.mapped_table.insert().execute(details)
+						self.imported += 1
+					except Exception, e:
+						self.debug.show("movie details are not unique, skipping: %s" % str(e))
 			else:
 				self.debug.show('skipping movie without title or original title')
 			self.widgets['progressbar'].set_text("%s/%s" % (str(self.imported), str(count)))
@@ -155,7 +155,6 @@ class ImportPlugin:
 				gtk.main_iteration()
 		self.widgets['progressbar'].set_text("%s/%s" % (str(self.imported), str(count)))
 		self.widgets['progressbar'].set_fraction(1)
-		print 'end_time=', time.localtime() # FIXME: remove it
 		return True
 
 	def clear(self):

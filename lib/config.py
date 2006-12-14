@@ -110,7 +110,7 @@ class Config:
 		self.config['font']                 = ""
 		self.config['db_type']              = "sqlite"
 		self.config['db_host']              = "localhost"
-		self.config['db_port']              = "5433"
+		self.config['db_port']              = "5432"
 		self.config['db_name']              = "griffith"
 		self.config['db_user']              = "griffith"
 		self.config['db_passwd']            = "gRiFiTh"

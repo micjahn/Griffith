@@ -34,7 +34,6 @@ def clear(self):
 	set_details(self, {})
 
 def add_movie(self, details={}):
-	quick_filter.clear_filter(self)	 # FIXME: remove this line
 	if not details.has_key('number'):
 		details['number'] = gutils.find_next_available(self.db)
 	set_details(self, details)
@@ -377,7 +376,8 @@ def add_movie_db(self, close):
 				return False
 
 	movie = self.db.Movie()
-	movie.add_to_db(details)
+	if not movie.add_to_db(details):
+		return False
 
 	# lets move poster from tmp to posters dir
 	tmp_dest = self.locations['posters']
@@ -392,8 +392,9 @@ def add_movie_db(self, close):
 			gutils.make_thumbnail(self, "%s.jpg"%details['image'])
 			gutils.make_medium_image(self, "%s.jpg"%details['image'])
 
-	if int(self.widgets['add']['number'].get_text()) >= 2:
-		insert_after = self.treemodel.get_iter(int(self.widgets['add']['number'].get_text())-2)
+	rows = len(self.treemodel)
+	if rows>0:
+		insert_after = self.treemodel.get_iter(rows-1)	# last
 	else:
 		insert_after = None
 	myiter = self.treemodel.insert_after(None, insert_after)
@@ -411,7 +412,7 @@ def add_movie_db(self, close):
 	self.total += 1
 	self.count_statusbar()
 	#select new entry from main treelist
-	self.widgets['treeview'].set_cursor(int(self.widgets['add']['number'].get_text())-1)
+	self.widgets['treeview'].get_selection().select_iter(myiter)
 	self.treeview_clicked()
 	clear(self)
 
