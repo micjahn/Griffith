@@ -82,6 +82,11 @@ class ImportPlugin(IP):
 		self.tv_assigned.append_column(column)
 		
 		# 2nd list
+		sorted_list = ( "number","title", "o_title", "director", "year", "country", 
+				"cast", "studio", "plot", "runtime", "genre", "classification",
+				"site", "o_site", "trailer", "image", "seen", "loaned", "notes", 
+				"rating", "movie_id", "collection_id", "volumne_id", "medium_id", 
+				"vcodec_id", "color", "cond", "layers", "region", "media_num" )
 		self.ls_griffith = gtk.ListStore(str,str)
 		self.tv_griffith.set_model(self.ls_griffith)
 		renderer = gtk.CellRendererText()
@@ -90,10 +95,13 @@ class ImportPlugin(IP):
 		self.tv_griffith.append_column(column)
 		column = gtk.TreeViewColumn("none", renderer, text=1)
 		self.tv_griffith.append_column(column)
-		for name in self.fields_to_import:
-			iterator = self.ls_griffith.append()
-			self.ls_griffith.set_value(iterator, 0, name)
-			self.ls_griffith.set_value(iterator, 1, self.fields[name])
+		# sort the list and add field and translated field-name
+		for sorted in sorted_list:
+			for name in self.fields_to_import:
+				if sorted == name:
+					iterator = self.ls_griffith.append()
+					self.ls_griffith.set_value(iterator, 0, name)
+					self.ls_griffith.set_value(iterator, 1, self.fields[name])
 	
 		# hide tabs
 		self.nb_pages = self.gtk.get_widget('nb_pages')
@@ -278,7 +286,7 @@ class ImportPlugin(IP):
 				self.ls_csv.set_value(iterator, 0, name)
 			return True
 		except:
-			gutils.info(self.gtk, _("Can't open the file %s" % self.__source_name), self.gtk.get_widget('d_import') )
+			gutils.info(self.gtk, _("Can't open the file %s") % self.__source_name, self.gtk.get_widget('d_import') )
 			return False
 			
 
@@ -325,9 +333,9 @@ class ImportPlugin(IP):
 		for field in self.import_table:
 			try:
 				# some minor fixes to the import so it fits the griffith variable types
-				if field == 'year' or field == 'runtime' or field == 'media_num':
+				if field == 'year' or field == 'runtime' or field == 'media_num' or field == 'number'  or field == 'volume_id':
 					t_movies[field] = int( digits_only( item[ int(self.import_table[field]) ] ) )
-				elif field == 'seen':
+				elif field == 'seen' or field == 'loaned':
 					t_movies[field] = bool( item[ int(self.import_table[field]) ] )
 				elif field == 'country':
 					t_movies[field] = letters_only( item[ int(self.import_table[field]) ] )
