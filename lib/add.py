@@ -455,45 +455,38 @@ def populate_with_results(self):
 	plugin = __import__(plugin_name)
 	self.movie = plugin.Plugin(m_id)
 	self.movie.locations = self.locations
+	
+	fields_to_fetch = ('o_title', 'title', 'director', 'plot', 'cast', 'country', 'genre',
+				'classification', 'studio', 'o_site', 'site', 'trailer', 'year',
+				'notes', 'runtime')
+	fields_to_fetch = [ i for i in fields_to_fetch if self.config.get(i, True) ] # remove fields user doesn't want to fetch
+	if w['cb_only_empty'].get_active(): # only empty fields
+		details = get_details(self)
+		for i in fields_to_fetch:
+			if not (details[i] is None or details[i] == ''):
+				fields_to_fetch.pop(fields_to_fetch.index(i))
+	self.movie.fields_to_fetch = fields_to_fetch
+	
 	self.movie.open_page(w['window'])
 	self.movie.parse_movie(self.config)
-	if self.config.get('s_o_title'):
-		w['o_title'].set_text(gutils.convert_entities(self.movie.o_title))
-	if self.config.get('s_title'):
-		w['title'].set_text(gutils.convert_entities(self.movie.title))
-	if self.config.get('s_director'):
-		w['director'].set_text(gutils.convert_entities(self.movie.director))
-	if self.config.get('s_plot'):
-		plot_buffer = w['plot'].get_buffer()
-		plot_buffer.set_text(gutils.convert_entities(self.movie.plot))
-	if self.config.get('s_cast'):
+
+	if 'cast' in fields_to_fetch and self.config.get('s_cast', True):
 		cast_buffer = w['cast'].get_buffer()
 		cast_buffer.set_text(gutils.convert_entities(self.movie.cast))
-	if self.config.get('s_country'):
-		w['country'].set_text(gutils.convert_entities(self.movie.country))
-	if self.config.get('s_genre'):
-		w['genre'].set_text(gutils.convert_entities(self.movie.genre))
-	if self.config.get('s_classification'):
-		w['classification'].set_text(gutils.convert_entities(self.movie.classification))
-	if self.config.get('s_studio'):
-		w['studio'].set_text(gutils.convert_entities(self.movie.studio))
-	if self.config.get('s_o_site'):
-		w['o_site'].set_text(gutils.remove_accents(self.movie.o_site))
-	if self.config.get('s_site'):
-		w['site'].set_text(gutils.remove_accents(self.movie.site))
-	if self.config.get('s_trailer'):
-		w['trailer'].set_text(gutils.remove_accents(self.movie.trailer))
-	if self.config.get('s_year'):
-		w['year'].set_text(self.movie.year)
-	if self.config.get('s_notes'):
+		fields_to_fetch.pop(fields_to_fetch.index('cast'))
+	if 'plot' in fields_to_fetch and self.config.get('s_plot', True):
+		plot_buffer = w['plot'].get_buffer()
+		plot_buffer.set_text(gutils.convert_entities(self.movie.plot))
+		fields_to_fetch.pop(fields_to_fetch.index('plot'))
+	if 'notes' in fields_to_fetch and self.config.get('s_notes', True):
 		notes_buffer = w['notes'].get_buffer()
 		notes_buffer.set_text(gutils.convert_entities(self.movie.notes))
-	if self.config.get('s_runtime'):
-		w['runtime'].set_text(self.movie.runtime)
-	if self.config.get('s_rating') and self.movie.rating:
+		fields_to_fetch.pop(fields_to_fetch.index('notes'))
+	if 'rating' in fields_to_fetch and self.config.get('s_rating', True) and self.movie.rating:
 		w['rating_slider'].set_value(float(self.movie.rating))
+		fields_to_fetch.pop(fields_to_fetch.index('rating'))
 	# poster
-	if self.config.get('s_image'):
+	if 'image' in fields_to_fetch and self.config.get('s_image'):
 		if self.movie.image:
 			image = os.path.join(self.locations['temp'], "poster_%s.jpg" % self.movie.image)
 			try:
@@ -510,6 +503,11 @@ def populate_with_results(self):
 			handler = self.Image.set_from_file(image)
 			Pixbuf = self.Image.get_pixbuf()
 			w['picture'].set_from_pixbuf(Pixbuf)
+		fields_to_fetch.pop(fields_to_fetch.index('image'))
+	# other fields
+	for i in fields_to_fetch:
+		if self.config.get("s_%s" % i):
+			w[i].set_text(gutils.convert_entities(self.movie[i]))
 
 def show_websearch_results(self):
 	total = self.founded_results_id = 0

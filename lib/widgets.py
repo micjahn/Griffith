@@ -135,6 +135,7 @@ def define_widgets(self, gladefile):
 		'add_close_button':get('am_add_close_button'),
 		'clear_button':	get('am_clear_button'),
 		'save_button':	get('am_save_button'),
+		'cb_only_empty':get('am_cb_only_empty'),
 	}
 	self.widgets['add']['window'].connect('delete_event', self.on_delete_event_am)
 	self.widgets['add']['lang_treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
