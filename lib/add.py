@@ -456,9 +456,9 @@ def populate_with_results(self):
 	self.movie = plugin.Plugin(m_id)
 	self.movie.locations = self.locations
 	
-	fields_to_fetch = ('o_title', 'title', 'director', 'plot', 'cast', 'country', 'genre',
+	fields_to_fetch = ['o_title', 'title', 'director', 'plot', 'cast', 'country', 'genre',
 				'classification', 'studio', 'o_site', 'site', 'trailer', 'year',
-				'notes', 'runtime', 'image', 'rating')
+				'notes', 'runtime', 'image', 'rating']
 	# remove fields that user doesn't want to fetch: (see preferences window)
 	fields_to_fetch = [ i for i in fields_to_fetch if self.config.get("s_%s" % i, True) ]
 
