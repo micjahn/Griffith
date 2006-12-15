@@ -266,17 +266,13 @@ class Griffith:
 		edit.toggle_seen(self)
 
 	def sugest_movie(self, *args):
-		quick_filter.change_filter(self)
-		movies = self.db.Movie.select_by(seen=False)
-		subtotal = len(movies)
-		self.clear_filter()
-		self.widgets['menu']['all_movies'].set_active(1)
+		self.widgets['menu']['not_seen_movies'].set_active(True)
+		subtotal = len(self.widgets['treeview'].get_model())
 		self.count_statusbar()
 		if subtotal > 0:
 			import random
-			movie = movies[random.randrange(subtotal)]
-			self.debug.show("suggested movie: %s"%movie.title)
-			self.widgets['treeview'].set_cursor_on_cell(movie.number-1)
+			number = random.randrange(subtotal)
+			self.widgets['treeview'].set_cursor(number)
 			self.treeview_clicked()
 		else:
 			gutils.info(self, \
