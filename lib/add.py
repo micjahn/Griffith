@@ -252,7 +252,7 @@ def get_details(self): #{{{
 		'genre'          : w['genre'].get_text(),
 		'image'          : w['image'].get_text(),
 		'layers'         : w['layers'].get_active(),
-		'media_num'      : w['discs'].get_text(),
+		'media_num'      : w['discs'].get_value(),
 		'number'         : w['number'].get_value(),
 		'o_site'         : w['o_site'].get_text(),
 		'o_title'        : w['o_title'].get_text(),
@@ -263,7 +263,7 @@ def get_details(self): #{{{
 		'studio'         : w['studio'].get_text(),
 		'title'          : w['title'].get_text(),
 		'trailer'        : w['trailer'].get_text(),
-		'year'           : w['year'].get_text(),
+		'year'           : w['year'].get_value(),
 		'collection_id'  : self.collection_combo_ids[w['collection'].get_active()],
 		'volume_id'      : self.volume_combo_ids[w['volume'].get_active()],
 		'cast'           : cast_buffer.get_text(cast_buffer.get_start_iter(),cast_buffer.get_end_iter()),
@@ -283,6 +283,8 @@ def get_details(self): #{{{
 		t_movies['seen'] = True
 	else:
 		t_movies['seen'] = False
+	if t_movies['year'] < 1886:
+		t_movies['year'] = None
 
 	def get_id(model, text):
 		for i in model:
@@ -316,12 +318,10 @@ def validate_details(t_movies, allow_only=None):
 			t_movies[i] = None
 	for i in ['color','cond','layers','region', 'media', 'vcodec']:
 		if t_movies.has_key(i) and t_movies[i] < 0:
-			t_movies[i]=None
+			t_movies[i] = None
 	for i in ['volume_id','collection_id', 'runtime']:
 		if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
 			t_movies[i] = None
-	if t_movies.has_key('year') and (t_movies['year'] is None or int(t_movies['year']) < 1886):
-		t_movies['year'] = None
 	if allow_only is not None:
 		for i in t_movies:
 			if not i in allow_only:
@@ -458,35 +458,35 @@ def populate_with_results(self):
 	
 	fields_to_fetch = ('o_title', 'title', 'director', 'plot', 'cast', 'country', 'genre',
 				'classification', 'studio', 'o_site', 'site', 'trailer', 'year',
-				'notes', 'runtime')
-	fields_to_fetch = [ i for i in fields_to_fetch if self.config.get(i, True) ] # remove fields user doesn't want to fetch
+				'notes', 'runtime', 'image', 'rating')
+	# remove fields that user doesn't want to fetch: (see preferences window)
+	fields_to_fetch = [ i for i in fields_to_fetch if self.config.get("s_%s" % i, True) ]
+
 	if w['cb_only_empty'].get_active(): # only empty fields
 		details = get_details(self)
-		for i in fields_to_fetch:
-			if not (details[i] is None or details[i] == ''):
-				fields_to_fetch.pop(fields_to_fetch.index(i))
+		fields_to_fetch = [ i for i in fields_to_fetch if details[i] is None ]
 	self.movie.fields_to_fetch = fields_to_fetch
 	
 	self.movie.open_page(w['window'])
-	self.movie.parse_movie(self.config)
+	self.movie.parse_movie()
 
-	if 'cast' in fields_to_fetch and self.config.get('s_cast', True):
+	if 'cast' in fields_to_fetch:
 		cast_buffer = w['cast'].get_buffer()
 		cast_buffer.set_text(gutils.convert_entities(self.movie.cast))
 		fields_to_fetch.pop(fields_to_fetch.index('cast'))
-	if 'plot' in fields_to_fetch and self.config.get('s_plot', True):
+	if 'plot' in fields_to_fetch:
 		plot_buffer = w['plot'].get_buffer()
 		plot_buffer.set_text(gutils.convert_entities(self.movie.plot))
 		fields_to_fetch.pop(fields_to_fetch.index('plot'))
-	if 'notes' in fields_to_fetch and self.config.get('s_notes', True):
+	if 'notes' in fields_to_fetch:
 		notes_buffer = w['notes'].get_buffer()
 		notes_buffer.set_text(gutils.convert_entities(self.movie.notes))
 		fields_to_fetch.pop(fields_to_fetch.index('notes'))
-	if 'rating' in fields_to_fetch and self.config.get('s_rating', True) and self.movie.rating:
+	if 'rating' in fields_to_fetch and self.movie.rating:
 		w['rating_slider'].set_value(float(self.movie.rating))
 		fields_to_fetch.pop(fields_to_fetch.index('rating'))
 	# poster
-	if 'image' in fields_to_fetch and self.config.get('s_image'):
+	if 'image' in fields_to_fetch:
 		if self.movie.image:
 			image = os.path.join(self.locations['temp'], "poster_%s.jpg" % self.movie.image)
 			try:
@@ -506,8 +506,7 @@ def populate_with_results(self):
 		fields_to_fetch.pop(fields_to_fetch.index('image'))
 	# other fields
 	for i in fields_to_fetch:
-		if self.config.get("s_%s" % i):
-			w[i].set_text(gutils.convert_entities(self.movie[i]))
+		w[i].set_text(gutils.convert_entities(self.movie[i]))
 
 def show_websearch_results(self):
 	total = self.founded_results_id = 0
