@@ -1,7 +1,7 @@
 # $Id$
 INSTALL ?= install
 
-PYFILES = ../griffith $(wildcard ../lib/*.py ../lib/plugins/movie/*.py ../lib/plugins/export/*.py) 
+PYFILES = ../griffith $(wildcard ../lib/*.py ../lib/plugins/movie/*.py ../lib/plugins/export/*.py ../lib/plugins/imp/*.py) 
 GLADEFILES = $(wildcard ../glade/*.glade)
 POFILES = $(wildcard *.po)
 
