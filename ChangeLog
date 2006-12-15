@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2006-12-15 Piotr Ożarowski <ozarow@gmail.com>
 	* Added "N/A" to some fields in "technical information" tab (NULL in database)
+	* Added some relations between windows
 
 2006-12-15 Jessica K. Parth <Jessica.K.P@women-at-work.org>
 	* ODFb Plugin uses the quicksearch and returns much more and better results

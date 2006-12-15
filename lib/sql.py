@@ -77,7 +77,8 @@ class DBTable(object):#{{{
 		if self.name is None or len(self.name)==0:
 			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
-		if self.get_by(name=self.name) is not None:
+		tmp = self.get_by(name=self.name)
+		if tmp is not None and tmp is not self:
 			gutils.warning(self, msg=_("This name is already in use!"))
 			return False
 		self.update()

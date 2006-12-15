@@ -139,6 +139,7 @@ def define_widgets(self, gladefile):
 	}
 	self.widgets['add']['window'].connect('delete_event', self.on_delete_event_am)
 	self.widgets['add']['lang_treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
+	self.widgets['add']['window'].set_transient_for(self.widgets['window'])
 	#}}}
 
 	self.widgets['preferences'] = {#{{{
@@ -204,6 +205,7 @@ def define_widgets(self, gladefile):
 	}
 	self.widgets['preferences']['treeview'].connect('button_press_event', self.on_p_tree_button_press_event)
 	self.widgets['preferences']['window'].connect('delete_event', self.on_delete_event_p)
+	self.widgets['preferences']['window'].set_transient_for(self.widgets['window'])
 	#}}}
 
 	self.widgets['results'] = {#{{{
@@ -213,6 +215,7 @@ def define_widgets(self, gladefile):
 		'cancel':	get('results_cancel'),
 	}
 	self.widgets['results']['window'].connect('delete_event', self.on_delete_event_r)
+	self.widgets['results']['window'].set_transient_for(self.widgets['add']['window'])
 	#}}}
 
 	self.widgets['print_cover'] = {#{{{
@@ -227,6 +230,8 @@ def define_widgets(self, gladefile):
 	}
 	self.widgets['print_cover']['window_simple'].connect('delete_event', self.on_delete_event_pcs)
 	self.widgets['print_cover']['window_image'].connect('delete_event', self.on_delete_event_pci)
+	self.widgets['print_cover']['window_simple'].set_transient_for(self.widgets['window'])
+	self.widgets['print_cover']['window_image'].set_transient_for(self.widgets['window'])
 	#}}}
 	
 	self.widgets['people'] = {#{{{
@@ -234,6 +239,7 @@ def define_widgets(self, gladefile):
 		'treeview':	get('p_treeview'),
 	}
 	self.widgets['people']['window'].connect('delete_event', self.on_delete_event_wp)
+	self.widgets['people']['window'].set_transient_for(self.widgets['window'])
 	#}}}
 	
 	self.widgets['person'] = {#{{{
@@ -250,6 +256,8 @@ def define_widgets(self, gladefile):
 	}
 	self.widgets['person']['window'].connect('delete_event', self.on_delete_event_ap)
 	self.widgets['person']['e_window'].connect('delete_event', self.on_delete_event_ep)
+	self.widgets['person']['window'].set_transient_for(self.widgets['people']['window'])
+	self.widgets['person']['e_window'].set_transient_for(self.widgets['people']['window'])
 	#}}}
 
 	self.widgets['filter'] = {#{{{
@@ -283,6 +291,7 @@ def define_widgets(self, gladefile):
 
 	self.widgets['poster_window'] = get('poster_window')
 	self.widgets['poster_window'].connect('delete_event', self.on_delete_event_pw)
+	self.widgets['poster_window'].set_transient_for(self.widgets['window'])
 	self.widgets['big_poster']    = get('big_poster')
 
 	#add some tooltips
