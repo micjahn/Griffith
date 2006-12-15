@@ -291,7 +291,7 @@ def get_details(self): #{{{
 		t_movies['seen'] = True
 	else:
 		t_movies['seen'] = False
-	if t_movies['year'] < 1886:
+	if t_movies['year'] < 1900:
 		t_movies['year'] = None
 
 	def get_id(model, text):
@@ -340,10 +340,14 @@ def update_movie(self):
 	old_image = movie.image
 	details = get_details(self)
 	if movie.update_in_db(details):
+		treeselection = self.widgets['treeview'].get_selection()
+		(tmp_model, tmp_iter) = treeselection.get_selected()
+		
 		if details['image'] and details['image'] != old_image:
 			# TODO: fetch poster from amazon / load from disk
 			image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
 			if os.path.isfile(image_path):
+				# delete old image
 				import delete
 				delete.delete_poster(self, old_image)
 				new_image_path = os.path.join(self.locations['posters'], "%s.jpg" % details['image'])
@@ -351,10 +355,11 @@ def update_movie(self):
 				#lets make the thumbnail and medium image from poster for future use
 				gutils.make_thumbnail(self, "%s.jpg"%details['image'])
 				gutils.make_medium_image(self, "%s.jpg"%details['image'])
-		self.update_statusbar(_('Movie information has been updated'))
+				# update thumbnail in main list
+				handler = self.Image.set_from_file(new_image_path)
+				pixbuf = self.Image.get_pixbuf()
+				tmp_model.set_value(tmp_iter,1, pixbuf.scale_simple(30,40,3))
 		# update main treelist
-		treeselection = self.widgets['treeview'].get_selection()
-		(tmp_model, tmp_iter) = treeselection.get_selected()
 		tmp_model.set_value(tmp_iter,0,'%004d' % int(movie.number))
 		tmp_model.set_value(tmp_iter,2, movie.o_title)
 		tmp_model.set_value(tmp_iter,3,	movie.title)
@@ -363,6 +368,7 @@ def update_movie(self):
 		self.widgets['add']['window'].hide()
 		# refresh
 		self.treeview_clicked()
+		self.update_statusbar(_('Movie information has been updated'))
 
 def add_movie_db(self, close):
 	details = get_details(self)
@@ -453,11 +459,6 @@ def populate_with_results(self):
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		m_id = tmp_model.get_value(tmp_iter, 0)
 	self.hide_results()
-
-	try:
-		self.debug.show("m_id: %s" % m_id)
-	except:
-		self.debug.show("m_id: Bad UNICODE character")
 
 	plugin_name = 'PluginMovie' + self.active_plugin
 	plugin = __import__(plugin_name)
