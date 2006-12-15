@@ -459,7 +459,8 @@ def dictionaries(self):
 	create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
 	self.sort_criteria = [ # "[]" because of index() 
 		'number', 'o_title', 'title', 'director', 'year', 'runtime', 'country',
-		'genre', 'studio', 'media_num', 'rating']
+		'genre', 'studio', 'media_num', 'rating', 'classification', 'collection_id',
+		'volume_id', 'cond', 'layers', 'region']
 	self.search_criteria = (
 		'o_title', 'title', 'number', 'director',
 		'plot', 'cast', 'notes', 'year', 'runtime', 'country',

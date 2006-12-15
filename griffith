@@ -266,7 +266,8 @@ class Griffith:
 		edit.toggle_seen(self)
 
 	def sugest_movie(self, *args):
-		self.widgets['menu']['not_seen_movies'].set_active(True)
+		if not self.widgets['menu']['not_seen_movies'].get_active():
+			self.widgets['menu']['not_seen_movies'].set_active(True)
 		subtotal = len(self.widgets['treeview'].get_model())
 		self.count_statusbar()
 		if subtotal > 0:
