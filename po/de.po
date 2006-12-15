@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.6.2-SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-15 02:36+0100\n"
+"POT-Creation-Date: 2006-12-15 19:06+0100\n"
 "PO-Revision-Date: 2006-09-15 10:45+0100\n"
 "Last-Translator: M.W. <nono@nono.no>\n"
 "Language-Team: German <de@li.org>\n"
@@ -156,11 +156,11 @@ msgstr "Schwedisch"
 msgid "This program is released under the GNU"
 msgstr "Dieses Programm wurde unter der GNU veröffentlich"
 
-#: ../lib/add.py:346
+#: ../lib/add.py:371
 msgid "Movie information has been updated"
 msgstr "Filminformation wurde aktualisiert"
 
-#: ../lib/add.py:362 ../lib/add.py:560
+#: ../lib/add.py:376 ../lib/add.py:569
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
@@ -168,21 +168,21 @@ msgstr ""
 "Sie müssen den Originaltitel\n"
 "oder den Titel ausfüllen."
 
-#: ../lib/add.py:368 ../lib/add.py:374
+#: ../lib/add.py:382 ../lib/add.py:388
 msgid "Movie with that title already exists, are you sure you want to add?"
 msgstr ""
 "Ein Film mit dem Titel existiert bereits, möchten sie ihn wirklich "
 "hinzufügen?"
 
-#: ../lib/add.py:537
+#: ../lib/add.py:546
 msgid "No results"
 msgstr "Keine Ergebnisse"
 
-#: ../lib/add.py:568
+#: ../lib/add.py:577
 msgid "Url: "
 msgstr "URL: "
 
-#: ../lib/add.py:569
+#: ../lib/add.py:578
 msgid "Language: "
 msgstr "Sprache: "
 
@@ -338,7 +338,8 @@ msgstr "Möchten sie das Poster anstelle des Alten verwenden?"
 
 #: ../lib/edit.py:231
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
-msgstr "Der Film wurde gefunden, es existiert jedoch kein Poster auf Amazon.com."
+msgstr ""
+"Der Film wurde gefunden, es existiert jedoch kein Poster auf Amazon.com."
 
 #: ../lib/gconsole.py:136
 msgid "No movie found"
@@ -516,6 +517,12 @@ msgstr "Datenträger"
 msgid "Year"
 msgstr "Jahr"
 
+#: ../lib/initialize.py:495 ../lib/initialize.py:496 ../lib/initialize.py:498
+#: ../lib/initialize.py:694 ../lib/initialize.py:695 ../lib/initialize.py:726
+#: ../lib/initialize.py:727
+msgid "N/A"
+msgstr "k.A."
+
 #: ../lib/initialize.py:495
 msgid "Damaged"
 msgstr "beschädigt"
@@ -535,11 +542,6 @@ msgstr "gut"
 #: ../lib/initialize.py:495
 msgid "Excellent"
 msgstr "exzellent"
-
-#: ../lib/initialize.py:495 ../lib/initialize.py:496 ../lib/initialize.py:498
-#: ../lib/initialize.py:508
-msgid "N/A"
-msgstr "k.A."
 
 #: ../lib/initialize.py:496
 msgid "Black and White"
@@ -565,25 +567,25 @@ msgstr "Zweiseitig, eine Lage"
 msgid "Dual Side, Dual Layer"
 msgstr "Zweiseitig, zwei Lagen"
 
-#: ../lib/initialize.py:499
+#: ../lib/initialize.py:500
 msgid "Region 0 (No Region Coding)"
 msgstr "Region 0 (keine Regional-Kodierung)"
 
-#: ../lib/initialize.py:500
+#: ../lib/initialize.py:501
 msgid "Region 1 (United States of America, Canada)"
 msgstr "Region 1 (USA, Kanada)"
 
-#: ../lib/initialize.py:501
+#: ../lib/initialize.py:502
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
 msgstr "Region 2 (Europa, Türkei, Ägypten, Japan und Südafrika)"
 
-#: ../lib/initialize.py:502
+#: ../lib/initialize.py:503
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
 msgstr "Region 3 (Korea, Thailand, Vietnam, Borneo und Indonesien)"
 
-#: ../lib/initialize.py:503
+#: ../lib/initialize.py:504
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
@@ -591,23 +593,23 @@ msgstr ""
 "Region 4 (Australia und Neuseeland, Mexiko, die karibischen Inseln und "
 "Südamerika)"
 
-#: ../lib/initialize.py:504
+#: ../lib/initialize.py:505
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
 msgstr "Region 5 (Indien, Afrika, Russland und Nachfolgestaaten der UDSSR)"
 
-#: ../lib/initialize.py:505
+#: ../lib/initialize.py:506
 msgid "Region 6 (Popular Republic of China)"
 msgstr "Region 6 (Volksrepublik China)"
 
-#: ../lib/initialize.py:506
+#: ../lib/initialize.py:507
+msgid "Region 7 (Reserved for Unspecified Special Use)"
+msgstr ""
+
+#: ../lib/initialize.py:508
 msgid "Region 8 (Airlines/Cruise Ships)"
 msgstr "Region 8 (Fluglinien / Kreuzfahrtschiffe)"
 
-#: ../lib/initialize.py:507
-msgid "Region 9 (Often used as region free)"
-msgstr "Region 9 (Häufig verwendet für Regionalcode-Frei)"
-
-#: ../lib/initialize.py:546
+#: ../lib/initialize.py:547
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr ""
 "Wörterbuch nicht vorhanden. Die Rechtschreibprüfung ist deaktiviert. \n"
@@ -624,15 +626,15 @@ msgstr "Möchten Sie die gesamte Sammlung verleihen?"
 msgid "Movie loaned"
 msgstr "Film verliehen"
 
-#: ../lib/main_treeview.py:219
+#: ../lib/main_treeview.py:220
 msgid "This movie has been loaned to "
 msgstr "Dieser Film wurde verliehen an "
 
-#: ../lib/main_treeview.py:219
+#: ../lib/main_treeview.py:220
 msgid " on "
 msgstr "an"
 
-#: ../lib/main_treeview.py:231
+#: ../lib/main_treeview.py:232
 msgid "Movie not loaned"
 msgstr "Film nicht verliehen"
 
@@ -903,10 +905,12 @@ msgid "Please assign at least one field first!"
 msgstr "Sie muessen mindestens ein Feld zuordnen!"
 
 #: ../lib/plugins/imp/CSV.py:289
+#, python-format
 msgid "Can't open the file %s"
 msgstr "Kann die Datei %s nicht öffnen!"
 
 #: ../lib/plugins/imp/__init__.py:217
+#, python-format
 msgid "%s file has been imported. %s movies added."
 msgstr "%s Datei wurde importiert. %s Filme hinzugefügt."
 
@@ -1514,7 +1518,8 @@ msgid ""
 "Type in the original film tile, select source and choose <i>Get from web</"
 "i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
-"Geben sie den Originaltitel des Filmes ein und\n wählen sie eine Quelle aus.\n"
+"Geben sie den Originaltitel des Filmes ein und\n"
+" wählen sie eine Quelle aus.\n"
 "Mit einem Klick auf <i>Aus dem Netz holen</i> wird Griffith versuchen alle "
 "relevanten Daten aus dem Netz zu laden."
 
@@ -1618,30 +1623,6 @@ msgstr "Marken"
 msgid "volume details"
 msgstr "Datenträger Details"
 
-#: ../glade/import.glade.h:1
-msgid "<b>Import only fields selected below</b>"
-msgstr "<b>Nur die ausgewählten Felder importieren</b>"
-
-#: ../glade/import.glade.h:2
-msgid "<b>Importing...</b>"
-msgstr "<b>Importiere...</b>"
-
-#: ../glade/import.glade.h:6 ../glade/importcsv.glade.h:11
-msgid "Fields"
-msgstr "Felder"
-
-#: ../glade/import.glade.h:7
-msgid "Import window"
-msgstr "Importieren"
-
-#: ../glade/import.glade.h:8
-msgid "Plugin"
-msgstr "Module"
-
-#: ../glade/import.glade.h:9
-msgid "Source"
-msgstr "Quelle"
-
 #: ../glade/importcsv.glade.h:1
 msgid ""
 "<b>Some Hints</b>:\n"
@@ -1681,6 +1662,10 @@ msgstr "Feldtrenner"
 msgid "Encoding"
 msgstr "Zeichensatz"
 
+#: ../glade/importcsv.glade.h:11 ../glade/import.glade.h:6
+msgid "Fields"
+msgstr "Felder"
+
 #: ../glade/importcsv.glade.h:12
 msgid "File-Options"
 msgstr "Datei-Optionen"
@@ -1707,3 +1692,25 @@ msgstr "Zeilenende"
 msgid "Quotechar"
 msgstr "Texttrenner"
 
+#: ../glade/import.glade.h:1
+msgid "<b>Import only fields selected below</b>"
+msgstr "<b>Nur die ausgewählten Felder importieren</b>"
+
+#: ../glade/import.glade.h:2
+msgid "<b>Importing...</b>"
+msgstr "<b>Importiere...</b>"
+
+#: ../glade/import.glade.h:7
+msgid "Import window"
+msgstr "Importieren"
+
+#: ../glade/import.glade.h:8
+msgid "Plugin"
+msgstr "Module"
+
+#: ../glade/import.glade.h:9
+msgid "Source"
+msgstr "Quelle"
+
+#~ msgid "Region 9 (Often used as region free)"
+#~ msgstr "Region 9 (Häufig verwendet für Regionalcode-Frei)"
