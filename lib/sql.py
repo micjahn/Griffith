@@ -431,7 +431,8 @@ class GriffithSQL:
 			'movies': relation(self.Movie, backref='medium')})
 		assign_mapper(self.VCodec, vcodecs, properties={
 			'movies': relation(self.Movie, backref='vcodec')})
-		assign_mapper(self.Person, people)
+		assign_mapper(self.Person, people, properties = {
+			'loans'    : relation(self.Loan, backref='person', cascade='all, delete-orphan')})
 		assign_mapper(self.MovieLang, movie_lang, primary_key=[movie_lang.c.ml_id], properties = {
 			'movie'    : relation(self.Movie, lazy=False),
 			'language' : relation(self.Lang, lazy=False),
@@ -449,16 +450,15 @@ class GriffithSQL:
 		assign_mapper(self.MovieTag, movie_tag)
 		assign_mapper(self.Tag, tags, properties={'movietags': relation(self.MovieTag, backref='tag')})
 		assign_mapper(self.Loan, loans, properties = {
-			'person'     : relation(self.Person),
-			'volume'     : relation(self.Volume),
-			'collection' : relation(self.Collection)})
+			'volume'    : relation(self.Volume),
+			'collection': relation(self.Collection)})
 		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
-			'loans'      : relation(self.Loan, backref='movie', cascade='all, delete-orphan'),
+			'loans'     : relation(self.Loan, backref='movie', cascade='all, delete-orphan'),
 			#'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
-			'tags'       : relation(self.Tag, secondary=movie_tag,
+			'tags'      : relation(self.Tag, secondary=movie_tag,
 					primaryjoin=movies.c.movie_id==movie_tag.c.movie_id,
 					secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id),
-			'languages'  : relation(self.MovieLang, cascade='all, delete-orphan')})#}}}
+			'languages' : relation(self.MovieLang, cascade='all, delete-orphan')})#}}}
 		
 		# check if database needs upgrade
 		try:
