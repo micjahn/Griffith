@@ -128,28 +128,23 @@ def set_details(self, item=None):#{{{
 		w['genre'].set_text('')
 	if item.has_key('color') and item['color']:
 		w['color'].set_active(int(item['color']))
-	elif self.config.has_key('color'):
-		w['color'].set_active(int(self.config.get('color')))
 	else:
-		w['color'].set_active(3)
+		w['color'].set_active(int(self.config.get('color', 0)))
 	if item.has_key('layers') and item['layers']:
 		w['layers'].set_active(int(item['layers']))
-	elif self.config.has_key('layers'):
-		w['layers'].set_active(int(self.config.get('layers')))
 	else:
-		w['layers'].set_active(4)
+		w['layers'].set_active(int(self.config.get('layers', 0)))
 	if item.has_key('region') and item['region']:
-		w['region'].set_active(int(item['region']))
-	elif self.config.has_key('region'):
-		w['region'].set_active(int(self.config.get('region')))
+		if 0 < item['region'] > 9:
+			w['region'].set_active(int(item['region']))
+		else:
+			w['region'].set_active(0)
 	else:
-		w['region'].set_active(9)
+		w['region'].set_active(int(self.config.get('region', 0)))
 	if item.has_key('cond') and item['cond']:
 		w['condition'].set_active(int(item['cond']))
-	elif self.config.has_key('condition'):
-		w['condition'].set_active(int(self.config.get('condition')))
 	else:
-		w['condition'].set_active(5)
+		w['condition'].set_active(int(self.config.get('condition', 0)))
 	if item.has_key('media_num') and item['media_num']:
 		w['discs'].set_value(int(item['media_num']))
 	else:
@@ -177,8 +172,8 @@ def set_details(self, item=None):#{{{
 	pos = 0
 	if item.has_key('medium_id') and item['medium_id']:
 		pos = gutils.findKey(item['medium_id'], self.media_ids)
-	elif self.config.has_key('media'):
-		pos = gutils.findKey(self.config['media'], self.media_ids)
+	else:
+		pos = gutils.findKey(self.config.get('media', 0), self.media_ids)
 	if pos is not None:
 		w['media'].set_active(int(pos))
 	else:
@@ -264,21 +259,34 @@ def get_details(self): #{{{
 		'title'          : w['title'].get_text(),
 		'trailer'        : w['trailer'].get_text(),
 		'year'           : w['year'].get_value(),
-		'collection_id'  : self.collection_combo_ids[w['collection'].get_active()],
-		'volume_id'      : self.volume_combo_ids[w['volume'].get_active()],
+		'collection_id'  : w['collection'].get_active(),
+		'medium_id'      : w['media'].get_active(),
+		'volume_id'      : w['volume'].get_active(),
+		'vcodec_id'      : w['vcodec'].get_active(),
 		'cast'           : cast_buffer.get_text(cast_buffer.get_start_iter(),cast_buffer.get_end_iter()),
 		'notes'          : notes_buffer.get_text(notes_buffer.get_start_iter(),notes_buffer.get_end_iter()),
 		'plot'           : plot_buffer.get_text(plot_buffer.get_start_iter(),plot_buffer.get_end_iter()),
 	}
 	if self._am_movie_id is not None:
 		t_movies['movie_id'] = self._am_movie_id
-
-	medium_id = w['media'].get_active()
-	if medium_id>0:
-		t_movies['medium_id'] = self.media_ids[medium_id]
-	vcodec_id = w['vcodec'].get_active()
-	if vcodec_id>0:
-		t_movies['vcodec_id'] = self.vcodecs_ids[vcodec_id]
+	
+	if t_movies['collection_id'] > 0:
+		t_movies['collection_id'] = self.collection_combo_ids[t_movies['collection_id']]
+	else:
+		t_movies['collection_id'] = None
+	if t_movies['volume_id'] > 0:
+		t_movies['volume_id'] = self.volume_combo_ids[t_movies['volume_id']]
+	else:
+		t_movies['volume_id'] = None
+	if t_movies['medium_id'] > 0:
+		t_movies['medium_id'] = self.media_ids[t_movies['medium_id']]
+	else:
+		t_movies['medium_id'] = None
+	if t_movies['vcodec_id'] > 0:
+		t_movies['vcodec_id'] = self.vcodecs_ids[t_movies['vcodec_id']]
+	else:
+		t_movies['vcodec_id'] = None
+	
 	if w['seen'].get_active():
 		t_movies['seen'] = True
 	else:
@@ -317,7 +325,7 @@ def validate_details(t_movies, allow_only=None):
 		if t_movies[i] == '':
 			t_movies[i] = None
 	for i in ['color','cond','layers','region', 'media', 'vcodec']:
-		if t_movies.has_key(i) and t_movies[i] < 0:
+		if t_movies.has_key(i) and t_movies[i] < 1:
 			t_movies[i] = None
 	for i in ['volume_id','collection_id', 'runtime']:
 		if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):

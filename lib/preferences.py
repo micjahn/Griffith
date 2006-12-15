@@ -74,15 +74,15 @@ def show_preferences(self):
 		w['font'].set_filename(self.config.get('font'))
 
 	# defaults (for static data only)
-	if self.config.get('condition'):
-		w['condition'].set_active(int(self.config.get('condition')))
-	if self.config.get('region'):
-		w['region'].set_active(int(self.config.get('region')))
-	if self.config.get('layers'):
-		w['layers'].set_active(int(self.config.get('layers')))
-	if self.config.get('color'):
-		w['color'].set_active(int(self.config.get('color')))
-
+	w['condition'].set_active(int(self.config.get('condition', 0)))
+	w['region'].set_active(int(self.config.get('region', 0)))
+	w['layers'].set_active(int(self.config.get('layers', 0)))
+	w['color'].set_active(int(self.config.get('color', 0)))
+	if self.config.get('media', 0) in self.media_ids:
+		w['media'].set_active( gutils.findKey(self.config.get('media', 0), self.media_ids) )
+	if self.config.get('vcodec', 0) in self.vcodecs_ids:
+		w['vcodec'].set_active(	gutils.findKey(self.config.get('vcodec', 0), self.vcodecs_ids) )
+	
 	# search for:
 	w['s_classification'].set_active(bool(self.config.get('s_classification', True)))
 	w['s_country'].set_active(bool(self.config.get('s_country', True)))

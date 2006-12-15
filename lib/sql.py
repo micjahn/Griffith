@@ -341,10 +341,10 @@ class GriffithSQL:
 			Column('loaned', Boolean, nullable=False, default=False),
 			Column('seen', Boolean, nullable=False, default=False),
 			Column('rating', Smallinteger(2), nullable=False, default=0),
-			Column('color', Smallinteger, default=3),
-			Column('cond', Smallinteger, default=5),	# MySQL will not accept name "condition"
-			Column('layers', Smallinteger, default=4),
-			Column('region', Smallinteger, default=9),
+			Column('color', Smallinteger, default=None),
+			Column('cond', Smallinteger, default=None),	# MySQL will not accept name "condition"
+			Column('layers', Smallinteger, default=None),
+			Column('region', Smallinteger, default=None),
 			Column('media_num', Smallinteger),
 			Column('runtime', Integer),
 			Column('year', Integer),

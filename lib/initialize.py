@@ -492,20 +492,21 @@ def dictionaries(self):
 		'trailer'        : _('Trailer'),
 		'volume_id'      : _('Volume'),
 		'year'           : _('Year')}
-	self._conditions = (_('Damaged'), _('Poor'),  _('Fair'), _('Good'), _('Excellent'), _('N/A'))
-	self._colors = (_('Color'), _('Black and White'), _('Mixed'), _('N/A'))
+	self._conditions = (_('N/A'), _('Damaged'), _('Poor'),  _('Fair'), _('Good'), _('Excellent'))
+	self._colors = (_('N/A'), _('Color'), _('Black and White'), _('Mixed'))
 	self._lang_types = ('', _('lector'), _('dubbing'), _('subtitles'))
-	self._layers = (_('Single Side, Single Layer'), _('Single Side, Dual Layer'), _('Dual Side, Single Layer'), _('Dual Side, Dual Layer'), _('N/A'))
-	self._regions = (_('Region 0 (No Region Coding)'),
-			_('Region 1 (United States of America, Canada)'),
-			_('Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)'),
-			_('Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)'),
-			_('Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)'),
-			_('Region 5 (India, Africa, Russia and former USSR countries)'),
-			_('Region 6 (Popular Republic of China)'),
-			_('Region 8 (Airlines/Cruise Ships)'),
-			_('Region 9 (Often used as region free)'),
-			_('N/A'))
+	self._layers = (_('N/A'), _('Single Side, Single Layer'), _('Single Side, Dual Layer'), _('Dual Side, Single Layer'), _('Dual Side, Dual Layer'))
+	self._regions = (
+		_('Region 0 (No Region Coding)'),
+		_('Region 1 (United States of America, Canada)'),
+		_('Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)'),
+		_('Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)'),
+		_('Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)'),
+		_('Region 5 (India, Africa, Russia and former USSR countries)'),
+		_('Region 6 (Popular Republic of China)'),
+		_('Region 7 (Reserved for Unspecified Special Use)'),
+		_('Region 8 (Airlines/Cruise Ships)'),
+	)
 
 def web_results(self):
 	self.treemodel_results = gtk.TreeStore(str, str)
@@ -685,14 +686,21 @@ def media_combos(self):
 	self.widgets['preferences']['medium_name'].get_model().clear()
 	self.widgets['preferences']['media'].get_model().clear()
 	self.widgets['add']['media'].get_model().clear()
+	
 	self.media_ids = {}
-	i = 0
+
+	self.media_ids[0] = None
+	self.widgets['preferences']['medium_name'].insert_text(0, '')
+	self.widgets['add']['media'].insert_text(0, _('N/A'))
+	self.widgets['preferences']['media'].insert_text(0, _('N/A'))
+	i = 1
 	for medium in self.db.Medium.select():
 		self.media_ids[i] = medium.medium_id
 		self.widgets['preferences']['medium_name'].insert_text(int(i), str(medium.name))
 		self.widgets['add']['media'].insert_text(int(i), str(medium.name))
 		self.widgets['preferences']['media'].insert_text(int(i), str(medium.name))
 		i += 1
+
 	self.widgets['preferences']['medium_name'].show_all()
 	self.widgets['add']['media'].show_all()
 	self.widgets['preferences']['media'].show_all()
@@ -710,23 +718,28 @@ def vcodec_combos(self):
 	self.widgets['preferences']['vcodec_name'].get_model().clear()
 	self.widgets['preferences']['vcodec'].get_model().clear()
 	self.widgets['add']['vcodec'].get_model().clear()
+	
 	self.vcodecs_ids = {}
-	i = 0
+	
+	self.vcodecs_ids[0] = None
+	self.widgets['preferences']['vcodec_name'].insert_text(0, '')
+	self.widgets['add']['vcodec'].insert_text(0, _('N/A'))
+	self.widgets['preferences']['vcodec'].insert_text(0, _('N/A'))
+	i = 1
 	for vcodec in self.db.VCodec.select():
 		self.vcodecs_ids[i] = vcodec.vcodec_id
 		self.widgets['preferences']['vcodec_name'].insert_text(int(i), str(vcodec.name))
 		self.widgets['add']['vcodec'].insert_text(int(i), str(vcodec.name))
 		self.widgets['preferences']['vcodec'].insert_text(int(i), str(vcodec.name))
 		i += 1
+
 	self.widgets['preferences']['vcodec_name'].show_all()
 	self.widgets['add']['vcodec'].show_all()
 	self.widgets['preferences']['vcodec'].show_all()
-	if self.config.has_key('vcodec'):
-		pos = gutils.findKey(int(self.config['vcodec']), self.vcodecs_ids)
-		if pos is not None:
-			self.widgets['preferences']['vcodec'].set_active(int(pos))
-		else:
-			self.widgets['preferences']['vcodec'].set_active(0)
+	
+	pos = gutils.findKey(self.config.get('vcodec', 0), self.vcodecs_ids)
+	if pos is not None:
+		self.widgets['preferences']['vcodec'].set_active(int(pos))
 	else:
 		self.widgets['preferences']['vcodec'].set_active(0)
 

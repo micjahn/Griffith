@@ -91,13 +91,14 @@ def set_details(self, item=None):#{{{
 	if item.has_key('cond') and item['cond']:
 		w['condition'].set_markup("<i>%s</i>" % self._conditions[item['cond']])
 	else:
-		w['condition'].set_markup("<i>%s</i>" % self._conditions[5]) # 5 == N/A
+		w['condition'].set_markup("<i>%s</i>" % self._conditions[0]) # 5 == N/A
 	if item.has_key('region') and item['region']:
 		w['region'].set_markup("<i>%s</i>" % gutils.html_encode(item['region']))
-		self.widgets['tooltips'].set_tip(w['region'], self._regions[item['region']])
+		if int(item['region']) < 9:
+			self.widgets['tooltips'].set_tip(w['region'], self._regions[int(item['region'])])
 	else:
 		w['region'].set_text('')
-		self.widgets['tooltips'].set_tip(w['region'], self._regions[9]) # N/A
+		self.widgets['tooltips'].set_tip(w['region'], self._regions[0]) # N/A
 	if item.has_key('layers') and item['layers']:
 		w['layers'].set_markup("<i>%s</i>" % self._layers[item['layers']])
 	else:

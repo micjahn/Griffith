@@ -4,10 +4,14 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2006-12-15 Piotr Ożarowski <ozarow@gmail.com>
+	* Added "N/A" to some fields in "technical information" tab (NULL in database)
+
 2006-12-15 Jessica K. Parth <Jessica.K.P@women-at-work.org>
 	* ODFb Plugin uses the quicksearch and returns much more and better results
 	* KinoDE Plugin return both results for Video/DVD and Kino now and some small fixes
 	* German Translation updated
+	* Moviefone Plugin updated
 
 2006-12-14 Piotr Ożarowski <ozarow@gmail.com>
 	* Search for empty fields only option added
