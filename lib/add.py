@@ -413,9 +413,9 @@ def add_movie_db(self, close):
 		insert_after = None
 	myiter = self.treemodel.insert_after(None, insert_after)
 
-	if not os.path.isfile(image_path):
+	if not os.path.isfile(new_image_path):
 		image_path = os.path.join(self.locations['images'], 'default.png')
-	handler = self.Image.set_from_file(image_path)
+	handler = self.Image.set_from_file(new_image_path)
 	pixbuf = self.Image.get_pixbuf()
 	self.treemodel.set_value(myiter, 0, '%004d' % details['number'])
 	self.treemodel.set_value(myiter, 1, pixbuf.scale_simple(30,40,3))
