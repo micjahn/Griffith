@@ -162,6 +162,7 @@ class ImportPlugin:
 		self.data = None
 		self.imported = 0
 		self.__source_name = None
+		self._abort = False
 	
 	def destroy(self):
 		"""close all resources"""
