@@ -491,8 +491,9 @@ def populate_with_results(self):
 		notes_buffer = w['notes'].get_buffer()
 		notes_buffer.set_text(gutils.convert_entities(self.movie.notes))
 		fields_to_fetch.pop(fields_to_fetch.index('notes'))
-	if 'rating' in fields_to_fetch and self.movie.rating:
-		w['rating_slider'].set_value(float(self.movie.rating))
+	if 'rating' in fields_to_fetch:
+		if self.movie.rating:
+			w['rating_slider'].set_value(float(self.movie.rating))
 		fields_to_fetch.pop(fields_to_fetch.index('rating'))
 	# poster
 	if 'image' in fields_to_fetch:
