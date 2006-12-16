@@ -508,3 +508,18 @@ def html_encode(s):
 	s = s.replace('>', '&gt;')
 	s = s.replace('=', '&quot;')
 	return s
+
+def digits_only(s, maximum=None):
+	import string, re
+	match = re.compile(r"\d+")
+	try:
+		s = int(reduce( string.join, match.findall(str(s))))
+	except:
+		s = 0
+	if maximum is None:
+		return s
+	else:
+		if s > maximum:
+			return maximum
+		else:
+			return s

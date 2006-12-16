@@ -116,6 +116,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	print 'Converting old database - it can take several minutes...'
 	from sqlalchemy.orm import clear_mappers
 	from sql import GriffithSQL
+	from gutils import digits_only
 	import os
 	try:
 		import sqlite
@@ -314,19 +315,4 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	clear_mappers()
 	return True
 #}}}
-
-def digits_only(s, maximum=None):
-	import string, re
-	match = re.compile(r"\d+")
-	try:
-		s = int(reduce( string.join, match.findall(str(s))))
-	except:
-		s = 0
-	if maximum is None:
-		return s
-	else:
-		if s > maximum:
-			return maximum
-		else:
-			return s
 # vim: fdm=marker
