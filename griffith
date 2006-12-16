@@ -151,7 +151,10 @@ class Griffith:
 
 	def edit_movie(self, *args):
 		movie = self.db.Movie.get_by(movie_id=self._movie_id)
-		add.edit_movie(self, movie)
+		if movie != None:
+			add.edit_movie(self, movie)
+		else:
+			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
 
 	def hide_add_window(self, *args):
 		self.widgets['add']['window'].hide()
@@ -671,7 +674,7 @@ class Griffith:
 		if tmp_model and tmp_iter:
 			return tmp_model.get_value(tmp_iter, 0), tmp_iter
 		else:
-			return False
+			return None, None
 
 	# backup/restore ------------------------------------------------------	
 
@@ -707,7 +710,10 @@ You can't undo this operation."""), \
 
 	def print_cover_simple_process(self, *args):
 		movie_id, movie_iter = self.get_maintree_selection()
-		cover.cover_simple(self, movie_id)
+		if movie_id != None:
+			cover.cover_simple(self, movie_id)
+		else:
+			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
 
 	def print_cover_image(self, *args):
 		self.widgets['print_cover']['ci_size'].set_active(0)
