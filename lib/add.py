@@ -585,11 +585,13 @@ def source_changed(self):
 def clone_movie(self):
 	treeselection = self.widgets['treeview'].get_selection()
 	(tmp_model, tmp_iter) = treeselection.get_selected()
+	if tmp_iter == None:
+		return False
 	number = tmp_model.get_value(tmp_iter, 0)
 	movie = self.db.Movie.get_by(number=number)
 
 	if movie is None:
-		return false
+		return False
 
 	next_number = gutils.find_next_available(self.db)
 	new_image = str(movie.image) + '_' + str(next_number)

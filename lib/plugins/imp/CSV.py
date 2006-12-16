@@ -43,7 +43,7 @@ class ImportPlugin(IP):
 	description	= _("Full CSV list import plugin")
 	author		= "Jessica Katharina Parth"
 	email		= "Jessica.K.P@women-at-work.org"
-	version		= "0.2"
+	version		= "0.3"
 	file_filters	= '*.[cC][sS][vV]'
 	mime_types	= ('text/comma-separated-values', 'text/csv', 'application/csv',
 			'application/excel', 'application/vnd.ms-excel', 'application/vnd.msexcel')
@@ -247,7 +247,8 @@ class ImportPlugin(IP):
 		import csv, codecs, os
 		# get user values for converting/opening the csv-file
 		self.start_row = int(digits_only( self.gtk.get_widget('e_startrow').get_text() ))
-		encoding = self.gtk.get_widget('e_encoding').get_text()
+		encoding = self.gtk.get_widget('e_encoding').get_active_text()
+		encoding = encoding[:string.find( encoding, ' ' )]
 		delimiter = self.gtk.get_widget('e_delimiter').get_text()
 		if delimiter == '':
 			delimiter = ","
@@ -296,7 +297,34 @@ class ImportPlugin(IP):
 		if name is None or not os.path.isfile(name):
 			return False
 		self.__source_name = name
+		# auto-detect file-encoding (optional)
+		try:
+			from chardet.universaldetector import UniversalDetector
+			detector = UniversalDetector()
+			detector.reset()
+			lines = 0
+			for line in file(self.__source_name, 'rb'):
+				detector.feed(line)
+				lines += 1
+				if detector.done or lines == 50:
+					break
+			detector.close()
+			encoding = string.replace( string.lower( detector.result['encoding'] ), '-', '' )
+		except:
+			encoding = 'utf_8'
+		# remove - and _ for better detection
+		encoding = string.replace( encoding, '_', '' )
 		
+		model	= self.gtk.get_widget('e_encoding').get_model()
+		itempos	= 0
+		for item in model:
+			pos1 = string.find( string.replace( string.lower(str(item[0])), '_', '' ) , encoding )
+			if pos1 == 0:
+				break
+			itempos += 1
+		self.gtk.get_widget('e_encoding').set_active(itempos)
+		
+		# run dialog
 		response = self.gtk.get_widget('d_import').run()
 		if response == gtk.RESPONSE_OK:
 			return True

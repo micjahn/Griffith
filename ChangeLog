@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2006-12-16 Jessica K. Parth <Jessica.K.P@women-at-work.org>
+	* added a warning when there are no movies in the database to ( print cover, fetch poster, change poster, edit movie, delete movie, clone movie )
+	* Import CSV Plugin updated (use chardet "http://chardet.feedparser.org/" to detect file format)
+
 2006-12-15 Piotr Ożarowski <ozarow@gmail.com>
 	* Added "N/A" to some fields in "technical information" tab (NULL in database)
 	* Added some relations between windows
