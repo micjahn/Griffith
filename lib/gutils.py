@@ -478,6 +478,16 @@ def get_dependencies():
 		'debian_req'	: '1.2.1-p2-2'
 	})
 	try:
+		import chardet
+		version	= chardet.__version__
+	except:
+		version = False
+	optional.append({'module': 'chardet',
+		'version'	: version,
+		'url'		: 'http://chardet.feedparser.org/',
+		'debian'	: 'python-chardet'
+	})
+	try:
 		import sqlite
 		version	= sqlite.version
 	except:

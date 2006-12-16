@@ -140,7 +140,7 @@ class ImportPlugin(IP):
 	def create_import_table(self):
 		self.import_table = {}
 		item = self.ls_assigned.get_iter_first()
-		while item != None:
+		while item is not None:
 			self.import_table[self.ls_assigned.get_value(item,1)] = self.ls_assigned.get_value(item,2)
 			item = self.ls_assigned.iter_next(item)
 		
@@ -151,13 +151,13 @@ class ImportPlugin(IP):
 			
 		if widget == self.b_next:
 			if self.nb_pages.get_current_page() == 0:
-				if self.csv_header != None or self.open_source():
+				if self.csv_header is not None or self.open_source():
 					self.nb_pages.get_nth_page(1).show()
 					self.nb_pages.next_page()
 			else:
 				if self.nb_pages.get_current_page() == 1:
 					# test if at least one field is assigned
-					if self.ls_assigned.get_iter_first() != None:
+					if self.ls_assigned.get_iter_first() is not None:
 						# prepare tabelle for import
 						self.create_import_table()
 							
@@ -207,7 +207,7 @@ class ImportPlugin(IP):
 				self.selected_csv = self.ls_csv.get_value(iter,0)
 				
 		# enable add button if both lists have a selected item
-		if self.selected_griffith != None and self.selected_csv != None:
+		if self.selected_griffith is not None and self.selected_csv is not None:
 			self.b_add.set_sensitive(True)
 		else:
 			self.b_add.set_sensitive(False)
@@ -238,7 +238,7 @@ class ImportPlugin(IP):
 				self.b_del.set_sensitive(False)
 				
 		# enable add button if both lists have a selected item
-		if self.selected_griffith != None and self.selected_csv != None:
+		if self.selected_griffith is not None and self.selected_csv is not None:
 			self.b_add.set_sensitive(True)
 		else:
 			self.b_add.set_sensitive(False)

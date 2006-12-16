@@ -40,9 +40,9 @@ def change_poster(self):
 	"""
 	picture = self.widgets['movie']['picture']
 	number = self.get_maintree_selection()[0]
-	if number == None:
+	if number is None:
 		gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
-		return
+		return False
 	filename = gutils.file_chooser(_("Select image"), action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK), name="", folder=self.locations['desktop'], picture=True)
 	if filename and filename[0]:
 		filename = filename[0]
@@ -123,9 +123,9 @@ def fetch_bigger_poster(self):
 	match = 0
 	self.debug.show("fetching poster from amazon")
 	movie = self.db.Movie.get_by(movie_id=self._movie_id)
-	if movie == None:
+	if movie is None:
 		gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
-		return
+		return False
 	current_poster = movie.image
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 

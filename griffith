@@ -151,7 +151,7 @@ class Griffith:
 
 	def edit_movie(self, *args):
 		movie = self.db.Movie.get_by(movie_id=self._movie_id)
-		if movie != None:
+		if movie is not None:
 			add.edit_movie(self, movie)
 		else:
 			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
@@ -245,11 +245,11 @@ class Griffith:
 	def z_poster(self, *args):
 		treeselection = self.widgets['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
-		if tmp_iter == None:
+		if tmp_iter is None:
 			return
 		number = tmp_model.get_value(tmp_iter, 0)
 		movie = self.db.Movie.get_by(number=number)
-		if movie != None:
+		if movie is not None:
 			tmp_dest = self.locations['posters']
 			tmp_img = os.path.join(tmp_dest, str(movie.image)+".jpg")
 			self.widgets['big_poster'].set_from_file(tmp_img)
@@ -336,7 +336,7 @@ class Griffith:
 		if col_id != 0:
 			new_name = self.widgets['add']['collection'].get_active_text()
 			col = self.db.Collection.get_by(collection_id=col_id)
-			if col != None:
+			if col is not None:
 				col.name=new_name
 				if col.update_in_db():
 					initialize.fill_collections_combo(self, default=col_id)
@@ -359,7 +359,7 @@ class Griffith:
 			y = int(event.y)
 			time = event.time
 			pthinfo = self.widgets['add']['lang_treeview'].get_path_at_pos(x, y)
-			if pthinfo != None:
+			if pthinfo is not None:
 				path, col, cellx, celly = pthinfo
 				self.widgets['add']['lang_treeview'].grab_focus()
 				self.widgets['add']['lang_treeview'].set_cursor( path, col, 0)
@@ -443,7 +443,7 @@ class Griffith:
 		lang_id = self.languages_ids[active]
 		if lang_id>0:
 			lang = self.db.Lang.get_by(lang_id=lang_id)
-			if lang != None:
+			if lang is not None:
 				lang.name = self.widgets['preferences']['lang_name'].get_active_text()
 				if lang.update_in_db():
 					initialize.language_combos(self)
@@ -480,7 +480,7 @@ class Griffith:
 			return False
 		tag_id = self.tags_ids[active]
 		tag = self.db.Tag.get_by(tag_id=tag_id)
-		if tag != None:
+		if tag is not None:
 			tag.name = self.widgets['preferences']['tag_name'].get_active_text()
 			if tag.update_in_db():
 				initialize.fill_preferences_tags_combo(self)
@@ -516,7 +516,7 @@ class Griffith:
 			return False
 		acodec_id = self.acodecs_ids[active]
 		acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
-		if acodec != None:
+		if acodec is not None:
 			acodec.name = self.widgets['preferences']['acodec_name'].get_active_text()
 			if acodec.update_in_db():
 				initialize.acodec_combos(self)
@@ -550,7 +550,7 @@ class Griffith:
 			return False
 		achannel_id = self.achannels_ids[active]
 		achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
-		if achannel != None:
+		if achannel is not None:
 			achannel.name = self.widgets['preferences']['achannel_name'].get_active_text()
 			if achannel.update_in_db():
 				initialize.achannel_combos(self)
@@ -584,7 +584,7 @@ class Griffith:
 			return False
 		subformat_id = self.subformats_ids[active]
 		subformat = self.db.SubFormat.get_by(subformat_id=subformat_id)
-		if subformat != None:
+		if subformat is not None:
 			subformat.name = self.widgets['preferences']['subformat_name'].get_active_text()
 			if subformat.update_in_db():
 				initialize.subformat_combos(self)
@@ -618,7 +618,7 @@ class Griffith:
 			return False
 		medium_id = self.media_ids[active]
 		medium = self.db.Medium.get_by(medium_id=medium_id)
-		if medium != None:
+		if medium is not None:
 			medium.name = self.widgets['preferences']['medium_name'].get_active_text()
 			if medium.update_in_db():
 				initialize.media_combos(self)
@@ -652,7 +652,7 @@ class Griffith:
 			return False
 		vcodec_id = self.vcodecs_ids[active]
 		vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
-		if vcodec != None:
+		if vcodec is not None:
 			vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text()
 			if vcodec.update_in_db():
 				initialize.vcodec_combos(self)
@@ -712,7 +712,7 @@ You can't undo this operation."""), \
 
 	def print_cover_simple_process(self, *args):
 		movie_id, movie_iter = self.get_maintree_selection()
-		if movie_id != None:
+		if movie_id is not None:
 			cover.cover_simple(self, movie_id)
 		else:
 			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
@@ -973,7 +973,7 @@ You can't undo this operation."""), \
 			y = int(event.y)
 			time = event.time
 			pthinfo = self.widgets['treeview'].get_path_at_pos(x, y)
-			if pthinfo != None:
+			if pthinfo is not None:
 				path, col, cellx, celly = pthinfo
 				self.widgets['treeview'].grab_focus()
 				self.widgets['treeview'].set_cursor( path, col, 0)
@@ -1012,12 +1012,12 @@ You can't undo this operation."""), \
 			return False
 		nextiter = None
 		if direction == 'next':
-			if treeiter==None:
+			if treeiter is None:
 				nextiter = treemodel.get_iter_first()
 			else:
 				nextiter = treemodel.iter_next(treeiter)
 		elif direction == 'prev':
-			if treeiter==None:
+			if treeiter is None:
 				nextiter = treemodel.get_iter_first()
 			else:
 				iterpath = treemodel.get_path(treeiter)
