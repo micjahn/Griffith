@@ -54,6 +54,7 @@ class ImportPlugin:
 		self.regions	= parent._regions
 		self.widgets	= parent.widgets['import']
 		self.fields_to_import = fields_to_import
+		self._abort	= False
 
 	def initialize(self):
 		"""
@@ -61,6 +62,9 @@ class ImportPlugin:
 		"""
 		self.imported = 0
 		return True
+
+	def abort(self, *args):
+		self._abort = True
 
 	def set_source(self, name):
 		"""
@@ -93,7 +97,8 @@ class ImportPlugin:
 			return False
 		
 		self.widgets['pwindow'].show()
-		gtk.main_iteration()
+		for i in range(0,40):	# give GTK some time for updates
+			gtk.main_iteration()
 
 		# progressbar
 		update_on = []
@@ -111,10 +116,20 @@ class ImportPlugin:
 
 		statement = Select(self.db.Movie.c)
 
-		while True:
+		processed = 0
+		while self._abort is False:
 			details = self.get_movie_details()
 			if details is None:
 				break
+
+			processed += 1
+			if processed in update_on:
+				self.widgets['progressbar'].set_fraction(float(processed)/float(count))
+				gtk.main_iteration()
+				self.widgets['progressbar'].set_text("%s (%s/%s)" % (str(self.imported), str(processed), str(count)))
+				gtk.main_iteration()
+				gtk.main_iteration() # extra iteration for abort button
+
 			if (details.has_key('o_title') and details['o_title']) or (details.has_key('title') and details['title']):
 				if details.has_key('o_title') and details['o_title']:
 					statement.whereclause = self.db.Movie.c.o_title==details['o_title']
@@ -147,13 +162,7 @@ class ImportPlugin:
 						self.debug.show("movie details are not unique, skipping: %s" % str(e))
 			else:
 				self.debug.show('skipping movie without title or original title')
-			self.widgets['progressbar'].set_text("%s/%s" % (str(self.imported), str(count)))
-			gtk.main_iteration()
-			if self.imported in update_on:
-				update_on.pop(update_on.index(self.imported))
-				self.widgets['progressbar'].set_fraction(float(self.imported)/float(count))
-				gtk.main_iteration()
-		self.widgets['progressbar'].set_text("%s/%s" % (str(self.imported), str(count)))
+		self.widgets['progressbar'].set_text("%s (%s/%s)" % (str(self.imported), str(processed), str(count)))
 		self.widgets['progressbar'].set_fraction(1)
 		return True
 
@@ -212,6 +221,9 @@ def on_import_button_clicked(button, self, *args):
 	if ip.initialize():
 		self.widgets['window'].set_sensitive(False)
 		self.widgets['import']['window'].hide()
+		self.widgets['import']['pabort'].connect('clicked', ip.abort, ip)
+		self.widgets['import']['progressbar'].set_fraction(0)
+		self.widgets['import']['progressbar'].set_text('')
 		# for file in selected_files:
 		if ip.run(filename):
 			gutils.info(self, _("%s file has been imported. %s movies added.") \
@@ -220,4 +232,9 @@ def on_import_button_clicked(button, self, *args):
 		ip.clear()
 		self.widgets['import']['pwindow'].hide()
 		self.widgets['window'].set_sensitive(True)
+
+def on_abort_button_clicked(button, self, *args):
+	self.widgets['import']['window'].hide()
+	self.widgets['import']['pwindow'].hide()
+	self.widgets['window'].set_sensitive(True)
 

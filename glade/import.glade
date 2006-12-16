@@ -694,7 +694,7 @@
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="closebutton1">
+	    <widget class="GtkButton" id="p_abortbutton">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -703,7 +703,6 @@
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-6</property>
-	      <signal name="clicked" handler="on_abort_clicked" last_modification_time="Wed, 13 Dec 2006 22:52:04 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -751,7 +750,7 @@
 	    <widget class="GtkProgressBar" id="progressbar">
 	      <property name="visible">True</property>
 	      <property name="orientation">GTK_PROGRESS_LEFT_TO_RIGHT</property>
-	      <property name="fraction">0.530000030994</property>
+	      <property name="fraction">0</property>
 	      <property name="pulse_step">0</property>
 	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 	    </widget>
