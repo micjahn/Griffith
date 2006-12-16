@@ -29,6 +29,7 @@ import gtk
 import gutils
 import gobject
 import gettext
+import platform
 
 try:
 	import gtkspell
@@ -121,12 +122,16 @@ def location_posters(locations, config):
 
 def gui(self):
 	self._ = None
-	self.debug.show("running on %s" % os.name)
-	
+	self.debug.show("running on %s - %s" % (os.name, platform.system()))
 	if os.name == 'win32' or os.name == 'nt':
 		self.windows = True
 	else:
 		self.windows = False
+		
+	if platform.system() == 'Darwin':
+		self.mac = True
+	else:
+		self.mac = False
 	
 	self.griffith_dir = self.locations['home']	# deprecated
 	
