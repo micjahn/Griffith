@@ -398,10 +398,10 @@ def add_movie_db(self, close):
 
 	image_path = ''
 	if details['image']:
-		image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
-		if os.path.isfile(image_path):
-			new_image_path = os.path.join(tmp_dest, "%s.jpg" % details['image'])
-			shutil.move(image_path, new_image_path)
+		tmp_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
+		if os.path.isfile(tmp_image_path):
+			image_path = os.path.join(tmp_dest, "%s.jpg" % details['image'])
+			shutil.move(tmp_image_path, image_path)
 			#lets make the thumbnail and medium image from poster for future use
 			gutils.make_thumbnail(self, "%s.jpg"%details['image'])
 			gutils.make_medium_image(self, "%s.jpg"%details['image'])
@@ -413,9 +413,9 @@ def add_movie_db(self, close):
 		insert_after = None
 	myiter = self.treemodel.insert_after(None, insert_after)
 
-	if not os.path.isfile(new_image_path):
+	if not os.path.isfile(image_path):
 		image_path = os.path.join(self.locations['images'], 'default.png')
-	handler = self.Image.set_from_file(new_image_path)
+	handler = self.Image.set_from_file(image_path)
 	pixbuf = self.Image.get_pixbuf()
 	self.treemodel.set_value(myiter, 0, '%004d' % details['number'])
 	self.treemodel.set_value(myiter, 1, pixbuf.scale_simple(30,40,3))
