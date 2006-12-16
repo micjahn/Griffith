@@ -384,4 +384,9 @@ class ImportPlugin(IP):
 
 	def clear(self):
 		IP.clear(self)
+		self.nb_pages.get_nth_page(1).hide()
+		self.csv_header = None
+		self.ls_assigned.clear() # TODO: return all fields to ls_griffith
+
+	def destroy(self):
 		self.gtk.get_widget('d_import').destroy()

@@ -57,36 +57,27 @@ class ImportPlugin:
 		self._abort	= False
 
 	def initialize(self):
-		"""
-		Initializes plugin (get all parameters from user, etc.)
-		"""
+		"""Initializes plugin (get all parameters from user, etc.)"""
 		self.imported = 0
 		return True
 
 	def abort(self, *args):
+		"""called after abort button clicked"""
 		self._abort = True
 
 	def set_source(self, name):
-		"""
-		Prepare source (open file, etc.)
-		"""
+		"""Prepare source (open file, etc.)"""
 
 	def count_movies(self):
-		"""
-		Returns number of movies in file which is about to be imported
-		"""
+		"""Returns number of movies in file which is about to be imported"""
 		pass
 
 	def get_movie_details(self):
-		"""
-		Returns dictionary with movie details
-		"""
+		"""Returns dictionary with movie details"""
 		pass
 
 	def run(self, name):
-		"""
-		Import movies
-		"""
+		"""Import movies, function called in a loop over source files"""
 		from add import validate_details, edit_movie
 		from gutils import find_next_available
 		from sqlalchemy import Select, func
@@ -138,7 +129,7 @@ class ImportPlugin:
 						self.debug.show("movie already exists (o_title=%s)" % details['o_title'])
 						continue
 				if details.has_key('title') and details['title']:
-					statement.whereclause = self.db.Movie.c.o_title==details['o_title']
+					statement.whereclause = self.db.Movie.c.o_title==details['title']
 					tmp = statement.execute().fetchone()
 					if tmp is not None:
 						self.debug.show("movie already exists (title=%s)" % details['title'])
@@ -167,9 +158,14 @@ class ImportPlugin:
 		return True
 
 	def clear(self):
+		"""clear plugin before next source file"""
 		self.data = None
 		self.imported = 0
 		self.__source_name = None
+	
+	def destroy(self):
+		"""close all resources"""
+		pass
 
 
 def on_import_plugin_changed(combobox, widgets, *args):
@@ -208,7 +204,7 @@ def on_import_plugin_changed(combobox, widgets, *args):
 def on_import_button_clicked(button, self, *args):
 	import plugins.imp, gutils
 	plugin_name = self.widgets['import']['plugin'].get_active_text()
-	filename = self.widgets['import']['fcw'].get_filename() # TODO: multiple files
+	filenames = self.widgets['import']['fcw'].get_filenames()
 	
 	fields = []
 	w = self.widgets['import']['fields']
@@ -222,14 +218,15 @@ def on_import_button_clicked(button, self, *args):
 		self.widgets['window'].set_sensitive(False)
 		self.widgets['import']['window'].hide()
 		self.widgets['import']['pabort'].connect('clicked', ip.abort, ip)
-		self.widgets['import']['progressbar'].set_fraction(0)
-		self.widgets['import']['progressbar'].set_text('')
-		# for file in selected_files:
-		if ip.run(filename):
-			gutils.info(self, _("%s file has been imported. %s movies added.") \
-				% (plugin_name, ip.imported), self.widgets['window'])
-			self.populate_treeview()
-		ip.clear()
+		for filename in filenames:
+			self.widgets['import']['progressbar'].set_fraction(0)
+			self.widgets['import']['progressbar'].set_text('')
+			if ip.run(filename):
+				gutils.info(self, _("%s file has been imported. %s movies added.") \
+					% (plugin_name, ip.imported), self.widgets['window'])
+				self.populate_treeview()
+			ip.clear()
+		ip.destroy()
 		self.widgets['import']['pwindow'].hide()
 		self.widgets['window'].set_sensitive(True)
 
