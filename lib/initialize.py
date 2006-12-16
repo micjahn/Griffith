@@ -363,7 +363,7 @@ def import_plugins(self):
 	get('import_button').connect('clicked', plugins.imp.on_import_button_clicked, self)
 	w['plugin'].connect('changed', plugins.imp.on_import_plugin_changed, w)
 	w['window'].set_transient_for(self.widgets['window'])
-	w['pwindow'].set_transient_for(w['window'])
+	w['pwindow'].set_transient_for(self.widgets['window'])
 	
 	for name in plugins.imp.__all__:
 		w['plugin'].append_text(name)

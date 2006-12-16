@@ -153,8 +153,7 @@ class ImportPlugin:
 						self.debug.show("movie details are not unique, skipping: %s" % str(e))
 			else:
 				self.debug.show('skipping movie without title or original title')
-		self.widgets['progressbar'].set_text("%s (%s/%s)" % (str(self.imported), str(processed), str(count)))
-		self.widgets['progressbar'].set_fraction(1)
+		self.widgets['pwindow'].hide()
 		return True
 
 	def clear(self):

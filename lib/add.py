@@ -479,6 +479,12 @@ def populate_with_results(self):
 	self.movie.open_page(w['window'])
 	self.movie.parse_movie()
 
+	if 'year' in fields_to_fetch:
+		w['year'].set_value(int(self.movie.year))
+		fields_to_fetch.pop(fields_to_fetch.index('year'))
+	if 'runtime' in fields_to_fetch:
+		w['runtime'].set_value(int(self.movie.runtime))
+		fields_to_fetch.pop(fields_to_fetch.index('runtime'))
 	if 'cast' in fields_to_fetch:
 		cast_buffer = w['cast'].get_buffer()
 		cast_buffer.set_text(gutils.convert_entities(self.movie.cast))

@@ -11,6 +11,7 @@ Griffith ChangeLog
 	  + opening new page inside movie plugin is now as easy as: "self.new_page =  self.open_page(url='http://something')"
 	* chardet added to optional dependencies
 	* Import multiple files at once
+	* FDb movie plugin updated
 
 2006-12-16 Jessica K. Parth <Jessica.K.P@women-at-work.org>
 	* added a warning when there are no movies in the database to ( print cover, fetch poster, change poster, edit movie, delete movie, clone movie )
