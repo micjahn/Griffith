@@ -6,9 +6,9 @@ Griffith ChangeLog
 
 2006-12-17 Jessica K. Parth <Jessica.K.P@women-at-work.org>
 	* Import CSV plugin updated to work with multiple files
-	
+
 2006-12-17 Piotr Ożarowski <ozarow@gmail.com>
-	* Stopklatka movie plugin updated
+	* Stopklatka and TanukiAnime movie plugins updated
 	* Upgrade from old database: detect SQLite3 and print some hints
 
 2006-12-16 Piotr Ożarowski <ozarow@gmail.com>
