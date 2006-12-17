@@ -230,7 +230,7 @@ def lang_treeview(self):
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
 	combo.connect('edited', self.on_tv_lang_combo_edited, 0)
-	column=gtk.TreeViewColumn('Language', combo, text=0)
+	column=gtk.TreeViewColumn(_('Language'), combo, text=0)
 	column.set_sort_column_id(0)
 	treeview.append_column(column)
 	
