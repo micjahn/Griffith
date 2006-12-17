@@ -510,6 +510,8 @@ def html_encode(s):
 	return s
 
 def digits_only(s, maximum=None):
+	if s is None:
+		return 0
 	import string, re
 	match = re.compile(r"\d+")
 	try:

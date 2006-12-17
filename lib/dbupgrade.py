@@ -156,6 +156,8 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2007")
 	old_cursor.execute("UPDATE movies SET rating=10 WHERE rating>10")
 	old_cursor.execute("UPDATE movies SET rating=0 WHERE rating<0")
+	old_cursor.execute("UPDATE movies SET volume_id=0 WHERE volume_id<1")
+	old_cursor.execute("UPDATE movies SET collection_id=0 WHERE collection_id<1")
 	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
 	old_cursor.execute("DELETE FROM loans WHERE date='' OR date ISNULL")
 	#old_cursor.commit()
@@ -170,6 +172,12 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	self.config['db_type'] = 'sqlite'
 	self.config['default_db'] = 'griffith.db'
 	self.config['posters'] = 'posters'
+	self.config['color'] = 0
+	self.config['condition'] = 0
+	self.config['layers'] = 0
+	self.config['media'] = 0
+	self.config['region'] = 0
+	self.config['vcodec'] = 0
 	new_db = GriffithSQL(self.config, self.debug, self.locations['home'])
 
 	# collections

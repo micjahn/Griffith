@@ -74,14 +74,20 @@ def show_preferences(self):
 		w['font'].set_filename(self.config.get('font'))
 
 	# defaults (for static data only)
-	w['condition'].set_active(int(self.config.get('condition', 0)))
-	w['region'].set_active(int(self.config.get('region', 0)))
-	w['layers'].set_active(int(self.config.get('layers', 0)))
-	w['color'].set_active(int(self.config.get('color', 0)))
+	w['condition'].set_active( gutils.digits_only(self.config.get('condition', 0), 3) )
+	w['region'].set_active( gutils.digits_only(self.config.get('region', 0), 8) )
+	w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0), 4) )
+	w['color'].set_active( gutils.digits_only(self.config.get('color', 0), 3 ))
 	if self.config.get('media', 0) in self.media_ids:
-		w['media'].set_active( gutils.findKey(self.config.get('media', 0), self.media_ids) )
-	if self.config.get('vcodec', 0) in self.vcodecs_ids:
-		w['vcodec'].set_active(	gutils.findKey(self.config.get('vcodec', 0), self.vcodecs_ids) )
+		if self.config.get('media', 0) > 0:
+			w['media'].set_active( gutils.findKey(self.config.get('media', 0), self.media_ids) )
+		else:
+			w['media'].set_active(0)
+	if self.config.get('vcodec', 0) in self.vcodecs_ids >- 1:
+		if self.config.get('vcodec', 0) > 0:
+			w['vcodec'].set_active(	int(gutils.findKey(self.config.get('vcodec', 0), self.vcodecs_ids)) )
+		else:
+			w['vcodec'].set_active(0)
 	
 	# search for:
 	w['s_classification'].set_active(bool(self.config.get('s_classification', True)))
