@@ -249,7 +249,7 @@ def lang_treeview(self):
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
 	combo.connect('edited', self.on_tv_lang_combo_edited, 1)
-	column=gtk.TreeViewColumn('Type', combo, text=1)
+	column=gtk.TreeViewColumn(_('Type'), combo, text=1)
 	column.set_sort_column_id(1)
 	treeview.append_column(column)
 
@@ -262,7 +262,7 @@ def lang_treeview(self):
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
 	combo.connect('edited', self.on_tv_lang_combo_edited, 2)
-	column=gtk.TreeViewColumn('Codec', combo, text=2)
+	column=gtk.TreeViewColumn(_('Codec'), combo, text=2)
 	column.set_sort_column_id(2)
 	treeview.append_column(column)
 	
@@ -275,7 +275,7 @@ def lang_treeview(self):
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
 	combo.connect('edited', self.on_tv_lang_combo_edited, 3)
-	column=gtk.TreeViewColumn('Channels', combo, text=3)
+	column=gtk.TreeViewColumn(_('Channels'), combo, text=3)
 	column.set_sort_column_id(3)
 	treeview.append_column(column)
 	
@@ -288,7 +288,7 @@ def lang_treeview(self):
 	combo.set_property('editable', True)
 	combo.set_property('has-entry', False)
 	combo.connect('edited', self.on_tv_lang_combo_edited, 4)
-	column=gtk.TreeViewColumn('Subtitle format', combo, text=4)
+	column=gtk.TreeViewColumn(_('Subtitle format'), combo, text=4)
 	column.set_sort_column_id(4)
 	treeview.append_column(column)
 	

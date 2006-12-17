@@ -74,7 +74,7 @@ def show_preferences(self):
 		w['font'].set_filename(self.config.get('font'))
 
 	# defaults (for static data only)
-	w['condition'].set_active( gutils.digits_only(self.config.get('condition', 0), 3) )
+	w['condition'].set_active( gutils.digits_only(self.config.get('condition', 0), 5) )
 	w['region'].set_active( gutils.digits_only(self.config.get('region', 0), 8) )
 	w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0), 4) )
 	w['color'].set_active( gutils.digits_only(self.config.get('color', 0), 3 ))

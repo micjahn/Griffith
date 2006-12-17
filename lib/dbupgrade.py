@@ -179,7 +179,9 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET color=NULL WHERE color='' OR color='0'")
 	old_cursor.execute("UPDATE movies SET layers=NULL WHERE layers='' OR layers='4'")
 	old_cursor.execute("DELETE FROM volumes WHERE name = ''")
+	old_cursor.execute("DELETE FROM volumes WHERE name = 'None'")
 	old_cursor.execute("DELETE FROM collections WHERE name = ''")
+	old_cursor.execute("DELETE FROM collections WHERE name = 'None'")
 	old_cursor.execute("DELETE FROM languages WHERE name = ''")
 
 	self.config['db_type'] = 'sqlite'
