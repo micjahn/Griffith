@@ -120,8 +120,9 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	import os
 	try:
 		import sqlite
+		from sqlite import DatabaseError
 	except:
-		self.debug.show("Old DB conversion: please install pysqlite legacy (v1.0)")
+		print 'Old DB conversion: please install pysqlite legacy (v1.0)'
 		return False
 
 	if os.path.isfile(destination_file):
@@ -134,7 +135,19 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 				break
 		os.rename(destination_file, "%s_%s" % (destination_file, i))
 
-	old_db = sqlite.connect(source_file,autocommit=0)
+	try:
+		old_db = sqlite.connect(source_file,autocommit=0)
+	except DatabaseError, e:
+		if str(e) == 'file is encrypted or is not a database':
+			print 'Your database is most probably in SQLite3 format, please convert it to SQLite2:'
+			print '$ sqlite3 ~/.griffith/griffith.gri .dump | sqlite ~/.griffith/griffith.gri2'
+			print '$ mv ~/.griffith/griffith.gri{,3}'
+			print '$ mv ~/.griffith/griffith.gri{2,}'
+			print 'or install pysqlite in version 1.1'
+		else:
+			raise
+		return False
+
 	old_cursor = old_db.cursor()
 
 	# fix old database

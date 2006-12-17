@@ -62,11 +62,14 @@ class Griffith:
 		# convert old database
 		filename = os.path.join(self.locations['home'], self.config['default_db'])
 		if self.config['default_db'].lower().endswith('.gri'):
-			debug.show('SQLite2 database format detected. Converting...')
+			debug.show('Old database format detected. Converting...')
 			from dbupgrade import convert_from_old_db
 			if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
 				self.config.save()
 				initialize.location_posters(self.locations, self.config)
+			else:
+				print 'Cant convert old database, exiting.'
+				sys.exit(4)
 		
 		# create/connect db
 		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
