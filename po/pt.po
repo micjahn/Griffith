@@ -9,12 +9,12 @@ msgstr ""
 "Project-Id-Version: Griffith 0.8pre1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-15 19:06+0100\n"
-"PO-Revision-Date: 2006-12-09 00:29+0000\n"
+"PO-Revision-Date: 2006-12-17 03:25+0000\n"
 "Last-Translator: Vasco Nunes <vasco.m.nunes@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../griffith:283
 msgid "You saw all movies in your collection!"
@@ -507,7 +507,7 @@ msgstr "Distribuidora"
 #: ../lib/initialize.py:492 ../lib/plugins/export/PluginExportHTML.py:101
 #: ../glade/griffith.glade.h:146
 msgid "Trailer"
-msgstr ""
+msgstr "Trailer"
 
 #: ../lib/initialize.py:493 ../glade/griffith.glade.h:157
 msgid "Volume"
@@ -605,7 +605,7 @@ msgstr "Região 6 (República Popular da China)"
 
 #: ../lib/initialize.py:507
 msgid "Region 7 (Reserved for Unspecified Special Use)"
-msgstr ""
+msgstr "Região 7 (Reservado para utilização especial não especificada)"
 
 #: ../lib/initialize.py:508
 msgid "Region 8 (Airlines/Cruise Ships)"
@@ -700,7 +700,7 @@ msgstr "Este nome já está a ser utilizado!"
 #: ../lib/sql.py:277
 #, python-format
 msgid "Column \"%s\" is not unique"
-msgstr ""
+msgstr "A coluna \"%s\" não é única"
 
 #: ../lib/sql.py:326
 msgid "Database connection failed."
@@ -754,12 +754,14 @@ msgid ""
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
 "Internet Service Provider's SMTP server address."
 msgstr ""
+"Utilize este campo para definir o servidor SMTP que deseja utilizar para enviar as suas mensagens de correio electrónico. Em sistemas unix, 'localhost' deverá funcionar. Em alternativam poderá utilizar o servidor SMTP do seu ISP."
 
 #: ../lib/widgets.py:293
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
 msgstr ""
+"Este é o endereço de remetente que será utilizado em todas as mensagens de correio electrónico enviadas pelo Griffith. Provavelmente, vai querer definir aqui o seu próprio endereço pessoal de correio electrónico."
 
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:88
@@ -893,23 +895,22 @@ msgid "Full XML list export plugin"
 msgstr "Plugin de exportação de XML"
 
 #: ../lib/plugins/imp/CSV.py:43
-#, fuzzy
 msgid "Full CSV list import plugin"
-msgstr "Plugin para exportação de listagem em CSV"
+msgstr "Plugin para importação de uma lista CSV"
 
 #: ../lib/plugins/imp/CSV.py:168
 msgid "Please assign at least one field first!"
-msgstr ""
+msgstr "Por favor, indique pelo menos um campo!"
 
 #: ../lib/plugins/imp/CSV.py:289
-#, fuzzy, python-format
+#, python-format
 msgid "Can't open the file %s"
-msgstr "Não é possível abrir %s!"
+msgstr "Não é possível abrir %s"
 
 #: ../lib/plugins/imp/__init__.py:217
-#, fuzzy, python-format
+#, python-format
 msgid "%s file has been imported. %s movies added."
-msgstr "Ficheiro %s foi criado."
+msgstr "O ficheiro %s foi importado. Foram adicionados %s filmes."
 
 #: ../glade/exporthtml.glade.h:1
 msgid "<b>Example</b>"
@@ -1205,7 +1206,7 @@ msgstr "Obter da Amazon"
 
 #: ../glade/griffith.glade.h:53
 msgid "Fill empty fields only"
-msgstr ""
+msgstr "Preencher apenas campos vazios"
 
 #: ../glade/griffith.glade.h:54
 msgid "Filter "
@@ -1241,12 +1242,11 @@ msgstr "Página web"
 
 #: ../glade/griffith.glade.h:63
 msgid "Host"
-msgstr ""
+msgstr "Servidor"
 
 #: ../glade/griffith.glade.h:64
-#, fuzzy
 msgid "I_mport"
-msgstr "E_xportar"
+msgstr "I_mportar"
 
 #: ../glade/griffith.glade.h:66
 msgid "Include Front Image"
@@ -1338,7 +1338,7 @@ msgstr "Título"
 
 #: ../glade/griffith.glade.h:95
 msgid "Other"
-msgstr ""
+msgstr "Outro"
 
 #: ../glade/griffith.glade.h:96
 msgid "PDF reader"
@@ -1362,7 +1362,7 @@ msgstr "Por favor, aguarde um momento..."
 
 #: ../glade/griffith.glade.h:102
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: ../glade/griffith.glade.h:103
 msgid "Port"
@@ -1529,7 +1529,7 @@ msgstr "Utilizar a verificação ortográfica"
 
 #: ../glade/griffith.glade.h:152
 msgid "Use locale:"
-msgstr ""
+msgstr "Utilizar locale:"
 
 #: ../glade/griffith.glade.h:153
 msgid "Username"
@@ -1628,27 +1628,31 @@ msgid ""
 "only one title.\n"
 "Your cast-list should be comma-seperated to break it apart in multiple lines."
 msgstr ""
+"<b>Instruções</b>:\n"
+"\n"
+"No passo seguinte poderá relacionar os seus campos csv com os do Griffith.\n"
+"Um campo CSV pode ser atribuído a vários campos do Griffith, i.e. se tiver apenas um título\n"
+"A sua listagem de actores deverá ter separação por vírgulas de modo a quebrar em linhas múltiplas."
 
 #: ../glade/importcsv.glade.h:6
 msgid "Assigned Fields (CSV > Griffith)"
-msgstr ""
+msgstr "Campos atribuídos (CSV > Griffith)"
 
 #: ../glade/importcsv.glade.h:7
-#, fuzzy
 msgid "CSV Fields"
-msgstr "Campos"
+msgstr "Campos CSV"
 
 #: ../glade/importcsv.glade.h:8
 msgid "CSV Import"
-msgstr ""
+msgstr "Importação CSV"
 
 #: ../glade/importcsv.glade.h:9
 msgid "Delimiter"
-msgstr ""
+msgstr "Delimitador"
 
 #: ../glade/importcsv.glade.h:10
 msgid "Encoding"
-msgstr ""
+msgstr "Codificação"
 
 #: ../glade/importcsv.glade.h:11 ../glade/import.glade.h:6
 msgid "Fields"
@@ -1656,37 +1660,35 @@ msgstr "Campos"
 
 #: ../glade/importcsv.glade.h:12
 msgid "File-Options"
-msgstr ""
+msgstr "Opções do ficheiro"
 
 #: ../glade/importcsv.glade.h:13
 msgid "From Row"
-msgstr ""
+msgstr "Linha de origem"
 
 #: ../glade/importcsv.glade.h:14
-#, fuzzy
 msgid "Griffith Fields"
-msgstr "Lista de filmes do Griffith"
+msgstr "Campos do Griffith"
 
 #: ../glade/importcsv.glade.h:15
 msgid "If your file has no column headers then you should import from row 0."
-msgstr ""
+msgstr "Se o seu ficheiro não tem cabeçalhos de coluna deve importar a partir da linha 0."
 
 #: ../glade/importcsv.glade.h:16
 msgid "Lineterminator"
-msgstr ""
+msgstr "Terminação de linha"
 
 #: ../glade/importcsv.glade.h:17
 msgid "Quotechar"
-msgstr ""
+msgstr "Quotechar"
 
 #: ../glade/import.glade.h:1
 msgid "<b>Import only fields selected below</b>"
 msgstr "<b>Importar apenas os campos abaixo seleccionados</b>"
 
 #: ../glade/import.glade.h:2
-#, fuzzy
 msgid "<b>Importing...</b>"
-msgstr "<b>Exportar</b>"
+msgstr "<b>A importar...</b>"
 
 #: ../glade/import.glade.h:7
 msgid "Import window"
@@ -1694,14 +1696,14 @@ msgstr "Janela de importação"
 
 #: ../glade/import.glade.h:8
 msgid "Plugin"
-msgstr ""
+msgstr "Plugin"
 
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Fonte"
 
 #~ msgid "Region 9 (Often used as region free)"
-#~ msgstr "Região 9 (Geralmente utilizado para multi-região)"
+#~ msgstr "RegiÃ£o 9 (Geralmente utilizado para multi-regiÃ£o)"
 
 #~ msgid "To buy"
 #~ msgstr "A comprar"
@@ -1710,7 +1712,7 @@ msgstr "Fonte"
 #~ msgstr "PDF"
 
 #~ msgid "Spell Checker"
-#~ msgstr "Verificação Ortográfica"
+#~ msgstr "VerificaÃ§Ã£o OrtogrÃ¡fica"
 
 #~ msgid "min."
 #~ msgstr " "
