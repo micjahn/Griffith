@@ -10,6 +10,7 @@ Griffith ChangeLog
 2006-12-17 Piotr Ożarowski <ozarow@gmail.com>
 	* AniDB, Filmweb, Stopklatka and TanukiAnime movie plugins updated
 	* Upgrade from old database: detect SQLite3 and print some hints
+	* Add "commentary" to the language types
 
 2006-12-16 Piotr Ożarowski <ozarow@gmail.com>
 	* WP, FDb and Onet movie plugins updated

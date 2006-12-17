@@ -243,6 +243,7 @@ def lang_treeview(self):
 	model.append([1, _('lector')])
 	model.append([2, _('dubbing')])
 	model.append([3, _('subtitles')])
+	model.append([4, _("commentary")])
 	combo = gtk.CellRendererCombo()
 	combo.set_property('model', model)
 	combo.set_property('text-column', 1)
@@ -501,7 +502,7 @@ def dictionaries(self):
 		'year'           : _('Year')}
 	self._conditions = (_('N/A'), _('Damaged'), _('Poor'),  _('Fair'), _('Good'), _('Excellent'))
 	self._colors = (_('N/A'), _('Color'), _('Black and White'), _('Mixed'))
-	self._lang_types = ('', _('lector'), _('dubbing'), _('subtitles'))
+	self._lang_types = ('', _('lector'), _('dubbing'), _('subtitles'), _('commentary'))
 	self._layers = (_('N/A'), _('Single Side, Single Layer'), _('Single Side, Dual Layer'), _('Dual Side, Single Layer'), _('Dual Side, Dual Layer'))
 	self._regions = (
 		_('Region 0 (No Region Coding)'),
