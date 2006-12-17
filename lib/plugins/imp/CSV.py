@@ -67,6 +67,24 @@ class ImportPlugin(IP):
 		self.tv_assigned = self.gtk.get_widget('tv_assigned')
 		self.tv_griffith = self.gtk.get_widget('tv_griffith')
 		
+		# 1st list
+		self.ls_csv = gtk.ListStore(str)
+		self.tv_csv.set_model(self.ls_csv)
+		renderer = gtk.CellRendererText()
+		column = gtk.TreeViewColumn("none", renderer, text=0)
+		self.tv_csv.append_column(column)
+		
+		# 2nd list 
+		self.ls_griffith = gtk.ListStore(str,str)
+		self.tv_griffith.set_model(self.ls_griffith)
+		renderer = gtk.CellRendererText()
+		column = gtk.TreeViewColumn("none", renderer, text=0)
+		column.set_visible(False)
+		self.tv_griffith.append_column(column)
+		column = gtk.TreeViewColumn("none", renderer, text=1)
+		self.tv_griffith.append_column(column)
+		self.set_griffith_fields()
+		
 		# 3rd list
 		self.ls_assigned = gtk.ListStore(str,str,str)
 		self.tv_assigned.set_model(self.ls_assigned)
@@ -80,32 +98,11 @@ class ImportPlugin(IP):
 		column = gtk.TreeViewColumn("none", renderer, text=2)
 		column.set_visible(False)
 		self.tv_assigned.append_column(column)
-		
-		# 2nd list
-		sorted_list = ( "number","title", "o_title", "director", "year", "country", 
-				"cast", "studio", "plot", "runtime", "genre", "classification",
-				"site", "o_site", "trailer", "image", "seen", "loaned", "notes", 
-				"rating", "movie_id", "collection_id", "volumne_id", "medium_id", 
-				"vcodec_id", "color", "cond", "layers", "region", "media_num" )
-		self.ls_griffith = gtk.ListStore(str,str)
-		self.tv_griffith.set_model(self.ls_griffith)
-		renderer = gtk.CellRendererText()
-		column = gtk.TreeViewColumn("none", renderer, text=0)
-		column.set_visible(False)
-		self.tv_griffith.append_column(column)
-		column = gtk.TreeViewColumn("none", renderer, text=1)
-		self.tv_griffith.append_column(column)
-		# sort the list and add field and translated field-name
-		for sorted in sorted_list:
-			for name in self.fields_to_import:
-				if sorted == name:
-					iterator = self.ls_griffith.append()
-					self.ls_griffith.set_value(iterator, 0, name)
-					self.ls_griffith.set_value(iterator, 1, self.fields[name])
 	
 		# hide tabs
 		self.nb_pages = self.gtk.get_widget('nb_pages')
 		self.nb_pages.get_nth_page(1).hide()
+		self.nb_pages.connect("switch-page", self._on_page_changed)
 		
 		# Events
 		# Buttons
@@ -115,12 +112,14 @@ class ImportPlugin(IP):
 		self.b_next = self.gtk.get_widget("b_next")
 		self.b_next.connect("clicked", self._clicked)
 		
+		self.b_back = self.gtk.get_widget("b_back")
+		self.b_back.connect("clicked", self._clicked)
+		
 		self.b_add = self.gtk.get_widget("b_add")
 		self.b_add.connect("clicked", self._clicked)
 		
 		self.b_del = self.gtk.get_widget("b_del")
 		self.b_del.connect("clicked", self._clicked)
-
 		
 		# Treeviews
 		self.tv_griffith.connect("row_activated", self._on_row_activated)
@@ -136,6 +135,22 @@ class ImportPlugin(IP):
 		self.current_csv_row = 0
 		self.csv_header = None
 		return True
+	
+	def set_griffith_fields(self):
+		# 2nd list
+		sorted_list = ( "number","title", "o_title", "director", "year", "country", 
+				"cast", "studio", "plot", "runtime", "genre", "classification",
+				"site", "o_site", "trailer", "image", "seen", "loaned", "notes", 
+				"rating", "movie_id", "collection_id", "volumne_id", "medium_id", 
+				"vcodec_id", "color", "cond", "layers", "region", "media_num" )
+		# sort the list and add field and translated field-name
+		for sorted in sorted_list:
+			for name in self.fields_to_import:
+				if sorted == name:
+					iterator = self.ls_griffith.append()
+					self.ls_griffith.set_value(iterator, 0, name)
+					self.ls_griffith.set_value(iterator, 1, self.fields[name])
+		
 		
 	def create_import_table(self):
 		self.import_table = {}
@@ -143,17 +158,28 @@ class ImportPlugin(IP):
 		while item is not None:
 			self.import_table[self.ls_assigned.get_value(item,1)] = self.ls_assigned.get_value(item,2)
 			item = self.ls_assigned.iter_next(item)
+			
+	def _on_page_changed(self, notebook, page, page_num):
+		if page_num == 0:
+			self.b_back.set_sensitive(False)
+		if page_num == 1:
+			self.b_back.set_sensitive(True)
+			self.open_source()
+			
 		
 	def _clicked(self, widget, event=None, data=None):
 		if widget == self.b_cancel:
 			self.gtk.get_widget('d_import').hide()
 			self.gtk.get_widget('d_import').response(gtk.RESPONSE_CANCEL)
 			
+		if widget == self.b_back:
+			if self.nb_pages.get_current_page() == 1:
+				self.nb_pages.prev_page()
+
 		if widget == self.b_next:
 			if self.nb_pages.get_current_page() == 0:
-				if self.csv_header is not None or self.open_source():
-					self.nb_pages.get_nth_page(1).show()
-					self.nb_pages.next_page()
+				self.nb_pages.get_nth_page(1).show()
+				self.nb_pages.next_page()
 			else:
 				if self.nb_pages.get_current_page() == 1:
 					# test if at least one field is assigned
@@ -276,12 +302,8 @@ class ImportPlugin(IP):
 				self.data = csv.reader(codecs.open(self.__source_name, 'r', encoding), dialect='excel', quotechar=quotechar, delimiter=delimiter, lineterminator = lineterminator)
 			
 		
-			# fill the found names in the simple string list
-			self.ls_csv = gtk.ListStore(str)
-			self.tv_csv.set_model(self.ls_csv)
-			renderer = gtk.CellRendererText()
-			column = gtk.TreeViewColumn("none", renderer, text=0)
-			self.tv_csv.append_column(column)
+			# fill the found csv-headers in the simple string list
+			self.ls_csv.clear()
 			for name in self.csv_header:
 				iterator = self.ls_csv.append()
 				self.ls_csv.set_value(iterator, 0, name)
@@ -386,7 +408,10 @@ class ImportPlugin(IP):
 		IP.clear(self)
 		self.nb_pages.get_nth_page(1).hide()
 		self.csv_header = None
-		self.ls_assigned.clear() # TODO: return all fields to ls_griffith
+		self.ls_assigned.clear()
+		self.ls_griffith.clear()
+		# add default griffith fields again
+		self.set_griffith_fields()
 
 	def destroy(self):
 		self.gtk.get_widget('d_import').destroy()
