@@ -1,5 +1,5 @@
-UNIX systems
-============
+1. UNIX systems
+===============
 
 1.1 Installing on some Linux distributions
 
@@ -21,7 +21,7 @@ UNIX systems
 
 		# emerge -a griffith
 
-1.1 Installing from source
+1.2 Installing from source
 
 	Unpack the Griffith tarball using these commands:
 
@@ -40,7 +40,7 @@ UNIX systems
 		$ cd griffith-version
 		$ ./griffith --home /tmp/griffith
 
-1.2 Installing from downloaded package
+1.3 Installing from downloaded package
 
 	If you have downloaded Griffith package, just do as root:
 
@@ -52,7 +52,7 @@ UNIX systems
 
 		# rpm -Uvh griffith_<version>.rpm
 
-1.3 Making Debian package
+1.4 Making Debian package
 
 	If you want to make your own Debian package, follow these steps:
 	* change your working directory to griffith source
@@ -61,10 +61,67 @@ UNIX systems
 	* type `debuild` or `dpkg-buildpackage -rfakeroot` to build package
 	* install new package (`dpkg -i ../griffith_<version>_all.deb`)
 
-Microsoft Windows systems
-=========================
+2. Microsoft Windows systems
+============================
 
-Just run the griffith installer available for your system.
-A separated GTK+ Runtime Environment for Win32 is NOT necessary.
-For now, Griffith is only known to work under Microsoft Windows XP
-Professional Edition but should work on other windows flavours too.
+2.1 Installing using the installer
+
+	Just run the griffith installer available for your system.
+	A separated GTK+ Runtime Environment for Win32 is NOT necessary.
+	For now, Griffith is only known to work under Microsoft Windows XP
+	Professional Edition but should work on other windows flavours too.
+
+3. Apple MacOSX
+===============
+
+3.1 Installing from source
+
+	These setup guides were tested on MacOSX 10.4.x
+	
+	3.1.1 	Download and install DarwinPorts
+			from http://darwinports.opendarwin.org/getdp/
+	
+	3.1.2 	Open a terminal window and syncronize DarwinPorts' port tree 
+			with 'sudo port -d selfupdate'
+
+	3.1.3 	Then we need to install XCode that will provide us somes required 
+			tools, like a compiler :) You can find it on your original MacOSX 
+			disk or download it from http://developer.apple.com/tools/download/ 
+			Be aware that this is a very big download - almost 1 Gb. 
+			Pick version 2.4 or later.
+
+	3.1.4 	Type 'sudo port install py-gtk2' 
+			(this will install all the dependencies needed to pygtk and will 
+			take a while to complete)
+			
+	3.1.5 	Install PIL typing 'sudo port install py-pil'
+
+	3.1.6 	Install Reportlab typing 'sudo port install py-reportlab'
+
+	3.1.7 	Install pysqlite2 typing 'sudo port install py-sqlite2'
+	
+	3.1.8	Then you will need to install at least version 0.3.1
+			of py-sqlalchemy from http://www.sqlalchemy.org/ because darwin
+			ports doesn't provide a recent version of this library.
+			So, download it, untar it and from the inside of the package
+			directory type: 'sudo python setup.py install'. Probably you will 
+			need to upgrade setuptools to 0.6c3 version as well during 
+			this process.
+			
+	3.1.9 	Last but not least, you will need a X11 server because gtk is not 
+			native yet on the MacOSX. Use the Apple's X11 server because 
+			it will be much easier to configure. If not already installed you 
+			can find it on your MacOSX install dvd.
+
+	3.1.10	To run Griffith just type 'open-x11 griffith' on terminal
+			to see if all is working as expected.
+
+	Note: 	If you get an error when trying to run Griffith regarding
+			a problem with module gtk.glade, try to delete py-gtk2 and 
+			install it again. This is because py-gtk2 was build before libglade.
+			Type 'sudo port uninstall py-gtk2'
+			and then 'sudo port install py-gtk2'. This fixes the problem.
+			
+3.2 Installing from dmg package
+
+	Not yet.
