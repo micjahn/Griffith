@@ -4097,6 +4097,7 @@ Double Slim</property>
 	  <child>
 	    <widget class="GtkToolButton" id="people_add">
 	      <property name="visible">True</property>
+	      <property name="tooltip" translatable="yes">Add a new person</property>
 	      <property name="stock_id">gtk-add</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
@@ -4112,6 +4113,7 @@ Double Slim</property>
 	  <child>
 	    <widget class="GtkToolButton" id="people_delete">
 	      <property name="visible">True</property>
+	      <property name="tooltip" translatable="yes">Delete a person</property>
 	      <property name="stock_id">gtk-delete</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
@@ -4127,6 +4129,7 @@ Double Slim</property>
 	  <child>
 	    <widget class="GtkToolButton" id="people_edit">
 	      <property name="visible">True</property>
+	      <property name="tooltip" translatable="yes">Edit a person</property>
 	      <property name="stock_id">gtk-edit</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
