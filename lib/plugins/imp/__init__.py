@@ -229,6 +229,7 @@ def on_import_button_clicked(button, self, *args):
 		ip.destroy()
 		self.widgets['import']['pwindow'].hide()
 		self.widgets['window'].set_sensitive(True)
+	self.go_last()
 
 def on_abort_button_clicked(button, self, *args):
 	self.widgets['import']['window'].hide()

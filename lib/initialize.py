@@ -386,7 +386,6 @@ def import_plugins(self):
 	w['box_import_1'].show_all()
 	w['box_import_2'].show_all()
 	w['box_import_3'].show_all()
-	
 
 def people_treeview(self, create=True):
 	row = None

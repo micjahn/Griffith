@@ -32,6 +32,7 @@ import quick_filter
 def clear(self):
 	"""clears all fields in dialog"""
 	set_details(self, {})
+	self.widgets['add']['cb_only_empty'].set_active(False)
 
 def add_movie(self, details={}):
 	set_details(self, details)
@@ -41,6 +42,7 @@ def add_movie(self, details={}):
 	self.widgets['add']['add_close_button'].show()
 	self.widgets['add']['clear_button'].show()
 	self.widgets['add']['save_button'].hide()
+	self.widgets['add']['window'].set_title(_('Add a new movie'))
 	self.widgets['add']['window'].show()
 
 def edit_movie(self, details={}):
@@ -51,6 +53,7 @@ def edit_movie(self, details={}):
 	self.widgets['add']['add_close_button'].hide()
 	self.widgets['add']['clear_button'].hide()
 	self.widgets['add']['save_button'].show()
+	self.widgets['add']['window'].set_title(_('Edit movie'))
 	self.widgets['add']['window'].show()
 
 def set_details(self, item=None):#{{{
@@ -319,7 +322,7 @@ def validate_details(t_movies, allow_only=None):
 	for i in t_movies.keys():
 		if t_movies[i] == '':
 			t_movies[i] = None
-	for i in ['color','cond','layers','region', 'media', 'vcodec']:
+	for i in ['color','cond','layers','region', 'media', 'vcodec', 'rating']:
 		if t_movies.has_key(i) and t_movies[i] < 1:
 			t_movies[i] = None
 	for i in ['volume_id','collection_id', 'runtime']:
