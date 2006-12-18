@@ -113,6 +113,8 @@ def restore(self):
 		for each in zip.namelist():
 			file_to_restore = os.path.split(each)
 			if not os.path.isdir(file_to_restore[1]):
+				if file_to_restore[1] == '':
+					continue
 				if file_to_restore[1].endswith('.jpg'):
 					myfile = os.path.join(mypath,file_to_restore[1])
 				else:
@@ -127,16 +129,23 @@ def restore(self):
 		self.config = config.Config(file=os.path.join(self.locations['home'],'griffith.conf'))
 		filename = os.path.join(self.locations['home'], self.config["default_db"])
 
-		# check if file needs conversion
-		if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
-			self.debug.show("RESTORE: SQLite2 database format detected. Converting...")
-			if not self.db.convert_from_sqlite2(filename, os.path.join(self.locations['home'], self.config["default_db"])):
-				self.debug.show("RESTORE: Can't convert database, aborting.")
-				return False
-
 		self.db.metadata.engine.dispose() # close DB
 		from sqlalchemy.orm import clear_mappers
 		clear_mappers()
+
+		# check if file needs conversion
+		if self.config['default_db'].lower().endswith('.gri'):
+			self.debug.show('Old database format detected. Converting...')
+			from dbupgrade import convert_from_old_db
+			from initialize	import location_posters
+			if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
+				self.config.save()
+				location_posters(self.locations, self.config)
+			else:
+				print 'Cant convert old database, exiting.'
+				import sys
+				sys.exit(4)
+
 		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
 		from initialize	import dictionaries, people_treeview
 		dictionaries(self)
