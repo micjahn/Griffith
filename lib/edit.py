@@ -56,7 +56,8 @@ def update_image(self, number, file_path):
 	except Exception, e:
 		self.debug.show(str(e))
 		gutils.error(self, _("Image not valid."), self.widgets['window'])
-	
+		return False
+
 	filename = os.path.basename(file_path)
 	new_image = os.path.splitext(filename)[0]
 	if self.db.Movie.get_by(image=new_image) is not None:
@@ -66,7 +67,7 @@ def update_image(self, number, file_path):
 			if self.db.Movie.get_by(image="%s_%s" % (new_image, i)) is None:
 				new_image = "%s_%s" % (new_image, i)
 				break
-	
+
 	movie = self.db.Movie.get_by(number=number)
 	old_image = os.path.join(self.locations['posters'], "%s.jpg" % movie.image)
 	delete.delete_poster(self, old_image)
@@ -75,15 +76,15 @@ def update_image(self, number, file_path):
 	movie.flush()
 
 	shutil.copyfile(file_path, os.path.join(self.locations['posters'], "%s.jpg" % new_image))
-	
+
 	gutils.make_thumbnail(self, '%s.jpg' % new_image)
 	gutils.make_medium_image(self, '%s.jpg' % new_image)
 	update_tree_thumbnail(self, os.path.join(self.locations['posters'], 't_%s.jpg' % new_image))
-			
+
 	self.widgets['movie']['picture_button'].set_sensitive(True)
 	self.widgets['add']['delete_poster'].set_sensitive(True)
 	self.widgets['menu']['delete_poster'].set_sensitive(True)
-	
+
 	self.update_statusbar(_("Image has been updated"))
 
 def delete_poster(self):

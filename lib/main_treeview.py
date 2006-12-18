@@ -183,6 +183,7 @@ def set_details(self, item=None):#{{{
 				gutils.make_medium_image(self, "%s.jpg"%item.image)
 	else:
 		image_path = os.path.join(self.locations['images'], 'default.png')
+		w['picture_button'].set_sensitive(False)
 	w['picture'].set_from_file(image_path)
 	# ratig
 	try:

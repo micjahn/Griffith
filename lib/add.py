@@ -34,8 +34,6 @@ def clear(self):
 	set_details(self, {})
 
 def add_movie(self, details={}):
-	if not details.has_key('number'):
-		details['number'] = gutils.find_next_available(self.db)
 	set_details(self, details)
 	
 	self.active_plugin = ''
@@ -83,11 +81,11 @@ def set_details(self, item=None):#{{{
 	if item.has_key('title') and item['title']:
 		w['title'].set_text(item['title'])
 	if item.has_key('year') and item['year']:
-		w['year'].set_value(int(item['year']))
+		w['year'].set_value( gutils.digits_only(item['year'], 2100))
 	else:
 		w['year'].set_value(0)
 	if item.has_key('runtime') and item['runtime']:
-		w['runtime'].set_value(int(item['runtime']))
+		w['runtime'].set_value( gutils.digits_only(item['runtime']))
 	else:
 		w['runtime'].set_value(0)
 	if item.has_key('country') and item['country']:
@@ -127,30 +125,27 @@ def set_details(self, item=None):#{{{
 	else:
 		w['genre'].set_text('')
 	if item.has_key('color') and item['color']:
-		w['color'].set_active(int(item['color']))
+		w['color'].set_active( gutils.digits_only(item['color'], 3))
 	else:
-		w['color'].set_active(int(self.config.get('color', 0)))
+		w['color'].set_active( gutils.digits_only(self.config.get('color', 0), 3))
 	if item.has_key('layers') and item['layers']:
-		w['layers'].set_active(int(item['layers']))
+		w['layers'].set_active( gutils.digits_only(item['layers'], 4))
 	else:
-		w['layers'].set_active(int(self.config.get('layers', 0)))
-	if item.has_key('region') and item['region']:
-		if 0 < item['region'] > 9:
-			w['region'].set_active(int(item['region']))
-		else:
-			w['region'].set_active(0)
+		w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0), 4))
+	if item.has_key('region') and item['region']>=0:
+			w['region'].set_active( gutils.digits_only(item['region'], 8))
 	else:
-		w['region'].set_active(int(self.config.get('region', 0)))
-	if item.has_key('cond') and item['cond']:
-		w['condition'].set_active(int(item['cond']))
+		w['region'].set_active( gutils.digits_only(self.config.get('region', 0), 8))
+	if item.has_key('cond') and item['cond']>=0:
+		w['condition'].set_active( gutils.digits_only( item['cond'], 5) )
 	else:
-		w['condition'].set_active(int(self.config.get('condition', 0)))
+		w['condition'].set_active( gutils.digits_only( self.config.get('condition', 0), 5))
 	if item.has_key('media_num') and item['media_num']:
-		w['discs'].set_value(int(item['media_num']))
+		w['discs'].set_value( gutils.digits_only(item['media_num']))
 	else:
 		w['discs'].set_value(1)
 	if item.has_key('rating') and item['rating']:
-		w['rating_slider'].set_value(item['rating'])
+		w['rating_slider'].set_value( gutils.digits_only(item['rating'], 10) )
 	else:
 		w['rating_slider'].set_value(0)
 	if item.has_key('seen') and item['seen'] is True:
@@ -241,7 +236,7 @@ def get_details(self): #{{{
 	t_movies = {
 		'classification' : w['classification'].get_text(),
 		'color'          : w['color'].get_active(),
-		'cond'           : w['color'].get_active(),
+		'cond'           : w['condition'].get_active(),
 		'country'        : w['country'].get_text(),
 		'director'       : w['director'].get_text(),
 		'genre'          : w['genre'].get_text(),
