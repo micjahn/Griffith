@@ -86,7 +86,7 @@
 		      <signal name="activate" handler="on_import_activate" last_modification_time="Wed, 06 Dec 2006 20:39:22 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image624">
+			<widget class="GtkImage" id="image636">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-convert</property>
 			  <property name="icon_size">1</property>
@@ -106,7 +106,7 @@
 		      <property name="use_underline">True</property>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image625">
+			<widget class="GtkImage" id="image637">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-convert</property>
 			  <property name="icon_size">1</property>
@@ -187,7 +187,7 @@
 		      <signal name="activate" handler="on_clone_activate" last_modification_time="Fri, 29 Apr 2005 15:04:29 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image626">
+			<widget class="GtkImage" id="image638">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-copy</property>
 			  <property name="icon_size">1</property>
@@ -281,7 +281,7 @@
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Not Seen Movies</property>
 		      <property name="use_underline">True</property>
-		      <property name="active">True</property>
+		      <property name="active">False</property>
 		      <signal name="activate" handler="on_seen_movies_activate" last_modification_time="Fri, 05 Aug 2005 17:55:56 GMT"/>
 		      <accelerator key="S" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK" signal="activate"/>
 		    </widget>
@@ -292,7 +292,7 @@
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Loaned Movies</property>
 		      <property name="use_underline">True</property>
-		      <property name="active">True</property>
+		      <property name="active">False</property>
 		      <property name="group">seen_movies</property>
 		      <signal name="activate" handler="on_list_loaned_movies_activate" last_modification_time="Fri, 05 Aug 2005 17:55:56 GMT"/>
 		      <accelerator key="L" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK" signal="activate"/>
@@ -340,7 +340,7 @@
 		      <property name="use_underline">True</property>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image627">
+			<widget class="GtkImage" id="image639">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-print</property>
 			  <property name="icon_size">1</property>
