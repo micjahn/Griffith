@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2006-12-18 Piotr Ożarowski <ozarow@gmail.com>
 	* Detect old DB (and convert it) in restore function
+	* UI changes (rest of windows converted to dialogs, minor changes)
 
 2006-12-18 Jessica K. Parth <Jessica.K.P@women-at-work.org>
 	* tooltips to mange people dialog added
