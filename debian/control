@@ -6,11 +6,13 @@ Build-Depends: debhelper (>= 5.0.37.2)
 Build-Depends-Indep: python (>= 2.3.5-11), python-central (>= 0.5)
 Standards-Version: 3.7.2
 XS-Python-Version: current, >=2.3
+XS-Vcs-Svn: svn://svn.berlios.de/griffith/trunk
+XS-Vcs-Browser: http://svn.berlios.de/wsvn/griffith/?sc=1
 
 Package: griffith
 Architecture: all
-Depends: ${python:Depends}, python-gtk2 (>= 2.8.6-1), python-glade2 (>= 2.8.6-1), python-sqlalchemy (>= 0.3.0-1), python-pysqlite2 (>= 2.3.0-1),  python-reportlab (>= 1.20debian-6), python-imaging (>= 1.1.5-6)
-Recommends: python-gnome2-extras (>= 2.14.0-1), python-psycopg2 (>= 1.1.21-6), python-mysqldb (>= 1.2.1-p2-2), python-chardet, python-sqlite
+Depends: ${python:Depends}, python-gtk2 (>= 2.8.6-1), python-glade2 (>= 2.8.6-1), python-sqlalchemy (>= 0.3.0-1), python-pysqlite2 (>= 2.3.0-1), python-reportlab (>= 1.20debian-6), python-imaging (>= 1.1.5-6), python-sqlite
+Recommends: python-gnome2-extras (>= 2.14.0-1), python-psycopg2 (>= 1.1.21-6), python-mysqldb (>= 1.2.1-p2-2), python-chardet
 Suggests: griffith-extra-artwork (>= 0.8)
 XB-Python-Version: ${python:Versions}
 Description: film collection manager
