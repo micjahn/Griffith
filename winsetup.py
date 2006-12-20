@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: ISO-8859-1 -*-
+# -*- coding: utf-8 -*-
 
 __revision__ = '$Id: $'
 
@@ -22,7 +22,7 @@ __revision__ = '$Id: $'
 # GNU General Public License, version 2 or later
 
 
-# for build this on a win32 environment and becames with a standalone distribution 
+# for build this on a win32 environment and becames with a standalone distribution
 # a base python 2.4 for 2in32 instalation must be present
 # along with gtk+ development libraries
 # pywin32com extensions, reportlab module, pygtk for win32 and pysqlite-1.1.7.win32-py2.4 (current win32 distro install is using this pysqlite 3 version)
@@ -50,22 +50,22 @@ from distutils.core import setup
 import glob
 import py2exe
 
-opts = { 
-    "py2exe": { 
-        "includes": "cairo,pangocairo,cgi,PIL,sqlite,pysqlite2,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,adodb,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,winshell", 
+opts = {
+    "py2exe": {
+        "includes": "cairo,pangocairo,cgi,PIL,sqlite,pysqlite2,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,adodb,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,winshell",
         "optimize": 2,
-		"dist_dir": "dist", 
-    } 
-} 
+		"dist_dir": "dist",
+    }
+}
 
 setup(
     name = "Griffith",
     description = "Griffith",
-    version = "0.6.2",
-    console = [ 
-        { 
-            "script": "griffith", 
-            "icon_resources": [(1, "images\griffith.ico")] 
+    version = "0.9~rc1",
+    console = [
+        {
+            "script": "griffith",
+            "icon_resources": [(1, "images\griffith.ico")]
         }],
 		options = opts,
 		data_files=[

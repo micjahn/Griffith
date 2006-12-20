@@ -3,11 +3,11 @@ next version
 * Advanced sort/filter criteria
 * Extended export templates (probably using jinja template engine)
 * Exporting data to Excel files (.xls) (pyExcelerator?)
+* Customising main list view
 
 near future
 ===========
 * Nice PDF tabular report
-* Customising main list view
 * Detecting audio/video parameters from file (mmpython?)
 
 far future

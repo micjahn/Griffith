@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: ISO-8859-1 -*-
+# -*- coding: utf-8 -*-
 
 __revision__ = '$Id$'
 
@@ -113,7 +113,7 @@ class Griffith:
 
 		# add default folders to some select widgets
 		if self.windows:
-			self.widgets['preferences']['font'].set_current_folder("c:\\windows\\fonts\\") # TODO: use env var.
+			self.widgets['preferences']['font'].set_current_folder("c:\\windows\\fonts\\") # FIXME: use env var.
 		elif self.mac:
 			self.widgets['preferences']['font'].set_current_folder("/System/Library/Fonts/")
 		else:
@@ -895,9 +895,9 @@ You can't undo this operation."""), \
 			gutils.run_browser(self._trailer_url)
 
 	def on_goto_homepage_activate(site, *args):
-		gutils.run_browser("http://griffith.vasconunes.net/")
+		gutils.run_browser("http://griffith.berlios.de/")
 	def on_goto_forum_activate(site, *args):
-		gutils.run_browser("http://griffith.vasconunes.net/forum/")
+		gutils.run_browser("http://griffith.berlios.de/forum/")
 	def on_goto_report_bug_activate(site, *args):
 		gutils.run_browser("http://developer.berlios.de/bugs/?group_id=4891")
 

@@ -4,6 +4,7 @@ griffith (0.9~rc1-1) UNRELEASED; urgency=low
   * Dependencies updated (python-sqlite is still in Depends: to make the
     upgrade process smooth)
   * Added XS-Vcs-Svn and XS-Vcs-Browser fields to debian/control
+  * Homepage updated
 
  -- Piotr Ozarowski <ozarow@gmail.com>  Wed, 20 Dec 2006 17:30:14 +0100
 

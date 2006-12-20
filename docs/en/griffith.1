@@ -1,4 +1,4 @@
-.TH griffith 1 "Aug 28, 2005"  
+.TH griffith 1 "Dec 20, 2006"  
 .SH NAME
 griffith \- film collection manager
 .SH SYNOPSIS
@@ -10,13 +10,45 @@ title and selecting a supported source. Griffith will then try to fetch all
 the related information from the Web.
 .SH OPTIONS
 .TP 
-\fB\-h\fR, \fB\-\-help\fR 
+\fB\-h\fR \fB\-\-help\fR 
 Show usage information.
 .TP 
-\fB\-d\fR, \fB\-\-debug\fR 
+\fB\-D\fR \fB\-\-debug\fR 
 Run in debug mode.
+.TP 
+\fB\-C\fR \fB\-\-clean\fR 
+find and delete orphan files in posters directory.
+.TP 
+\fB\-\-check\-dep\fR 
+check dependencies \- if all needed Python modules are installed, it prints nothting.
+.TP 
+\fB\-\-sqlecho\fR 
+Prints all SQL queries to standart output.
+.TP 
+\fB\-\-home DIR\fR 
+Set Griffith's home directory. Use this option if you want to change the default ~/.griffith
+.PP
+Printing movie list:
+.TP 
+\fB\-c <expr>\fR \fB\-\-cast=<expr>\fR 
+cast field must contain <expr>
+.TP 
+\fB\-d <expr>\fR \fB\-\-director=<expr>\fR 
+director field must contain <expr>
+.TP 
+\fB\-o <expr>\fR \fB\-\-original_title=<expr>\fR 
+original title field must contain <expr>
+.TP 
+\fB\-t <expr>\fR \fB\-\-title=<expr>\fR 
+title field must contain <expr>
+.TP 
+\fB\-y <expr>\fR \fB\-\-year=<number>\fR 
+movie must be released in year <number>
+.TP 
+\fB\-s <columns>\fR \fB\-\-sort=<columns>\fR 
+set sort columns to <columns>. Example: \-\-sort=o_title,number,director
 .SH "SEE ALSO"
-Homepage: http://griffith.vasconunes.net/
+Homepage: http://griffith.berlios.de/
 .PP
 \fBgriffith\-export\-template\fR(5)
 .SH BUGS
@@ -24,9 +56,4 @@ If you want to help or report any bugs founded please visit
 homepage or
 http://developer.berlios.de/bugs/?group_id=4891
 .SH AUTHORS
-griffith was initially written by Vasco Nunes. See the AUTHORS file
-for a list of other contributors.
-.PP
-Copyright (C) 2005 Vasco Nunes vasco.m.nunes@gmail.com
-.PP
-This man page was written by Piotr Ozarowski
+Griffith was written by Vasco Nunes and Piotr O

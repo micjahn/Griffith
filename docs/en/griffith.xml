@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
 	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 	[
 	<!ENTITY program   "griffith">
 	<!ENTITY command   "<command>&program;</command>">
-	<!ENTITY homepage  "http://griffith.vasconunes.net/">
+	<!ENTITY homepage  "http://griffith.berlios.de/">
 	]>
 <refentry>
 	<refentryinfo>
 		<!-- Informations about the author of the document -->		
 		<author>
 			<firstname>Piotr</firstname>
-			<surname>Ozarowski</surname>
+			<surname>Ożarowski</surname>
 		</author>
 		<address>ozarow@gmail.com</address>
 		<copyright>
 			<year>2005</year>
-			<holder>Piotr Ozarowski</holder>
+			<holder>Piotr Ożarowski</holder>
 		</copyright>
-		<date>Aug 28, 2005</date>
+		<date>Dec 20, 2006</date>
 	</refentryinfo>
 	<refmeta>
 		<refentrytitle>&program;</refentrytitle>
@@ -43,7 +43,8 @@
 		<variablelist>
 			<varlistentry>
 				<term>
-					<option>-h</option></term><term><option>--help</option>
+					<option>-h</option>
+					<option>--help</option>
 				</term>
 				<listitem>
 					<para>Show usage information.</para> 
@@ -51,10 +52,101 @@
 			</varlistentry>
 			<varlistentry>
 				<term>
-					<option>-d</option></term><term><option>--debug</option>
+					<option>-D</option>
+					<option>--debug</option>
 				</term>
 				<listitem>
 					<para>Run in debug mode.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-C</option>
+					<option>--clean</option>
+				</term>
+				<listitem>
+					<para>find and delete orphan files in posters directory.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>--check-dep</option>
+				</term>
+				<listitem>
+					<para>check dependencies - if all needed Python modules are installed, it prints nothting.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>--sqlecho</option>
+				</term>
+				<listitem>
+					<para>Prints all SQL queries to standart output.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>--home DIR</option>
+				</term>
+				<listitem>
+					<para>Set Griffith's home directory. Use this option if you want to change the default ~/.griffith</para> 
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		<para>Printing movie list:</para>
+		<variablelist>
+			<varlistentry>
+				<term>
+					<option>-c &lt;expr&gt;</option>
+					<option>--cast=&lt;expr&gt;</option>
+				</term>
+				<listitem>
+					<para>cast field must contain &lt;expr&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-d &lt;expr&gt;</option>
+					<option>--director=&lt;expr&gt;</option>
+				</term>
+				<listitem>
+					<para>director field must contain &lt;expr&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-o &lt;expr&gt;</option>
+					<option>--original_title=&lt;expr&gt;</option>
+				</term>
+				<listitem>
+					<para>original title field must contain &lt;expr&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-t &lt;expr&gt;</option>
+					<option>--title=&lt;expr&gt;</option>
+				</term>
+				<listitem>
+					<para>title field must contain &lt;expr&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-y &lt;expr&gt;</option>
+					<option>--year=&lt;number&gt;</option>
+				</term>
+				<listitem>
+					<para>movie must be released in year &lt;number&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-s &lt;columns&gt;</option>
+					<option>--sort=&lt;columns&gt;</option>
+				</term>
+				<listitem>
+					<para>set sort columns to &lt;columns&gt;. Example: --sort=o_title,number,director</para>
 				</listitem>
 			</varlistentry>
 		</variablelist>
@@ -79,9 +171,13 @@
 	</refsect1>
 	<refsect1>
 		<title>AUTHORS</title>
-		<para>&command; was initially written by Vasco Nunes. See the AUTHORS file
-			for a list of other contributors.</para>
-		<para>Copyright (C) 2005 Vasco Nunes <email>vasco.m.nunes@gmail.com</email></para>
+		<para>Griffith was written by Vasco Nunes and Piotr Ożarowski.
+			See the AUTHORS and THANKS files for a list of other
+			contributors.</para>
+		<para>
+			Copyright (C) 2005-2006 Vasco Nunes <email>vasco.m.nunes@gmail.com</email>,
+			Piotr Ożarowski <email>ozarow+griffith@gmail.com</email>,
+		</para>
 		<para>This man page was written by Piotr Ozarowski</para>
 	</refsect1>
 </refentry>

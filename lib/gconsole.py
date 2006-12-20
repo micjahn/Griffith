@@ -32,9 +32,9 @@ def check_args(self):
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], 'hDCo:t:d:c:y:s:',
 				('help', 'debug', 'sqlecho', 'clean', 'check-dep', 'show-dep',
-					'fix-db', 'original_title=', 'title=', 'director=', 'cast=',
-					'year=', 'sort=', 'seen=', 'loaned=', 'number=', 'runtime=',
-					'rating=', 'home='))
+				'original_title=', 'title=', 'director=', 'cast=', 'year=',
+				'sort=', 'seen=', 'loaned=', 'number=', 'runtime=',
+				'rating=', 'home='))
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
@@ -61,9 +61,9 @@ def check_args_with_db(self):
 		try:
 			opts, args = getopt.getopt(sys.argv[1:], 'hDCo:t:d:c:y:s:',
 				('help', 'debug', 'sqlecho', 'clean', 'check-dep', 'show-dep',
-					'fix-db', 'original_title=', 'title=', 'director=', 'cast=',
-					'year=', 'sort=', 'seen=', 'loaned=', 'number=', 'runtime=',
-					'rating=', 'home='))
+				'original_title=', 'title=', 'director=', 'cast=', 'year=',
+				'sort=', 'seen=', 'loaned=', 'number=', 'runtime=',
+				'rating=', 'home='))
 		except getopt.GetoptError:
 			# print help information and exit:
 			con_usage()
@@ -75,8 +75,6 @@ def check_args_with_db(self):
 			if o in ('-C', '--clean'):
 				gutils.clean_posters_dir(self)
 				sys.exit()
-			elif o == '--fix-db':
-				self.db.fix_old_data()
 			elif o == '--sqlecho':
 				self.db.metadata.engine.echo = True
 			elif o in ('-s', '--sort'):
@@ -199,7 +197,6 @@ def con_usage():
 	print "-C, --clean\tfind and delete orphan files in posters directory"
 	print "--check-dep\tcheck dependencies"
 	print "--show-dep\tshow dependencies"
-	print "--fix-db\tfix old database"
 	print "--sqlecho\tprint SQL queries"
 	print "--home DIR \tset Griffith's home directory (instead of the default ~/.griffith)"
 	print "\n printing movie list:"

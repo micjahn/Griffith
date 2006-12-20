@@ -1,14 +1,15 @@
-Griffith 0.8 README
-===================
+Griffith 0.9~rc1 README
+=======================
 
 This document was last updated on Tue Dev 12 2006.
 Please see the file COPYING for licensing and warranty information.
 The latest version of this software is available at the following URL:
-http://griffith.vasconunes.net/
+http://griffith.berlios.de/
 
 
 Table of Contents
 =================
+
 * Introduction
 * System Requirements
 * Installation
@@ -84,7 +85,7 @@ Reporting Bugs
 ==============
 	
 If you want to help or report any bugs founded please visit:
-  http://griffith.vasconunes.net/
+  http://griffith.berlios.de/
 or
   http://developer.berlios.de/bugs/?group_id=4891
 

@@ -3,11 +3,11 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.8
-AppPublisher=Vasco Nunes, Piotr Ozarowski
-AppPublisherURL=http://griffith.vasconunes.net/
-AppSupportURL=http://griffith.vasconunes.net/
-AppUpdatesURL=http://griffith.vasconunes.net/
+AppVerName=Griffith 0.9~rc1
+AppPublisher=Vasco Nunes, Piotr Ożarowski
+AppPublisherURL=http://griffith.berlios.de/
+AppSupportURL=http://griffith.berlios.de/
+AppUpdatesURL=http://griffith.berlios.de/
 DefaultDirName={pf}\Griffith
 DefaultGroupName=Griffith
 AllowNoIcons=yes
@@ -42,7 +42,7 @@ Source: "C:\griffith\dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubd
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [INI]
-Filename: "{app}\griffith.url"; Section: "InternetShortcut"; Key: "URL"; String: "http://griffith.vasconunes.net/"
+Filename: "{app}\griffith.url"; Section: "InternetShortcut"; Key: "URL"; String: "http://griffith.berlios.de/"
 
 [Icons]
 Name: "{group}\Griffith"; Filename: "{app}\griffith.exe"

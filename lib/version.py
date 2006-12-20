@@ -26,5 +26,5 @@ pname        = "Griffith"
 pversion     = "0.9~rc1"
 pauthor      = "Vasco Nunes <vasco.m.nunes@gmail.com>, Piotr Ożarowski <ozarow+griffith@gmail.com>"
 pyear        = "2005-2006"
-pwebsite     = "http://griffith.vasconunes.net/"
+pwebsite     = "http://griffith.berlios.de/"
 pdescription = _("Griffith is a film collection manager.")

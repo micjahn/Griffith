@@ -103,7 +103,7 @@ uninstall:
 	$(MAKE) -C docs uninstall
 	
 clean:
-	${RM} *.pyc *.bak po/*.~ glade/*~ glade/*.bak lib/*.pyc *~ lib/*~ lib/plugins/movie/*~ lib/plugins/export/*~
+	${FIND} . -iname '*\.py[co]' -or -iname '*~' -or -iname '*\.bak' -exec ${RM} '{}' \;
 	
 freshmeat:
 	firefox http://freshmeat.net/add-release/54772/ &
