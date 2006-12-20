@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2006-12-20 Piotr Ożarowski <ozarow@gmail.com>
+	* Version changed to 0.9~rc1 (0.7 and 0.8 are skipped because of lots of changes in this release)
+	* Merge function and MySQL/PostgreSQL backup disabled for now
+
 2006-12-18 Piotr Ożarowski <ozarow@gmail.com>
 	* Detect old DB (and convert it) in restore function
 	* UI changes (rest of windows converted to dialogs, minor changes)

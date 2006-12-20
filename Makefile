@@ -111,7 +111,7 @@ freshmeat:
 gnomefiles:
 	firefox http://www.gnomefiles.org/devs/newversion.php?soft_id=965 &
 	
-dist:
+dist: clean
 	@tar --exclude=*.svn* --exclude=*.tar* --exclude=debian -cf griffith.tar ./
 	@mkdir $(PACKAGE)-$(VERSION)
 	@tar -xf griffith.tar -C $(PACKAGE)-$(VERSION)

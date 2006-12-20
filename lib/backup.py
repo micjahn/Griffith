@@ -54,6 +54,8 @@ def backup(self):
 			if self.db.metadata.engine.name == 'sqlite':
 				mzip.write(os.path.join(self.locations['home'], self.config['default_db']))
 			else:
+				gutils.error(self, _("Backup function is available only for SQLite engine for now"), self.widgets['window'])
+				return False
 				from tempfile import mkdtemp
 				from shutil import rmtree, move
 				from sqlalchemy import BoundMetaData
@@ -158,7 +160,7 @@ def restore(self):
 		self.count_statusbar()
 		gutils.info(self, _("Backup restored"), self.widgets['window'])
 
-def merge(self):
+def merge(self):	# FIXME
 	"""
 		Merge database from:
 		* compressed backup
@@ -247,5 +249,5 @@ def merge(self):
 		self.go_last()
 		self.treeview_clicked()
 		self.count_statusbar()
-		gutils.info(self, _("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
+		#gutils.info(self, _("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
 
