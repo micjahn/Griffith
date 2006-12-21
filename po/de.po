@@ -166,9 +166,8 @@ msgid "Add a new movie"
 msgstr "Film hinzufügen"
 
 #: ../lib/add.py:56
-#, fuzzy
 msgid "Edit movie"
-msgstr "_Film hinzufügen"
+msgstr "Film bearbeiten"
 
 #: ../lib/add.py:369
 msgid "Movie information has been updated"
@@ -1888,22 +1887,3 @@ msgstr "Module"
 msgid "Source"
 msgstr "Quelle"
 
-#~ msgid ""
-#~ "Databases merged!\n"
-#~ "\n"
-#~ "Processed movies: %s\n"
-#~ "Merged movies: %s"
-#~ msgstr ""
-#~ "Datenbanken vereinigt!\n"
-#~ "\n"
-#~ "Abgearbeitete Filme: %s\n"
-#~ "Hinzugefügte Filme: %s"
-
-#~ msgid "Merge"
-#~ msgstr "Zusammenfassen"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Select"
-#~ msgstr "Auswählen"
