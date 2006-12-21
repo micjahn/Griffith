@@ -8,7 +8,6 @@ char *s = N_("<b>Style</b>");
 char *s = N_("<b>Template</b>");
 char *s = N_("Author");
 char *s = N_("Black and white");
-char *s = N_("Cancel");
 char *s = N_("Choose style file");
 char *s = N_("Convert images");
 char *s = N_("Data");
