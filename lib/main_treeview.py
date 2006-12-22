@@ -91,7 +91,7 @@ def set_details(self, item=None):#{{{
 	if item.has_key('cond') and item['cond']:
 		w['condition'].set_markup("<i>%s</i>" % self._conditions[item['cond']])
 	else:
-		w['condition'].set_markup("<i>%s</i>" % self._conditions[0]) # N/A
+		w['condition'].set_text('')
 	if item.has_key('region') and item['region']:
 		w['region'].set_markup("<i>%s</i>" % gutils.html_encode(item['region']))
 		if int(item['region']) < 9:
@@ -102,11 +102,11 @@ def set_details(self, item=None):#{{{
 	if item.has_key('layers') and item['layers']:
 		w['layers'].set_markup("<i>%s</i>" % self._layers[item['layers']])
 	else:
-		w['layers'].set_markup("<i>%s</i>" % self._layers[0]) # N/A
+		w['layers'].set_text('')
 	if item.has_key('color') and item['color']:
 		w['color'].set_markup("<i>%s</i>" % self._colors[item['color']])
 	else:
-		w['color'].set_markup("<i>%s</i>" % self._colors[0]) # N/A
+		w['color'].set_markup('')
 	if item.has_key('classification') and item['classification']:
 		w['classification'].set_markup("<i>%s</i>" % gutils.html_encode(item['classification']))
 	else:
