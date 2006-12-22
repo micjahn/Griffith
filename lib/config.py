@@ -131,4 +131,5 @@ class Config:
 		self.config['s_trailer']            = True
 		self.config['s_cast']               = True
 		self.config['s_year']               = True
+		self.config['s_limit']              = '0' # limit search results to x items (0 -> no limits)
 		self.save()
