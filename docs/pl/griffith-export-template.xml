@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
 	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 	[
@@ -11,12 +11,12 @@
 		<!-- Informations about author of the document -->		
 		<author>
 			<firstname>Piotr</firstname>
-			<surname>Ozarowski</surname>
+			<surname>OÅ¼arowski</surname>
 		</author>
-		<address>ozarow@gmail.com</address>
+		<address>ozarow+griffith@gmail.com</address>
 		<copyright>
-			<year>2005</year>
-			<holder>Piotr Ozarowski</holder>
+			<year>2005-2006</year>
+			<holder>Piotr OÅ¼arowski</holder>
 		</copyright>
 		<date>Sep 09, 2005</date>
 	</refentryinfo>
@@ -28,60 +28,59 @@
 		<refname>Szablon eksportu dla Griffith'a</refname>
 	</refnamediv>
 	<refsynopsisdiv>
-		<cmdsynopsis>Wtyczka do eksportu danych UseTemplate (wcze¶niej HTML) od wersji 3.0
-		u¿ywa wpe³ni konfigurowalnych szablonów</cmdsynopsis>
+		<cmdsynopsis>Wtyczka do eksportu danych HTML od wersji 3.0 uÅ¼ywa wpeÅ‚ni konfigurowalnych szablonÃ³w</cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 		<title>OPIS</title>
 		<para>Tworzenie nowego szablonu:</para>
-		<para>Stwórz nowy katalog o krótkiej nazwie dla szablonu/rodziny szablonów
-			(ka¿dy katalog mo¿e zawieraæ wiêcej ni¿ jednen szablon, zobacz opis pliku config.xml)</para>
-		<para>Przygotuj plik page.tpl. Plik ten powinien sk³adaæ siê z trzech czê¶ci:</para>
-		<para>* nag³ówka - bêdzie pojawia³ siê na pocz±tku ka¿dego wygenerowanego pliku</para>
-		<para>* elementów - ta czê¶æ bêdzie wype³niana danymi exportowanych filmów</para>
-		<para>* ogona - który pojawi siê na koñcu pliku(-ów)</para>
-		<para>Aby rozdzieliæ powy¿sze czê¶ci, dodaj ³añcuch<quote>&lt;!-- ITEMS --&gt;</quote> przed, oraz: <quote>&lt;!-- /ITEMS --&gt;</quote> po czê¶ci dla elementów.</para>
-		<para>Stwórz plik config.xml (zobacz te¿ sekcjê CONFIG)</para>
-		<para>Opcjonalnie: stwórz obrazy podgl±du (parez sekcja CONFIG). Najlepsz± rozdzielczo¶ci± dla tych plików bêdzie 200x150px</para>
+		<para>StwÃ³rz nowy katalog o krÃ³tkiej nazwie dla szablonu/rodziny szablonÃ³w
+			(kaÅ¼dy katalog moÅ¼e zawieraÄ‡ wiÄ™cej niÅ¼ jednen szablon, zobacz opis pliku config.xml)</para>
+		<para>Przygotuj plik page.tpl. Plik ten powinien skÅ‚adaÄ‡ siÄ™ z trzech czÄ™Å›ci:</para>
+		<para>* nagÅ‚Ã³wka - bÄ™dzie pojawiaÅ‚ siÄ™ na poczÄ…tku kaÅ¼dego wygenerowanego pliku</para>
+		<para>* elementÃ³w - ta czÄ™Å›Ä‡ bÄ™dzie wypeÅ‚niana danymi exportowanych filmÃ³w</para>
+		<para>* ogona - ktÃ³ry pojawi siÄ™ na koÅ„cu pliku(-Ã³w)</para>
+		<para>Aby rozdzieliÄ‡ powyÅ¼sze czÄ™Å›ci, dodaj Å‚aÅ„cuch<quote>&lt;!-- ITEMS --&gt;</quote> przed, oraz: <quote>&lt;!-- /ITEMS --&gt;</quote> po czÄ™Å›ci dla elementÃ³w.</para>
+		<para>StwÃ³rz plik config.xml (zobacz teÅ¼ sekcjÄ™ CONFIG)</para>
+		<para>Opcjonalnie: stwÃ³rz obrazy podglÄ…du (parez sekcja CONFIG). NajlepszÄ… rozdzielczoÅ›ciÄ… dla tych plikÃ³w bÄ™dzie 200x150px</para>
 	</refsect1>
 	<refsect1>
 		<title>TAGI</title>
-		<para>Poni¿ej s± wylistowane tagi, których mo¿esz u¿ywaæ w pliku page.tpl.
-			Ka¿dy tag zaczyba siê od znaku "@".
-			Pomiêdzy tagi mo¿esz umie¶ciæ ³añcuchy specjalne: <quote>@TITLE@</quote> oraz <quote>@DATA@</quote>, które bêd± zast±pione
-			odpowiednio nazw± pola oraz danymi filmu.
+		<para>PoniÅ¼ej sÄ… wylistowane tagi, ktÃ³rych moÅ¼esz uÅ¼ywaÄ‡ w pliku page.tpl.
+			KaÅ¼dy tag zaczyba siÄ™ od znaku "@".
+			PomiÄ™dzy tagi moÅ¼esz umieÅ›ciÄ‡ Å‚aÅ„cuchy specjalne: <quote>@TITLE@</quote> oraz <quote>@DATA@</quote>, ktÃ³re bÄ™dÄ… zastÄ…pione
+			odpowiednio nazwÄ… pola oraz danymi filmu.
 		</para>
 		<para>
-			Przyk³ad:
+			PrzykÅ‚ad:
 			<quote>Pole &lt;@runtime&gt;@TITLE@ zawiera dane: "@DATA@" &lt;/@runtime&gt;</quote>
-			bêdzie zast±pione przez:
+			bÄ™dzie zastÄ…pione przez:
 			<quote>Pole Czas trwania zawiera dane: "120 min."</quote>
 		</para>
-		<para>Lista dozwolonych tagów:</para>
+		<para>Lista dozwolonych tagÃ³w:</para>
 		<variablelist>
-			<para>Tagi dozwolone w ca³ym dokumencie:</para>
+			<para>Tagi dozwolone w caÅ‚ym dokumencie:</para>
 			<varlistentry>
 				<term><option>header</option></term>
 				<listitem>
-					<para>³añcuch zdefiniowany w zak³adce "Szablon", @TITLE@ nie jest u¿ywany</para> 
+					<para>Å‚aÅ„cuch zdefiniowany w zakÅ‚adce "Szablon", @TITLE@ nie jest uÅ¼ywany</para> 
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>navigarion</option></term>
 				<listitem>
-					<para>generuje panel nawigacyjny (je¿eli jest potrzebny)</para> 
+					<para>generuje panel nawigacyjny (jeÅ¼eli jest potrzebny)</para> 
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>copyright</option></term>
 				<listitem>
-					<para>wy¶wietla prawa autorskie dokumentu</para> 
+					<para>wyÅ›wietla prawa autorskie dokumentu</para> 
 				</listitem>
 			</varlistentry>
 			<para>Tags allowed only in "items" part:</para>
 			<varlistentry>
 				<term><option>image</option></term>
-				<listitem>nazwa pliku z plakatem (bez ¶cie¿ki i rozszerzenia)</listitem>
+				<listitem>nazwa pliku z plakatem (bez Å›cieÅ¼ki i rozszerzenia)</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>number</option></term>
@@ -89,11 +88,11 @@
 			</varlistentry>
 			<varlistentry>
 				<term><option>title</option></term>
-				<listitem>tytu³ filmu</listitem>
+				<listitem>tytuÅ‚ filmu</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>original_title</option></term>
-				<listitem>oryginalny tytu³ filmu</listitem>
+				<listitem>oryginalny tytuÅ‚ filmu</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>year</option></term>
@@ -101,7 +100,7 @@
 			</varlistentry>
 			<varlistentry>
 				<term><option>director</option></term>
-				<listitem>re¿yser filmu</listitem>
+				<listitem>reÅ¼yser filmu</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>rating</option></term>
@@ -113,7 +112,7 @@
 			</varlistentry>
 			<varlistentry>
 				<term><option>country</option></term>
-				<listitem>pañstwo, w którym wyprodukowano film</listitem>
+				<listitem>paÅ„stwo, w ktÃ³rym wyprodukowano film</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>genre</option></term>
@@ -121,7 +120,7 @@
 			</varlistentry>
 			<varlistentry>
 				<term><option>imdb</option></term>
-				<listitem>z tego URLa by³y pobierane dane filmu</listitem>
+				<listitem>z tego URLa byÅ‚y pobierane dane filmu</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>site</option></term>
@@ -133,15 +132,15 @@
 			</varlistentry>
 			<varlistentry>
 				<term><option>media</option></term>
-				<listitem>liczba dysków i typ dysku, np. "2xDVD"</listitem>
+				<listitem>liczba dyskÃ³w i typ dysku, np. "2xDVD"</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>seen</option></term>
-				<listitem>czy film zosta³ obejrzany: "Tak" lub "Nie"</listitem>
+				<listitem>czy film zostaÅ‚ obejrzany: "Tak" lub "Nie"</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>loaned</option></term>
-				<listitem>czy film jest wypo¿yczony: "Tak" lub "Nie"</listitem>
+				<listitem>czy film jest wypoÅ¼yczony: "Tak" lub "Nie"</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term><option>classification</option></term>
@@ -164,19 +163,19 @@
 	<refsect1>
 		<title>PLIK CONFIG</title>
 		<para>Najprostszym sposobem na stworzenie pliku config.xml jest skopiowanie go z innego szablonu i wyedytowanie kopii.
-			Ka¿dy plik musi zawieraæ autora szablonu, wersjê oraz emial autora. Opcjonalnie mo¿na dodaæ
-			opis i listê styli. Ka¿dy styl musi zawieraæ nazwê stylu i nazwê pliku ze stylem.
-			Szczegó³y s± w pliku template.dtd.
+			KaÅ¼dy plik musi zawieraÄ‡ autora szablonu, wersjÄ™ oraz emial autora. Opcjonalnie moÅ¼na dodaÄ‡
+			opis i listÄ™ styli. KaÅ¼dy styl musi zawieraÄ‡ nazwÄ™ stylu i nazwÄ™ pliku ze stylem.
+			SzczegÃ³Å‚y sÄ… w pliku template.dtd.
 		</para>
 	</refsect1>
 	<refsect1>
-		<title>PRZYK£AD</title>
-		<para>Przyk³adowy szablon mo¿esz znale¼æ w katalogu
+		<title>PRZYKÅAD</title>
+		<para>PrzykÅ‚adowy szablon moÅ¼esz znaleÅºÄ‡ w katalogu
 			<quote>/usr/share/griffith/export_templates/html_tables</quote>
 		</para>
 	</refsect1>
 	<refsect1>
-		<title>ZOBACZ TAK¯E</title>
+		<title>ZOBACZ TAKÅ»E</title>
 		<para>
 			<citerefentry>
 				<refentrytitle>griffith</refentrytitle>
@@ -186,8 +185,8 @@
 	</refsect1>
 	<refsect1>
 		<title>AUTORZY</title>
-		<para>&command; zosta³ napisany przez Vasco Nunesa. Zobacz plik AUTHORS z list± wspó³pracowników</para>
+		<para>&command; zostaÅ‚ napisany przez Vasco Nunesa. Zobacz plik AUTHORS z listÄ… wspÃ³Å‚pracownikÃ³w</para>
 		<para>Copyright (C) 2005 Vasco Nunes <email>vasco.m.nunes@gmail.com</email></para>
-		<para>Ta strona podrêcznika zosta³a napisana przez Piotra O¿arowskiego</para>
+		<para>Ta strona podrÄ™cznika zostaÅ‚a napisana przez Piotra OÅ¼arowskiego</para>
 	</refsect1>
 </refentry>

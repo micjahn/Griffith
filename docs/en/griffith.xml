@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="latin1" ?>
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
 	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 	[
@@ -11,12 +11,12 @@
 		<!-- Informations about the author of the document -->		
 		<author>
 			<firstname>Piotr</firstname>
-			<surname>Ożarowski</surname>
+			<surname>Ozarowski</surname>
 		</author>
-		<address>ozarow@gmail.com</address>
+		<address>ozarow+griffith@gmail.com</address>
 		<copyright>
-			<year>2005</year>
-			<holder>Piotr Ożarowski</holder>
+			<year>2005-2006</year>
+			<holder>Piotr Ozarowski</holder>
 		</copyright>
 		<date>Dec 20, 2006</date>
 	</refentryinfo>
@@ -133,7 +133,7 @@
 			</varlistentry>
 			<varlistentry>
 				<term>
-					<option>-y &lt;expr&gt;</option>
+					<option>-y &lt;number&gt;</option>
 					<option>--year=&lt;number&gt;</option>
 				</term>
 				<listitem>

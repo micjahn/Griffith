@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF8" ?>
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
 	"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 	[
 	<!ENTITY program   "griffith">
 	<!ENTITY command   "<command>&program;</command>">
-	<!ENTITY homepage  "http://griffith.vasconunes.net/">
+	<!ENTITY homepage  "http://griffith.berlios.de/">
 	]>
 <refentry>
 	<refentryinfo>
 		<!-- Informations about the author of the document -->		
 		<author>
 			<firstname>Piotr</firstname>
-			<surname>O�arowski</surname>
+			<surname>Ożarowski</surname>
 		</author>
-		<address>ozarow@gmail.com</address>
+		<address>ozarow+griffith@gmail.com</address>
 		<copyright>
-			<year>2005</year>
-			<holder>Piotr O�arowski</holder>
+			<year>2005-2006</year>
+			<holder>Piotr Ożarowski</holder>
 		</copyright>
-		<date>Aug 28, 2005</date>
+		<date>Dec 22, 2006</date>
 	</refentryinfo>
 	<refmeta>
 		<refentrytitle>&program;</refentrytitle>
@@ -26,16 +26,16 @@
 	</refmeta>
 	<refnamediv>
 		<refname>&program;</refname>
-		<refpurpose>zarz�dca kolekcji film�w</refpurpose>
+		<refpurpose>zarządca kolekcji filmów</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 		<cmdsynopsis>&command; [OPCJE]</cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 		<title>OPIS</title>
-		<para>Griffith zarz�dza kolekcj� film�w.
-			Dodawanie kolejnych pozycji jest tak �atwe i szybkie, jak wpisanie tytu�u filmu i wybranie
-			odpowiedniego �r�d�a. Griffith nast�pnie sam pobierze z internetu potrzebne informacje.</para>
+		<para>Griffith zarządza kolekcją filmów.
+			Dodawanie kolejnych pozycji jest tak łatwe i szybkie, jak wpisanie tytułu filmu i wybranie
+			odpowiedniego źródła. Griffith następnie sam pobierze z internetu potrzebne informacje.</para>
 	</refsect1>
 	<refsect1>
 		<title>OPCJE</title>
@@ -45,21 +45,114 @@
 					<option>-h</option></term><term><option>--help</option>
 				</term>
 				<listitem>
-					<para>Pokazuje informacje o sposobie u�ycia.</para> 
+					<para>Pokazuje informacje o sposobie użycia.</para> 
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>
-					<option>-d</option></term><term><option>--debug</option>
+					<option>-D</option>
+					<option>--debug</option>
 				</term>
 				<listitem>
 					<para>Uruchamia program w trybie debugowania.</para> 
 				</listitem>
 			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-C</option>
+					<option>--clean</option>
+				</term>
+				<listitem>
+					<para>znajduje i usuwa niepotrzebne pliki w katalogu z plakatami.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>--check-dep</option>
+				</term>
+				<listitem>
+					<para>sprawdza zależności - jeżeli wszystkie potrzebne moduły Pythona są
+						zainstalowane, polecenie nie wyświetla żadnych komunikatów.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>--sqlecho</option>
+				</term>
+				<listitem>
+					<para>Wyświetla wszystkie zapytania SQL na standardowym wyjściu.</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>--home DIR</option>
+				</term>
+				<listitem>
+					<para>Ustawia katalog domowy Griffith'a. Użyj tej opcji, jeżeli chcesz zmienić
+						domyślny katalog ~/.griffith</para> 
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		<para>Wyszukiwanie listy filmów:</para>
+		<variablelist>
+			<varlistentry>
+				<term>
+					<option>-c &lt;wyrażenie&gt;</option>
+					<option>--cast=&lt;wyrażenie&gt;</option>
+				</term>
+				<listitem>
+					<para>pole obsada musi zawierać &lt;wyrażenie&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-d &lt;wyrażenie&gt;</option>
+					<option>--director=&lt;wyrażenie&gt;</option>
+				</term>
+				<listitem>
+					<para>pole dyrektor musi zawierać &lt;wyrażenie&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-o &lt;wyrażenie&gt;</option>
+					<option>--original_title=&lt;wyrażenie&gt;</option>
+				</term>
+				<listitem>
+					<para>pole tytuł oryginalny musi zawierać &lt;wyrażenie&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-t &lt;wyrażenie&gt;</option>
+					<option>--title=&lt;wyrażenie&gt;</option>
+				</term>
+				<listitem>
+					<para>pole tytułu musi zawierać &lt;wyrażenie&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-y &lt;numer&gt;</option>
+					<option>--year=&lt;numer&gt;</option>
+				</term>
+				<listitem>
+					<para>film musi być wydany w roku &lt;numer&gt;</para> 
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					<option>-s &lt;kolumny&gt;</option>
+					<option>--sort=&lt;kolumny&gt;</option>
+				</term>
+				<listitem>
+					<para>ustaw metodę sortowania na &lt;columns&gt;. Przykład użycia: --sort=o_title,number,director</para>
+				</listitem>
+			</varlistentry>
 		</variablelist>
 	</refsect1>
 	<refsect1>
-		<title>ZOBACZ TAK�E</title>
+		<title>ZOBACZ TAKŻE</title>
 
 		<para>Strona domowa: <ulink url="&homepage;">&homepage;</ulink></para>
 
@@ -68,18 +161,21 @@
 		</para>
 	</refsect1>
 	<refsect1>
-		<title>B��DY</title>
-		<para>Je�eli szukasz pomocy lub chcesz zg�osi� b��d, odwied�
-			<ulink url="&homepage;">stron� domow�</ulink> lub
+		<title>BŁĘDY</title>
+		<para>Jeżeli szukasz pomocy lub chcesz zgłosić błąd, odwiedź
+			<ulink url="&homepage;">stronę domową</ulink> lub
 			<ulink url="http://developer.berlios.de/bugs/?group_id=4891">
-				http://developer.berlios.de/bugs/?group_id=4891
+			http://developer.berlios.de/bugs/?group_id=4891
 			</ulink>
 		</para>
 	</refsect1>
 	<refsect1>
 		<title>AUTORZY</title>
-		<para>&command; zosta� napisany przez Vasco Nunesa. Zobacz plik AUTHORS z list� wsp�pracownik�w</para>
-		<para>Copyright (C) 2005 Vasco Nunes <email>vasco.m.nunes@gmail.com</email></para>
-		<para>Ta strona podr�cznika zosta�a napisana przez Piotra O�arowskiego</para>
+		<para>Griffith został napisany przez Vasco Nunesa i Piotra Ożarowskiego. Zobacz plik AUTHORS z listą współpracowników</para>
+		<para>
+			Copyright (C) 2005-2006 Vasco Nunes <email>vasco.m.nunes@gmail.com</email>,
+			Piotr Ożarowski <email>ozarow+griffith@gmail.com</email>,
+		</para>
+		<para>Ta strona podręcznika została napisana przez Piotra Ożarowskiego</para>
 	</refsect1>
 </refentry>

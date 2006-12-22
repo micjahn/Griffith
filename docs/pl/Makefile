@@ -16,10 +16,10 @@ clean:
 	$(RM) $(MANPAGES)
 
 %.1: %.xml
-	docbook2x-man $<
+	docbook2x-man --encoding utf8 $<
 
 %.5: %.xml
-	docbook2x-man $<
+	docbook2x-man --encoding utf8 $<
 
 install: $(MANPAGES)
 	$(INSTALL) -m 755 -d "$(MANDIR)/pl/man1"

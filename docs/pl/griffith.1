@@ -1,30 +1,65 @@
-.TH griffith 1 "Aug 28, 2005"  
+.TH griffith 1 "Dec 22, 2006"  
 .SH NAME
-griffith \- zarz\(+-dca kolekcji film\('ow
+griffith \- zarządca kolekcji filmów
 .SH SYNOPSIS
 \fBgriffith\fR [OPCJE]
 .SH OPIS
-Griffith zarz\(+-dza kolekcj\(+- film\('ow.
-Dodawanie kolejnych pozycji jest tak \(S3atwe i szybkie, jak wpisanie tytu\(S3u filmu i wybranie
-odpowiedniego \(14r\('od\(S3a. Griffith nast\(^epnie sam pobierze z internetu potrzebne informacje.
+Griffith zarządza kolekcją filmów.
+Dodawanie kolejnych pozycji jest tak łatwe i szybkie, jak wpisanie tytułu filmu i wybranie
+odpowiedniego źródła. Griffith następnie sam pobierze z internetu potrzebne informacje.
 .SH OPCJE
 .TP 
 \fB\-h\fR, \fB\-\-help\fR 
-Pokazuje informacje o sposobie u\(r?ycia.
+Pokazuje informacje o sposobie użycia.
 .TP 
-\fB\-d\fR, \fB\-\-debug\fR 
+\fB\-D\fR \fB\-\-debug\fR 
 Uruchamia program w trybie debugowania.
-.SH "ZOBACZ TAK\(a-E"
-Strona domowa: http://griffith.vasconunes.net/
+.TP 
+\fB\-C\fR \fB\-\-clean\fR 
+znajduje i usuwa niepotrzebne pliki w katalogu z plakatami.
+.TP 
+\fB\-\-check\-dep\fR 
+sprawdza zależności \- jeżeli wszystkie potrzebne moduły Pythona są
+zainstalowane, polecenie nie wyświetla żadnych komunikatów.
+.TP 
+\fB\-\-sqlecho\fR 
+Wyświetla wszystkie zapytania SQL na standardowym wyjściu.
+.TP 
+\fB\-\-home DIR\fR 
+Ustawia katalog domowy Griffith'a. Użyj tej opcji, jeżeli chcesz zmienić
+domyślny katalog ~/.griffith
+.PP
+Wyszukiwanie listy filmów:
+.TP 
+\fB\-c <wyrażenie>\fR \fB\-\-cast=<wyrażenie>\fR 
+pole obsada musi zawierać <wyrażenie>
+.TP 
+\fB\-d <wyrażenie>\fR \fB\-\-director=<wyrażenie>\fR 
+pole dyrektor musi zawierać <wyrażenie>
+.TP 
+\fB\-o <wyrażenie>\fR \fB\-\-original_title=<wyrażenie>\fR 
+pole tytuł oryginalny musi zawierać <wyrażenie>
+.TP 
+\fB\-t <wyrażenie>\fR \fB\-\-title=<wyrażenie>\fR 
+pole tytułu musi zawierać <wyrażenie>
+.TP 
+\fB\-y <numer>\fR \fB\-\-year=<numer>\fR 
+film musi być wydany w roku <numer>
+.TP 
+\fB\-s <kolumny>\fR \fB\-\-sort=<kolumny>\fR 
+ustaw metodę sortowania na <columns>. Przykład użycia: \-\-sort=o_title,number,director
+.SH "ZOBACZ TAKŻE"
+Strona domowa: http://griffith.berlios.de/
 .PP
 \fBgriffith\-export\-template\fR(5)
-.SH B\(Po\(^EDY
-Je\(r?eli szukasz pomocy lub chcesz zg\(S3osi\(ae b\(S3\(+-d, odwied\(14
-stron\(^e domow\(+- lub
+.SH BŁĘDY
+Jeżeli szukasz pomocy lub chcesz zgłosić błąd, odwiedź
+stronę domową lub
 http://developer.berlios.de/bugs/?group_id=4891
 .SH AUTORZY
-griffith zosta\(S3 napisany przez Vasco Nunesa. Zobacz plik AUTHORS z list\(+- wsp\('o\(S3pracownik\('ow
+Griffith został napisany przez Vasco Nunesa i Piotra Ożarowskiego. Zobacz plik AUTHORS z listą współpracowników
 .PP
-Copyright (C) 2005 Vasco Nunes vasco.m.nunes@gmail.com
+Copyright (C) 2005\-2006 Vasco Nunes vasco.m.nunes@gmail.com,
+Piotr Ożarowski ozarow+griffith@gmail.com,
 .PP
-Ta strona podr\(^ecznika zosta\(S3a napisana przez Piotra O\(r?arowskiego
+Ta strona podręcznika została napisana przez Piotra Ożarowskiego
