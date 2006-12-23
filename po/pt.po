@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.8pre1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-21 02:19+0100\n"
-"PO-Revision-Date: 2006-12-19 01:35+0000\n"
+"POT-Creation-Date: 2006-12-23 03:47+0000\n"
+"PO-Revision-Date: 2006-12-23 03:47+0000\n"
 "Last-Translator: Vasco Nunes <vasco.m.nunes@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../griffith:162 ../griffith:723 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
@@ -218,6 +218,8 @@ msgstr "Erro na cria��o da c�pia de seguran�a"
 #: ../lib/backup.py:57
 msgid "Backup function is available only for SQLite engine for now"
 msgstr ""
+"A fun��o de c�pia de seguran�a est� dispon�vel apenas para sistemas que "
+"utilizem SQLite."
 
 #: ../lib/backup.py:100
 msgid "Backup has been created"
@@ -1829,7 +1831,7 @@ msgstr "Fonte"
 #~ msgstr "Actualizar"
 
 #~ msgid "Region 9 (Often used as region free)"
-#~ msgstr "RegiÃ£o 9 (Geralmente utilizado para multi-regiÃ£o)"
+#~ msgstr "RegiÃÂÃÂ£o 9 (Geralmente utilizado para multi-regiÃÂÃÂ£o)"
 
 #~ msgid "To buy"
 #~ msgstr "A comprar"
@@ -1838,7 +1840,7 @@ msgstr "Fonte"
 #~ msgstr "PDF"
 
 #~ msgid "Spell Checker"
-#~ msgstr "VerificaÃ§Ã£o OrtogrÃ¡fica"
+#~ msgstr "VerificaÃÂÃÂ§ÃÂÃÂ£o OrtogrÃÂÃÂ¡fica"
 
 #~ msgid "min."
 #~ msgstr " "
