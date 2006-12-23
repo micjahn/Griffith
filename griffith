@@ -813,6 +813,8 @@ You can't undo this operation."""), \
 	# windows/dialogs -----------------------------------------------------
 
 	def results_cancel_ck(self, *args):
+		from widgets import reconnect_add_signals
+		reconnect_add_signals(self)
 		self.widgets['results']['window'].hide()
 
 	def save_state(self):

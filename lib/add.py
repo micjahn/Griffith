@@ -571,12 +571,12 @@ def get_from_web(self):
 			self.search_movie.title = gutils.remove_accents(title, 'utf-8')
 		self.search_movie.search(self.widgets['add']['window'])
 		self.search_movie.get_searches()
-		self.show_search_results(self.search_movie)
 		if len(self.search_movie.ids) == 1 and o_title and title:
 			self.search_movie.url = self.search_movie.translated_url_search
 			self.search_movie.title = gutils.remove_accents(title, 'utf-8')
 			self.search_movie.search(self.widgets['add']['window'])
 			self.search_movie.get_searches()
+		self.show_search_results(self.search_movie)
 	else:
 		gutils.error(self.widgets['results']['window'], \
 			_("You should fill the original title\nor the movie title."))

@@ -148,11 +148,12 @@ def fetch_bigger_poster(self):
 		gutils.warning(self, _("No posters found for this movie."))
 		return
 
-	from widgets import connect_poster_signals
+	from widgets import connect_poster_signals, reconnect_add_signals
 	connect_poster_signals(self, get_poster_select_dc, result, current_poster)
 
 	if not len(result):
 		gutils.warning(self, _("No posters found for this movie."))
+		reconnect_add_signals(self)
 		return
 
 	for f in range(len(result)):
