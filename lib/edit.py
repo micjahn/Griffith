@@ -177,10 +177,11 @@ def get_poster_select_dc(self, event, mself, result, current_poster):
 	if event.type == gtk.gdk._2BUTTON_PRESS:
 		get_poster(mself, None, result, current_poster)
 
-def get_poster_select(self, mself, result, current_poster):
+def get_poster_select(self, mself, result, current_poster): # TODO: it ir used?
 	get_poster(mself, None, result, current_poster)
 
 def get_poster(self, f, result, current_poster):
+	from widgets import reconnect_add_signals
 	if f is None:
 		treeselection = self.widgets['results']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
@@ -217,6 +218,7 @@ def get_poster(self, f, result, current_poster):
 			if im.format == "GIF":
 				gutils.warning(self, _("Sorry. This poster image format is not supported."))
 				os.remove(file_to_copy)
+				reconnect_add_signals(self)
 				return
 		self.widgets['poster_window'].show()
 		self.widgets['poster_window'].move(0,0)
@@ -236,4 +238,5 @@ def get_poster(self, f, result, current_poster):
 		self.widgets['poster_window'].hide()
 	else:
 		gutils.warning(self, _("Sorry. This movie is listed but have no poster available at Amazon.com."))
+	reconnect_add_signals(self)
 

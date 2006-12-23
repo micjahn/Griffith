@@ -22,7 +22,6 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from gettext import gettext as _
-import edit
 import gtk
 import sys
 
@@ -216,6 +215,9 @@ def define_widgets(self, gladefile):
 	}
 	self.widgets['results']['window'].connect('delete_event', self.on_delete_event_r)
 	self.widgets['results']['window'].set_transient_for(self.widgets['add']['window'])
+	# default results window signals:
+	self.results_signal = self.widgets['results']['select'].connect('clicked', self.populate_dialog_with_results)
+	self.results_double_click = self.widgets['results']['treeview'].connect('button_press_event', self.on_results_button_press_event)
 	#}}}
 
 	self.widgets['print_cover'] = {#{{{
@@ -439,7 +441,7 @@ def define_widgets(self, gladefile):
 		'on_vcodec_name_combo_changed'		: self.on_vcodec_name_combo_changed
 	})#}}}
 
-def connect_add_signals(self):#{{{
+def reconnect_add_signals(self):#{{{
 	try:
 		self.widgets['results']['select'].disconnect(self.poster_results_signal)
 	except:
@@ -450,18 +452,8 @@ def connect_add_signals(self):#{{{
 	except:
 		pass
 
-	try:
-		self.widgets['results']['select'].disconnect(self.widgets['results']['signal'])
-	except:
-		pass
-
-	try:
-		self.widgets['results']['treeview'].disconnect(self.results_double_click)
-	except:
-		pass
-
 	# connect signals
-	self.widgets['results']['signal'] = self.widgets['results']['select'].connect('clicked', \
+	self.results_signal = self.widgets['results']['select'].connect('clicked', \
 			self.populate_dialog_with_results)
 	self.results_double_click = self.widgets['results']['treeview'].connect('button_press_event', \
 		self.on_results_button_press_event)#}}}
@@ -470,17 +462,7 @@ def connect_poster_signals(self, event, result, current_poster):#{{{
 	import edit
 
 	try:
-		self.widgets['results']['select'].disconnect(self.poster_results_signal)
-	except:
-		pass
-
-	try:
-		self.widgets['results']['treeview'].disconnect(self.results_poster_double_click)
-	except:
-		pass
-
-	try:
-		self.widgets['results']['select'].disconnect(self.widgets['results']['signal'])
+		self.widgets['results']['select'].disconnect(self.results_signal)
 	except:
 		pass
 

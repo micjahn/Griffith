@@ -170,16 +170,6 @@ class Griffith:
 	def show_search_results(self, results):
 		add.show_websearch_results(self)
 
-	def hide_results(self, *args):
-		self.treemodel_results.clear()
-		try:
-			self.widgets['results']['select'].disconnect(self.poster_results_signal)
-			self.widgets['results']['signal'] = self.widgets['results']['select'].connect("clicked", \
-				self.populate_dialog_with_results)
-		except:
-			pass
-		self.widgets['results']['window'].hide()
-
 	def populate_dialog_with_results(self, *args):
 		add.populate_with_results(self)
 

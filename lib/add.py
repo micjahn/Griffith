@@ -225,8 +225,6 @@ def set_details(self, item=None):#{{{
 	w['notebook'].set_current_page(0)
 	w['source'].set_active(self.d_plugin)
 	w['o_title'].grab_focus()
-	from widgets import connect_add_signals
-	connect_add_signals(self)
 	#}}}
 
 def get_details(self): #{{{
@@ -458,7 +456,9 @@ def populate_with_results(self):
 		treeselection = self.widgets['results']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
 		m_id = tmp_model.get_value(tmp_iter, 0)
-	self.hide_results()
+	
+	self.treemodel_results.clear()
+	self.widgets['results']['window'].hide()
 
 	plugin_name = 'PluginMovie' + self.active_plugin
 	plugin = __import__(plugin_name)
