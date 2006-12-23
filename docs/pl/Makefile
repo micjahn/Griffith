@@ -24,8 +24,8 @@ clean:
 install: $(MANPAGES)
 	$(INSTALL) -m 755 -d "$(MANDIR)/pl/man1"
 	$(INSTALL) -m 755 -d "$(MANDIR)/pl/man5"
-	if test -n "$(MANPAGES_1)"; then $(INSTALL) -m 644 $(MANPAGES_1) $(MANDIR)/pl/man1; fi
-	if test -n "$(MANPAGES_5)"; then $(INSTALL) -m 644 $(MANPAGES_5) $(MANDIR)/pl/man5; fi
+	if test -n "$(MANPAGES_1)"; then $(INSTALL) -m 644 $(MANPAGES_1) $(MANDIR)/pl.UTF-8/man1; fi
+	if test -n "$(MANPAGES_5)"; then $(INSTALL) -m 644 $(MANPAGES_5) $(MANDIR)/pl.UTF-8/man5; fi
 
 uninstall: $(MANPAGES)
 	for manpage in $(MANPAGES_1); do \
