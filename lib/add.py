@@ -455,6 +455,8 @@ def populate_with_results(self):
 		self.founded_results_id = 0
 		treeselection = self.widgets['results']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
+		if tmp_iter is None:
+			return False
 		m_id = tmp_model.get_value(tmp_iter, 0)
 	
 	self.treemodel_results.clear()

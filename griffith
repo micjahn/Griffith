@@ -162,6 +162,8 @@ class Griffith:
 			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
 
 	def hide_add_window(self, *args):
+		#if self.widgets['add']['b_get_from_web'].is_sensitive() is True: # fetch from amazon is not working
+		self.widgets['results']['window'].hide()
 		self.widgets['add']['window'].hide()
 
 	def get_from_web(self, *args):
