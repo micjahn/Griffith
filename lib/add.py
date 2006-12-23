@@ -335,6 +335,8 @@ def validate_details(t_movies, allow_only=None):
 
 def update_movie(self):
 	movie = self.db.Movie.get_by(movie_id=self._movie_id)
+	if movie is None: # movie was deleted in the meantime
+		return add_movie_db(self, True)
 	old_image = movie.image
 	details = get_details(self)
 	if movie.update_in_db(details):
@@ -552,23 +554,29 @@ def show_websearch_results(self):
 
 def get_from_web(self):
 	"""search the movie in web using the active plugin"""
-	if self.widgets['add']['o_title'].get_text() or self.widgets['add']['title'].get_text():
+	title = self.widgets['add']['title'].get_text()
+	o_title = self.widgets['add']['o_title'].get_text()
+
+	if o_title or title:
 		option = gutils.on_combo_box_entry_changed_name(self.widgets['add']['source'])
 		self.active_plugin = option
 		plugin_name = 'PluginMovie%s' % option
 		plugin = __import__(plugin_name)
 		self.search_movie = plugin.SearchPlugin()
-		if self.widgets['add']['o_title'].get_text():
+		if o_title:
 			self.search_movie.url = self.search_movie.original_url_search
-			self.search_movie.title = \
-				gutils.remove_accents(self.widgets['add']['o_title'].get_text(), 'utf-8')
-		elif self.widgets['add']['title'].get_text():
+			self.search_movie.title = gutils.remove_accents(o_title, 'utf-8')
+		elif title:
 			self.search_movie.url = self.search_movie.translated_url_search
-			self.search_movie.title = \
-				gutils.remove_accents(self.widgets['add']['title'].get_text(), 'utf-8')
+			self.search_movie.title = gutils.remove_accents(title, 'utf-8')
 		self.search_movie.search(self.widgets['add']['window'])
 		self.search_movie.get_searches()
 		self.show_search_results(self.search_movie)
+		if len(self.search_movie.ids) == 1 and o_title and title:
+			self.search_movie.url = self.search_movie.translated_url_search
+			self.search_movie.title = gutils.remove_accents(title, 'utf-8')
+			self.search_movie.search(self.widgets['add']['window'])
+			self.search_movie.get_searches()
 	else:
 		gutils.error(self.widgets['results']['window'], \
 			_("You should fill the original title\nor the movie title."))
