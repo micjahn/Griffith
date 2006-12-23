@@ -108,25 +108,25 @@ msgstr "Brazylijsko-portugalski"
 #: ../lib/about.py:54 ../lib/dbupgrade.py:88
 #: ../lib/plugins/movie/PluginMovieCSFD.py:30
 msgid "Czech"
-msgstr "Czeski"
+msgstr "czeski"
 
 #: ../lib/about.py:57 ../lib/dbupgrade.py:89
 #: ../lib/plugins/movie/PluginMovieAllocine.py:32
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:31
 msgid "French"
-msgstr "Francuski"
+msgstr "francuski"
 
 #: ../lib/about.py:59 ../lib/dbupgrade.py:90
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:32
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:32
 #: ../lib/plugins/movie/PluginMovieOFDb.py:13
 msgid "German"
-msgstr "Niemiecki"
+msgstr "niemiecki"
 
 #: ../lib/about.py:62 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
-msgstr "Włoski"
+msgstr "włoski"
 
 #: ../lib/about.py:64 ../lib/dbupgrade.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:32
@@ -136,25 +136,25 @@ msgstr "Włoski"
 #: ../lib/plugins/movie/PluginMovieTanukiAnime.py:31
 #: ../lib/plugins/movie/PluginMovieWP.py:32
 msgid "Polish"
-msgstr "Polski"
+msgstr "polski"
 
 #: ../lib/about.py:66 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
-msgstr "Portugalski"
+msgstr "portugalski"
 
 #: ../lib/about.py:68 ../lib/dbupgrade.py:94
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
 msgid "Spanish"
-msgstr "Hiszpański"
+msgstr "hiszpański"
 
 #: ../lib/about.py:70
 msgid "Swedish"
-msgstr "Szwedzki"
+msgstr "szwedzki"
 
 #: ../lib/about.py:76
 msgid "This program is released under the GNU"
@@ -282,11 +282,11 @@ msgstr "Gatunek"
 #: ../lib/plugins/movie/PluginMovieMediadis.py:16
 #: ../lib/plugins/movie/PluginMovieMoviefone.py:16
 msgid "English"
-msgstr "Angielski"
+msgstr "angielski"
 
 #: ../lib/dbupgrade.py:87 ../lib/plugins/movie/PluginMovieE-Pipoca.py:30
 msgid "Brazilian Portuguese"
-msgstr "Brazylijsko-portugalski"
+msgstr "brazylijsko-portugalski"
 
 #: ../lib/dbupgrade.py:97
 msgid "Favourite"

@@ -28,7 +28,7 @@
 		<refname>Szablon eksportu dla Griffith'a</refname>
 	</refnamediv>
 	<refsynopsisdiv>
-		<cmdsynopsis>Wtyczka do eksportu danych HTML od wersji 3.0 używa wpełni konfigurowalnych szablonów</cmdsynopsis>
+		<cmdsynopsis>Wtyczka do eksportu danych HTML od wersji 3.0 używa w pełni konfigurowalnych szablonów</cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 		<title>OPIS</title>
