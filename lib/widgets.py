@@ -442,6 +442,7 @@ def define_widgets(self, gladefile):
 	})#}}}
 
 def reconnect_add_signals(self):#{{{
+	self.widgets['add']['b_get_from_web'].set_sensitive(True)
 	try:
 		self.widgets['results']['select'].disconnect(self.poster_results_signal)
 	except:

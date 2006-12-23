@@ -161,6 +161,7 @@ def fetch_bigger_poster(self):
 			return
 
 	self.treemodel_results.clear()
+	self.widgets['add']['b_get_from_web'].set_sensitive(False) # disable movie plugins (result window is shared)
 
 	for f in range(len(result)):
 
