@@ -374,7 +374,6 @@ def get_dependencies():
 		version	= '.'.join([str(i) for i in gtk.pygtk_version])
 		if gtk.pygtk_version <= (2, 6, 0):
 			version = '-%s' % version
-			raise
 	except:
 		version = False
 	depend.append({'module': 'gtk',
