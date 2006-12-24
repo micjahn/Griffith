@@ -114,6 +114,7 @@ def upgrade_database(self, version):
 def convert_from_old_db(self, source_file, destination_file):	#{{{
 	# TODO: table.insert().execute({'number':1, 'o_title':'test1'}, {'number':2, 'title: 'test2'}) is faster!
 	print 'Converting old database - it can take several minutes...'
+	gutils.info(self,_("Griffith will now convert your database to the new format. This can take several minutes if you have a large database."))
 	from sqlalchemy.orm import clear_mappers
 	from sql import GriffithSQL
 	from gutils import digits_only
@@ -123,6 +124,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		from sqlite import DatabaseError
 	except:
 		print 'Old DB conversion: please install pysqlite legacy (v1.0)'
+		gutils.warning(self,_("Old DB conversion: please install pysqlite legacy (v1.0)"))
 		return False
 
 	if os.path.isfile(destination_file):
@@ -144,6 +146,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			print '$ mv ~/.griffith/griffith.gri{,3}'
 			print '$ mv ~/.griffith/griffith.gri{2,}'
 			print 'or install pysqlite in version 1.1'
+			gutils.warning(self,_("Your database is most probably in SQLite3 format, please convert it to SQLite2"))
 		else:
 			raise
 		return False
