@@ -99,11 +99,11 @@ msgstr "Logo, ikonę i większość grafik"
 
 #: ../lib/about.py:50
 msgid "Bulgarian"
-msgstr "Bułgarski"
+msgstr "bułgarski"
 
 #: ../lib/about.py:52
 msgid "Brasilian Portuguese"
-msgstr "Brazylijsko-portugalski"
+msgstr "brazylijsko-portugalski"
 
 #: ../lib/about.py:54 ../lib/dbupgrade.py:88
 #: ../lib/plugins/movie/PluginMovieCSFD.py:30
