@@ -28,6 +28,7 @@ GLADEDIR = $(DATADIR)/glade
 PLUGINSDIR = $(DATADIR)/plugins
 MOVIEPLUGINSDIR = $(PLUGINSDIR)/movie
 EXPORTPLUGINSDIR = $(PLUGINSDIR)/export
+IMPORTPLUGINSDIR = $(PLUGINSDIR)/imp
 TPLDIR = $(DATADIR)/export_templates
 APPLICATIONSDIR = $(PREFIX)/share/applications
 ICONDIR = $(PREFIX)/share/pixmaps
@@ -55,6 +56,7 @@ install:
 	$(INSTALL) -m 644 lib/*.py $(LIBDIR)
 	$(INSTALL) -m 644 lib/plugins/movie/*.py $(MOVIEPLUGINSDIR)
 	$(INSTALL) -m 644 lib/plugins/export/*.py $(EXPORTPLUGINSDIR)
+	$(INSTALL) -m 644 lib/plugins/imp/*.py $(IMPORTPLUGINSDIR)
 	$(INSTALL) -m 644 glade/*.glade $(GLADEDIR)
 	$(INSTALL) -m 644 glade/*.png $(GLADEDIR)
 	$(INSTALL) -m 644 images/*.png $(IMAGESDIR)
