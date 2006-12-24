@@ -4,11 +4,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.6.2-SVN\n"
+"Project-Id-Version: Griffith 0.9-rc1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-24 11:42+0100\n"
 "PO-Revision-Date: 2006-09-15 10:45+0100\n"
-"Last-Translator: M.W. <nono@nono.no>\n"
+"Last-Translator: Jessica K. P. <Jessica.K.P@women-at-work.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -215,7 +215,7 @@ msgstr "Fehler beim Erstellen des Backups"
 
 #: ../lib/backup.py:57
 msgid "Backup function is available only for SQLite engine for now"
-msgstr ""
+msgstr "Backup funktioniert im Moment nur mit der SQLite Datenbank."
 
 #: ../lib/backup.py:100
 msgid "Backup has been created"
@@ -300,16 +300,20 @@ msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
 msgstr ""
+"Griffith wird jetzt ihre alte Datenbank in das neue Format konvertieren. Das kann "
+"einige Minuten dauern, je nach Größe ihrer Datenbank."
 
 #: ../lib/dbupgrade.py:127
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
-msgstr ""
+msgstr "Datenbankupgrade: Bitte installieren sie pysqlite legacy (v1.0)"
 
 #: ../lib/dbupgrade.py:149
 msgid ""
 "Your database is most probably in SQLite3 format, please convert it to "
 "SQLite2"
 msgstr ""
+"Ihre Datenbank is höchstwahrscheinlich im SQLite3 Format, bitte konvertieren "
+"Sie die Datenbank ins SQLite2 Format."
 
 #: ../lib/delete.py:37
 msgid "You can't delete movie while it is loaned."
@@ -647,7 +651,7 @@ msgstr "Region 6 (Volksrepublik China)"
 
 #: ../lib/initialize.py:514
 msgid "Region 7 (Reserved for Unspecified Special Use)"
-msgstr ""
+msgstr "Region 7 (Reserviert für besondere Zwecke)"
 
 #: ../lib/initialize.py:515
 msgid "Region 8 (Airlines/Cruise Ships)"
@@ -1639,6 +1643,30 @@ msgstr "Merkmale"
 msgid "volume details"
 msgstr "Datenträger Details"
 
+#: ../glade/import.glade.h:1
+msgid "<b>Import only fields selected below</b>"
+msgstr "<b>Nur die ausgewählten Felder importieren</b>"
+
+#: ../glade/import.glade.h:2
+msgid "<b>Importing...</b>"
+msgstr "<b>Importiere...</b>"
+
+#: ../glade/import.glade.h:6 ../glade/importcsv.glade.h:11
+msgid "Fields"
+msgstr "Felder"
+
+#: ../glade/import.glade.h:7
+msgid "Import window"
+msgstr "Importieren"
+
+#: ../glade/import.glade.h:8
+msgid "Plugin"
+msgstr "Module"
+
+#: ../glade/import.glade.h:9
+msgid "Source"
+msgstr "Quelle"
+
 #: ../glade/importcsv.glade.h:1
 msgid ""
 "<b>Some Hints</b>:\n"
@@ -1677,10 +1705,6 @@ msgstr "Feldtrenner"
 #: ../glade/importcsv.glade.h:10
 msgid "Encoding"
 msgstr "Zeichensatz"
-
-#: ../glade/importcsv.glade.h:11 ../glade/import.glade.h:6
-msgid "Fields"
-msgstr "Felder"
 
 #: ../glade/importcsv.glade.h:12
 msgid "File-Options"
@@ -1882,23 +1906,3 @@ msgstr ""
 "utf_16_le (Alle Sprachen (BMP only))\n"
 "utf_7 (Alle Sprachen)\n"
 "utf_8 (Alle Sprachen)"
-
-#: ../glade/import.glade.h:1
-msgid "<b>Import only fields selected below</b>"
-msgstr "<b>Nur die ausgewählten Felder importieren</b>"
-
-#: ../glade/import.glade.h:2
-msgid "<b>Importing...</b>"
-msgstr "<b>Importiere...</b>"
-
-#: ../glade/import.glade.h:7
-msgid "Import window"
-msgstr "Importieren"
-
-#: ../glade/import.glade.h:8
-msgid "Plugin"
-msgstr "Module"
-
-#: ../glade/import.glade.h:9
-msgid "Source"
-msgstr "Quelle"
