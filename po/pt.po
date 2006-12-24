@@ -8,29 +8,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.8pre1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-23 03:47+0000\n"
+"POT-Creation-Date: 2006-12-24 11:42+0100\n"
 "PO-Revision-Date: 2006-12-23 03:47+0000\n"
 "Last-Translator: Vasco Nunes <vasco.m.nunes@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:162 ../griffith:723 ../lib/delete.py:33 ../lib/edit.py:44
+#: ../griffith:163 ../griffith:716 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 msgid "You have no movies in your database"
 msgstr "Não existem filmes na sua colecção"
 
-#: ../griffith:290
+#: ../griffith:283
 msgid "You saw all movies in your collection!"
 msgstr "Já viu todos os filmes da sua colecção!"
 
-#: ../griffith:410 ../griffith:415 ../lib/initialize.py:245
+#: ../griffith:403 ../griffith:408 ../lib/initialize.py:245
 #: ../lib/initialize.py:504
 msgid "subtitles"
 msgstr "legendas"
 
-#: ../griffith:693
+#: ../griffith:686
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -40,7 +40,7 @@ msgstr ""
 "A sua colecção actual será substituída.\n"
 "Esta operação é irreversível."
 
-#: ../griffith:702
+#: ../griffith:695
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
@@ -50,23 +50,23 @@ msgstr ""
 "A sua colecção actual será concatenada com os dados da cópia de segurança.\n"
 "Esta operação é irreversível."
 
-#: ../griffith:784
+#: ../griffith:777
 msgid " movie(s) in collection. "
 msgstr " filme(s) na colecção. "
 
-#: ../griffith:785
+#: ../griffith:778
 msgid " movie(s) loaned. "
 msgstr " filme(s) emprestado(s). "
 
-#: ../griffith:786
+#: ../griffith:779
 msgid "You haven't seen "
 msgstr "Ainda não viu "
 
-#: ../griffith:786
+#: ../griffith:779
 msgid " movie(s)"
 msgstr "filme(s)"
 
-#: ../griffith:917
+#: ../griffith:912
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -74,7 +74,7 @@ msgstr ""
 "Tem a certeza que deseja criar uma nova base de dados?\n"
 "Irá perder TODOS os seus dados actuais!"
 
-#: ../griffith:921
+#: ../griffith:916
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -175,7 +175,7 @@ msgstr "Editar filme"
 msgid "Movie information has been updated"
 msgstr "Os dados do filme foram actualizados"
 
-#: ../lib/add.py:374 ../lib/add.py:574
+#: ../lib/add.py:374 ../lib/add.py:584
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
@@ -189,15 +189,15 @@ msgstr ""
 "Um filme com esse título já existe. De certeza que deseja na mesma adicioná-"
 "lo?"
 
-#: ../lib/add.py:551
+#: ../lib/add.py:555
 msgid "No results"
 msgstr "Sem resultados"
 
-#: ../lib/add.py:582
+#: ../lib/add.py:592
 msgid "Url: "
 msgstr "Url:"
 
-#: ../lib/add.py:583
+#: ../lib/add.py:593
 msgid "Language: "
 msgstr "Idioma: "
 
@@ -299,6 +299,22 @@ msgstr "Português do Brasil"
 msgid "Favourite"
 msgstr "Favorito"
 
+#: ../lib/dbupgrade.py:117
+msgid ""
+"Griffith will now convert your database to the new format. This can take "
+"several minutes if you have a large database."
+msgstr ""
+
+#: ../lib/dbupgrade.py:127
+msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
+msgstr ""
+
+#: ../lib/dbupgrade.py:149
+msgid ""
+"Your database is most probably in SQLite3 format, please convert it to "
+"SQLite2"
+msgstr ""
+
 #: ../lib/delete.py:37
 msgid "You can't delete movie while it is loaned."
 msgstr "Não pode eliminar um volume enquanto estiver emprestado!"
@@ -323,28 +339,28 @@ msgstr "Tem a certeza que deseja eliminar este cartaz?"
 msgid "No posters found for this movie."
 msgstr "Não foram encontrados cartazes deste filme."
 
-#: ../lib/edit.py:194 ../lib/movie.py:144
+#: ../lib/edit.py:197 ../lib/movie.py:144
 msgid "Fetching poster"
 msgstr "Obter imagem"
 
-#: ../lib/edit.py:194 ../lib/movie.py:119 ../lib/movie.py:144
+#: ../lib/edit.py:197 ../lib/movie.py:119 ../lib/movie.py:144
 #: ../lib/movie.py:237
 msgid "Wait a moment"
 msgstr "Aguarde um momento"
 
-#: ../lib/edit.py:206
+#: ../lib/edit.py:209
 msgid "Sorry. A connection error was occurred."
 msgstr "Ocorreu um erro de ligação."
 
-#: ../lib/edit.py:218
+#: ../lib/edit.py:221
 msgid "Sorry. This poster image format is not supported."
 msgstr "Este formato de imagem não é suportado."
 
-#: ../lib/edit.py:224
+#: ../lib/edit.py:228
 msgid "Do you want to use this poster instead?"
 msgstr "Tem a certeza que deseja utilizar antes este cartaz?"
 
-#: ../lib/edit.py:238
+#: ../lib/edit.py:242
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
 msgstr "Este filme está listado na Amazon mas não tem um cartaz disponível."
 
@@ -657,15 +673,15 @@ msgstr "Deseja emprestar toda a colecção?"
 msgid "Movie loaned"
 msgstr "Filme emprestado"
 
-#: ../lib/main_treeview.py:221
+#: ../lib/main_treeview.py:224
 msgid "This movie has been loaned to "
 msgstr "Este filme foi emprestado a "
 
-#: ../lib/main_treeview.py:221
+#: ../lib/main_treeview.py:224
 msgid " on "
 msgstr " em "
 
-#: ../lib/main_treeview.py:233
+#: ../lib/main_treeview.py:236
 msgid "Movie not loaned"
 msgstr "O filme não está emprestado"
 
@@ -757,7 +773,7 @@ msgstr "Filtro activado. A listar apenas os filmes do volume: %s"
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr "Filtro activado. A listar apenas os filmes da colecção: %s"
 
-#: ../lib/widgets.py:299
+#: ../lib/widgets.py:301
 msgid ""
 "Define here the PDF reader you want to use within Griffith. Popular choices "
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
@@ -767,7 +783,7 @@ msgstr ""
 "populares são xpdf, gpdf, evince ou kpdf. Certifique-se que tem este "
 "programa instalado e a funcionar correctamente."
 
-#: ../lib/widgets.py:300
+#: ../lib/widgets.py:302
 msgid ""
 "Here you can define the desired language to use while spell checking some "
 "fields. Use you locale setting. For example, to use european portuguese "
@@ -777,7 +793,7 @@ msgstr ""
 "Utilize a definição local. Por exemplo, para utilizar português europeu na "
 "verificação ortográfica indique neste campo 'pt'"
 
-#: ../lib/widgets.py:301
+#: ../lib/widgets.py:303
 msgid ""
 "Use this entry to define the SMTP server you want to use to send e-mails. On "
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
@@ -788,7 +804,7 @@ msgstr ""
 "'localhost' deverá funcionar. Em alternativam poderá utilizar o servidor "
 "SMTP do seu ISP."
 
-#: ../lib/widgets.py:302
+#: ../lib/widgets.py:304
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
