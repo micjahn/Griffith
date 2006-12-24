@@ -12,16 +12,14 @@ Generating griffith.mo files:
 Creating new translation:
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Follow these steps:
-	$ svn checkout http://svn.berlios.de/svnroot/repos/griffith/griffith
+	$ svn checkout svn://svn.berlios.de/griffith/trunk griffith
 	$ cd griffith/po
 	$ make update
 remember to replace XX with your country language code:
 	$ make XX.po
 edit XX.po with your favourite editor (VIM/KBabel/poEdit/...)
 	$ make dist
-if no errors occurs:
-	# cp ../i18n/XX/LC_MESSAGES/griffith.mo /usr/local/share/locale/XX/LC_MESSAGES/griffith.mo
 test your translation:
-	$ LANG=XX griffith
+	$ LANG=XX ./griffith
 if all seems to be OK, send your translation (compressed XX.po file)
 to the devel mailing list or directly to us

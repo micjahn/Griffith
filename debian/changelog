@@ -1,4 +1,4 @@
-griffith (0.9~rc1-1) UNRELEASED; urgency=low
+griffith (0.9~rc1-1) experimental; urgency=low
 
   * New upstream release
   * Dependencies updated (python-sqlite is still in Depends: to make the

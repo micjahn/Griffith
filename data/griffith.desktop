@@ -2,7 +2,7 @@
 Name=Griffith
 GenericName=Griffith - Movie Collection Manager
 Comment=Movie Collection Manager
-Version=0.6.1
+Version=0.9~rc1
 Encoding=UTF-8
 Exec=griffith
 Icon=griffith.png
