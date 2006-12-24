@@ -32,6 +32,9 @@ def treeview_clicked(self):
 	if self.total:
 		treeselection = self.widgets['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
+		if tmp_iter is None:
+			self.debug.show('Treeview: no selection')
+			return False
 		number = tmp_model.get_value(tmp_iter,0)
 		movie = self.db.Movie.get_by(number=number)
 		if movie is None:

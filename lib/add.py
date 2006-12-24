@@ -659,6 +659,8 @@ def clone_movie(self):
 		# clone image
 		shutil.copyfile(image_path, clone_path)
 		image_path = clone_path
+		gutils.make_thumbnail(self, "%s.jpg" % new_image)
+		gutils.make_medium_image(self, "%s.jpg" % new_image)
 	else:
 		image_path = os.path.join(self.locations['images'], "default.png")
 	handler = self.Image.set_from_file(image_path)
@@ -667,7 +669,8 @@ def clone_movie(self):
 	self.total = self.total + 1
 	self.count_statusbar()
 	self.populate_treeview()
-	self.widgets['treeview'].set_cursor(next_number-1)
+	#self.widgets['treeview'].set_cursor(next_number-1)
+	self.go_last()
 	self.treeview_clicked()
 
 # vim: fdm=marker
