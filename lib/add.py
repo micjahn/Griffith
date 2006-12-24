@@ -594,7 +594,7 @@ def source_changed(self):
 	image = os.path.join(self.locations['images'], plugin_name + ".png")
 	# if movie plugin logo exists lets use it
 	if os.path.exists(image):
-		handler = self.am_plugin_image.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
+		handler = self.widgets['add']['plugin_image'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image))
 
 def clone_movie(self):
 	treeselection = self.widgets['treeview'].get_selection()
