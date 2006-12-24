@@ -52,7 +52,7 @@ import py2exe
 
 opts = {
     "py2exe": {
-        "includes": "cairo,pangocairo,cgi,PIL,sqlite,pysqlite2,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,adodb,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,winshell",
+        "includes": "cairo,pangocairo,cgi,PIL,pysqlite2,pysqlite2.*,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlalchemy,sqlalchemy.*,sqlalchemy.mods.*,sqlalchemy.databases.*,sqlalchemy.engine.*,sqlalchemy.ext.*,sqlalchemy.orm.*,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,platform,winshell,psycopg2,MySQLdb,chardet",
         "optimize": 2,
 		"dist_dir": "dist",
     }
@@ -60,8 +60,12 @@ opts = {
 
 setup(
     name = "Griffith",
-    description = "Griffith",
     version = "0.9~rc1",
+	description = 'Griffith - A film manager',
+    author = 'Vasco Nunes/Piotr Ozarowski',
+    author_email = 'vasco.m.nunes@gmail.com',
+    url = 'http://griffith.vasconunes.net',
+    license = 'GPL',
     console = [
         {
             "script": "griffith",
@@ -101,10 +105,16 @@ setup(
 		glob.glob("i18n\\pt\\LC_MESSAGES\\*.mo")),
 		("i18n/it/LC_MESSAGES",
 		glob.glob("i18n\\it\\LC_MESSAGES\\*.mo")),
+		("i18n/sv/LC_MESSAGES",
+		glob.glob("i18n\\sv\\LC_MESSAGES\\*.mo")),
+		("i18n/pt_BR/LC_MESSAGES",
+		glob.glob("i18n\\pt_BR\\LC_MESSAGES\\*.mo")),
 		("lib/plugins/export",
 		glob.glob("lib\\plugins\\export\\*.*")),
 		("lib/plugins/movie",
 		glob.glob("lib\\plugins\\movie\\*.*")),
+		("lib/plugins/imp",
+		glob.glob("lib\\plugins\\imp\\*.*")),
 		("images",
 		glob.glob("images\\*.png")),
 		("",

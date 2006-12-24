@@ -43,10 +43,10 @@ def locations(self):
 	locations['lib']  = os.path.dirname(__file__)
 	
 	if os.name == 'nt' or os.name == 'win32':
-		#import winshell
-		#mydocs = winshell.my_documents()
-		#locations['home']           = os.path.join(mydocs, 'griffith')
-		locations['home']           = os.path.join(os.path.expanduser('~'), 'griffith')
+		import winshell
+		mydocs = winshell.my_documents()
+		locations['home']           = os.path.join(mydocs, 'griffith')
+		#locations['home']           = os.path.join(os.path.expanduser('~'), 'griffith')
 		locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
 		locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
 		locations['images']         = "%s\\images" % locations['exec']

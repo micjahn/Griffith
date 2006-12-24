@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2006-12-24 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Added some gtk dialogs when converting old db format
+	* Fixed some win32 setup includes
+
 2006-12-22 Piotr Ożarowski <ozarow@gmail.com>
 	* Polish manpage updated
 

@@ -25,7 +25,8 @@ __revision__ = '$Id$'
 import sys, os.path
 import gtk, gtk.glade
 assert gtk.pygtk_version >= (2, 6, 0), 'PyGTK should be >= 2.6.0'
-lib = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lib'))
+lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
+#lib = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lib'))
 if os.path.isdir(lib):
 	sys.path.append(lib)
 del lib
