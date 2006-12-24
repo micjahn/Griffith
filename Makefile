@@ -25,7 +25,7 @@ DATADIR = $(PREFIX)/share/griffith
 LIBDIR = $(DATADIR)/lib
 IMAGESDIR = $(DATADIR)/images
 GLADEDIR = $(DATADIR)/glade
-PLUGINSDIR = $(DATADIR)/plugins
+PLUGINSDIR = $(LIBDIR)/plugins
 MOVIEPLUGINSDIR = $(PLUGINSDIR)/movie
 EXPORTPLUGINSDIR = $(PLUGINSDIR)/export
 IMPORTPLUGINSDIR = $(PLUGINSDIR)/imp
@@ -54,6 +54,7 @@ install:
 		$(ICONDIR) $(TPLDIR) $(IMAGESDIR) $(GLADEDIR)
 	$(INSTALL) -m 755 griffith $(LIBDIR)
 	$(INSTALL) -m 644 lib/*.py $(LIBDIR)
+	$(INSTALL) -m 644 lib/plugins/*.py $(PLUGINSDIR)
 	$(INSTALL) -m 644 lib/plugins/movie/*.py $(MOVIEPLUGINSDIR)
 	$(INSTALL) -m 644 lib/plugins/export/*.py $(EXPORTPLUGINSDIR)
 	$(INSTALL) -m 644 lib/plugins/imp/*.py $(IMPORTPLUGINSDIR)
