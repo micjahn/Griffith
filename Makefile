@@ -50,8 +50,8 @@ install:
 	@echo "installing Griffith"
 	@echo "^^^^^^^^^^^^^^^^^^^"
 	$(INSTALL) -m 755 -d $(BINDIR) $(DATADIR) $(LIBDIR) $(PLUGINSDIR) $(MOVIEPLUGINSDIR) \
-		$(EXPORTPLUGINSDIR) $(FONTSDIR) $(APPLICATIONSDIR) $(ICONDIR) $(TPLDIR) \
-		$(IMAGESDIR) $(GLADEDIR)
+		$(EXPORTPLUGINSDIR) $(IMPORTPLUGINSDIR) $(FONTSDIR) $(APPLICATIONSDIR) \
+		$(ICONDIR) $(TPLDIR) $(IMAGESDIR) $(GLADEDIR)
 	$(INSTALL) -m 755 griffith $(LIBDIR)
 	$(INSTALL) -m 644 lib/*.py $(LIBDIR)
 	$(INSTALL) -m 644 lib/plugins/movie/*.py $(MOVIEPLUGINSDIR)
