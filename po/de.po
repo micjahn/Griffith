@@ -1197,7 +1197,7 @@ msgstr "Filter löschen"
 
 #: ../glade/griffith.glade.h:32
 msgid "Clone"
-msgstr "Kopieren"
+msgstr "Duplizieren"
 
 #: ../glade/griffith.glade.h:37
 msgid "DVD layers"
@@ -1405,7 +1405,7 @@ msgstr "Port"
 
 #: ../glade/griffith.glade.h:101
 msgid "Poster image"
-msgstr "Poster Bild"
+msgstr "Film-Poster"
 
 #: ../glade/griffith.glade.h:102
 msgid "Poster viewer"
