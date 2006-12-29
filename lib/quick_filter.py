@@ -33,7 +33,7 @@ def change_filter(self):
 	
 	if text:
 		criteria = self.search_criteria[self.widgets['filter']['criteria'].get_active()]
-		if {'year':None, 'runtime':None, 'media_num':None, 'rating':None}.has_key(criteria):
+		if criteria in ('year', 'runtime', 'media_num', 'rating'):
 			statement.append_whereclause(self.db.Movie.c[criteria]==text)
 		else:
 			statement.append_whereclause(self.db.Movie.c[criteria].like('%'+text+'%'))

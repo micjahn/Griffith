@@ -179,7 +179,7 @@ def get_poster_select_dc(self, event, mself, result, current_poster):
 	if event.type == gtk.gdk._2BUTTON_PRESS:
 		get_poster(mself, None, result, current_poster)
 
-def get_poster_select(self, mself, result, current_poster): # TODO: it ir used?
+def get_poster_select(self, mself, result, current_poster):
 	get_poster(mself, None, result, current_poster)
 
 def get_poster(self, f, result, current_poster):
@@ -187,6 +187,8 @@ def get_poster(self, f, result, current_poster):
 	if f is None:
 		treeselection = self.widgets['results']['treeview'].get_selection()
 		(tmp_model, tmp_iter) = treeselection.get_selected()
+		if tmp_iter is None:
+			return False
 		f = int(tmp_model.get_value(tmp_iter, 0))
 		self.widgets['results']['window'].hide()
 

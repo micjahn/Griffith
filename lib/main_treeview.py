@@ -316,6 +316,8 @@ def set_details(self, item=None):#{{{
 	#}}}
 
 def populate(self, movies=None, where=None):#{{{
+	if self.initialized is False:
+		return False
 	from sqlalchemy import Select, desc
 	
 	if movies is None:
