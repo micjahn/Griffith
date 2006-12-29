@@ -319,6 +319,8 @@ class GriffithSQL:
 				config['db_host'],
 				int(config['db_port']),
 				config['db_name'])
+		else:
+			config['db_type'] = 'sqlite'
 		self.metadata = BoundMetaData(url)
 		# try to establish a db connection
 		try:

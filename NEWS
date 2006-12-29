@@ -1,10 +1,15 @@
+Griffith 0.9~rc2
+================
+
+* NOT RELEASED YET
+
+
 Griffith 0.9~rc1 "Christmas Edition"
 ====================================
-This release is marked as "Release Candidate" because of database format change
-(please, let us know if you will have any problems with upgrading from old
-version, old database is not deleted - if upgrade process will fail, send us
-the ~/.griffith/griffith.gri file or `griffith --debug' output) and because not
-all translators had time to update their files.
+This release is marked as "Release Candidate" due to:
+ - database format change (if you have any problems send us the
+   ~/.griffith/griffith.gri file or `griffith --debug' output)
+ - translations are not finished (translators need more time)
 
 * SQLAlchemy transition, i.e.
   + MySQL support added
