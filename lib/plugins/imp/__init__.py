@@ -105,7 +105,7 @@ class ImportPlugin:
 		else:
 			number += 1
 
-		statement = Select(self.db.Movie.c)
+		statement = Select([self.db.Movie.c.number])
 
 		processed = 0
 		while self._abort is False:
@@ -123,16 +123,18 @@ class ImportPlugin:
 
 			if (details.has_key('o_title') and details['o_title']) or (details.has_key('title') and details['title']):
 				if details.has_key('o_title') and details['o_title']:
-					statement.whereclause = self.db.Movie.c.o_title==details['o_title']
+					statement.whereclause = func.lower(self.db.Movie.c.o_title)==details['o_title'].lower()
+					if details.has_key('title') and details['title']:
+						statement.append_whereclause( func.lower(self.db.Movie.c.title)==details['title'].lower() )
 					tmp = statement.execute().fetchone()
 					if tmp is not None:
-						self.debug.show("movie already exists (o_title=%s)" % details['o_title'])
+						self.debug.show("movie already exists (number=%s, o_title=%s)" % (tmp.number, details['o_title']))
 						continue
-				if details.has_key('title') and details['title']:
-					statement.whereclause = self.db.Movie.c.o_title==details['title']
+				elif details.has_key('title') and details['title']:
+					statement.whereclause = func.lower(self.db.Movie.c.title)==details['title'].lower()
 					tmp = statement.execute().fetchone()
 					if tmp is not None:
-						self.debug.show("movie already exists (title=%s)" % details['title'])
+						self.debug.show("movie already exists (number=%s, title=%s)" % (tmp.number, details['title']))
 						continue
 				validate_details(details, self.fields_to_import)
 				if self.edit is True:
