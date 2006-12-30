@@ -34,6 +34,11 @@ except:
 
 def show_preferences(self):
 	w = self.widgets['preferences']
+	# number
+	if self.config.get('view_number', 'True')=='False':
+		w['view_number'].set_active(False)
+	else:
+		w['view_number'].set_active(True)
 	# image
 	if self.config.get('view_image', 'True')=='False':
 		w['view_image'].set_active(False)
@@ -170,6 +175,11 @@ def save_preferences(self):
 	if c.get('spell_plot', 'False') == 'True':
 		plot_was_false = 0
 
+	# number
+	if w['view_number'].get_active():
+		c['view_number'] = 'True'
+	else:
+		c['view_number'] = 'False'
 	# image
 	if w['view_image'].get_active():
 		c['view_image'] = 'True'

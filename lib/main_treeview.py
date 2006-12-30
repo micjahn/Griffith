@@ -222,7 +222,6 @@ def set_details(self, item=None):#{{{
 		self.person_email = str(data_person.email)
 		self.loan_date = str(data_loan.date)
 		w['loan_info'].set_label(_("This movie has been loaned to ") + self.person_name + _(" on ") + self.loan_date[:10])
-		w['loaned_icon'].set_from_stock('gtk-no', 2) # "is movie available?"
 	else:
 		self.widgets['popups']['loan'].set_sensitive(True)
 		self.widgets['popups']['email'].set_sensitive(False)
@@ -234,7 +233,6 @@ def set_details(self, item=None):#{{{
 		w['email_reminder_button'].set_sensitive(False)
 		w['loan_button'].set_sensitive(True)
 		w['loan_info'].set_markup("<b>%s</b>" % _("Movie not loaned"))
-		w['loaned_icon'].set_from_stock('gtk-yes', 2) # "is movie available?"
 
 	# loan history	
 	self.loans_treemodel.clear()
@@ -358,25 +356,32 @@ def populate(self, movies=None, where=None):#{{{
 
 	self.total = len(movies)
 	self.treemodel.clear()
+	# check preferences to hide or show columns
+	if self.config.get('view_number', 'True') == 'True':
+		self.number_column.set_visible(True)
+	else:
+		self.number_column.set_visible(False)
+	if self.config.get('view_otitle', 'True') == 'True':
+		self.otitle_column.set_visible(True)
+	else:
+		self.otitle_column.set_visible(False)
+	if self.config.get('view_title', 'True') == 'True':
+		self.title_column.set_visible(True)
+	else:
+		self.title_column.set_visible(False)
+	if self.config.get('view_director', 'True') == 'True':
+		self.director_column.set_visible(True)
+	else:
+		self.director_column.set_visible(False)
+	if self.config.get('view_image', 'True') == 'True':
+		self.image_column.set_visible(True)
+	else:
+		self.image_column.set_visible(False)
 	for movie in movies:
 		myiter = self.treemodel.append(None)
 		self.treemodel.set_value(myiter,0,'%004d' % int(movie.number))
 
-		# check preferences to hide or show columns
-		if self.config.get('view_otitle') == 'True':
-			self.otitle_column.set_visible(True)
-		else:
-			self.otitle_column.set_visible(False)
-		if self.config.get('view_title') == 'True':
-			self.title_column.set_visible(True)
-		else:
-			self.title_column.set_visible(False)
-		if self.config.get('view_director') == 'True':
-			self.director_column.set_visible(True)
-		else:
-			self.director_column.set_visible(False)
-		if self.config['view_image'] == 'True':
-			self.image_column.set_visible(True)
+		if self.config.get('view_image', 'True') == 'True':
 			tmp_dest = self.locations['posters']
 			tmp_img = os.path.join(tmp_dest, "t_%s.jpg" % str(movie.image))
 			if movie.image and os.path.isfile(tmp_img):
@@ -397,10 +402,6 @@ def populate(self, movies=None, where=None):#{{{
 			self.Image.set_from_file(image_path)
 			pixbuf = self.Image.get_pixbuf()
 			self.treemodel.set_value(myiter, 1, pixbuf)
-
-		else:
-			# let's hide image column from main treeview since we don't want it to be visible
-			self.image_column.set_visible(False)
 		self.treemodel.set_value(myiter,2,movie.o_title)
 		self.treemodel.set_value(myiter,3,movie.title)
 		self.treemodel.set_value(myiter,4,movie.director)

@@ -6,7 +6,9 @@ Griffith ChangeLog
 
 2006-12-30 Piotr Ożarowski <ozarow@gmail.com>
 	* Compare lower() values while importing movies
-	* Seen / loaned icon moved near to rating
+	* Seen icon moved near to rating, loaned icon removed
+	* Speed up main list filling
+	* Hide number column option added 
 
 2006-12-30 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Under MacOSX Preview.app is used for pdfs now

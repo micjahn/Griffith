@@ -85,6 +85,7 @@ class Config:
 		self.config['top']                  = "None"
 		self.config['left']                 = "None"
 		self.config['view_director']        = "True"
+		self.config['view_number']          = "True"
 		self.config['view_otitle']          = "True"
 		self.config['view_title']           = "True"
 		self.config['view_image']           = "True"

@@ -163,10 +163,10 @@ def treeview(self):
 	self.widgets['treeview'].set_headers_visible(True)
 	# number column
 	renderer=gtk.CellRendererText()
-	column=gtk.TreeViewColumn(_('N.'), renderer, text=0)
-	column.set_resizable(True)
-	column.set_sort_column_id(0)
-	self.widgets['treeview'].append_column(column)
+	self.number_column=gtk.TreeViewColumn(_('N.'), renderer, text=0)
+	self.number_column.set_resizable(True)
+	self.number_column.set_sort_column_id(0)
+	self.widgets['treeview'].append_column(self.number_column)
 	# pic column
 	renderer=gtk.CellRendererPixbuf()
 	self.image_column=gtk.TreeViewColumn(_('Image'), renderer, pixbuf=1)
