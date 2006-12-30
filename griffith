@@ -97,6 +97,7 @@ class Griffith:
 
 		self.restore_state()
 		self.clear_details()
+		self.populate_treeview()
 		self.count_statusbar()
 		self.go_last()
 
