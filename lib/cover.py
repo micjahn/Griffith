@@ -193,7 +193,6 @@ def cover_simple(self, id):
 	if self.windows:
 		os.popen3("\"" + cover_file + "\"")
 	elif self.mac:
-		print "aqui"
 		os.popen3("open -a Preview" + " " + cover_file)
 	else:
 		os.popen3(self.pdf_reader + " " + cover_file)
