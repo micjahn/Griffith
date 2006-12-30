@@ -37,7 +37,7 @@ def change_filter(self):
 			statement.append_whereclause(self.db.Movie.c[criteria]==text)
 		else:
 			statement.append_whereclause(self.db.Movie.c[criteria].like('%'+text+'%'))
-	if len(text)>0: # filter mode
+	if len(text)<4: # filter mode
 		limit = int(self.config.get('s_limit', 0))
 		if limit > 0:
 			statement.limit = limit
@@ -48,4 +48,5 @@ def clear_filter(self):
 	self.widgets['filter']['text'].set_text('')
 	self.widgets['filter']['criteria'].set_active(0)
 	self.widgets['filter']['collection'].set_active(0)
+	self.populate_treeview()
 	self.go_last()
