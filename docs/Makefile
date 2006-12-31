@@ -1,5 +1,7 @@
 # $Id$
 LANGUAGES = en pl pt
+DOC2MAN ?= docbook2x-man
+
 .PHONY: man clean $(LANGUAGES) 
 
 

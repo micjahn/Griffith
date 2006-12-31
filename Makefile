@@ -18,6 +18,7 @@ MSGFMT ?= msgfmt
 MSGMERGE ?= msgmerge
 XGETTEXT ?= xgettext
 FIND ?= find
+DOC2MAN ?= docbook2x-man
 
 PREFIX = $(DESTDIR)/usr
 BINDIR = $(PREFIX)/bin

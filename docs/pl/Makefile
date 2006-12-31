@@ -7,6 +7,7 @@ MANPAGES= $(MANPAGES_1) $(MANPAGES_5)
 PREFIX= $(DESTDIR)/usr
 MANDIR= $(PREFIX)/share/man
 INSTALL ?= install
+DOC2MAN ?= docbook2x-man
 
 all: man
 
@@ -16,10 +17,10 @@ clean:
 	$(RM) $(MANPAGES)
 
 %.1: %.xml
-	docbook2x-man --encoding utf8 $<
+	$(DOC2MAN) --encoding utf8 $<
 
 %.5: %.xml
-	docbook2x-man --encoding utf8 $<
+	$(DOC2MAN) --encoding utf8 $<
 
 install: $(MANPAGES)
 	$(INSTALL) -m 755 -d "$(MANDIR)/pl/man1"
