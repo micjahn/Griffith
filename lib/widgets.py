@@ -174,6 +174,7 @@ def define_widgets(self, gladefile):
 		's_trailer':		get('p_s_trailer'),
 		's_cast':		get('p_s_cast'),
 		's_year':		get('p_s_year'),
+		's_limit':		get('p_sp_s_limit'),
 		'vcodec':		get('p_vcodec'),
 		'view_image':		get('view_image'),
 		'view_number':		get('view_number'),

@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2007-01-01 Piotr Ożarowski <ozarow@gmail.com>
+	* Filmweb movie plugin updated
+	* Added "limit search results to x movies" in preferences
+
 2006-12-30 Piotr Ożarowski <ozarow@gmail.com>
 	* Compare lower() values while importing movies
 	* Seen icon moved near to rating, loaned icon removed

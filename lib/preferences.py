@@ -118,6 +118,8 @@ def show_preferences(self):
 		w['sortby'].set_active(tmp)
 	w['sortby_reverse'].set_active(bool(self.config.get('sortby_reverse', False)))
 	
+	w['s_limit'].set_value(gutils.digits_only(self.config.get('s_limit', 0)))
+	
 	plugins = gutils.read_plugins('PluginMovie', \
 		self.locations['movie_plugins'])
 	plugins.sort()
@@ -209,6 +211,8 @@ def save_preferences(self):
 	else:
 		c['sortby'] = 'number'
 	c['sortby_reverse'] = w['sortby_reverse'].get_active()
+	
+	c['s_limit'] = str(int(w['s_limit'].get_value()))
 	
 
 	# pdf font
