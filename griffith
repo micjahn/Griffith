@@ -267,7 +267,15 @@ class Griffith:
 		add.change_rating_from_slider(self)
 
 	def toggle_seen(self, *args):
-		edit.toggle_seen(self)
+		m_number, m_iter = self.get_maintree_selection()
+		movie = self.db.Movie.get_by(number=m_number)
+		if movie.seen:
+			movie.seen = False
+		else:
+			movie.seen = True
+		movie.update()
+		movie.flush()
+		movie.refresh()
 
 	def sugest_movie(self, *args):
 		if not self.widgets['menu']['not_seen_movies'].get_active():
@@ -710,9 +718,9 @@ You can't undo this operation."""), \
 		self.widgets['print_cover']['window_simple'].hide()
 
 	def print_cover_simple_process(self, *args):
-		movie_id, movie_iter = self.get_maintree_selection()
-		if movie_id is not None:
-			cover.cover_simple(self, movie_id)
+		movie_number, movie_iter = self.get_maintree_selection()
+		if movie_number is not None:
+			cover.cover_simple(self, movie_number)
 		else:
 			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
 
@@ -722,8 +730,8 @@ You can't undo this operation."""), \
 
 	def print_cover_image_process(self, *args):
 		self.widgets['print_cover']['window_image'].hide()
-		movie_id, movie_iter = self.get_maintree_selection()
-		cover.cover_image(self, movie_id)
+		movie_number, movie_iter = self.get_maintree_selection()
+		cover.cover_image(self, movie_number)
 
 	def print_cover_image_hide(self, *args):
 		self.widgets['print_cover']['window_image'].hide()

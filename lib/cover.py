@@ -38,15 +38,15 @@ import pango
 
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
-def cover_image(self,id):
+def cover_image(self,number):
 	filename = gutils.file_chooser(_("Select image"), \
 		action=gtk.FILE_CHOOSER_ACTION_OPEN, \
 		buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, \
 			gtk.STOCK_OPEN, gtk.RESPONSE_OK))
 	if filename[0]:
-		cover_image_process(self, filename[0], id)
+		cover_image_process(self, filename[0], number)
 
-def cover_image_process(self, filename, id):
+def cover_image_process(self, filename, number):
 	size = self.widgets['print_cover']['ci_size'].get_active()
 	number = self.widgets['print_cover']['ci_number'].get_active()
 
@@ -88,7 +88,7 @@ def cover_image_process(self, filename, id):
 		_("Released Under the GNU/GPL License").encode('utf-8'))
 
 	# get movie information from db
-	movie = self.db.Movie.get_by(number=id)
+	movie = self.db.Movie.get_by(number=number)
 	if movie is not None:
 		c.drawImage(filename, pos_x, pos_y, cover_x, cover_y)
 		if number == True:
@@ -96,7 +96,7 @@ def cover_image_process(self, filename, id):
 			c.rect((pageWidth/2)-13, 520, 26, 70, fill=1, stroke=0)
 			c.setFillColor(colors.black)
 			c.setFont(fontName, 10)
-			c.drawCentredString(pageWidth/2, 530, id)
+			c.drawCentredString(pageWidth/2, 530, number)
 
 	# draw cover area
 	c.rect(pos_x, pos_y, cover_x, cover_y)
@@ -110,7 +110,7 @@ def cover_image_process(self, filename, id):
 	else:
 		os.popen3(self.pdf_reader + " " + cover_file)
 
-def cover_simple(self, id):
+def cover_simple(self, number):
 	size = self.widgets['print_cover']['cs_size'].get_active()
 	number = self.widgets['print_cover']['cs_include_movie_number'].get_active()
 	poster = self.widgets['print_cover']['cs_include_poster'].get_active()
@@ -154,11 +154,11 @@ def cover_simple(self, id):
 	c.rect(pos_x, pos_y, cover_x, cover_y)
 
 	# get movie information from db
-	movie = self.db.Movie.get_by(number=id)
+	movie = self.db.Movie.get_by(number=number)
 	if movie is not None:
 		if number == True:
 			c.setFont(fontName, 10)
-			c.drawCentredString(pageWidth/2, 530, id)
+			c.drawCentredString(pageWidth/2, 530, number)
 
 		c.setFont(fontName, 16)
 		c.rotate(90)

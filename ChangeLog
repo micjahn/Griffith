@@ -10,6 +10,7 @@ Griffith ChangeLog
 	* Scroll movie list when selecting first/prev/next/last movie button
 	* Copy video codec data when cloning movie
 	* Fixed displaying volume/collection loan status
+	* Seen status can be now set without opening edit window
 
 2006-12-30 Piotr Ożarowski <ozarow@gmail.com>
 	* Compare lower() values while importing movies
