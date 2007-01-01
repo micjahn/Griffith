@@ -619,6 +619,7 @@ def clone_movie(self):
 	
 	new_movie.cast = movie.cast
 	new_movie.classification = movie.classification
+	new_movie.vcodec_id = movie.vcodec_id
 	new_movie.color = movie.color
 	new_movie.cond = movie.cond
 	new_movie.country = movie.country

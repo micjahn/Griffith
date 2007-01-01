@@ -7,6 +7,8 @@ Griffith ChangeLog
 2007-01-01 Piotr Ożarowski <ozarow@gmail.com>
 	* Filmweb movie plugin updated
 	* Added "limit search results to x movies" in preferences
+	* Scroll movie list when selecting first/prev/next/last movie button
+	* Copy video codec data when cloning movie
 
 2006-12-30 Piotr Ożarowski <ozarow@gmail.com>
 	* Compare lower() values while importing movies

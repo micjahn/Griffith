@@ -1007,38 +1007,33 @@ You can't undo this operation."""), \
 	def click_on(self, treeview, direction):
 		treeselection = treeview.get_selection()
 		if not treeselection:
-			return False
+			treeview.set_cursor_on_cell(0)
+			return 2 # no selection => selecting first movie
 		(treemodel, treeiter) = treeselection.get_selected()
-		if not treemodel:
+		if treemodel is None:
 			return False
-		nextiter = None
-		if direction == 'next':
-			if treeiter is None:
-				nextiter = treemodel.get_iter_first()
+		if treeiter is None or direction=='first':
+			treeview.set_cursor_on_cell(0)
+		elif direction == 'next':
+			nextiter = treemodel.iter_next(treeiter)
+			if nextiter is None:
+				direction = 'last'
 			else:
-				nextiter = treemodel.iter_next(treeiter)
+				iterpath = treemodel.get_path(nextiter)
+				treeview.set_cursor_on_cell(iterpath[0])
 		elif direction == 'prev':
-			if treeiter is None:
-				nextiter = treemodel.get_iter_first()
+			iterpath = treemodel.get_path(treeiter)
+			row = iterpath[0]
+			if row>0:
+				treeview.set_cursor_on_cell(row-1)
 			else:
-				iterpath = treemodel.get_path(treeiter)
-				row = iterpath[0]
-				if row>0:
-					nextiter = treemodel.get_iter(row-1)
-				else:
-					nextiter = treemodel.get_iter(0)
-		elif direction == 'first':
-			nextiter = treemodel.get_iter_first()
-		elif direction == 'last':
+				treeview.set_cursor_on_cell(0)
+		if direction == 'last':
 			rows = len(treemodel)
 			if rows>0:
-				nextiter = treemodel.get_iter(rows-1)	# last
-		else:
-			logger.warning("Bad direction: %s"%direction)
-		# select new iter
-		if nextiter:
-			treeselection.select_iter(nextiter)
-			self.treeview_clicked()
+				treeview.set_cursor_on_cell(rows-1)
+			else:
+				treeview.set_cursor_on_cell(0)
 
 if __name__ == "__main__":
 	griffith = Griffith()
