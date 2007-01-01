@@ -88,6 +88,16 @@ def return_loan(self):
 def get_loan_info(db, movie_id, volume_id=None, collection_id=None):
 	"""Returns current collection/volume/movie loan data"""
 	from sqlalchemy import and_, or_
+	movie = db.Movie.get_by(movie_id=movie_id)
+	if movie is None:
+		return False
+	
+	# fix or add volume/collection data:
+	if movie.collection_id is not None:
+		collection_id = movie.collection_id
+	if movie.volume_id is not None:
+		volume_id = movie.volume_id
+	
 	if collection_id>0 and volume_id>0:
 		return db.Loan.get_by(
 				and_(or_(db.Loan.c.collection_id==collection_id,

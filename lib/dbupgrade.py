@@ -146,6 +146,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			print '$ mv ~/.griffith/griffith.gri{,3}'
 			print '$ mv ~/.griffith/griffith.gri{2,}'
 			print 'or install pysqlite in version 1.1'
+			print 'if your database is in SQLite2 format - convert it to SQLite3 or install pysqlite in version 1.0 (legacy)'
 			gutils.warning(self,_("Your database is most probably in SQLite3 format, please convert it to SQLite2"))
 		else:
 			raise
@@ -176,6 +177,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET collection_id=0 WHERE collection_id<1")
 	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
 	old_cursor.execute("DELETE FROM loans WHERE date='' OR date ISNULL")
+	old_cursor.execute("DELETE FROM loans WHERE movie_id=0")
 	#old_cursor.commit()
 	old_cursor.execute("UPDATE movies SET region=NULL WHERE region='' OR region='2' OR region<0 OR region>8")
 	old_cursor.execute("UPDATE movies SET condition=NULL WHERE condition='' OR condition='3'")
