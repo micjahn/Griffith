@@ -61,7 +61,7 @@ def define_widgets(self, gladefile):
 		'plot':			get('m_plot'),
 		'region':		get('m_region'),
 		'runtime':		get('m_runtime'),
-		'seen':			get('m_seen'),
+		'seen_icon':		get('m_seen_icon'),
 		'site':			get('m_site'),
 		'studio':		get('m_studio'),
 		'tags':			get('m_tags'),
@@ -322,7 +322,7 @@ def define_widgets(self, gladefile):
 		'on_get_from_web_clicked'		: self.get_from_web,
 		'on_update_button_clicked'		: self.update_movie,
 		'on_import_activate'			: self.on_import_activate,
-		'on_m_seen_clicked'			: self.toggle_seen,
+		'on_seen_activate'			: self.toggle_seen,
 		# preferences
 		'on_preferences1_activate'		: self.show_preferences,
 		'on_cancel_preferences_clicked'		: self.hide_preferences,

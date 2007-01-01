@@ -137,9 +137,9 @@ def set_details(self, item=None):#{{{
 		self._trailer_url = None
 		w['go_trailer_button'].set_sensitive(False)
 	if item.has_key('seen') and item['seen'] == True:
-		w['seen'].set_active(True)
+		w['seen_icon'].set_from_file(os.path.join(self.locations['images'], 'seen.png'))
 	else:
-		w['seen'].set_active(False)
+		w['seen_icon'].set_from_file(os.path.join(self.locations['images'], 'unseen.png'))
 	if item.has_key('notes') and item['notes']:
 		w['notes'].set_text(str(item.notes))
 	else:

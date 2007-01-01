@@ -276,6 +276,7 @@ class Griffith:
 		movie.update()
 		movie.flush()
 		movie.refresh()
+		self.treeview_clicked()
 
 	def sugest_movie(self, *args):
 		if not self.widgets['menu']['not_seen_movies'].get_active():
