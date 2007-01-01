@@ -46,8 +46,12 @@ def change_filter(self):
 	self.go_last()
 
 def clear_filter(self):
+	# prevent multiple treeview updates
+	self.initialized = False
 	self.widgets['filter']['text'].set_text('')
 	self.widgets['filter']['criteria'].set_active(0)
 	self.widgets['filter']['collection'].set_active(0)
+	self.initialized = True
 	self.populate_treeview()
 	self.go_last()
+	

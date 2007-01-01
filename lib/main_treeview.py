@@ -312,7 +312,7 @@ def set_details(self, item=None):#{{{
 		tmp = tmp[:-2] # cut last comma
 		w['tags'].set_text(tmp)
 	#}}}
-
+	
 def populate(self, movies=None, where=None):#{{{
 	if self.initialized is False:
 		return False
@@ -355,7 +355,17 @@ def populate(self, movies=None, where=None):#{{{
 		movies = movies.execute().fetchall()
 
 	self.total = len(movies)
+	# disable refreshing while inserting
+	self.widgets['treeview'].freeze_child_notify()
+	self.widgets['treeview'].set_model(None)
+	
+	# save user sort column
+	sort_column_id, order = self.treemodel.get_sort_column_id()
+	
 	self.treemodel.clear()
+	# new treemodel (faster and prevents some problems)
+	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
+	
 	# check preferences to hide or show columns
 	if self.config.get('view_number', 'True') == 'True':
 		self.number_column.set_visible(True)
@@ -377,8 +387,10 @@ def populate(self, movies=None, where=None):#{{{
 		self.image_column.set_visible(True)
 	else:
 		self.image_column.set_visible(False)
+		
 	for movie in movies:
 		myiter = self.treemodel.append(None)
+		
 		self.treemodel.set_value(myiter,0,'%004d' % int(movie.number))
 
 		if self.config.get('view_image', 'True') == 'True':
@@ -405,6 +417,14 @@ def populate(self, movies=None, where=None):#{{{
 		self.treemodel.set_value(myiter,2,movie.o_title)
 		self.treemodel.set_value(myiter,3,movie.title)
 		self.treemodel.set_value(myiter,4,movie.director)
+		
+	# restore user sort column
+	if sort_column_id is not None:
+		self.treemodel.set_sort_column_id(sort_column_id, gtk.SORT_ASCENDING)
+	
+	# add new treemodel and allow refreshs again
+	self.widgets['treeview'].set_model(self.treemodel)
+	self.widgets['treeview'].thaw_child_notify()
 #}}}
 
 # vim: fdm=marker

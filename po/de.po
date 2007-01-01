@@ -184,8 +184,7 @@ msgstr ""
 #: ../lib/add.py:380 ../lib/add.py:386
 msgid "Movie with that title already exists, are you sure you want to add?"
 msgstr ""
-"Ein Film mit dem Titel existiert bereits, möchten sie ihn wirklich "
-"hinzufügen?"
+"Ein Film mit dem Titel existiert bereits, möchten sie ihn wirklich hinzufügen?"
 
 #: ../lib/add.py:555
 msgid "No results"
@@ -362,8 +361,7 @@ msgstr "Möchten sie das Poster anstelle des Alten verwenden?"
 
 #: ../lib/edit.py:244
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
-msgstr ""
-"Der Film wurde gefunden, es existiert jedoch kein Poster auf Amazon.com."
+msgstr "Der Film wurde gefunden, es existiert jedoch kein Poster auf Amazon.com."
 
 #: ../lib/gconsole.py:134
 msgid "No movie found"
@@ -1089,7 +1087,7 @@ msgstr "nur Ungesehene"
 
 #: ../glade/griffith.glade.h:1
 msgid "0 means no limits"
-msgstr ""
+msgstr "0 bedeutet kein Limit"
 
 #: ../glade/griffith.glade.h:2
 msgid "<b>Audio channels</b>"
@@ -1132,9 +1130,8 @@ msgid "<b>Search for:</b>"
 msgstr "<b>Suche nach:</b>"
 
 #: ../glade/griffith.glade.h:12
-#, fuzzy
 msgid "<b>Search results</b>"
-msgstr "<b>Suche nach:</b>"
+msgstr "<b>Suchergebnisse</b>"
 
 #: ../glade/griffith.glade.h:13
 msgid "<b>Select database to use</b>"
@@ -1314,7 +1311,7 @@ msgstr "Sprachen"
 
 #: ../glade/griffith.glade.h:71
 msgid "Limit search results to"
-msgstr ""
+msgstr "Suchergebnisse begrenzen auf"
 
 #: ../glade/griffith.glade.h:72
 msgid "Load poster from disk"
@@ -1641,9 +1638,8 @@ msgid "minutes"
 msgstr "Minuten"
 
 #: ../glade/griffith.glade.h:171
-#, fuzzy
 msgid "movies"
-msgstr "Film(e)"
+msgstr "Filme"
 
 #: ../glade/griffith.glade.h:172
 msgid "remove selected collection"
