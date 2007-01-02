@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2007-01-02 Piotr Ożarowski <ozarow@gmail.com>
+	* Copy volume/collection data when cloning movie
+	* Fix displaying loan info (cached data can be obsolete)
+
 2007-01-01 Piotr Ożarowski <ozarow@gmail.com>
 	* Filmweb movie plugin updated
 	* Added "limit search results to x movies" in preferences

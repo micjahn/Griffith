@@ -620,6 +620,8 @@ def clone_movie(self):
 	new_movie.cast = movie.cast
 	new_movie.classification = movie.classification
 	new_movie.vcodec_id = movie.vcodec_id
+	new_movie.collection_id = movie.collection_id
+	new_movie.volume_id = movie.volume_id
 	new_movie.color = movie.color
 	new_movie.cond = movie.cond
 	new_movie.country = movie.country
@@ -627,6 +629,7 @@ def clone_movie(self):
 	new_movie.genre = movie.genre
 	new_movie.image = new_image
 	new_movie.site = movie.site
+	new_movie.loaned = movie.loaned
 	new_movie.layers = movie.layers
 	new_movie.medium_id = movie.medium_id
 	new_movie.number = next_number
@@ -646,6 +649,7 @@ def clone_movie(self):
 	
 	new_movie.tags = movie.tags
 	new_movie.languages = movie.languages
+	new_movie.loans = movie.loans
 	
 	# save
 	new_movie.save()

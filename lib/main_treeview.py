@@ -37,6 +37,7 @@ def treeview_clicked(self):
 			return False
 		number = tmp_model.get_value(tmp_iter,0)
 		movie = self.db.Movie.get_by(number=number)
+		movie.refresh() # loan data can be obsolete in cache
 		if movie is None:
 			self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
 		set_details(self, movie)
