@@ -2,69 +2,69 @@
 .SH NAME
 Szablon eksportu dla Griffith'a
 .SH SYNOPSIS
-Wtyczka do eksportu danych HTML od wersji 3.0 uÅ¼ywa w peÅ‚ni konfigurowalnych szablonÃ³w
+Wtyczka do eksportu danych HTML od wersji 3.0 u¿ywa w pe\(/lni konfigurowalnych szablon\('ow
 .SH OPIS
 Tworzenie nowego szablonu:
 .PP
-StwÃ³rz nowy katalog o krÃ³tkiej nazwie dla szablonu/rodziny szablonÃ³w
-(kaÅ¼dy katalog moÅ¼e zawieraÄ‡ wiÄ™cej niÅ¼ jednen szablon, zobacz opis pliku config.xml)
+Stw\('orz nowy katalog o kr\('otkiej nazwie dla szablonu/rodziny szablon\('ow
+(ka¿dy katalog mo¿e zawieraæ wiêcej ni¿ jednen szablon, zobacz opis pliku config.xml)
 .PP
-Przygotuj plik page.tpl. Plik ten powinien skÅ‚adaÄ‡ siÄ™ z trzech czÄ™Å›ci:
+Przygotuj plik page.tpl. Plik ten powinien sk\(/ladaæ siê z trzech czê¶ci:
 .PP
-* nagÅ‚Ã³wka \- bÄ™dzie pojawiaÅ‚ siÄ™ na poczÄ…tku kaÅ¼dego wygenerowanego pliku
+* nag\(/l\('owka \- bêdzie pojawia\(/l siê na pocz±tku ka¿dego wygenerowanego pliku
 .PP
-* elementÃ³w \- ta czÄ™Å›Ä‡ bÄ™dzie wypeÅ‚niana danymi exportowanych filmÃ³w
+* element\('ow \- ta czê¶æ bêdzie wype\(/lniana danymi exportowanych film\('ow
 .PP
-* ogona \- ktÃ³ry pojawi siÄ™ na koÅ„cu pliku(\-Ã³w)
+* ogona \- kt\('ory pojawi siê na koñcu pliku(\-\('ow)
 .PP
-Aby rozdzieliÄ‡ powyÅ¼sze czÄ™Å›ci, dodaj Å‚aÅ„cuch<!\-\- ITEMS \-\-> przed, oraz: <!\-\- /ITEMS \-\-> po czÄ™Å›ci dla elementÃ³w.
+Aby rozdzieliæ powy¿sze czê¶ci, dodaj \(/lañcuch<!\-\- ITEMS \-\-> przed, oraz: <!\-\- /ITEMS \-\-> po czê¶ci dla element\('ow.
 .PP
-StwÃ³rz plik config.xml (zobacz teÅ¼ sekcjÄ™ CONFIG)
+Stw\('orz plik config.xml (zobacz te¿ sekcjê CONFIG)
 .PP
-Opcjonalnie: stwÃ³rz obrazy podglÄ…du (parez sekcja CONFIG). NajlepszÄ… rozdzielczoÅ›ciÄ… dla tych plikÃ³w bÄ™dzie 200x150px
+Opcjonalnie: stw\('orz obrazy podgl±du (parez sekcja CONFIG). Najlepsz± rozdzielczo¶ci± dla tych plik\('ow bêdzie 200x150px
 .SH TAGI
-PoniÅ¼ej sÄ… wylistowane tagi, ktÃ³rych moÅ¼esz uÅ¼ywaÄ‡ w pliku page.tpl.
-KaÅ¼dy tag zaczyba siÄ™ od znaku "@".
-PomiÄ™dzy tagi moÅ¼esz umieÅ›ciÄ‡ Å‚aÅ„cuchy specjalne: @TITLE@ oraz @DATA@, ktÃ³re bÄ™dÄ… zastÄ…pione
-odpowiednio nazwÄ… pola oraz danymi filmu.
+Poni¿ej s± wylistowane tagi, kt\('orych mo¿esz u¿ywaæ w pliku page.tpl.
+Ka¿dy tag zaczyba siê od znaku "@".
+Pomiêdzy tagi mo¿esz umie¶ciæ \(/lañcuchy specjalne: @TITLE@ oraz @DATA@, kt\('ore bêd± zast±pione
+odpowiednio nazw± pola oraz danymi filmu.
 .PP
-PrzykÅ‚ad:
+Przyk\(/lad:
 Pole <@runtime>@TITLE@ zawiera dane: "@DATA@" </@runtime>
-bÄ™dzie zastÄ…pione przez:
+bêdzie zast±pione przez:
 Pole Czas trwania zawiera dane: "120 min."
 .PP
-Lista dozwolonych tagÃ³w:
+Lista dozwolonych tag\('ow:
 .PP
-Tagi dozwolone w caÅ‚ym dokumencie:
+Tagi dozwolone w ca\(/lym dokumencie:
 .TP 
 \fBheader\fR
-Å‚aÅ„cuch zdefiniowany w zakÅ‚adce "Szablon", @TITLE@ nie jest uÅ¼ywany
+\(/lañcuch zdefiniowany w zak\(/ladce "Szablon", @TITLE@ nie jest u¿ywany
 .TP 
 \fBnavigarion\fR
-generuje panel nawigacyjny (jeÅ¼eli jest potrzebny)
+generuje panel nawigacyjny (je¿eli jest potrzebny)
 .TP 
 \fBcopyright\fR
-wyÅ›wietla prawa autorskie dokumentu
+wy¶wietla prawa autorskie dokumentu
 .PP
 Tags allowed only in "items" part:
 .TP 
 \fBimage\fR
-nazwa pliku z plakatem (bez Å›cieÅ¼ki i rozszerzenia)
+nazwa pliku z plakatem (bez ¶cie¿ki i rozszerzenia)
 .TP 
 \fBnumber\fR
 identyfikator filmu w bazie danych
 .TP 
 \fBtitle\fR
-tytuÅ‚ filmu
+tytu\(/l filmu
 .TP 
 \fBoriginal_title\fR
-oryginalny tytuÅ‚ filmu
+oryginalny tytu\(/l filmu
 .TP 
 \fByear\fR
 data premiry filmu
 .TP 
 \fBdirector\fR
-reÅ¼yser filmu
+re¿yser filmu
 .TP 
 \fBrating\fR
 ocena (0\-9)
@@ -73,13 +73,13 @@ ocena (0\-9)
 czas trwania filmu w minutach
 .TP 
 \fBcountry\fR
-paÅ„stwo, w ktÃ³rym wyprodukowano film
+pañstwo, w kt\('orym wyprodukowano film
 .TP 
 \fBgenre\fR
 rodzaj filmu
 .TP 
 \fBimdb\fR
-z tego URLa byÅ‚y pobierane dane filmu
+z tego URLa by\(/ly pobierane dane filmu
 .TP 
 \fBsite\fR
 oficjalna strona filmu (URL)
@@ -88,13 +88,13 @@ oficjalna strona filmu (URL)
 URL do zwiastunu filmu
 .TP 
 \fBmedia\fR
-liczba dyskÃ³w i typ dysku, np. "2xDVD"
+liczba dysk\('ow i typ dysku, np. "2xDVD"
 .TP 
 \fBseen\fR
-czy film zostaÅ‚ obejrzany: "Tak" lub "Nie"
+czy film zosta\(/l obejrzany: "Tak" lub "Nie"
 .TP 
 \fBloaned\fR
-czy film jest wypoÅ¼yczony: "Tak" lub "Nie"
+czy film jest wypo¿yczony: "Tak" lub "Nie"
 .TP 
 \fBclassification\fR
 klasyfikacja filmu (od ilu lat)
@@ -108,17 +108,17 @@ obsada filmu
 opis/streszczenie filmu
 .SH "PLIK CONFIG"
 Najprostszym sposobem na stworzenie pliku config.xml jest skopiowanie go z innego szablonu i wyedytowanie kopii.
-KaÅ¼dy plik musi zawieraÄ‡ autora szablonu, wersjÄ™ oraz emial autora. Opcjonalnie moÅ¼na dodaÄ‡
-opis i listÄ™ styli. KaÅ¼dy styl musi zawieraÄ‡ nazwÄ™ stylu i nazwÄ™ pliku ze stylem.
-SzczegÃ³Å‚y sÄ… w pliku template.dtd.
-.SH PRZYKÅAD
-PrzykÅ‚adowy szablon moÅ¼esz znaleÅºÄ‡ w katalogu
+Ka¿dy plik musi zawieraæ autora szablonu, wersjê oraz emial autora. Opcjonalnie mo¿na dodaæ
+opis i listê styli. Ka¿dy styl musi zawieraæ nazwê stylu i nazwê pliku ze stylem.
+Szczeg\('o\(/ly s± w pliku template.dtd.
+.SH PRZYK\(/LAD
+Przyk\(/ladowy szablon mo¿esz znale¼æ w katalogu
 /usr/share/griffith/export_templates/html_tables
-.SH "ZOBACZ TAKÅ»E"
+.SH "ZOBACZ TAK¯E"
 \fBgriffith\fR(1)
 .SH AUTORZY
-griffith zostaÅ‚ napisany przez Vasco Nunesa. Zobacz plik AUTHORS z listÄ… wspÃ³Å‚pracownikÃ³w
+griffith zosta\(/l napisany przez Vasco Nunesa. Zobacz plik AUTHORS z list± wsp\('o\(/lpracownik\('ow
 .PP
 Copyright (C) 2005 Vasco Nunes vasco.m.nunes@gmail.com
 .PP
-Ta strona podrÄ™cznika zostaÅ‚a napisana przez Piotra OÅ¼arowskiego
+Ta strona podrêcznika zosta\(/la napisana przez Piotra O¿arowskiego

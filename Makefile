@@ -107,7 +107,7 @@ uninstall:
 	$(MAKE) -C docs uninstall
 	
 clean:
-	${FIND} . -iname '*\.py[co]' -or -iname '*~' -or -iname '*\.bak' -exec ${RM} '{}' \;
+	${FIND} . \( -iname '*\.py[co]' -or -iname '*~' -or -iname '*\.bak' \) -exec ${RM} '{}' \;
 	
 freshmeat:
 	firefox http://freshmeat.net/add-release/54772/ &

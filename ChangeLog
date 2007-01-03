@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 
+2007-01-03 Piotr Ożarowski <ozarow@gmail.com>
+	* Install Polish manpage in ISO-8859-2 encoding
+	* Fix clean rule
+
 2007-01-02 Piotr Ożarowski <ozarow@gmail.com>
 	* Copy volume/collection data when cloning movie
 	* Fix displaying loan info (cached data can be obsolete)
