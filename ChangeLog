@@ -8,6 +8,7 @@ Griffith ChangeLog
 	* Install Polish manpage in ISO-8859-2 encoding
 	* Fix clean rule
 	* Sort by last added movies option added
+	* pysqlite1.1 is not needed anymore
 
 2007-01-02 Piotr Ożarowski <ozarow@gmail.com>
 	* Copy volume/collection data when cloning movie

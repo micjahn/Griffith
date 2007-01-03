@@ -119,13 +119,20 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	from sql import GriffithSQL
 	from gutils import digits_only
 	import os
-	try:
-		import sqlite
-		from sqlite import DatabaseError
-	except:
-		print 'Old DB conversion: please install pysqlite legacy (v1.0)'
-		gutils.warning(self,_("Old DB conversion: please install pysqlite legacy (v1.0)"))
+
+	if not os.path.isfile(source_file):
 		return False
+	if open(source_file).readline()[:47] == '** This file contains an SQLite 2.1 database **':
+		try:
+			import sqlite
+			from sqlite import DatabaseError
+		except:
+			print 'Old DB conversion: please install pysqlite legacy (v1.0)'
+			gutils.warning(self,_("Old DB conversion: please install pysqlite legacy (v1.0)"))
+			return False
+	else:
+		from pysqlite2 import dbapi2 as sqlite
+		from pysqlite2.dbapi2 import DatabaseError
 
 	if os.path.isfile(destination_file):
 		# rename destination_file if it already exist
@@ -138,16 +145,16 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		os.rename(destination_file, "%s_%s" % (destination_file, i))
 
 	try:
-		old_db = sqlite.connect(source_file,autocommit=0)
+		#old_db = sqlite.connect(source_file,autocommit=0)
+		old_db = sqlite.connect(source_file, isolation_level=None)
 	except DatabaseError, e:
 		if str(e) == 'file is encrypted or is not a database':
-			print 'Your database is most probably in SQLite3 format, please convert it to SQLite2:'
-			print '$ sqlite3 ~/.griffith/griffith.gri .dump | sqlite ~/.griffith/griffith.gri2'
-			print '$ mv ~/.griffith/griffith.gri{,3}'
-			print '$ mv ~/.griffith/griffith.gri{2,}'
-			print 'or install pysqlite in version 1.1'
-			print 'if your database is in SQLite2 format - convert it to SQLite3 or install pysqlite in version 1.0 (legacy)'
-			gutils.warning(self,_("Your database is most probably in SQLite3 format, please convert it to SQLite2"))
+			print 'Your database is most probably in wrong SQLite format, please convert it to SQLite3:'
+			print '$ sqlite ~/.griffith/griffith.gri .dump | sqlite3 ~/.griffith/griffith.gri3'
+			print '$ mv ~/.griffith/griffith.gri{,2}'
+			print '$ mv ~/.griffith/griffith.gri{3,}'
+			print 'or install pysqlite in version 1.0'
+			gutils.warning(self,_("Your database is most probably in SQLite2 format, please convert it to SQLite3"))
 		else:
 			raise
 		return False
@@ -201,7 +208,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	new_db = GriffithSQL(self.config, self.debug, self.locations['home'])
 
 	# collections
-	collection_mapper = {0:None}
+	collection_mapper = {0:None, u'':None}
 	old_cursor.execute("SELECT id, name, loaned FROM collections;")
 	for i in old_cursor.fetchall():
 		o = new_db.Collection(name=i[1], loaned=bool(i[2]))
@@ -209,7 +216,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		collection_mapper[i[0]] = o.collection_id
 	
 	# volumes
-	volume_mapper = {0:None}
+	volume_mapper = {0:None, u'':None}
 	old_cursor.execute("SELECT id, name, loaned FROM volumes;")
 	for i in old_cursor.fetchall():
 		o = new_db.Volume(name=i[1], loaned=bool(i[2]))

@@ -44,8 +44,8 @@ System Requirements
   * Psycopg2		2			http://initd.org/tracker/psycopg/wiki/PsycopgTwo
   MySQL support:
   * MySQLDb					http://sourceforge.net/projects/mysql-python
-  Upgrading from Griffith <=0.6.2:
-  * pyqlite		1.0 (1.1 for SQLite3)	http://initd.org/tracker/pysqlite
+  Upgrading from Griffith <=0.6.2 (only if pysqlite 1.0 was used before, 1.1 is not needed)
+  * pysqlite		1.0 			http://initd.org/tracker/pysqlite
   Gtkspell:
   * python-gnome-extras
   Covers and reports support:

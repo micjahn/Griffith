@@ -12,7 +12,7 @@ Griffith 0.9-rc2
 * Filmweb movie plugin fixed
 
 Note to package maintainers:
-Please keep pysqlite1.0 (or 1.1 - see README) as required dependency.
+Please keep pysqlite1.0 as required dependency (see README file)
 This will make upgrade process from 0.6.2 a lot easier.
 
 
