@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.9~rc1
+AppVerName=Griffith 0.9-rc2
 AppPublisher=Vasco Nunes, Piotr Ożarowski
 AppPublisherURL=http://griffith.berlios.de/
 AppSupportURL=http://griffith.berlios.de/

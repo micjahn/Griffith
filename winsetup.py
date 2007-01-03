@@ -21,12 +21,6 @@ __revision__ = '$Id: $'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-
-# for build this on a win32 environment and becames with a standalone distribution
-# a base python 2.4 for 2in32 instalation must be present
-# along with gtk+ development libraries
-# pywin32com extensions, reportlab module, pygtk for win32 and pysqlite-1.1.7.win32-py2.4 (current win32 distro install is using this pysqlite 3 version)
-
 import time
 import sys
 
@@ -60,11 +54,11 @@ opts = {
 
 setup(
     name = "Griffith",
-    version = "0.9~rc1",
+    version = "0.9-rc2",
 	description = 'Griffith - A film manager',
     author = 'Vasco Nunes/Piotr Ozarowski',
     author_email = 'vasco.m.nunes@gmail.com',
-    url = 'http://griffith.vasconunes.net',
+    url = 'http://griffith.berlios.de',
     license = 'GPL',
     console = [
         {
