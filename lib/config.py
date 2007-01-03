@@ -23,7 +23,7 @@ __revision__ = '$Id$'
 
 import os
 import os.path
-import pickle
+import cPickle as pickle
 
 class Config:
 	def __init__ (self, file):
