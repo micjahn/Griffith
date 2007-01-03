@@ -469,7 +469,7 @@ msgstr "E-Mail"
 
 #: ../lib/initialize.py:448
 msgid "Last added"
-msgstr ""
+msgstr "Zuletzt hinzugefügt"
 
 #: ../lib/initialize.py:478 ../lib/plugins/export/PluginExportHTML.py:93
 #: ../glade/griffith.glade.h:30
