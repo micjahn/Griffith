@@ -4,6 +4,7 @@ Griffith 0.9-rc2
 * NOT RELEASED YET
 * Griffith works now a lot faster with large (>1000 movies) databases
 * Fix displaying volume/collection's loan status
+* Config files are now fully cross-platform
 * New features:
   + limit search results to x movies
   + sort by last added movies

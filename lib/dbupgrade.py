@@ -205,6 +205,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	self.config['media'] = 0
 	self.config['region'] = 0
 	self.config['vcodec'] = 0
+	self.locations['posters'] = os.path.join(self.locations['home'], 'posters')
 	new_db = GriffithSQL(self.config, self.debug, self.locations['home'])
 
 	# collections
