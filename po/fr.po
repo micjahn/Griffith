@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-03 17:30+0100\n"
+"POT-Creation-Date: 2007-01-04 00:52+0100\n"
 "PO-Revision-Date: 2006-02-28 02:33+0000\n"
 "Last-Translator: Pierre-Luc Lévy <pllevy@free.fr>\n"
 "Language-Team: Français\n"
@@ -299,14 +299,14 @@ msgid ""
 "several minutes if you have a large database."
 msgstr ""
 
-#: ../lib/dbupgrade.py:127
+#: ../lib/dbupgrade.py:131
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr ""
 
-#: ../lib/dbupgrade.py:150
+#: ../lib/dbupgrade.py:157
 msgid ""
-"Your database is most probably in SQLite3 format, please convert it to "
-"SQLite2"
+"Your database is most probably in SQLite2 format, please convert it to "
+"SQLite3"
 msgstr ""
 
 #: ../lib/delete.py:37
