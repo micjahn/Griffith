@@ -442,7 +442,10 @@ def combos(self):
 	self.widgets['filter']['criteria'].set_active(0)
 	i = 0
 	for field in self.sort_criteria:
-		self.widgets['preferences']['sortby'].insert_text(i, self.field_names[field])
+		if field != 'movie_id':
+			self.widgets['preferences']['sortby'].insert_text(i, self.field_names[field])
+		else:
+			self.widgets['preferences']['sortby'].insert_text(i, _('Last added'))
 		i += 1
 	self.widgets['preferences']['sortby'].set_wrap_width(3)
 	self.widgets['preferences']['sortby'].set_active(0) # Number
@@ -466,7 +469,7 @@ def dictionaries(self):
 	self.sort_criteria = [ # "[]" because of index() 
 		'number', 'o_title', 'title', 'director', 'year', 'runtime', 'country',
 		'genre', 'studio', 'media_num', 'rating', 'classification', 'collection_id',
-		'volume_id', 'cond', 'layers', 'region']
+		'volume_id', 'cond', 'layers', 'region', 'movie_id']
 	self.search_criteria = (
 		'o_title', 'title', 'number', 'director',
 		'plot', 'cast', 'notes', 'year', 'runtime', 'country',
