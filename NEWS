@@ -1,7 +1,19 @@
-Griffith 0.9~rc2
+Griffith 0.9-rc2
 ================
 
 * NOT RELEASED YET
+* Griffith works now a lot faster with large (>1000 movies) databases
+* Fix displaying volume/collection's loan status
+* New features:
+  + limit search results to x movies
+  + sort by last added movies
+  + hide "Number" column
+  + change "seen it" status without opening edit window, new icons added
+* Filmweb movie plugin fixed
+
+Note to package maintainers:
+Please keep pysqlite1.0 (or 1.1 - see README) as required dependency.
+This will make upgrade process from 0.6.2 a lot easier.
 
 
 Griffith 0.9~rc1 "Christmas Edition"
