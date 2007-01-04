@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007 Vasco Nunes, Piotr Ożarowski
 
+2007-01-04 Vasco Nunes <vasco.m.nunes@gmail.com>
+	* Updated Swedish translation (thanks to Daniel Nylander)
+
 2007-01-03 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Using cPickle over pickle for serialization. Config files are now fully cross-platform.
 
