@@ -8,6 +8,7 @@ Griffith ChangeLog
 	* Updated Swedish translation (thanks to Daniel Nylander)
 	* Updated Czech translation and CSFD movie pluging (thanks to Blondak)
 	* Updated Portuguese Brazilian translation (thanks to Fábio Nogueira)
+	* Fixed win32 gtk locale issue
 
 2007-01-03 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Using cPickle over pickle for serialization. Config files are now fully cross-platform.

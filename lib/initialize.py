@@ -30,6 +30,7 @@ import gutils
 import gobject
 import gettext
 import platform
+import locale
 
 try:
 	import gtkspell
@@ -58,6 +59,16 @@ def locations(self):
 		locations['desktop']        = ''
 		locations['i18n']           = "%s\\i18n" % locations['exec']
 		os.environ['PATH'] += ";lib;"
+		
+		# windows hack for locale setting
+		lang = os.getenv('LANG')
+		if lang is None:
+			defaultLang, defaultEnc = locale.getdefaultlocale()
+			if defaultLang:
+				lang = defaultLang
+		if lang:
+			os.environ['LANG'] = lang
+	   
 	elif os.name == 'posix':
 		locations['home']  = os.path.join(os.path.expanduser('~'), ".griffith")
 		locations['share'] = os.path.abspath(os.path.join(locations['lib'], '..'))
