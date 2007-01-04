@@ -153,7 +153,9 @@ class ExportPlugin(gtk.Window):
 		templates = {}
 		j=0 # number of templates
 		dirName = os.path.join(self.locations['share'], 'export_templates')
-		for i in os.listdir(dirName):
+		items = os.listdir(dirName)
+		items.sort()
+		for i in items:
 			fileName = os.path.join(dirName, i)
 			if not os.path.islink(fileName) and os.path.isdir(fileName):
 				# clear previous data
@@ -295,7 +297,7 @@ class ExportPlugin(gtk.Window):
 
 		# set defaults --------------------------------
 		self.widgets['entry_header'].set_text(self.config['title'])
-		self.widgets['combo_theme'].set_active(1)	# html_tables
+		self.widgets['combo_theme'].set_active(2)	# html_tables
 		self.widgets['combo_sortby'].set_active(17)	# orginal title
 		# spliting
 		self.widgets['sb_split_num'].set_value(self.config['split_num'])
