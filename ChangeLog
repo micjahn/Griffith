@@ -11,6 +11,7 @@ Griffith ChangeLog
 	* Fixed win32 gtk locale issue
 	* Fixed win32 default system font directory detection (for use in preferences)
 	* Updated French translation (thanks to Pierre-Luc Lévi)
+	* Latex is no more the default entry for html export plugin :)
 
 2007-01-03 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Using cPickle over pickle for serialization. Config files are now fully cross-platform.
