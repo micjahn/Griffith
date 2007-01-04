@@ -9,6 +9,7 @@ Griffith ChangeLog
 	* Updated Czech translation and CSFD movie pluging (thanks to Blondak)
 	* Updated Portuguese Brazilian translation (thanks to Fábio Nogueira)
 	* Fixed win32 gtk locale issue
+	* Fixed win32 default system font directory detection (for use in preferences)
 
 2007-01-03 Vasco Nunes <vasco.m.nunes@gmail.com>
 	* Using cPickle over pickle for serialization. Config files are now fully cross-platform.

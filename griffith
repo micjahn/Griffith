@@ -115,8 +115,8 @@ class Griffith:
 
 		# add default folders to some select widgets
 		if self.windows:
-			#self.widgets['preferences']['font'].set_current_folder("c:\\windows\\fonts\\") # FIXME: use env var.
-			pass
+			fonts_dir = os.path.join(os.environ['SYSTEMROOT'],'fonts')
+			self.widgets['preferences']['font'].set_current_folder(fonts_dir)
 		elif self.mac:
 			self.widgets['preferences']['font'].set_current_folder("/System/Library/Fonts/")
 		else:

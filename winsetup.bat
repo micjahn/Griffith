@@ -3,12 +3,15 @@
 @rem ***** get rid of all the old files in the build folder 
 @rd /S /Q build 
 @rd /S /Q dist 
- 
-@rem ***** create the exe 
-@python.exe -OO winsetup.py py2exe
+
 @mkdir dist\etc
 @mkdir dist\share
+@mkdir dist\lib
 @mkdir dist\share\locale
+
+@rem ***** create the exe 
+
+@python.exe -OO winsetup.py py2exe
 
 @xcopy c:\gtk\etc c:\griffith\dist\etc /s /e
 @xcopy c:\gtk\lib c:\griffith\dist\lib /s /e
