@@ -1,6 +1,6 @@
 # Griffith makefile
 #
-# (c) 2005-2006 Vasco Nunes, Piotr Ozarowski
+# (c) 2005-2007 Vasco Nunes, Piotr Ozarowski
 #
 # $Id$
 

@@ -1,6 +1,7 @@
 griffith (0.9~rc2-1) UNRELEASED; urgency=low
 
   * New upstream release
+  * debian/copyright file updated
 
  -- Piotr Ozarowski <ozarow@gmail.com>  Tue,  2 Jan 2007 00:15:43 +0100
 

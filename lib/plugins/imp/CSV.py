@@ -3,7 +3,7 @@
 __revision__ = '$Id$'
 
 ###########################################################################
-#    Copyright (C) 2006 by Jessica Katharina Parth                         
+#    Copyright (C) 2006-2007 by Jessica Katharina Parth                         
 #    <Jessica.K.P@women-at-work.org>                                       
 #
 # Copyright: See COPYING file that comes with this distribution
