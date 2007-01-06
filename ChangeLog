@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-01-06  Piotr Ożarowski
 	* Clear movie details if no movie is selected
+	* Speed up Griffith's startup a little bit
 
 2007-01-05  Piotr Ożarowski
 	* Copyright years updated

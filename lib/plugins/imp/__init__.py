@@ -88,7 +88,7 @@ class ImportPlugin:
 			return False
 		
 		self.widgets['pwindow'].show()
-		for i in range(0,40):	# give GTK some time for updates
+		while gtk.events_pending():	# give GTK some time for updates
 			gtk.main_iteration()
 
 		# progressbar

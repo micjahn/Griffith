@@ -30,9 +30,7 @@ lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
 if os.path.isdir(lib):
 	sys.path.append(lib)
 del lib
-import about, add, backup, config, cover, delete, edit, gconsole, gdebug
-import gemail, gutils, initialize, loan, main_treeview
-import people, preferences, quick_filter, sql, update, version, view
+import add, config, gconsole, gdebug, gutils, initialize, main_treeview, quick_filter
 from gettext import gettext as _
 
 class Griffith:
@@ -73,7 +71,8 @@ class Griffith:
 				sys.exit(4)
 		
 		# create/connect db
-		self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
+		from sql import GriffithSQL
+		self.db = GriffithSQL(self.config, self.debug, self.locations['home'])
 
 		# let's check any console arguments to parse
 		gconsole.check_args_with_db(self)
@@ -150,7 +149,8 @@ class Griffith:
 	# about dialog	-------------------------------------------------------			
 
 	def about_dialog(self, *args):
-		about_dialog = about.AboutDialog(self.locations['images'])
+		from about import AboutDialog
+		about_dialog = AboutDialog(self.locations['images'])
 
 	# add movie -----------------------------------------------------------
 
@@ -184,13 +184,15 @@ class Griffith:
 	# preferences ---------------------------------------------------------
 
 	def show_preferences(self, *args):
-		preferences.show_preferences(self)
+		from preferences import show_preferences
+		show_preferences(self)
 
 	def hide_preferences(self, *args):
 		self.widgets['preferences']['window'].hide()
 
 	def save_preferences(self, *args):
-		preferences.save_preferences(self)
+		from preferences import save_preferences
+		save_preferences(self)
 		self.hide_preferences()
 
 	def on_p_db_type_changed(self, widget):
@@ -220,7 +222,8 @@ class Griffith:
 		add.add_movie_db(self, 1)
 
 	def delete_movie(self, *args):
-		delete.delete_movie(self)
+		from delete import delete_movie
+		delete_movie(self)
 
 	def update_movie(self, *args):
 		add.update_movie(self)
@@ -229,7 +232,8 @@ class Griffith:
 		main_treeview.set_details(self)
 
 	def loan_movie(self, *args):
-		loan.loan_movie(self)
+		from loan import loan_movie
+		loan_movie(self)
 
 	def clone_movie(self, *args):
 		add.clone_movie(self)
@@ -237,10 +241,12 @@ class Griffith:
 	# poster --------------------------------------------------------------
 
 	def change_poster(self, *args):
-		edit.change_poster(self)
+		from edit import change_poster
+		change_poster(self)
 
 	def del_poster(self, *args):
-		edit.delete_poster(self)
+		from edit import delete_poster
+		delete_poster(self)
 
 	def z_poster(self, *args):
 		treeselection = self.widgets['treeview'].get_selection()
@@ -260,7 +266,8 @@ class Griffith:
 
 	def get_poster(self, *args):
 		"""tries to fetch a new big poster from amazon"""
-		edit.fetch_bigger_poster(self)
+		from delete import fetch_bigger_poster
+		fetch_bigger_poster(self)
 
 	# rating --------------------------------------------------------------
 
@@ -303,31 +310,35 @@ class Griffith:
 			self._selected_volume = self.volume_combo_ids[widget.get_active()]
 
 	def add_volume(self, widget):
+		from update import update_volume_combo_ids
 		name = self.widgets['add']['volume'].get_active_text()
 		vol = self.db.Volume(name=name)
 		if vol and vol.add_to_db():
-			update.update_volume_combo_ids(self)
+			update_volume_combo_ids(self)
 			initialize.fill_volumes_combo(self, id)
 
 	def add_collection(self, widget):
+		from update import update_collection_combo_ids
 		name = self.widgets['add']['collection'].get_active_text()
 		col = self.db.Collection(name=name)
 		if col and col.add_to_db():
-			update.update_collection_combo_ids(self)
+			update_collection_combo_ids(self)
 			initialize.fill_collections_combo(self, id)
 
 	def remove_volume(self, widget):
+		from update import update_volume_combo_ids
 		vol_id = self._selected_volume
 		vol = self.db.Volume.get_by(volume_id=vol_id)
 		if vol and vol.remove_from_db():
-			update.update_volume_combo_ids(self)
+			update_volume_combo_ids(self)
 			initialize.fill_volumes_combo(self, id)
 
 	def remove_collection(self, widget):
+		from update import update_collection_combo_ids
 		col_id = self._selected_collection
 		col = self.db.Collection.get_by(collection_id=col_id)
 		if col and col.remove_from_db():
-			update.update_collection_combo_ids(self)
+			update_collection_combo_ids(self)
 			initialize.fill_collections_combo(self, id)
 
 	def rename_volume(self, widget):
@@ -351,8 +362,9 @@ class Griffith:
 					initialize.fill_collections_combo(self, default=col_id)
 
 	def show_volume(self, widget):
+		from view import filter_by_volume
 		vol_id = self.db.Movie.get_by(movie_id=self._movie_id).volume_id
-		view.filter_by_volume(self, vol_id)
+		filter_by_volume(self, vol_id)
 
 	def show_collection(self, widget):
 		col_id = self.db.Movie.get_by(movie_id=self._movie_id).collection_id
@@ -690,7 +702,8 @@ class Griffith:
 	# backup/restore ------------------------------------------------------	
 
 	def backup(self, *args):
-		backup.backup(self)
+		from backup import backup
+		backup(self)
 
 	def restore(self, *args):
 		response = gutils.question(self, \
@@ -699,7 +712,8 @@ Your current movie collection will be replaced.
 You can't undo this operation."""), \
 			1, self.widgets['window'])
 		if response == gtk.RESPONSE_YES:
-			backup.restore(self)
+			from backup import restore
+			restore(self)
 
 	def merge(self, *args):
 		response = gutils.question(self, \
@@ -708,7 +722,8 @@ Your current movie collection will be mixed with a backup.
 You can't undo this operation."""), \
 			1, self.widgets['window'])
 		if response == gtk.RESPONSE_YES:
-			backup.merge(self)
+			from backup import merge
+			merge(self)
 
 	# cover ---------------------------------------------------------------
 
@@ -720,9 +735,10 @@ You can't undo this operation."""), \
 		self.widgets['print_cover']['window_simple'].hide()
 
 	def print_cover_simple_process(self, *args):
+		from cover import cover_simple
 		movie_number, movie_iter = self.get_maintree_selection()
 		if movie_number is not None:
-			cover.cover_simple(self, movie_number)
+			cover_simple(self, movie_number)
 		else:
 			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
 
@@ -731,9 +747,10 @@ You can't undo this operation."""), \
 		self.widgets['print_cover']['window_image'].show()
 
 	def print_cover_image_process(self, *args):
+		from cover import cover_image
 		self.widgets['print_cover']['window_image'].hide()
 		movie_number, movie_iter = self.get_maintree_selection()
-		cover.cover_image(self, movie_number)
+		cover_image(self, movie_number)
 
 	def print_cover_image_hide(self, *args):
 		self.widgets['print_cover']['window_image'].hide()
@@ -741,43 +758,56 @@ You can't undo this operation."""), \
 	# loans management ----------------------------------------------------	
 
 	def show_people_window(self, *args):
-		people.show_people_window(self)
+		from people import show_people_window
+		show_people_window(self)
 
 	def hide_people_window(self, *args):
-		people.hide_people_window(self)
+		from people import  hide_people_window
+		hide_people_window(self)
 
 	def add_person(self, *args):
-		people.add_person(self)
+		from people import add_person
+		add_person(self)
 
 	def add_person_cancel(self, *args):
-		people.add_person_cancel(self)
+		from people import add_person_cancel
+		add_person_cancel(self)
 
 	def add_person_db(self, *args):
-		people.add_person_db(self)
+		from people import add_person_db
+		add_person_db(self)
 
 	def delete_person(self, *args):
-		people.delete_person(self)
+		from people import delete_person
+		delete_person(self)
 
 	def edit_person(self, *args):
-		people.edit_person(self)
+		from people import edit_person
+		edit_person(self)
 
 	def update_person(self, *args):
-		people.update_person(self)
+		from people import update_person
+		update_person(self)
 
 	def edit_person_cancel(self, *args):
-		people.edit_person_cancel(self)
+		from people import edit_person_cancel
+		edit_person_cancel(self)
 
 	def cancel_loan(self, *args):
-		loan.cancel_loan(self)
+		from loan import cancel_loan
+		cancel_loan(self)
 
 	def commit_loan(self, *args):
-		loan.commit_loan(self)
+		from loan import commit_loan
+		commit_loan(self)
 
 	def return_loan(self, *args):
-		loan.return_loan(self)
+		from loan import return_loan
+		return_loan(self)
 
 	def email_reminder(self, *args):
-		gemail.send_email(self)
+		from gemail import send_email
+		send_email(self)
 
 	# statusbar -----------------------------------------------------------
 
@@ -805,13 +835,16 @@ You can't undo this operation."""), \
 	# menu filter ---------------------------------------------------------
 
 	def filter_loaned(self, *args):
-		view.filter_loaned(self)
+		from view import filter_loaned
+		filter_loaned(self)
 
 	def filter_not_seen(self, *args):
-		view.filter_not_seen(self)
+		from view import filter_not_seen
+		filter_not_seen(self)
 
 	def filter_all(self, *args):
-		view.filter_all(self)
+		from view import filter_all
+		filter_all(self)
 
 	def on_delete_event_am(self, *args):
 		self.widgets['add']['window'].hide()
@@ -975,7 +1008,8 @@ You can't undo this operation."""), \
 	def on_p_tree_button_press_event(self, widget, event):
 		"""add a double click event to people tree"""				
 		if event.type == gtk.gdk._2BUTTON_PRESS:
-			people.edit_person(self)
+			from people import edit_person
+			edit_person(self)
 
 	def on_maintree_button_press_event(self, widget, event):
 		"""add a left click menu to main tree"""

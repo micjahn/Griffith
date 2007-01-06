@@ -48,7 +48,7 @@ def cover_image(self,number):
 
 def cover_image_process(self, filename, number):
 	size = self.widgets['print_cover']['ci_size'].get_active()
-	number = self.widgets['print_cover']['ci_number'].get_active()
+	print_number = self.widgets['print_cover']['ci_number'].get_active()
 
 	if self.config.get('font', '')!='':
 		fontName = "custom_font"
@@ -91,7 +91,7 @@ def cover_image_process(self, filename, number):
 	movie = self.db.Movie.get_by(number=number)
 	if movie is not None:
 		c.drawImage(filename, pos_x, pos_y, cover_x, cover_y)
-		if number == True:
+		if print_number == True:
 			c.setFillColor(colors.white)
 			c.rect((pageWidth/2)-13, 520, 26, 70, fill=1, stroke=0)
 			c.setFillColor(colors.black)
@@ -112,7 +112,7 @@ def cover_image_process(self, filename, number):
 
 def cover_simple(self, number):
 	size = self.widgets['print_cover']['cs_size'].get_active()
-	number = self.widgets['print_cover']['cs_include_movie_number'].get_active()
+	print_number = self.widgets['print_cover']['cs_include_movie_number'].get_active()
 	poster = self.widgets['print_cover']['cs_include_poster'].get_active()
 
 	if self.config.get('font', '')!='':
@@ -156,7 +156,7 @@ def cover_simple(self, number):
 	# get movie information from db
 	movie = self.db.Movie.get_by(number=number)
 	if movie is not None:
-		if number == True:
+		if print_number == True:
 			c.setFont(fontName, 10)
 			c.drawCentredString(pageWidth/2, 530, number)
 
