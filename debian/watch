@@ -1,2 +1,2 @@
 version=3
-http://griffith.berlios.de/pages/download.php http://download.berlios.de/griffith/griffith-([\d\.]*).tar.gz
+opts="uversionmangle=s/-rc/~rc/" http://griffith.vasconunes.net/pages/download.php http://download.berlios.de/griffith/griffith-(\d.*).tar.gz
