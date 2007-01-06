@@ -43,9 +43,6 @@ def locations(self):
 	locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
 	locations['lib']  = os.path.dirname(__file__)
 	
-	if (platform.system() == 'Darwin'):
-		locations['lib']  = os.path.join(os.path.dirname(__file__), "lib")
-	
 	if os.name == 'nt' or os.name == 'win32':
 		import winshell
 		mydocs = winshell.my_documents()
