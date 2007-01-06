@@ -4,7 +4,7 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
-2007-01-03  Piotr Ożarowski
+2007-01-05  Piotr Ożarowski
 	* Copyright years updated
 	* Version changed to 0.9-rc2
 	* E-mails removed from changelog
@@ -34,6 +34,11 @@ Griffith ChangeLog
 2007-01-02  Piotr Ożarowski
 	* Copy volume/collection data when cloning movie
 	* Fix displaying loan info (cached data can be obsolete)
+
+2007-01-01  Jessica K. Parth
+	* "fixed" slow populate function
+	* clear_filter -> don't update four times the maintreeview
+	* german translation update
 
 2007-01-01  Piotr Ożarowski
 	* Filmweb movie plugin updated
