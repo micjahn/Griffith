@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-01-06  Piotr Ożarowski
+	* Clear movie details if no movie is selected
+
 2007-01-05  Piotr Ożarowski
 	* Copyright years updated
 	* Version changed to 0.9-rc2

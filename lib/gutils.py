@@ -56,8 +56,7 @@ def find_next_available(db):
 	This is the first empty position.
 	If none is empty then increments the last position.
 	"""
-	a = first = 0
-	row = None
+	first = 0
 
 	movies = db.Movie.select(order_by="number ASC")
 	for movie in movies:
@@ -67,7 +66,6 @@ def find_next_available(db):
 		if (second>first+1):
 			break
 		first = second
-		a += a
 
 	if first is None:
 		return 1

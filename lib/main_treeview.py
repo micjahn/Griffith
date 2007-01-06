@@ -41,6 +41,8 @@ def treeview_clicked(self):
 		if movie is None:
 			self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
 		set_details(self, movie)
+	else:
+		set_details(self, {})
 
 def set_details(self, item=None):#{{{
 	from loan import get_loan_info, get_loan_history
