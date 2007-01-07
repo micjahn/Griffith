@@ -1,7 +1,6 @@
 Griffith 0.9-rc2
 ================
 
-* NOT RELEASED YET
 * Griffith works now a lot faster with large (>1000 movies) databases
 * Fix displaying volume/collection's loan status
 * Config files are now fully cross-platform
@@ -11,6 +10,8 @@ Griffith 0.9-rc2
   + hide "Number" column
   + change "seen it" status without opening edit window, new icons added
 * Filmweb movie plugin fixed
+* Updated translations: Czech, French, German, Portuguese, Portuguese Brazilian,
+  Swedish 
 
 Note to package maintainers:
 Please keep pysqlite1.0 as required dependency (see README file)

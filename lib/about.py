@@ -58,7 +58,7 @@ class AboutDialog:
 				"Pierre-Luc Lévy <pllevy@free.fr>\n" + \
 			_("German") + ":\n\t" + \
 				"Jessica Katharina Parth <Jessica.K.P@women-at-work.org>,\n\t" + \
-				"original tranlslation from:\n\t" + \
+				"original translation from:\n\t" + \
 				"Christian Sagmueller <christian@sagmueller.net>,\n\t" + \
 				"Malte Wiemann <ryan2057@gmx.de>\n" + \
 			_("Italian") + ":\n\t" + \

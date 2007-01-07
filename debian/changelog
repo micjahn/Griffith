@@ -3,7 +3,7 @@ griffith (0.9~rc2-1) unstable; urgency=low
   * New upstream release
   * debian/copyright and debian/watch files updated
 
- -- Piotr Ozarowski <ozarow@gmail.com>  Sun,  7 Jan 2007 00:25:47 +0100
+ -- Piotr Ozarowski <ozarow@gmail.com>  Mon,  8 Jan 2007 00:04:41 +0100
 
 griffith (0.9~rc1-1) experimental; urgency=low
 
