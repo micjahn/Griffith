@@ -155,10 +155,6 @@
 		<title>SEE ALSO</title>
 
 		<para>Homepage: <ulink url="&homepage;">&homepage;</ulink></para>
-
-		<para>
-			<citerefentry><refentrytitle>griffith-export-template</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-		</para>
 	</refsect1>
 	<refsect1>
 		<title>BUGS</title>

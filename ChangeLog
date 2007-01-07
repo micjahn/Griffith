@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-01-07  Piotr Ożarowski
 	* Copy title if original title is not available in FDb.pl movie plugin
+	* griffith-export-template manpage removed
 
 2007-01-06  Piotr Ożarowski
 	* Clear movie details if no movie is selected
