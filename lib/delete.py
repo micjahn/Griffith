@@ -45,9 +45,12 @@ def delete_movie(self):
 		if movie.remove_from_db():
 			# update main treelist
 			self.total -= 1
-			self.treemodel.remove(m_iter)
-			self.go_prev()
 			self.clear_details()
+			self.initialized = False
+			self.go_prev()
+			self.treemodel.remove(m_iter)
+			self.initialized = True
+			self.go_next()
 			self.count_statusbar()
 	else:
 		return False
