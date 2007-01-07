@@ -373,6 +373,6 @@ def save_preferences(self):
 		people_treeview(self, False)
 		self.initialized = True
 	self.clear_details()
-	self.populate_treeview()
+	self.filter_txt(None)
 	self.go_last()
 	c.save()
