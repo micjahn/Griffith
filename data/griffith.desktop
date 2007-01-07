@@ -13,9 +13,9 @@ StartupNotify=true
 StartupWMClass=Griffith
 Categories=GNOME;GTK;Application;Database;AudioVideo
 
-GenericName[en_PT]=Griffith - Um gestor de colecÃ§Ãµes de filmes
+GenericName[en_PT]=Griffith - Um gestor de colecções de filmes
 GenericName[pl]=Griffith - wspomaga zarządzanie kolekcją filmów
 
-Comment[pt_PT]=Gerir uma colecÃ§Ã£o de filmes.
-Comment[pt]=Gerir uma colecÃ§Ã£o de filmes.
+Comment[pt_PT]=Gerir uma colecção de filmes.
+Comment[pt]=Gerir uma colecção de filmes.
 Comment[pl]=wspomaga zarządzanie kolekcją filmów.
