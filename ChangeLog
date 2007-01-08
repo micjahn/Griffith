@@ -4,6 +4,11 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-01-07  Vasco Nunes
+	* Italian translation updated (Thanks to Diego)
+
+---- 0.9-rc2 ---
+
 2007-01-07  Piotr Ożarowski
 	* Copy title if original title is not available in FDb.pl movie plugin
 	* griffith-export-template manpage removed
