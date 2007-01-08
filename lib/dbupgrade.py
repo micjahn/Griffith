@@ -145,8 +145,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		os.rename(destination_file, "%s_%s" % (destination_file, i))
 
 	try:
-		#old_db = sqlite.connect(source_file,autocommit=0)
-		old_db = sqlite.connect(source_file, isolation_level=None)
+		old_db = sqlite.connect(source_file)
 	except DatabaseError, e:
 		if str(e) == 'file is encrypted or is not a database':
 			print 'Your database is most probably in wrong SQLite format, please convert it to SQLite3:'
@@ -178,13 +177,14 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET media = '11' WHERE media = 'VHS';")
 	old_cursor.execute("UPDATE movies SET media = '12' WHERE media = 'BETACAM';")
 	old_cursor.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2007")
-	old_cursor.execute("UPDATE movies SET rating=10 WHERE rating>10")
-	old_cursor.execute("UPDATE movies SET rating=0 WHERE rating<0")
+	old_cursor.execute("UPDATE movies SET rating=10 WHERE rating>10")	# FIXME?
+	old_cursor.execute("UPDATE movies SET rating=0 WHERE rating<0")		# FIXME?
 	old_cursor.execute("UPDATE movies SET volume_id=0 WHERE volume_id<1")
 	old_cursor.execute("UPDATE movies SET collection_id=0 WHERE collection_id<1")
 	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
 	old_cursor.execute("DELETE FROM loans WHERE date='' OR date ISNULL")
 	old_cursor.execute("DELETE FROM loans WHERE movie_id=0")
+	old_cursor.execute("DELETE FROM loans WHERE movie_id NOT IN (SELECT id FROM movies)")
 	#old_cursor.commit()
 	old_cursor.execute("UPDATE movies SET region=NULL WHERE region='' OR region='2' OR region<0 OR region>8")
 	old_cursor.execute("UPDATE movies SET condition=NULL WHERE condition='' OR condition='3'")
@@ -335,10 +335,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	# loans
 	old_cursor.execute("SELECT person_id, movie_id, volume_id, collection_id, date, return_date FROM loans;")
 	for i in old_cursor.fetchall():
-		try:
-			m = new_db.Movie.get_by(movie_id=movie_mapper[i[1]])
-		except:
-			continue
+		m = new_db.Movie.get_by(movie_id=movie_mapper[i[1]])
 		o = new_db.Loan()
 		o.person_id = person_mapper[i[0]]
 		o.volume_id = volume_mapper[i[2]]

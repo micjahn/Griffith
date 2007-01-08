@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-01-08  Piotr Ożarowski
 	* Ignore bad entries in loans table
+	* Don't save changes in old database while upgrading
 
 2007-01-08  Vasco Nunes
 	* Italian translation updated (Thanks to Diego)
