@@ -335,7 +335,10 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	# loans
 	old_cursor.execute("SELECT person_id, movie_id, volume_id, collection_id, date, return_date FROM loans;")
 	for i in old_cursor.fetchall():
-		m = new_db.Movie.get_by(movie_id=movie_mapper[i[1]])
+		try:
+			m = new_db.Movie.get_by(movie_id=movie_mapper[i[1]])
+		except:
+			continue
 		o = new_db.Loan()
 		o.person_id = person_mapper[i[0]]
 		o.volume_id = volume_mapper[i[2]]
