@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2006 Vasco Nunes, Piotr O�arowski
+# Copyright (c) 2005-2006 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -112,7 +112,6 @@ def upgrade_database(self, version):
 # ---------------------------------------------------
 
 def convert_from_old_db(self, source_file, destination_file):	#{{{
-	# TODO: table.insert().execute({'number':1, 'o_title':'test1'}, {'number':2, 'title: 'test2'}) is faster!
 	print 'Converting old database - it can take several minutes...'
 	gutils.info(self,_("Griffith will now convert your database to the new format. This can take several minutes if you have a large database."))
 	from sqlalchemy.orm import clear_mappers
@@ -183,17 +182,15 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET layers=NULL WHERE layers<0 OR layers='' OR layers>3")
 	old_cursor.execute("UPDATE movies SET region=NULL WHERE region='' OR region=2 OR region<0 OR region>8")
 	old_cursor.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2007")
-	old_cursor.execute("UPDATE movies SET rating=0 WHERE rating<0")		# FIXME?
-	old_cursor.execute("UPDATE movies SET rating=10 WHERE rating>10")	# FIXME?
 	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
 	old_cursor.execute("DELETE FROM loans WHERE date='' OR date ISNULL")
-	old_cursor.execute("DELETE FROM loans WHERE movie_id=0")
-	old_cursor.execute("DELETE FROM loans WHERE movie_id NOT IN (SELECT id FROM movies)")
 	old_cursor.execute("DELETE FROM volumes WHERE name = ''")
 	old_cursor.execute("DELETE FROM volumes WHERE name = 'None'")
 	old_cursor.execute("DELETE FROM collections WHERE name = ''")
 	old_cursor.execute("DELETE FROM collections WHERE name = 'None'")
 	old_cursor.execute("DELETE FROM languages WHERE name = ''")
+	
+	#old_cursor.execute('SELECT number FROM movies WHERE (movies.id IN (SELECT movie_id FROM loans) OR movies.volume_id IN (SELECT volume_id FROM loans) OR movies.collection_id IN (SELECT collection_id FROM loans)); ' # wszystkie z historią wyp.
 
 	self.config['db_type'] = 'sqlite'
 	self.config['default_db'] = 'griffith.db'
@@ -209,26 +206,38 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 
 	# collections
 	collection_mapper = {0:None, u'':None}
-	old_cursor.execute("SELECT id, name, loaned FROM collections;")
+	old_cursor.execute("SELECT id, name FROM collections;") # loaned status will be set later - buggy databases :-(
 	for i in old_cursor.fetchall():
-		o = new_db.Collection(name=i[1], loaned=bool(i[2]))
-		o.save(); o.flush()
+		o = new_db.Collection(name=i[1])
+		try:
+			o.save(); o.flush()
+		except Exception, e:
+			self.debug.show(str(e))
+			continue
 		collection_mapper[i[0]] = o.collection_id
 	
 	# volumes
 	volume_mapper = {0:None, u'':None}
-	old_cursor.execute("SELECT id, name, loaned FROM volumes;")
+	old_cursor.execute("SELECT id, name FROM volumes;") # loaned status will be set later - buggy databases :-(
 	for i in old_cursor.fetchall():
-		o = new_db.Volume(name=i[1], loaned=bool(i[2]))
-		o.save(); o.flush()
+		o = new_db.Volume(name=i[1])
+		try:
+			o.save(); o.flush()
+		except Exception, e:
+			self.debug.show(str(e))
+			continue
 		volume_mapper[i[0]] = o.volume_id
-	
+
 	# people
 	person_mapper = {}
 	old_cursor.execute("SELECT id, name, email, phone FROM people;")
 	for i in old_cursor.fetchall():
 		o = new_db.Person(name=i[1], email=i[2], phone=i[3])
-		o.save(); o.flush()
+		try:
+			o.save(); o.flush()
+		except Exception, e:
+			self.debug.show(str(e))
+			continue
 		person_mapper[i[0]] = o.person_id
 	
 	# languages
@@ -240,7 +249,11 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			language_mapper[i[0]] = o.lang_id
 		else:
 			o = new_db.Lang(name=i[1])
-			o.save(); o.flush()
+			try:
+				o.save(); o.flush()
+			except Exception, e:
+				self.debug.show(str(e))
+				continue
 			language_mapper[i[0]] = o.lang_id
 
 	# media
@@ -252,7 +265,11 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			medium_mapper[i[0]] = o.medium_id
 		else:
 			o = new_db.Medium(name=i[1])
-			o.save(); o.flush()
+			try:
+				o.save(); o.flush()
+			except Exception, e:
+				self.debug.show(str(e))
+				continue
 			medium_mapper[i[0]] = o.medium_id
 	
 	# tags
@@ -264,7 +281,11 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			tag_mapper[i[0]] = o.tag_id
 		else:
 			o = new_db.Tag(name=i[1])
-			o.save(); o.flush()
+			try:
+				o.save(); o.flush()
+			except Exception, e:
+				self.debug.show(str(e))
+				continue
 			tag_mapper[i[0]] = o.tag_id
 	
 	# movies
@@ -296,7 +317,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		o.cast = i[17]
 		o.trailer = i[18][:255]
 		o.rating = digits_only(i[19])
-		o.loaned = bool(i[20])
+		#o.loaned = bool(i[20]) # updated later
 		o.medium_id = medium_mapper[int(i[21])]
 		o.media_num = digits_only(i[22])
 		o.notes = i[23]
@@ -306,11 +327,15 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		o.color = digits_only(i[27], 3)
 		o.layers = digits_only(i[28], 4)
 		
-		o.save(); o.flush()
+		try:
+			o.save(); o.flush()
+		except Exception, e:
+			self.debug.show(str(e))
+			continue
 		movie_mapper[i[0]] = o.movie_id
 
 	# movie tag
-	old_cursor.execute("SELECT movie_id, tag_id FROM movie_tag;")
+	old_cursor.execute("SELECT movie_id, tag_id FROM movie_tag WHERE movie_id IN (SELECT id FROM movies);")
 	for i in old_cursor.fetchall():
 		o = new_db.MovieTag.get_by(movie_id=movie_mapper[i[0]], tag_id=tag_mapper[i[1]])
 		if o is None:
@@ -318,10 +343,14 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			t = new_db.Tag.get_by(tag_id=tag_mapper[i[1]])
 			t.save()
 			m.tags.append(t)
-			m.save(); m.flush()
+			try:
+				m.save(); m.flush()
+			except Exception, e:
+				self.debug.show(str(e))
+				continue
 	
 	# movie lang
-	old_cursor.execute("SELECT movie_id, lang_id, type FROM movie_lang;")
+	old_cursor.execute("SELECT movie_id, lang_id, type FROM movie_lang WHERE movie_id IN (SELECT id FROM movies);")
 	for i in old_cursor.fetchall():
 		o = new_db.MovieLang.get_by(movie_id=movie_mapper[i[0]], lang_id=language_mapper[i[1]], type=i[2])
 		if o is None:
@@ -329,24 +358,71 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			l = new_db.MovieLang(lang_id=language_mapper[i[1]], type=i[2])
 			l.save()
 			m.languages.append(l)
-			m.save(); m.flush()
+			try:
+				m.save(); m.flush()
+			except Exception, e:
+				self.debug.show(str(e))
+				continue
 
 	# loans
 	old_cursor.execute("SELECT person_id, movie_id, volume_id, collection_id, date, return_date FROM loans;")
 	for i in old_cursor.fetchall():
-		m = new_db.Movie.get_by(movie_id=movie_mapper[i[1]])
-		o = new_db.Loan()
-		o.person_id = person_mapper[i[0]]
-		o.volume_id = volume_mapper[i[2]]
-		o.collection_id = collection_mapper[i[3]]
-		o.date = str(i[4])[:10]
-		if i[5] is not None:
-			o.return_date = str(i[5])[:10]
+		vol = col = None
+		not_returned = i[5] is not None
+
+		if int(i[2]) > 0:
+			try:
+				vol = new_db.Volume.get_by(volume_id=volume_mapper[i[2]])
+			except Exception, e:
+				self.debug.show(str(e))
+				continue
+		if int(i[3]) > 0:
+			try:
+				col = new_db.Collection.get_by(collection_id=collection_mapper[i[3]])
+			except Exception, e:
+				self.debug.show(str(e))
+				continue
+		if int(i[1]) == 0:
+			if vol is not None and len(vol.movies)>0:
+				m = vol.movies[0]
+			elif col is not None and len(col.movies)>0:
+				m = col.movies[0]
+			else:
+				self.debug.show("Cannot find associated movie for this loan (%s)" % i)
+				continue
 		else:
+			try:
+				m = new_db.Movie.get_by(movie_id=movie_mapper[i[1]])
+			except Exception, e:
+				self.debug.show(str(e))
+				continue
+		
+		l = new_db.Loan()
+		l.person_id = person_mapper[i[0]]
+		l.date = str(i[4])[:10]
+		if not_returned:
 			m.loaned = True
-		o.save();
-		m.loans.append(o)
-		m.flush()
+		else:
+			l.return_date = str(i[5])[:10]
+		
+		# update volume / collection status
+		if int(i[2]) > 0:
+			l.volume_id = volume_mapper[i[2]]
+			if not_returned:
+				vol.loaned = True
+				vol.save()
+		if int(i[3]) > 0:
+			l.collection_id = collection_mapper[i[3]]
+			if not_returned:
+				col.loaned = True
+				col.save()
+		l.save();
+		m.loans.append(l)
+		try:
+			m.flush()
+		except Exception, e:
+			self.debug.show(str(e))
+			continue
 	clear_mappers()
 	return True
 #}}}
