@@ -46,6 +46,8 @@ System Requirements
   * MySQLDb					http://sourceforge.net/projects/mysql-python
   Upgrading from Griffith <=0.6.2 (only if pysqlite 1.0 was used before, 1.1 is not needed)
   * pysqlite		1.0 			http://initd.org/tracker/pysqlite
+  Encoding detection of imported CSV file support:
+  * chardet					http://chardet.feedparser.org/
   Gtkspell:
   * python-gnome-extras
   Covers and reports support:

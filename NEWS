@@ -1,3 +1,12 @@
+Griffith 0.9-rc3
+================
+
+NOT RELEASED YET
+* Old database is not modified during upgrade process (bug introduced in 0.9-rc2)
+* Catch some more bad cases while upgrading database
+* Updated translations: Italian
+
+
 Griffith 0.9-rc2
 ================
 

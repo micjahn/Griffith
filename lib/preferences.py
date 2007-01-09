@@ -359,8 +359,16 @@ def save_preferences(self):
 		self.initialized = False
 		self.db.metadata.clear()
 		from sqlalchemy.orm import clear_mappers
+		from sqlalchemy.exceptions import InvalidRequestError
 		clear_mappers()
-		self.db = sql.GriffithSQL(c, self.debug, self.locations['home'])
+		try:
+			self.db = sql.GriffithSQL(c, self.debug, self.locations['home'])
+		except InvalidRequestError, e:
+			self.debug.show(str(e))
+			c['db_type'] = 'sqlite'
+			w['db_type'].set_active(0)
+			self.db = sql.GriffithSQL(c, self.debug, self.locations['home'])
+
 		self.debug.show("New database Engine: %s" % self.db.metadata.engine.name)
 		
 		# initialize new database

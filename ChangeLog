@@ -4,9 +4,13 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-01-09  Piotr Ożarowski
+	* Catch some more bad cases while upgrading database
+	* Switch to sqlite if psycopg2 or MySQLdb module are not available
+
 2007-01-08  Piotr Ożarowski
 	* Ignore bad entries in loans table
-	* Don't save changes in old database while upgrading
+	* Don't modify old database while upgrading
 
 2007-01-08  Vasco Nunes
 	* Italian translation updated (Thanks to Diego)

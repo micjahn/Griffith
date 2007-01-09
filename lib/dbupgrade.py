@@ -176,20 +176,19 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET media = '10' WHERE media = 'SVCD'; 	")
 	old_cursor.execute("UPDATE movies SET media = '11' WHERE media = 'VHS';")
 	old_cursor.execute("UPDATE movies SET media = '12' WHERE media = 'BETACAM';")
-	old_cursor.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2007")
-	old_cursor.execute("UPDATE movies SET rating=10 WHERE rating>10")	# FIXME?
-	old_cursor.execute("UPDATE movies SET rating=0 WHERE rating<0")		# FIXME?
-	old_cursor.execute("UPDATE movies SET volume_id=0 WHERE volume_id<1")
 	old_cursor.execute("UPDATE movies SET collection_id=0 WHERE collection_id<1")
+	old_cursor.execute("UPDATE movies SET volume_id=0 WHERE volume_id<1")
+	old_cursor.execute("UPDATE movies SET color=NULL WHERE color<1 OR color=''")
+	old_cursor.execute("UPDATE movies SET condition=NULL WHERE condition<0 OR condition='' OR condition>2")
+	old_cursor.execute("UPDATE movies SET layers=NULL WHERE layers<0 OR layers='' OR layers>3")
+	old_cursor.execute("UPDATE movies SET region=NULL WHERE region='' OR region=2 OR region<0 OR region>8")
+	old_cursor.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2007")
+	old_cursor.execute("UPDATE movies SET rating=0 WHERE rating<0")		# FIXME?
+	old_cursor.execute("UPDATE movies SET rating=10 WHERE rating>10")	# FIXME?
 	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
 	old_cursor.execute("DELETE FROM loans WHERE date='' OR date ISNULL")
 	old_cursor.execute("DELETE FROM loans WHERE movie_id=0")
 	old_cursor.execute("DELETE FROM loans WHERE movie_id NOT IN (SELECT id FROM movies)")
-	#old_cursor.commit()
-	old_cursor.execute("UPDATE movies SET region=NULL WHERE region='' OR region='2' OR region<0 OR region>8")
-	old_cursor.execute("UPDATE movies SET condition=NULL WHERE condition='' OR condition='3'")
-	old_cursor.execute("UPDATE movies SET color=NULL WHERE color='' OR color='0'")
-	old_cursor.execute("UPDATE movies SET layers=NULL WHERE layers='' OR layers='4'")
 	old_cursor.execute("DELETE FROM volumes WHERE name = ''")
 	old_cursor.execute("DELETE FROM volumes WHERE name = 'None'")
 	old_cursor.execute("DELETE FROM collections WHERE name = ''")

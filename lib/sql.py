@@ -283,6 +283,7 @@ class GriffithSQL:
 
 	def __init__(self, config, gdebug, griffith_dir):
 		from sqlalchemy.mods.threadlocal import assign_mapper
+		from sqlalchemy.exceptions import InvalidRequestError
 		global debug
 		debug = gdebug
 		if not config.has_key('db_type'):
@@ -321,7 +322,13 @@ class GriffithSQL:
 				config['db_name'])
 		else:
 			config['db_type'] = 'sqlite'
-		self.metadata = BoundMetaData(url)
+			url = "sqlite:///%s" % os.path.join(griffith_dir, config['default_db'])
+		try:
+			self.metadata = BoundMetaData(url)
+		except InvalidRequestError, e:
+			debug.show(str(e))
+			config['db_type'] = 'sqlite'
+			self.metadata = BoundMetaData("sqlite:///%s" % os.path.join(griffith_dir, config['default_db']))
 		# try to establish a db connection
 		try:
 			self.metadata.engine.connect()
