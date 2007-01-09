@@ -326,13 +326,14 @@ class GriffithSQL:
 		try:
 			self.metadata = BoundMetaData(url)
 		except InvalidRequestError, e:
-			debug.show(str(e))
+			debug.show("BoundMetaData: %s" % e)
 			config['db_type'] = 'sqlite'
 			self.metadata = BoundMetaData("sqlite:///%s" % os.path.join(griffith_dir, config['default_db']))
 		# try to establish a db connection
 		try:
 			self.metadata.engine.connect()
-		except:
+		except Exception, e:
+			debug.show("engine connection: %s" % e)
 			gutils.error(self, _('Database connection failed.'))
 			config['db_type'] = 'sqlite'
 			url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
@@ -472,7 +473,8 @@ class GriffithSQL:
 		# check if database needs upgrade
 		try:
 			v = self.Configuration.get_by(param='version')	# returns None if table exists && param ISNULL
-		except exceptions.SQLError:	# table doesn't exist
+		except exceptions.SQLError, e:	# table doesn't exist
+			debug.show("DB version: %s" % e)
 			v = 0
 
 		if v is not None and v>1:

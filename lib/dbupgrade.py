@@ -190,8 +190,6 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("DELETE FROM collections WHERE name = 'None'")
 	old_cursor.execute("DELETE FROM languages WHERE name = ''")
 	
-	#old_cursor.execute('SELECT number FROM movies WHERE (movies.id IN (SELECT movie_id FROM loans) OR movies.volume_id IN (SELECT volume_id FROM loans) OR movies.collection_id IN (SELECT collection_id FROM loans)); ' # wszystkie z historią wyp.
-
 	self.config['db_type'] = 'sqlite'
 	self.config['default_db'] = 'griffith.db'
 	self.config['posters'] = 'posters'

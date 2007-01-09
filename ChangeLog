@@ -8,6 +8,7 @@ Griffith ChangeLog
 	* Catch some more bad cases while upgrading database
 	* Switch to sqlite if psycopg2 or MySQLdb module are not available
 	* Fix upgrading vol/col loan data
+	* Version changed to 0.9-rc3
 
 2007-01-08  Piotr Ożarowski
 	* Ignore bad entries in loans table

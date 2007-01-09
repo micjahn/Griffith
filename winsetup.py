@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__revision__ = '$Id: $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005-2007 Vasco Nunes
 # This program is free software; you can redistribute it and/or modify
@@ -54,7 +54,7 @@ opts = {
 
 setup(
     name = "Griffith",
-    version = "0.9-rc2",
+    version = "0.9-rc3",
 	description = 'Griffith - A film manager',
     author = 'Vasco Nunes/Piotr Ozarowski',
     author_email = 'vasco.m.nunes@gmail.com',
