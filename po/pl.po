@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith-0.9-rc2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 00:11+0100\n"
+"POT-Creation-Date: 2007-01-10 00:11+0100\n"
 "PO-Revision-Date: 2006-12-09 20:06+0100\n"
 "Last-Translator: Piotr Ożarowski <ozarow+griffith@gmail.com>\n"
 "Language-Team: Polski\n"
@@ -294,7 +294,7 @@ msgstr "brazylijsko-portugalski"
 msgid "Favourite"
 msgstr "Ulubiony"
 
-#: ../lib/dbupgrade.py:117
+#: ../lib/dbupgrade.py:116
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
@@ -302,11 +302,11 @@ msgstr ""
 "Griffith skonwertuje teraz twoją bazę do nowego formatu. To może potrwać "
 "wiele minut, zależnie od wielkości bazy."
 
-#: ../lib/dbupgrade.py:131
+#: ../lib/dbupgrade.py:130
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr "Konwersja starej bazy: zainstaluj proszę pysqlite w wersji 1.0"
 
-#: ../lib/dbupgrade.py:157
+#: ../lib/dbupgrade.py:155
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -750,7 +750,7 @@ msgstr "Ta nazwa jest juz używana!"
 msgid "Column \"%s\" is not unique"
 msgstr "Pozycja \"%s\" nie jest unikalna"
 
-#: ../lib/sql.py:329
+#: ../lib/sql.py:337
 msgid "Database connection failed."
 msgstr "Połączenie z bazą nie może być ustanowione."
 

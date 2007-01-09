@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.9-rc1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 00:11+0100\n"
+"POT-Creation-Date: 2007-01-10 00:11+0100\n"
 "PO-Revision-Date: 2006-09-15 10:45+0100\n"
 "Last-Translator: Jessica K. P. <Jessica.K.P@women-at-work.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -295,7 +295,7 @@ msgstr "Brasilianisches Portugiesisch"
 msgid "Favourite"
 msgstr "Lieblingsfilm"
 
-#: ../lib/dbupgrade.py:117
+#: ../lib/dbupgrade.py:116
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
@@ -303,11 +303,11 @@ msgstr ""
 "Griffith wird jetzt ihre alte Datenbank in das neue Format konvertieren. Das "
 "kann einige Minuten dauern, je nach Größe ihrer Datenbank."
 
-#: ../lib/dbupgrade.py:131
+#: ../lib/dbupgrade.py:130
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr "Datenbankupgrade: Bitte installieren sie pysqlite legacy (v1.0)"
 
-#: ../lib/dbupgrade.py:157
+#: ../lib/dbupgrade.py:155
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -752,7 +752,7 @@ msgstr "Der Name wird bereits benutzt!"
 msgid "Column \"%s\" is not unique"
 msgstr "Spalte \"%s\" ist nicht eindeutig"
 
-#: ../lib/sql.py:329
+#: ../lib/sql.py:337
 msgid "Database connection failed."
 msgstr "Datenbank-Verbindung fehlgeschlagen."
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 00:11+0100\n"
+"POT-Creation-Date: 2007-01-10 00:11+0100\n"
 "PO-Revision-Date: 2007-01-04 09:01+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -297,7 +297,7 @@ msgstr "Brasiliansk portugisiska"
 msgid "Favourite"
 msgstr "Favorit"
 
-#: ../lib/dbupgrade.py:117
+#: ../lib/dbupgrade.py:116
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
@@ -305,11 +305,11 @@ msgstr ""
 "Griffith kommer nu att konvertera din databas till det nya formatet. Det här "
 "kan ta flera minuter om du har en stor databas."
 
-#: ../lib/dbupgrade.py:131
+#: ../lib/dbupgrade.py:130
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr "Gammal databaskonvertering: installera pysqlite legacy (v1.0)"
 
-#: ../lib/dbupgrade.py:157
+#: ../lib/dbupgrade.py:155
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -755,7 +755,7 @@ msgstr "Det här namnet används redan!"
 msgid "Column \"%s\" is not unique"
 msgstr "Kolumnen \"%s\" är inte unik"
 
-#: ../lib/sql.py:329
+#: ../lib/sql.py:337
 msgid "Database connection failed."
 msgstr "Databasanslutning misslyckades."
 

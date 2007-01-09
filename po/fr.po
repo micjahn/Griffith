@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 00:11+0100\n"
+"POT-Creation-Date: 2007-01-10 00:11+0100\n"
 "PO-Revision-Date: 2006-02-28 02:33+0000\n"
 "Last-Translator: Pierre-Luc Lévy <pllevy@free.fr>\n"
 "Language-Team: Français\n"
@@ -297,7 +297,7 @@ msgstr ""
 msgid "Favourite"
 msgstr "Favoris"
 
-#: ../lib/dbupgrade.py:117
+#: ../lib/dbupgrade.py:116
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
@@ -305,11 +305,11 @@ msgstr ""
 "Griffith va convertir votre base de donnée au nouveau format. Cela peut "
 "prendre plusieurs minutes suivant l'importance de votre base donnée."
 
-#: ../lib/dbupgrade.py:131
+#: ../lib/dbupgrade.py:130
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr ""
 
-#: ../lib/dbupgrade.py:157
+#: ../lib/dbupgrade.py:155
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -756,7 +756,7 @@ msgstr "Ce nom est déjà utilisé !"
 msgid "Column \"%s\" is not unique"
 msgstr "La colonne \"%s\" n'est pas unique"
 
-#: ../lib/sql.py:329
+#: ../lib/sql.py:337
 msgid "Database connection failed."
 msgstr "Echec de connexion à la base donnée"
 
