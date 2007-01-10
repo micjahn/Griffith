@@ -266,7 +266,7 @@ class Griffith:
 
 	def get_poster(self, *args):
 		"""tries to fetch a new big poster from amazon"""
-		from delete import fetch_bigger_poster
+		from edit import fetch_bigger_poster
 		fetch_bigger_poster(self)
 
 	# rating --------------------------------------------------------------
