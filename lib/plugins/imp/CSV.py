@@ -138,10 +138,9 @@ class ImportPlugin(IP):
 	def set_griffith_fields(self):
 		# 2nd list
 		for name in self.fields_to_import:
-			if sorted == name:
-				iterator = self.ls_griffith.append()
-				self.ls_griffith.set_value(iterator, 0, name)
-				self.ls_griffith.set_value(iterator, 1, self.fields[name])
+			iterator = self.ls_griffith.append()
+			self.ls_griffith.set_value(iterator, 0, name)
+			self.ls_griffith.set_value(iterator, 1, self.fields[name])
 		
 		
 	def create_import_table(self):
