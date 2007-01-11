@@ -137,12 +137,19 @@ class ImportPlugin(IP):
 	
 	def set_griffith_fields(self):
 		# 2nd list
-		for name in self.fields_to_import:
-			iterator = self.ls_griffith.append()
-			self.ls_griffith.set_value(iterator, 0, name)
-			self.ls_griffith.set_value(iterator, 1, self.fields[name])
-		
-		
+		sorted_list = ( "number", "title", "o_title", "director", "year", "country",
+				"cast", "studio", "plot", "runtime", "genre", "classification",
+				"site", "o_site", "trailer", "image", "seen", "loaned", "notes",
+				"rating", "movie_id", "collection_id", "volume_id", "medium_id",
+				"vcodec_id", "color", "cond", "layers", "region", "media_num" )
+		# sort the list and add field and translated field-name
+		for sorted in sorted_list:
+			for name in self.fields_to_import:
+				if sorted == name:
+					iterator = self.ls_griffith.append()
+					self.ls_griffith.set_value(iterator, 0, name)
+					self.ls_griffith.set_value(iterator, 1, self.fields[name])
+
 	def create_import_table(self):
 		self.import_table = {}
 		item = self.ls_assigned.get_iter_first()
