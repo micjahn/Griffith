@@ -511,9 +511,10 @@ def digits_only(s, maximum=None):
 		return 0
 	import string, re
 	match = re.compile(r"\d+")
-	try:
-		s = int(reduce( string.join, match.findall(str(s))))
-	except:
+	a = match.findall(str(s))
+	if len(a):
+		s = int(a[0])
+	else:
 		s = 0
 	if maximum is None:
 		return s

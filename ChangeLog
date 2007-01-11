@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-01-11  Piotr Ożarowski
+	* Fix possible memory leak
+
 2007-01-10  Vasco Nunes
 	* PTGate movie plugin updated
 
