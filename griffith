@@ -98,7 +98,6 @@ class Griffith:
 		self.clear_details()
 		self.populate_treeview()
 		self.count_statusbar()
-		self.go_last()
 
 		# adding some completion fields
 		self.completion = gtk.EntryCompletion()

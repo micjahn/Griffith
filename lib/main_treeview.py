@@ -361,14 +361,13 @@ def populate(self, movies=None, where=None):#{{{
 	# disable refreshing while inserting
 	self.widgets['treeview'].freeze_child_notify()
 	self.widgets['treeview'].set_model(None)
-	
+
 	# save user sort column
 	sort_column_id, order = self.treemodel.get_sort_column_id()
-	
-	self.treemodel.clear()
+
 	# new treemodel (faster and prevents some problems)
 	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
-	
+
 	# check preferences to hide or show columns
 	if self.config.get('view_number', 'True') == 'True':
 		self.number_column.set_visible(True)
@@ -428,6 +427,7 @@ def populate(self, movies=None, where=None):#{{{
 	# add new treemodel and allow refreshs again
 	self.widgets['treeview'].set_model(self.treemodel)
 	self.widgets['treeview'].thaw_child_notify()
+	self.widgets['treeview'].set_cursor_on_cell(0)
 #}}}
 
 # vim: fdm=marker

@@ -65,7 +65,7 @@ def locations(self):
 				lang = defaultLang
 		if lang:
 			os.environ['LANG'] = lang
-	   
+
 	elif os.name == 'posix':
 		locations['home']  = os.path.join(os.path.expanduser('~'), ".griffith")
 		locations['share'] = os.path.abspath(os.path.join(locations['lib'], '..'))
@@ -350,6 +350,12 @@ def import_plugins(self):
 	"""
 	
 	import plugins.imp, math
+
+	fields_to_import = ( 'number','title', 'o_title', 'director', 'year', 'runtime', 'country',
+		'seen', 'rating', 'genre', 'studio', 'plot', 'cast', 'notes', 'classification',
+		'site', 'o_site', 'trailer', 'medium_id', 'media_num', 'vcodec_id', 'color', 'cond',
+		'layers', 'region', 'collection_id', 'volume_id', 'image')
+
 	# glade
 	glade_file = gtk.glade.XML(os.path.join(self.locations['glade'], 'import.glade'))
 	get = lambda x: glade_file.get_widget(x)
@@ -384,7 +390,7 @@ def import_plugins(self):
 	# fields to import
 	j = 0
 	k = math.ceil( len(self.field_names) / float(3) )
-	for i in self.field_names:
+	for i in fields_to_import:
 		j = j + 1
 		w['fields'][i] = gtk.CheckButton(self.field_names[i])
 		w['fields'][i].set_active(True) # TODO: get from config
@@ -482,9 +488,8 @@ def dictionaries(self):
 		'genre', 'studio', 'media_num', 'rating', 'classification', 'collection_id',
 		'volume_id', 'cond', 'layers', 'region', 'movie_id']
 	self.search_criteria = (
-		'o_title', 'title', 'number', 'director',
-		'plot', 'cast', 'notes', 'year', 'runtime', 'country',
-		'genre', 'studio', 'media_num', 'rating')
+		'o_title', 'title', 'number', 'director', 'plot', 'cast', 'notes', 'year',
+		'runtime', 'country', 'genre', 'studio', 'media_num', 'rating')
 	self.field_names = {
 		'cast'           : _('Cast'),
 		'classification' : _('Classification'),
@@ -498,6 +503,7 @@ def dictionaries(self):
 		'layers'         : _('Layers'),
 		'loaned'         : _('Loaned'),
 		'media_num'      : _('Discs'),
+		'medium_id'      : _('Medium'),
 		'notes'          : _('Notes'),
 		'number'         : _('Number'),
 		'o_site'         : _('Official site'),
@@ -511,6 +517,7 @@ def dictionaries(self):
 		'studio'         : _('Studio'),
 		'title'          : _('Title'),
 		'trailer'        : _('Trailer'),
+		'vcodec_id'      : _('Video codec'),
 		'volume_id'      : _('Volume'),
 		'year'           : _('Year')}
 	self._conditions = (_('N/A'), _('Damaged'), _('Poor'),  _('Fair'), _('Good'), _('Excellent'))

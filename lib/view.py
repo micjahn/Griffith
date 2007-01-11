@@ -26,17 +26,14 @@ from gettext import gettext as _
 def filter_not_seen(self):
 	self.populate_treeview()
 	self.update_statusbar(_("Filter activated. Showing only not seen movies."))
-	self.go_last()
 
 def filter_loaned(self):
 	self.populate_treeview()
 	self.update_statusbar(_("Filter activated. Showing only loaned movies."))
-	self.go_last()
 
 def filter_all(self):
 	self.populate_treeview()
 	self.count_statusbar()
-	self.go_last()
 
 def filter_by_volume(self, volume_id):
 	from quick_filter import clear_filter
@@ -44,7 +41,6 @@ def filter_by_volume(self, volume_id):
 	self.populate_treeview(where={'volume_id':volume_id})
 	volume_name = self.db.Volume.get_by(volume_id=volume_id).name
 	self.update_statusbar(_("Filter activated. Showing only movies from volume: %s")%volume_name)
-	self.go_last()
 
 def filter_by_collection(self, collection_id):
 	from quick_filter import clear_filter
@@ -52,5 +48,4 @@ def filter_by_collection(self, collection_id):
 	self.populate_treeview(where={'collection_id':collection_id})
 	collection_name = self.db.Collection.get_by(collection_id=collection_id).name
 	self.update_statusbar(_("Filter activated. Showing only movies from collection: %s")%collection_name)
-	self.go_last()
 

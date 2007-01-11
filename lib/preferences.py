@@ -382,5 +382,4 @@ def save_preferences(self):
 		self.initialized = True
 	self.clear_details()
 	self.filter_txt(None)
-	self.go_last()
 	c.save()

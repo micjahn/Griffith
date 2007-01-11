@@ -43,7 +43,6 @@ def change_filter(self):
 			if limit > 0:
 				statement.limit = limit
 	self.populate_treeview(statement)
-	self.go_last()
 
 def clear_filter(self):
 	# prevent multiple treeview updates
@@ -53,5 +52,4 @@ def clear_filter(self):
 	self.widgets['filter']['collection'].set_active(0)
 	self.initialized = True
 	self.populate_treeview()
-	self.go_last()
-	
+

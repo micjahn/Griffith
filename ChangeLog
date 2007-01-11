@@ -6,6 +6,9 @@ Griffith ChangeLog
 
 2007-01-11  Piotr Ożarowski
 	* Fix possible memory leak
+	* Select first movie by default
+	* Remove Excel mime types from CSV import plugin
+	* Fix list of fields to import
 
 2007-01-10  Vasco Nunes
 	* PTGate movie plugin updated

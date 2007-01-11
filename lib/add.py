@@ -674,8 +674,5 @@ def clone_movie(self):
 	self.total = self.total + 1
 	self.count_statusbar()
 	self.populate_treeview()
-	#self.widgets['treeview'].set_cursor(next_number-1)
-	self.go_last()
-	self.treeview_clicked()
 
 # vim: fdm=marker
