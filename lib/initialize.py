@@ -74,12 +74,8 @@ def locations(self):
 		if not os.path.isdir(locations['i18n']):
 			locations['i18n'] = os.path.join(locations['share'], 'i18n')
 		#some locations
-		if os.path.isdir(os.path.join(locations['share'], 'plugins')):
-			locations['movie_plugins']  = os.path.join(locations['share'], 'plugins', 'movie')
-			locations['export_plugins'] = os.path.join(locations['share'], 'plugins', 'export')
-		else:
-			locations['movie_plugins']  = os.path.join(locations['lib'], 'plugins', 'movie')
-			locations['export_plugins'] = os.path.join(locations['lib'], 'plugins', 'export')
+		locations['movie_plugins']  = os.path.join(locations['lib'], 'plugins', 'movie')
+		locations['export_plugins'] = os.path.join(locations['lib'], 'plugins', 'export')
 		locations['images']  = os.path.join(locations['share'], 'images')
 		locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop')
 	else:

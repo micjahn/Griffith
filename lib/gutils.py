@@ -503,7 +503,7 @@ def html_encode(s):
 	s = s.replace('&', '&amp;')
 	s = s.replace('<', '&lt;')
 	s = s.replace('>', '&gt;')
-	s = s.replace('=', '&quot;')
+	s = s.replace('"', '&quot;')
 	return s
 
 def digits_only(s, maximum=None):
