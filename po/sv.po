@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-10 00:11+0100\n"
+"POT-Creation-Date: 2007-01-24 12:55+0100\n"
 "PO-Revision-Date: 2007-01-04 09:01+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -14,21 +14,21 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:165 ../griffith:743 ../lib/delete.py:33 ../lib/edit.py:44
+#: ../griffith:164 ../griffith:742 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 msgid "You have no movies in your database"
 msgstr "Du har inga filmer i din databas"
 
-#: ../griffith:301
+#: ../griffith:300
 msgid "You saw all movies in your collection!"
 msgstr "Du har sett alla filmer i din samling!"
 
-#: ../griffith:426 ../griffith:431 ../lib/initialize.py:256
-#: ../lib/initialize.py:518
+#: ../griffith:425 ../griffith:430 ../lib/initialize.py:252
+#: ../lib/initialize.py:521
 msgid "subtitles"
 msgstr "undertexter"
 
-#: ../griffith:710
+#: ../griffith:709
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -38,7 +38,7 @@ msgstr ""
 "Din aktuell filmsamling kommer att ersättas.\n"
 "Du kan inte ångra den här åtgärden."
 
-#: ../griffith:720
+#: ../griffith:719
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
@@ -49,23 +49,23 @@ msgstr ""
 "med en säkerhetskopia.\n"
 "Du kan inte ångra den här åtgärden."
 
-#: ../griffith:818
+#: ../griffith:817
 msgid " movie(s) in collection. "
 msgstr " film(er) i samlingen. "
 
-#: ../griffith:819
+#: ../griffith:818
 msgid " movie(s) loaned. "
 msgstr " film(er) utlånade. "
 
-#: ../griffith:820
+#: ../griffith:819
 msgid "You haven't seen "
 msgstr "Du har inte sett "
 
-#: ../griffith:820
+#: ../griffith:819
 msgid " movie(s)"
 msgstr " film(er)"
 
-#: ../griffith:956
+#: ../griffith:955
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -73,7 +73,7 @@ msgstr ""
 "Är du säker på att du vill skapa en ny databas?\n"
 "Du kommer att förlora ALL aktuell data!"
 
-#: ../griffith:960
+#: ../griffith:959
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -223,15 +223,15 @@ msgstr ""
 msgid "Backup has been created"
 msgstr "Säkerhetskopia har skapats"
 
-#: ../lib/backup.py:104 ../lib/backup.py:170
+#: ../lib/backup.py:104 ../lib/backup.py:168
 msgid "Restore Griffith backup"
 msgstr "Återställ säkerhetskopia"
 
-#: ../lib/backup.py:112 ../lib/backup.py:186
+#: ../lib/backup.py:112 ../lib/backup.py:184
 msgid "Can't read backup file"
 msgstr "Kan inte läsa säkerhetskopia"
 
-#: ../lib/backup.py:161
+#: ../lib/backup.py:159
 msgid "Backup restored"
 msgstr "Säkerhetskopia återställd"
 
@@ -249,17 +249,17 @@ msgstr "Omslagsbild genererad av Griffith v"
 msgid "Released Under the GNU/GPL License"
 msgstr "Utgiven under GNU/GPL License"
 
-#: ../lib/cover.py:176 ../lib/initialize.py:188 ../lib/initialize.py:504
+#: ../lib/cover.py:176 ../lib/initialize.py:184 ../lib/initialize.py:506
 #: ../lib/plugins/export/PluginExportHTML.py:105 ../glade/griffith.glade.h:93
 msgid "Original Title"
 msgstr "Ursprunglig titel"
 
-#: ../lib/cover.py:177 ../lib/initialize.py:194 ../lib/initialize.py:512
+#: ../lib/cover.py:177 ../lib/initialize.py:190 ../lib/initialize.py:514
 #: ../lib/plugins/export/PluginExportHTML.py:111 ../glade/griffith.glade.h:143
 msgid "Title"
 msgstr "Titel"
 
-#: ../lib/cover.py:179 ../lib/initialize.py:200 ../lib/initialize.py:495
+#: ../lib/cover.py:179 ../lib/initialize.py:196 ../lib/initialize.py:496
 #: ../lib/plugins/export/PluginExportHTML.py:96 ../glade/griffith.glade.h:45
 msgid "Director"
 msgstr "Regissör"
@@ -272,12 +272,12 @@ msgstr "Speltid"
 msgid " min"
 msgstr " min"
 
-#: ../lib/cover.py:182 ../lib/initialize.py:494
+#: ../lib/cover.py:182 ../lib/initialize.py:495
 #: ../lib/plugins/export/PluginExportHTML.py:95 ../glade/griffith.glade.h:38
 msgid "Country"
 msgstr "Land"
 
-#: ../lib/cover.py:183 ../lib/initialize.py:496
+#: ../lib/cover.py:183 ../lib/initialize.py:497
 #: ../lib/plugins/export/PluginExportHTML.py:97 ../glade/griffith.glade.h:59
 msgid "Genre"
 msgstr "Genre"
@@ -407,230 +407,238 @@ msgstr "Bilder"
 msgid "All files"
 msgstr "Alla filer"
 
-#: ../lib/initialize.py:177
+#: ../lib/initialize.py:173
 msgid "N."
 msgstr "Nr"
 
-#: ../lib/initialize.py:183 ../lib/initialize.py:497
+#: ../lib/initialize.py:179 ../lib/initialize.py:498
 #: ../lib/plugins/export/PluginExportHTML.py:98 ../glade/griffith.glade.h:66
 msgid "Image"
 msgstr "Bild"
 
-#: ../lib/initialize.py:214
+#: ../lib/initialize.py:210
 msgid "Loan Date"
 msgstr "Utlåningsdatum"
 
-#: ../lib/initialize.py:220
+#: ../lib/initialize.py:216
 msgid "Return Date"
 msgstr "Återlämningsdatum"
 
-#: ../lib/initialize.py:225
+#: ../lib/initialize.py:221
 msgid "Loaned To"
 msgstr "Utlånad till"
 
-#: ../lib/initialize.py:244
+#: ../lib/initialize.py:240
 msgid "Language"
 msgstr "Språk"
 
 # VAD?
-#: ../lib/initialize.py:254 ../lib/initialize.py:518
+#: ../lib/initialize.py:250 ../lib/initialize.py:521
 msgid "lector"
 msgstr "lektor"
 
-#: ../lib/initialize.py:255 ../lib/initialize.py:518
+#: ../lib/initialize.py:251 ../lib/initialize.py:521
 msgid "dubbing"
 msgstr "dubbning"
 
-#: ../lib/initialize.py:257 ../lib/initialize.py:518
+#: ../lib/initialize.py:253 ../lib/initialize.py:521
 msgid "commentary"
 msgstr "kommentator"
 
-#: ../lib/initialize.py:264 ../glade/griffith.glade.h:147
+#: ../lib/initialize.py:260 ../glade/griffith.glade.h:147
 msgid "Type"
 msgstr "Typ"
 
-#: ../lib/initialize.py:277
+#: ../lib/initialize.py:273
 msgid "Codec"
 msgstr "Kodek"
 
-#: ../lib/initialize.py:290
+#: ../lib/initialize.py:286
 msgid "Channels"
 msgstr "Kanaler"
 
-#: ../lib/initialize.py:303
+#: ../lib/initialize.py:299
 msgid "Subtitle format"
 msgstr "Undertextformat"
 
-#: ../lib/initialize.py:410 ../glade/griffith.glade.h:87
+#: ../lib/initialize.py:412 ../glade/griffith.glade.h:87
 msgid "Name"
 msgstr "Namn"
 
-#: ../lib/initialize.py:416 ../glade/exporthtml.glade.h:16
+#: ../lib/initialize.py:418 ../glade/exporthtml.glade.h:16
 #: ../glade/griffith.glade.h:47 ../glade/import.glade.h:5
 msgid "E-mail"
 msgstr "E-post"
 
-#: ../lib/initialize.py:459
+#: ../lib/initialize.py:461
 msgid "Last added"
 msgstr "Senast tillagd"
 
-#: ../lib/initialize.py:489 ../lib/plugins/export/PluginExportHTML.py:93
+#: ../lib/initialize.py:490 ../lib/plugins/export/PluginExportHTML.py:93
 #: ../glade/griffith.glade.h:30
 msgid "Cast"
 msgstr "Medverkande"
 
-#: ../lib/initialize.py:490 ../lib/plugins/export/PluginExportHTML.py:94
+#: ../lib/initialize.py:491 ../lib/plugins/export/PluginExportHTML.py:94
 #: ../glade/griffith.glade.h:32
 msgid "Classification"
 msgstr "Klassificering"
 
-#: ../lib/initialize.py:491 ../glade/griffith.glade.h:35
+#: ../lib/initialize.py:492 ../glade/griffith.glade.h:35
 msgid "Collection"
 msgstr "Samling"
 
-#: ../lib/initialize.py:492 ../lib/initialize.py:517
+#: ../lib/initialize.py:493 ../lib/initialize.py:520
 #: ../glade/griffith.glade.h:36
 msgid "Color"
 msgstr "Färg"
 
-#: ../lib/initialize.py:493 ../glade/griffith.glade.h:37
+#: ../lib/initialize.py:494 ../glade/griffith.glade.h:37
 msgid "Condition"
 msgstr "Tillstånd"
 
-#: ../lib/initialize.py:498 ../glade/griffith.glade.h:70
+#: ../lib/initialize.py:499 ../glade/griffith.glade.h:70
 msgid "Layers"
 msgstr "Lager"
 
-#: ../lib/initialize.py:499 ../lib/plugins/export/PluginExportHTML.py:102
+#: ../lib/initialize.py:500 ../lib/plugins/export/PluginExportHTML.py:102
 msgid "Loaned"
 msgstr "Utlånad"
 
-#: ../lib/initialize.py:500 ../glade/griffith.glade.h:46
+#: ../lib/initialize.py:501 ../glade/griffith.glade.h:46
 msgid "Discs"
 msgstr "Skivor"
 
-#: ../lib/initialize.py:501 ../lib/plugins/export/PluginExportHTML.py:113
+#: ../lib/initialize.py:502 ../glade/griffith.glade.h:82
+msgid "Medium"
+msgstr "Medel"
+
+#: ../lib/initialize.py:503 ../lib/plugins/export/PluginExportHTML.py:113
 #: ../glade/griffith.glade.h:90
 msgid "Notes"
 msgstr "Anteckningar"
 
-#: ../lib/initialize.py:502 ../lib/sql.py:278
+#: ../lib/initialize.py:504 ../lib/sql.py:278
 #: ../lib/plugins/export/PluginExportHTML.py:104 ../glade/griffith.glade.h:91
 msgid "Number"
 msgstr "Nummer"
 
-#: ../lib/initialize.py:503 ../lib/plugins/export/PluginExportHTML.py:99
+#: ../lib/initialize.py:505 ../lib/plugins/export/PluginExportHTML.py:99
 #: ../glade/griffith.glade.h:92
 msgid "Official site"
 msgstr "Officiell webbsida"
 
-#: ../lib/initialize.py:505 ../lib/plugins/export/PluginExportHTML.py:106
+#: ../lib/initialize.py:507 ../lib/plugins/export/PluginExportHTML.py:106
 #: ../glade/griffith.glade.h:101
 msgid "Plot"
 msgstr "Handling"
 
-#: ../lib/initialize.py:506 ../lib/plugins/export/PluginExportHTML.py:107
+#: ../lib/initialize.py:508 ../lib/plugins/export/PluginExportHTML.py:107
 #: ../glade/griffith.glade.h:109
 msgid "Rating"
 msgstr "Betyg"
 
-#: ../lib/initialize.py:507 ../glade/griffith.glade.h:111
+#: ../lib/initialize.py:509 ../glade/griffith.glade.h:111
 msgid "Region"
 msgstr "Region"
 
-#: ../lib/initialize.py:508 ../lib/plugins/export/PluginExportHTML.py:108
+#: ../lib/initialize.py:510 ../lib/plugins/export/PluginExportHTML.py:108
 #: ../glade/griffith.glade.h:119
 msgid "Runtime"
 msgstr "Speltid"
 
-#: ../lib/initialize.py:509 ../lib/plugins/export/PluginExportHTML.py:110
+#: ../lib/initialize.py:511 ../lib/plugins/export/PluginExportHTML.py:110
 #: ../glade/griffith.glade.h:122
 msgid "Seen it"
 msgstr "Har sett den"
 
-#: ../lib/initialize.py:510 ../lib/plugins/export/PluginExportHTML.py:100
+#: ../lib/initialize.py:512 ../lib/plugins/export/PluginExportHTML.py:100
 #: ../glade/griffith.glade.h:132
 msgid "Site"
 msgstr "Webbplats"
 
-#: ../lib/initialize.py:511 ../lib/plugins/export/PluginExportHTML.py:109
+#: ../lib/initialize.py:513 ../lib/plugins/export/PluginExportHTML.py:109
 #: ../glade/griffith.glade.h:138
 msgid "Studio"
 msgstr "Filmstudio"
 
-#: ../lib/initialize.py:513 ../lib/plugins/export/PluginExportHTML.py:101
+#: ../lib/initialize.py:515 ../lib/plugins/export/PluginExportHTML.py:101
 #: ../glade/griffith.glade.h:145
 msgid "Trailer"
 msgstr "Förhandsvisning"
 
-#: ../lib/initialize.py:514 ../glade/griffith.glade.h:155
+#: ../lib/initialize.py:516 ../glade/griffith.glade.h:152
+msgid "Video codec"
+msgstr "Videokodek"
+
+#: ../lib/initialize.py:517 ../glade/griffith.glade.h:155
 msgid "Volume"
 msgstr "Volym"
 
-#: ../lib/initialize.py:515 ../lib/plugins/export/PluginExportHTML.py:112
+#: ../lib/initialize.py:518 ../lib/plugins/export/PluginExportHTML.py:112
 #: ../glade/griffith.glade.h:157
 msgid "Year"
 msgstr "År"
 
-#: ../lib/initialize.py:516 ../lib/initialize.py:517 ../lib/initialize.py:519
-#: ../lib/initialize.py:715 ../lib/initialize.py:716 ../lib/initialize.py:747
-#: ../lib/initialize.py:748
+#: ../lib/initialize.py:519 ../lib/initialize.py:520 ../lib/initialize.py:522
+#: ../lib/initialize.py:718 ../lib/initialize.py:719 ../lib/initialize.py:750
+#: ../lib/initialize.py:751
 msgid "N/A"
 msgstr "-"
 
-#: ../lib/initialize.py:516
+#: ../lib/initialize.py:519
 msgid "Damaged"
 msgstr "Skadad"
 
-#: ../lib/initialize.py:516
+#: ../lib/initialize.py:519
 msgid "Poor"
 msgstr "Dålig"
 
-#: ../lib/initialize.py:516
+#: ../lib/initialize.py:519
 msgid "Fair"
 msgstr "OK"
 
-#: ../lib/initialize.py:516
+#: ../lib/initialize.py:519
 msgid "Good"
 msgstr "Bra"
 
-#: ../lib/initialize.py:516
+#: ../lib/initialize.py:519
 msgid "Excellent"
 msgstr "Mycket bra"
 
-#: ../lib/initialize.py:517
+#: ../lib/initialize.py:520
 msgid "Black and White"
 msgstr "Svart och vit"
 
-#: ../lib/initialize.py:517
+#: ../lib/initialize.py:520
 msgid "Mixed"
 msgstr "Blandad"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:522
 msgid "Single Side, Single Layer"
 msgstr "Enkelsidig, ett lager"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:522
 msgid "Single Side, Dual Layer"
 msgstr "Enkelsidig, dubbla lager"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:522
 msgid "Dual Side, Single Layer"
 msgstr "Dubbelsidig, ett lager"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:522
 msgid "Dual Side, Dual Layer"
 msgstr "Dubbelsidig, dubbla lager"
 
-#: ../lib/initialize.py:521
+#: ../lib/initialize.py:524
 msgid "Region 0 (No Region Coding)"
 msgstr "Region 0 (Ingen regionskodning)"
 
-#: ../lib/initialize.py:522
+#: ../lib/initialize.py:525
 msgid "Region 1 (United States of America, Canada)"
 msgstr "Region 1 (USA, Kanada)"
 
-#: ../lib/initialize.py:523
+#: ../lib/initialize.py:526
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
@@ -638,33 +646,33 @@ msgstr ""
 "Region 2 (Europa, inklusive Frankrike, Grekland, Turkiet, Egypten, "
 "Arabstaterna, Japan och Sydafrika)"
 
-#: ../lib/initialize.py:524
+#: ../lib/initialize.py:527
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
 msgstr "Region 3 (Korea, Thailand, Vietnam, Borneo och Indonesien)"
 
-#: ../lib/initialize.py:525
+#: ../lib/initialize.py:528
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
 msgstr "Region 4 (Australien och Nya Zeeland, Mexiko, Karibien och Sydamerika)"
 
-#: ../lib/initialize.py:526
+#: ../lib/initialize.py:529
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
 msgstr "Region 5 (Indien, Afrika, Ryssland och tidigare USSR-länder)"
 
-#: ../lib/initialize.py:527
+#: ../lib/initialize.py:530
 msgid "Region 6 (Popular Republic of China)"
 msgstr "Region 6 (Kina)"
 
-#: ../lib/initialize.py:528
+#: ../lib/initialize.py:531
 msgid "Region 7 (Reserved for Unspecified Special Use)"
 msgstr "Region 7 (Reserverad för ospecifierad specialanvändning)"
 
-#: ../lib/initialize.py:529
+#: ../lib/initialize.py:532
 msgid "Region 8 (Airlines/Cruise Ships)"
 msgstr "Region 8 (Flygbolag/Kryssningsskepp)"
 
-#: ../lib/initialize.py:568
+#: ../lib/initialize.py:571
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr ""
 "Ordboken är inte tillgänglig. Stavningskontroll kommer att inaktiveras. \n"
@@ -767,16 +775,16 @@ msgstr "Griffith är en filmsamlingshanterare."
 msgid "Filter activated. Showing only not seen movies."
 msgstr "Filter aktiverat. Visar endast filmer som inte setts."
 
-#: ../lib/view.py:33
+#: ../lib/view.py:32
 msgid "Filter activated. Showing only loaned movies."
 msgstr "Filter aktiverat. Visar endast utlånade filmer."
 
-#: ../lib/view.py:46
+#: ../lib/view.py:43
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
 msgstr "Filter aktiverat. Visar endast filmer från volymen: %s"
 
-#: ../lib/view.py:54
+#: ../lib/view.py:50
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr "Filter aktiverat. Visar endast filmer från samlingen: %s"
@@ -953,11 +961,11 @@ msgstr "Exporteringsmodul för fullständig XML-lista"
 msgid "Full CSV list import plugin"
 msgstr "Importeringsmodul för fullständig CSV-lista"
 
-#: ../lib/plugins/imp/CSV.py:194
+#: ../lib/plugins/imp/CSV.py:192
 msgid "Please assign at least one field first!"
 msgstr "Tilldela åtminstone ett fält först!"
 
-#: ../lib/plugins/imp/CSV.py:312
+#: ../lib/plugins/imp/CSV.py:310
 #, python-format
 msgid "Can't open the file %s"
 msgstr "Kan inte öppna filen %s"
@@ -1359,10 +1367,6 @@ msgstr "Huvudlista"
 msgid "Manage People"
 msgstr "Hantera personer"
 
-#: ../glade/griffith.glade.h:82
-msgid "Medium"
-msgstr "Medel"
-
 #: ../glade/griffith.glade.h:83
 msgid ""
 "Meter\n"
@@ -1576,10 +1580,6 @@ msgstr "Använda lokal:"
 #: ../glade/griffith.glade.h:151
 msgid "Username"
 msgstr "Användarnamn"
-
-#: ../glade/griffith.glade.h:152
-msgid "Video codec"
-msgstr "Videokodek"
 
 #: ../glade/griffith.glade.h:153
 msgid "Visit movie web site"
