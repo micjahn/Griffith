@@ -4,6 +4,7 @@ Griffith 0.9
   correctly)
 * AnimeDB and PTGate movie plugins updated
 * CSV import plugin updated
+* Fetch from Amazon function recognizes more posters now
 * First movie is selected by default now
 * Czech translation updated
 

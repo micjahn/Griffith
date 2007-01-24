@@ -211,24 +211,27 @@ def get_poster(self, f, result, current_poster):
 		gutils.warning(self, _("Sorry. A connection error was occurred."))
 
 	if  os.path.isfile(file_to_copy):
-		handler = self.widgets['big_poster'].set_from_file(file_to_copy)
-		gutils.garbage(handler)
-
 		try:
 			im = Image.open(file_to_copy)
 		except IOError:
 			self.debug.show("failed to identify %s"%file_to_copy)
 
+		if im.size == (1,1):
+			from urllib import FancyURLopener, urlretrieve
+			url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result[f].Asin).read()
+			url = gutils.after(url, 'id="imageViewerDiv"><img src="')
+			url = gutils.before(url, '" id="prodImage"')
+			urlretrieve(url, file_to_copy)
+			try:
+				im = Image.open(file_to_copy)
+			except IOError:
+				self.debug.show("failed to identify %s"%file_to_copy)
+
 		if im.mode != 'RGB': # convert GIFs
 			im = im.convert('RGB')
 			im.save(file_to_copy, 'JPEG')
-
-		if im.size == (1,1):
-			self.debug.show("Amazon module is broken, please download poster from this URL:\n%s" % result[f].URL)
-			gutils.warning(self, _("Sorry. This poster image format is not supported."))
-			os.remove(file_to_copy)
-			reconnect_add_signals(self)
-			return False
+		
+		handler = self.widgets['big_poster'].set_from_file(file_to_copy)
 
 		self.widgets['poster_window'].show()
 		self.widgets['poster_window'].move(0,0)
