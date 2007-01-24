@@ -218,12 +218,18 @@ def get_poster(self, f, result, current_poster):
 			im = Image.open(file_to_copy)
 		except IOError:
 			self.debug.show("failed to identify %s"%file_to_copy)
-		else:
-			if im.format == "GIF":
-				gutils.warning(self, _("Sorry. This poster image format is not supported."))
-				os.remove(file_to_copy)
-				reconnect_add_signals(self)
-				return
+
+		if im.mode != 'RGB': # convert GIFs
+			im = im.convert('RGB')
+			im.save(file_to_copy, 'JPEG')
+
+		if im.size == (1,1):
+			self.debug.show("Amazon module is broken, please download poster from this URL:\n%s" % result[f].URL)
+			gutils.warning(self, _("Sorry. This poster image format is not supported."))
+			os.remove(file_to_copy)
+			reconnect_add_signals(self)
+			return False
+
 		self.widgets['poster_window'].show()
 		self.widgets['poster_window'].move(0,0)
 		response = gutils.question(self, \

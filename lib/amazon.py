@@ -81,7 +81,7 @@ try:
 except ImportError:
     pass
 
-LICENSE_KEY = "08XMVGB3QFSS4V1VWZR2"
+LICENSE_KEY = ""
 ASSOCIATE = "webservices-20"
 HTTP_PROXY = None
 LOCALE = "us"
