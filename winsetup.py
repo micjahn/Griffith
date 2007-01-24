@@ -54,7 +54,7 @@ opts = {
 
 setup(
     name = "Griffith",
-    version = "0.9-rc3",
+    version = "0.9",
 	description = 'Griffith - A film manager',
     author = 'Vasco Nunes/Piotr Ozarowski',
     author_email = 'vasco.m.nunes@gmail.com',

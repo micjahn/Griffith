@@ -1,3 +1,13 @@
+Griffith 0.9
+============
+* Possible memory leak fixed (year data from some movie plugins wasn't parsed
+  correctly)
+* AnimeDB and PTGate movie plugins updated
+* CSV import plugin updated
+* First movie is selected by default now
+* Czech translation updated
+
+
 Griffith 0.9-rc3
 ================
 
