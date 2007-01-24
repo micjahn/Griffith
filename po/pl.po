@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith-0.9-rc2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 12:55+0100\n"
+"POT-Creation-Date: 2007-01-24 20:32+0100\n"
 "PO-Revision-Date: 2006-12-09 20:06+0100\n"
 "Last-Translator: Piotr Ożarowski <ozarow+griffith@gmail.com>\n"
 "Language-Team: Polski\n"
@@ -351,15 +351,11 @@ msgstr "Proszę czekać"
 msgid "Sorry. A connection error was occurred."
 msgstr "Wybacz, wystąpił błąd połączenia."
 
-#: ../lib/edit.py:223
-msgid "Sorry. This poster image format is not supported."
-msgstr "Wybacz, ten format obrazka nie jest jeszcze obsługiwany."
-
-#: ../lib/edit.py:230
+#: ../lib/edit.py:239
 msgid "Do you want to use this poster instead?"
 msgstr "Czy chcesz podmienić plakat na aktualny?"
 
-#: ../lib/edit.py:244
+#: ../lib/edit.py:253
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
 msgstr "Wybacz, serwis Amazon.com nie posiada plakatu z tym filmem"
 
@@ -1834,6 +1830,9 @@ msgstr "Wtyczka"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Żródło"
+
+#~ msgid "Sorry. This poster image format is not supported."
+#~ msgstr "Wybacz, ten format obrazka nie jest jeszcze obsługiwany."
 
 #~ msgid ""
 #~ "Databases merged!\n"

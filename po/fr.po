@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 12:55+0100\n"
+"POT-Creation-Date: 2007-01-24 20:32+0100\n"
 "PO-Revision-Date: 2006-02-28 02:33+0000\n"
 "Last-Translator: Pierre-Luc Lévy <pllevy@free.fr>\n"
 "Language-Team: Français\n"
@@ -354,15 +354,11 @@ msgstr "Attendez un instant"
 msgid "Sorry. A connection error was occurred."
 msgstr "Désolé. Une erreur de connexion a eu lieu"
 
-#: ../lib/edit.py:223
-msgid "Sorry. This poster image format is not supported."
-msgstr "Désolé. Le format d'image de l'affiche n'est pas supporté"
-
-#: ../lib/edit.py:230
+#: ../lib/edit.py:239
 msgid "Do you want to use this poster instead?"
 msgstr "Voulez-vous utilisez cette affiche à la place ?"
 
-#: ../lib/edit.py:244
+#: ../lib/edit.py:253
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
 msgstr ""
 "Désolé. Ce film est listé mais n'a pas d'affiche disponible chez Amazon.com"
@@ -1844,6 +1840,9 @@ msgstr "Plugin"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Source"
+
+#~ msgid "Sorry. This poster image format is not supported."
+#~ msgstr "Désolé. Le format d'image de l'affiche n'est pas supporté"
 
 #~ msgid "Add person"
 #~ msgstr "Ajouter la personne"

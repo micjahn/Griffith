@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 12:55+0100\n"
+"POT-Creation-Date: 2007-01-24 20:32+0100\n"
 "PO-Revision-Date: 2007-01-04 09:01+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -353,15 +353,11 @@ msgstr "Var god vänta"
 msgid "Sorry. A connection error was occurred."
 msgstr "Tyvärr, ett anslutningsfel inträffade."
 
-#: ../lib/edit.py:223
-msgid "Sorry. This poster image format is not supported."
-msgstr "Tyvärr, formatet på den här posterbilden stöds inte."
-
-#: ../lib/edit.py:230
+#: ../lib/edit.py:239
 msgid "Do you want to use this poster instead?"
 msgstr "Vill du använda den här postern istället?"
 
-#: ../lib/edit.py:244
+#: ../lib/edit.py:253
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
 msgstr ""
 "Tyvärr, den här filmen är listad men saknar en tillgänglig poster på Amazon."
@@ -1924,6 +1920,9 @@ msgstr "Insticksmodul"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Källa"
+
+#~ msgid "Sorry. This poster image format is not supported."
+#~ msgstr "Tyvärr, formatet på den här posterbilden stöds inte."
 
 #~ msgid "Add person"
 #~ msgstr "Lägg till person"

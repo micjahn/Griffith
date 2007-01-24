@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: griffith 0.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 12:55+0100\n"
+"POT-Creation-Date: 2007-01-24 20:32+0100\n"
 "PO-Revision-Date: 2005-09-22 23:30+0300\n"
 "Last-Translator: Luchezar P. Petkov <>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -354,16 +354,12 @@ msgstr "Изчакайте момент"
 msgid "Sorry. A connection error was occurred."
 msgstr ""
 
-#: ../lib/edit.py:223
-msgid "Sorry. This poster image format is not supported."
-msgstr ""
-
-#: ../lib/edit.py:230
+#: ../lib/edit.py:239
 #, fuzzy
 msgid "Do you want to use this poster instead?"
 msgstr "Сигурни ли сте, че искате да изтриете този филм?"
 
-#: ../lib/edit.py:244
+#: ../lib/edit.py:253
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
 msgstr ""
 

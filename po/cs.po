@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 12:55+0100\n"
+"POT-Creation-Date: 2007-01-24 20:32+0100\n"
 "PO-Revision-Date: 2007-01-16 04:05+0100\n"
 "Last-Translator: Ondra 'Kepi' Kudlík <kepi@igloonet.cz>\n"
 "Language-Team: Gnome Czech <gnome-cs-list@gnome.org>\n"
@@ -351,15 +351,11 @@ msgstr "Moment prosím"
 msgid "Sorry. A connection error was occurred."
 msgstr "Je mi líto, ale nastala chyba spojení. "
 
-#: ../lib/edit.py:223
-msgid "Sorry. This poster image format is not supported."
-msgstr "Je mi líto, ale formát obrázku není podporován."
-
-#: ../lib/edit.py:230
+#: ../lib/edit.py:239
 msgid "Do you want to use this poster instead?"
 msgstr "Chtete použít tento plakát místo stávajícího?"
 
-#: ../lib/edit.py:244
+#: ../lib/edit.py:253
 msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
 msgstr "Je mi líto, ale na Amazon.com nenalezen žádný plakát."
 
@@ -1920,6 +1916,9 @@ msgstr "Zásuvné moduly"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Zdroj"
+
+#~ msgid "Sorry. This poster image format is not supported."
+#~ msgstr "Je mi líto, ale formát obrázku není podporován."
 
 #~ msgid "by Peek <peekpt@gmail.com>."
 #~ msgstr "Peek <peekpt@gmail.com>."
