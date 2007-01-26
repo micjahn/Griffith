@@ -2,7 +2,7 @@ Griffith 0.9
 ============
 * Possible memory leak fixed (year data from some movie plugins wasn't parsed
   correctly)
-* AnimeDB and PTGate movie plugins updated
+* AnimeDB, PTGate and WP movie plugins updated
 * CSV import plugin updated
 * Fetch from Amazon function recognizes more posters now
 * First movie is selected by default now
