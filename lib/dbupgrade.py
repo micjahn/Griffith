@@ -205,7 +205,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	new_db = GriffithSQL(self.config, self.debug, self.locations['home'])
 
 	# collections
-	collection_mapper = {0:None, u'':None}
+	collection_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
 	old_cursor.execute("SELECT id, name FROM collections;") # loaned status will be set later - buggy databases :-(
 	for i in old_cursor.fetchall():
 		o = new_db.Collection(name=i[1])
@@ -217,7 +217,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		collection_mapper[i[0]] = o.collection_id
 	
 	# volumes
-	volume_mapper = {0:None, u'':None}
+	volume_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
 	old_cursor.execute("SELECT id, name FROM volumes;") # loaned status will be set later - buggy databases :-(
 	for i in old_cursor.fetchall():
 		o = new_db.Volume(name=i[1])
@@ -241,7 +241,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		person_mapper[i[0]] = o.person_id
 	
 	# languages
-	language_mapper = {}
+	language_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
 	old_cursor.execute("SELECT id, name FROM languages;")
 	for i in old_cursor.fetchall():
 		o = new_db.Lang.get_by(name=i[1])
@@ -257,7 +257,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			language_mapper[i[0]] = o.lang_id
 
 	# media
-	medium_mapper = {'0':None, '-1': None}
+	medium_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
 	old_cursor.execute("SELECT id, name FROM media;")
 	for i in old_cursor.fetchall():
 		o = new_db.Medium.get_by(name=i[1])
