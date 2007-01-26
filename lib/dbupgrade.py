@@ -257,7 +257,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 			language_mapper[i[0]] = o.lang_id
 
 	# media
-	medium_mapper = {'0':None}
+	medium_mapper = {'0':None, '-1': None}
 	old_cursor.execute("SELECT id, name FROM media;")
 	for i in old_cursor.fetchall():
 		o = new_db.Medium.get_by(name=i[1])
