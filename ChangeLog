@@ -6,6 +6,9 @@ Griffith ChangeLog
 
 ---- 0.9 ---
 
+2007-01-25  Piotr Ożarowski
+	* Fix more bad cases in upgrade from old DB function
+
 2007-01-24  Piotr Ożarowski
 	* Fetch from Amazon function recognizes more posters now
 

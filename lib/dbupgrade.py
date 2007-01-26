@@ -177,11 +177,13 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET media = '12' WHERE media = 'BETACAM';")
 	old_cursor.execute("UPDATE movies SET collection_id=0 WHERE collection_id<1")
 	old_cursor.execute("UPDATE movies SET volume_id=0 WHERE volume_id<1")
-	old_cursor.execute("UPDATE movies SET color=NULL WHERE color<1 OR color=''")
-	old_cursor.execute("UPDATE movies SET condition=NULL WHERE condition<0 OR condition='' OR condition>2")
-	old_cursor.execute("UPDATE movies SET layers=NULL WHERE layers<0 OR layers='' OR layers>3")
+	old_cursor.execute("UPDATE movies SET color=NULL WHERE color<1 OR color='' OR color>3")
+	old_cursor.execute("UPDATE movies SET condition=NULL WHERE condition<0 OR condition='' OR condition>5")
+	old_cursor.execute("UPDATE movies SET layers=NULL WHERE layers<0 OR layers='' OR layers>4")
 	old_cursor.execute("UPDATE movies SET region=NULL WHERE region='' OR region=2 OR region<0 OR region>8")
 	old_cursor.execute("UPDATE movies SET year=NULL WHERE year<1900 or year>2007")
+	old_cursor.execute("UPDATE movies SET rating = 0 WHERE rating NOT IN (0,1,2,3,4,5,6,7,8,9,10);") # rating>10 doesn't work with some DB
+	old_cursor.execute("UPDATE movies SET runtime = NULL WHERE runtime > 10000;") # remove strings
 	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
 	old_cursor.execute("DELETE FROM loans WHERE date='' OR date ISNULL")
 	old_cursor.execute("DELETE FROM volumes WHERE name = ''")
