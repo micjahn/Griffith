@@ -208,7 +208,7 @@ def get_poster(self, f, result, current_poster):
 		progress.close()
 		urlcleanup()
 	except:
-		gutils.warning(self, _("Sorry. A connection error was occurred."))
+		gutils.warning(self, _("Sorry. A connection error has occurred."))
 
 	if  os.path.isfile(file_to_copy):
 		try:
@@ -250,6 +250,6 @@ def get_poster(self, f, result, current_poster):
 
 		self.widgets['poster_window'].hide()
 	else:
-		gutils.warning(self, _("Sorry. This movie is listed but have no poster available at Amazon.com."))
+		gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
 	reconnect_add_signals(self)
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 20:32+0100\n"
+"POT-Creation-Date: 2007-01-27 21:05+0100\n"
 "PO-Revision-Date: 2007-01-04 14:53-0300\n"
 "Last-Translator: Fábio Nogueira <deb-user-ba@ubuntu.com>\n"
 "Language-Team: Portuguese\n"
@@ -346,17 +346,17 @@ msgstr "Tem certeza que deseja eliminar este pôster?"
 msgid "No posters found for this movie."
 msgstr "Não foram encontrados pôsteres deste filme."
 
-#: ../lib/edit.py:199 ../lib/movie.py:144
+#: ../lib/edit.py:199 ../lib/movie.py:145
 msgid "Fetching poster"
 msgstr "Buscando pôster"
 
-#: ../lib/edit.py:199 ../lib/movie.py:119 ../lib/movie.py:144
-#: ../lib/movie.py:237
+#: ../lib/edit.py:199 ../lib/movie.py:119 ../lib/movie.py:145
+#: ../lib/movie.py:238
 msgid "Wait a moment"
 msgstr "Aguarde um momento"
 
 #: ../lib/edit.py:211
-msgid "Sorry. A connection error was occurred."
+msgid "Sorry. A connection error has occurred."
 msgstr "Desculpe. Ocorreu um erro de conexão."
 
 #: ../lib/edit.py:239
@@ -364,7 +364,7 @@ msgid "Do you want to use this poster instead?"
 msgstr "Tem certeza que deseja utilizar este pôster?"
 
 #: ../lib/edit.py:253
-msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
+msgid "Sorry. This movie is listed but has no poster available at Amazon.com."
 msgstr ""
 "Desculpe. Este filme está listado na Amazon mas não tem nenhum pôster "
 "disponível."
@@ -705,15 +705,15 @@ msgstr "O filme não está emprestado"
 msgid "Fetching data"
 msgstr "Obtendo dados"
 
-#: ../lib/movie.py:237
+#: ../lib/movie.py:238
 msgid "Searching"
 msgstr "Pesquisando"
 
-#: ../lib/movie.py:275
+#: ../lib/movie.py:277
 msgid "Connection error"
 msgstr "Erro de conexão"
 
-#: ../lib/movie.py:299
+#: ../lib/movie.py:301
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -832,13 +832,13 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:96
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:78
-#: ../lib/plugins/movie/PluginMovieFilmweb.py:98
+#: ../lib/plugins/movie/PluginMovieFilmweb.py:100
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB.py:80
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:137
 #: ../lib/plugins/movie/PluginMovieOnet.py:102
-#: ../lib/plugins/movie/PluginMovieWP.py:94
-#: ../lib/plugins/movie/PluginMovieWP.py:95
+#: ../lib/plugins/movie/PluginMovieWP.py:96
+#: ../lib/plugins/movie/PluginMovieWP.py:98
 msgid " as "
 msgstr " como "
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 20:32+0100\n"
+"POT-Creation-Date: 2007-01-27 21:05+0100\n"
 "PO-Revision-Date: 2007-01-16 04:05+0100\n"
 "Last-Translator: Ondra 'Kepi' Kudlík <kepi@igloonet.cz>\n"
 "Language-Team: Gnome Czech <gnome-cs-list@gnome.org>\n"
@@ -338,17 +338,17 @@ msgstr "Opravdu chcete smazat tento plakát?"
 msgid "No posters found for this movie."
 msgstr "Žádné plakáty pro tento film."
 
-#: ../lib/edit.py:199 ../lib/movie.py:144
+#: ../lib/edit.py:199 ../lib/movie.py:145
 msgid "Fetching poster"
 msgstr "Stahuji plakát"
 
-#: ../lib/edit.py:199 ../lib/movie.py:119 ../lib/movie.py:144
-#: ../lib/movie.py:237
+#: ../lib/edit.py:199 ../lib/movie.py:119 ../lib/movie.py:145
+#: ../lib/movie.py:238
 msgid "Wait a moment"
 msgstr "Moment prosím"
 
 #: ../lib/edit.py:211
-msgid "Sorry. A connection error was occurred."
+msgid "Sorry. A connection error has occurred."
 msgstr "Je mi líto, ale nastala chyba spojení. "
 
 #: ../lib/edit.py:239
@@ -356,7 +356,7 @@ msgid "Do you want to use this poster instead?"
 msgstr "Chtete použít tento plakát místo stávajícího?"
 
 #: ../lib/edit.py:253
-msgid "Sorry. This movie is listed but have no poster available at Amazon.com."
+msgid "Sorry. This movie is listed but has no poster available at Amazon.com."
 msgstr "Je mi líto, ale na Amazon.com nenalezen žádný plakát."
 
 #: ../lib/gconsole.py:134
@@ -695,15 +695,15 @@ msgstr "Filmy nebyl půjčen"
 msgid "Fetching data"
 msgstr "Stahuji data"
 
-#: ../lib/movie.py:237
+#: ../lib/movie.py:238
 msgid "Searching"
 msgstr "Hledám"
 
-#: ../lib/movie.py:275
+#: ../lib/movie.py:277
 msgid "Connection error"
 msgstr "Chyba spojení"
 
-#: ../lib/movie.py:299
+#: ../lib/movie.py:301
 msgid "Cancel"
 msgstr "Storno"
 
@@ -819,13 +819,13 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:96
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:78
-#: ../lib/plugins/movie/PluginMovieFilmweb.py:98
+#: ../lib/plugins/movie/PluginMovieFilmweb.py:100
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB.py:80
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:137
 #: ../lib/plugins/movie/PluginMovieOnet.py:102
-#: ../lib/plugins/movie/PluginMovieWP.py:94
-#: ../lib/plugins/movie/PluginMovieWP.py:95
+#: ../lib/plugins/movie/PluginMovieWP.py:96
+#: ../lib/plugins/movie/PluginMovieWP.py:98
 msgid " as "
 msgstr " jako "
 
