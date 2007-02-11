@@ -185,6 +185,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("UPDATE movies SET rating = 0 WHERE rating NOT IN (0,1,2,3,4,5,6,7,8,9,10);") # rating>10 doesn't work with some DB
 	old_cursor.execute("UPDATE movies SET runtime = NULL WHERE runtime > 10000;") # remove strings
 	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date=''")
+	old_cursor.execute("UPDATE loans SET return_date=NULL WHERE return_date='None'")
 	old_cursor.execute("DELETE FROM loans WHERE date='' OR date ISNULL")
 	old_cursor.execute("DELETE FROM volumes WHERE name = ''")
 	old_cursor.execute("DELETE FROM volumes WHERE name = 'None'")

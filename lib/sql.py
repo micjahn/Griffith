@@ -133,32 +133,32 @@ class GriffithSQL:
 		def __setitem__(self, key, value):
 			if key == 'movie_id' and value:
 				if GriffithSQL.Movie.get_by(movie_id=value) is None:
-					raise Exception('wrong movie_id')
+					raise ValueError('wrong movie_id')
 			elif key == 'person_id' and value:
 				if GriffithSQL.Person.get_by(person_id=value) is None:
-					raise Exception('wrong movie_id')
+					raise ValueError('wrong movie_id')
 			self[key] = value
 		def _validate(self):
 			if self.movie_id is None:
-				raise Exception('movie_id is not set')
+				raise ValueError('movie_id is not set')
 			if self.person_id is None:
-				raise Exception('person_id is not set')
+				raise ValueError('person_id is not set')
 			if self.movie is None:
 				self.movie = GriffithSQL.Movie.get_by(movie_id=self.movie_id)
 				if self.movie is None:
-					raise Exception('wrong movie_id')
+					raise ValueError('wrong movie_id')
 			if self.person is None:
 				self.person = GriffithSQL.Person.get_by(person_id=self.person_id)
 				if self.person is None:
-					raise Exception('wrong person_id')
+					raise ValueError('wrong person_id')
 			if self.collection_id>0 and self.collection is None:
 				self.collection = GriffithSQL.Collection.get_by(collection_id=self.collection_id)
 				if self.collection is None:
-					raise Exception('wrong collection_id')
+					raise ValueError('wrong collection_id')
 			if self.volume_id>0 and self.volume is None:
 				self.volume = GriffithSQL.Volume.get_by(volume_id=self.volume_id)
 				if self.volume is None:
-					raise Exception('wrong volume_id')
+					raise ValueError('wrong volume_id')
 			return True
 		def set_loaned(self):
 			"""
@@ -181,7 +181,7 @@ class GriffithSQL:
 			self.movie.update()
 			if self.date is None:
 				self.date = func.current_date()	# update loan date
-			self.return_date is None
+			self.return_date = None
 			self.save_or_update()
 			try:
 				self.mapper.get_session().flush()
@@ -242,7 +242,7 @@ class GriffithSQL:
 			return True
 		def update_in_db(self, t_movies=None):
 			if self.movie_id < 1:
-				raise Exception('movie_id is not set')
+				raise ValueError('movie_id is not set')
 			if t_movies is not None:
 				self.languages.clear()
 				self.tags.clear()
