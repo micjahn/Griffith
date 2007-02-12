@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-02-11  Piotr Ożarowski
 	* Fix one more bad case in upgrade function
+	* Fix setting loan status in upgrade function
 
 2007-02-03 Jessica K. Parth
 	* OFDb movie plugin updated (website changed)

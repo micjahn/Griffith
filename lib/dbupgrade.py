@@ -369,7 +369,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("SELECT person_id, movie_id, volume_id, collection_id, date, return_date FROM loans;")
 	for i in old_cursor.fetchall():
 		vol = col = None
-		not_returned = i[5] is not None
+		not_returned = i[5] is None
 
 		if int(i[2]) > 0:
 			try:
