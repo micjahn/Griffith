@@ -1,9 +1,10 @@
 Griffith 0.9.1
 ==============
 Loan data is now imported correctly from old database.
-Please change "griffith.db" into "griffith.gri" in griffith.conf file to redo the upgrade process.
-On Linux you can do that with this simple command:
-`sed -ie 's/griffith.db/griffith.gri/' ~/griffith.conf`
+Broken databases will be fixed automatically, but return date will be set to 2007-01-01.
+If you don't like this behaviour, redo the upgrade process by changing
+"griffith.db" into "griffith.gri" in griffith.conf file. On Linux you can do
+that with this simple command: `sed -ie 's/griffith.db/griffith.gri/' ~/griffith.conf`
 
 
 Griffith 0.9

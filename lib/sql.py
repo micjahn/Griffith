@@ -91,7 +91,7 @@ class DBTable(object):#{{{
 		return True#}}}
 
 class GriffithSQL:
-	version = 1	# database format version, incrase after any changes in data structures
+	version = 2	# database format version, incrase after any changes in data structures
 	metadata = None
 	class Configuration(object):
 		def __repr__(self):
@@ -478,8 +478,8 @@ class GriffithSQL:
 			v = 0
 
 		if v is not None and v>1:
-			v = v.value
-		if v<self.version:
+			v = int(v.value)
+		if v < self.version:
 			from dbupgrade import upgrade_database
 			upgrade_database(self, v)
 

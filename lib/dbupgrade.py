@@ -99,9 +99,12 @@ def upgrade_database(self, version):
 		#self.metadata.commit()
 		return True # upgrade process finished
 	if version == 1: # fix changes between v1 and v2
-		pass # v2 is not yet released
-		#version+=1
-		#self.Configuration.get_by(param='version').value = version
+		version+=1
+		self.metadata.engine.execute("UPDATE loans SET return_date = '2007-01-01' WHERE return_date='None';")
+		db_version = self.Configuration.get_by(param='version')
+		db_version.value = version
+		db_version.update()
+		db_version.flush()
 	#if version == 2:	# fix changes between v2 and v3
 	#	version+=1
 	#	self.Configuration.get_by(param='version').value = version
