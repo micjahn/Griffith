@@ -1,3 +1,11 @@
+Griffith 0.9.1
+==============
+Loan data is now imported correctly from old database.
+Please change "griffith.db" into "griffith.gri" in griffith.conf file to redo the upgrade process.
+On Linux you can do that with this simple command:
+`sed -ie 's/griffith.db/griffith.gri/' ~/griffith.conf`
+
+
 Griffith 0.9
 ============
 * Possible memory leak fixed (year data from some movie plugins wasn't parsed

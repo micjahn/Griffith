@@ -153,15 +153,15 @@ def set_details(self, item=None):#{{{
 	else:
 		tmp = '0'
 	if item.has_key('medium_id') and item['medium_id']:
-		try:
-			tmp += ' x ' + item['medium'].name
-		except:
+		if item.medium is not None:
+			tmp += ' x ' + item.medium.name
+		else:
 			pass
 	w['medium'].set_markup("<i>%s</i>" % gutils.html_encode(tmp))
 	if item.has_key('vcodec_id'):
-		try:
-			w['vcodec'].set_markup("<i>%s</i>" % gutils.html_encode(item['vcodec'].name))
-		except:
+		if item.vcodec is not None:
+			w['vcodec'].set_markup("<i>%s</i>" % gutils.html_encode(item.vcodec.name))
+		else:
 			w['vcodec'].set_text('')
 	else:
 		w['vcodec'].set_text('')
@@ -220,12 +220,15 @@ def set_details(self, item=None):#{{{
 		w['return_button'].set_sensitive(True)
 		
 		data_loan = get_loan_info(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
-		data_person = self.db.Person.get_by(person_id=data_loan.person.person_id)
-		self.person_name = str(data_person.name)
-		self.person_email = str(data_person.email)
-		self.loan_date = str(data_loan.date)
-		w['loan_info'].set_label(_("This movie has been loaned to ") + self.person_name + _(" on ") + self.loan_date[:10])
-	else:
+		if data_loan is None:
+			item.loaned = False
+		else:
+			data_person = self.db.Person.get_by(person_id=data_loan.person.person_id)
+			self.person_name = str(data_person.name)
+			self.person_email = str(data_person.email)
+			self.loan_date = str(data_loan.date)
+			w['loan_info'].set_label(_("This movie has been loaned to ") + self.person_name + _(" on ") + self.loan_date[:10])
+	if item.has_key('loaned') and item['loaned'] != True: # "loaned" status can be changed above, so don't use "else:" in this line
 		self.widgets['popups']['loan'].set_sensitive(True)
 		self.widgets['popups']['email'].set_sensitive(False)
 		self.widgets['popups']['return'].set_sensitive(False)

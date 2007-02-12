@@ -403,6 +403,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		l.date = str(i[4])[:10]
 		if not_returned:
 			m.loaned = True
+			l.return_date = None
 		else:
 			l.return_date = str(i[5])[:10]
 		

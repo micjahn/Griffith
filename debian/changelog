@@ -1,3 +1,9 @@
+griffith (0.9.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Piotr Ozarowski <ozarow@gmail.com>  Mon, 12 Feb 2007 21:30:40 +0100
+
 griffith (0.9-1) unstable; urgency=low
 
   * New upstream release
