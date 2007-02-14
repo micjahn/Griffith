@@ -1,3 +1,9 @@
+griffith (0.9.1+svn-1) UNRELEASED; urgency=low
+
+  * New upstream release
+
+ -- Piotr Ozarowski <ozarow@gmail.com>  Wed, 14 Feb 2007 14:59:22 +0100
+
 griffith (0.9.1-1) unstable; urgency=low
 
   * New upstream release
