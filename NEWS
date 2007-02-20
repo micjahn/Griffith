@@ -1,3 +1,10 @@
+Griffith 0.9.2
+==============
+* Updated movie plugins: IMDB, CSFD, KinoDE, FilmeVonAZ
+* New movie plugin: DVDEmpire
+* New seen/unseen icons
+
+
 Griffith 0.9.1
 ==============
 Loan data is now imported correctly from old database.
@@ -20,7 +27,6 @@ Griffith 0.9
 
 Griffith 0.9-rc3
 ================
-
 * Old database is not modified during upgrade process (bug introduced in 0.9-rc2)
 * Catch some more bad cases while upgrading database
 * Fix upgrading volume / collection loan data
@@ -29,7 +35,6 @@ Griffith 0.9-rc3
 
 Griffith 0.9-rc2
 ================
-
 * Griffith works now a lot faster with large (>1000 movies) databases
 * Fix displaying volume/collection's loan status
 * Config files are now fully cross-platform
