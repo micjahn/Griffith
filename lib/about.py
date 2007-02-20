@@ -35,18 +35,22 @@ class AboutDialog:
 		dialog.set_version(version.pversion)
 		dialog.set_copyright("Copyright © 2005-2007 Vasco Nunes. Piotr Ożarowski")
 		dialog.set_website(version.pwebsite)
-		dialog.set_authors([_("Main Authors") + ":\n"+ \
+		dialog.set_authors([
+			_("Main Authors") + ':',
 			version.pauthor.replace(', ', '\n') + "\n",
-			'%s:\nJessica Katharina Parth <Jessica.K.P@women-at-work.org>\n'%_("Programmer") +"\n"+ \
-
-			_('Contributors:'),
+			_("Programmer") + ':',
+			'Jessica Katharina Parth <Jessica.K.P@women-at-work.org>\n',
+			_('Contributors:'), # FIXME: remove ":"
 			'Christian Sagmueller <christian@sagmueller.net>\n' \
-			'Arjen Schwarz <arjen.schwarz@gmail.com>' \
-			])
+			'Arjen Schwarz <arjen.schwarz@gmail.com>\n' \
+			'Michael Jahn <mikej06@hotmail.com>'
+		])
 		dialog.set_artists([_("Logo, icon and general artwork " + \
 			"by Peek <peekpt@gmail.com>." + \
-			"\nPlease visit http://www.peekmambo.com/")])
-		dialog.set_translator_credits( \
+			"\nPlease visit http://www.peekmambo.com/\n"),
+			'seen / unseen icons by dragonskulle <dragonskulle@gmail.com>'
+		])
+		dialog.set_translator_credits(\
 			_("Bulgarian") + ":\n\t" + \
 				"Luchezar P. Petkov <luchezar.petkov@gmail.com>\n" + \
 			_("Brasilian Portuguese") + ":\n\t" + \
@@ -75,9 +79,12 @@ class AboutDialog:
 		logo_file = os.path.abspath(os.path.join(images_dir, 'griffith.png'))
 		logo = gtk.gdk.pixbuf_new_from_file(logo_file)
 		dialog.set_logo(logo)
-		dialog.set_license(_("This program is released under the GNU" + \
-			"General Public License.\n" + \
-			"Please visit http://www.gnu.org/copyleft/gpl.html for details."))
+		if os.path.isfile('/usr/share/common-licenses/GPL-2'):
+			dialog.set_license(open('/usr/share/common-licenses/GPL-2').read())
+		else:
+			dialog.set_license(_("This program is released under the GNU" + \
+				"General Public License.\n" + \
+				"Please visit http://www.gnu.org/copyleft/gpl.html for details."))
 		dialog.set_comments(version.pdescription)
 		dialog.run()
 		dialog.destroy()
