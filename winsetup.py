@@ -46,7 +46,7 @@ import py2exe
 
 opts = {
     "py2exe": {
-        "includes": "pygtk,cairo,pangocairo,cgi,PIL,pysqlite2,pysqlite2.*,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlalchemy,sqlalchemy.*,sqlalchemy.mods.*,sqlalchemy.databases.*,sqlalchemy.engine.*,sqlalchemy.ext.*,sqlalchemy.orm.*,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,platform,winshell,psycopg2,MySQLdb,chardet,gzip",
+        "includes": "pygtk,cairo,pangocairo,gobject,cgi,PIL,pysqlite2,pysqlite2.*,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlalchemy,sqlalchemy.*,sqlalchemy.mods.*,sqlalchemy.databases.*,sqlalchemy.engine.*,sqlalchemy.ext.*,sqlalchemy.orm.*,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,platform,winshell,psycopg2,MySQLdb,chardet,gzip",
         "optimize": 2,
 		"dist_dir": "dist",
     }
@@ -60,7 +60,7 @@ setup(
     author_email = 'vasco.m.nunes@gmail.com',
     url = 'http://griffith.berlios.de',
     license = 'GPL',
-    console = [
+    windows = [
         {
             "script": "griffith",
             "icon_resources": [(1, "images\griffith.ico")]
@@ -113,6 +113,6 @@ setup(
 		glob.glob("lib\\plugins\\imp\\*.*")),
 		("images",
 		glob.glob("images\\*.png")),
-		("",
+		("lib",
 		glob.glob("lib\\*.*"))],
 )
