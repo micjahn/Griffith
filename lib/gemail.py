@@ -49,7 +49,7 @@ def mailto(self, server, auth, user, password, sender, to, subject, msg):
 
 def send_email(self):
 	if len(self.person_email):
-		if self.config.get('mail_use_auth', "False") == "True":
+		if self.config.get('mail_use_auth', False) == True:
 			use_auth = 1
 		else:
 			use_auth = 0

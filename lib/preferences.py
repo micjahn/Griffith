@@ -35,33 +35,33 @@ except:
 def show_preferences(self):
 	w = self.widgets['preferences']
 	# number
-	if self.config.get('view_number', 'True')=='False':
+	if self.config.get('view_number', True) == False:
 		w['view_number'].set_active(False)
 	else:
 		w['view_number'].set_active(True)
 	# image
-	if self.config.get('view_image', 'True')=='False':
+	if self.config.get('view_image', True) == False:
 		w['view_image'].set_active(False)
 	else:
 		w['view_image'].set_active(True)
 	# original title
-	if self.config.get('view_otitle', 'True')=='False':
+	if self.config.get('view_otitle', True) == False:
 		w['view_o_title'].set_active(False)
 	else:
 		w['view_o_title'].set_active(True)
 	# title
-	if self.config.get('view_title', 'True')=='False':
+	if self.config.get('view_title', True) == False:
 		w['view_title'].set_active(False)
 	else:
 		w['view_title'].set_active(True)
 	# director
-	if self.config.get('view_director', 'True')=='False':
+	if self.config.get('view_director', True) == False:
 		w['view_director'].set_active(False)
 	else:
 		w['view_director'].set_active(True)
 
 	# email reminder
-	if self.config.get('mail_use_auth', 'False') == 'False':
+	if self.config.get('mail_use_auth', False) == False:
 		w['mail_use_auth'].set_active(False)
 	else:
 		w['mail_use_auth'].set_active(True)
@@ -83,14 +83,14 @@ def show_preferences(self):
 	w['region'].set_active( gutils.digits_only(self.config.get('region', 0), 8) )
 	w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0), 4) )
 	w['color'].set_active( gutils.digits_only(self.config.get('color', 0), 3 ))
-	if self.config.get('media', 0) in self.media_ids:
-		if self.config.get('media', 0) > 0:
-			w['media'].set_active( gutils.findKey(self.config.get('media', 0), self.media_ids) )
+	if int(self.config.get('media', 0)) in self.media_ids:
+		if int(self.config.get('media', 0)) > 0:
+			w['media'].set_active( gutils.findKey(int(self.config.get('media', 0)), self.media_ids) )
 		else:
 			w['media'].set_active(0)
-	if self.config.get('vcodec', 0) in self.vcodecs_ids >- 1:
-		if self.config.get('vcodec', 0) > 0:
-			w['vcodec'].set_active(	int(gutils.findKey(self.config.get('vcodec', 0), self.vcodecs_ids)) )
+	if int(self.config.get('vcodec', 0)) in self.vcodecs_ids:
+		if int(self.config.get('vcodec', 0)) > 0:
+			w['vcodec'].set_active(	int(gutils.findKey(int(self.config.get('vcodec', 0)), self.vcodecs_ids)) )
 		else:
 			w['vcodec'].set_active(0)
 	
@@ -124,40 +124,41 @@ def show_preferences(self):
 		self.locations['movie_plugins'])
 	plugins.sort()
 	mcounter = 0
+	default_movie_plugin = self.config.get('default_movie_plugin')
 	for p in plugins:
 		plugin_module = os.path.basename(p).replace('.py','')
 		plugin_name = plugin_module.replace('PluginMovie','')
-		if self.config.get('default_movie_plugin') == plugin_name:
+		if plugin_name == default_movie_plugin:
 			w['default_plugin'].set_active(mcounter)
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
 
 	# rating image
 	try:
-		rimage = int(str(self.config.get('rating_image', '0')))
+		rimage = int(self.config.get('rating_image', 0))
 	except:
 		rimage = 0
 	w['rating_image'].set_active(rimage)
 
 	# spellchecker
-	if self.config.get('use_gtkspell', 'False')=='False':
+	if self.config.get('use_gtkspell', False) == False:
 		w['spellchecker'].set_active(False)
 	else:
 		w['spellchecker'].set_active(True)
 
-	if self.config.get('spell_notes', 'True')=='False':
+	if self.config.get('spell_notes', True) == False:
 		w['spell_notes'].set_active(False)
 	else:
 		w['spell_notes'].set_active(True)
 
-	if self.config.get('spell_plot', 'True')=='False':
+	if self.config.get('spell_plot', True) == False:
 		w['spell_plot'].set_active(False)
 	else:
 		w['spell_plot'].set_active(True)
 
 	w['spell_lang'].set_text(str(self.config.get('spell_lang', 'en')))
 
-	w['amazon_locale'].set_active(self.config.get('amazon_locale', 0))
+	w['amazon_locale'].set_active(int(self.config.get('amazon_locale', 0)))
 
 	w['window'].show()
 

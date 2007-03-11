@@ -312,12 +312,13 @@ def movie_plugins(self):
 	self.plugins.sort()
 	self.d_plugin = 0
 	mcounter = 0
+	default_plugin = self.config.get('default_movie_plugin')
 	for p in self.plugins:
 		plugin_module = os.path.basename(p).replace('.py','')
 		plugin_name = plugin_module.replace('PluginMovie','')
 		self.widgets['add']['source'].append_text(plugin_name)
 		self.widgets['preferences']['default_plugin'].append_text(plugin_name)
-		if self.config.get('default_movie_plugin') == plugin_name:
+		if plugin_name == default_plugin:
 			self.widgets['preferences']['default_plugin'].set_active(mcounter)
 			self.d_plugin = mcounter
 		mcounter = mcounter + 1
@@ -552,15 +553,13 @@ def gtkspell(self):
 	global spell_support
 	spell_error = False
 	if self.posix and spell_support:
-		if self.config.get('use_gtkspell', False) == 'True':
-			if self.config.get('spell_notes', True) == 'True' and \
-				self.config.get('spell_lang')!='':
+		if self.config.get('use_gtkspell', False) == True:
+			if self.config.get('spell_notes', True) == True and self.config.get('spell_lang') != '':
 				try:
 					self.notes_spell = gtkspell.Spell(self.widgets['add']['cast'], self.config.get('spell_lang'))
 				except:
 					spell_error = True
-			if self.config.get('spell_plot', True)=='True' and \
-				self.config.get('spell_lang')!='':
+			if self.config.get('spell_plot', True)==True and self.config.get('spell_lang') != '':
 				try:
 					self.plot_spell = gtkspell.Spell(self.widgets['add']['plot'], self.config.get('spell_lang'))
 				except:

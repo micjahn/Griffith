@@ -7,6 +7,7 @@ Griffith ChangeLog
 2007-03-11  Piotr Ożarowski
 	* Filmweb movie plugin updated (no more hangs if no movie info found - closes #10601)
 	* Version changed to 0.9.2+svn
+	* New configuration file format (human readable) - please delete old one manually
 
 ---- 0.9.2 ---
 

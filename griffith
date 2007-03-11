@@ -875,7 +875,7 @@ You can't undo this operation."""), \
 
 	def restore_state(self):
 		"""Restores main window state"""
-		if self.config.get("left") == "None":
+		if self.config.get("left") == None:
 			pass
 		else:
 			self.widgets['window'].move(int(self.config.get("left")), \

@@ -192,10 +192,7 @@ def set_details(self, item=None):#{{{
 		w['picture_button'].set_sensitive(False)
 	w['picture'].set_from_file(image_path)
 	# ratig
-	try:
-		rimage = int(str(self.config.get('rating_image')))
-	except:
-		rimage = 0
+	rimage = int(self.config.get('rating_image', 0))
 	if rimage:
 		prefix = ''
 	else:
@@ -372,23 +369,23 @@ def populate(self, movies=None, where=None):#{{{
 	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
 
 	# check preferences to hide or show columns
-	if self.config.get('view_number', 'True') == 'True':
+	if self.config.get('view_number', True) == True:
 		self.number_column.set_visible(True)
 	else:
 		self.number_column.set_visible(False)
-	if self.config.get('view_otitle', 'True') == 'True':
+	if self.config.get('view_otitle', True) == True:
 		self.otitle_column.set_visible(True)
 	else:
 		self.otitle_column.set_visible(False)
-	if self.config.get('view_title', 'True') == 'True':
+	if self.config.get('view_title', True) == True:
 		self.title_column.set_visible(True)
 	else:
 		self.title_column.set_visible(False)
-	if self.config.get('view_director', 'True') == 'True':
+	if self.config.get('view_director', True) == True:
 		self.director_column.set_visible(True)
 	else:
 		self.director_column.set_visible(False)
-	if self.config.get('view_image', 'True') == 'True':
+	if self.config.get('view_image', True) == True:
 		self.image_column.set_visible(True)
 	else:
 		self.image_column.set_visible(False)
@@ -398,7 +395,7 @@ def populate(self, movies=None, where=None):#{{{
 		
 		self.treemodel.set_value(myiter,0,'%004d' % int(movie.number))
 
-		if self.config.get('view_image', 'True') == 'True':
+		if self.config.get('view_image', True) == True:
 			tmp_dest = self.locations['posters']
 			tmp_img = os.path.join(tmp_dest, "t_%s.jpg" % str(movie.image))
 			if movie.image and os.path.isfile(tmp_img):
