@@ -2,6 +2,7 @@ Griffith 0.9.3 - UNRELEASED
 ===========================
 * Updated movie plugins: Filmweb
 * New configuration file format (human readable)
+* New movie plugins: FilmDb, Zelluloid
 
 
 Griffith 0.9.2
