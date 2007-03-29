@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-03-29  Piotr Ożarowski
+	* IMDB movie plugin updated
+
 2007-03-20  Piotr Ożarowski
 	* FilmDb and Zelluloid movie plugins added (thanks to Michael Jahn)
 
