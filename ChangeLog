@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-03-29  Piotr Ożarowski
 	* IMDB movie plugin updated
+	* IMDb-de movie plugin added (thanks to Michael Jahn)
 
 2007-03-20  Piotr Ożarowski
 	* FilmDb and Zelluloid movie plugins added (thanks to Michael Jahn)
