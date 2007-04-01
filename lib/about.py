@@ -58,6 +58,8 @@ class AboutDialog:
 			_("Czech") + ":\n\t" + \
 				"Blondak <blondak@neser.cz>,\n\t" + \
 				"Ondra 'Kepi' Kudlík <kepi@igloonet.cz>\n" + \
+			_("Dutch") + ":\n\t" + \
+				"Marcel Dijkstra <mdtje@hotmail.com>\n" + \
 			_("French") + ":\n\t" + \
 				"Pierre-Luc Lévy <pllevy@free.fr>\n" + \
 			_("German") + ":\n\t" + \
