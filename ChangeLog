@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-04-15  Piotr Ożarowski
+	* IMDB movie plugin updated to version 1.2
+
 2007-04-11  Piotr Ożarowski
 	* Fixed medium_id and vcodec_id column type in movies table
 

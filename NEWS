@@ -1,6 +1,6 @@
 Griffith 0.9.3 - UNRELEASED
 ===========================
-* Updated movie plugins: Filmweb
+* Updated movie plugins: Filmweb, IMDb
 * New configuration file format (human readable)
 * New movie plugins: FilmDb, Zelluloid, IMDb-de
 * Added Dutch translation (thanks to Marcel Dijkstra)
