@@ -219,7 +219,7 @@ def get_poster(self, f, result, current_poster):
 		if im.size == (1,1):
 			from urllib import FancyURLopener, urlretrieve
 			url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result[f].Asin).read()
-			if url.find('http://ec1.images-amazon.com/images/G/01/x-site/icons/no-img-sm._V47056216_.gif') > 0:
+			if url.find('no-img-sm._V47056216_.gif') > 0:
 				self.debug.show('No image available')
 				gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
 				return False
