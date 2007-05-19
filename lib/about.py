@@ -61,6 +61,8 @@ class AboutDialog:
 			_("Dutch") + ":\n\t" + \
 				"Marcel Dijkstra <mdtje@hotmail.com>\n" + \
 			_("French") + ":\n\t" + \
+				"Guillaume Pratte <guillaume@guillaumepratte.net>" + \
+				"original translation from:\n\t" + \
 				"Pierre-Luc Lévy <pllevy@free.fr>\n" + \
 			_("German") + ":\n\t" + \
 				"Jessica Katharina Parth <Jessica.K.P@women-at-work.org>,\n\t" + \
