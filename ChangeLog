@@ -7,6 +7,8 @@ Griffith ChangeLog
 2007-05-19  Vasco Nunes
 	* French translation updated (thanks to Guillaume Pratte)
 	* IMDB plugin rating fix (thanks to babelfish)
+	* PTGate movie plugin encoding fixed
+	* E-pipoca movie plugin updated
 
 2007-05-11  Jessica K. Parth
 	* OFDb updated
