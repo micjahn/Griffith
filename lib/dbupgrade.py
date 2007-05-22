@@ -303,8 +303,10 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	for i in old_cursor.fetchall():
 		o = new_db.Movie()
 		o.number = digits_only(i[6])
-		o.volume_id = volume_mapper[i[1]]
-		o.collection_id = collection_mapper[i[2]]
+		if volume_mapper.has_key(i[1]):
+			o.volume_id = volume_mapper[i[1]]
+		if collection_mapper.has_key(i[2]):
+			o.collection_id = collection_mapper[i[2]]
 		o.o_title = i[3][:255]
 		o.title = i[4][:255]
 		o.director = i[5][:255]
@@ -322,7 +324,8 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		o.trailer = i[18][:255]
 		o.rating = digits_only(i[19])
 		#o.loaned = bool(i[20]) # updated later
-		o.medium_id = medium_mapper[int(i[21])]
+		if medium_mapper.has_key(int(i[21])):
+			o.medium_id = medium_mapper[int(i[21])]
 		o.media_num = digits_only(i[22])
 		o.notes = i[23]
 		o.seen = bool(i[24])

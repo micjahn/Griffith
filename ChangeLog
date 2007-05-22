@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-05-22  Piotr Ożarowski
+	* Minor fix in dbupgrade.py
+
 2007-05-19  Vasco Nunes
 	* French translation updated (thanks to Guillaume Pratte)
 	* IMDB plugin rating fix (thanks to babelfish)
