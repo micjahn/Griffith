@@ -8,6 +8,7 @@ Griffith ChangeLog
 	* IMDB, IMDB-de and KinoDe movie plugins updated (thanks to Michael Jahn)
 	* Resizable columns in add movie window's languages tab (thanks to Michael Jahn)
 	* Increase runtime maximum value (thanks to Michael Jahn)
+	* Add Microsoft SQL support (thanks to Michael Jahn)
 
 2007-05-22  Piotr Ożarowski
 	* Minor fix in dbupgrade.py

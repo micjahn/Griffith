@@ -589,6 +589,7 @@ def preferences(self):
 	self.widgets['preferences']['db_type'].insert_text(0,'SQLite3 (internal)')
 	self.widgets['preferences']['db_type'].insert_text(1,'PostgreSQL')
 	self.widgets['preferences']['db_type'].insert_text(2,'MySQL')
+	self.widgets['preferences']['db_type'].insert_text(3,'Microsoft SQL')
 	if self.config.has_key('db_host'):
 		self.widgets['preferences']['db_host'].set_text(self.config['db_host'])
 	if self.config.has_key('db_port'):
@@ -605,6 +606,8 @@ def preferences(self):
 			self.widgets['preferences']['db_type'].set_active(1)
 		elif self.config['db_type'] == 'mysql':
 			self.widgets['preferences']['db_type'].set_active(2)
+		elif self.config['db_type'] == 'mssql':
+			self.widgets['preferences']['db_type'].set_active(3)
 	else:
 		self.widgets['preferences']['db_type'].set_active(0)
 		self.widgets['preferences']['db_details'].set_sensitive(False)

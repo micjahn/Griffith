@@ -346,6 +346,8 @@ def save_preferences(self):
 		c['db_type'] = 'postgres'
 	elif db_type == 2:
 		c['db_type'] = 'mysql'
+	elif db_type == 3:
+		c['db_type'] = 'mssql'
 	else:
 		c['db_type'] = 'sqlite'
 

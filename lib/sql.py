@@ -320,6 +320,23 @@ class GriffithSQL:
 				config['db_host'],
 				int(config['db_port']),
 				config['db_name'])
+		elif config['db_type'] == 'mssql':
+			if not config.has_key('db_port') or config['db_port']==0:
+				config['db_port'] = 1433
+			# use_scope_identity=0 have to be set as workaround for a sqlalchemy bug
+			# but it is not guaranteed that the right identity value will be selected
+			# because the select @@identity statement selects the very last id which
+			# also can be a id from a trigger-insert or another user
+			# sqlalchemy uses a wrong syntax. It has to select the id within the insert
+			# statement: insert <table> (<columns>) values (<values>) select scope_identity()
+			# (one statement !) After preparing and executing there should be a fetch
+			# If it is executed as two separate statements the scope is lost after insert.
+			url = "mssql://%s:%s@%s:%d/%s?use_scope_identity=0" % (
+				config['db_user'],
+				config['db_passwd'],
+				config['db_host'],
+				int(config['db_port']),
+				config['db_name'])
 		else:
 			config['db_type'] = 'sqlite'
 			url = "sqlite:///%s" % os.path.join(griffith_dir, config['default_db'])

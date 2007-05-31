@@ -199,14 +199,19 @@ class Griffith:
 		if active == 0:
 			self.widgets['preferences']['db_details'].set_sensitive(False)
 		elif active == 1:
-			# change port number IF previous one was MySQL's one
-			if self.widgets['preferences']['db_port'].get_value() == 3306:
+			# change port number IF previous one was MySQL's or MSSQL one
+			if self.widgets['preferences']['db_port'].get_value() == 3306 or self.widgets['preferences']['db_port'].get_value() == 1433:
 				self.widgets['preferences']['db_port'].set_value(5432)
 			self.widgets['preferences']['db_details'].set_sensitive(True)
 		elif active == 2:
-			# change port number IF previous one was PostgreSQL's one
-			if self.widgets['preferences']['db_port'].get_value() == 5432:
+			# change port number IF previous one was PostgreSQL's or MSSQL one
+			if self.widgets['preferences']['db_port'].get_value() == 5432 or self.widgets['preferences']['db_port'].get_value() == 1433:
 				self.widgets['preferences']['db_port'].set_value(3306)
+			self.widgets['preferences']['db_details'].set_sensitive(True)
+		elif active == 3:
+			# change port number IF previous one was PostgreSQL's or MySQL one
+			if self.widgets['preferences']['db_port'].get_value() == 5432 or self.widgets['preferences']['db_port'].get_value() == 3306:
+				self.widgets['preferences']['db_port'].set_value(1433)
 			self.widgets['preferences']['db_details'].set_sensitive(True)
 
 	# movie related operations --------------------------------------------
