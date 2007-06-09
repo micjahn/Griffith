@@ -4,6 +4,11 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-06-09  Vasco Nunes
+	* Added new alpha export plugin for iPods.
+	  Exports directly to iPod on macosx for now, saves files in custom location on other platforms.
+	  Not handling 4Kb iPod notes limit yet.
+
 2007-05-31  Piotr Ożarowski
 	* IMDB, IMDB-de and KinoDe movie plugins updated (thanks to Michael Jahn)
 	* Resizable columns in add movie window's languages tab (thanks to Michael Jahn)
