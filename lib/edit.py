@@ -130,7 +130,7 @@ def fetch_bigger_poster(self):
 	current_poster = movie.image
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 
-	locale = self.config.get('amazon_locale', 0)
+	locale = self.config.get('amazon_locale', 0, section='add')
 	if locale == 1:
 		locale = 'uk'
 	elif locale == 2:

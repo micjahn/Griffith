@@ -115,12 +115,12 @@ def locations(self):
 def location_posters(locations, config):
 	if config['posters'] is not None:
 		locations['posters']  = os.path.join(locations['home'], config['posters'])
-	elif config['db_type'] == 'sqlite':
+	elif config.get('type', 'sqlite', section='database') == 'sqlite':
 		config['posters'] = 'posters'
 		locations['posters'] = os.path.join(locations['home'], 'posters')
 		config.save()
 	else:
-		config['posters'] = "posters_%(db_type)s_%(db_host)s_%(db_port)s_%(db_name)s_%(db_user)s" % config
+		config['posters'] = "posters_%(type)s_%(host)s_%(port)s_%(name)s_%(user)s" % config.toDict('database')
 		locations['posters'] = os.path.join(locations['home'], config['posters'])
 		config.save()
 	# check if posters dir exists
@@ -160,7 +160,7 @@ def i18n(self, location):
 
 def toolbar(self):
 	"""if toolbar is hide in config lets hide the widget"""
-	if not self.config.get('view_toolbar'):
+	if not self.config.get('view_toolbar', 'True', section='window'):
 		self.widgets['toolbar'].hide()
 		self.widgets['menu']['toolbar'].set_active(False)
 
@@ -563,24 +563,24 @@ def gtkspell(self):
 	global spell_support
 	spell_error = False
 	if self.posix and spell_support:
-		if self.config.get('use_gtkspell', False) == True:
-			if self.config.get('spell_notes', True) == True and self.config.get('spell_lang') != '':
+		if self.config.get('gtkspell', False, section='spell') == True:
+			if self.config.get('notes', True, section='spell') == True and self.config.get('lang', section='spell') != '':
 				try:
-					self.notes_spell = gtkspell.Spell(self.widgets['add']['cast'], self.config.get('spell_lang'))
+					self.notes_spell = gtkspell.Spell(self.widgets['add']['cast'], self.config.get('lang', section='spell'))
 				except:
 					spell_error = True
-			if self.config.get('spell_plot', True)==True and self.config.get('spell_lang') != '':
+			if self.config.get('plot', True, section='spell')==True and self.config.get('lang', section='spell') != '':
 				try:
-					self.plot_spell = gtkspell.Spell(self.widgets['add']['plot'], self.config.get('spell_lang'))
+					self.plot_spell = gtkspell.Spell(self.widgets['add']['plot'], self.config.get('lang', section='spell'))
 				except:
 					spell_error = True
 			if spell_error:
 				self.debug.show('Dictionary not available. Spellcheck will be disabled.')
-				if not self.config.get('spell_notify', False):
+				if not self.config.get('notified', False, section='spell'):
 					gutils.info(self, _("Dictionary not available. Spellcheck will be disabled. \n" + \
-						"Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('spell_lang'), \
+						"Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('lang', section='spell'), \
 						self.widgets['preferences']['window'])
-					self.config['spell_notify'] = True
+					self.config.set('notified', True, section='spell')
 					self.config.save()
 	else:
 		self.debug.show('Spellchecker is not available')
@@ -590,23 +590,19 @@ def preferences(self):
 	self.widgets['preferences']['db_type'].insert_text(1,'PostgreSQL')
 	self.widgets['preferences']['db_type'].insert_text(2,'MySQL')
 	self.widgets['preferences']['db_type'].insert_text(3,'Microsoft SQL')
-	if self.config.has_key('db_host'):
-		self.widgets['preferences']['db_host'].set_text(self.config['db_host'])
-	if self.config.has_key('db_port'):
-		self.widgets['preferences']['db_port'].set_value(int(self.config['db_port']))
-	if self.config.has_key('db_user'):
-		self.widgets['preferences']['db_user'].set_text(self.config['db_user'])
-	if self.config.has_key('db_passwd'):
-		self.widgets['preferences']['db_passwd'].set_text(self.config['db_passwd'])
-	if self.config.has_key('db_name'):
-		self.widgets['preferences']['db_name'].set_text(self.config['db_name'])
-	if self.config.has_key('db_type') and self.config['db_type'] != 'sqlite':
+	self.widgets['preferences']['db_host'].set_text(self.config.get('host', '', section='database'))
+	self.widgets['preferences']['db_port'].set_value(int(self.config.get('port', 0, section='database')))
+	self.widgets['preferences']['db_user'].set_text(self.config.get('user', '', section='database'))
+	self.widgets['preferences']['db_passwd'].set_text(self.config.get('passwd', '', section='database'))
+	self.widgets['preferences']['db_name'].set_text(self.config.get('name', '', section='database'))
+	db_type = self.config.get('type', 'sqlite', section='database')
+	if db_type != 'sqlite':
 		self.widgets['preferences']['db_details'].set_sensitive(True)
-		if self.config['db_type'] == 'postgres':
+		if db_type == 'postgres':
 			self.widgets['preferences']['db_type'].set_active(1)
-		elif self.config['db_type'] == 'mysql':
+		elif db_type == 'mysql':
 			self.widgets['preferences']['db_type'].set_active(2)
-		elif self.config['db_type'] == 'mssql':
+		elif db_type == 'mssql':
 			self.widgets['preferences']['db_type'].set_active(3)
 	else:
 		self.widgets['preferences']['db_type'].set_active(0)
@@ -740,8 +736,8 @@ def media_combos(self):
 	self.widgets['preferences']['medium_name'].show_all()
 	self.widgets['add']['media'].show_all()
 	self.widgets['preferences']['media'].show_all()
-	if self.config.has_key('media'):
-		pos = gutils.findKey(self.config['media'], self.media_ids)
+	if self.config.has_key('media', section='defaults'):
+		pos = gutils.findKey(self.config.get('media', section='defaults'), self.media_ids)
 		if pos  is not None:
 			self.widgets['preferences']['media'].set_active(int(pos))
 		else:
@@ -773,7 +769,7 @@ def vcodec_combos(self):
 	self.widgets['add']['vcodec'].show_all()
 	self.widgets['preferences']['vcodec'].show_all()
 	
-	pos = gutils.findKey(self.config.get('vcodec', 0), self.vcodecs_ids)
+	pos = gutils.findKey(self.config.get('vcodec', 0, section='defaults'), self.vcodecs_ids)
 	if pos is not None:
 		self.widgets['preferences']['vcodec'].set_active(int(pos))
 	else:

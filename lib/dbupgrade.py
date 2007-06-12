@@ -196,15 +196,15 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	old_cursor.execute("DELETE FROM collections WHERE name = 'None'")
 	old_cursor.execute("DELETE FROM languages WHERE name = ''")
 	
-	self.config['db_type'] = 'sqlite'
-	self.config['default_db'] = 'griffith.db'
+	self.config.set('type','sqlite', section='database')
+	self.config.set('file', 'griffith.db', section='database')
 	self.config['posters'] = 'posters'
-	self.config['color'] = 0
-	self.config['condition'] = 0
-	self.config['layers'] = 0
-	self.config['media'] = 0
-	self.config['region'] = 0
-	self.config['vcodec'] = 0
+	self.config.set('color', 0, section='defaults')
+	self.config.set('condition', 0, section='defaults')
+	self.config.set('layers', 0, section='defaults')
+	self.config.set('media', 0, section='defaults')
+	self.config.set('region', 0, section='defaults')
+	self.config.set('vcodec', 0, section='defaults')
 	self.locations['posters'] = os.path.join(self.locations['home'], 'posters')
 	new_db = GriffithSQL(self.config, self.debug, self.locations['home'])
 

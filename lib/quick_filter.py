@@ -39,7 +39,7 @@ def change_filter(self):
 			statement.append_whereclause(self.db.Movie.c[criteria].like('%'+text+'%'))
 	if self.widgets['filter']['text'].is_focus():
 		if len(text)<4: # filter mode
-			limit = int(self.config.get('s_limit', 0))
+			limit = int(self.config.get('limit', 0, section='mainlist'))
 			if limit > 0:
 				statement.limit = limit
 	self.populate_treeview(statement)

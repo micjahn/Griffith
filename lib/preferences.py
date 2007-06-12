@@ -35,41 +35,41 @@ except:
 def show_preferences(self):
 	w = self.widgets['preferences']
 	# number
-	if self.config.get('view_number', True) == False:
+	if self.config.get('number', True, section='mainlist') == False:
 		w['view_number'].set_active(False)
 	else:
 		w['view_number'].set_active(True)
 	# image
-	if self.config.get('view_image', True) == False:
+	if self.config.get('image', True, section='mainlist') == False:
 		w['view_image'].set_active(False)
 	else:
 		w['view_image'].set_active(True)
 	# original title
-	if self.config.get('view_otitle', True) == False:
+	if self.config.get('otitle', True, section='mainlist') == False:
 		w['view_o_title'].set_active(False)
 	else:
 		w['view_o_title'].set_active(True)
 	# title
-	if self.config.get('view_title', True) == False:
+	if self.config.get('title', True, section='mainlist') == False:
 		w['view_title'].set_active(False)
 	else:
 		w['view_title'].set_active(True)
 	# director
-	if self.config.get('view_director', True) == False:
+	if self.config.get('director', True, 'mainlist') == False:
 		w['view_director'].set_active(False)
 	else:
 		w['view_director'].set_active(True)
 
 	# email reminder
-	if self.config.get('mail_use_auth', False) == False:
+	if self.config.get('use_auth', False, section='mail') == False:
 		w['mail_use_auth'].set_active(False)
 	else:
 		w['mail_use_auth'].set_active(True)
 
-	w['mail_smtp_server'].set_text(self.config.get('mail_smtp_server', 'localhost'))
-	w['mail_username'].set_text(self.config.get('mail_username', ''))
-	w['mail_password'].set_text(self.config.get('mail_password', ''))
-	w['mail_email'].set_text(self.config.get('mail_email', 'griffith'))
+	w['mail_smtp_server'].set_text(self.config.get('smtp_server', 'localhost', section='mail'))
+	w['mail_username'].set_text(self.config.get('username', '', section='mail'))
+	w['mail_password'].set_text(self.config.get('password', '', section='mail'))
+	w['mail_email'].set_text(self.config.get('email', 'griffith@localhost', section='mail'))
 
 	# pdf reader
 	w['epdf_reader'].set_text(self.pdf_reader)
@@ -79,48 +79,48 @@ def show_preferences(self):
 		w['font'].set_filename(self.config.get('font'))
 
 	# defaults (for static data only)
-	w['condition'].set_active( gutils.digits_only(self.config.get('condition', 0), 5) )
-	w['region'].set_active( gutils.digits_only(self.config.get('region', 0), 8) )
-	w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0), 4) )
-	w['color'].set_active( gutils.digits_only(self.config.get('color', 0), 3 ))
-	tmp = self.config.get('media', 0)
+	w['condition'].set_active( gutils.digits_only(self.config.get('condition', 0, section='defaults'), 5) )
+	w['region'].set_active( gutils.digits_only(self.config.get('region', 0, section='defaults'), 8) )
+	w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0, section='defaults'), 4) )
+	w['color'].set_active( gutils.digits_only(self.config.get('color', 0, section='defaults'), 3 ))
+	tmp = self.config.get('media', 0, section='defaults')
 	if tmp is not None and int(tmp) in self.media_ids:
-		if int(self.config.get('media', 0)) > 0:
-			w['media'].set_active( gutils.findKey(int(self.config.get('media', 0)), self.media_ids) )
+		if int(self.config.get('media', 0, section='defaults')) > 0:
+			w['media'].set_active( gutils.findKey(int(self.config.get('media', 0, section='defaults')), self.media_ids) )
 		else:
 			w['media'].set_active(0)
-	tmp = self.config.get('vcodec', 0)
+	tmp = self.config.get('vcodec', 0, section='defaults')
 	if tmp is not None and int(tmp) in self.vcodecs_ids:
-		if int(self.config.get('vcodec', 0)) > 0:
-			w['vcodec'].set_active(	int(gutils.findKey(int(self.config.get('vcodec', 0)), self.vcodecs_ids)) )
+		if int(self.config.get('vcodec', 0, section='defaults')) > 0:
+			w['vcodec'].set_active(	int(gutils.findKey(int(self.config.get('vcodec', 0, section='defaults')), self.vcodecs_ids)) )
 		else:
 			w['vcodec'].set_active(0)
 	
 	# search for:
-	w['s_classification'].set_active(bool(self.config.get('s_classification', True)))
-	w['s_country'].set_active(bool(self.config.get('s_country', True)))
-	w['s_director'].set_active(bool(self.config.get('s_director', True)))
-	w['s_genre'].set_active(bool(self.config.get('s_genre', True)))
-	w['s_image'].set_active(bool(self.config.get('s_image', True)))
-	w['s_notes'].set_active(bool(self.config.get('s_notes', True)))
-	w['s_o_site'].set_active(bool(self.config.get('s_o_site', True)))
-	w['s_o_title'].set_active(bool(self.config.get('s_o_title', True)))
-	w['s_plot'].set_active(bool(self.config.get('s_plot', True)))
-	w['s_rating'].set_active(bool(self.config.get('s_rating', True)))
-	w['s_runtime'].set_active(bool(self.config.get('s_runtime', True)))
-	w['s_site'].set_active(bool(self.config.get('s_site', True)))
-	w['s_studio'].set_active(bool(self.config.get('s_studio', True)))
-	w['s_title'].set_active(bool(self.config.get('s_title', True)))
-	w['s_trailer'].set_active(bool(self.config.get('s_trailer', True)))
-	w['s_cast'].set_active(bool(self.config.get('s_cast', True)))
-	w['s_year'].set_active(bool(self.config.get('s_year', True)))
+	w['s_classification'].set_active(bool(self.config.get('s_classification', True, section='add')))
+	w['s_country'].set_active(bool(self.config.get('s_country', True, section='add')))
+	w['s_director'].set_active(bool(self.config.get('s_director', True, section='add')))
+	w['s_genre'].set_active(bool(self.config.get('s_genre', True, section='add')))
+	w['s_image'].set_active(bool(self.config.get('s_image', True, section='add')))
+	w['s_notes'].set_active(bool(self.config.get('s_notes', True, section='add')))
+	w['s_o_site'].set_active(bool(self.config.get('s_o_site', True, section='add')))
+	w['s_o_title'].set_active(bool(self.config.get('s_o_title', True, section='add')))
+	w['s_plot'].set_active(bool(self.config.get('s_plot', True, section='add')))
+	w['s_rating'].set_active(bool(self.config.get('s_rating', True, section='add')))
+	w['s_runtime'].set_active(bool(self.config.get('s_runtime', True, section='add')))
+	w['s_site'].set_active(bool(self.config.get('s_site', True, section='add')))
+	w['s_studio'].set_active(bool(self.config.get('s_studio', True, section='add')))
+	w['s_title'].set_active(bool(self.config.get('s_title', True, section='add')))
+	w['s_trailer'].set_active(bool(self.config.get('s_trailer', True, section='add')))
+	w['s_cast'].set_active(bool(self.config.get('s_cast', True, section='add')))
+	w['s_year'].set_active(bool(self.config.get('s_year', True, section='add')))
 	
-	if self.config.get('sortby'):
-		tmp = self.sort_criteria.index(self.config.get('sortby'))
+	if self.config.get('sortby', section='mainlist'):
+		tmp = self.sort_criteria.index(self.config.get('sortby', section='mainlist'))
 		w['sortby'].set_active(tmp)
-	w['sortby_reverse'].set_active(bool(self.config.get('sortby_reverse', False)))
+	w['sortby_reverse'].set_active(bool(self.config.get('sortby_reverse', False, section='mainlist')))
 	
-	w['s_limit'].set_value(gutils.digits_only(self.config.get('s_limit', 0)))
+	w['s_limit'].set_value(gutils.digits_only(self.config.get('limit', 0, section='mainlist')))
 	
 	plugins = gutils.read_plugins('PluginMovie', \
 		self.locations['movie_plugins'])
@@ -143,24 +143,24 @@ def show_preferences(self):
 	w['rating_image'].set_active(rimage)
 
 	# spellchecker
-	if self.config.get('use_gtkspell', False) == False:
+	if self.config.get('gtkspell', False, section='spell') == False:
 		w['spellchecker'].set_active(False)
 	else:
 		w['spellchecker'].set_active(True)
 
-	if self.config.get('spell_notes', True) == False:
+	if self.config.get('notes', True, section='spell') == False:
 		w['spell_notes'].set_active(False)
 	else:
 		w['spell_notes'].set_active(True)
 
-	if self.config.get('spell_plot', True) == False:
+	if self.config.get('plot', True, section='spell') == False:
 		w['spell_plot'].set_active(False)
 	else:
 		w['spell_plot'].set_active(True)
 
-	w['spell_lang'].set_text(str(self.config.get('spell_lang', 'en')))
+	w['spell_lang'].set_text(str(self.config.get('lang', 'en', section='spell')))
 
-	w['amazon_locale'].set_active(int(self.config.get('amazon_locale', 0)))
+	w['amazon_locale'].set_active(int(self.config.get('amazon_locale', 0, section='add')))
 
 	w['window'].show()
 
@@ -171,40 +171,40 @@ def save_preferences(self):
 
 	was_false = notes_was_false = plot_was_false = 1	
 
-	if c.get('use_gtkspell', 'False') == 'True':
+	if c.get('gtkspell', False, section='spell') == True:
 		was_false = 0
 
-	if c.get('spell_notes', 'False') == 'True':
+	if c.get('notes', False, section='spell') == True:
 		notes_was_false = 0
 
-	if c.get('spell_plot', 'False') == 'True':
+	if c.get('plot', False, section='spell') == True:
 		plot_was_false = 0
 
 	# number
 	if w['view_number'].get_active():
-		c['view_number'] = 'True'
+		c.set('number', 'True', section='mainlist')
 	else:
-		c['view_number'] = 'False'
+		c.set('number', 'False', section='mainlist')
 	# image
 	if w['view_image'].get_active():
-		c['view_image'] = 'True'
+		c.set('image', 'True', section='mainlist')
 	else:
-		c['view_image'] = 'False'
+		c.set('image', 'False', section='mainlist')
 	# original title
 	if w['view_o_title'].get_active():
-		c['view_otitle'] = 'True'
+		c.set('otitle', 'True', section='mainlist')
 	else:
-		c['view_otitle'] = 'False'
+		c.set('otitle', 'False', section='mainlist')
 	# title
 	if w['view_title'].get_active():
-		c['view_title'] = 'True'
+		c.set('title', 'True', section='mainlist')
 	else:
-		c['view_title'] = 'False'
+		c.set('title', 'False', section='mainlist')
 	# director
 	if w['view_director'].get_active():
-		c['view_director'] = 'True'
+		c.set('director', 'True', section='mainlist')
 	else:
-		c['view_director'] = 'False'
+		c.set('director', 'False', section='mainlist')
 	
 	# sortby
 	if w['sortby'].get_active():
@@ -215,7 +215,7 @@ def save_preferences(self):
 		c['sortby'] = 'number'
 	c['sortby_reverse'] = w['sortby_reverse'].get_active()
 	
-	c['s_limit'] = str(int(w['s_limit'].get_value()))
+	c.set('limit', str(int(w['s_limit'].get_value())), section='mainlist')
 	
 
 	# pdf font
@@ -224,62 +224,62 @@ def save_preferences(self):
 
 	# spellchecker
 	if w['spellchecker'].get_active():
-		c['use_gtkspell'] = 'True'
+		c.set('gtkspell', True, section='spell')
 	else:
-		c['use_gtkspell'] = 'False'		
+		c.set('gtkspell', False, section='spell')
 	if w['spell_notes'].get_active():
-		c['spell_notes'] = 'True'
+		c.set('notes', True, section='spell')
 	else:
-		c['spell_notes'] = 'False'
+		c.set('notes', False, section='spell')
 	if w['spell_plot'].get_active():
-		c['spell_plot'] = 'True'
+		c.set('plot', True, section='spell')
 	else:
-		c['spell_plot'] = 'False'
+		c.set('plot', False, section='spell')
 
 	# rating image
 	c['rating_image'] = str(w['rating_image'].get_active())
 
 	#defaults
-	c['media'] = self.media_ids[w['media'].get_active()]
-	c['vcodec'] = self.vcodecs_ids[w['vcodec'].get_active()]
-	c['condition'] = str(w['condition'].get_active())
-	c['region'] = str(w['region'].get_active())
-	c['layers'] = str(w['layers'].get_active())
-	c['color'] = str(w['color'].get_active())
+	c.set('media', self.media_ids[w['media'].get_active()], section='defaults')
+	c.set('vcodec', self.vcodecs_ids[w['vcodec'].get_active()], section='defaults')
+	c.set('condition', str(w['condition'].get_active()), section='defaults')
+	c.set('region', str(w['region'].get_active()), section='defaults')
+	c.set('layers', str(w['layers'].get_active()), section='defaults')
+	c.set('color', str(w['color'].get_active()), section='defaults')
 
 	# email reminder
 	if w['mail_use_auth'].get_active():
-		c['mail_use_auth'] = 'True'
+		c.set('use_auth', True, section='mail')
 	else:
-		c['mail_use_auth'] = 'False'
+		c.set('use_auth', False, section='mail')
 
-	c['mail_smtp_server'] = w['mail_smtp_server'].get_text()
-	c['mail_username'] = w['mail_username'].get_text()
-	c['mail_password'] = w['mail_password'].get_text()
-	c['mail_email'] = w['mail_email'].get_text()
+	c.set('smtp_server', w['mail_smtp_server'].get_text(), section='mail')
+	c.set('username', w['mail_username'].get_text(), section='mail')
+	c.set('password', w['mail_password'].get_text(), section='mail')
+	c.set('email', w['mail_email'].get_text(), section='mail')
 
 	# default movie plugin
 	if w['default_plugin'].get_active():
 		c['default_movie_plugin'] = \
 			gutils.on_combo_box_entry_changed(w['default_plugin'])
 	# search for:
-	c['s_classification'] = w['s_classification'].get_active()
-	c['s_country'] = w['s_country'].get_active()
-	c['s_director'] = w['s_director'].get_active()
-	c['s_genre'] = w['s_genre'].get_active()
-	c['s_image'] = w['s_image'].get_active()
-	c['s_notes'] = w['s_notes'].get_active()
-	c['s_o_site'] = w['s_o_site'].get_active()
-	c['s_o_title'] = w['s_o_title'].get_active()
-	c['s_plot'] = w['s_plot'].get_active()
-	c['s_rating'] = w['s_rating'].get_active()
-	c['s_runtime'] = w['s_runtime'].get_active()
-	c['s_site'] = w['s_site'].get_active()
-	c['s_studio'] = w['s_studio'].get_active()
-	c['s_title'] = w['s_title'].get_active()
-	c['s_trailer'] = w['s_trailer'].get_active()
-	c['s_cast'] = w['s_cast'].get_active()
-	c['s_year'] = w['s_year'].get_active()
+	c.set('s_classification', w['s_classification'].get_active(), section='add')
+	c.set('s_country', w['s_country'].get_active(), section='add')
+	c.set('s_director', w['s_director'].get_active(), section='add')
+	c.set('s_genre', w['s_genre'].get_active(), section='add')
+	c.set('s_image', w['s_image'].get_active(), section='add')
+	c.set('s_notes', w['s_notes'].get_active(), section='add')
+	c.set('s_o_site', w['s_o_site'].get_active(), section='add')
+	c.set('s_o_title', w['s_o_title'].get_active(), section='add')
+	c.set('s_plot', w['s_plot'].get_active(), section='add')
+	c.set('s_rating', w['s_rating'].get_active(), section='add')
+	c.set('s_runtime', w['s_runtime'].get_active(), section='add')
+	c.set('s_site', w['s_site'].get_active(), section='add')
+	c.set('s_studio', w['s_studio'].get_active(), section='add')
+	c.set('s_title', w['s_title'].get_active(), section='add')
+	c.set('s_trailer', w['s_trailer'].get_active(), section='add')
+	c.set('s_cast', w['s_cast'].get_active(), section='add')
+	c.set('s_year', w['s_year'].get_active(), section='add')
 	
 	mcounter = 0
 	for p in self.plugins:
@@ -295,68 +295,62 @@ def save_preferences(self):
 	else:
 		save_reader = w['epdf_reader'].get_text()
 
-	c['spell_lang'] = w['spell_lang'].get_text()
+	c.set('lang', w['spell_lang'].get_text(), section='spell')
 	c['pdf_reader'] = save_reader
 
-	c['amazon_locale'] = w['amazon_locale'].get_active()
+	c.set('amazon_locale', w['amazon_locale'].get_active(), section='add')
 	
 	if spell_support:
-		if c.get('use_gtkspell', 'False') == 'False' and not was_false:
+		if c.get('gtkspell', False, section='spell') == False and not was_false:
 			self.notes_spell.detach()
 			self.plot_spell.detach()
-		elif c.get('use_gtkspell', 'False') == 'True' and was_false:
+		elif c.get('gtkspell', False, section='spell') == True and was_false:
 			initialize.initialize_gtkspell(self)
 		else:
 			pass
 
-		if c.get('use_gtkspell', 'False') == 'True':
-			if c.get('spell_plot', 'True') == 'False' and not plot_was_false:
+		if c.get('gtkspell', False, section='spell') == True:
+			if c.get('plot', True, section='spell') == False and not plot_was_false:
 				self.plot_spell.detach()
-			elif c.get('spell_plot', 'True') == 'True' and plot_was_false:
+			elif c.get('plot', True, section='spell') == True and plot_was_false:
 				self.plot_spell = gtkspell.Spell(self.widgets['add']['plot'])
-				self.plot_spell.set_language(c.get('spell_lang', 'en'))
+				self.plot_spell.set_language(c.get('lang', 'en', section='spell'))
 			else:
 				pass
 
-			if c.get('spell_notes', 'True') == 'False' and not notes_was_false:
+			if c.get('notes', True, section='spell') == False and not notes_was_false:
 				self.notes_spell.detach()
-			elif c.get('spell_notes', 'True') == 'True' and notes_was_false:
+			elif c.get('notes', True, section='spell') == True and notes_was_false:
 				self.notes_spell = gtkspell.Spell(self.widgets['add']['notes'])
-				self.notes_spell.set_language(c.get('spell_lang', 'en'))
+				self.notes_spell.set_language(c.get('lang', 'en', section='spell'))
 			else:
 				pass
 	self.pdf_reader = save_reader
 
 	# database
-	old = {
-		'db_type':   c['db_type'],
-		'db_host':   c['db_host'],
-		'db_port':   c['db_port'],
-		'db_name':   c['db_name'],
-		'db_user':   c['db_user'],
-		'db_passwd': c['db_passwd'],
-	}
-	c['db_host']   = w['db_host'].get_text()
-	c['db_port']   = int(w['db_port'].get_value())
-	c['db_name']   = w['db_name'].get_text()
-	c['db_user']   = w['db_user'].get_text()
-	c['db_passwd'] = w['db_passwd'].get_text()
+	old = c.toDict(section='database')
+	
+	c.set('host', w['db_host'].get_text(), section='database')
+	c.set('port', int(w['db_port'].get_value()), section='database')
+	c.set('name', w['db_name'].get_text(), section='database')
+	c.set('user', w['db_user'].get_text(), section='database')
+	c.set('passwd', w['db_passwd'].get_text(), section='database')
 	db_type = int(w['db_type'].get_active())
 	if db_type == 1:
-		c['db_type'] = 'postgres'
+		c.set('type', 'postgres', section='database')
 	elif db_type == 2:
-		c['db_type'] = 'mysql'
+		c.set('type', 'mysql', section='database')
 	elif db_type == 3:
-		c['db_type'] = 'mssql'
+		c.set('type', 'mssql', section='database')
 	else:
-		c['db_type'] = 'sqlite'
+		c.set('type', 'sqlite', section='database')
 
-	if old['db_type'] != c['db_type'] or (old['db_type']!='sqlite' and (\
-			old['db_host'] != c['db_host'] or \
-			old['db_port'] != c['db_port'] or \
-			old['db_name'] != c['db_name'] or \
-			old['db_user'] != c['db_user'] or \
-			old['db_passwd'] != c['db_passwd'])):
+	if old['type'] != c.get('type', section='database') or (old['type']!='sqlite' and (\
+			old['host'] != c.get('host', section='database') or \
+			old['port'] != c.get('port', section='database') or \
+			old['name'] != c.get('name', section='database') or \
+			old['user'] != c.get('user', section='database') or \
+			old['passwd'] != c.get('passwd', section='database'))):
 		self.debug.show('DATABASE: connecting to new db server...')
 		
 		# new database connection
@@ -370,7 +364,7 @@ def save_preferences(self):
 			self.db = sql.GriffithSQL(c, self.debug, self.locations['home'])
 		except InvalidRequestError, e:
 			self.debug.show(str(e))
-			c['db_type'] = 'sqlite'
+			c.set('type', 'sqlite', section='database')
 			w['db_type'].set_active(0)
 			self.db = sql.GriffithSQL(c, self.debug, self.locations['home'])
 

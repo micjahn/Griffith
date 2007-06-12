@@ -286,43 +286,43 @@ class GriffithSQL:
 		from sqlalchemy.exceptions import InvalidRequestError
 		global debug
 		debug = gdebug
-		if not config.has_key('db_type'):
-			config['db_type'] = 'sqlite'
+		if config.get('type', None, section='database') is None:
+			config.set('type', 'sqlite', section='database')
 
-		if config['db_type'] != 'sqlite':
-			if not config.has_key('db_host'):
-				config['db_host'] = '127.0.0.1'
-			if not config.has_key('db_user'):
-				config['db_user'] = 'griffith'
-			if not config.has_key('db_passwd'):
-				config['db_passwd'] = 'gRiFiTh'
-			if not config.has_key('db_name'):
-				config['db_name'] = 'griffith'
+		if config.get('type', 'sqlite', section='database') != 'sqlite':
+			if config.get('host', None, section='database') is None:
+				config.set('host', '127.0.0.1', section='database')
+			if config.get('user', None, section='database') is None:
+				config.set('user', 'griffith', section='database')
+			if config.get('passwd', None, section='database') is None:
+				config.set('passwd', 'gRiFiTh', section='database')
+			if config.get('name', None, section='database') is None:
+				config.set('name', 'griffith', section='database')
 
 		# connect to database --------------------------------------{{{
-		if config['db_type'] == 'sqlite':
-			url = "sqlite:///%s" % os.path.join(griffith_dir, config['default_db'])
-		elif config['db_type'] == 'postgres':
-			if not config.has_key('db_port') or config['db_port']==0:
-				config['db_port'] = 5432
+		if config.get('type', section='database') == 'sqlite':
+			url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('file', 'griffith.db', section='database'))
+		elif config.get('type', section='database') == 'postgres':
+			if config.get('db_port', 0, section='database')==0:
+				config.set('port', 5432, section='database')
 			url = "postgres://%s:%s@%s:%d/%s" % (
-				config['db_user'],
-				config['db_passwd'],
-				config['db_host'],
-				int(config['db_port']),
-				config['db_name'])
-		elif config['db_type'] == 'mysql':
-			if not config.has_key('db_port') or config['db_port']==0:
-				config['db_port'] = 3306
+				config.get('db_user', section='database'),
+				config.get('db_passwd', section='database'),
+				config.get('db_host', section='database'),
+				int(config.get('db_port', section='database')),
+				config.get('db_name', section='database'))
+		elif config.get('type', section='database') == 'mysql':
+			if config.get('db_port', 0, section='database')==0:
+				config.set('port', 3306, section='database')
 			url = "mysql://%s:%s@%s:%d/%s" % (
-				config['db_user'],
-				config['db_passwd'],
-				config['db_host'],
-				int(config['db_port']),
-				config['db_name'])
-		elif config['db_type'] == 'mssql':
-			if not config.has_key('db_port') or config['db_port']==0:
-				config['db_port'] = 1433
+				config.get('db_user', section='database'),
+				config.get('db_passwd', section='database'),
+				config.get('db_host', section='database'),
+				int(config.get('db_port', section='database')),
+				config.get('db_name', section='database'))
+		elif config.get('type', section='database') == 'mssql':
+			if config.get('db_port', 0, section='database')==0:
+				config.set('port', 1433, section='database')
 			# use_scope_identity=0 have to be set as workaround for a sqlalchemy bug
 			# but it is not guaranteed that the right identity value will be selected
 			# because the select @@identity statement selects the very last id which
@@ -332,27 +332,27 @@ class GriffithSQL:
 			# (one statement !) After preparing and executing there should be a fetch
 			# If it is executed as two separate statements the scope is lost after insert.
 			url = "mssql://%s:%s@%s:%d/%s?use_scope_identity=0" % (
-				config['db_user'],
-				config['db_passwd'],
-				config['db_host'],
-				int(config['db_port']),
-				config['db_name'])
+				config.get('db_user', section='database'),
+				config.get('db_passwd', section='database'),
+				config.get('db_host', section='database'),
+				int(config.get('db_port', section='database')),
+				config.get('db_name', section='database'))
 		else:
-			config['db_type'] = 'sqlite'
-			url = "sqlite:///%s" % os.path.join(griffith_dir, config['default_db'])
+			config.set('type', 'sqlite', section='database')
+			url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('file', 'griffith.db', section='database'))
 		try:
 			self.metadata = BoundMetaData(url)
 		except InvalidRequestError, e:
 			debug.show("BoundMetaData: %s" % e)
-			config['db_type'] = 'sqlite'
-			self.metadata = BoundMetaData("sqlite:///%s" % os.path.join(griffith_dir, config['default_db']))
+			config.set('type', 'sqlite', section='database')
+			self.metadata = BoundMetaData("sqlite:///%s" % os.path.join(griffith_dir, config.get('file', 'griffith.db', section='database')))
 		# try to establish a db connection
 		try:
 			self.metadata.engine.connect()
 		except Exception, e:
 			debug.show("engine connection: %s" % e)
 			gutils.error(self, _('Database connection failed.'))
-			config['db_type'] = 'sqlite'
+			config.set('type', 'sqlite', section='database')
 			url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
 			self.metadata = BoundMetaData(url)
 			self.metadata.engine.connect()

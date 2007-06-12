@@ -341,8 +341,8 @@ def populate(self, movies=None, where=None):#{{{
 				movies.append_whereclause(self.db.Movie.c.collection_id==col_id)
 		
 		# select sort column
-		sort_column_name = self.config.get('sortby', 'number')
-		sort_reverse = self.config.get('sortby_reverse', False)
+		sort_column_name = self.config.get('sortby', 'number', section='mainlist')
+		sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
 		for i in sort_column_name.split(','):
 			if self.db.Movie.c.has_key(i):
 				if sort_reverse:
@@ -369,23 +369,23 @@ def populate(self, movies=None, where=None):#{{{
 	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
 
 	# check preferences to hide or show columns
-	if self.config.get('view_number', True) == True:
+	if self.config.get('number', True, 'mainlist') == True:
 		self.number_column.set_visible(True)
 	else:
 		self.number_column.set_visible(False)
-	if self.config.get('view_otitle', True) == True:
+	if self.config.get('otitle', True, 'mainlist') == True:
 		self.otitle_column.set_visible(True)
 	else:
 		self.otitle_column.set_visible(False)
-	if self.config.get('view_title', True) == True:
+	if self.config.get('title', True, 'mainlist') == True:
 		self.title_column.set_visible(True)
 	else:
 		self.title_column.set_visible(False)
-	if self.config.get('view_director', True) == True:
+	if self.config.get('director', True, 'mainlist') == True:
 		self.director_column.set_visible(True)
 	else:
 		self.director_column.set_visible(False)
-	if self.config.get('view_image', True) == True:
+	if self.config.get('image', True, 'mainlist') == True:
 		self.image_column.set_visible(True)
 	else:
 		self.image_column.set_visible(False)
@@ -395,7 +395,7 @@ def populate(self, movies=None, where=None):#{{{
 		
 		self.treemodel.set_value(myiter,0,'%004d' % int(movie.number))
 
-		if self.config.get('view_image', True) == True:
+		if self.config.get('image', True, section='mainlist') == True:
 			tmp_dest = self.locations['posters']
 			tmp_img = os.path.join(tmp_dest, "t_%s.jpg" % str(movie.image))
 			if movie.image and os.path.isfile(tmp_img):

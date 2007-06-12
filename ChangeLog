@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-06-13  Piotr Ożarowski
+	* Add sections to config file
+
 2007-06-09  Vasco Nunes
 	* Added new alpha export plugin for iPods.
 	  Exports directly to iPod on macosx for now, saves files in custom location on other platforms.

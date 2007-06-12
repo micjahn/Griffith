@@ -49,14 +49,14 @@ def mailto(self, server, auth, user, password, sender, to, subject, msg):
 
 def send_email(self):
 	if len(self.person_email):
-		if self.config.get('mail_use_auth', False) == True:
+		if self.config.get('use_auth', False, section='mail') == True:
 			use_auth = 1
 		else:
 			use_auth = 0
-		mailto(self, self.config.get('mail_smtp_server', "localhost"), \
-			use_auth, self.config.get('mail_username', ""), \
-			self.config.get('mail_password', ""), \
-			self.config.get('mail_email', "griffith"), self.person_email, \
+		mailto(self, self.config.get('smtp_server', 'localhost', section='mail'), \
+			use_auth, self.config.get('username', '', section='mail'), \
+			self.config.get('password', '', section='mail'), \
+			self.config.get('email', 'griffith', section='mail'), self.person_email, \
 			_("Movie loan reminder"), _("Hi, %s!\n\nJust to reminder you " + \
 			"that I'm really needing the following movie I have loaned you " + \
 			"recently:\n\n%s (%s)\n\nLoaned on %s") \

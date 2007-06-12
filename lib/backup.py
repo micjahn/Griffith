@@ -50,9 +50,9 @@ def backup(self):
 			except:
 				gutils.error(self, _("Error creating backup"), self.widgets['window'])
 				return False
-			mzip.write(os.path.join(self.locations['home'],'griffith.conf'))
+			mzip.write(os.path.join(self.locations['home'],'griffith.cfg'))
 			if self.db.metadata.engine.name == 'sqlite':
-				mzip.write(os.path.join(self.locations['home'], self.config['default_db']))
+				mzip.write(os.path.join(self.locations['home'], self.config.get('file','griffith.db', section='database')))
 			else:
 				gutils.error(self, _("Backup function is available only for SQLite engine for now"), self.widgets['window'])
 				return False
@@ -63,16 +63,16 @@ def backup(self):
 				# if backup_to_sqlite:
 				tmp_dir = mkdtemp()
 				tmp_config = copy.deepcopy(self.config)
-				tmp_config.file = os.path.join(tmp_dir,'griffith.conf')
-				tmp_config["db_type"] = 'sqlite'
-				tmp_config["default_db"] = "griffith.db"
+				tmp_config._file = os.path.join(tmp_dir,'griffith.cfg')
+				tmp_config.get('type', 'sqlite', section='database') == 'sqlite'
+				tmp_config.set('file', section='database') == "griffith.db"
 				tmp_config.save()
 
 #				tmp_db = sql.GriffithSQL(tmp_config, self.debug, tmp_dir)
 #				for i in self.db.metadata.tables
 #				tmp_db.
 
-				tmp_file = os.path.join(tmp_dir, tmp_config['default_db'])
+				tmp_file = os.path.join(tmp_dir, tmp_config.get('file', 'griffith.db', section='database'))
 				tmp_metadata = BoundMetaData("sqlite:///%s" % tmp_file)
 				tmp_metadata.tables = self.db.metadata.tables
 				tmp_metadata.create_all()
@@ -128,15 +128,15 @@ def restore(self):
 		zip.close()
 
 		# restore config file
-		self.config = config.Config(file=os.path.join(self.locations['home'],'griffith.conf'))
-		filename = os.path.join(self.locations['home'], self.config["default_db"])
+		self.config = config.Config(file=os.path.join(self.locations['home'],'griffith.cfg'))
+		filename = os.path.join(self.locations['home'], self.config.get('file', 'griffith.db', section='database'))
 
 		self.db.metadata.engine.dispose() # close DB
 		from sqlalchemy.orm import clear_mappers
 		clear_mappers()
 
 		# check if file needs conversion
-		if self.config['default_db'].lower().endswith('.gri'):
+		if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
 			self.debug.show('Old database format detected. Converting...')
 			from dbupgrade import convert_from_old_db
 			from initialize	import location_posters
@@ -173,8 +173,8 @@ def merge(self):	# FIXME
 		from tempfile import mkdtemp
 		from shutil import rmtree, move
 
-		tmp_config={}
-		tmp_config["db_type"] = "sqlite"
+		#tmp_config={}
+		#tmp_config.get('type', 'sqlite', section='database')
 
 		if filename.lower().endswith('.zip'):
 			tmp_dir = mkdtemp()
@@ -193,17 +193,18 @@ def merge(self):	# FIXME
 					outfile.close()
 			# load stored database filename
 			tmp_config = config.Config(file=os.path.join(tmp_dir,'griffith.conf'))
-			filename = os.path.join(tmp_dir, tmp_config["default_db"])
+			filename = os.path.join(tmp_dir, tmp_config('file', 'griffith.db', section='database'))
 			zip.close()
 
 		# check if file needs conversion
 		if filename.lower().endswith(".gri"):
 			if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
 				self.debug.show("MERGE: SQLite2 database format detected. Converting...")
-				if not self.db.convert_from_sqlite2(filename, os.path.join(tmp_dir, self.config["default_db"])):
+				if not self.db.convert_from_sqlite2(filename, os.path.join(tmp_dir, self.config.get('file', 'griffith.db', section='database'))):
 					self.debug.show("MERGE: Can't convert database, aborting.")
 					return False
-		tmp_dir, tmp_config["default_db"] = os.path.split(filename)
+		tmp_dir, tmp_file = os.path.split(filename)
+		self.config.get('file', tmp_file, section='database') 
 
 		tmp_db = sql.GriffithSQL(tmp_config, self.debug, tmp_dir)
 

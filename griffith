@@ -55,12 +55,16 @@ class Griffith:
 		self.posix = (os.name == 'posix')
 	
 		# Configuration
-		self.config = config.Config(file=os.path.join(self.locations['home'], 'griffith.conf'))
+		if self._tmp_config.find('/') >=0 or self._tmp_config.find('\\') >=0:
+			configFileName = self._tmp_config
+		else:
+			configFileName = os.path.join(self.locations['home'], self._tmp_config)
+		self.config = config.Config(file=configFileName)
 		initialize.location_posters(self.locations, self.config)
 
 		# convert old database
-		filename = os.path.join(self.locations['home'], self.config['default_db'])
-		if self.config['default_db'].lower().endswith('.gri'):
+		filename = os.path.join(self.locations['home'], self.config.get('file', 'griffith.db', section='database'))
+		if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
 			debug.show('Old database format detected. Converting...')
 			from dbupgrade import convert_from_old_db
 			if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
@@ -868,25 +872,25 @@ You can't undo this operation."""), \
 		reconnect_add_signals(self)
 		self.widgets['results']['window'].hide()
 
-	def save_state(self):
+	def save_state(self): # FIXME: somehow it always saves default window size
 		"""Saves main window state"""
 		pos = self.widgets['window'].get_position()
 		size = self.widgets['window'].get_size()
-		self.config["width"] = size[0]
-		self.config["height"] = size[1]
-		self.config["left"] = pos[0]
-		self.config["top"] = pos[1]
+		self.config.set('width', size[0], section='window')
+		self.config.set('height', size[1], section='window')
+		self.config.set('left', pos[0], section='window')
+		self.config.set('top', pos[1], section='window')
 		self.config.save()
 
 	def restore_state(self):
 		"""Restores main window state"""
-		if self.config.get("left") == None:
+		if self.config.get("left", None, section='window') == None:
 			pass
 		else:
-			self.widgets['window'].move(int(self.config.get("left")), \
-				int(self.config.get("top")))
-			self.widgets['window'].resize(int(self.config.get("width")), \
-				int(self.config.get("height")))
+			self.widgets['window'].move(int(self.config.get('left', section='window')), \
+				int(self.config.get('top', section='window')))
+			self.widgets['window'].resize(int(self.config.get('width', section='window')), \
+				int(self.config.get('height', section='window')))
 		self.widgets['window'].show()
 
 	def on_delete_event_r(self, *args):
@@ -951,7 +955,7 @@ You can't undo this operation."""), \
 			self.widgets['toolbar'].hide()
 		else:
 			self.widgets['toolbar'].show()
-		self.config["view_toolbar"] = state
+		self.config.set('view_toolbar', state, section='window')
 		self.config.save()
 
 	def new_dbb(self, *args):
@@ -987,10 +991,10 @@ You can't undo this operation."""), \
 				self.db.metadata.drop_all()
 				from sqlalchemy.orm import clear_mappers
 				clear_mappers()
-				if self.config['db_type'] == 'sqlite':
-					os.unlink(os.path.join(self.locations['home'],self.config.get('default_db')))
-					if self.config['default_db'] == 'griffith.gri':
-						self.config['default_db'] = 'griffith.db'
+				if self.config.get('type', 'sqlite', section='database') == 'sqlite':
+					os.unlink(os.path.join(self.locations['home'],self.config.get('file', 'griffith.db', section='database')))
+					if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
+						self.config.set('file', 'griffith.db', section='database')
 				# create/connect db
 				self.db = GriffithSQL(self.config, debug, self.griffith_dir)
 				self.clear_details()

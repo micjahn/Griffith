@@ -130,19 +130,19 @@ def set_details(self, item=None):#{{{
 	if item.has_key('color') and item['color']:
 		w['color'].set_active( gutils.digits_only(item['color'], 3))
 	else:
-		w['color'].set_active( gutils.digits_only(self.config.get('color', 0), 3))
+		w['color'].set_active( gutils.digits_only(self.config.get('color', 0, section='defaults'), 3))
 	if item.has_key('layers') and item['layers']:
 		w['layers'].set_active( gutils.digits_only(item['layers'], 4))
 	else:
-		w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0), 4))
+		w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0, section='defaults'), 4))
 	if item.has_key('region') and item['region']>=0:
 			w['region'].set_active( gutils.digits_only(item['region'], 8))
 	else:
-		w['region'].set_active( gutils.digits_only(self.config.get('region', 0), 8))
+		w['region'].set_active( gutils.digits_only(self.config.get('region', 0, section='defaults'), 8))
 	if item.has_key('cond') and item['cond']>=0:
 		w['condition'].set_active( gutils.digits_only( item['cond'], 5) )
 	else:
-		w['condition'].set_active( gutils.digits_only( self.config.get('condition', 0), 5))
+		w['condition'].set_active( gutils.digits_only( self.config.get('condition', 0, section='defaults'), 5))
 	if item.has_key('media_num') and item['media_num']:
 		w['discs'].set_value( gutils.digits_only(item['media_num']))
 	else:
@@ -171,7 +171,7 @@ def set_details(self, item=None):#{{{
 	if item.has_key('medium_id') and item['medium_id']:
 		pos = gutils.findKey(item['medium_id'], self.media_ids)
 	else:
-		pos = gutils.findKey(self.config.get('media', 0), self.media_ids)
+		pos = gutils.findKey(self.config.get('media', 0, section='defaults'), self.media_ids)
 	if pos is not None:
 		w['media'].set_active(int(pos))
 	else:
@@ -179,8 +179,8 @@ def set_details(self, item=None):#{{{
 	pos = 0
 	if item.has_key('vcodec_id') and item['vcodec_id']:
 		pos = gutils.findKey(item['vcodec_id'], self.vcodecs_ids)
-	elif self.config.has_key('vcodec'):
-		pos = gutils.findKey(self.config['vcodec'], self.vcodecs_ids)
+	else:
+		pos = gutils.findKey(self.config.get('vcodec', 0, section='defaults'), self.vcodecs_ids)
 	if pos is not None:
 		w['vcodec'].set_active(int(pos))
 	else:
@@ -471,7 +471,7 @@ def populate_with_results(self):
 				'classification', 'studio', 'o_site', 'site', 'trailer', 'year',
 				'notes', 'runtime', 'image', 'rating']
 	# remove fields that user doesn't want to fetch: (see preferences window)
-	fields_to_fetch = [ i for i in fields_to_fetch if self.config.get("s_%s" % i, True) ]
+	fields_to_fetch = [ i for i in fields_to_fetch if self.config.get("s_%s" % i, True, section='add') ]
 
 	if w['cb_only_empty'].get_active(): # only empty fields
 		details = get_details(self)
