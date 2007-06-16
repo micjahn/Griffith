@@ -210,10 +210,10 @@ def save_preferences(self):
 	if w['sortby'].get_active():
 		field = self.sort_criteria[w['sortby'].get_active()]
 		if field:
-			c['sortby'] = field
+			c.set('sortby', field, section='mainlist')
 	else:
-		c['sortby'] = 'number'
-	c['sortby_reverse'] = w['sortby_reverse'].get_active()
+		c.set('sortby', 'number', section='mainlist')
+	c.set('sortby_reverse', w['sortby_reverse'].get_active(), section='mainlist')
 	
 	c.set('limit', str(int(w['s_limit'].get_value())), section='mainlist')
 	
