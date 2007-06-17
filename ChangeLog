@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-06-17  Piotr Ożarowski
+	* Change "report bug" link in about menu
+	* Minor bug fixes
+
 2007-06-13  Piotr Ożarowski
 	* Add sections to config file
 

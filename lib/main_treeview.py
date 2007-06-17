@@ -95,22 +95,39 @@ def set_details(self, item=None):#{{{
 	else:
 		w['genre'].set_text('')
 	if item.has_key('cond') and item['cond']:
-		w['condition'].set_markup("<i>%s</i>" % self._conditions[item['cond']])
+		if str(item['cond']) in [ str(i) for i in range(len(self._conditions)) ]:
+			w['condition'].set_markup("<i>%s</i>" % self._conditions[item['cond']])
+		else:
+			w['condition'].set_text('')
+			self.debug.show("Wrong value in 'condition' field (movie_id=%s, cond=%s)" % (item['movie_id'], item['cond']))
 	else:
 		w['condition'].set_text('')
 	if item.has_key('region') and item['region']:
-		w['region'].set_markup("<i>%s</i>" % gutils.html_encode(item['region']))
-		if int(item['region']) < 9:
-			self.widgets['tooltips'].set_tip(w['region'], self._regions[int(item['region'])])
+		if str(item['region']) in [ str(i) for i in range(len(self._regions)) ]:
+			w['region'].set_markup("<i>%s</i>" % gutils.html_encode(item['region']))
+			if int(item['region']) < 9:
+				self.widgets['tooltips'].set_tip(w['region'], self._regions[int(item['region'])])
+		else:
+			self.debug.show("Wrong value in 'region' field (movie_id=%s, region=%s)" % (item['movie_id'], item['region']))
+			w['region'].set_text('')
+			self.widgets['tooltips'].set_tip(w['region'], self._regions[0]) # N/A
 	else:
 		w['region'].set_text('')
 		self.widgets['tooltips'].set_tip(w['region'], self._regions[0]) # N/A
 	if item.has_key('layers') and item['layers']:
-		w['layers'].set_markup("<i>%s</i>" % self._layers[item['layers']])
+		if str(item['layers']) in [ str(i) for i in range(len(self._layers)) ]:
+			w['layers'].set_markup("<i>%s</i>" % self._layers[item['layers']])
+		else:
+			self.debug.show("Wrong value in 'layers' field (movie_id=%s, layers=%s)" % (item['movie_id'], item['layers']))
+			w['layers'].set_text('')
 	else:
 		w['layers'].set_text('')
 	if item.has_key('color') and item['color']:
-		w['color'].set_markup("<i>%s</i>" % self._colors[item['color']])
+		if str(item['color']) in [ str(i) for i in range(len(self._colors)) ]:
+			w['color'].set_markup("<i>%s</i>" % self._colors[item['color']])
+		else:
+			self.debug.show("Wrong value in 'color' field (movie_id=%s, color=%s)" % (item['movie_id'], item['color']))
+			w['color'].set_markup('')
 	else:
 		w['color'].set_markup('')
 	if item.has_key('classification') and item['classification']:

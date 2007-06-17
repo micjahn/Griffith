@@ -946,7 +946,7 @@ You can't undo this operation."""), \
 	def on_goto_forum_activate(site, *args):
 		gutils.run_browser("http://griffith.berlios.de/forum/")
 	def on_goto_report_bug_activate(site, *args):
-		gutils.run_browser("http://developer.berlios.de/bugs/?group_id=4891")
+		gutils.run_browser("https://bugs.launchpad.net/griffith/")
 
 	# toolbar -------------------------------------------------------------
 	def toggle_toolbar(self, *args):
