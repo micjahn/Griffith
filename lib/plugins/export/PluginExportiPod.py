@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id:  $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2005-2007 Vasco Nunes
 #
@@ -65,10 +65,10 @@ class Path2iPod:
 
 class ExportPlugin:
 
-    def __init__(self, database, locations, parent, debug):
+    def __init__(self, database, locations, parent_window, debug, **kwargs):
         self.db = database
         self.locations = locations
-        self.parent = parent
+        self.parent = parent_window
         self.export_iPod()
 
     def export_iPod(self):
@@ -101,7 +101,7 @@ class ExportPlugin:
 		# this is not a mac, lets save the file
 		else:
 			filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-	            buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='ipod_griffith_list')
+				buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='ipod_griffith_list')
 			if filename[0]:
 				overwrite = None
 				if os.path.isfile(filename[0]):

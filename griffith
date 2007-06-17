@@ -137,7 +137,7 @@ class Griffith:
 
 	def on_export_activate(self, menu_iter, plugin_name):
 		export_plugin = __import__('PluginExport%s' % plugin_name)
-		export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], self.debug)
+		export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], self.debug, config=self.config)
 
 	def on_import_activate(self, *args):
 		if self.widgets.has_key('import'):

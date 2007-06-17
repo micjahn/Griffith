@@ -120,7 +120,7 @@ class ExportPlugin(gtk.Window):
 	}
 	#}}}
 
-	def __init__(self, database, locations, parent, debug):#{{{
+	def __init__(self, database, locations, parent_window, debug, **kwargs):#{{{
 		self.db = database
 		self.debug = debug
 		self.locations = locations

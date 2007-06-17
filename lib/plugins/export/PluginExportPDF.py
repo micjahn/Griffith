@@ -47,10 +47,11 @@ plugin_author_email = "<vasco.m.nunes@gmail.com>"
 plugin_version = "0.3"
 
 class ExportPlugin:
-    def __init__(self, database, locations, parent, debug):
+    def __init__(self, database, locations, parent_window, debug, **kwargs):
         self.db = database
         self.locations = locations
-        self.parent = parent
+        self.parent = parent_window
+	self.config = kwargs['config']
         self.styles = getSampleStyleSheet()
         self.export_simple_pdf()
         self.fontName = ""
@@ -58,10 +59,9 @@ class ExportPlugin:
     def export_simple_pdf(self):
         """exports a simple movie list to a pdf file"""
         
-        myconfig = config.Config(os.path.join(self.locations['home'], 'griffith.conf'))
-        if myconfig.get('font', '')!='':
-                self.fontName = "custom_font"
-                pdfmetrics.registerFont(TTFont(self.fontName, myconfig.get('font', '')))
+        if self.config.get('font', '') != '':
+                self.fontName = 'custom_font'
+                pdfmetrics.registerFont(TTFont(self.fontName, self.config.get('font', '')))
         else:
                 self.fontName = "Helvetica"
 
