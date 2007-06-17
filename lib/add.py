@@ -320,7 +320,7 @@ def validate_details(t_movies, allow_only=None):
 	for i in t_movies.keys():
 		if t_movies[i] == '':
 			t_movies[i] = None
-	for i in ['color','cond','layers','region', 'media', 'vcodec', 'rating']:
+	for i in ['color','cond','layers','region', 'media', 'vcodec']:
 		if t_movies.has_key(i) and t_movies[i] < 1:
 			t_movies[i] = None
 	for i in ['volume_id','collection_id', 'runtime']:
