@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: griffith 0.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 21:05+0100\n"
+"POT-Creation-Date: 2007-06-19 22:32+0200\n"
 "PO-Revision-Date: 2005-09-22 23:30+0300\n"
 "Last-Translator: Luchezar P. Petkov <>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -15,22 +15,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:164 ../griffith:742 ../lib/delete.py:33 ../lib/edit.py:44
+#: ../griffith:168 ../griffith:751 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 #, fuzzy
 msgid "You have no movies in your database"
 msgstr "Видяхте всички филми във Вашата колекция!"
 
-#: ../griffith:300
+#: ../griffith:309
 msgid "You saw all movies in your collection!"
 msgstr "Видяхте всички филми във Вашата колекция!"
 
-#: ../griffith:425 ../griffith:430 ../lib/initialize.py:252
-#: ../lib/initialize.py:521
+#: ../griffith:434 ../griffith:439 ../lib/initialize.py:254
+#: ../lib/initialize.py:532
 msgid "subtitles"
 msgstr ""
 
-#: ../griffith:709
+#: ../griffith:718
 #, fuzzy
 msgid ""
 "Are you sure you want to restore?\n"
@@ -38,7 +38,7 @@ msgid ""
 "You can't undo this operation."
 msgstr "Текущата ви филмова колекция ще бъде заменена.\n"
 
-#: ../griffith:719
+#: ../griffith:728
 #, fuzzy
 msgid ""
 "Are you sure you want to mix?\n"
@@ -46,24 +46,24 @@ msgid ""
 "You can't undo this operation."
 msgstr "Текущата ви филмова колекция ще бъде заменена.\n"
 
-#: ../griffith:817
+#: ../griffith:826
 msgid " movie(s) in collection. "
 msgstr "Филм(и) в колекцията."
 
-#: ../griffith:818
+#: ../griffith:827
 msgid " movie(s) loaned. "
 msgstr "Заети филм(и). "
 
-#: ../griffith:819
+#: ../griffith:828
 msgid "You haven't seen "
 msgstr "Не сте гледали "
 
-#: ../griffith:819
+#: ../griffith:828
 #, fuzzy
 msgid " movie(s)"
 msgstr "Добавя филм"
 
-#: ../griffith:955
+#: ../griffith:964
 #, fuzzy
 msgid ""
 "Are you sure you want to create a new database?\n"
@@ -72,7 +72,7 @@ msgstr ""
 "Сигурни ли сте, че искате да създадете нова база данни?\n"
 "Ще загубите ЦЯЛАТА си текуща информация!"
 
-#: ../griffith:959
+#: ../griffith:968
 #, fuzzy
 msgid ""
 "Last chance!\n"
@@ -83,58 +83,65 @@ msgstr ""
 "Потвърждавате ли, че искате да\n"
 "изгубите всичката текуща информация?"
 
-#: ../lib/about.py:38
+#: ../lib/about.py:39
 #, fuzzy
 msgid "Main Authors"
 msgstr "Главен списък"
 
-#: ../lib/about.py:40
+#: ../lib/about.py:41
 #, fuzzy
 msgid "Programmer"
 msgstr "Програмиране:"
 
-#: ../lib/about.py:42
+#: ../lib/about.py:43
 msgid "Contributors:"
 msgstr "Сътрудници:"
 
-#: ../lib/about.py:46
+#: ../lib/about.py:48
 #, fuzzy
 msgid "Logo, icon and general artwork "
 msgstr "Лого, икона и други изображения от Peek <peekpt@gmail.com>"
 
-#: ../lib/about.py:50
+#: ../lib/about.py:54
 msgid "Bulgarian"
 msgstr ""
 
-#: ../lib/about.py:52
+#: ../lib/about.py:56
 #, fuzzy
 msgid "Brasilian Portuguese"
 msgstr "Португалски"
 
-#: ../lib/about.py:54 ../lib/dbupgrade.py:88
+#: ../lib/about.py:58 ../lib/dbupgrade.py:88
 #: ../lib/plugins/movie/PluginMovieCSFD.py:30
 msgid "Czech"
 msgstr ""
 
-#: ../lib/about.py:57 ../lib/dbupgrade.py:89
+#: ../lib/about.py:61
+msgid "Dutch"
+msgstr ""
+
+#: ../lib/about.py:63 ../lib/dbupgrade.py:89
 #: ../lib/plugins/movie/PluginMovieAllocine.py:32
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:31
 msgid "French"
 msgstr "Френски"
 
-#: ../lib/about.py:59 ../lib/dbupgrade.py:90
+#: ../lib/about.py:67 ../lib/dbupgrade.py:90
+#: ../lib/plugins/movie/PluginMovieFilmDb.py:32
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:32
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:32
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:32
 #: ../lib/plugins/movie/PluginMovieOFDb.py:13
+#: ../lib/plugins/movie/PluginMovieZelluloid.py:33
 msgid "German"
 msgstr "Немски"
 
-#: ../lib/about.py:64 ../lib/dbupgrade.py:91
+#: ../lib/about.py:72 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
 msgstr "Италиански"
 
-#: ../lib/about.py:66 ../lib/dbupgrade.py:93
+#: ../lib/about.py:74 ../lib/dbupgrade.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:32
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:31
 #: ../lib/plugins/movie/PluginMovieOnet.py:31
@@ -144,25 +151,25 @@ msgstr "Италиански"
 msgid "Polish"
 msgstr "Полски"
 
-#: ../lib/about.py:68 ../lib/dbupgrade.py:92
+#: ../lib/about.py:76 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr "Португалски"
 
-#: ../lib/about.py:70 ../lib/dbupgrade.py:94
+#: ../lib/about.py:78 ../lib/dbupgrade.py:94
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
 msgid "Spanish"
 msgstr ""
 
-#: ../lib/about.py:72
+#: ../lib/about.py:80
 msgid "Swedish"
 msgstr ""
 
-#: ../lib/about.py:78
+#: ../lib/about.py:89
 msgid "This program is released under the GNU"
 msgstr "Програмата е издадена под GNU"
 
@@ -208,6 +215,7 @@ msgid "Save Griffith backup"
 msgstr "Запазва Griffith резервно копие"
 
 #: ../lib/backup.py:40 ../lib/plugins/export/PluginExportCSV.py:50
+#: ../lib/plugins/export/PluginExportiPod.py:108
 #: ../lib/plugins/export/PluginExportPDF.py:72
 #: ../lib/plugins/export/PluginExportXML.py:51
 msgid "File exists. Do you want to overwrite it?"
@@ -251,17 +259,17 @@ msgstr "Плаката е генериран от Griffith в"
 msgid "Released Under the GNU/GPL License"
 msgstr "Издадено под ГНУ Общ публичен лиценз"
 
-#: ../lib/cover.py:176 ../lib/initialize.py:184 ../lib/initialize.py:506
+#: ../lib/cover.py:176 ../lib/initialize.py:184 ../lib/initialize.py:517
 #: ../lib/plugins/export/PluginExportHTML.py:105 ../glade/griffith.glade.h:93
 msgid "Original Title"
 msgstr "Оригинално заглавие"
 
-#: ../lib/cover.py:177 ../lib/initialize.py:190 ../lib/initialize.py:514
+#: ../lib/cover.py:177 ../lib/initialize.py:190 ../lib/initialize.py:525
 #: ../lib/plugins/export/PluginExportHTML.py:111 ../glade/griffith.glade.h:143
 msgid "Title"
 msgstr "Заглавие"
 
-#: ../lib/cover.py:179 ../lib/initialize.py:196 ../lib/initialize.py:496
+#: ../lib/cover.py:179 ../lib/initialize.py:196 ../lib/initialize.py:507
 #: ../lib/plugins/export/PluginExportHTML.py:96 ../glade/griffith.glade.h:45
 msgid "Director"
 msgstr "Режисьор"
@@ -274,24 +282,25 @@ msgstr "Времетраене"
 msgid " min"
 msgstr "мин"
 
-#: ../lib/cover.py:182 ../lib/initialize.py:495
+#: ../lib/cover.py:182 ../lib/initialize.py:506
 #: ../lib/plugins/export/PluginExportHTML.py:95 ../glade/griffith.glade.h:38
 msgid "Country"
 msgstr "Държава"
 
-#: ../lib/cover.py:183 ../lib/initialize.py:497
+#: ../lib/cover.py:183 ../lib/initialize.py:508
 #: ../lib/plugins/export/PluginExportHTML.py:97 ../glade/griffith.glade.h:59
 msgid "Genre"
 msgstr "Жанр"
 
 #: ../lib/dbupgrade.py:86 ../lib/plugins/movie/PluginMovieAniDB.py:32
-#: ../lib/plugins/movie/PluginMovieIMDB.py:32
+#: ../lib/plugins/movie/PluginMovieDVDEmpire.py:32
+#: ../lib/plugins/movie/PluginMovieIMDB.py:31
 #: ../lib/plugins/movie/PluginMovieMediadis.py:16
 #: ../lib/plugins/movie/PluginMovieMoviefone.py:16
 msgid "English"
 msgstr "Английски"
 
-#: ../lib/dbupgrade.py:87 ../lib/plugins/movie/PluginMovieE-Pipoca.py:30
+#: ../lib/dbupgrade.py:87 ../lib/plugins/movie/PluginMovieE-Pipoca.py:34
 msgid "Brazilian Portuguese"
 msgstr "Португалски"
 
@@ -299,17 +308,17 @@ msgstr "Португалски"
 msgid "Favourite"
 msgstr ""
 
-#: ../lib/dbupgrade.py:116
+#: ../lib/dbupgrade.py:119
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
 msgstr ""
 
-#: ../lib/dbupgrade.py:130
+#: ../lib/dbupgrade.py:133
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr ""
 
-#: ../lib/dbupgrade.py:155
+#: ../lib/dbupgrade.py:158
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -341,12 +350,12 @@ msgstr "Сигурни ли сте, че искате да изтриете то
 msgid "No posters found for this movie."
 msgstr ""
 
-#: ../lib/edit.py:199 ../lib/movie.py:145
+#: ../lib/edit.py:199 ../lib/movie.py:147
 msgid "Fetching poster"
 msgstr "Извличане на плакат"
 
-#: ../lib/edit.py:199 ../lib/movie.py:119 ../lib/movie.py:145
-#: ../lib/movie.py:238
+#: ../lib/edit.py:199 ../lib/movie.py:121 ../lib/movie.py:147
+#: ../lib/movie.py:240
 msgid "Wait a moment"
 msgstr "Изчакайте момент"
 
@@ -354,16 +363,16 @@ msgstr "Изчакайте момент"
 msgid "Sorry. A connection error has occurred."
 msgstr ""
 
-#: ../lib/edit.py:239
+#: ../lib/edit.py:224 ../lib/edit.py:257
+msgid "Sorry. This movie is listed but has no poster available at Amazon.com."
+msgstr ""
+
+#: ../lib/edit.py:243
 #, fuzzy
 msgid "Do you want to use this poster instead?"
 msgstr "Сигурни ли сте, че искате да изтриете този филм?"
 
-#: ../lib/edit.py:253
-msgid "Sorry. This movie is listed but has no poster available at Amazon.com."
-msgstr ""
-
-#: ../lib/gconsole.py:134
+#: ../lib/gconsole.py:133
 #, fuzzy
 msgid "No movie found"
 msgstr "Заети филм(и). "
@@ -405,7 +414,7 @@ msgstr "Всички файлове"
 msgid "N."
 msgstr "Номер"
 
-#: ../lib/initialize.py:179 ../lib/initialize.py:498
+#: ../lib/initialize.py:179 ../lib/initialize.py:509
 #: ../lib/plugins/export/PluginExportHTML.py:98 ../glade/griffith.glade.h:66
 msgid "Image"
 msgstr "Плакат"
@@ -422,227 +431,229 @@ msgstr "Дата на връщане"
 msgid "Loaned To"
 msgstr "Заето на"
 
-#: ../lib/initialize.py:240
+#: ../lib/initialize.py:240 ../lib/plugins/movie/PluginMovieIMDB-de.py:145
+#: ../lib/plugins/movie/PluginMovieIMDB.py:140
 #, fuzzy
 msgid "Language"
 msgstr "Език: "
 
-#: ../lib/initialize.py:250 ../lib/initialize.py:521
+#: ../lib/initialize.py:252 ../lib/initialize.py:532
 #, fuzzy
 msgid "lector"
 msgstr "Режисьор"
 
-#: ../lib/initialize.py:251 ../lib/initialize.py:521
+#: ../lib/initialize.py:253 ../lib/initialize.py:532
 msgid "dubbing"
 msgstr ""
 
-#: ../lib/initialize.py:253 ../lib/initialize.py:521
+#: ../lib/initialize.py:255 ../lib/initialize.py:532
 msgid "commentary"
 msgstr ""
 
-#: ../lib/initialize.py:260 ../glade/griffith.glade.h:147
+#: ../lib/initialize.py:262 ../glade/griffith.glade.h:147
 msgid "Type"
 msgstr ""
 
-#: ../lib/initialize.py:273
+#: ../lib/initialize.py:277
 #, fuzzy
 msgid "Codec"
 msgstr "Дублиране"
 
-#: ../lib/initialize.py:286
+#: ../lib/initialize.py:292
 #, fuzzy
 msgid "Channels"
 msgstr "Отказ"
 
-#: ../lib/initialize.py:299
+#: ../lib/initialize.py:307
 #, fuzzy
 msgid "Subtitle format"
 msgstr "<b>Тема</b>"
 
-#: ../lib/initialize.py:412 ../glade/griffith.glade.h:87
+#: ../lib/initialize.py:423 ../glade/griffith.glade.h:87
 msgid "Name"
 msgstr "Име"
 
-#: ../lib/initialize.py:418 ../glade/exporthtml.glade.h:16
+#: ../lib/initialize.py:429 ../glade/exporthtml.glade.h:16
 #: ../glade/griffith.glade.h:47 ../glade/import.glade.h:5
 msgid "E-mail"
 msgstr "Електронна поща"
 
-#: ../lib/initialize.py:461
+#: ../lib/initialize.py:472
 msgid "Last added"
 msgstr ""
 
-#: ../lib/initialize.py:490 ../lib/plugins/export/PluginExportHTML.py:93
+#: ../lib/initialize.py:501 ../lib/plugins/export/PluginExportHTML.py:93
 #: ../glade/griffith.glade.h:30
 msgid "Cast"
 msgstr "С участието на"
 
-#: ../lib/initialize.py:491 ../lib/plugins/export/PluginExportHTML.py:94
+#: ../lib/initialize.py:502 ../lib/plugins/export/PluginExportHTML.py:94
 #: ../glade/griffith.glade.h:32
 msgid "Classification"
 msgstr "Класификация"
 
-#: ../lib/initialize.py:492 ../glade/griffith.glade.h:35
+#: ../lib/initialize.py:503 ../glade/griffith.glade.h:35
 #, fuzzy
 msgid "Collection"
 msgstr "<b>Разделя на<b>"
 
-#: ../lib/initialize.py:493 ../lib/initialize.py:520
-#: ../glade/griffith.glade.h:36
+#: ../lib/initialize.py:504 ../lib/initialize.py:531
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:149
+#: ../lib/plugins/movie/PluginMovieIMDB.py:144 ../glade/griffith.glade.h:36
 msgid "Color"
 msgstr "Цвят"
 
-#: ../lib/initialize.py:494 ../glade/griffith.glade.h:37
+#: ../lib/initialize.py:505 ../glade/griffith.glade.h:37
 msgid "Condition"
 msgstr "Състояние"
 
-#: ../lib/initialize.py:499 ../glade/griffith.glade.h:70
+#: ../lib/initialize.py:510 ../glade/griffith.glade.h:70
 msgid "Layers"
 msgstr "Слоеве"
 
-#: ../lib/initialize.py:500 ../lib/plugins/export/PluginExportHTML.py:102
+#: ../lib/initialize.py:511 ../lib/plugins/export/PluginExportHTML.py:102
 msgid "Loaned"
 msgstr "Зает"
 
-#: ../lib/initialize.py:501 ../glade/griffith.glade.h:46
+#: ../lib/initialize.py:512 ../glade/griffith.glade.h:46
 msgid "Discs"
 msgstr "Дискове"
 
-#: ../lib/initialize.py:502 ../glade/griffith.glade.h:82
+#: ../lib/initialize.py:513 ../glade/griffith.glade.h:82
 #, fuzzy
 msgid "Medium"
 msgstr "Медия"
 
-#: ../lib/initialize.py:503 ../lib/plugins/export/PluginExportHTML.py:113
+#: ../lib/initialize.py:514 ../lib/plugins/export/PluginExportHTML.py:113
 #: ../glade/griffith.glade.h:90
 msgid "Notes"
 msgstr "Бележки"
 
-#: ../lib/initialize.py:504 ../lib/sql.py:278
+#: ../lib/initialize.py:515 ../lib/sql.py:278
 #: ../lib/plugins/export/PluginExportHTML.py:104 ../glade/griffith.glade.h:91
 msgid "Number"
 msgstr "Номер"
 
-#: ../lib/initialize.py:505 ../lib/plugins/export/PluginExportHTML.py:99
+#: ../lib/initialize.py:516 ../lib/plugins/export/PluginExportHTML.py:99
 #: ../glade/griffith.glade.h:92
 #, fuzzy
 msgid "Official site"
 msgstr "Официална интернет страница"
 
-#: ../lib/initialize.py:507 ../lib/plugins/export/PluginExportHTML.py:106
+#: ../lib/initialize.py:518 ../lib/plugins/export/PluginExportHTML.py:106
 #: ../glade/griffith.glade.h:101
 msgid "Plot"
 msgstr "Кратко описание"
 
-#: ../lib/initialize.py:508 ../lib/plugins/export/PluginExportHTML.py:107
+#: ../lib/initialize.py:519 ../lib/plugins/export/PluginExportHTML.py:107
 #: ../glade/griffith.glade.h:109
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: ../lib/initialize.py:509 ../glade/griffith.glade.h:111
+#: ../lib/initialize.py:520 ../glade/griffith.glade.h:111
 msgid "Region"
 msgstr "Регион"
 
-#: ../lib/initialize.py:510 ../lib/plugins/export/PluginExportHTML.py:108
+#: ../lib/initialize.py:521 ../lib/plugins/export/PluginExportHTML.py:108
 #: ../glade/griffith.glade.h:119
 msgid "Runtime"
 msgstr "Продължителност"
 
-#: ../lib/initialize.py:511 ../lib/plugins/export/PluginExportHTML.py:110
+#: ../lib/initialize.py:522 ../lib/plugins/export/PluginExportHTML.py:110
 #: ../glade/griffith.glade.h:122
 msgid "Seen it"
 msgstr "Гледан"
 
-#: ../lib/initialize.py:512 ../lib/plugins/export/PluginExportHTML.py:100
+#: ../lib/initialize.py:523 ../lib/plugins/export/PluginExportHTML.py:100
 #: ../glade/griffith.glade.h:132
 #, fuzzy
 msgid "Site"
 msgstr "Размер"
 
-#: ../lib/initialize.py:513 ../lib/plugins/export/PluginExportHTML.py:109
+#: ../lib/initialize.py:524 ../lib/plugins/export/PluginExportHTML.py:109
 #: ../glade/griffith.glade.h:138
 msgid "Studio"
 msgstr "Студио"
 
-#: ../lib/initialize.py:515 ../lib/plugins/export/PluginExportHTML.py:101
+#: ../lib/initialize.py:526 ../lib/plugins/export/PluginExportHTML.py:101
 #: ../glade/griffith.glade.h:145
 msgid "Trailer"
 msgstr "Сцени от филма"
 
-#: ../lib/initialize.py:516 ../glade/griffith.glade.h:152
+#: ../lib/initialize.py:527 ../glade/griffith.glade.h:152
 msgid "Video codec"
 msgstr ""
 
-#: ../lib/initialize.py:517 ../glade/griffith.glade.h:155
+#: ../lib/initialize.py:528 ../glade/griffith.glade.h:155
 msgid "Volume"
 msgstr ""
 
-#: ../lib/initialize.py:518 ../lib/plugins/export/PluginExportHTML.py:112
+#: ../lib/initialize.py:529 ../lib/plugins/export/PluginExportHTML.py:112
 #: ../glade/griffith.glade.h:157
 msgid "Year"
 msgstr "Година"
 
-#: ../lib/initialize.py:519 ../lib/initialize.py:520 ../lib/initialize.py:522
-#: ../lib/initialize.py:718 ../lib/initialize.py:719 ../lib/initialize.py:750
-#: ../lib/initialize.py:751
+#: ../lib/initialize.py:530 ../lib/initialize.py:531 ../lib/initialize.py:533
+#: ../lib/initialize.py:726 ../lib/initialize.py:727 ../lib/initialize.py:758
+#: ../lib/initialize.py:759
 msgid "N/A"
 msgstr "Няма"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:530
 msgid "Damaged"
 msgstr "Повредено"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:530
 msgid "Poor"
 msgstr "Бедно"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:530
 msgid "Fair"
 msgstr "Задоволително"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:530
 msgid "Good"
 msgstr "Добро"
 
-#: ../lib/initialize.py:519
+#: ../lib/initialize.py:530
 #, fuzzy
 msgid "Excellent"
 msgstr "Отлично"
 
-#: ../lib/initialize.py:520
+#: ../lib/initialize.py:531
 msgid "Black and White"
 msgstr "Черно-бял"
 
-#: ../lib/initialize.py:520
+#: ../lib/initialize.py:531
 msgid "Mixed"
 msgstr "Миксирано"
 
-#: ../lib/initialize.py:522
+#: ../lib/initialize.py:533
 msgid "Single Side, Single Layer"
 msgstr "Едностранен, еднослоен"
 
-#: ../lib/initialize.py:522
+#: ../lib/initialize.py:533
 msgid "Single Side, Dual Layer"
 msgstr "Едностранен, двуслоен"
 
-#: ../lib/initialize.py:522
+#: ../lib/initialize.py:533
 #, fuzzy
 msgid "Dual Side, Single Layer"
 msgstr "Едностранен, еднослоен"
 
-#: ../lib/initialize.py:522
+#: ../lib/initialize.py:533
 msgid "Dual Side, Dual Layer"
 msgstr "Двустранен, двуслоен"
 
-#: ../lib/initialize.py:524
+#: ../lib/initialize.py:535
 msgid "Region 0 (No Region Coding)"
 msgstr "Регион 0 (Без регионална кодировка)"
 
-#: ../lib/initialize.py:525
+#: ../lib/initialize.py:536
 msgid "Region 1 (United States of America, Canada)"
 msgstr "Регион 1 (САЩ, Канада)"
 
-#: ../lib/initialize.py:526
+#: ../lib/initialize.py:537
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
@@ -650,34 +661,34 @@ msgstr ""
 "Регион 2 (Европа, включвайки Франция, Гърция, Турция, Египет, Арабия, Япония "
 "и: Южна Африка)"
 
-#: ../lib/initialize.py:527
+#: ../lib/initialize.py:538
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
 msgstr "Регион 3 (Корея, Тайланд, Виетнам, Борнео и Индонезия)"
 
-#: ../lib/initialize.py:528
+#: ../lib/initialize.py:539
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
 msgstr ""
 "Регион 4 (Австралия и Нова Заландия, Мексико, Карибските о-ви и ЮжнаАмерика)"
 
-#: ../lib/initialize.py:529
+#: ../lib/initialize.py:540
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
 msgstr "Регион 5(Индия, Африка, Русия и други бивши СССР репиблики)"
 
-#: ../lib/initialize.py:530
+#: ../lib/initialize.py:541
 msgid "Region 6 (Popular Republic of China)"
 msgstr "Регион 6(Народна Република Китай)"
 
-#: ../lib/initialize.py:531
+#: ../lib/initialize.py:542
 msgid "Region 7 (Reserved for Unspecified Special Use)"
 msgstr ""
 
-#: ../lib/initialize.py:532
+#: ../lib/initialize.py:543
 msgid "Region 8 (Airlines/Cruise Ships)"
 msgstr "Регион 8(Въздушни линии/пътуващи кораби)"
 
-#: ../lib/initialize.py:571
+#: ../lib/initialize.py:580
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr ""
 
@@ -693,31 +704,31 @@ msgstr ""
 msgid "Movie loaned"
 msgstr "Филмът е даден"
 
-#: ../lib/main_treeview.py:227
+#: ../lib/main_treeview.py:244
 msgid "This movie has been loaned to "
 msgstr "Този филм бе даден на "
 
-#: ../lib/main_treeview.py:227
+#: ../lib/main_treeview.py:244
 msgid " on "
 msgstr " на "
 
-#: ../lib/main_treeview.py:238
+#: ../lib/main_treeview.py:255
 msgid "Movie not loaned"
 msgstr "Филмът не е даден"
 
-#: ../lib/movie.py:119
+#: ../lib/movie.py:121
 msgid "Fetching data"
 msgstr "Извличане на информация"
 
-#: ../lib/movie.py:238
+#: ../lib/movie.py:240
 msgid "Searching"
 msgstr "Търсене"
 
-#: ../lib/movie.py:277
+#: ../lib/movie.py:279
 msgid "Connection error"
 msgstr "Грешка при свързване"
 
-#: ../lib/movie.py:301
+#: ../lib/movie.py:303
 msgid "Cancel"
 msgstr "Отказ"
 
@@ -766,7 +777,7 @@ msgstr ""
 msgid "Column \"%s\" is not unique"
 msgstr ""
 
-#: ../lib/sql.py:337
+#: ../lib/sql.py:354
 msgid "Database connection failed."
 msgstr ""
 
@@ -823,20 +834,29 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieFDb.py:96
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:78
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:100
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:101
-#: ../lib/plugins/movie/PluginMovieIMDB.py:80
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:137
+#: ../lib/plugins/movie/PluginMovieIMDB.py:93
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:142
 #: ../lib/plugins/movie/PluginMovieOnet.py:102
 #: ../lib/plugins/movie/PluginMovieWP.py:96
 #: ../lib/plugins/movie/PluginMovieWP.py:98
+#: ../lib/plugins/movie/PluginMovieZelluloid.py:103
 msgid " as "
 msgstr "като"
+
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:147
+#: ../lib/plugins/movie/PluginMovieIMDB.py:142 ../glade/griffith.glade.h:4
+#, fuzzy
+msgid "<b>Audio</b>"
+msgstr "Експорт"
 
 #: ../lib/plugins/export/PluginExportCSV.py:31
 msgid "Full CSV list export plugin"
 msgstr "Модул за пълен CSV ескпорт"
 
 #: ../lib/plugins/export/PluginExportCSV.py:45
+#: ../lib/plugins/export/PluginExportiPod.py:103
 #: ../lib/plugins/export/PluginExportXML.py:46
 #, fuzzy, python-format
 msgid "Export a %s document"
@@ -919,6 +939,30 @@ msgstr "Не"
 #, fuzzy
 msgid "Document has been generated."
 msgstr "Беше създаден PDF"
+
+#: ../lib/plugins/export/PluginExportiPod.py:36
+#, fuzzy
+msgid "iPod Notes export plugin"
+msgstr "Модул за експорт на PDF"
+
+#: ../lib/plugins/export/PluginExportiPod.py:82
+#, fuzzy
+msgid "My Movies List"
+msgstr "Общо филми: %s"
+
+#: ../lib/plugins/export/PluginExportiPod.py:98
+msgid "List was successful exported to iPod."
+msgstr ""
+
+#: ../lib/plugins/export/PluginExportiPod.py:100
+msgid "iPod is not connected."
+msgstr ""
+
+#: ../lib/plugins/export/PluginExportiPod.py:115
+msgid ""
+"List was successful exported. Now you should move it to the 'Notes' folder "
+"on your iPod."
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportPDF.py:44
 msgid "PDF export plugin"
@@ -1122,11 +1166,6 @@ msgstr ""
 #: ../glade/griffith.glade.h:3
 msgid "<b>Audio codecs</b>"
 msgstr ""
-
-#: ../glade/griffith.glade.h:4
-#, fuzzy
-msgid "<b>Audio</b>"
-msgstr "Експорт"
 
 #: ../glade/griffith.glade.h:5
 #, fuzzy
