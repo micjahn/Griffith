@@ -6,10 +6,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.8pre1\n"
+"Project-Id-Version: Griffith 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-19 22:32+0200\n"
-"PO-Revision-Date: 2007-01-05 00:37+0000\n"
+"PO-Revision-Date: 2007-06-19 23:52+0000\n"
 "Last-Translator: Vasco Nunes <vasco.m.nunes@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -86,11 +86,11 @@ msgstr ""
 
 #: ../lib/about.py:39
 msgid "Main Authors"
-msgstr "Autores principais:"
+msgstr "Autores principais"
 
 #: ../lib/about.py:41
 msgid "Programmer"
-msgstr "Programação:"
+msgstr "Programação"
 
 #: ../lib/about.py:43
 msgid "Contributors:"
@@ -98,7 +98,7 @@ msgstr "Contribuições:"
 
 #: ../lib/about.py:48
 msgid "Logo, icon and general artwork "
-msgstr "Logotipo, icone e gráficos por Peek."
+msgstr "Logotipo, icone e gráficos por "
 
 #: ../lib/about.py:54
 msgid "Bulgarian"
@@ -115,7 +115,7 @@ msgstr "Checo"
 
 #: ../lib/about.py:61
 msgid "Dutch"
-msgstr ""
+msgstr "Holandês"
 
 #: ../lib/about.py:63 ../lib/dbupgrade.py:89
 #: ../lib/plugins/movie/PluginMovieAllocine.py:32
@@ -168,7 +168,7 @@ msgstr "Sueco"
 
 #: ../lib/about.py:89
 msgid "This program is released under the GNU"
-msgstr "Este programa é licenciado sob a GNU"
+msgstr "Este programa é licenciado sob a licença GNU"
 
 #: ../lib/add.py:45 ../glade/griffith.glade.h:23
 msgid "Add a new movie"
@@ -202,7 +202,7 @@ msgstr "Sem resultados"
 
 #: ../lib/add.py:592
 msgid "Url: "
-msgstr "Url:"
+msgstr "Url: "
 
 #: ../lib/add.py:593
 msgid "Language: "
@@ -262,7 +262,7 @@ msgstr "Disponibilizado sob a licença GNU/GPL"
 #: ../lib/cover.py:176 ../lib/initialize.py:184 ../lib/initialize.py:517
 #: ../lib/plugins/export/PluginExportHTML.py:105 ../glade/griffith.glade.h:93
 msgid "Original Title"
-msgstr "Título"
+msgstr "Título Original"
 
 #: ../lib/cover.py:177 ../lib/initialize.py:190 ../lib/initialize.py:525
 #: ../lib/plugins/export/PluginExportHTML.py:111 ../glade/griffith.glade.h:143
@@ -318,17 +318,17 @@ msgstr ""
 
 #: ../lib/dbupgrade.py:133
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
-msgstr ""
+msgstr "Base de dados antiga: por favor instale o pysqlite legacy (v1.0)"
 
 #: ../lib/dbupgrade.py:158
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
-msgstr ""
+msgstr "A sua base de dados está provavelmente em SQLite2, por favor converta-a para SQLite3."
 
 #: ../lib/delete.py:37
 msgid "You can't delete movie while it is loaned."
-msgstr "Não pode eliminar um volume enquanto estiver emprestado!"
+msgstr "Não pode eliminar um volume enquanto estiver emprestado."
 
 #: ../lib/delete.py:39
 msgid "Are you sure you want to delete this movie?"
@@ -504,7 +504,7 @@ msgstr "Estado"
 
 #: ../lib/initialize.py:510 ../glade/griffith.glade.h:70
 msgid "Layers"
-msgstr "Layers DVD"
+msgstr "Camadas"
 
 #: ../lib/initialize.py:511 ../lib/plugins/export/PluginExportHTML.py:102
 msgid "Loaned"
@@ -545,7 +545,7 @@ msgstr "Classificação"
 
 #: ../lib/initialize.py:520 ../glade/griffith.glade.h:111
 msgid "Region"
-msgstr "Região DVD"
+msgstr "Região"
 
 #: ../lib/initialize.py:521 ../lib/plugins/export/PluginExportHTML.py:108
 #: ../glade/griffith.glade.h:119
@@ -637,7 +637,7 @@ msgstr "Lado duplo, camada dupla"
 
 #: ../lib/initialize.py:535
 msgid "Region 0 (No Region Coding)"
-msgstr "Região 0 (Sem codificação de região)"
+msgstr "Região 0 (sem codificação de região)"
 
 #: ../lib/initialize.py:536
 msgid "Region 1 (United States of America, Canada)"
@@ -787,12 +787,12 @@ msgstr "Filtro activo. A listar apenas os filmes emprestados"
 #: ../lib/view.py:43
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
-msgstr "Filtro activado. A listar apenas os filmes do volume: %s"
+msgstr "Filtro activo. A listar apenas os filmes do volume: %s"
 
 #: ../lib/view.py:50
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
-msgstr "Filtro activado. A listar apenas os filmes da colecção: %s"
+msgstr "Filtro activo. A listar apenas os filmes da colecção: %s"
 
 #: ../lib/widgets.py:302
 msgid ""
@@ -943,28 +943,26 @@ msgid "Document has been generated."
 msgstr "O documento foi gerado."
 
 #: ../lib/plugins/export/PluginExportiPod.py:36
-#, fuzzy
 msgid "iPod Notes export plugin"
-msgstr "Plugin para exportação de PDF"
+msgstr "Plugin para exportação para o iPod"
 
 #: ../lib/plugins/export/PluginExportiPod.py:82
-#, fuzzy
 msgid "My Movies List"
-msgstr "Total de filmes: %s"
+msgstr "A Minha Lista de Filmes"
 
 #: ../lib/plugins/export/PluginExportiPod.py:98
 msgid "List was successful exported to iPod."
-msgstr ""
+msgstr "Lista exportada para o iPod com sucesso."
 
 #: ../lib/plugins/export/PluginExportiPod.py:100
 msgid "iPod is not connected."
-msgstr ""
+msgstr "iPod não está ligado."
 
 #: ../lib/plugins/export/PluginExportiPod.py:115
 msgid ""
 "List was successful exported. Now you should move it to the 'Notes' folder "
 "on your iPod."
-msgstr ""
+msgstr "A lista foi exportada correctamente. Agora deve mover o ficheiro para a pasta 'Notes' do iPod."
 
 #: ../lib/plugins/export/PluginExportPDF.py:44
 msgid "PDF export plugin"
@@ -1428,7 +1426,7 @@ msgstr "Filmes por visualizar"
 
 #: ../glade/griffith.glade.h:94
 msgid "Original title"
-msgstr "Título"
+msgstr "Título Original"
 
 #: ../glade/griffith.glade.h:95
 msgid "Other"
@@ -1440,7 +1438,7 @@ msgstr "Leitor PDF"
 
 #: ../glade/griffith.glade.h:97
 msgid "Password"
-msgstr "Palavra-chave"
+msgstr "Palavra-passe"
 
 #: ../glade/griffith.glade.h:98
 msgid "People"
@@ -1762,7 +1760,7 @@ msgstr ""
 
 #: ../glade/importcsv.glade.h:16
 msgid "Lineterminator"
-msgstr "Terminação de linha"
+msgstr "Finalizaão de linha"
 
 #: ../glade/importcsv.glade.h:17
 msgid "Quotechar"
@@ -1876,50 +1874,3 @@ msgstr "Plugin"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Fonte"
-
-#~ msgid "Sorry. This poster image format is not supported."
-#~ msgstr "Este formato de imagem não é suportado."
-
-#~ msgid ""
-#~ "Databases merged!\n"
-#~ "\n"
-#~ "Processed movies: %s\n"
-#~ "Merged movies: %s"
-#~ msgstr ""
-#~ "Bases de dados concatenadas!\n"
-#~ "\n"
-#~ "Filmes processados: %s\n"
-#~ "Filmes concatenados: %s"
-
-#~ msgid "Merge"
-#~ msgstr "Concatenar"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Select"
-#~ msgstr "Seleccionar"
-
-#~ msgid "Add person"
-#~ msgstr "Adicionar pessoa"
-
-#~ msgid "Update"
-#~ msgstr "Actualizar"
-
-#~ msgid "Region 9 (Often used as region free)"
-#~ msgstr ""
-#~ "RegiÃƒÂƒÃ‚ÂƒÃƒÂ‚Ã‚ÂƒÃƒÂƒÃ‚Â‚ÃƒÂ‚Ã‚Â£o 9 (Geralmente utilizado para multi-"
-#~ "regiÃƒÂƒÃ‚ÂƒÃƒÂ‚Ã‚ÂƒÃƒÂƒÃ‚Â‚ÃƒÂ‚Ã‚Â£o)"
-
-#~ msgid "To buy"
-#~ msgstr "A comprar"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "Spell Checker"
-#~ msgstr ""
-#~ "VerificaÃƒÂƒÃ‚ÂƒÃƒÂ‚Ã‚ÂƒÃƒÂƒÃ‚Â‚ÃƒÂ‚Ã‚Â§ÃƒÂƒÃ‚ÂƒÃƒÂ‚Ã‚ÂƒÃƒÂƒÃ‚Â‚ÃƒÂ‚Ã‚Â£o OrtogrÃƒÂƒÃ‚ÂƒÃƒÂ‚Ã‚ÂƒÃƒÂƒÃ‚Â‚ÃƒÂ‚Ã‚Â¡fica"
-
-#~ msgid "min."
-#~ msgstr " "

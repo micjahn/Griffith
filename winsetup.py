@@ -46,7 +46,7 @@ import py2exe
 
 opts = {
     "py2exe": {
-        "includes": "pygtk,cairo,pangocairo,gobject,cgi,PIL,pysqlite2,pysqlite2.*,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlalchemy,sqlalchemy.*,sqlalchemy.mods.*,sqlalchemy.databases.*,sqlalchemy.engine.*,sqlalchemy.ext.*,sqlalchemy.orm.*,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,platform,winshell,psycopg2,MySQLdb,chardet,gzip",
+        "includes": "pygtk,cairo,pangocairo,gobject,cgi,PIL,pysqlite2,pysqlite2.*,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.ext,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlalchemy,sqlalchemy.*,sqlalchemy.mods.*,sqlalchemy.databases.*,sqlalchemy.engine.*,sqlalchemy.ext.*,sqlalchemy.orm.*,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,smtplib,win32com,platform,winshell,psycopg2,MySQLdb,chardet,gzip,commands",
         "optimize": 2,
 		"dist_dir": "dist",
     }
@@ -54,7 +54,7 @@ opts = {
 
 setup(
     name = "Griffith",
-    version = "0.9.2",
+    version = "0.9.3",
 	description = 'Griffith - A film manager',
     author = 'Vasco Nunes/Piotr Ozarowski',
     author_email = 'vasco.m.nunes@gmail.com',
@@ -99,6 +99,8 @@ setup(
 		glob.glob("i18n\\pt\\LC_MESSAGES\\*.mo")),
 		("i18n/it/LC_MESSAGES",
 		glob.glob("i18n\\it\\LC_MESSAGES\\*.mo")),
+		("i18n/nl/LC_MESSAGES",
+		glob.glob("i18n\\nl\\LC_MESSAGES\\*.mo")),
 		("i18n/sv/LC_MESSAGES",
 		glob.glob("i18n\\sv\\LC_MESSAGES\\*.mo")),
 		("i18n/pt_BR/LC_MESSAGES",
