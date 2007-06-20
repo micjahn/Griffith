@@ -92,6 +92,7 @@ You need to prepare a new database and a new user by yourself
 	USE griffith
 	EXEC sp_changedbowner @loginame='griffith'
 
+
 Installation
 ============
 
