@@ -608,7 +608,10 @@ def clone_movie(self):
 		return False
 
 	next_number = gutils.find_next_available(self.db)
-	new_image = str(movie.image) + '_' + str(next_number)
+	if movie.image is not None:
+		new_image = str(movie.image) + '_' + str(next_number)
+	else:
+		new_image = None
 	
 	# integer problem workaround
 	if int(movie.seen)==1:
@@ -662,10 +665,16 @@ def clone_movie(self):
 		image_path = os.path.join(tmp_dest, str(movie.image)+".jpg")
 		clone_path = os.path.join(tmp_dest, new_image+".jpg")
 		# clone image
-		shutil.copyfile(image_path, clone_path)
-		image_path = clone_path
-		gutils.make_thumbnail(self, "%s.jpg" % new_image)
-		gutils.make_medium_image(self, "%s.jpg" % new_image)
+		# catch IOError otherwise you would not see the cloned entry in
+		# the list before the next start of griffith or another refresh
+		# of the list
+		try:
+			shutil.copyfile(image_path, clone_path)
+			image_path = clone_path
+			gutils.make_thumbnail(self, "%s.jpg" % new_image)
+			gutils.make_medium_image(self, "%s.jpg" % new_image)
+		except IOError:
+			image_path = os.path.join(self.locations['images'], "default.png")
 	else:
 		image_path = os.path.join(self.locations['images'], "default.png")
 	handler = self.Image.set_from_file(image_path)

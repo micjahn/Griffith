@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-06-20  Michael Jahn
 	* fixed bug #11103: windows are not "on top"
+	* fixed bug #11088: Clone doesn't produce a new entry
 	* added script for database creation under Microsoft SQL Server (README)
 
 2007-06-19  Vasco Nunes
