@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-06-20  Michael Jahn
+	* fixed bug #11103: windows are not "on top"
+	* added script for database creation under Microsoft SQL Server (README)
+
 2007-06-19  Vasco Nunes
 	* Portuguese translation updated
 	* winsetup script updated

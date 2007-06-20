@@ -84,6 +84,13 @@ You need to prepare a new database and a new user by yourself
 	GRANT ALL ON `griffith` . * TO 'griffith'@'localhost';
 	GRANT ALL ON `griffith` . * TO 'griffith'@'%';
 
+  Microsoft SQL Server
+  --------------------
+	CREATE DATABASE griffith
+	EXEC sp_addlogin @loginame='griffith', @passwd='gRiFiTh', @defdb='griffith'
+	GO
+	USE griffith
+	EXEC sp_changedbowner @loginame='griffith'
 
 Installation
 ============

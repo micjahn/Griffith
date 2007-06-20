@@ -205,6 +205,7 @@ def error(self, msg, parent=None):
 	dialog = gtk.MessageDialog(parent,
 			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 			gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, msg)
+	dialog.set_skip_taskbar_hint(False)
 	dialog.run()
 	dialog.destroy()
 
@@ -212,6 +213,7 @@ def urllib_error(msg, parent=None):
 	dialog = gtk.MessageDialog(parent,
 			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 			gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, msg)
+	dialog.set_skip_taskbar_hint(False)
 	dialog.run()
 	dialog.destroy()
 
@@ -219,6 +221,7 @@ def warning(self, msg, parent=None):
 	dialog = gtk.MessageDialog(parent,
 			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 			gtk.MESSAGE_WARNING, gtk.BUTTONS_OK, msg)
+	dialog.set_skip_taskbar_hint(False)
 	dialog.run()
 	dialog.destroy()
 
@@ -226,6 +229,7 @@ def info(self, msg, parent=None):
 	dialog = gtk.MessageDialog(parent,
 			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 			gtk.MESSAGE_INFO, gtk.BUTTONS_OK, msg)
+	dialog.set_skip_taskbar_hint(False)
 	dialog.run()
 	dialog.destroy()
 
@@ -237,6 +241,7 @@ def question(self, msg, cancel=1, parent=None):
 	dialog.add_buttons(gtk.STOCK_YES, gtk.RESPONSE_YES,
 			gtk.STOCK_NO, gtk.RESPONSE_NO)
 	dialog.set_default_response(gtk.RESPONSE_NO)
+	dialog.set_skip_taskbar_hint(False)
 	response = dialog.run()
 	dialog.destroy()
 	return response
