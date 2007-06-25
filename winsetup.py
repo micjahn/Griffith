@@ -105,6 +105,8 @@ setup(
 		glob.glob("i18n\\sv\\LC_MESSAGES\\*.mo")),
 		("i18n/pt_BR/LC_MESSAGES",
 		glob.glob("i18n\\pt_BR\\LC_MESSAGES\\*.mo")),
+		("i18n/da/LC_MESSAGES",
+		glob.glob("i18n\\da\\LC_MESSAGES\\*.mo")),
 		("lib/plugins",
 		glob.glob("lib\\plugins\\*.*")),
 		("lib/plugins/export",
