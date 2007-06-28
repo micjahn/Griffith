@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-06-20  Piotr Ożarowski
+	* IMDb movie plugin updated
+
 2007-06-27  Michael Jahn
 	* Kino.de movie plugin updated
 	* DVD-Palace movie plugin added

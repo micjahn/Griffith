@@ -58,6 +58,8 @@ class AboutDialog:
 			_("Czech") + ":\n\t" + \
 				"Blondak <blondak@neser.cz>,\n\t" + \
 				"Ondra 'Kepi' Kudlík <kepi@igloonet.cz>\n" + \
+			_("Danish") + ":\n\t" + \
+				"Joe Dalton <joedalton2@yahoo.dk>\n" \
 			_("Dutch") + ":\n\t" + \
 				"Marcel Dijkstra <mdtje@hotmail.com>\n" + \
 			_("French") + ":\n\t" + \
@@ -79,8 +81,6 @@ class AboutDialog:
 				"Daniel Ucero <escaranbujo@gmail.com>\n" + \
 			_("Swedish") + ":\n\t" + \
 				"Daniel Nylander <po@danielnylander.se>\n" + \
-			_("Danish") + ":\n\t" + \
-				"Joe Dalton <joedalton2@yahoo.dk>\n" \
 		)
 		logo_file = os.path.abspath(os.path.join(images_dir, 'griffith.png'))
 		logo = gtk.gdk.pixbuf_new_from_file(logo_file)
