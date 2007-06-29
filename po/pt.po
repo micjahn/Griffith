@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-19 22:32+0200\n"
+"POT-Creation-Date: 2007-06-29 22:50+0200\n"
 "PO-Revision-Date: 2007-06-19 23:52+0000\n"
 "Last-Translator: Vasco Nunes <vasco.m.nunes@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -114,32 +114,43 @@ msgid "Czech"
 msgstr "Checo"
 
 #: ../lib/about.py:61
+#, fuzzy
+msgid "Danish"
+msgstr "Espanhol"
+
+#: ../lib/about.py:63
 msgid "Dutch"
 msgstr "Holandês"
 
-#: ../lib/about.py:63 ../lib/dbupgrade.py:89
+#: ../lib/about.py:65 ../lib/dbupgrade.py:89
 #: ../lib/plugins/movie/PluginMovieAllocine.py:32
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:31
 msgid "French"
 msgstr "Francês"
 
-#: ../lib/about.py:67 ../lib/dbupgrade.py:90
+#: ../lib/about.py:69 ../lib/dbupgrade.py:90
+#: ../lib/plugins/movie/PluginMovieDVDPalace.py:33
 #: ../lib/plugins/movie/PluginMovieFilmDb.py:32
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:32
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:32
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:33
 #: ../lib/plugins/movie/PluginMovieOFDb.py:13
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:33
 msgid "German"
 msgstr "Alemão"
 
-#: ../lib/about.py:72 ../lib/dbupgrade.py:91
+#: ../lib/about.py:75
+#, fuzzy
+msgid "Greek"
+msgstr "Género"
+
+#: ../lib/about.py:77 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
 msgstr "Italiano"
 
-#: ../lib/about.py:74 ../lib/dbupgrade.py:93
-#: ../lib/plugins/movie/PluginMovieFDb.py:32
+#: ../lib/about.py:79 ../lib/dbupgrade.py:93
+#: ../lib/plugins/movie/PluginMovieFDb.py:33
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:31
 #: ../lib/plugins/movie/PluginMovieOnet.py:31
 #: ../lib/plugins/movie/PluginMovieStopklatka.py:31
@@ -148,25 +159,29 @@ msgstr "Italiano"
 msgid "Polish"
 msgstr "Polaco"
 
-#: ../lib/about.py:76 ../lib/dbupgrade.py:92
+#: ../lib/about.py:81 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr "Português"
 
-#: ../lib/about.py:78 ../lib/dbupgrade.py:94
+#: ../lib/about.py:83
+msgid "Simplified Chinese"
+msgstr ""
+
+#: ../lib/about.py:85 ../lib/dbupgrade.py:94
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
 msgid "Spanish"
 msgstr "Espanhol"
 
-#: ../lib/about.py:80
+#: ../lib/about.py:87
 msgid "Swedish"
 msgstr "Sueco"
 
-#: ../lib/about.py:89
+#: ../lib/about.py:96
 msgid "This program is released under the GNU"
 msgstr "Este programa é licenciado sob a licença GNU"
 
@@ -324,7 +339,9 @@ msgstr "Base de dados antiga: por favor instale o pysqlite legacy (v1.0)"
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
-msgstr "A sua base de dados está provavelmente em SQLite2, por favor converta-a para SQLite3."
+msgstr ""
+"A sua base de dados está provavelmente em SQLite2, por favor converta-a para "
+"SQLite3."
 
 #: ../lib/delete.py:37
 msgid "You can't delete movie while it is loaned."
@@ -403,11 +420,11 @@ msgstr ""
 msgid "This person has no e-mail address defined."
 msgstr "Esta pessoa nao tem um endereço de e-mail definido"
 
-#: ../lib/gutils.py:256
+#: ../lib/gutils.py:262
 msgid "Images"
 msgstr "Imagens"
 
-#: ../lib/gutils.py:267 ../lib/plugins/imp/__init__.py:202
+#: ../lib/gutils.py:273 ../lib/plugins/imp/__init__.py:202
 msgid "All files"
 msgstr "Todos os ficheiros"
 
@@ -835,13 +852,13 @@ msgstr ""
 "definir aqui o seu próprio endereço pessoal de correio electrónico."
 
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:93
-#: ../lib/plugins/movie/PluginMovieFDb.py:96
+#: ../lib/plugins/movie/PluginMovieFDb.py:100
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:78
-#: ../lib/plugins/movie/PluginMovieFilmweb.py:100
+#: ../lib/plugins/movie/PluginMovieFilmweb.py:108
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB.py:93
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:142
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:141
 #: ../lib/plugins/movie/PluginMovieOnet.py:102
 #: ../lib/plugins/movie/PluginMovieWP.py:96
 #: ../lib/plugins/movie/PluginMovieWP.py:98
@@ -962,7 +979,9 @@ msgstr "iPod não está ligado."
 msgid ""
 "List was successful exported. Now you should move it to the 'Notes' folder "
 "on your iPod."
-msgstr "A lista foi exportada correctamente. Agora deve mover o ficheiro para a pasta 'Notes' do iPod."
+msgstr ""
+"A lista foi exportada correctamente. Agora deve mover o ficheiro para a "
+"pasta 'Notes' do iPod."
 
 #: ../lib/plugins/export/PluginExportPDF.py:44
 msgid "PDF export plugin"

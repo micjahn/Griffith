@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: griffith\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2007-06-17 22:44+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-06-29 22:50+0200\n"
 "PO-Revision-Date: 2007-06-25 14:17+0000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -114,32 +114,43 @@ msgid "Czech"
 msgstr "Tjekkiske"
 
 #: ../lib/about.py:61
+#, fuzzy
+msgid "Danish"
+msgstr "Spanske"
+
+#: ../lib/about.py:63
 msgid "Dutch"
 msgstr "Hollandske"
 
-#: ../lib/about.py:63 ../lib/dbupgrade.py:89
+#: ../lib/about.py:65 ../lib/dbupgrade.py:89
 #: ../lib/plugins/movie/PluginMovieAllocine.py:32
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:31
 msgid "French"
 msgstr "Franske"
 
-#: ../lib/about.py:67 ../lib/dbupgrade.py:90
+#: ../lib/about.py:69 ../lib/dbupgrade.py:90
+#: ../lib/plugins/movie/PluginMovieDVDPalace.py:33
 #: ../lib/plugins/movie/PluginMovieFilmDb.py:32
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:32
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:32
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:33
 #: ../lib/plugins/movie/PluginMovieOFDb.py:13
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:33
 msgid "German"
 msgstr "Tyske"
 
-#: ../lib/about.py:72 ../lib/dbupgrade.py:91
+#: ../lib/about.py:75
+#, fuzzy
+msgid "Greek"
+msgstr "Genre"
+
+#: ../lib/about.py:77 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
 msgstr "Italienske"
 
-#: ../lib/about.py:74 ../lib/dbupgrade.py:93
-#: ../lib/plugins/movie/PluginMovieFDb.py:32
+#: ../lib/about.py:79 ../lib/dbupgrade.py:93
+#: ../lib/plugins/movie/PluginMovieFDb.py:33
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:31
 #: ../lib/plugins/movie/PluginMovieOnet.py:31
 #: ../lib/plugins/movie/PluginMovieStopklatka.py:31
@@ -148,25 +159,29 @@ msgstr "Italienske"
 msgid "Polish"
 msgstr "Polske"
 
-#: ../lib/about.py:76 ../lib/dbupgrade.py:92
+#: ../lib/about.py:81 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr "Portugisiske"
 
-#: ../lib/about.py:78 ../lib/dbupgrade.py:94
+#: ../lib/about.py:83
+msgid "Simplified Chinese"
+msgstr ""
+
+#: ../lib/about.py:85 ../lib/dbupgrade.py:94
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
 msgid "Spanish"
 msgstr "Spanske"
 
-#: ../lib/about.py:80
+#: ../lib/about.py:87
 msgid "Swedish"
 msgstr "Svenske"
 
-#: ../lib/about.py:89
+#: ../lib/about.py:96
 msgid "This program is released under the GNU"
 msgstr "Dette program er udgivet under GNU"
 
@@ -290,12 +305,9 @@ msgstr "Land"
 msgid "Genre"
 msgstr "Genre"
 
-#: ../lib/dbupgrade.py:86
-#: ../lib/plugins/movie/PluginMovieAdultFilmDatabase.py:32
-#: ../lib/plugins/movie/PluginMovieAniDB.py:32
+#: ../lib/dbupgrade.py:86 ../lib/plugins/movie/PluginMovieAniDB.py:32
 #: ../lib/plugins/movie/PluginMovieDVDEmpire.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB.py:31
-#: ../lib/plugins/movie/PluginMovieIMDbPY.py:37
 #: ../lib/plugins/movie/PluginMovieMediadis.py:16
 #: ../lib/plugins/movie/PluginMovieMoviefone.py:16
 msgid "English"
@@ -367,8 +379,7 @@ msgid "Sorry. A connection error has occurred."
 msgstr "Beklager. En forbindelsesfejl er opstået."
 
 #: ../lib/edit.py:224 ../lib/edit.py:257
-msgid ""
-"Sorry. This movie is listed but has no poster available at Amazon.com."
+msgid "Sorry. This movie is listed but has no poster available at Amazon.com."
 msgstr ""
 "Beklager. Denne film er registreret men har ingen plakater tilgængelig hos "
 "Amazon.com"
@@ -409,11 +420,11 @@ msgstr ""
 msgid "This person has no e-mail address defined."
 msgstr "Denne person har ingen e-post-adresse defineret."
 
-#: ../lib/gutils.py:256
+#: ../lib/gutils.py:262
 msgid "Images"
 msgstr "billeder"
 
-#: ../lib/gutils.py:267 ../lib/plugins/imp/__init__.py:202
+#: ../lib/gutils.py:273 ../lib/plugins/imp/__init__.py:202
 msgid "All files"
 msgstr "Alle filer"
 
@@ -440,7 +451,6 @@ msgstr "Udlånt til"
 
 #: ../lib/initialize.py:240 ../lib/plugins/movie/PluginMovieIMDB-de.py:145
 #: ../lib/plugins/movie/PluginMovieIMDB.py:140
-#: ../lib/plugins/movie/PluginMovieIMDbPY.py:124
 msgid "Language"
 msgstr "Sprog"
 
@@ -501,8 +511,7 @@ msgstr "Samling"
 
 #: ../lib/initialize.py:504 ../lib/initialize.py:531
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:149
-#: ../lib/plugins/movie/PluginMovieIMDB.py:144
-#: ../lib/plugins/movie/PluginMovieIMDbPY.py:128 ../glade/griffith.glade.h:36
+#: ../lib/plugins/movie/PluginMovieIMDB.py:144 ../glade/griffith.glade.h:36
 msgid "Color"
 msgstr "Farve"
 
@@ -667,13 +676,11 @@ msgstr "Region 3 (Korea, Thailand, Vietnam, Borneo og Indonesien)"
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
-msgstr ""
-"Region 4 (Australien og New Zealand, Mexico, Caribien, og Sydamerika)"
+msgstr "Region 4 (Australien og New Zealand, Mexico, Caribien, og Sydamerika)"
 
 #: ../lib/initialize.py:540
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
-msgstr ""
-"Region 5 (Indien, Afrika, Rusland og tidligere lande i Sovjetunionen)"
+msgstr "Region 5 (Indien, Afrika, Rusland og tidligere lande i Sovjetunionen)"
 
 #: ../lib/initialize.py:541
 msgid "Region 6 (Popular Republic of China)"
@@ -748,8 +755,8 @@ msgid ""
 "This person has data in the loan history. This data will be erased if you "
 "continue."
 msgstr ""
-"Denne person har informationer i udlånshistorien. Disse informationer slettes "
-"hvis du fortsætter."
+"Denne person har informationer i udlånshistorien. Disse informationer "
+"slettes hvis du fortsætter."
 
 #: ../lib/people.py:117
 #, python-format
@@ -841,14 +848,13 @@ msgstr ""
 "anføre din egen e-post-adresse."
 
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:93
-#: ../lib/plugins/movie/PluginMovieFDb.py:96
+#: ../lib/plugins/movie/PluginMovieFDb.py:100
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:78
-#: ../lib/plugins/movie/PluginMovieFilmweb.py:100
+#: ../lib/plugins/movie/PluginMovieFilmweb.py:108
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB.py:93
-#: ../lib/plugins/movie/PluginMovieIMDbPY.py:83
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:142
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:141
 #: ../lib/plugins/movie/PluginMovieOnet.py:102
 #: ../lib/plugins/movie/PluginMovieWP.py:96
 #: ../lib/plugins/movie/PluginMovieWP.py:98
@@ -857,8 +863,7 @@ msgid " as "
 msgstr " som "
 
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:147
-#: ../lib/plugins/movie/PluginMovieIMDB.py:142
-#: ../lib/plugins/movie/PluginMovieIMDbPY.py:126 ../glade/griffith.glade.h:4
+#: ../lib/plugins/movie/PluginMovieIMDB.py:142 ../glade/griffith.glade.h:4
 msgid "<b>Audio</b>"
 msgstr "<b>Lyd</b>"
 
@@ -1606,12 +1611,11 @@ msgstr "Forsøg hentning af en stor plakat fra Amazons netside"
 
 #: ../glade/griffith.glade.h:148
 msgid ""
-"Type in the original film tile, select source and choose <i>Get from "
-"web</i>. Griffith will try to fetch all the related information from the Web."
+"Type in the original film tile, select source and choose <i>Get from web</"
+"i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
-"Indtast den originale filmtitel, vælg kilde og vælg <i>Hent fra "
-"internettet</i>, så vil Griffith forsøgt at hente de relevante oplysninger "
-"fra nettet."
+"Indtast den originale filmtitel, vælg kilde og vælg <i>Hent fra internettet</"
+"i>, så vil Griffith forsøgt at hente de relevante oplysninger fra nettet."
 
 #: ../glade/griffith.glade.h:149
 msgid "Use Spellchecker"
@@ -1776,6 +1780,7 @@ msgid "Quotechar"
 msgstr "Citeret person"
 
 #: ../glade/importcsv.glade.h:18
+#, fuzzy
 msgid ""
 "ascii (English)\n"
 "big5 (Traditional Chinese)\n"
@@ -1819,7 +1824,7 @@ msgid ""
 "euc_jp (Japanese)\n"
 "euc_jis_2004 (Japanese)\n"
 "euc_jisx0213 (Japanese)\n"
-"euc_kr (Koreansk)\n"
+"euc_kr (Korean)\n"
 "gb2312 (Simplified Chinese)\n"
 "gbk (Unified Chinese)\n"
 "gb18030 (Unified Chinese)\n"

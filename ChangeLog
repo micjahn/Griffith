@@ -4,6 +4,13 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-06-29  Piotr Ożarowski
+	* Added Greek translation (thanka to Ioannis Koniaris)
+	* Added Simplified Chinese translation (thanks to kempson)
+	* Updated German, Spanish, French and Portuguese Brazilian translations (from Rosetta)
+	* Updated Polish translations
+	* Do not register mime type in .desktop file
+
 2007-06-29  Vasco Nunes
 	* 7arte.net and Cineteka movie plugins updated
 

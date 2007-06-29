@@ -71,12 +71,16 @@ class AboutDialog:
 				"original translation from:\n\t" + \
 				"Christian Sagmueller <christian@sagmueller.net>,\n\t" + \
 				"Malte Wiemann <ryan2057@gmx.de>\n" + \
+			_("Greek") + ":\n\t" + \
+				"Ioannis Koniaris <ikoniari@csd.auth.gr>\n" + \
 			_("Italian") + ":\n\t" + \
 				"Diego Porcelli <diego.p77@gmail.com>\n" + \
 			_("Polish") + ":\n\t" + \
 				"Piotr Ozarowski <ozarow+griffith@gmail.com>\n" + \
 			_("Portuguese") + ":\n\t" + \
 				"Vasco Nunes <vasco.m.nunes@gmail.com>\n" + \
+			_("Simplified Chinese") + ":\n\t" + \
+				"kempson <kempson.chen@gmail.com>\n" + \
 			_("Spanish") + ":\n\t" + \
 				"Daniel Ucero <escaranbujo@gmail.com>\n" + \
 			_("Swedish") + ":\n\t" + \

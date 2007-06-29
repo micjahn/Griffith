@@ -1,82 +1,81 @@
-# Language po/pt translations for Griffith package.
-# Copyright (C) 2005 Vasco Nunes
-# This file is distributed under the same license as the Griffith package.
-# Vasco Nunes <vasco.m.nunes@gmail.com>, 2005.
-# Fábio Nogueira <deb-user-ba@ubuntu.com>, 2007.
+# Greek translation for griffith
+# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# This file is distributed under the same license as the griffith package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
 #
-#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.6.2\n"
+"Project-Id-Version: griffith\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-29 22:50+0200\n"
-"PO-Revision-Date: 2007-01-04 14:53-0300\n"
-"Last-Translator: Fábio Nogueira <deb-user-ba@ubuntu.com>\n"
-"Language-Team: Portuguese\n"
+"PO-Revision-Date: 2007-06-28 11:01+0000\n"
+"Last-Translator: Ioannis Koniaris <ikoniari@csd.auth.gr>\n"
+"Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Portuguese\n"
-"X-Poedit-Country: BRAZIL\n"
-"X-Poedit-KeywordsList: pt_BR\n"
+"X-Rosetta-Export-Date: 2007-06-29 19:48:16+0000\n"
 
 #: ../griffith:168 ../griffith:751 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 msgid "You have no movies in your database"
-msgstr "Você não tem filmes no seu banco de dados"
+msgstr "Η βάση δεδομένων είναι άδεια"
 
 #: ../griffith:309
 msgid "You saw all movies in your collection!"
-msgstr "Você já viu todos os filmes da sua coleção!"
+msgstr "Είδατε όλες τις ταινίες της συλλογή σας!"
 
 #: ../griffith:434 ../griffith:439 ../lib/initialize.py:254
 #: ../lib/initialize.py:532
 msgid "subtitles"
-msgstr "legendas"
+msgstr "υπότιτλοι"
 
 #: ../griffith:718
+#, fuzzy
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
 "You can't undo this operation."
 msgstr ""
-"Tem certeza que deseja restaurar a cópia de segurança?\n"
-"A sua coleção atual será substituída.\n"
-"Esta operação é irreversível."
+"Είστε σίγουροι για την επαναφορά;\n"
+"Η τρέχουσα συλλογή ταινιών θα αντικατασταθεί.\n"
+"Δεν μπορείτε να αναιρέσετε αυτή την αλλαγή!"
 
 #: ../griffith:728
+#, fuzzy
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
 "You can't undo this operation."
 msgstr ""
-"Tem certeza que deseja restaurar a cópia de segurança?\n"
-"A sua coleção atual será substituída.\n"
-"Esta operação é irreversível."
+"Είστε σίγουροι για το ανακάτεμα;\n"
+"Η τρέχουσα συλλογή ταινιών θα ανακατευτεί με ένα αντίγραφο.\n"
+"Δεν μπορείτε να αναιρέσετε αυτή την αλλαγή!"
 
 #: ../griffith:826
 msgid " movie(s) in collection. "
-msgstr " filme(s) na coleção. "
+msgstr " ταινία(ες) στη συλλογή "
 
 #: ../griffith:827
 msgid " movie(s) loaned. "
-msgstr " filme(s) emprestado(s). "
+msgstr " ταινία(ες) δανείστηκαν "
 
 #: ../griffith:828
 msgid "You haven't seen "
-msgstr "Ainda não assitiu "
+msgstr "Δεν έχετε δει "
 
 #: ../griffith:828
 msgid " movie(s)"
-msgstr " filme(s)"
+msgstr " ταινία(ες)"
 
 #: ../griffith:964
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
 msgstr ""
-"Você tem certeza que deseja criar um novo banco de dados?\n"
-"Você irá perder TODOS os seus dados atuais!"
+"Είστε σίγουροι οτι θέλετε να δημιουργήσετε μια νέα βάση δεδομένων;\n"
+"Θα χάσετε ΟΛΑ τα υπάρχοντα δεδομένα!"
 
 #: ../griffith:968
 msgid ""
@@ -84,53 +83,59 @@ msgid ""
 "Do you confirm that you want\n"
 "to lose your current data?"
 msgstr ""
-"última chance!\n"
-"Confirma que deseja\n"
-"perder todos os seus dados atuais?"
+"Τελευταία ευκαιρία!\n"
+"Είστε σίγουροi οτι θέλετε\n"
+"να χάσετε τα υπάρχοντα δεδομένα;"
 
 #: ../lib/about.py:39
+#, fuzzy
 msgid "Main Authors"
-msgstr "Autores Principais"
+msgstr "Βασικοί Συντάκτες"
 
 #: ../lib/about.py:41
 msgid "Programmer"
-msgstr "Programadores"
+msgstr "Προγραμματιστής"
 
 #: ../lib/about.py:43
 msgid "Contributors:"
-msgstr "Contribuições:"
+msgstr "Συνεργάτες:"
 
 #: ../lib/about.py:48
+#, fuzzy
 msgid "Logo, icon and general artwork "
-msgstr "Logotipo, icone e trabalho gráfico "
+msgstr "Λογότυπο, εικονίδιο και γενικά γραφικά "
 
 #: ../lib/about.py:54
+#, fuzzy
 msgid "Bulgarian"
-msgstr "Búlgaro"
+msgstr "Βουλγαρικά"
 
 #: ../lib/about.py:56
 msgid "Brasilian Portuguese"
-msgstr "Português do Brasil"
+msgstr "Πορτογαλλικά Βραζιλίας"
 
 #: ../lib/about.py:58 ../lib/dbupgrade.py:88
 #: ../lib/plugins/movie/PluginMovieCSFD.py:30
+#, fuzzy
 msgid "Czech"
-msgstr "Checo"
+msgstr "Τσεχικά"
 
 #: ../lib/about.py:61
 #, fuzzy
 msgid "Danish"
-msgstr "Espanhol"
+msgstr "Ισπανικά"
 
 #: ../lib/about.py:63
+#, fuzzy
 msgid "Dutch"
-msgstr "Holandês"
+msgstr "Ολλανδικά"
 
 #: ../lib/about.py:65 ../lib/dbupgrade.py:89
 #: ../lib/plugins/movie/PluginMovieAllocine.py:32
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:31
+#, fuzzy
 msgid "French"
-msgstr "Francês"
+msgstr "Γαλλικά"
 
 #: ../lib/about.py:69 ../lib/dbupgrade.py:90
 #: ../lib/plugins/movie/PluginMovieDVDPalace.py:33
@@ -140,18 +145,20 @@ msgstr "Francês"
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:33
 #: ../lib/plugins/movie/PluginMovieOFDb.py:13
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:33
+#, fuzzy
 msgid "German"
-msgstr "Alemão"
+msgstr "Γερμανικά"
 
 #: ../lib/about.py:75
 #, fuzzy
 msgid "Greek"
-msgstr "Gênero"
+msgstr "Είδος"
 
 #: ../lib/about.py:77 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
+#, fuzzy
 msgid "Italian"
-msgstr "Italiano"
+msgstr "Ιταλικά"
 
 #: ../lib/about.py:79 ../lib/dbupgrade.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:33
@@ -160,15 +167,17 @@ msgstr "Italiano"
 #: ../lib/plugins/movie/PluginMovieStopklatka.py:31
 #: ../lib/plugins/movie/PluginMovieTanukiAnime.py:31
 #: ../lib/plugins/movie/PluginMovieWP.py:32
+#, fuzzy
 msgid "Polish"
-msgstr "Polaco"
+msgstr "Πολωνικά"
 
 #: ../lib/about.py:81 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
+#, fuzzy
 msgid "Portuguese"
-msgstr "Português"
+msgstr "Πορτογαλλικά"
 
 #: ../lib/about.py:83
 msgid "Simplified Chinese"
@@ -178,237 +187,264 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
+#, fuzzy
 msgid "Spanish"
-msgstr "Espanhol"
+msgstr "Ισπανικά"
 
 #: ../lib/about.py:87
+#, fuzzy
 msgid "Swedish"
-msgstr "Sueco"
+msgstr "Σουηδικά"
 
 #: ../lib/about.py:96
+#, fuzzy
 msgid "This program is released under the GNU"
-msgstr "Este programa é licenciado sob a GNU"
+msgstr "Το πρόγραμμα υπόκειται στην άδεια χρήσης GNU"
 
 #: ../lib/add.py:45 ../glade/griffith.glade.h:23
 msgid "Add a new movie"
-msgstr "Adicionar um novo filme"
+msgstr "Προσθήκη νέας ταινίας"
 
 #: ../lib/add.py:56
 msgid "Edit movie"
-msgstr "Editar filme"
+msgstr "Επεξεργασία ταινίας"
 
 #: ../lib/add.py:369
 msgid "Movie information has been updated"
-msgstr "As informações do filme foram atualizadas"
+msgstr "Οι πληροφορίες της ταινίας ενημερώθηκαν"
 
 #: ../lib/add.py:374 ../lib/add.py:584
+#, fuzzy
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
 msgstr ""
-"Deve indicar o título original\n"
-"ou o título traduzido do filme."
+"Πρέπει να εισάγετε τον πρωτότυπο τίτλο\n"
+"ή τον τίτλο της ταινίας."
 
 #: ../lib/add.py:380 ../lib/add.py:386
 msgid "Movie with that title already exists, are you sure you want to add?"
 msgstr ""
-"Já existe um filme com este título, tem certeza que deseja adicioná-lo?"
+"Ταινία με αυτόν τον τίτλο υπάρχει ήδη, είστε σίγουροι ότι θέλετε να την "
+"προσθέσετε;"
 
 #: ../lib/add.py:555
 msgid "No results"
-msgstr "Sem resultados"
+msgstr "Κανένα αποτέλεσμα"
 
 #: ../lib/add.py:592
+#, fuzzy
 msgid "Url: "
 msgstr "Url: "
 
 #: ../lib/add.py:593
 msgid "Language: "
-msgstr "Idioma: "
+msgstr "Γλώσσα: "
 
 #: ../lib/backup.py:32
 msgid "Save Griffith backup"
-msgstr "Salvar cópia de segurança do Griffith"
+msgstr "Αποθήκευση αντιγράφου Griffith"
 
 #: ../lib/backup.py:40 ../lib/plugins/export/PluginExportCSV.py:50
 #: ../lib/plugins/export/PluginExportiPod.py:108
 #: ../lib/plugins/export/PluginExportPDF.py:72
 #: ../lib/plugins/export/PluginExportXML.py:51
 msgid "File exists. Do you want to overwrite it?"
-msgstr "O arquivo já existe. Deseja substituí-lo?"
+msgstr "Το αρχείο υπάρχει. Θέλετε να το αντικαταστήσετε;"
 
 #: ../lib/backup.py:51
 msgid "Error creating backup"
-msgstr "Erro na criação da cópia de segurança"
+msgstr "Σφάλμα δημιουργίας αντιγράφου"
 
 #: ../lib/backup.py:57
+#, fuzzy
 msgid "Backup function is available only for SQLite engine for now"
 msgstr ""
-"A função de cópia de segurança está disponível apenas para sistemas que "
-"utilizem SQLite!"
+"Η λειτουργία δημιουργίας αντιγράφου είναι διαθέσιμη μόνο για τη μηχανή "
+"SQLite προς το παρόν"
 
 #: ../lib/backup.py:100
 msgid "Backup has been created"
-msgstr "Cópia de segurança foi criada"
+msgstr "Το αντίγραφο δημιουργήθηκε"
 
 #: ../lib/backup.py:104 ../lib/backup.py:168
+#, fuzzy
 msgid "Restore Griffith backup"
-msgstr "Restaurar cópia de segurança do Griffith"
+msgstr "Επαναφορά αντιγράφου Griffith"
 
 #: ../lib/backup.py:112 ../lib/backup.py:184
 msgid "Can't read backup file"
-msgstr "Erro ao ler o arquivo de cópia de segurança"
+msgstr "Δεν ήταν δυνατή η ανάγνωση του αντιγράφου"
 
 #: ../lib/backup.py:159
+#, fuzzy
 msgid "Backup restored"
-msgstr "Cópia de segurança restaurada"
+msgstr "Το αντίγραφο επανακτήθηκε"
 
 #: ../lib/cover.py:42 ../lib/edit.py:46
 msgid "Select image"
-msgstr "Selecionar imagem"
+msgstr "Επιλογή εικόνας"
 
 #: ../lib/cover.py:86 ../lib/cover.py:149
+#, fuzzy
 msgid "Cover generated by Griffith v"
-msgstr "Capa gerada pelo Griffith v"
+msgstr "Το εξώφυλλο δημιουργήθηκε από το Griffith v"
 
 #: ../lib/cover.py:88 ../lib/cover.py:151
 #: ../lib/plugins/export/PluginExportHTML.py:630
 #: ../lib/plugins/export/PluginExportPDF.py:119
 msgid "Released Under the GNU/GPL License"
-msgstr "Disponibilizado Sob a Licença GNU/GPL"
+msgstr "Κυκλοφορία υπό την  άδεια χρήσης GNU/GPL"
 
 #: ../lib/cover.py:176 ../lib/initialize.py:184 ../lib/initialize.py:517
 #: ../lib/plugins/export/PluginExportHTML.py:105 ../glade/griffith.glade.h:93
+#, fuzzy
 msgid "Original Title"
-msgstr "Título Original"
+msgstr "Πρωτότυπος τίτλος"
 
 #: ../lib/cover.py:177 ../lib/initialize.py:190 ../lib/initialize.py:525
 #: ../lib/plugins/export/PluginExportHTML.py:111 ../glade/griffith.glade.h:143
 msgid "Title"
-msgstr "Título em português"
+msgstr "Τίτλος"
 
 #: ../lib/cover.py:179 ../lib/initialize.py:196 ../lib/initialize.py:507
 #: ../lib/plugins/export/PluginExportHTML.py:96 ../glade/griffith.glade.h:45
 msgid "Director"
-msgstr "Diretor"
+msgstr "Σκηνοθέτης"
 
 #: ../lib/cover.py:181
+#, fuzzy
 msgid "Running Time"
-msgstr "Duração"
+msgstr "Συνολικός Χρόνος"
 
 #: ../lib/cover.py:181
 msgid " min"
-msgstr " min"
+msgstr " λεπτά"
 
 #: ../lib/cover.py:182 ../lib/initialize.py:506
 #: ../lib/plugins/export/PluginExportHTML.py:95 ../glade/griffith.glade.h:38
 msgid "Country"
-msgstr "País"
+msgstr "Χώρα"
 
 #: ../lib/cover.py:183 ../lib/initialize.py:508
 #: ../lib/plugins/export/PluginExportHTML.py:97 ../glade/griffith.glade.h:59
 msgid "Genre"
-msgstr "Gênero"
+msgstr "Είδος"
 
 #: ../lib/dbupgrade.py:86 ../lib/plugins/movie/PluginMovieAniDB.py:32
 #: ../lib/plugins/movie/PluginMovieDVDEmpire.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB.py:31
 #: ../lib/plugins/movie/PluginMovieMediadis.py:16
 #: ../lib/plugins/movie/PluginMovieMoviefone.py:16
+#, fuzzy
 msgid "English"
-msgstr "Inglês"
+msgstr "Αγγλικά"
 
 #: ../lib/dbupgrade.py:87 ../lib/plugins/movie/PluginMovieE-Pipoca.py:34
+#, fuzzy
 msgid "Brazilian Portuguese"
-msgstr "Português do Brasil"
+msgstr "Πορτογαλλικά Βραζιλίας"
 
 #: ../lib/dbupgrade.py:97
+#, fuzzy
 msgid "Favourite"
-msgstr "Favorito"
+msgstr "Αγαπημένο"
 
 #: ../lib/dbupgrade.py:119
+#, fuzzy
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
 msgstr ""
-"O Griffith irá agora converter seu banco de dados para um novo formato! Isto "
-"pode durar alguns minutos caso você possua um banco de dados muito grande."
+"Το Griffith θα μετατρέψει τώρα την βάση δεδομένων σας στη νέα μορφή. Αυτή η "
+"διαδικασία μπορεί να διαρκέσει αρκετά λεπτά εάν έχετε μία μεγάλη βάση "
+"δεδομένων."
 
 #: ../lib/dbupgrade.py:133
+#, fuzzy
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
-msgstr "Conversão antiga do DB: por favor instale o pysqlite legacy (v1.0)"
+msgstr "Παλιά μετατροπή ΒΔ: παρακαλώ εγκαταστήστε τα pysqlite legacy (v1.0)"
 
 #: ../lib/dbupgrade.py:158
+#, fuzzy
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
 msgstr ""
-"Seu banco de dados está provavelmente no formato SQLite2, converta por favor "
-"para SQLite3"
+"Η βάση δεδομένων είναι πιθανότατα σε μορφή SQLite2, παρακαλώ μετατρέψτε την "
+"σε SQLite3"
 
 #: ../lib/delete.py:37
+#, fuzzy
 msgid "You can't delete movie while it is loaned."
-msgstr "Não pode apagar um filme enquanto ele estiver emprestado."
+msgstr "Δεν μπορείτε να διαγράψετε την ταινία ενώ είναι νοικιασμένη."
 
 #: ../lib/delete.py:39
 msgid "Are you sure you want to delete this movie?"
-msgstr "Tem a certeza que deseja eliminar este filme?"
+msgstr "Είστε σίγουρος/η οτι θέλετε να διαγράψετε την ταινία;"
 
 #: ../lib/edit.py:58
 msgid "Image not valid."
-msgstr "Imagem inválida."
+msgstr "Μη έγκυρη εικόνα"
 
 #: ../lib/edit.py:88 ../lib/edit.py:106
 msgid "Image has been updated"
-msgstr "A imagem foi atualizada"
+msgstr "Η εικόνα έχει ενημερωθεί"
 
 #: ../lib/edit.py:95
+#, fuzzy
 msgid "Are you sure you want to delete this poster?"
-msgstr "Tem certeza que deseja eliminar este pôster?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την αφίσα;"
 
 #: ../lib/edit.py:148 ../lib/edit.py:155
+#, fuzzy
 msgid "No posters found for this movie."
-msgstr "Não foram encontrados pôsteres deste filme."
+msgstr "Δεν βρέθηκαν αφίσες γι'αυτή την ταινία."
 
 #: ../lib/edit.py:199 ../lib/movie.py:147
+#, fuzzy
 msgid "Fetching poster"
-msgstr "Buscando pôster"
+msgstr "Ανάκτηση αφίσας"
 
 #: ../lib/edit.py:199 ../lib/movie.py:121 ../lib/movie.py:147
 #: ../lib/movie.py:240
 msgid "Wait a moment"
-msgstr "Aguarde um momento"
+msgstr "Παρακαλώ περιμένετε"
 
 #: ../lib/edit.py:211
+#, fuzzy
 msgid "Sorry. A connection error has occurred."
-msgstr "Desculpe. Ocorreu um erro de conexão."
+msgstr "Λυπούμαστε. Προέκυψε σφάλμα στη σύνδεση."
 
 #: ../lib/edit.py:224 ../lib/edit.py:257
+#, fuzzy
 msgid "Sorry. This movie is listed but has no poster available at Amazon.com."
 msgstr ""
-"Desculpe. Este filme está listado na Amazon mas não tem nenhum pôster "
-"disponível."
+"Λυπούμαστε. Αυτή η ταινία υπάρχει στη βάση αλλά δεν υπάρχει ανάλογη αφίσα "
+"στην τοποθεσία Amazon.com."
 
 #: ../lib/edit.py:243
+#, fuzzy
 msgid "Do you want to use this poster instead?"
-msgstr "Tem certeza que deseja utilizar este pôster?"
+msgstr "Θα θέλατε να χρησιμοποιήσετε αυτή την αφίσα;"
 
 #: ../lib/gconsole.py:133
 msgid "No movie found"
-msgstr "Nenhum filme encontrado"
+msgstr "Δεν βρέθηκε ταινία"
 
 #: ../lib/gemail.py:38 ../lib/gemail.py:48
 #, python-format
 msgid "Error sending e-mail: %s"
-msgstr "Erro enviando o e-mail: %s"
+msgstr "Λάθος κατα την αποστολή ηλεκτρονικού μηνύματος: %s"
 
 #: ../lib/gemail.py:45
 msgid "E-mail sent sucessuly"
-msgstr "E-mail enviado com sucesso"
+msgstr "Επιτυχής αποστολή ηλεκτρονικού μηνύματος"
 
 #: ../lib/gemail.py:60
+#, fuzzy
 msgid "Movie loan reminder"
-msgstr "Lembrete de empréstimo de filme"
+msgstr "Υπενθύμιση ενοικίασης ταινίας"
 
 #: ../lib/gemail.py:60
 #, python-format
@@ -417,351 +453,395 @@ msgid ""
 "\n"
 "Just to reminder you "
 msgstr ""
-"Oi, %s!\n"
+"Γειά %s!\n"
 "\n"
-"É só para recordar que "
+"Σου υπενθυμίζω "
 
 #: ../lib/gemail.py:66
 msgid "This person has no e-mail address defined."
-msgstr "Não foi informado o endereço de e-mail desta pessoa!"
+msgstr "Δεν βρέθηκε ηλεκτρονική διεύθυνση καταχωρημένη για αυτό το άτομο."
 
 #: ../lib/gutils.py:262
+#, fuzzy
 msgid "Images"
-msgstr "Imagens"
+msgstr "Εικόνες"
 
 #: ../lib/gutils.py:273 ../lib/plugins/imp/__init__.py:202
+#, fuzzy
 msgid "All files"
-msgstr "Todos os arquivos"
+msgstr "Όλα τα αρχεία"
 
 #: ../lib/initialize.py:173
+#, fuzzy
 msgid "N."
-msgstr "No."
+msgstr "Νούμερο"
 
 #: ../lib/initialize.py:179 ../lib/initialize.py:509
 #: ../lib/plugins/export/PluginExportHTML.py:98 ../glade/griffith.glade.h:66
+#, fuzzy
 msgid "Image"
-msgstr "Imagem"
+msgstr "Εικόνα"
 
 #: ../lib/initialize.py:210
 msgid "Loan Date"
-msgstr "Data do Empréstimo"
+msgstr "Ημερομηνία Ενοικίασης"
 
 #: ../lib/initialize.py:216
 msgid "Return Date"
-msgstr "Data de Devolução"
+msgstr "Ημερομηνία Επιστροφής"
 
 #: ../lib/initialize.py:221
 msgid "Loaned To"
-msgstr "Emprestado a"
+msgstr "Ενοικίαση στον (στην)"
 
 #: ../lib/initialize.py:240 ../lib/plugins/movie/PluginMovieIMDB-de.py:145
 #: ../lib/plugins/movie/PluginMovieIMDB.py:140
 msgid "Language"
-msgstr "Idioma"
+msgstr "Γλώσσα"
 
 #: ../lib/initialize.py:252 ../lib/initialize.py:532
 msgid "lector"
-msgstr "leitor"
+msgstr "λέκτορας"
 
 #: ../lib/initialize.py:253 ../lib/initialize.py:532
 msgid "dubbing"
-msgstr "dobragem"
+msgstr "υποτιτλισμός"
 
 #: ../lib/initialize.py:255 ../lib/initialize.py:532
 msgid "commentary"
-msgstr "comentário"
+msgstr "σχόλια"
 
 #: ../lib/initialize.py:262 ../glade/griffith.glade.h:147
 msgid "Type"
-msgstr "Tipo"
+msgstr "Τύπος"
 
 #: ../lib/initialize.py:277
+#, fuzzy
 msgid "Codec"
-msgstr "Codec"
+msgstr "Αποκωδικοποιητής"
 
 #: ../lib/initialize.py:292
+#, fuzzy
 msgid "Channels"
-msgstr "Canais"
+msgstr "Κανάλια"
 
 #: ../lib/initialize.py:307
 msgid "Subtitle format"
-msgstr "Formato da legenda"
+msgstr "Τύπος υπότιτλων"
 
 #: ../lib/initialize.py:423 ../glade/griffith.glade.h:87
+#, fuzzy
 msgid "Name"
-msgstr "Nome"
+msgstr "Όνομα"
 
 #: ../lib/initialize.py:429 ../glade/exporthtml.glade.h:16
 #: ../glade/griffith.glade.h:47 ../glade/import.glade.h:5
+#, fuzzy
 msgid "E-mail"
-msgstr "E-mail"
+msgstr "Ηλ. Διεύθυνση"
 
 #: ../lib/initialize.py:472
 msgid "Last added"
-msgstr "Último adicionado"
+msgstr "Τελευταία Προσθήκη"
 
 #: ../lib/initialize.py:501 ../lib/plugins/export/PluginExportHTML.py:93
 #: ../glade/griffith.glade.h:30
+#, fuzzy
 msgid "Cast"
-msgstr "Elenco"
+msgstr "Ηθοποιοί"
 
 #: ../lib/initialize.py:502 ../lib/plugins/export/PluginExportHTML.py:94
 #: ../glade/griffith.glade.h:32
+#, fuzzy
 msgid "Classification"
-msgstr "Classificação"
+msgstr "Ταξινόμιση"
 
 #: ../lib/initialize.py:503 ../glade/griffith.glade.h:35
+#, fuzzy
 msgid "Collection"
-msgstr "Coleção"
+msgstr "Συλλογή"
 
 #: ../lib/initialize.py:504 ../lib/initialize.py:531
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:149
 #: ../lib/plugins/movie/PluginMovieIMDB.py:144 ../glade/griffith.glade.h:36
+#, fuzzy
 msgid "Color"
-msgstr "Cor"
+msgstr "Έγχρωμο"
 
 #: ../lib/initialize.py:505 ../glade/griffith.glade.h:37
+#, fuzzy
 msgid "Condition"
-msgstr "Estado"
+msgstr "Κατάσταση"
 
 #: ../lib/initialize.py:510 ../glade/griffith.glade.h:70
+#, fuzzy
 msgid "Layers"
-msgstr "Camadas"
+msgstr "Επίπεδα"
 
 #: ../lib/initialize.py:511 ../lib/plugins/export/PluginExportHTML.py:102
+#, fuzzy
 msgid "Loaned"
-msgstr "Emprestado"
+msgstr "Δανεισμένη"
 
 #: ../lib/initialize.py:512 ../glade/griffith.glade.h:46
+#, fuzzy
 msgid "Discs"
-msgstr "Disco(s)"
+msgstr "Δίσκοι"
 
 #: ../lib/initialize.py:513 ../glade/griffith.glade.h:82
+#, fuzzy
 msgid "Medium"
-msgstr "Médio"
+msgstr "Μέσο"
 
 #: ../lib/initialize.py:514 ../lib/plugins/export/PluginExportHTML.py:113
 #: ../glade/griffith.glade.h:90
+#, fuzzy
 msgid "Notes"
-msgstr "Observações"
+msgstr "Σημειώσεις"
 
 #: ../lib/initialize.py:515 ../lib/sql.py:278
 #: ../lib/plugins/export/PluginExportHTML.py:104 ../glade/griffith.glade.h:91
+#, fuzzy
 msgid "Number"
-msgstr "Número"
+msgstr "Αριθμός"
 
 #: ../lib/initialize.py:516 ../lib/plugins/export/PluginExportHTML.py:99
 #: ../glade/griffith.glade.h:92
 msgid "Official site"
-msgstr "Site oficial"
+msgstr "Επίσημος δικτιακός χώρος"
 
 #: ../lib/initialize.py:518 ../lib/plugins/export/PluginExportHTML.py:106
 #: ../glade/griffith.glade.h:101
+#, fuzzy
 msgid "Plot"
-msgstr "Sinopse"
+msgstr "Πλοκή"
 
 #: ../lib/initialize.py:519 ../lib/plugins/export/PluginExportHTML.py:107
 #: ../glade/griffith.glade.h:109
+#, fuzzy
 msgid "Rating"
-msgstr "Avaliação"
+msgstr "Αξιολόγηση"
 
 #: ../lib/initialize.py:520 ../glade/griffith.glade.h:111
+#, fuzzy
 msgid "Region"
-msgstr "Região"
+msgstr "Περιοχή"
 
 #: ../lib/initialize.py:521 ../lib/plugins/export/PluginExportHTML.py:108
 #: ../glade/griffith.glade.h:119
 msgid "Runtime"
-msgstr "Duração"
+msgstr "Διάρκεια χρόνου"
 
 #: ../lib/initialize.py:522 ../lib/plugins/export/PluginExportHTML.py:110
 #: ../glade/griffith.glade.h:122
 msgid "Seen it"
-msgstr "Filme já assistido"
+msgstr "Το έχετε δει"
 
 #: ../lib/initialize.py:523 ../lib/plugins/export/PluginExportHTML.py:100
 #: ../glade/griffith.glade.h:132
 msgid "Site"
-msgstr "Site"
+msgstr "Ιστοσελίδα"
 
 #: ../lib/initialize.py:524 ../lib/plugins/export/PluginExportHTML.py:109
 #: ../glade/griffith.glade.h:138
 msgid "Studio"
-msgstr "Estúdio"
+msgstr "Θάλαμος"
 
 #: ../lib/initialize.py:526 ../lib/plugins/export/PluginExportHTML.py:101
 #: ../glade/griffith.glade.h:145
 msgid "Trailer"
-msgstr "Trailer"
+msgstr "Διαφημιστικό"
 
 #: ../lib/initialize.py:527 ../glade/griffith.glade.h:152
+#, fuzzy
 msgid "Video codec"
-msgstr "Codec de Vídeo"
+msgstr "Κώδικας αναπαραγωγής βίντεο"
 
 #: ../lib/initialize.py:528 ../glade/griffith.glade.h:155
 msgid "Volume"
-msgstr "Volume"
+msgstr "Ένταση ήχου"
 
 #: ../lib/initialize.py:529 ../lib/plugins/export/PluginExportHTML.py:112
 #: ../glade/griffith.glade.h:157
 msgid "Year"
-msgstr "Ano"
+msgstr "Χρονιά"
 
 #: ../lib/initialize.py:530 ../lib/initialize.py:531 ../lib/initialize.py:533
 #: ../lib/initialize.py:726 ../lib/initialize.py:727 ../lib/initialize.py:758
 #: ../lib/initialize.py:759
 msgid "N/A"
-msgstr "N/D"
+msgstr "Ν/Α"
 
 #: ../lib/initialize.py:530
+#, fuzzy
 msgid "Damaged"
-msgstr "Danificado"
+msgstr "Κατεστραμένη"
 
 #: ../lib/initialize.py:530
+#, fuzzy
 msgid "Poor"
-msgstr "Ruim"
+msgstr "Κακή"
 
 #: ../lib/initialize.py:530
+#, fuzzy
 msgid "Fair"
-msgstr "Razoável"
+msgstr "Μέτρια"
 
 #: ../lib/initialize.py:530
+#, fuzzy
 msgid "Good"
-msgstr "Bom"
+msgstr "Καλή"
 
 #: ../lib/initialize.py:530
+#, fuzzy
 msgid "Excellent"
-msgstr "Excelente"
+msgstr "Εξαιρετική"
 
 #: ../lib/initialize.py:531
+#, fuzzy
 msgid "Black and White"
-msgstr "Preto e Branco"
+msgstr "Ασπρόμαυρη"
 
 #: ../lib/initialize.py:531
+#, fuzzy
 msgid "Mixed"
-msgstr "Misturado"
+msgstr "Ανάμεικτη"
 
 #: ../lib/initialize.py:533
+#, fuzzy
 msgid "Single Side, Single Layer"
-msgstr "Single Side, Single Layer"
+msgstr "Μονής Πλευράς, Μονής Στρώσης"
 
 #: ../lib/initialize.py:533
+#, fuzzy
 msgid "Single Side, Dual Layer"
-msgstr "Single Side, Dual Layer"
+msgstr "Μονής Πλευράς, Διπλής Στρώσης"
 
 #: ../lib/initialize.py:533
+#, fuzzy
 msgid "Dual Side, Single Layer"
-msgstr "Dual Side, Single Layer"
+msgstr "Διπλής Πλευράς, Μονής Στρώσης"
 
 #: ../lib/initialize.py:533
+#, fuzzy
 msgid "Dual Side, Dual Layer"
-msgstr "Dual Side, Dual Layer"
+msgstr "Διπλής Πλευράς, Διπλής Στρώσης"
 
 #: ../lib/initialize.py:535
+#, fuzzy
 msgid "Region 0 (No Region Coding)"
-msgstr "Região 0 (Sem Codificação de Região)"
+msgstr "Περιοχή 0 (Δεν υπάρχει Κωδικοποίηση Περιοχής)"
 
 #: ../lib/initialize.py:536
 msgid "Region 1 (United States of America, Canada)"
-msgstr "Região 1 (Estados Unidos da América, Canadá)"
+msgstr "Περιοχή 1 (Ηνωμένες Πολιτείες, Καναδάς)"
 
 #: ../lib/initialize.py:537
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
 msgstr ""
-"Região 2 (Europa, incluindo França, Grécia, Turquia, Egito, Arábia, Japão e "
-"África do Sul)"
+"Περιοχή 2 (Ευρώπη,συμπεριλαμβανομένης Γαλλίας, Ελλάδας, Τουρκίας, Αιγύπτου, "
+"Σ.Αραβία,Ιαπωνία και Νότια Αφρική)"
 
 #: ../lib/initialize.py:538
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
-msgstr "Região 3 (Coréia, Tailāndia, Vietnam, Borneo e Indonésia)"
+msgstr "Περιοχή 3 (Κορέα, Ταιλάνδη, Βιετνάμ,Βόρνεο και Ινδονησία)"
 
 #: ../lib/initialize.py:539
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
-msgstr "Região 4 (Austrália e Nova Zelândia, México, Caribe e América do Sul)"
+msgstr ""
+"Περιοχή 4 (Αυστραλία και Νέα Ζηλανδία, Μεξικό, Καραϊβική και Νότια Αμερική)"
 
 #: ../lib/initialize.py:540
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
-msgstr "Região 5 (Índia, África, Rússia e países da antiga União Soviética)"
+msgstr "Περιοχή 5 (Ινδία, Αφρική, Ρωσία και πρώην ΕΣΣΔ χώρες)"
 
 #: ../lib/initialize.py:541
 msgid "Region 6 (Popular Republic of China)"
-msgstr "Região 6 (República Popular da China)"
+msgstr "Περιοχή 6 (Λαϊκή Δημοκρατίας της Κίνας)"
 
 #: ../lib/initialize.py:542
 msgid "Region 7 (Reserved for Unspecified Special Use)"
-msgstr "Região 7 (Reservada para Uso Especial Não-Específico)"
+msgstr "Περιοχή 7 (Δεσμευμένη για απροσδιόριστη χρήση)"
 
 #: ../lib/initialize.py:543
 msgid "Region 8 (Airlines/Cruise Ships)"
-msgstr "Região 8 (Linhas Aéreas/Cruzeiros Marítimos)"
+msgstr "Περιοχή 8 (Αεροπορικές εταιρίες και κρουαζιερόπλοια)"
 
 #: ../lib/initialize.py:580
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
-msgstr "Dicionário não disponível. Corretor ortográfico será desabilitado. \n"
+msgstr ""
+"Το λεξικό δεν είναι διαθέσιμο.Ο έλεγχος ορθογραφίας θα απενεργοποιηθεί. \n"
 
 #: ../lib/loan.py:40
+#, fuzzy
 msgid "No person is defined yet."
-msgstr "Não existe nenhuma pessoa criada!"
+msgstr "Δεν ορίστηκε κάποιο άτομο ακόμη"
 
 #: ../lib/loan.py:67
 msgid "Do you want to loan whole collection?"
-msgstr "Deseja emprestar toda a coleção?"
+msgstr "Θέλετε να δανείσετε ολόκληρη συλλογή;"
 
 #: ../lib/loan.py:79
 msgid "Movie loaned"
-msgstr "Filme emprestado"
+msgstr "Η ταινία δανείστηκε"
 
 #: ../lib/main_treeview.py:244
 msgid "This movie has been loaned to "
-msgstr "Este filme foi emprestado a "
+msgstr "Αυτή η ταινία δανείστηκε στο-η/ν "
 
 #: ../lib/main_treeview.py:244
 msgid " on "
-msgstr " em "
+msgstr " στο-η/ν "
 
 #: ../lib/main_treeview.py:255
 msgid "Movie not loaned"
-msgstr "O filme não está emprestado"
+msgstr "Η ταινία δεν δανείστηκε"
 
 #: ../lib/movie.py:121
+#, fuzzy
 msgid "Fetching data"
-msgstr "Obtendo dados"
+msgstr "Ανάκτηση δεδομένων"
 
 #: ../lib/movie.py:240
 msgid "Searching"
-msgstr "Pesquisando"
+msgstr "Αναζήτηση"
 
 #: ../lib/movie.py:279
 msgid "Connection error"
-msgstr "Erro de conexão"
+msgstr "Σφάλμα σύνδεσης"
 
 #: ../lib/movie.py:303
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "Άκυρο"
 
 #: ../lib/people.py:59
+#, fuzzy
 msgid "You should fill the person name"
-msgstr "Você deve indicar o nome da pessoa"
+msgstr "Θα πρέπει να συμπληρώσετε το όνομα του ατόμου"
 
 #: ../lib/people.py:88
 msgid "Record updated"
-msgstr "Registro atualizado"
+msgstr "Ανανέωση αρχέιου"
 
 #: ../lib/people.py:111
+#, fuzzy
 msgid "This person has loaned films from you. Return them first."
-msgstr "Esta pessoa tem filmes emprestados por você. Primeiro devolva-os."
+msgstr ""
+"Το άτομο αυτό έχει δανειστεί ταινίες από εσάς. Θα πρέπει πρώτα να τις "
+"επιστρέψει."
 
 #: ../lib/people.py:116
+#, fuzzy
 msgid ""
 "This person has data in the loan history. This data will be erased if you "
 "continue."
 msgstr ""
-"Esta pessoa tem dados no histórico de empréstimos. Estes dados serão "
-"eliminados se você prosseguir."
+"Το άτομο αυτό έχει στοιχεία στο ιστορικό δανεισμού. Τα στοιχεία αυτά θα "
+"διαγραφούν εάν συνεχίσετε."
 
 #: ../lib/people.py:117
 #, python-format
@@ -770,50 +850,57 @@ msgid ""
 "Are you sure you want to delete this person?"
 msgstr ""
 "%s\n"
-"Tem certeza que deseja eliminar esta pessoa?"
+"Είστε σίγουρος/η οτι επιθυμείτε να διαγράψετε αυτό το άτομο;"
 
 #: ../lib/sql.py:61 ../lib/sql.py:123
 msgid ""
 "This item is in use.\n"
 "Operation aborted!"
 msgstr ""
-"Este item está em uso.\n"
-"Operação abortada!"
+"Το αντικέιμενο αυτό χρησιμοποιείται.\n"
+"Ματαίωση λειτουργίας!"
 
 #: ../lib/sql.py:82
 msgid "This name is already in use!"
-msgstr "Este nome já está em uso!"
+msgstr "Αυτό το όνομα χρησιμοποιείται ήδη!"
 
 #: ../lib/sql.py:278
-#, python-format
+#, fuzzy, python-format
 msgid "Column \"%s\" is not unique"
-msgstr "A coluna \"%s\" não é única!"
+msgstr "Η στήλη \"%s\" δεν είναι μοναδική"
 
 #: ../lib/sql.py:354
+#, fuzzy
 msgid "Database connection failed."
-msgstr "Falha de conexão ao banco de dados."
+msgstr "Η σύνδεση με τη Βάση Δεδομένων απέτυχε."
 
 #: ../lib/version.py:30
 msgid "Griffith is a film collection manager."
-msgstr "Griffith é um gerenciador de coleção de filmes."
+msgstr "Το Griffith είναι ένα πρόγραμμα διαχείρησης συλλογής ταινιών."
 
 #: ../lib/view.py:28
+#, fuzzy
 msgid "Filter activated. Showing only not seen movies."
-msgstr "Filtro ativado. Exibir apenas os filmes não assistidos."
+msgstr ""
+"Το φίλτρο ενεργοποιήθηκε. Παρουσιάζονται μόνο οι ταινίες που έχουν προβληθεί."
 
 #: ../lib/view.py:32
+#, fuzzy
 msgid "Filter activated. Showing only loaned movies."
-msgstr "Filtro ativado. Exibe apenas os filmes emprestados."
+msgstr ""
+"Το φίλτρο ενεργοποιήθηκε. Παρουσιάζονται μόνο οι ταινίες που έχουν δανειστεί."
 
 #: ../lib/view.py:43
-#, python-format
+#, fuzzy, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
-msgstr "Filtro ativado. Exibir apenas os filmes do volume: %s"
+msgstr ""
+"Το φίλτρο ενεργοποιήθηκε. Παρουσιάζονται μόνο οι ταινίες από τη σειρά: %s"
 
 #: ../lib/view.py:50
-#, python-format
+#, fuzzy, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
-msgstr "Filtro ativado. Exibir apenas os filmes da coleção: %s"
+msgstr ""
+"Το φίλτρο ενεργοποιήθηκε. Παρουσιάζονται μόνο οι ταινίες από τη συλλογή: %s"
 
 #: ../lib/widgets.py:302
 msgid ""
@@ -821,9 +908,10 @@ msgid ""
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
 "and working first."
 msgstr ""
-"Defina aqui o leitor PDF que deseja utilizar com o Griffith. Os leitores "
-"mais populares são xpdf, gpdf, evince ou kpdf. Certifique-se da instalação "
-"de algum desses programas e que o mesmo esteja funcionando perfeitamente."
+"Καθορίστε εδώ το πρόγραμμα ανάγνωσης PDF που επιθυμείτε να χρησιμοποιήσετε "
+"στο Griffith. Ανάμεσα στις πιο δημοφιλείς επιλογές είναι τα xpdf, gpdf, "
+"evince ή kpdf. Σιγουρευτείτε οτι το πρόγραμμα είναι εγκατεστημένο και "
+"δουλεύει σωστά."
 
 #: ../lib/widgets.py:303
 msgid ""
@@ -831,29 +919,32 @@ msgid ""
 "fields. Use you locale setting. For example, to use european portuguese "
 "spell checking enter 'pt'"
 msgstr ""
-"Aqui você pode definir o idioma que deseja utilizar na correção ortográfica. "
-"Utilize a definição local. Por exemplo, para utilizar Português do Brasil na "
-"verificação ortográfica, indique neste campo a opção 'pt_br'"
+"Εδω μπορείτε να καθορίσετε την χρήση της επιθυμητής γλώσσας ενω ελέγχεται η "
+"ορθρογραφία σε μερικά πεδία. Χρησιμοποιήστε τις ρυθμίσεις εντοπιότητας. Για "
+"παράδειγμα, για να χρησιμοποιήσετε τον έλεγχο ορθογραφίας στα πορτογαλλικά "
+"ευρώπης, εισάγετε 'pt'"
 
 #: ../lib/widgets.py:304
+#, fuzzy
 msgid ""
 "Use this entry to define the SMTP server you want to use to send e-mails. On "
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
 "Internet Service Provider's SMTP server address."
 msgstr ""
-"Utilize este campo para definir o servidor SMTP que deseja utilizar para "
-"enviar as suas mensagens de e-mail. Em sistemas unix, 'localhost' deverá "
-"funcionar. Você pode também usar o endereço do usuário do smtp do seu "
-"provedor de internet."
+"Χρησιμοποιείστε αυτή την εγγραφή για να καθορίσετε τον διακομιστή SMTP τον "
+"οποίο θα χρησιμοποιήσετε για την αποστολή της ηλεκτρονικής αλληλογραφίας. Σε "
+"συστήματα τύπου *nix, η χρήση του 'localhost' πρέπει να αρκεί. Εναλλακτικά, "
+"μπορείτε να χρησιμοποιήσετε την διεύθυνση SMTP του Παρόχου Υπηρεσιών "
+"Διαδικτύου σας."
 
 #: ../lib/widgets.py:305
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
 msgstr ""
-"Este é o campo para endereço de e-mail que será utilizado em todas as "
-"mensagens enviadas pelo Griffith. Provavelmente você irá definir aqui o seu "
-"próprio e-mail."
+"Αυτή είναι η ηλεκτρονική διεύθυνση που πρέπει να χρησιμοποιείται για όλα τα "
+"εξερχόμενα ηλεκτρονικά μηνύματα. Πιθανώς να θέλετε να συμπεριλάβετε και την "
+"δική σας ηλεκτρονική διεύθυνση."
 
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:100
@@ -867,59 +958,64 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieWP.py:96
 #: ../lib/plugins/movie/PluginMovieWP.py:98
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:103
+#, fuzzy
 msgid " as "
-msgstr " como "
+msgstr " ως "
 
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:147
 #: ../lib/plugins/movie/PluginMovieIMDB.py:142 ../glade/griffith.glade.h:4
+#, fuzzy
 msgid "<b>Audio</b>"
-msgstr "<b>Áudio</b>"
+msgstr "<b>Ήχος</b>"
 
 #: ../lib/plugins/export/PluginExportCSV.py:31
+#, fuzzy
 msgid "Full CSV list export plugin"
-msgstr "Plugin para exportação de listagem em CSV"
+msgstr "Πρόσθετο πλήρους εξωγής λίστας ως αρχείο CSV"
 
 #: ../lib/plugins/export/PluginExportCSV.py:45
 #: ../lib/plugins/export/PluginExportiPod.py:103
 #: ../lib/plugins/export/PluginExportXML.py:46
 #, python-format
 msgid "Export a %s document"
-msgstr "Exportar um documento %s"
+msgstr "Εξαγωγή του %s εγγράφου"
 
 #: ../lib/plugins/export/PluginExportCSV.py:65
 #: ../lib/plugins/export/PluginExportXML.py:83
 #, python-format
 msgid "%s file has been created."
-msgstr "O arquivo %s foi criado."
+msgstr "Δημιουργήθηκε το %s αρχείο."
 
 #: ../lib/plugins/export/PluginExportHTML.py:36
+#, fuzzy
 msgid "Plugin exports data using templates"
-msgstr "Plugin de exportação de dados utilizando modelos"
+msgstr "Πρόσθετο που εξάγει δεδομένα χρησιμοποιώντας πρότυπα"
 
 #: ../lib/plugins/export/PluginExportHTML.py:48
 msgid "Griffith's movies list"
-msgstr "Lista de filmes do Griffith"
+msgstr "Λίστα ταινιών του Griffith"
 
 #: ../lib/plugins/export/PluginExportHTML.py:103 ../glade/griffith.glade.h:81
+#, fuzzy
 msgid "Media"
-msgstr "Mídia"
+msgstr "Μέσο"
 
 #: ../lib/plugins/export/PluginExportHTML.py:440
 #: ../lib/plugins/export/PluginExportHTML.py:442
 msgid "previous"
-msgstr "anterior"
+msgstr "προηγούμενη"
 
 #: ../lib/plugins/export/PluginExportHTML.py:453
 #: ../lib/plugins/export/PluginExportHTML.py:455
 msgid "next"
-msgstr "próximo"
+msgstr "επόμενο"
 
 #: ../lib/plugins/export/PluginExportHTML.py:547
 #: ../lib/plugins/export/PluginExportHTML.py:577
 #: ../lib/plugins/export/PluginExportHTML.py:668
-#, python-format
+#, fuzzy, python-format
 msgid "Can't create %s!"
-msgstr "Não é possível criar %s!"
+msgstr "Δεν ήταν δυνατή η δημιουργία %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:566
 #, python-format
@@ -927,433 +1023,473 @@ msgid ""
 "Directory %s already exists.\n"
 "Do you want to overwrite it?"
 msgstr ""
-"O diretório %s já existe.\n"
-"Deseja substituí-lo?"
+"Ο φάκελος %s υπάρχει ήδη.\n"
+"Θέλετε να το αντικαταστήσετε;"
 
 #: ../lib/plugins/export/PluginExportHTML.py:570
-#, python-format
+#, fuzzy, python-format
 msgid "Can't remove %s!"
-msgstr "Não é possível remover %s!"
+msgstr "Δεν ήταν δυνατή η αφαίρεση %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:585
 #: ../lib/plugins/export/PluginExportHTML.py:598
-#, python-format
+#, fuzzy, python-format
 msgid "Can't copy %s!"
-msgstr "Não é possível copiar %s!"
+msgstr "Αδύνατη η αντιγραφή του %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:620
-#, python-format
+#, fuzzy, python-format
 msgid "Can't open %s!"
-msgstr "Não é possível abrir %s!"
+msgstr "Αδύνατο το άνοιγμα του %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:628
 #: ../lib/plugins/export/PluginExportPDF.py:117
+#, fuzzy
 msgid "Document generated by Griffith v"
-msgstr "Documento gerado pelo Griffith v"
+msgstr "Το έγγραφο αυτό δημιουργήθηκε από το Griffith v"
 
 #: ../lib/plugins/export/PluginExportHTML.py:689
+#, fuzzy
 msgid "Yes"
-msgstr "Sim"
+msgstr "Ναί"
 
 #: ../lib/plugins/export/PluginExportHTML.py:691
+#, fuzzy
 msgid "No"
-msgstr "Não"
+msgstr "Όχι"
 
 #: ../lib/plugins/export/PluginExportHTML.py:743
+#, fuzzy
 msgid "Document has been generated."
-msgstr "O documento foi gerado."
+msgstr "Το έγγραφο έχει δημιουργηθεί."
 
 #: ../lib/plugins/export/PluginExportiPod.py:36
+#, fuzzy
 msgid "iPod Notes export plugin"
-msgstr "Plugin de exportação de notas iPod"
+msgstr "πρόσθετο εξαγωγής σημειώσεων iPod"
 
 #: ../lib/plugins/export/PluginExportiPod.py:82
+#, fuzzy
 msgid "My Movies List"
-msgstr "Minha lista de filmes"
+msgstr "Η συλλογή ταινιών μου"
 
 #: ../lib/plugins/export/PluginExportiPod.py:98
+#, fuzzy
 msgid "List was successful exported to iPod."
-msgstr "Lista exportada com sucesso para o iPod."
+msgstr "Επιτυχής εξαγωγή της λίστας στο iPod."
 
 #: ../lib/plugins/export/PluginExportiPod.py:100
+#, fuzzy
 msgid "iPod is not connected."
-msgstr "iPod não está conectado."
+msgstr "Το iPod δεν είναι συνδεδεμένο."
 
 #: ../lib/plugins/export/PluginExportiPod.py:115
 msgid ""
 "List was successful exported. Now you should move it to the 'Notes' folder "
 "on your iPod."
 msgstr ""
-"Lista exportada com sucesso. Agora você deve movê-la para a pasta 'Notes' do "
-"seu iPod."
+"Επιτυχής εξαγωγή λίστας. Μεταφέρετε την λίστα στον φάκελο 'Σημειώσεις' του "
+"iPod σας."
 
 #: ../lib/plugins/export/PluginExportPDF.py:44
 msgid "PDF export plugin"
-msgstr "Plugin para exportação de PDF"
+msgstr "Πρόσθετο εξαγωγής PDF"
 
 #: ../lib/plugins/export/PluginExportPDF.py:68
 msgid "Export a PDF"
-msgstr "Exportar um PDF"
+msgstr "Εξαγωγή σε PDF"
 
 #: ../lib/plugins/export/PluginExportPDF.py:84
+#, fuzzy
 msgid "List of films"
-msgstr "Lista de filmes"
+msgstr "Λίστα των ταινιών"
 
 #: ../lib/plugins/export/PluginExportPDF.py:87
 #, python-format
 msgid "Total Movies: %s"
-msgstr "Total de Filmes: %s"
+msgstr "Σύνολο ταινιών: %s"
 
 #: ../lib/plugins/export/PluginExportPDF.py:110
 msgid "PDF has been created."
-msgstr "PDF criado com sucesso."
+msgstr "Δημιουργήθηκε αρχείο PDF."
 
 #: ../lib/plugins/export/PluginExportPDF.py:115
 #, python-format
 msgid "Page %d"
-msgstr "Página %d"
+msgstr "Σελίδα %d"
 
 #: ../lib/plugins/export/PluginExportXML.py:32
 msgid "Full XML list export plugin"
-msgstr "Plugin de exportação de XML"
+msgstr "Plugin πλήρης εξαγωγής λίστας XML"
 
 #: ../lib/plugins/imp/CSV.py:43
 msgid "Full CSV list import plugin"
-msgstr "Plugin para exportação de listagem em CSV"
+msgstr "Plugin πλήρης εισαγωγής CSV λίστας"
 
 #: ../lib/plugins/imp/CSV.py:192
 msgid "Please assign at least one field first!"
-msgstr "Por favor, assinale pelo menos um campo!"
+msgstr "Παρακαλώ, ορίσατε πρώτα τουλάχιστον ενα πεδίο!"
 
 #: ../lib/plugins/imp/CSV.py:310
 #, python-format
 msgid "Can't open the file %s"
-msgstr "Não é possível abrir o arquivo %s!"
+msgstr "Δεν είναι δυνάτο το άνοιγμα του αρχείου %s"
 
 #: ../lib/plugins/imp/__init__.py:227
 #, python-format
 msgid "%s file has been imported. %s movies added."
-msgstr "O arquivo %s foi importado. %s filmes adicionados."
+msgstr "Εσαγωγή του αρχείου %s. Προσθήκη %s ταινιών."
 
 #: ../glade/exporthtml.glade.h:1
 msgid "<b>Example</b>"
-msgstr "<b>Exemplo</b>"
+msgstr "<b>Παράδειγμα</b>"
 
 #: ../glade/exporthtml.glade.h:2
 msgid "<b>Export</b>"
-msgstr "<b>Exportar</b>"
+msgstr "<b>Εξαγωγή</b>"
 
 #: ../glade/exporthtml.glade.h:3
+#, fuzzy
 msgid "<b>Header</b>"
-msgstr "<b>Cabeçalho</b>"
+msgstr "<b>Κεφαλίδα</b>"
 
 #: ../glade/exporthtml.glade.h:4
 msgid "<b>Limits</b>"
-msgstr "<b>Limites</b"
+msgstr "<b>Όρια</b>"
 
 #: ../glade/exporthtml.glade.h:5 ../glade/griffith.glade.h:15
 msgid "<b>Sort by</b>"
-msgstr "<b>Ordenar por</b>"
+msgstr "<b>Ταξινόμηση κατά</b>"
 
 #: ../glade/exporthtml.glade.h:6
 msgid "<b>Split into</b>"
-msgstr "<b>Dividir em</b>"
+msgstr "<b>Διαχωρισμός σε</b>"
 
 #: ../glade/exporthtml.glade.h:7
 msgid "<b>Style</b>"
-msgstr "<b>Estilo</b>"
+msgstr "<b>Στυλ</b>"
 
 #: ../glade/exporthtml.glade.h:8
 msgid "<b>Template</b>"
-msgstr "<b>Modelo</b>"
+msgstr "<b>Πρότυπο</b>"
 
 #: ../glade/exporthtml.glade.h:9 ../glade/import.glade.h:3
+#, fuzzy
 msgid "Author"
-msgstr "Autor"
+msgstr "Συντάκτης"
 
 #: ../glade/exporthtml.glade.h:10
+#, fuzzy
 msgid "Black and white"
-msgstr "Preto e Branco"
+msgstr "Ασπρόμαυρη"
 
 #: ../glade/exporthtml.glade.h:11
+#, fuzzy
 msgid "Choose style file"
-msgstr "Selecione o arquivo de estilos"
+msgstr "Επιλογή αρχείου μορφοποίησης"
 
 #: ../glade/exporthtml.glade.h:12
 msgid "Convert images"
-msgstr "Converter imagens"
+msgstr "Μετατροπή εικόνων"
 
 #: ../glade/exporthtml.glade.h:13
 msgid "Data"
-msgstr "Dados"
+msgstr "Δεδομένα"
 
 #: ../glade/exporthtml.glade.h:14 ../glade/import.glade.h:4
 msgid "Description"
-msgstr "Descrição"
+msgstr "Περιγραφή"
 
 #: ../glade/exporthtml.glade.h:15
+#, fuzzy
 msgid "Destination"
-msgstr "Destino"
+msgstr "Προορισμός"
 
 #: ../glade/exporthtml.glade.h:17
 msgid "Export"
-msgstr "Exportar"
+msgstr "Εξαγωγή"
 
 #: ../glade/exporthtml.glade.h:18
 msgid "Export data"
-msgstr "Exportar dados"
+msgstr "Εξαγωγή Δεδομένων"
 
 #: ../glade/exporthtml.glade.h:19
 msgid "Format"
-msgstr "Formato"
+msgstr "Διαμόρφωση"
 
 #: ../glade/exporthtml.glade.h:20
+#, fuzzy
 msgid "Maximal height"
-msgstr "Altura máxima"
+msgstr "Μέγιστο ύψος"
 
 #: ../glade/exporthtml.glade.h:21
+#, fuzzy
 msgid "Maximal width"
-msgstr "Largura máxima"
+msgstr "Μέγιστο πάχος"
 
 #: ../glade/exporthtml.glade.h:22
+#, fuzzy
 msgid "Posters"
-msgstr "Pôsteres"
+msgstr "Αφίσες"
 
 #: ../glade/exporthtml.glade.h:23 ../glade/griffith.glade.h:118
+#, fuzzy
 msgid "Reverse"
-msgstr "Inverso"
+msgstr "Αναστροφή"
 
 #: ../glade/exporthtml.glade.h:24
+#, fuzzy
 msgid "Template"
-msgstr "Modelo"
+msgstr "Πρότυπο"
 
 #: ../glade/exporthtml.glade.h:25
+#, fuzzy
 msgid "Use custom file"
-msgstr "Utilizar arquivo personalizado"
+msgstr "Χρήση προσαρμοσμένου αρχείου"
 
 #: ../glade/exporthtml.glade.h:26 ../glade/import.glade.h:10
 msgid "Version"
-msgstr "Versão"
+msgstr "Έκδοση"
 
 #: ../glade/exporthtml.glade.h:27
 msgid "entries per page"
-msgstr "entradas por página"
+msgstr "εισαγωγές ανα σελίδα"
 
 #: ../glade/exporthtml.glade.h:28
 msgid "files"
-msgstr "arquivos"
+msgstr "αρχεία"
 
 #: ../glade/exporthtml.glade.h:29
+#, fuzzy
 msgid "loaned only"
-msgstr "apenas emprestados"
+msgstr "μόνο νοικιασμένη"
 
 #: ../glade/exporthtml.glade.h:30
 msgid "none"
-msgstr "nenhum"
+msgstr "τίποτα"
 
 #: ../glade/exporthtml.glade.h:31
+#, fuzzy
 msgid "not loaned only"
-msgstr "apenas não emprestados"
+msgstr "όχι μόνο δανεισμένο"
 
 #: ../glade/exporthtml.glade.h:32
+#, fuzzy
 msgid "seen only"
-msgstr "apenas vistos"
+msgstr "μόνο προβεβλημένο"
 
 #: ../glade/exporthtml.glade.h:33
+#, fuzzy
 msgid "unseen only"
-msgstr "apenas não vistos"
+msgstr "μη προβεβλημένο μόνο"
 
 #: ../glade/griffith.glade.h:1
+#, fuzzy
 msgid "0 means no limits"
-msgstr "0 meios sem limites"
+msgstr "το 0 σημαίνει καθόλου όρια"
 
 #: ../glade/griffith.glade.h:2
 msgid "<b>Audio channels</b>"
-msgstr "<b>Canais de Áudio</b>"
+msgstr "<b>Κανάλια ήχου</b>"
 
 #: ../glade/griffith.glade.h:3
+#, fuzzy
 msgid "<b>Audio codecs</b>"
-msgstr "<b>Codecs de Áudio</b>"
+msgstr "<b>Κωδικοποίηση Ήχου</b>"
 
 #: ../glade/griffith.glade.h:5
 msgid "<b>Collection</b>"
-msgstr "<b>Coleção</b>"
+msgstr "<b>Συλλογή</b>"
 
 #: ../glade/griffith.glade.h:6
 msgid "<b>Defaults</b>"
-msgstr "<b>Padrões</b>"
+msgstr "<b>Προεπιλεγμένα</b>"
 
 #: ../glade/griffith.glade.h:7
 msgid "<b>E-mail reminder</b>"
-msgstr "<b>Lembrete por E-mail</b>"
+msgstr "<b>Υπενθύμιση ηλεκτρονικού ταχυδρομείου</b>"
 
 #: ../glade/griffith.glade.h:8
 msgid "<b>Languages</b>"
-msgstr "<b>Idiomas</b>"
+msgstr "<b>Γλώσσες</b>"
 
 #: ../glade/griffith.glade.h:9
 msgid "<b>Loan History</b>"
-msgstr "<b>Histórico de Empréstimos</b>"
+msgstr "<b>Ιστορικό Δανεισμού</b>"
 
 #: ../glade/griffith.glade.h:10
+#, fuzzy
 msgid "<b>Media</b>"
-msgstr "<b>Mídia</b>"
+msgstr "<b>Μέσα</b>"
 
 #: ../glade/griffith.glade.h:11
 msgid "<b>Search for:</b>"
-msgstr "<b>Procurar por</b>"
+msgstr "<b>Αναζήτηση για:</b>"
 
 #: ../glade/griffith.glade.h:12
 msgid "<b>Search results</b>"
-msgstr "<b>Resultados da procura</b>"
+msgstr "<b>Αναζήτηση αποτελεσμάτων</b>"
 
 #: ../glade/griffith.glade.h:13
 msgid "<b>Select database to use</b>"
-msgstr "<b>Selecionar banco de dados para ser utilizado</b>"
+msgstr "<b>Επιλογή βάσης δεδομένων</b>"
 
 #: ../glade/griffith.glade.h:14
 msgid "<b>Show only the following columns</b>"
-msgstr "<b>Exibir apenas as seguintes colunas</b>"
+msgstr "<b>Προβολή μόνο των ακόλουθων στηλών</b>"
 
 #: ../glade/griffith.glade.h:16
+#, fuzzy
 msgid "<b>Subtitle formats</b>"
-msgstr "<b>Formatos da legenda</b>"
+msgstr "<b>Μορφή Υπότιτλων</b>"
 
 #: ../glade/griffith.glade.h:17
 msgid "<b>Subtitles</b>"
-msgstr "<b>Legendas</b>"
+msgstr "<b>Υπότιτλοι</b>"
 
 #: ../glade/griffith.glade.h:18
 msgid "<b>Tags</b>"
-msgstr "<b>Rótulos</b>"
+msgstr "<b>Ετικέτες</b>"
 
 #: ../glade/griffith.glade.h:19
+#, fuzzy
 msgid "<b>Use spell checking on the following fields:</b>"
-msgstr "<b>Utilizar correção ortográfica nos seguintes campos:</b>"
+msgstr "<b>Χρήση Ορθογραφικού Ελέγχου στα ακόλουθα πεδία:</b>"
 
 #: ../glade/griffith.glade.h:20
+#, fuzzy
 msgid "<b>Video codecs</b>"
-msgstr "<b>Codecs de Vídeo</b>"
+msgstr "<b>Αποκωδικοποιητές Βϊντεο</b>"
 
 #: ../glade/griffith.glade.h:21
 msgid "<b>Volume</b>"
-msgstr "<b>Volume</b>"
+msgstr "<b>Ήχος</b>"
 
 #: ../glade/griffith.glade.h:22
 msgid "Add"
-msgstr "Adicionar"
+msgstr "Προσθήκη"
 
 #: ../glade/griffith.glade.h:24
 msgid "Add a new person"
-msgstr "Adicionar uma nova pessoa"
+msgstr "Εισάγετε νέο άτομο"
 
 #: ../glade/griffith.glade.h:25
 msgid "Add movie"
-msgstr "Adicionar filme"
+msgstr "Προσθήκη ταινίας"
 
 #: ../glade/griffith.glade.h:26
 msgid "Add movie and close"
-msgstr "Adicionar filme e fechar"
+msgstr "Προσθήκη ταινίας και κλείσιμο"
 
 #: ../glade/griffith.glade.h:27
 msgid "Add new movie"
-msgstr "Adicionar um novo filme"
+msgstr "Προσθήκη νέας ταινίας"
 
 #: ../glade/griffith.glade.h:28
+#, fuzzy
 msgid "All Movies"
-msgstr "Todos os Filmes"
+msgstr "Όλες οι Ταινίες"
 
 #: ../glade/griffith.glade.h:29
+#, fuzzy
 msgid "By Collection"
-msgstr "Por Coleção"
+msgstr "Κατά Συλλογή"
 
 #: ../glade/griffith.glade.h:31
 msgid "Choose Image"
-msgstr "Selecionar Imagem"
+msgstr "Επιλογή εικόνας"
 
 #: ../glade/griffith.glade.h:33
+#, fuzzy
 msgid "Clears filter"
-msgstr "Limpar filtros"
+msgstr "Εκκαθάριση φίλτρου"
 
 #: ../glade/griffith.glade.h:34
 msgid "Clone"
-msgstr "Duplicar"
+msgstr "Αντίγραφο"
 
 #: ../glade/griffith.glade.h:39
 msgid "DVD layers"
-msgstr "Camadas de DVD"
+msgstr "Στρώματα DVD"
 
 #: ../glade/griffith.glade.h:40
 msgid "DVD region"
-msgstr "Região do DVD"
+msgstr "Περιοχή DVD"
 
 #: ../glade/griffith.glade.h:41
 msgid "Database"
-msgstr "Banco de dados"
+msgstr "Βάση Δεδομένων"
 
 #: ../glade/griffith.glade.h:42
 msgid "Delete a person"
-msgstr "Apagar uma pessoa"
+msgstr "Αφαίρεση ατόμου"
 
 #: ../glade/griffith.glade.h:43
+#, fuzzy
 msgid "Details"
-msgstr "Detalhes"
+msgstr "Λεπτομέρειες"
 
 #: ../glade/griffith.glade.h:44
 msgid "Dictionaries"
-msgstr "Dicionários"
+msgstr "Λεξικά"
 
 #: ../glade/griffith.glade.h:48
 msgid "E-mail reminder"
-msgstr "Lembrete por E-mail"
+msgstr "Υπενθύμιση ηλεκτρονικού ταχυδρομείου"
 
 #: ../glade/griffith.glade.h:49
+#, fuzzy
 msgid "E_xport"
-msgstr "E_xportar"
+msgstr "Ε_ξαγωγή"
 
 #: ../glade/griffith.glade.h:50
+#, fuzzy
 msgid "Edit a person"
-msgstr "Editar uma pessoa"
+msgstr "Επεξεργασία ενός ατόμου"
 
 #: ../glade/griffith.glade.h:51
+#, fuzzy
 msgid "Edit movie details"
-msgstr "Editar detalhes do filme"
+msgstr "Επεξεργασία λεπτομερειών ταινίας"
 
 #: ../glade/griffith.glade.h:52
 msgid "Favorite Movie Plugin"
-msgstr "Plugin de Filme Favorito"
+msgstr "Αγαπημένο πρόσθετο ταινίας"
 
 #: ../glade/griffith.glade.h:53
+#, fuzzy
 msgid "Fetch from Amazon"
-msgstr "Obter da Amazon"
+msgstr "Ανάκτηση από το Amazon"
 
 #: ../glade/griffith.glade.h:54
 msgid "Fill empty fields only"
-msgstr "Preencher somente os campos vazios"
+msgstr "Συμπληρώστε μόνο τα κενά πεδία"
 
 #: ../glade/griffith.glade.h:55
 msgid "Filter "
-msgstr "Filtro "
+msgstr "Φίλτρο "
 
 #: ../glade/griffith.glade.h:56
+#, fuzzy
 msgid "Font for reports"
-msgstr "Fonte para relatórios"
+msgstr "Γραμματοσειρά για αναφορές"
 
 #: ../glade/griffith.glade.h:57
+#, fuzzy
 msgid "Forum"
-msgstr "Fórum"
+msgstr "Forum"
 
 #: ../glade/griffith.glade.h:58
 msgid "Found Results"
-msgstr "Resultados Encontrados"
+msgstr "Αποτελέσματα"
 
 #: ../glade/griffith.glade.h:60
 msgid "Get from web"
-msgstr "Obter da Internet"
+msgstr "Βρείτε απο το διαδύκτιο"
 
 #: ../glade/griffith.glade.h:61
 msgid "Get movie data from:"
-msgstr "Obter dados do filme a partir do:"
+msgstr "Βρείτε δεδομένα ταινίων απο:"
 
 #: ../glade/griffith.glade.h:62
 msgid "Griffith"
@@ -1361,227 +1497,238 @@ msgstr "Griffith"
 
 #: ../glade/griffith.glade.h:63
 msgid "Homepage"
-msgstr "Página web"
+msgstr "Αρχική σελίδα"
 
 #: ../glade/griffith.glade.h:64
 msgid "Host"
-msgstr "Máquina"
+msgstr "Κόμβος δικτύου"
 
 #: ../glade/griffith.glade.h:65
 msgid "I_mport"
-msgstr "I_mportar"
+msgstr "_Εισαγωγή"
 
 #: ../glade/griffith.glade.h:67
+#, fuzzy
 msgid "Include Front Image"
-msgstr "Incluir Imagem Frontal"
+msgstr "να συμπεριληφθεί το εξώφυλλο"
 
 #: ../glade/griffith.glade.h:68
 msgid "Include movie number"
-msgstr "Incluir número do filme"
+msgstr "Συμπερίληψη αριθμού ταινίας"
 
 #: ../glade/griffith.glade.h:69
 msgid "Languages"
-msgstr "Idiomas"
+msgstr "Γλώσσες"
 
 #: ../glade/griffith.glade.h:71
 msgid "Limit search results to"
-msgstr "Limite de busca de resultados para"
+msgstr "Περιορισμός αποτελεσμάτων αναζήτησης σε"
 
 #: ../glade/griffith.glade.h:72
 msgid "Load poster from disk"
-msgstr "Carregar pôster do disco"
+msgstr "Ανάκτηση αφίσας από το δίσκο"
 
 #: ../glade/griffith.glade.h:73
 msgid "Loan"
-msgstr "Emprestar"
+msgstr "Δανεισμός"
 
 #: ../glade/griffith.glade.h:74
 msgid "Loan Management"
-msgstr "Gerenciamento de Empréstimos"
+msgstr "Διαχείρηση Δανείων"
 
 #: ../glade/griffith.glade.h:75
 msgid "Loan movie"
-msgstr "Emprestar filme"
+msgstr "Δανεισμός ταινίας"
 
 #: ../glade/griffith.glade.h:76
 msgid "Loan to"
-msgstr "Emprestar para"
+msgstr "Δανεισμός σε"
 
 #: ../glade/griffith.glade.h:77
 msgid "Loaned Movies"
-msgstr "Filmes Emprestados"
+msgstr "Δανεισμένες ταινίες"
 
 #: ../glade/griffith.glade.h:78
+#, fuzzy
 msgid "Loans"
-msgstr "Empréstimos"
+msgstr "Δανεισμοί"
 
 #: ../glade/griffith.glade.h:79
 msgid "Main list"
-msgstr "Lista de filmes"
+msgstr "Κεντρική Λίστα"
 
 #: ../glade/griffith.glade.h:80
+#, fuzzy
 msgid "Manage People"
-msgstr "Gerenciar Pessoas"
+msgstr "Διαχείριση Ατόμων"
 
 #: ../glade/griffith.glade.h:83
+#, fuzzy
 msgid ""
 "Meter\n"
 "Stars"
 msgstr ""
-"Termômetro\n"
-"Estrelas"
+"Ο Μετρητής\n"
+"Ξεκινάει"
 
 #: ../glade/griffith.glade.h:85
 msgid "Movie details"
-msgstr "Detalhes do filme"
+msgstr "Λεπτομέριες ταινίας"
 
 #: ../glade/griffith.glade.h:86
 msgid "Movie information"
-msgstr "Informações sobre o filme"
+msgstr "Πληροφορίες ταινίας"
 
 #: ../glade/griffith.glade.h:88
 msgid "Needs authentication"
-msgstr "Necessária autenticação"
+msgstr "Χρειάζεται πιστοποίηση"
 
 #: ../glade/griffith.glade.h:89
+#, fuzzy
 msgid "Not Seen Movies"
-msgstr "Filmes não assistidos"
+msgstr "Ταινίες που δεν έχουν προβληθεί"
 
 #: ../glade/griffith.glade.h:94
 msgid "Original title"
-msgstr "Título Original"
+msgstr "Πρωτότυπος τίτλος"
 
 #: ../glade/griffith.glade.h:95
+#, fuzzy
 msgid "Other"
-msgstr "Outros"
+msgstr "ΆΛΛες"
 
 #: ../glade/griffith.glade.h:96
 msgid "PDF reader"
-msgstr "Leitor de PDF"
+msgstr "Πρόγραμμα ανάγνωσης PDF"
 
 #: ../glade/griffith.glade.h:97
 msgid "Password"
-msgstr "Senha"
+msgstr "Κωδικός πρόσβασης"
 
 #: ../glade/griffith.glade.h:98
+#, fuzzy
 msgid "People"
-msgstr "Pessoa"
+msgstr "Άτομα"
 
 #: ../glade/griffith.glade.h:99
 msgid "Phone"
-msgstr "Telefone"
+msgstr "Τηλέφωνο:"
 
 #: ../glade/griffith.glade.h:100
 msgid "Please wait a moment..."
-msgstr "Por favor, aguarde um momento..."
+msgstr "Παρακαλώ αναμείνατε..."
 
 #: ../glade/griffith.glade.h:102
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Πρόσθετες Λειτουργίες"
 
 #: ../glade/griffith.glade.h:103
 msgid "Port"
-msgstr "Porta"
+msgstr "Θύρα"
 
 #: ../glade/griffith.glade.h:104
+#, fuzzy
 msgid "Poster image"
-msgstr "Imagem do pôster"
+msgstr "Εικόνα αφίσας"
 
 #: ../glade/griffith.glade.h:105
+#, fuzzy
 msgid "Poster viewer"
-msgstr "Visualizador de pôsters"
+msgstr "Προβολή αφίσας"
 
 #: ../glade/griffith.glade.h:106
 msgid "Preferences"
-msgstr "Preferências"
+msgstr "Προτιμήσεις..."
 
 #: ../glade/griffith.glade.h:107
+#, fuzzy
 msgid "Print Cover"
-msgstr "Imprimir Capa"
+msgstr "Εκτύπωση Εξώφυλλου"
 
 #: ../glade/griffith.glade.h:108
+#, fuzzy
 msgid "Print cover"
-msgstr "Imprimir capa"
+msgstr "Εκτύπωση εξώφυλλου"
 
 #: ../glade/griffith.glade.h:110
 msgid "Rating image"
-msgstr "Imagem de avaliação do filme"
+msgstr "Βαθμολογική κατάταξη εικόνας"
 
 #: ../glade/griffith.glade.h:112
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "Αφαίρεση"
 
 #: ../glade/griffith.glade.h:113
 msgid "Remove selected movie"
-msgstr "Remover o filme selecionado"
+msgstr "Απομάκρυνση επιλεγμένης ταινίας"
 
 #: ../glade/griffith.glade.h:114
 msgid "Removes poster"
-msgstr "Remover pôster"
+msgstr "Αφαίρεση αφίσας"
 
 #: ../glade/griffith.glade.h:115
 msgid "Rename"
-msgstr "Renomear"
+msgstr "Μετοναμασία"
 
 #: ../glade/griffith.glade.h:116
 msgid "Report bug"
-msgstr "Relatar erro"
+msgstr "Αναφορά σφάλματος"
 
 #: ../glade/griffith.glade.h:117
 msgid "Return"
-msgstr "Devolver filme"
+msgstr "Επιστροφή"
 
 #: ../glade/griffith.glade.h:120
 msgid "SMTP server"
-msgstr "Servidor SMTP"
+msgstr "Διακομιστής SMTP"
 
 #: ../glade/griffith.glade.h:121
 msgid "Searching on the web"
-msgstr "Buscando na internet"
+msgstr "Αναζήτηση στο διαδύκτιο"
 
 #: ../glade/griffith.glade.h:123
 msgid "Select A File"
-msgstr "Selecionar Um Arquivo"
+msgstr "Επιλογή αρχείου"
 
 #: ../glade/griffith.glade.h:124
 msgid "Select first movie"
-msgstr "Selecionar Primeiro Filme"
+msgstr "Επιλογή πρώτης ταινίας"
 
 #: ../glade/griffith.glade.h:125
 msgid "Select last movie"
-msgstr "Selecionar último Filme"
+msgstr "Επιλογή τελευταίας ταινίας"
 
 #: ../glade/griffith.glade.h:126
 msgid "Select next movie"
-msgstr "Selecionar próximo filme"
+msgstr "Επιλέξτε επόμενη ταινία"
 
 #: ../glade/griffith.glade.h:127
 msgid "Select previous movie"
-msgstr "Selecionar filme anterior"
+msgstr "Επιλέξτε προηγούμενη ταινία"
 
 #: ../glade/griffith.glade.h:128
 msgid "Sender E-mail address"
-msgstr "Endereço de E-mail do Remetente"
+msgstr "Αποστολέας ηλεκτρονικής διεύθυνσης"
 
 #: ../glade/griffith.glade.h:129
 msgid "Show other movies in this collection"
-msgstr "Exibir filmes da coleção selecionada"
+msgstr "Προβολή άλλων ταινιών σε αυτή την συλλογή"
 
 #: ../glade/griffith.glade.h:130
 msgid "Show other movies in this volume"
-msgstr "Exibir outros filmes do volume selecionado"
+msgstr "Προβολή άλλων ταινιών σε αυτό το αρχείο"
 
 #: ../glade/griffith.glade.h:131
 msgid "Simple"
-msgstr "Simples"
+msgstr "Απλό"
 
 #: ../glade/griffith.glade.h:133
 msgid "Size"
-msgstr "Tamanho"
+msgstr "Μέγεθος"
 
 #: ../glade/griffith.glade.h:134
 msgid "Spell check the following language"
-msgstr "Verificação ortográfica com o seguinte idioma"
+msgstr "Έλεγχος ορθογραφίας της ακόλουθης γλώσσας"
 
 #: ../glade/griffith.glade.h:135
 msgid ""
@@ -1589,140 +1736,155 @@ msgid ""
 "Slim\n"
 "Double Slim"
 msgstr ""
-"Standard\n"
-"Slim\n"
-"Double Slim"
+"Κανονικό\n"
+"Λεπτό\n"
+"Διπλά λεπτό"
 
 #: ../glade/griffith.glade.h:139
+#, fuzzy
 msgid "Suggest an unseen movie"
-msgstr "Sugerir um filme não assistido"
+msgstr "Πρόταση ταινίας που δεν έχω δει"
 
 #: ../glade/griffith.glade.h:140
 msgid "Tags"
-msgstr "Rótulos"
+msgstr "Ετικέτες"
 
 #: ../glade/griffith.glade.h:141
 msgid "Technical information"
-msgstr "Informação técnica"
+msgstr "Τεχνικές πληροφορίες"
 
 #: ../glade/griffith.glade.h:142
 msgid "This movie is part of..."
-msgstr "Este filme é parte de..."
+msgstr "Αυτή η ταινία είναι μέρος της/του"
 
 #: ../glade/griffith.glade.h:144
 msgid "Toolbar"
-msgstr "Barra de ferramentas"
+msgstr "Γραμμή εργαλείων"
 
 #: ../glade/griffith.glade.h:146
+#, fuzzy
 msgid "Try to fetch a big poster from Amazon services website"
-msgstr "Tentar obter um pôster grande utilizando os serviços web da Amazon"
+msgstr ""
+"Προσπάθησε να λάθεις μια μεγαλύτερη αφίσα από την ιστοσελίδα των υπηρεσιών "
+"Amazon"
 
 #: ../glade/griffith.glade.h:148
+#, fuzzy
 msgid ""
 "Type in the original film tile, select source and choose <i>Get from web</"
 "i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
-"Escreva o título original do filme, selecione a fonte e clique em <i>Obter "
-"da web</i>. O Griffith irá tentar obter automaticamente informações sobre o "
-"filme."
+"Πληκτρολογήστε τον πρωτότυπο τίτλο της ταινίας, επιλέξτε πηγή και πατήστε "
+"<i>Get from web</i>. Το Griffith θα προσπαθήσει να λάβει όλες τις σχετικές "
+"πληροφορίες από το Διαδίκτυο."
 
 #: ../glade/griffith.glade.h:149
+#, fuzzy
 msgid "Use Spellchecker"
-msgstr "Utilizar a Verificação Ortográfica"
+msgstr "Χρήση Ορθογραφικού Ελέγχου"
 
 #: ../glade/griffith.glade.h:150
+#, fuzzy
 msgid "Use locale:"
-msgstr "Utilizar a localidade:"
+msgstr "Χρήση γλώσσας:"
 
 #: ../glade/griffith.glade.h:151
 msgid "Username"
-msgstr "Usuário"
+msgstr "Όνομα χρήστη"
 
 #: ../glade/griffith.glade.h:153
+#, fuzzy
 msgid "Visit movie web site"
-msgstr "Visitar a página web do filme"
+msgstr "Επίσκεψη ιστοσελίδας της ταινίας"
 
 #: ../glade/griffith.glade.h:154
 msgid "Visit the oficial web site"
-msgstr "Visitar a página web oficial do filme"
+msgstr "Επισκεφτε'ίτε τον επίσημο διαδυκτιακό τόπο"
 
 #: ../glade/griffith.glade.h:156
 msgid "Watch the trailer"
-msgstr "Assistir o trailer"
+msgstr "Δείτε το διαφημιστικό"
 
 #: ../glade/griffith.glade.h:158
 msgid "_Edit"
-msgstr "_Editar"
+msgstr "Επεξεργασία"
 
 #: ../glade/griffith.glade.h:159
 msgid "_File"
-msgstr "_Arquivo"
+msgstr "Αρχείο"
 
 #: ../glade/griffith.glade.h:160
 msgid "_Help"
-msgstr "A_juda"
+msgstr "Βοήθεια"
 
 #: ../glade/griffith.glade.h:161
+#, fuzzy
 msgid "_Loans"
-msgstr "E_mpréstimos"
+msgstr "_Δανεισμοί"
 
 #: ../glade/griffith.glade.h:162
 msgid "_Tools"
-msgstr "Ferramen_tas"
+msgstr "Εργαλεία"
 
 #: ../glade/griffith.glade.h:163
 msgid "_View"
-msgstr "_Ver"
+msgstr "Προβολή"
 
 #: ../glade/griffith.glade.h:164
+#, fuzzy
 msgid "add entered name to collections list"
-msgstr "adicionar este nome à lista de coleções"
+msgstr "προσθήκη εισαχθέντος ονόματος στη λίστα της συλλογής"
 
 #: ../glade/griffith.glade.h:165
 msgid "add entered name to volumes list"
-msgstr "adicionar este nome à lista de volumes"
+msgstr "προσθήκη εισααχθέντος ονόματος στη λίστα της σειράς"
 
 #: ../glade/griffith.glade.h:166
 msgid "classification"
-msgstr "classificação"
+msgstr "Κατάταξη"
 
 #: ../glade/griffith.glade.h:167
+#, fuzzy
 msgid "click here if movie was returned"
-msgstr "clique aqui se o filme foi devolvido"
+msgstr "Κάντε κλικ εδώ εάν η ταινία έχει επιστραφεί"
 
 #: ../glade/griffith.glade.h:168
 msgid "collection details"
-msgstr "detalhes da coleção"
+msgstr "Λεπτομέριες Συλλογής"
 
 #: ../glade/griffith.glade.h:169
+#, fuzzy
 msgid "loans movie or volume"
-msgstr "emprestar um filme ou um volume"
+msgstr "δανεισμός ταινίας ή σειράς"
 
 #: ../glade/griffith.glade.h:170
 msgid "minutes"
-msgstr "minutos"
+msgstr "λεπτά"
 
 #: ../glade/griffith.glade.h:171
 msgid "movies"
-msgstr "filme(s)"
+msgstr "ταινίες"
 
 #: ../glade/griffith.glade.h:172
 msgid "remove selected collection"
-msgstr "remover a coleção selecionada"
+msgstr "Απομάκρυνση επιλεγμένης συλλογής"
 
 #: ../glade/griffith.glade.h:173
+#, fuzzy
 msgid "remove selected volume"
-msgstr "remover o volume selecionado"
+msgstr "Αφαίρεση επιλεγμένης σειράς"
 
 #: ../glade/griffith.glade.h:174
 msgid "tags"
-msgstr "rótulos"
+msgstr "ετικέτες"
 
 #: ../glade/griffith.glade.h:175
+#, fuzzy
 msgid "volume details"
-msgstr "detalhes do volume"
+msgstr "λεπτομέρειες σειράς"
 
 #: ../glade/importcsv.glade.h:1
+#, fuzzy
 msgid ""
 "<b>Some Hints</b>:\n"
 "\n"
@@ -1731,64 +1893,67 @@ msgid ""
 "only one title.\n"
 "Your cast-list should be comma-seperated to break it apart in multiple lines."
 msgstr ""
-"<b>Instruções</b>:\n"
+"<b>Μερικές Συμβουλές</b>:\n"
 "\n"
-"No passo seguinte você poderá relacionar os seus campos csv com os do "
+"Στο επόμενο βήμα μπορείτε να προσδιορίσετε τα csv πεδία σας σε αυτά του "
 "Griffith.\n"
-"Um campo CSV pode ser atribuído a vários campos do Griffith, por exemplo, se "
-"tiver apenas um título.\n"
-"A sua lista de elenco deverá ter separação por vírgulas para que se quebre "
-"em linhas múltiplas."
+"Ένα πεδίο CSV μπορεί να προσδιοριστεί σε πολλά πεδία griffith, π.χ. εάν "
+"έχετε μόνο έναν τίτλο.\n"
+"Η λίστα των ηθοποιών θα πρέπει να είναι χωριζμένη με κόμματα για να χωριστεί "
+"σε πολλαπλές σειρές."
 
 #: ../glade/importcsv.glade.h:6
+#, fuzzy
 msgid "Assigned Fields (CSV > Griffith)"
-msgstr "Campos Assinalados (CSV > Griffith)"
+msgstr "Ανατεθημένα Πεδία (CSV > Griffith)"
 
 #: ../glade/importcsv.glade.h:7
 msgid "CSV Fields"
-msgstr "Campos do CSV"
+msgstr "Πεδία CSV"
 
 #: ../glade/importcsv.glade.h:8
 msgid "CSV Import"
-msgstr "Importar CSV"
+msgstr "Εισαγωγή CSV"
 
 #: ../glade/importcsv.glade.h:9
+#, fuzzy
 msgid "Delimiter"
-msgstr "Delimitador"
+msgstr "Οριοθέτης"
 
 #: ../glade/importcsv.glade.h:10
 msgid "Encoding"
-msgstr "Codificando"
+msgstr "Κωδικοποίηση"
 
 #: ../glade/importcsv.glade.h:11 ../glade/import.glade.h:6
 msgid "Fields"
-msgstr "Campos"
+msgstr "Πεδία"
 
 #: ../glade/importcsv.glade.h:12
 msgid "File-Options"
-msgstr "Opções do Arquivo"
+msgstr "Επιλογές αρχείων"
 
 #: ../glade/importcsv.glade.h:13
 msgid "From Row"
-msgstr "Linha de Origem"
+msgstr "Από γραμμή"
 
 #: ../glade/importcsv.glade.h:14
 msgid "Griffith Fields"
-msgstr "Campos do Griffith"
+msgstr "Πεδία Griffith"
 
 #: ../glade/importcsv.glade.h:15
 msgid "If your file has no column headers then you should import from row 0."
 msgstr ""
-"Se o seu arquivo não tem cabeçalhos de coluna, então você deve importar a "
-"partir da linha 0."
+"Αν το αρχείο σας δεν έχει επικεφαλίδα στήλης, τότε πρέπει να εισάγετε απο "
+"την γραμμή 0."
 
 #: ../glade/importcsv.glade.h:16
+#, fuzzy
 msgid "Lineterminator"
-msgstr "Terminação de linha"
+msgstr "τερματισμός σειράς"
 
 #: ../glade/importcsv.glade.h:17
 msgid "Quotechar"
-msgstr "Quotechar"
+msgstr "Διάγραμμα Παράθεσης"
 
 #: ../glade/importcsv.glade.h:18
 msgid ""
@@ -1878,294 +2043,110 @@ msgid ""
 "utf_7 (all languages)\n"
 "utf_8 (all languages)"
 msgstr ""
-"ascii (Inglês)\n"
-"big5 (Chinês Tradicional)\n"
-"big5hkscs (Chinês Tradicional)\n"
-"cp037 (Inglês)\n"
-"cp424 (Hebráico)\n"
-"cp437 (Inglês)\n"
-"cp500 (Europa Ocidental)\n"
-"cp737 (Grego)\n"
-"cp775 (Línguas Bálticas)\n"
-"cp850 (Europa Ocidental)\n"
-"cp852 (Europa Oriental e Central)\n"
-"cp855 (Bulgaro, Belo-russo, Macedônio, Russo, Sérvio)\n"
-"cp856 (Hebráico)\n"
-"cp857 (Turco)\n"
-"cp860 (Português)\n"
-"cp861 (Islandês)\n"
-"cp862 (Hebráico)\n"
-"cp863 (Canadense)\n"
-"cp864 (Arábico)\n"
-"cp865 (Dinamarquês, Norueguês )\n"
-"cp866 (Russo)\n"
-"cp869 (Grego)\n"
-"cp874 (Tailandês)\n"
-"cp875 (Grego)\n"
-"cp932 (Japonês)\n"
-"cp949 (Coreano)\n"
-"cp950 (Chinês Tradicional)\n"
-"cp1006 (Hindu)\n"
-"cp1026 (Turco)\n"
-"cp1140 (Europa Ocidental)\n"
-"cp1250 (Europa Oriental e Central)\n"
-"cp1251 (Bulgaro, Belo-russo, Macedônio, Russo, Sérvio)\n"
-"cp1252 (Europa Ocidental)\n"
-"cp1253 (Grego)\n"
-"cp1254 (Turco)\n"
-"cp1255 (Hebráico)\n"
-"cp1256 (Arábico)\n"
-"cp1257 (Línguas Bálticas)\n"
-"cp1258 (Vietnamita)\n"
-"euc_jp (Japonês)\n"
-"euc_jis_2004 (Japonês)\n"
-"euc_jisx0213 (Japonês)\n"
-"euc_kr (Coreano)\n"
-"gb2312 (Chinês Simplificado)\n"
-"gbk (Chinês Unificado)\n"
-"gb18030 (Chinês Unificado)\n"
-"hz (Chinês Simplificado)\n"
-"iso2022_jp (Japonês)\n"
-"iso2022_jp_1 (Japonês)\n"
-"iso2022_jp_2 (Japonês, Coreano, Chinês Simplificado, Europa Ocidental, "
-"Grego)\n"
-"iso2022_jp_2004 (Japonês)\n"
-"iso2022_jp_3 (Japonês)\n"
-"iso2022_jp_ext (Japonês)\n"
-"iso2022_kr (Coreano)\n"
-"latin_1 (Europa Ocidental)\n"
-"iso8859_2 (Europa Oriental e Central)\n"
-"iso8859_3 (Esperanto, Maltês)\n"
-"iso8859_4 (Línguas Bálticas)\n"
-"iso8859_5 (Bulgaro, Belo-russo, Macedônio, Russo, Sérvio)\n"
-"iso8859_6 (Arábico)\n"
-"iso8859_7 (Grego)\n"
-"iso8859_8 (Hebráico)\n"
-"iso8859_9 (Turco)\n"
-"iso8859_10 (Línguas Nórdicas)\n"
-"iso8859_13 (Línguas Balticas)\n"
-"iso8859_14 (Línguas Celticas)\n"
-"iso8859_15 (Europa Ocidental)\n"
-"johab (Coreano)\n"
-"koi8_r (Russo)\n"
-"koi8_u (Ucraniano)\n"
-"mac_cyrillic (Bulgaro, Belo-russo, Macedônio, Russo, Sérvio)\n"
-"mac_greek (Grego)\n"
-"mac_iceland (Islandês)\n"
-"mac_latin2 (Europa Oriental e Central)\n"
-"mac_roman (Europa Ocidental)\n"
-"mac_turkish (Turco)\n"
-"ptcp154 (Kazakh)\n"
-"shift_jis (Japonês)\n"
-"shift_jis_2004 (Japonês)\n"
-"shift_jisx0213 (Japonês)\n"
-"utf_16 (Todos os idiomas)\n"
-"utf_16_be (Todos os idiomas (Somente BMP))\n"
-"utf_16_le (Todos os idiomas (Somente BMP))\n"
-"utf_7 (Todos os idiomas)\n"
-"utf_8 (Todos os idiomas)"
+"ascii (Αγγλικά)\n"
+"big5 (Παραδοσιακά Κινέζικα)\n"
+"big5hkscs (Παραδοσιακά Κινέζικα)\n"
+"cp037 (Αγγλικά)\n"
+"cp424 (Εβραϊκά)\n"
+"cp437 (Αγγλικά)\n"
+"cp500 (Δυτικής Ευρώπης)\n"
+"cp737 (Ελληνικά)\n"
+"cp775 (Βαλτικής)\n"
+"cp850 (Δυτικής Ευρώπης)\n"
+"cp852 (Κεντρικης και Ανατολικής Ευρώπης)\n"
+"cp855 (Βουλγαρικά,Λευκορωσικά,Σκοπιανά,Ρωσικά, Σερβικά)\n"
+"cp856 (Εβραϊκά)\n"
+"cp857 (Τουρκικά)\n"
+"cp860 (Πορτογαλλικά)\n"
+"cp861 (Ισλανδικά)\n"
+"cp862 (Εβραϊκά)\n"
+"cp863 (Καναδικά)\n"
+"cp864 (Αραβικά)\n"
+"cp865 (Δανέζικα, Νορβηγικά)\n"
+"cp866 (Ρωσικά)\n"
+"cp869 (Ελληνικά)\n"
+"cp874 (Ταϊλανδέζικα)\n"
+"cp875 (Ελληνικά)\n"
+"cp932 (Ιαπωνία)\n"
+"cp949 (Κορεάτικα)\n"
+"cp950 (Παραδοσιακά Κινεζικά)\n"
+"cp1006 (Ουρντού)\n"
+"cp1026 (Τουρκικά)\n"
+"cp1140 (Δυτικής Ευρώπης)\n"
+"cp1250 (Κεντρικής και Ανατολικής Ευρώπης)\n"
+"cp1251 (Βουλγαρικά,Λευκορωσικά,Σκοπιανά,Ρωσικά, Σερβικά)\n"
+"cp1252 (Δυτικής Ευρώπης)\n"
+"cp1253 (Ελληνικά)\n"
+"cp1254 (Τουρκικά)\n"
+"cp1255 (Εβραϊκά)\n"
+"cp1256 (Αραβικά)\n"
+"cp1257 (Βαλτικής)\n"
+"cp1258 (Βιετναμέζικα)\n"
+"euc_jp (Ιαπωνικά)\n"
+"euc_jis_2004 (Ιαπωνικά)\n"
+"euc_jisx0213 (Ιαπωνικά)\n"
+"euc_kr (Κορεάτικα)\n"
+"gb2312 (Απλουστευμένα Κινέζικα)\n"
+"gbk (Ενιαία Κινέζικα)\n"
+"gb18030 (Ενιαία Κινέζικα)\n"
+"hz (Απλουστευμένα Κινέζικα)\n"
+"iso2022_jp (Ιαπωνικά)\n"
+"iso2022_jp_1 (Ιαπωνικά)\n"
+"iso2022_jp_2 (Ιαπωνικά, Κορεάτικα, Απλουστευμένα Κινέζικα, Δυτικής Ευρώπης, "
+"Ελληνικά)\n"
+"iso2022_jp_2004 (Ιαπωνικά)\n"
+"iso2022_jp_3 (Ιαπωνικά)\n"
+"iso2022_jp_ext (Ιαπωνικά)\n"
+"iso2022_kr (Κορεάτικα)\n"
+"latin_1 (Δυτικής Ευρώπη)\n"
+"iso8859_2 (Κεντρικής και Ανατολικής Ευρώπης)\n"
+"iso8859_3 (Εσπεράντο, Μαλτέζικα)\n"
+"iso8859_4 (Βαλτικής)\n"
+"iso8859_5 (Βουλγαρικά,Λευκορωσικά,Σκοπιανά,Ρωσικά, Σερβικά)\n"
+"iso8859_6 (Αραβικά)\n"
+"iso8859_7 (Ελληνικά)\n"
+"iso8859_8 (Εβραϊκά)\n"
+"iso8859_9 (Τουρκικά)\n"
+"iso8859_10 (Σκανδιναβικές γλώσσες)\n"
+"iso8859_13 (Βαλτικής)\n"
+"iso8859_14 (Κέλτικες γλώσσες)\n"
+"iso8859_15 (Δυτικής Ευρώπης)\n"
+"johab (Κορεάτικα)\n"
+"koi8_r (Ρωσικά)\n"
+"koi8_u (Ουκρανικά)\n"
+"mac_cyrillic (Βουλγαρικά,Λευκορωσικά,Σκοπιανά,Ρωσικά, Σερβικά)\n"
+"mac_greek (Ελληνικά)\n"
+"mac_iceland (Ισλανδικά)\n"
+"mac_latin2 (Κεντρικής και Ανατολικής Ευρώπης)\n"
+"mac_roman (Δυτικής Ευρώπης)\n"
+"mac_turkish (Τουρκικά)\n"
+"ptcp154 (Καζακική)\n"
+"shift_jis (Ιαπωνικά)\n"
+"shift_jis_2004 (Ιαπωνικά)\n"
+"shift_jisx0213 (Ιαπωνικά)\n"
+"utf_16 (όλες οι γλώσσες)\n"
+"utf_16_be (όλες οι γλώσσες (BMP μόνο))\n"
+"utf_16_le (όλες οι γλώσσες (BMP μόνο))\n"
+"utf_7 (όλες οι γλώσσες)\n"
+"utf_8 (όλες οι γλώσσες)"
 
 #: ../glade/import.glade.h:1
 msgid "<b>Import only fields selected below</b>"
-msgstr "<b> Importar somente os campos abaixo selecionados </b>"
+msgstr "<b>Εισάγετε μόνο τα πεδία που είναι κάτωθεν επιλεγμένα</b>"
 
 #: ../glade/import.glade.h:2
 msgid "<b>Importing...</b>"
-msgstr "<b>Importando...</b>"
+msgstr "<b>Εισαγωγή...</b>"
 
 #: ../glade/import.glade.h:7
 msgid "Import window"
-msgstr "Janela de importação"
+msgstr "Εισαγωγή παραθύρου"
 
 #: ../glade/import.glade.h:8
 msgid "Plugin"
-msgstr "Plugin"
+msgstr "Πρόσθετη λειτουργία"
 
 #: ../glade/import.glade.h:9
+#, fuzzy
 msgid "Source"
-msgstr "Fonte"
-
-#~ msgid "Sorry. This poster image format is not supported."
-#~ msgstr "Desculpe. Este formato de imagem do pôster não é suportado."
-
-#~ msgid "Add person"
-#~ msgstr "Adicionar pessoa"
-
-#, fuzzy
-#~ msgid "Merge"
-#~ msgstr "Gênero"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Select"
-#~ msgstr "Selecionar"
-
-#~ msgid "Update"
-#~ msgstr "Atualizar"
-
-#~ msgid "Region 9 (Often used as region free)"
-#~ msgstr "Região 9 (Geralmente utilizado para multi-região)"
-
-#, fuzzy
-#~ msgid "To buy"
-#~ msgstr " por "
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "Spell Checker"
-#~ msgstr "Verificação Ortográfica"
-
-#~ msgid "min."
-#~ msgstr " min."
-
-#~ msgid "by Peek <peekpt@gmail.com>."
-#~ msgstr "por Peek <peekpt@gmail.com>."
-
-#~ msgid ""
-#~ "\n"
-#~ "Please visit http://www.peekmambo.com/"
-#~ msgstr ""
-#~ "\n"
-#~ "Por favor visite http://www.peekmambo.com/"
-
-#~ msgid "General Public License.\n"
-#~ msgstr "Licença Pública Geral (GPL).\n"
-
-#~ msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-#~ msgstr ""
-#~ "Por favor visite http://www.gnu.org/copyleft/gpl.html para maiores "
-#~ "detalhes."
-
-#~ msgid "that I'm really needing the following movie I have loaned you "
-#~ msgstr "que estou mesmo precisando do filme que lhe emprestei"
-
-#~ msgid ""
-#~ "recently:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Loaned on %s"
-#~ msgstr ""
-#~ "recentemente:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Emprestado em %s"
-
-#~ msgid "IMDb page"
-#~ msgstr "Página IMDB"
-
-#~ msgid ""
-#~ "Please install the aspell-%s package or adjust the spellchekcer "
-#~ "preferences."
-#~ msgstr ""
-#~ "Por favor instale o pacote aspell-%s ou ajuste as preferências do "
-#~ "corretor ortográfico."
-
-#~ msgid "Movie returned"
-#~ msgstr "Filme devolvido"
-
-#~ msgid "You can't change collection while it is loaned!"
-#~ msgstr "Não pode modificar a coleção enquanto ela estiver emprestada!"
-
-#~ msgid "You can't change volume while it is loaned!"
-#~ msgstr "Não pode modificar um volume enquanto ele estiver emprestado!"
-
-#~ msgid "You should fill the original title"
-#~ msgstr "Você deve indicar o título original"
-
-#~ msgid "Add language"
-#~ msgstr "Adicionar idioma"
-
-#~ msgid "Add new language entry"
-#~ msgstr "Adicionar nova entrada de idioma"
-
-#~ msgid "Backup"
-#~ msgstr "Cópia de segurança"
-
-#~ msgid "IMDB page"
-#~ msgstr "Página IMDB"
-
-#~ msgid "Oficial Site"
-#~ msgstr "Site Oficial"
-
-#~ msgid "Open image in poster window"
-#~ msgstr "Abrir imagem na janela do cartaz"
-
-#~ msgid "Remove language"
-#~ msgstr "Remover idioma"
-
-#~ msgid "Remove last language entry"
-#~ msgstr "Remover última entrada de idioma"
-
-#~ msgid "Restore"
-#~ msgstr "Restaurar"
-
-#~ msgid "Save preferences"
-#~ msgstr "Salvar preferências"
-
-#~ msgid "Technical info"
-#~ msgstr "Informação Técnica"
-
-#~ msgid "Visit the Internet Movie Database (IMDB) related page"
-#~ msgstr "Visitar a página deste filme no IMDB (Internet Movie Database)"
-
-#~ msgid "_Movies"
-#~ msgstr "F_ilmes"
-
-#~ msgid "add entered name to languages list"
-#~ msgstr "adicionar este nome à lista de idiomas"
-
-#~ msgid "remove selected language"
-#~ msgstr "remover o idioma selecionado"
-
-#~ msgid "rename collection assigned to movie"
-#~ msgstr "renomear a coleção atribuída a este filme"
-
-#~ msgid "rename selected language"
-#~ msgstr "renomear o idioma selecionado"
-
-#~ msgid "rename volume assigned to movie"
-#~ msgstr "renomear o volume atribuído a este filme"
-
-#~ msgid "Actors"
-#~ msgstr "Atores"
-
-#, fuzzy
-#~ msgid "Oficial site"
-#~ msgstr "Site oficial"
-
-#, fuzzy
-#~ msgid "IMDb"
-#~ msgstr "página IMDB"
-
-#, fuzzy
-#~ msgid "Seen"
-#~ msgstr "Visualizado"
-
-#~ msgid "Seen It"
-#~ msgstr "Visualizado"
-
-#~ msgid "Official Site"
-#~ msgstr "Site oficial"
-
-#~ msgid ""
-#~ "Number\n"
-#~ "Original Title\n"
-#~ "Title\n"
-#~ "Director\n"
-#~ "Genre\n"
-#~ "Rating\n"
-#~ "Cast\n"
-#~ "Year"
-#~ msgstr ""
-#~ "Número\n"
-#~ "Título em português\n"
-#~ "Título\n"
-#~ "Realizador\n"
-#~ "Género\n"
-#~ "Classificação\n"
-#~ "Actores\n"
-#~ "Ano"
+msgstr "Προέλευση"
