@@ -1,7 +1,7 @@
 Griffith 0.9.3
 ==============
 * New configuration file format (human readable) - please note that data from old config file is not used
-* Updated movie plugins: Filmweb, WP, FDb, IMDb, 7arte.net, Cineteka, Kino.de, DVD-Palace, E-Pipoca
+* Updated movie plugins: Filmweb, WP, FDb, IMDb, 7arte.net, Cineteka, Kino.de, DVD-Palace, E-Pipoca, Stopklatka
 * New movie plugins: FilmDb, Zelluloid, IMDb-de
 * New translations:
   + Dutch (thanks to Marcel Dijkstra)

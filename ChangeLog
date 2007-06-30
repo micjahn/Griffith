@@ -8,6 +8,7 @@ Griffith ChangeLog
 	* Use python2.5's sqlite3 module if available (no need to install pysqlite2)
 	* Check dependencies at startup
 	* Detect old config while restoring data
+	* Stopklatka movie plugin updated
 
 2007-06-29  Piotr Ożarowski
 	* Added Greek translation (thanka to Ioannis Koniaris)

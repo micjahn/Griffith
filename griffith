@@ -51,7 +51,7 @@ del missing
 
 # other imports
 import gtk, gtk.glade
-import add, config, gconsole, gdebug, initialize, main_treeview, quick_filter
+import add, config, gconsole, gutils, gdebug, initialize, main_treeview, quick_filter
 from gettext import gettext as _
 
 class Griffith:
