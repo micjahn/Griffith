@@ -128,13 +128,17 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 		try:
 			import sqlite
 			from sqlite import DatabaseError
-		except:
+		except ImportError:
 			print 'Old DB conversion: please install pysqlite legacy (v1.0)'
 			gutils.warning(self,_("Old DB conversion: please install pysqlite legacy (v1.0)"))
 			return False
 	else:
-		from pysqlite2 import dbapi2 as sqlite
-		from pysqlite2.dbapi2 import DatabaseError
+		try:	# Python 2.5
+			from sqlite3 import dbapi2 as sqlite
+			from sqlite3.dbapi2 import DatabaseError
+		except ImportError: # Python < 2.5 - try to use pysqlite2
+			from pysqlite2 import dbapi2 as sqlite
+			from pysqlite2.dbapi2 import DatabaseError
 
 	if os.path.isfile(destination_file):
 		# rename destination_file if it already exist

@@ -513,7 +513,7 @@ if __name__ == '__main__':
 	tmp = Tmp()
 	check_args(tmp)
 	locations(tmp)
-	tmp.config = config.Config(os.path.join(tmp.locations['home'], 'griffith.conf'))
+	tmp.config = config.Config(os.path.join(tmp.locations['home'], 'griffith.cfg'))
 	location_posters(tmp.locations, tmp.config)
 	
 	db = GriffithSQL(tmp.config, tmp.debug, tmp.locations['home'])

@@ -112,6 +112,7 @@ def restore(self):
 			gutils.error(self, _("Can't read backup file"), self.widgets['window'])
 			return False
 		mypath = os.path.join(self.locations['posters'])
+		old_config_file = False
 		for each in zip.namelist():
 			file_to_restore = os.path.split(each)
 			if not os.path.isdir(file_to_restore[1]):
@@ -121,6 +122,8 @@ def restore(self):
 					myfile = os.path.join(mypath,file_to_restore[1])
 				else:
 					myfile = os.path.join(self.locations['home'],file_to_restore[1])
+				if file_to_restore[1].endswith('.conf'):
+					old_config_file = myfile
 				outfile = open(myfile, 'wb')
 				outfile.write(zip.read(each))
 				outfile.flush()
@@ -129,6 +132,14 @@ def restore(self):
 
 		# restore config file
 		self.config = config.Config(file=os.path.join(self.locations['home'],'griffith.cfg'))
+		if old_config_file:
+			self.debug.show('Old config file detected. Please note that it will not be used.')
+			f = open(old_config_file, 'r')
+			old_config_raw_data = f.read()
+			f.close()
+			if old_config_raw_data.find('griffith.gri') >= -1:
+				self.config.set('file', 'griffith.gri', section='database')
+
 		filename = os.path.join(self.locations['home'], self.config.get('file', 'griffith.db', section='database'))
 
 		self.db.metadata.engine.dispose() # close DB
