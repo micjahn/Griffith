@@ -22,15 +22,36 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
+# set the PATH
 import sys, os.path
-import gtk, gtk.glade
-assert gtk.pygtk_version >= (2, 6, 0), 'PyGTK should be >= 2.6.0'
 lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
 #lib = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lib'))
 if os.path.isdir(lib):
 	sys.path.append(lib)
 del lib
-import add, config, gconsole, gdebug, gutils, initialize, main_treeview, quick_filter
+
+# check dependencies
+from gutils import get_dependencies
+(required, extra) = get_dependencies()
+missing = []
+for i in required:
+	if i['version'] is False or (i['version'] is not True and i['version'][0] == '-'):
+		missing.append(i)
+if len(missing) > 0:
+	print 'Error: missing modules:'
+	for i in missing:
+		print "%(module)s" % i,
+		if i.has_key('module_req'):
+			print "\t:: required version: %(module_req)s" % i,
+			if i['version'] is not False and i['version'][0] == '-':
+				print "\t:: detected: %(version)s" % i
+		print "\n",
+	sys.exit(1)
+del missing
+
+# other imports
+import gtk, gtk.glade
+import add, config, gconsole, gdebug, initialize, main_treeview, quick_filter
 from gettext import gettext as _
 
 class Griffith:

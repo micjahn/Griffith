@@ -24,11 +24,14 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import string
 import os
-import gtk
+try:
+	import gtk
+	import gobject
+except:
+	pass
 import htmlentitydefs
 import re
 import webbrowser
-import gobject
 
 url_re = re.compile('^\w+://')
 entity = re.compile(r'\&.\w*?\;')
@@ -413,17 +416,29 @@ def get_dependencies():
 		'debian_req'	: '0.3.0-1'
 	})
 	try:
-		import pysqlite2
-		version = True
-		# TODO: check if "pysqlite" is in version >= 2
-	except:
+		import sqlite3
+		version = sqlite3.version
+	except ImportError:
 		version = False
-	depend.append({'module': 'pysqlite2',
-		'version'	: version,
-		'url'		: 'http://initd.org/tracker/pysqlite',
-		'debian'	: 'python-pysqlite2',
-		'debian_req'	: '2.3.0-1'
-	})
+	if version is False:
+		try:
+			import pysqlite2
+			version = True
+		except:
+			version = False
+		depend.append({'module': 'pysqlite2',
+			'version'	: version,
+			'url'		: 'http://initd.org/tracker/pysqlite',
+			'debian'	: 'python-pysqlite2',
+			'debian_req'	: '2.3.0-1'
+		})
+	else:
+		depend.append({'module': 'sqlite3',
+			'version'	: version,
+			'url'		: 'http://www.python.org',
+			'debian'	: 'python',
+			'debian_req'	: '2.5'
+		})
 	try:
 		import reportlab
 		version = reportlab.Version

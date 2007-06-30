@@ -1,11 +1,14 @@
 Griffith 0.9.3
 ==============
+* New configuration file format (human readable) - please note that data from old config file is not used
 * Updated movie plugins: Filmweb, WP, FDb, IMDb, 7arte.net, Cineteka, Kino.de, DVD-Palace, E-Pipoca
-* New configuration file format (human readable)
 * New movie plugins: FilmDb, Zelluloid, IMDb-de
-* Added Dutch translation (thanks to Marcel Dijkstra)
-* Added Danish translation (thanks to Joe Dalton)
-* Added script for database creation under Microsoft SQL Server
+* New translations:
+  + Dutch (thanks to Marcel Dijkstra)
+  + Danish (thanks to Joe Dalton)
+  + Greek (thanka to Ioannis Koniaris)
+  + Simplified Chinese (thanks to kempson)
+* Updated translations: German, Spanish, French, Polish and Portuguese Brazilian (from Rosetta)
 * Added new alpha export plugin for iPods
 * Added Microsoft SQL support
 * Lots of bugs fixed
