@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: griffith\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-29 22:50+0200\n"
+"POT-Creation-Date: 2007-06-30 19:52+0200\n"
 "PO-Revision-Date: 2007-06-29 13:10+0000\n"
 "Last-Translator: kempson <kempson.chen@gmail.com>\n"
 "Language-Team: Simplified Chinese <zh_CN@li.org>\n"
@@ -17,21 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Rosetta-Export-Date: 2007-06-29 19:48:14+0000\n"
 
-#: ../griffith:168 ../griffith:751 ../lib/delete.py:33 ../lib/edit.py:44
+#: ../griffith:189 ../griffith:772 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 msgid "You have no movies in your database"
 msgstr "在你的数据库中没有电影"
 
-#: ../griffith:309
+#: ../griffith:330
 msgid "You saw all movies in your collection!"
 msgstr "你已经看过所有电影收藏"
 
-#: ../griffith:434 ../griffith:439 ../lib/initialize.py:254
+#: ../griffith:455 ../griffith:460 ../lib/initialize.py:254
 #: ../lib/initialize.py:532
 msgid "subtitles"
 msgstr "字幕"
 
-#: ../griffith:718
+#: ../griffith:739
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -41,7 +41,7 @@ msgstr ""
 "你现有的电影会被替换。\n"
 "你将不能撤销这项操作。"
 
-#: ../griffith:728
+#: ../griffith:749
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
@@ -51,23 +51,23 @@ msgstr ""
 "你现有的电影收藏会被混合并备份。\n"
 "你将不能撤销这项操作。"
 
-#: ../griffith:826
+#: ../griffith:847
 msgid " movie(s) in collection. "
 msgstr " 收藏的电影。 "
 
-#: ../griffith:827
+#: ../griffith:848
 msgid " movie(s) loaned. "
 msgstr ""
 
-#: ../griffith:828
+#: ../griffith:849
 msgid "You haven't seen "
 msgstr "你还没有看 "
 
-#: ../griffith:828
+#: ../griffith:849
 msgid " movie(s)"
 msgstr " 电影"
 
-#: ../griffith:964
+#: ../griffith:985
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -75,7 +75,7 @@ msgstr ""
 "你确定要新建一个数据库吗？\n"
 "你将丢失所有现有的数据！"
 
-#: ../griffith:968
+#: ../griffith:989
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -140,17 +140,17 @@ msgstr "法语"
 msgid "German"
 msgstr "德语"
 
-#: ../lib/about.py:75
+#: ../lib/about.py:74
 #, fuzzy
 msgid "Greek"
 msgstr "风格"
 
-#: ../lib/about.py:77 ../lib/dbupgrade.py:91
+#: ../lib/about.py:76 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
 msgstr "意大利语"
 
-#: ../lib/about.py:79 ../lib/dbupgrade.py:93
+#: ../lib/about.py:78 ../lib/dbupgrade.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:33
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:31
 #: ../lib/plugins/movie/PluginMovieOnet.py:31
@@ -160,29 +160,29 @@ msgstr "意大利语"
 msgid "Polish"
 msgstr "芬兰语"
 
-#: ../lib/about.py:81 ../lib/dbupgrade.py:92
+#: ../lib/about.py:80 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr "葡萄牙语"
 
-#: ../lib/about.py:83
+#: ../lib/about.py:82
 msgid "Simplified Chinese"
 msgstr ""
 
-#: ../lib/about.py:85 ../lib/dbupgrade.py:94
+#: ../lib/about.py:84 ../lib/dbupgrade.py:94
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
 msgid "Spanish"
 msgstr "西班牙语"
 
-#: ../lib/about.py:87
+#: ../lib/about.py:86
 msgid "Swedish"
 msgstr "瑞典语"
 
-#: ../lib/about.py:96
+#: ../lib/about.py:95
 msgid "This program is released under the GNU"
 msgstr "这个程序是发布在GNU下的。"
 
@@ -243,15 +243,15 @@ msgstr "现在备份功能只对SQLite引擎有用"
 msgid "Backup has been created"
 msgstr "备份已生成"
 
-#: ../lib/backup.py:104 ../lib/backup.py:168
+#: ../lib/backup.py:104 ../lib/backup.py:179
 msgid "Restore Griffith backup"
 msgstr "恢复Griffith备份"
 
-#: ../lib/backup.py:112 ../lib/backup.py:184
+#: ../lib/backup.py:112 ../lib/backup.py:195
 msgid "Can't read backup file"
 msgstr "无法读取备份文件"
 
-#: ../lib/backup.py:159
+#: ../lib/backup.py:170
 msgid "Backup restored"
 msgstr "备份已恢复"
 
@@ -328,7 +328,7 @@ msgstr ""
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr ""
 
-#: ../lib/dbupgrade.py:158
+#: ../lib/dbupgrade.py:162
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -411,11 +411,11 @@ msgstr ""
 msgid "This person has no e-mail address defined."
 msgstr "这人没有定义电子邮件地址"
 
-#: ../lib/gutils.py:262
+#: ../lib/gutils.py:265
 msgid "Images"
 msgstr "图片"
 
-#: ../lib/gutils.py:273 ../lib/plugins/imp/__init__.py:202
+#: ../lib/gutils.py:276 ../lib/plugins/imp/__init__.py:202
 msgid "All files"
 msgstr "全部文件"
 

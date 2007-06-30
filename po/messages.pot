@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-29 22:50+0200\n"
+"POT-Creation-Date: 2007-06-30 19:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,57 +16,57 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:168 ../griffith:751 ../lib/delete.py:33 ../lib/edit.py:44
+#: ../griffith:189 ../griffith:772 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 msgid "You have no movies in your database"
 msgstr ""
 
-#: ../griffith:309
+#: ../griffith:330
 msgid "You saw all movies in your collection!"
 msgstr ""
 
-#: ../griffith:434 ../griffith:439 ../lib/initialize.py:254
+#: ../griffith:455 ../griffith:460 ../lib/initialize.py:254
 #: ../lib/initialize.py:532
 msgid "subtitles"
 msgstr ""
 
-#: ../griffith:718
+#: ../griffith:739
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
 "You can't undo this operation."
 msgstr ""
 
-#: ../griffith:728
+#: ../griffith:749
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
 "You can't undo this operation."
 msgstr ""
 
-#: ../griffith:826
+#: ../griffith:847
 msgid " movie(s) in collection. "
 msgstr ""
 
-#: ../griffith:827
+#: ../griffith:848
 msgid " movie(s) loaned. "
 msgstr ""
 
-#: ../griffith:828
+#: ../griffith:849
 msgid "You haven't seen "
 msgstr ""
 
-#: ../griffith:828
+#: ../griffith:849
 msgid " movie(s)"
 msgstr ""
 
-#: ../griffith:964
+#: ../griffith:985
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
 msgstr ""
 
-#: ../griffith:968
+#: ../griffith:989
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -127,16 +127,16 @@ msgstr ""
 msgid "German"
 msgstr ""
 
-#: ../lib/about.py:75
+#: ../lib/about.py:74
 msgid "Greek"
 msgstr ""
 
-#: ../lib/about.py:77 ../lib/dbupgrade.py:91
+#: ../lib/about.py:76 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
 msgstr ""
 
-#: ../lib/about.py:79 ../lib/dbupgrade.py:93
+#: ../lib/about.py:78 ../lib/dbupgrade.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:33
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:31
 #: ../lib/plugins/movie/PluginMovieOnet.py:31
@@ -146,29 +146,29 @@ msgstr ""
 msgid "Polish"
 msgstr ""
 
-#: ../lib/about.py:81 ../lib/dbupgrade.py:92
+#: ../lib/about.py:80 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr ""
 
-#: ../lib/about.py:83
+#: ../lib/about.py:82
 msgid "Simplified Chinese"
 msgstr ""
 
-#: ../lib/about.py:85 ../lib/dbupgrade.py:94
+#: ../lib/about.py:84 ../lib/dbupgrade.py:94
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
 msgid "Spanish"
 msgstr ""
 
-#: ../lib/about.py:87
+#: ../lib/about.py:86
 msgid "Swedish"
 msgstr ""
 
-#: ../lib/about.py:96
+#: ../lib/about.py:95
 msgid "This program is released under the GNU"
 msgstr ""
 
@@ -229,15 +229,15 @@ msgstr ""
 msgid "Backup has been created"
 msgstr ""
 
-#: ../lib/backup.py:104 ../lib/backup.py:168
+#: ../lib/backup.py:104 ../lib/backup.py:179
 msgid "Restore Griffith backup"
 msgstr ""
 
-#: ../lib/backup.py:112 ../lib/backup.py:184
+#: ../lib/backup.py:112 ../lib/backup.py:195
 msgid "Can't read backup file"
 msgstr ""
 
-#: ../lib/backup.py:159
+#: ../lib/backup.py:170
 msgid "Backup restored"
 msgstr ""
 
@@ -314,7 +314,7 @@ msgstr ""
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr ""
 
-#: ../lib/dbupgrade.py:158
+#: ../lib/dbupgrade.py:162
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -394,11 +394,11 @@ msgstr ""
 msgid "This person has no e-mail address defined."
 msgstr ""
 
-#: ../lib/gutils.py:262
+#: ../lib/gutils.py:265
 msgid "Images"
 msgstr ""
 
-#: ../lib/gutils.py:273 ../lib/plugins/imp/__init__.py:202
+#: ../lib/gutils.py:276 ../lib/plugins/imp/__init__.py:202
 msgid "All files"
 msgstr ""
 

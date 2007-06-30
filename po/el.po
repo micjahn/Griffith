@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: griffith\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-29 22:50+0200\n"
+"POT-Creation-Date: 2007-06-30 19:52+0200\n"
 "PO-Revision-Date: 2007-06-28 11:01+0000\n"
 "Last-Translator: Ioannis Koniaris <ikoniari@csd.auth.gr>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -17,21 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Rosetta-Export-Date: 2007-06-29 19:48:16+0000\n"
 
-#: ../griffith:168 ../griffith:751 ../lib/delete.py:33 ../lib/edit.py:44
+#: ../griffith:189 ../griffith:772 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 msgid "You have no movies in your database"
 msgstr "Η βάση δεδομένων είναι άδεια"
 
-#: ../griffith:309
+#: ../griffith:330
 msgid "You saw all movies in your collection!"
 msgstr "Είδατε όλες τις ταινίες της συλλογή σας!"
 
-#: ../griffith:434 ../griffith:439 ../lib/initialize.py:254
+#: ../griffith:455 ../griffith:460 ../lib/initialize.py:254
 #: ../lib/initialize.py:532
 msgid "subtitles"
 msgstr "υπότιτλοι"
 
-#: ../griffith:718
+#: ../griffith:739
 #, fuzzy
 msgid ""
 "Are you sure you want to restore?\n"
@@ -42,7 +42,7 @@ msgstr ""
 "Η τρέχουσα συλλογή ταινιών θα αντικατασταθεί.\n"
 "Δεν μπορείτε να αναιρέσετε αυτή την αλλαγή!"
 
-#: ../griffith:728
+#: ../griffith:749
 #, fuzzy
 msgid ""
 "Are you sure you want to mix?\n"
@@ -53,23 +53,23 @@ msgstr ""
 "Η τρέχουσα συλλογή ταινιών θα ανακατευτεί με ένα αντίγραφο.\n"
 "Δεν μπορείτε να αναιρέσετε αυτή την αλλαγή!"
 
-#: ../griffith:826
+#: ../griffith:847
 msgid " movie(s) in collection. "
 msgstr " ταινία(ες) στη συλλογή "
 
-#: ../griffith:827
+#: ../griffith:848
 msgid " movie(s) loaned. "
 msgstr " ταινία(ες) δανείστηκαν "
 
-#: ../griffith:828
+#: ../griffith:849
 msgid "You haven't seen "
 msgstr "Δεν έχετε δει "
 
-#: ../griffith:828
+#: ../griffith:849
 msgid " movie(s)"
 msgstr " ταινία(ες)"
 
-#: ../griffith:964
+#: ../griffith:985
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -77,7 +77,7 @@ msgstr ""
 "Είστε σίγουροι οτι θέλετε να δημιουργήσετε μια νέα βάση δεδομένων;\n"
 "Θα χάσετε ΟΛΑ τα υπάρχοντα δεδομένα!"
 
-#: ../griffith:968
+#: ../griffith:989
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -149,18 +149,18 @@ msgstr "Γαλλικά"
 msgid "German"
 msgstr "Γερμανικά"
 
-#: ../lib/about.py:75
+#: ../lib/about.py:74
 #, fuzzy
 msgid "Greek"
 msgstr "Είδος"
 
-#: ../lib/about.py:77 ../lib/dbupgrade.py:91
+#: ../lib/about.py:76 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 #, fuzzy
 msgid "Italian"
 msgstr "Ιταλικά"
 
-#: ../lib/about.py:79 ../lib/dbupgrade.py:93
+#: ../lib/about.py:78 ../lib/dbupgrade.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:33
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:31
 #: ../lib/plugins/movie/PluginMovieOnet.py:31
@@ -171,7 +171,7 @@ msgstr "Ιταλικά"
 msgid "Polish"
 msgstr "Πολωνικά"
 
-#: ../lib/about.py:81 ../lib/dbupgrade.py:92
+#: ../lib/about.py:80 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
@@ -179,11 +179,11 @@ msgstr "Πολωνικά"
 msgid "Portuguese"
 msgstr "Πορτογαλλικά"
 
-#: ../lib/about.py:83
+#: ../lib/about.py:82
 msgid "Simplified Chinese"
 msgstr ""
 
-#: ../lib/about.py:85 ../lib/dbupgrade.py:94
+#: ../lib/about.py:84 ../lib/dbupgrade.py:94
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
@@ -191,12 +191,12 @@ msgstr ""
 msgid "Spanish"
 msgstr "Ισπανικά"
 
-#: ../lib/about.py:87
+#: ../lib/about.py:86
 #, fuzzy
 msgid "Swedish"
 msgstr "Σουηδικά"
 
-#: ../lib/about.py:96
+#: ../lib/about.py:95
 #, fuzzy
 msgid "This program is released under the GNU"
 msgstr "Το πρόγραμμα υπόκειται στην άδεια χρήσης GNU"
@@ -267,16 +267,16 @@ msgstr ""
 msgid "Backup has been created"
 msgstr "Το αντίγραφο δημιουργήθηκε"
 
-#: ../lib/backup.py:104 ../lib/backup.py:168
+#: ../lib/backup.py:104 ../lib/backup.py:179
 #, fuzzy
 msgid "Restore Griffith backup"
 msgstr "Επαναφορά αντιγράφου Griffith"
 
-#: ../lib/backup.py:112 ../lib/backup.py:184
+#: ../lib/backup.py:112 ../lib/backup.py:195
 msgid "Can't read backup file"
 msgstr "Δεν ήταν δυνατή η ανάγνωση του αντιγράφου"
 
-#: ../lib/backup.py:159
+#: ../lib/backup.py:170
 #, fuzzy
 msgid "Backup restored"
 msgstr "Το αντίγραφο επανακτήθηκε"
@@ -365,7 +365,7 @@ msgstr ""
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr "Παλιά μετατροπή ΒΔ: παρακαλώ εγκαταστήστε τα pysqlite legacy (v1.0)"
 
-#: ../lib/dbupgrade.py:158
+#: ../lib/dbupgrade.py:162
 #, fuzzy
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
@@ -461,12 +461,12 @@ msgstr ""
 msgid "This person has no e-mail address defined."
 msgstr "Δεν βρέθηκε ηλεκτρονική διεύθυνση καταχωρημένη για αυτό το άτομο."
 
-#: ../lib/gutils.py:262
+#: ../lib/gutils.py:265
 #, fuzzy
 msgid "Images"
 msgstr "Εικόνες"
 
-#: ../lib/gutils.py:273 ../lib/plugins/imp/__init__.py:202
+#: ../lib/gutils.py:276 ../lib/plugins/imp/__init__.py:202
 #, fuzzy
 msgid "All files"
 msgstr "Όλα τα αρχεία"

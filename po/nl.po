@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.9.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-29 22:50+0200\n"
+"POT-Creation-Date: 2007-06-30 19:52+0200\n"
 "PO-Revision-Date: 2007-04-01 16:34+0200\n"
 "Last-Translator: root <mdtje@hotmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
@@ -16,21 +16,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../griffith:168 ../griffith:751 ../lib/delete.py:33 ../lib/edit.py:44
+#: ../griffith:189 ../griffith:772 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 msgid "You have no movies in your database"
 msgstr "Uw database is leeg"
 
-#: ../griffith:309
+#: ../griffith:330
 msgid "You saw all movies in your collection!"
 msgstr "U heeft alle films al gezien!"
 
-#: ../griffith:434 ../griffith:439 ../lib/initialize.py:254
+#: ../griffith:455 ../griffith:460 ../lib/initialize.py:254
 #: ../lib/initialize.py:532
 msgid "subtitles"
 msgstr "ondertitels"
 
-#: ../griffith:718
+#: ../griffith:739
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Uw huidige filmdatabase zal worden overschreven.\n"
 "U kunt deze wijziging niet ongedaan maken."
 
-#: ../griffith:728
+#: ../griffith:749
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
@@ -50,23 +50,23 @@ msgstr ""
 "Uw huidige filmdatabase zal met een backup worden aangevuld.\n"
 "U kunt deze wijziging niet ongedaan maken."
 
-#: ../griffith:826
+#: ../griffith:847
 msgid " movie(s) in collection. "
 msgstr " Film(s) in uw collectie. "
 
-#: ../griffith:827
+#: ../griffith:848
 msgid " movie(s) loaned. "
 msgstr " Film(s) uitgeleend. "
 
-#: ../griffith:828
+#: ../griffith:849
 msgid "You haven't seen "
 msgstr "Niet gezien: "
 
-#: ../griffith:828
+#: ../griffith:849
 msgid " movie(s)"
 msgstr " film(s)"
 
-#: ../griffith:964
+#: ../griffith:985
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -74,7 +74,7 @@ msgstr ""
 "Weet u zeker dat u een nieuwe database wilt maken?\n"
 "Hierbij zal uw huidige database verloren gaan!"
 
-#: ../griffith:968
+#: ../griffith:989
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -139,17 +139,17 @@ msgstr "Frans"
 msgid "German"
 msgstr "Duits"
 
-#: ../lib/about.py:75
+#: ../lib/about.py:74
 #, fuzzy
 msgid "Greek"
 msgstr "Genre"
 
-#: ../lib/about.py:77 ../lib/dbupgrade.py:91
+#: ../lib/about.py:76 ../lib/dbupgrade.py:91
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:30
 msgid "Italian"
 msgstr "Italiaans"
 
-#: ../lib/about.py:79 ../lib/dbupgrade.py:93
+#: ../lib/about.py:78 ../lib/dbupgrade.py:93
 #: ../lib/plugins/movie/PluginMovieFDb.py:33
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:31
 #: ../lib/plugins/movie/PluginMovieOnet.py:31
@@ -159,29 +159,29 @@ msgstr "Italiaans"
 msgid "Polish"
 msgstr "Pools"
 
-#: ../lib/about.py:81 ../lib/dbupgrade.py:92
+#: ../lib/about.py:80 ../lib/dbupgrade.py:92
 #: ../lib/plugins/movie/PluginMovie7arte.py:32
 #: ../lib/plugins/movie/PluginMovieCineteka.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr "Portugees"
 
-#: ../lib/about.py:83
+#: ../lib/about.py:82
 msgid "Simplified Chinese"
 msgstr ""
 
-#: ../lib/about.py:85 ../lib/dbupgrade.py:94
+#: ../lib/about.py:84 ../lib/dbupgrade.py:94
 #: ../lib/plugins/movie/PluginMovieCulturalia.py:32
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
 msgid "Spanish"
 msgstr "Spaans"
 
-#: ../lib/about.py:87
+#: ../lib/about.py:86
 msgid "Swedish"
 msgstr "Sweeds"
 
-#: ../lib/about.py:96
+#: ../lib/about.py:95
 msgid "This program is released under the GNU"
 msgstr "Dit programma valt onder de GNU"
 
@@ -245,15 +245,15 @@ msgstr "Backup functie is alleen beschikbaar voor SQLite databases"
 msgid "Backup has been created"
 msgstr "Er is een backup gemaakt"
 
-#: ../lib/backup.py:104 ../lib/backup.py:168
+#: ../lib/backup.py:104 ../lib/backup.py:179
 msgid "Restore Griffith backup"
 msgstr "Herstel een Griffith backup"
 
-#: ../lib/backup.py:112 ../lib/backup.py:184
+#: ../lib/backup.py:112 ../lib/backup.py:195
 msgid "Can't read backup file"
 msgstr "Kan backup bestand niet lezen"
 
-#: ../lib/backup.py:159
+#: ../lib/backup.py:170
 msgid "Backup restored"
 msgstr "Backup hersteld"
 
@@ -333,7 +333,7 @@ msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr ""
 "Oude database conversie: installeer eerst pysqlite legacy (v1.0) a.u.b."
 
-#: ../lib/dbupgrade.py:158
+#: ../lib/dbupgrade.py:162
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -418,11 +418,11 @@ msgstr ""
 msgid "This person has no e-mail address defined."
 msgstr "Voor deze persoon is geen e-mail adres ingesteld."
 
-#: ../lib/gutils.py:262
+#: ../lib/gutils.py:265
 msgid "Images"
 msgstr "Afbeelingen"
 
-#: ../lib/gutils.py:273 ../lib/plugins/imp/__init__.py:202
+#: ../lib/gutils.py:276 ../lib/plugins/imp/__init__.py:202
 msgid "All files"
 msgstr "Alle bestanden"
 

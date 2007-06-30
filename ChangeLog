@@ -4,6 +4,8 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+---- 0.9.3 ---
+
 2007-06-30  Piotr Ożarowski
 	* Use python2.5's sqlite3 module if available (no need to install pysqlite2)
 	* Check dependencies at startup
