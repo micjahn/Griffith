@@ -4,8 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+---- 0.9.3.1 ---
+
 2007-07-01  Piotr Ożarowski
-	* Fix db config data (thanks Michael)
+	* Problem with saving database preferences in config file fixed
 
 ---- 0.9.3 ---
 

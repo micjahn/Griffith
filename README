@@ -1,5 +1,5 @@
-Griffith 0.9.3 README
-=====================
+Griffith 0.9.3.1 README
+=======================
 
 This document was last updated on Thu Jan 09 2007.
 Please see the file COPYING for licensing and warranty information.
@@ -27,18 +27,18 @@ Griffith is a film collection manager, released under the GNU/GPL License.
 System Requirements
 ===================
 
-  Name			Minimum version		URL
-  ----			---------------		---
+  Name			Minimum version		URL						NOTE
+  ----			---------------		---						----
   * Python		2.3 or higher		http://www.python.org/
   * GTK+		tested on 2.6.4		http://www.gtk.org/
   * PyGTK (with glade2)	tested on 2.6.1		http://www.pygtk.org/
   * SQLAlchemy		0.3.0			http://www.sqlalchemy.org/
-  * pysqlite2		2			http://initd.org/tracker/pysqlite
+  * pysqlite2		2			http://initd.org/tracker/pysqlite		Python 2.5's sqlite3 module will be used if available
   * PIL						http://www.pythonware.com/products/pil/
   * PyXML					http://pyxml.sf.net/
   * ReportLab		1.19			http://www.reportlab.org
-	
-  Other dependencies (optional):
+
+  Other (optional) dependencies:
   ------------------------------
   PostgreSQL support:
   * Psycopg2		2			http://initd.org/tracker/psycopg/wiki/PsycopgTwo
@@ -57,8 +57,8 @@ To check dependencies:
 ----------------------
   $ ./griffith --check-dep
 
-To show detected Python modules version:
-----------------------------------------
+To show detected Python modules versions:
+-----------------------------------------
   $ ./griffith --show-dep
 
 Windows installer includes all the needed requirements.
@@ -105,7 +105,7 @@ Reporting Bugs
 If you want to help or report any bugs founded please visit:
   http://griffith.berlios.de/
 or
-  http://developer.berlios.de/bugs/?group_id=4891
+  https://bugs.launchpad.net/griffith/
 
 
 TODO
