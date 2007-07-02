@@ -32,6 +32,8 @@ Name: pol; MessagesFile: compiler:Polish.isl
 Name: ger; MessagesFile: compiler:German.isl
 Name: cze; MessagesFile: compiler:Czech.isl
 Name: fre; MessagesFile: compiler:French.isl
+Name: chi; MessagesFile: compiler:ChineseSimp-11-5.1.0.isl
+Name: gre; MessagesFile: compiler:Greek-4-5.1.11.isl
 
 [LangOptions]
 LanguageCodePage=0
