@@ -71,6 +71,9 @@ class ExportPlugin:
         self.parent = parent_window
         self.export_iPod()
 
+	def split_file(self, filename):
+		pass
+
     def export_iPod(self):
 		tmp_dir = mkdtemp()
 		griffith_list = open(os.path.join(tmp_dir,"movies"),"w")
