@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-07-09  Michael Jahn
+	* toggle seen/unseen by double-clicking the icon
+
 2007-07-01  Piotr Ożarowski
 	* posters directory problem fixed (thanks to Michael)
 

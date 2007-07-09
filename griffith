@@ -267,6 +267,10 @@ class Griffith:
 	def clone_movie(self, *args):
 		add.clone_movie(self)
 
+	def on_m_seen_icon_button_press_event(self, widget, event):
+		if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+			self.toggle_seen()
+
 	# poster --------------------------------------------------------------
 
 	def change_poster(self, *args):

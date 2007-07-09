@@ -84,6 +84,7 @@ def define_widgets(self, gladefile):
 		'email_reminder_button':get('b_email_reminder'),
 		'image_rating':		get('m_image_rating'),
 	}
+	get('m_seen_icon_eventbox').connect('button_press_event', self.on_m_seen_icon_button_press_event)
 	#}}}
 
 	self.widgets['add'] = {#{{{
