@@ -4,13 +4,16 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-07-01  Piotr Ożarowski
+	* posters directory problem fixed (thanks to Michael)
+
 2007-07-06  Vasco Nunes
 	* PTGate movie plugin updated
 
-2007-07-04 Michael Jahn
+2007-07-04  Michael Jahn
 	* Kino.de movie plugin updated
-	
-2007-07-03 Michael Jahn
+
+2007-07-03  Michael Jahn
 	* DVD-Palace and IMDB-de movie plugin updated
 
 ---- 0.9.3.1 ---
@@ -27,7 +30,7 @@ Griffith ChangeLog
 	* Stopklatka movie plugin updated
 
 2007-06-29  Piotr Ożarowski
-	* Added Greek translation (thanka to Ioannis Koniaris)
+	* Added Greek translation (thanks to Ioannis Koniaris)
 	* Added Simplified Chinese translation (thanks to kempson)
 	* Updated German, Spanish, French and Portuguese Brazilian translations (from Rosetta)
 	* Updated Polish translations
