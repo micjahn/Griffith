@@ -114,14 +114,18 @@ def locations(self):
 
 def location_posters(locations, config):
 	if config.get('posters', None) is not None:
-		locations['posters']  = os.path.join(locations['home'], config['posters'])
+		locations['posters']  = os.path.join(locations['home'], config.get('posters'))
 	elif config.get('type', 'sqlite', section='database') == 'sqlite':
-		config['posters'] = 'posters'
-		locations['posters'] = os.path.join(locations['home'], 'posters')
+		dbname = config.get('name', 'griffith', section='database')
+		if dbname <> 'griffith':
+			config['posters'] = 'posters_sqlite_' + dbname
+		else:
+			config['posters'] = 'posters'
+		locations['posters'] = os.path.join(locations['home'], config.get('posters'))
 		config.save()
 	else:
 		config['posters'] = "posters_%(type)s_%(host)s_%(port)s_%(name)s_%(user)s" % config.toDict('database')
-		locations['posters'] = os.path.join(locations['home'], config['posters'])
+		locations['posters'] = os.path.join(locations['home'], config.get('posters'))
 		config.save()
 	# check if posters dir exists
 	if not os.path.isdir(locations['posters']):
@@ -596,17 +600,14 @@ def preferences(self):
 	self.widgets['preferences']['db_passwd'].set_text(self.config.get('passwd', '', section='database'))
 	self.widgets['preferences']['db_name'].set_text(self.config.get('name', '', section='database'))
 	db_type = self.config.get('type', 'sqlite', section='database')
-	if db_type != 'sqlite':
-		self.widgets['preferences']['db_details'].set_sensitive(True)
-		if db_type == 'postgres':
-			self.widgets['preferences']['db_type'].set_active(1)
-		elif db_type == 'mysql':
-			self.widgets['preferences']['db_type'].set_active(2)
-		elif db_type == 'mssql':
-			self.widgets['preferences']['db_type'].set_active(3)
+	if db_type == 'postgres':
+		self.widgets['preferences']['db_type'].set_active(1)
+	elif db_type == 'mysql':
+		self.widgets['preferences']['db_type'].set_active(2)
+	elif db_type == 'mssql':
+		self.widgets['preferences']['db_type'].set_active(3)
 	else:
 		self.widgets['preferences']['db_type'].set_active(0)
-		self.widgets['preferences']['db_details'].set_sensitive(False)
 
 def fill_volumes_combo(self, default=0):
 	self.widgets['add']['volume'].get_model().clear()

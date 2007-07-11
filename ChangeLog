@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-07-09  Michael Jahn
 	* toggle seen/unseen by double-clicking the icon
+	* support for different database names with sqlite
 
 2007-07-01  Piotr Ożarowski
 	* posters directory problem fixed (thanks to Michael)

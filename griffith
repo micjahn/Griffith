@@ -222,22 +222,46 @@ class Griffith:
 	def on_p_db_type_changed(self, widget):
 		active = widget.get_active()
 		if active == 0:
-			self.widgets['preferences']['db_details'].set_sensitive(False)
+			# change port number if it is something useful at the moment; for clearness
+			if self.widgets['preferences']['db_port'].get_value() == 0 or \
+				self.widgets['preferences']['db_port'].get_value() == 3306 or \
+				self.widgets['preferences']['db_port'].get_value() == 5432 or \
+				self.widgets['preferences']['db_port'].get_value() == 1433:
+				self.widgets['preferences']['db_port'].set_value(0)
+			self.widgets['preferences']['db_passwd'].set_sensitive(False)
+			self.widgets['preferences']['db_user'].set_sensitive(False)
+			self.widgets['preferences']['db_port'].set_sensitive(False)
+			self.widgets['preferences']['db_host'].set_sensitive(False)
 		elif active == 1:
 			# change port number IF previous one was MySQL's or MSSQL one
-			if self.widgets['preferences']['db_port'].get_value() == 3306 or self.widgets['preferences']['db_port'].get_value() == 1433:
+			if self.widgets['preferences']['db_port'].get_value() == 0 or \
+				self.widgets['preferences']['db_port'].get_value() == 3306 or \
+				self.widgets['preferences']['db_port'].get_value() == 1433:
 				self.widgets['preferences']['db_port'].set_value(5432)
-			self.widgets['preferences']['db_details'].set_sensitive(True)
+			self.widgets['preferences']['db_passwd'].set_sensitive(True)
+			self.widgets['preferences']['db_user'].set_sensitive(True)
+			self.widgets['preferences']['db_port'].set_sensitive(True)
+			self.widgets['preferences']['db_host'].set_sensitive(True)
 		elif active == 2:
 			# change port number IF previous one was PostgreSQL's or MSSQL one
-			if self.widgets['preferences']['db_port'].get_value() == 5432 or self.widgets['preferences']['db_port'].get_value() == 1433:
+			if self.widgets['preferences']['db_port'].get_value() == 0 or \
+				self.widgets['preferences']['db_port'].get_value() == 5432 or \
+				self.widgets['preferences']['db_port'].get_value() == 1433:
 				self.widgets['preferences']['db_port'].set_value(3306)
-			self.widgets['preferences']['db_details'].set_sensitive(True)
+			self.widgets['preferences']['db_passwd'].set_sensitive(True)
+			self.widgets['preferences']['db_user'].set_sensitive(True)
+			self.widgets['preferences']['db_port'].set_sensitive(True)
+			self.widgets['preferences']['db_host'].set_sensitive(True)
 		elif active == 3:
 			# change port number IF previous one was PostgreSQL's or MySQL one
-			if self.widgets['preferences']['db_port'].get_value() == 5432 or self.widgets['preferences']['db_port'].get_value() == 3306:
+			if self.widgets['preferences']['db_port'].get_value() == 0 or \
+				self.widgets['preferences']['db_port'].get_value() == 5432 or \
+				self.widgets['preferences']['db_port'].get_value() == 3306:
 				self.widgets['preferences']['db_port'].set_value(1433)
-			self.widgets['preferences']['db_details'].set_sensitive(True)
+			self.widgets['preferences']['db_passwd'].set_sensitive(True)
+			self.widgets['preferences']['db_user'].set_sensitive(True)
+			self.widgets['preferences']['db_port'].set_sensitive(True)
+			self.widgets['preferences']['db_host'].set_sensitive(True)
 
 	# movie related operations --------------------------------------------
 
@@ -1017,7 +1041,7 @@ You can't undo this operation."""), \
 				from sqlalchemy.orm import clear_mappers
 				clear_mappers()
 				if self.config.get('type', 'sqlite', section='database') == 'sqlite':
-					os.unlink(os.path.join(self.locations['home'],self.config.get('file', 'griffith.db', section='database')))
+					os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
 					if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
 						self.config.set('file', 'griffith.db', section='database')
 				# create/connect db

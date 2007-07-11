@@ -32,7 +32,7 @@ def backup(self):
 	filename = gutils.file_chooser(_("Save Griffith backup"), \
 		action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons= \
 		(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK), \
-		name='griffith_backup.zip')
+		name=self.config.get('name','griffith', section='database') + '_backup.zip')
 	if filename and filename[0]:
 		overwrite = None
 		if os.path.isfile(filename[0]):
@@ -52,7 +52,7 @@ def backup(self):
 				return False
 			mzip.write(os.path.join(self.locations['home'],'griffith.cfg'))
 			if self.db.metadata.engine.name == 'sqlite':
-				mzip.write(os.path.join(self.locations['home'], self.config.get('file','griffith.db', section='database')))
+				mzip.write(os.path.join(self.locations['home'], self.config.get('name','griffith', section='database') + '.db'))
 			else:
 				gutils.error(self, _("Backup function is available only for SQLite engine for now"), self.widgets['window'])
 				return False
@@ -140,7 +140,7 @@ def restore(self):
 			if old_config_raw_data.find('griffith.gri') >= -1:
 				self.config.set('file', 'griffith.gri', section='database')
 
-		filename = os.path.join(self.locations['home'], self.config.get('file', 'griffith.db', section='database'))
+		filename = os.path.join(self.locations['home'], self.config.get('name', 'griffith', section='database') + '.db')
 
 		self.db.metadata.engine.dispose() # close DB
 		from sqlalchemy.orm import clear_mappers
@@ -204,7 +204,7 @@ def merge(self):	# FIXME
 					outfile.close()
 			# load stored database filename
 			tmp_config = config.Config(file=os.path.join(tmp_dir,'griffith.conf'))
-			filename = os.path.join(tmp_dir, tmp_config('file', 'griffith.db', section='database'))
+			filename = os.path.join(tmp_dir, tmp_config('name', 'griffith', section='database') + '.db')
 			zip.close()
 
 		# check if file needs conversion

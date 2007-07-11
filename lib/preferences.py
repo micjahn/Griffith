@@ -348,9 +348,9 @@ def save_preferences(self):
 	if old['type'] != c.get('type', section='database') or (old['type']!='sqlite' and (\
 			old['host'] != c.get('host', section='database') or \
 			old['port'] != c.get('port', section='database') or \
-			old['name'] != c.get('name', section='database') or \
 			old['user'] != c.get('user', section='database') or \
-			old['passwd'] != c.get('passwd', section='database'))):
+			old['passwd'] != c.get('passwd', section='database'))) or \
+			old['name'] != c.get('name', section='database'):
 		self.debug.show('DATABASE: connecting to new db server...')
 		
 		# new database connection

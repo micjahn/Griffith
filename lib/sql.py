@@ -301,7 +301,7 @@ class GriffithSQL:
 
 		# connect to database --------------------------------------{{{
 		if config.get('type', section='database') == 'sqlite':
-			url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('file', 'griffith.db', section='database'))
+			url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
 		elif config.get('type', section='database') == 'postgres':
 			if config.get('port', 0, section='database')==0:
 				config.set('port', 5432, section='database')
@@ -339,13 +339,13 @@ class GriffithSQL:
 				config.get('name', section='database'))
 		else:
 			config.set('type', 'sqlite', section='database')
-			url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('file', 'griffith.db', section='database'))
+			url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
 		try:
 			self.metadata = BoundMetaData(url)
 		except InvalidRequestError, e:
 			debug.show("BoundMetaData: %s" % e)
 			config.set('type', 'sqlite', section='database')
-			self.metadata = BoundMetaData("sqlite:///%s" % os.path.join(griffith_dir, config.get('file', 'griffith.db', section='database')))
+			self.metadata = BoundMetaData("sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db'))
 		# try to establish a db connection
 		try:
 			self.metadata.engine.connect()
