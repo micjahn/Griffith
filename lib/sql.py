@@ -342,10 +342,12 @@ class GriffithSQL:
 			url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
 		try:
 			self.metadata = BoundMetaData(url)
-		except InvalidRequestError, e:
+		except Exception, e:	# InvalidRequestError, ImportError
 			debug.show("BoundMetaData: %s" % e)
 			config.set('type', 'sqlite', section='database')
+			gutils.warning(self, "%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
 			self.metadata = BoundMetaData("sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db'))
+
 		# try to establish a db connection
 		try:
 			self.metadata.engine.connect()
