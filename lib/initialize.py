@@ -21,7 +21,6 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-from gettext import gettext as _
 import sys
 import os
 import string
@@ -30,7 +29,8 @@ import gutils
 import gobject
 import gettext
 import platform
-import locale
+from gettext import gettext as _
+from locale import getdefaultlocale
 
 try:
 	import gtkspell
@@ -39,6 +39,7 @@ except:
 	spell_support = 0
 
 def locations(self):
+	defaultLang, defaultEnc = getdefaultlocale()
 	locations = {}
 	locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
 	locations['lib']  = os.path.dirname(__file__)
@@ -46,7 +47,7 @@ def locations(self):
 	if os.name == 'nt' or os.name == 'win32':
 		import winshell
 		mydocs = winshell.my_documents()
-		locations['home']           = os.path.join(mydocs, 'griffith')
+		locations['home']           = os.path.join(mydocs, 'griffith').decode(defaultEnc)
 		#locations['home']           = os.path.join(os.path.expanduser('~'), 'griffith')
 		locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
 		locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
@@ -60,14 +61,13 @@ def locations(self):
 		# windows hack for locale setting
 		lang = os.getenv('LANG')
 		if lang is None:
-			defaultLang, defaultEnc = locale.getdefaultlocale()
 			if defaultLang:
 				lang = defaultLang
 		if lang:
 			os.environ['LANG'] = lang
 
 	elif os.name == 'posix':
-		locations['home']  = os.path.join(os.path.expanduser('~'), ".griffith")
+		locations['home']  = os.path.join(os.path.expanduser('~'), '.griffith').decode(defaultEnc)
 		locations['share'] = os.path.abspath(os.path.join(locations['lib'], '..'))
 		locations['glade'] = os.path.join(locations['share'], 'glade')
 		locations['i18n']  = os.path.abspath(os.path.join(locations['share'], '..', 'locale'))
@@ -77,7 +77,7 @@ def locations(self):
 		locations['movie_plugins']  = os.path.join(locations['lib'], 'plugins', 'movie')
 		locations['export_plugins'] = os.path.join(locations['lib'], 'plugins', 'export')
 		locations['images']  = os.path.join(locations['share'], 'images')
-		locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop')
+		locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop').decode(defaultEnc)
 	else:
 		print 'Operating system not supported'
 		sys.exit()
@@ -117,7 +117,7 @@ def location_posters(locations, config):
 		locations['posters']  = os.path.join(locations['home'], config.get('posters'))
 	elif config.get('type', 'sqlite', section='database') == 'sqlite':
 		dbname = config.get('name', 'griffith', section='database')
-		if dbname <> 'griffith':
+		if dbname != 'griffith':
 			config['posters'] = 'posters_sqlite_' + dbname
 		else:
 			config['posters'] = 'posters'
