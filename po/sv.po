@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-30 19:52+0200\n"
+"POT-Creation-Date: 2007-08-01 12:56+0200\n"
 "PO-Revision-Date: 2007-01-04 09:01+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -14,21 +14,21 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../griffith:189 ../griffith:772 ../lib/delete.py:33 ../lib/edit.py:44
+#: ../griffith:189 ../griffith:800 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
 msgid "You have no movies in your database"
 msgstr "Du har inga filmer i din databas"
 
-#: ../griffith:330
+#: ../griffith:358
 msgid "You saw all movies in your collection!"
 msgstr "Du har sett alla filmer i din samling!"
 
-#: ../griffith:455 ../griffith:460 ../lib/initialize.py:254
-#: ../lib/initialize.py:532
+#: ../griffith:483 ../griffith:488 ../lib/initialize.py:258
+#: ../lib/initialize.py:536
 msgid "subtitles"
 msgstr "undertexter"
 
-#: ../griffith:739
+#: ../griffith:767
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -38,7 +38,7 @@ msgstr ""
 "Din aktuell filmsamling kommer att ersättas.\n"
 "Du kan inte ångra den här åtgärden."
 
-#: ../griffith:749
+#: ../griffith:777
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
@@ -49,23 +49,23 @@ msgstr ""
 "med en säkerhetskopia.\n"
 "Du kan inte ångra den här åtgärden."
 
-#: ../griffith:847
+#: ../griffith:875
 msgid " movie(s) in collection. "
 msgstr " film(er) i samlingen. "
 
-#: ../griffith:848
+#: ../griffith:876
 msgid " movie(s) loaned. "
 msgstr " film(er) utlånade. "
 
-#: ../griffith:849
+#: ../griffith:877
 msgid "You haven't seen "
 msgstr "Du har inte sett "
 
-#: ../griffith:849
+#: ../griffith:877
 msgid " movie(s)"
 msgstr " film(er)"
 
-#: ../griffith:985
+#: ../griffith:1013
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -73,7 +73,7 @@ msgstr ""
 "Är du säker på att du vill skapa en ny databas?\n"
 "Du kommer att förlora ALL aktuell data!"
 
-#: ../griffith:989
+#: ../griffith:1017
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -131,7 +131,7 @@ msgstr "Franska"
 #: ../lib/plugins/movie/PluginMovieDVDPalace.py:33
 #: ../lib/plugins/movie/PluginMovieFilmDb.py:32
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:32
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:32
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:31
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:33
 #: ../lib/plugins/movie/PluginMovieOFDb.py:13
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:33
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Spanish"
 msgstr "Spanska"
 
-#: ../lib/about.py:86
+#: ../lib/about.py:86 ../lib/plugins/movie/PluginMovieFilmTipset.py:33
 msgid "Swedish"
 msgstr "Svenska"
 
@@ -227,7 +227,7 @@ msgid "Save Griffith backup"
 msgstr "Spara säkerhetskopia"
 
 #: ../lib/backup.py:40 ../lib/plugins/export/PluginExportCSV.py:50
-#: ../lib/plugins/export/PluginExportiPod.py:108
+#: ../lib/plugins/export/PluginExportiPod.py:111
 #: ../lib/plugins/export/PluginExportPDF.py:72
 #: ../lib/plugins/export/PluginExportXML.py:51
 msgid "File exists. Do you want to overwrite it?"
@@ -272,17 +272,17 @@ msgstr "Omslagsbild genererad av Griffith v"
 msgid "Released Under the GNU/GPL License"
 msgstr "Utgiven under GNU/GPL License"
 
-#: ../lib/cover.py:176 ../lib/initialize.py:184 ../lib/initialize.py:517
+#: ../lib/cover.py:176 ../lib/initialize.py:188 ../lib/initialize.py:521
 #: ../lib/plugins/export/PluginExportHTML.py:105 ../glade/griffith.glade.h:93
 msgid "Original Title"
 msgstr "Ursprunglig titel"
 
-#: ../lib/cover.py:177 ../lib/initialize.py:190 ../lib/initialize.py:525
+#: ../lib/cover.py:177 ../lib/initialize.py:194 ../lib/initialize.py:529
 #: ../lib/plugins/export/PluginExportHTML.py:111 ../glade/griffith.glade.h:143
 msgid "Title"
 msgstr "Titel"
 
-#: ../lib/cover.py:179 ../lib/initialize.py:196 ../lib/initialize.py:507
+#: ../lib/cover.py:179 ../lib/initialize.py:200 ../lib/initialize.py:511
 #: ../lib/plugins/export/PluginExportHTML.py:96 ../glade/griffith.glade.h:45
 msgid "Director"
 msgstr "Regissör"
@@ -295,12 +295,12 @@ msgstr "Speltid"
 msgid " min"
 msgstr " min"
 
-#: ../lib/cover.py:182 ../lib/initialize.py:506
+#: ../lib/cover.py:182 ../lib/initialize.py:510
 #: ../lib/plugins/export/PluginExportHTML.py:95 ../glade/griffith.glade.h:38
 msgid "Country"
 msgstr "Land"
 
-#: ../lib/cover.py:183 ../lib/initialize.py:508
+#: ../lib/cover.py:183 ../lib/initialize.py:512
 #: ../lib/plugins/export/PluginExportHTML.py:97 ../glade/griffith.glade.h:59
 msgid "Genre"
 msgstr "Genre"
@@ -427,240 +427,240 @@ msgstr "Bilder"
 msgid "All files"
 msgstr "Alla filer"
 
-#: ../lib/initialize.py:173
+#: ../lib/initialize.py:177
 msgid "N."
 msgstr "Nr"
 
-#: ../lib/initialize.py:179 ../lib/initialize.py:509
+#: ../lib/initialize.py:183 ../lib/initialize.py:513
 #: ../lib/plugins/export/PluginExportHTML.py:98 ../glade/griffith.glade.h:66
 msgid "Image"
 msgstr "Bild"
 
-#: ../lib/initialize.py:210
+#: ../lib/initialize.py:214
 msgid "Loan Date"
 msgstr "Utlåningsdatum"
 
-#: ../lib/initialize.py:216
+#: ../lib/initialize.py:220
 msgid "Return Date"
 msgstr "Återlämningsdatum"
 
-#: ../lib/initialize.py:221
+#: ../lib/initialize.py:225
 msgid "Loaned To"
 msgstr "Utlånad till"
 
-#: ../lib/initialize.py:240 ../lib/plugins/movie/PluginMovieIMDB-de.py:145
+#: ../lib/initialize.py:244 ../lib/plugins/movie/PluginMovieIMDB-de.py:144
 #: ../lib/plugins/movie/PluginMovieIMDB.py:140
 msgid "Language"
 msgstr "Språk"
 
 # VAD?
-#: ../lib/initialize.py:252 ../lib/initialize.py:532
+#: ../lib/initialize.py:256 ../lib/initialize.py:536
 msgid "lector"
 msgstr "lektor"
 
-#: ../lib/initialize.py:253 ../lib/initialize.py:532
+#: ../lib/initialize.py:257 ../lib/initialize.py:536
 msgid "dubbing"
 msgstr "dubbning"
 
-#: ../lib/initialize.py:255 ../lib/initialize.py:532
+#: ../lib/initialize.py:259 ../lib/initialize.py:536
 msgid "commentary"
 msgstr "kommentator"
 
-#: ../lib/initialize.py:262 ../glade/griffith.glade.h:147
+#: ../lib/initialize.py:266 ../glade/griffith.glade.h:147
 msgid "Type"
 msgstr "Typ"
 
-#: ../lib/initialize.py:277
+#: ../lib/initialize.py:281
 msgid "Codec"
 msgstr "Kodek"
 
-#: ../lib/initialize.py:292
+#: ../lib/initialize.py:296
 msgid "Channels"
 msgstr "Kanaler"
 
-#: ../lib/initialize.py:307
+#: ../lib/initialize.py:311
 msgid "Subtitle format"
 msgstr "Undertextformat"
 
-#: ../lib/initialize.py:423 ../glade/griffith.glade.h:87
+#: ../lib/initialize.py:427 ../glade/griffith.glade.h:87
 msgid "Name"
 msgstr "Namn"
 
-#: ../lib/initialize.py:429 ../glade/exporthtml.glade.h:16
+#: ../lib/initialize.py:433 ../glade/exporthtml.glade.h:16
 #: ../glade/griffith.glade.h:47 ../glade/import.glade.h:5
 msgid "E-mail"
 msgstr "E-post"
 
-#: ../lib/initialize.py:472
+#: ../lib/initialize.py:476
 msgid "Last added"
 msgstr "Senast tillagd"
 
-#: ../lib/initialize.py:501 ../lib/plugins/export/PluginExportHTML.py:93
+#: ../lib/initialize.py:505 ../lib/plugins/export/PluginExportHTML.py:93
 #: ../glade/griffith.glade.h:30
 msgid "Cast"
 msgstr "Medverkande"
 
-#: ../lib/initialize.py:502 ../lib/plugins/export/PluginExportHTML.py:94
+#: ../lib/initialize.py:506 ../lib/plugins/export/PluginExportHTML.py:94
 #: ../glade/griffith.glade.h:32
 msgid "Classification"
 msgstr "Klassificering"
 
-#: ../lib/initialize.py:503 ../glade/griffith.glade.h:35
+#: ../lib/initialize.py:507 ../glade/griffith.glade.h:35
 msgid "Collection"
 msgstr "Samling"
 
-#: ../lib/initialize.py:504 ../lib/initialize.py:531
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:149
+#: ../lib/initialize.py:508 ../lib/initialize.py:535
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:148
 #: ../lib/plugins/movie/PluginMovieIMDB.py:144 ../glade/griffith.glade.h:36
 msgid "Color"
 msgstr "Färg"
 
-#: ../lib/initialize.py:505 ../glade/griffith.glade.h:37
+#: ../lib/initialize.py:509 ../glade/griffith.glade.h:37
 msgid "Condition"
 msgstr "Tillstånd"
 
-#: ../lib/initialize.py:510 ../glade/griffith.glade.h:70
+#: ../lib/initialize.py:514 ../glade/griffith.glade.h:70
 msgid "Layers"
 msgstr "Lager"
 
-#: ../lib/initialize.py:511 ../lib/plugins/export/PluginExportHTML.py:102
+#: ../lib/initialize.py:515 ../lib/plugins/export/PluginExportHTML.py:102
 msgid "Loaned"
 msgstr "Utlånad"
 
-#: ../lib/initialize.py:512 ../glade/griffith.glade.h:46
+#: ../lib/initialize.py:516 ../glade/griffith.glade.h:46
 msgid "Discs"
 msgstr "Skivor"
 
-#: ../lib/initialize.py:513 ../glade/griffith.glade.h:82
+#: ../lib/initialize.py:517 ../glade/griffith.glade.h:82
 msgid "Medium"
 msgstr "Medel"
 
-#: ../lib/initialize.py:514 ../lib/plugins/export/PluginExportHTML.py:113
+#: ../lib/initialize.py:518 ../lib/plugins/export/PluginExportHTML.py:113
 #: ../glade/griffith.glade.h:90
 msgid "Notes"
 msgstr "Anteckningar"
 
-#: ../lib/initialize.py:515 ../lib/sql.py:278
+#: ../lib/initialize.py:519 ../lib/sql.py:278
 #: ../lib/plugins/export/PluginExportHTML.py:104 ../glade/griffith.glade.h:91
 msgid "Number"
 msgstr "Nummer"
 
-#: ../lib/initialize.py:516 ../lib/plugins/export/PluginExportHTML.py:99
+#: ../lib/initialize.py:520 ../lib/plugins/export/PluginExportHTML.py:99
 #: ../glade/griffith.glade.h:92
 msgid "Official site"
 msgstr "Officiell webbsida"
 
-#: ../lib/initialize.py:518 ../lib/plugins/export/PluginExportHTML.py:106
+#: ../lib/initialize.py:522 ../lib/plugins/export/PluginExportHTML.py:106
 #: ../glade/griffith.glade.h:101
 msgid "Plot"
 msgstr "Handling"
 
-#: ../lib/initialize.py:519 ../lib/plugins/export/PluginExportHTML.py:107
+#: ../lib/initialize.py:523 ../lib/plugins/export/PluginExportHTML.py:107
 #: ../glade/griffith.glade.h:109
 msgid "Rating"
 msgstr "Betyg"
 
-#: ../lib/initialize.py:520 ../glade/griffith.glade.h:111
+#: ../lib/initialize.py:524 ../glade/griffith.glade.h:111
 msgid "Region"
 msgstr "Region"
 
-#: ../lib/initialize.py:521 ../lib/plugins/export/PluginExportHTML.py:108
+#: ../lib/initialize.py:525 ../lib/plugins/export/PluginExportHTML.py:108
 #: ../glade/griffith.glade.h:119
 msgid "Runtime"
 msgstr "Speltid"
 
-#: ../lib/initialize.py:522 ../lib/plugins/export/PluginExportHTML.py:110
+#: ../lib/initialize.py:526 ../lib/plugins/export/PluginExportHTML.py:110
 #: ../glade/griffith.glade.h:122
 msgid "Seen it"
 msgstr "Har sett den"
 
-#: ../lib/initialize.py:523 ../lib/plugins/export/PluginExportHTML.py:100
+#: ../lib/initialize.py:527 ../lib/plugins/export/PluginExportHTML.py:100
 #: ../glade/griffith.glade.h:132
 msgid "Site"
 msgstr "Webbplats"
 
-#: ../lib/initialize.py:524 ../lib/plugins/export/PluginExportHTML.py:109
+#: ../lib/initialize.py:528 ../lib/plugins/export/PluginExportHTML.py:109
 #: ../glade/griffith.glade.h:138
 msgid "Studio"
 msgstr "Filmstudio"
 
-#: ../lib/initialize.py:526 ../lib/plugins/export/PluginExportHTML.py:101
+#: ../lib/initialize.py:530 ../lib/plugins/export/PluginExportHTML.py:101
 #: ../glade/griffith.glade.h:145
 msgid "Trailer"
 msgstr "Förhandsvisning"
 
-#: ../lib/initialize.py:527 ../glade/griffith.glade.h:152
+#: ../lib/initialize.py:531 ../glade/griffith.glade.h:152
 msgid "Video codec"
 msgstr "Videokodek"
 
-#: ../lib/initialize.py:528 ../glade/griffith.glade.h:155
+#: ../lib/initialize.py:532 ../glade/griffith.glade.h:155
 msgid "Volume"
 msgstr "Volym"
 
-#: ../lib/initialize.py:529 ../lib/plugins/export/PluginExportHTML.py:112
+#: ../lib/initialize.py:533 ../lib/plugins/export/PluginExportHTML.py:112
 #: ../glade/griffith.glade.h:157
 msgid "Year"
 msgstr "År"
 
-#: ../lib/initialize.py:530 ../lib/initialize.py:531 ../lib/initialize.py:533
-#: ../lib/initialize.py:726 ../lib/initialize.py:727 ../lib/initialize.py:758
-#: ../lib/initialize.py:759
+#: ../lib/initialize.py:534 ../lib/initialize.py:535 ../lib/initialize.py:537
+#: ../lib/initialize.py:727 ../lib/initialize.py:728 ../lib/initialize.py:759
+#: ../lib/initialize.py:760
 msgid "N/A"
 msgstr "-"
 
-#: ../lib/initialize.py:530
+#: ../lib/initialize.py:534
 msgid "Damaged"
 msgstr "Skadad"
 
-#: ../lib/initialize.py:530
+#: ../lib/initialize.py:534
 msgid "Poor"
 msgstr "Dålig"
 
-#: ../lib/initialize.py:530
+#: ../lib/initialize.py:534
 msgid "Fair"
 msgstr "OK"
 
-#: ../lib/initialize.py:530
+#: ../lib/initialize.py:534
 msgid "Good"
 msgstr "Bra"
 
-#: ../lib/initialize.py:530
+#: ../lib/initialize.py:534
 msgid "Excellent"
 msgstr "Mycket bra"
 
-#: ../lib/initialize.py:531
+#: ../lib/initialize.py:535
 msgid "Black and White"
 msgstr "Svart och vit"
 
-#: ../lib/initialize.py:531
+#: ../lib/initialize.py:535
 msgid "Mixed"
 msgstr "Blandad"
 
-#: ../lib/initialize.py:533
+#: ../lib/initialize.py:537
 msgid "Single Side, Single Layer"
 msgstr "Enkelsidig, ett lager"
 
-#: ../lib/initialize.py:533
+#: ../lib/initialize.py:537
 msgid "Single Side, Dual Layer"
 msgstr "Enkelsidig, dubbla lager"
 
-#: ../lib/initialize.py:533
+#: ../lib/initialize.py:537
 msgid "Dual Side, Single Layer"
 msgstr "Dubbelsidig, ett lager"
 
-#: ../lib/initialize.py:533
+#: ../lib/initialize.py:537
 msgid "Dual Side, Dual Layer"
 msgstr "Dubbelsidig, dubbla lager"
 
-#: ../lib/initialize.py:535
+#: ../lib/initialize.py:539
 msgid "Region 0 (No Region Coding)"
 msgstr "Region 0 (Ingen regionskodning)"
 
-#: ../lib/initialize.py:536
+#: ../lib/initialize.py:540
 msgid "Region 1 (United States of America, Canada)"
 msgstr "Region 1 (USA, Kanada)"
 
-#: ../lib/initialize.py:537
+#: ../lib/initialize.py:541
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
@@ -668,33 +668,33 @@ msgstr ""
 "Region 2 (Europa, inklusive Frankrike, Grekland, Turkiet, Egypten, "
 "Arabstaterna, Japan och Sydafrika)"
 
-#: ../lib/initialize.py:538
+#: ../lib/initialize.py:542
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
 msgstr "Region 3 (Korea, Thailand, Vietnam, Borneo och Indonesien)"
 
-#: ../lib/initialize.py:539
+#: ../lib/initialize.py:543
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
 msgstr "Region 4 (Australien och Nya Zeeland, Mexiko, Karibien och Sydamerika)"
 
-#: ../lib/initialize.py:540
+#: ../lib/initialize.py:544
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
 msgstr "Region 5 (Indien, Afrika, Ryssland och tidigare USSR-länder)"
 
-#: ../lib/initialize.py:541
+#: ../lib/initialize.py:545
 msgid "Region 6 (Popular Republic of China)"
 msgstr "Region 6 (Kina)"
 
-#: ../lib/initialize.py:542
+#: ../lib/initialize.py:546
 msgid "Region 7 (Reserved for Unspecified Special Use)"
 msgstr "Region 7 (Reserverad för ospecifierad specialanvändning)"
 
-#: ../lib/initialize.py:543
+#: ../lib/initialize.py:547
 msgid "Region 8 (Airlines/Cruise Ships)"
 msgstr "Region 8 (Flygbolag/Kryssningsskepp)"
 
-#: ../lib/initialize.py:580
+#: ../lib/initialize.py:584
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr ""
 "Ordboken är inte tillgänglig. Stavningskontroll kommer att inaktiveras. \n"
@@ -785,7 +785,17 @@ msgstr "Det här namnet används redan!"
 msgid "Column \"%s\" is not unique"
 msgstr "Kolumnen \"%s\" är inte unik"
 
-#: ../lib/sql.py:354
+#: ../lib/sql.py:348
+msgid ""
+"Cannot connect to database.\n"
+"Falling back to SQLite."
+msgstr ""
+
+#: ../lib/sql.py:348
+msgid "Please check debug output for more informations."
+msgstr ""
+
+#: ../lib/sql.py:356
 msgid "Database connection failed."
 msgstr "Databasanslutning misslyckades."
 
@@ -811,7 +821,7 @@ msgstr "Filter aktiverat. Visar endast filmer från volymen: %s"
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr "Filter aktiverat. Visar endast filmer från samlingen: %s"
 
-#: ../lib/widgets.py:302
+#: ../lib/widgets.py:303
 msgid ""
 "Define here the PDF reader you want to use within Griffith. Popular choices "
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
@@ -821,7 +831,7 @@ msgstr ""
 "är xpdf, gpdf, evince eller kpdf. Se först till att du har det här "
 "programmet installerat och att det fungerar."
 
-#: ../lib/widgets.py:303
+#: ../lib/widgets.py:304
 msgid ""
 "Here you can define the desired language to use while spell checking some "
 "fields. Use you locale setting. For example, to use european portuguese "
@@ -831,7 +841,7 @@ msgstr ""
 "stavningskontroll för vissa fält. Använd din lokalinställning. För att till "
 "exempel använda svensk stavningskontroll, ange \"sv\""
 
-#: ../lib/widgets.py:304
+#: ../lib/widgets.py:305
 msgid ""
 "Use this entry to define the SMTP server you want to use to send e-mails. On "
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
@@ -841,7 +851,7 @@ msgstr ""
 "skicka e-postmeddelanden. På *nix-system bör \"localhost\" fungera. "
 "Alternativt kan du använda adressen till din Internetleverantörs SMTP-server."
 
-#: ../lib/widgets.py:305
+#: ../lib/widgets.py:306
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
@@ -853,10 +863,11 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieFDb.py:100
 #: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:78
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:108
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:101
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:100
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB.py:93
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:141
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:148
+#: ../lib/plugins/movie/PluginMovieOFDb.py:73
 #: ../lib/plugins/movie/PluginMovieOnet.py:102
 #: ../lib/plugins/movie/PluginMovieWP.py:96
 #: ../lib/plugins/movie/PluginMovieWP.py:98
@@ -864,7 +875,7 @@ msgstr ""
 msgid " as "
 msgstr " som "
 
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:147
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:146
 #: ../lib/plugins/movie/PluginMovieIMDB.py:142 ../glade/griffith.glade.h:4
 msgid "<b>Audio</b>"
 msgstr "<b>Ljud</b>"
@@ -874,7 +885,7 @@ msgid "Full CSV list export plugin"
 msgstr "Exporteringsmodul för fullständig CSV-lista"
 
 #: ../lib/plugins/export/PluginExportCSV.py:45
-#: ../lib/plugins/export/PluginExportiPod.py:103
+#: ../lib/plugins/export/PluginExportiPod.py:106
 #: ../lib/plugins/export/PluginExportXML.py:46
 #, python-format
 msgid "Export a %s document"
@@ -962,20 +973,20 @@ msgstr "Dokumentet har genererats."
 msgid "iPod Notes export plugin"
 msgstr "Insticksmodul för PDF-export"
 
-#: ../lib/plugins/export/PluginExportiPod.py:82
+#: ../lib/plugins/export/PluginExportiPod.py:85
 #, fuzzy
 msgid "My Movies List"
 msgstr "Totalt antal filmer: %s"
 
-#: ../lib/plugins/export/PluginExportiPod.py:98
+#: ../lib/plugins/export/PluginExportiPod.py:101
 msgid "List was successful exported to iPod."
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportiPod.py:100
+#: ../lib/plugins/export/PluginExportiPod.py:103
 msgid "iPod is not connected."
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportiPod.py:115
+#: ../lib/plugins/export/PluginExportiPod.py:118
 msgid ""
 "List was successful exported. Now you should move it to the 'Notes' folder "
 "on your iPod."

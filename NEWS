@@ -1,3 +1,14 @@
+Griffith 0.9.4
+==============
+* Support for different database names with sqlite
+* Updated movie plugins: OFDb, PTGate, Kino.de, DVD-Palace and IMDB-de
+* New movie plugins: FilmTipset
+* Translation files synchronized with Rosetta
+  + new: Japanese, Russian and Turkish
+  + uptaded: Czech, Spanish, Bulgarian, Greek
+* Few bugs fixed
+
+
 Griffith 0.9.3.1
 ================
 * Problem with saving database preferences in config file fixed
