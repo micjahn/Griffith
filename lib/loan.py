@@ -82,6 +82,13 @@ def commit_loan(self):
 def return_loan(self):
 	if self._movie_id:
 		loan = self.db.Loan.get_by(movie_id=self._movie_id, return_date=None)
+		if loan is None:
+			movie = self.db.Movie.get_by(movie_id=self._movie_id)
+			if movie.collection is not None and movie.collection.loaned:
+				#print len(movie.loans) # FIXME: why it's == 0? (mappers problem?)
+				loan = self.db.Loan.get_by(collection_id=movie.collection.collection_id, return_date=None)
+			if movie.volume is not None and movie.volume.loaned:
+				loan = self.db.Loan.get_by(volume_id=movie.volume.volume_id, return_date=None)
 		if loan and loan.set_returned():
 			self.treeview_clicked()
 

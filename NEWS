@@ -1,5 +1,6 @@
 Griffith 0.9.4
 ==============
+* Fixed volume/colection loaning problem
 * Support for different database names with sqlite
 * Updated movie plugins: OFDb, PTGate, Kino.de, DVD-Palace and IMDB-de
 * New movie plugins: FilmTipset

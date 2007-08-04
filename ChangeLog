@@ -8,6 +8,7 @@ Griffith ChangeLog
 	* Removing tags function fixed
 	* Copy all files from "data" subdirectory to the exported location in HTML export plugin
 	  + add index.htm files to html_table{,s} templates
+	* Fixed volume/colection loaning problem
 
 2007-08-01  Piotr Ożarowski
 	* Translation files synchronized with Rosetta
