@@ -471,6 +471,7 @@ class Griffith:
 		model[path][column] = new_text
 		mymodel = widget.get_property('model')
 		if column == 1:	# type
+			my_type = 0
 			for i in mymodel:
 				if i[1] == new_text:
 					my_type = i[0]
