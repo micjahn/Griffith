@@ -544,3 +544,33 @@ def digits_only(s, maximum=None):
 			return maximum
 		else:
 			return s
+
+def copytree(src, dst, symlinks=False):
+	"""Recursively copy a directory tree using copy2().
+
+	This is shutil's copytree modified version
+	"""
+	from shutil import copy2
+	names = os.listdir(src)
+	if not os.path.isdir(dst):
+		os.mkdir(dst)
+	errors = []
+	for name in names:
+		srcname = os.path.join(src, name)
+		dstname = os.path.join(dst, name)
+		try:
+			if symlinks and os.path.islink(srcname):
+				linkto = os.readlink(srcname)
+				os.symlink(linkto, dstname)
+			elif os.path.isdir(srcname):
+				copytree(srcname, dstname, symlinks)
+			else:
+				copy2(srcname, dstname)
+		except (IOError, os.error), why:
+			errors.append((srcname, dstname, why))
+		# catch the Error from the recursive copytree so that we can
+		# continue with other files
+		except Error, err:
+			errors.extend(err.args[0])
+	if errors:
+		raise Error, errors

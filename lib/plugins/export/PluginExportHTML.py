@@ -36,7 +36,7 @@ plugin_name         = 'HTML'
 plugin_description  = _('Plugin exports data using templates')
 plugin_author       = 'Piotr Ożarowski'
 plugin_author_email = 'ozarow+griffith@gmail.com'
-plugin_version      = '3.7'
+plugin_version      = '3.8'
 
 class ExportPlugin(gtk.Window):
 	#==[ configuration - default values ]==========={{{
@@ -546,6 +546,13 @@ class ExportPlugin(gtk.Window):
 			except:
 				gutils.error(self,_("Can't create %s!") % config['exported_dir'])
 				return 2
+			
+		data_path = os.path.join(self.locations['share'], 'export_templates', self.templates[tid]['dir'], 'data')
+		if os.path.isdir(data_path):
+			try:
+				gutils.copytree(data_path, config['exported_dir'])
+			except Exception, err:
+				gutils.warning(err)
 
 		if fields['image']:
 			# import modules needed later
