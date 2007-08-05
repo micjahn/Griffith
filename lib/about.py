@@ -62,6 +62,8 @@ class AboutDialog:
 				"Joe Dalton <joedalton2@yahoo.dk>\n" + \
 			_("Dutch") + ":\n\t" + \
 				"Marcel Dijkstra <mdtje@hotmail.com>\n" + \
+			_("Japanese") + ":\n\t" + \
+				"Jack Nihil <jnihil@gmail.com>\n" + \
 			_("French") + ":\n\t" + \
 				"Guillaume Pratte <guillaume@guillaumepratte.net>" + \
 				"original translation from:\n\t" + \
@@ -79,12 +81,16 @@ class AboutDialog:
 				"Piotr Ozarowski <ozarow+griffith@gmail.com>\n" + \
 			_("Portuguese") + ":\n\t" + \
 				"Vasco Nunes <vasco.m.nunes@gmail.com>\n" + \
+			_("Russian") + ":\n\t" + \
+				"Pavel V. Kulikov <kulikovpv8256@yandex.ru>\n" + \
 			_("Simplified Chinese") + ":\n\t" + \
 				"kempson <kempson.chen@gmail.com>\n" + \
 			_("Spanish") + ":\n\t" + \
 				"Daniel Ucero <escaranbujo@gmail.com>\n" + \
 			_("Swedish") + ":\n\t" + \
-				"Daniel Nylander <po@danielnylander.se>\n" \
+				"Daniel Nylander <po@danielnylander.se>\n" + \
+			_("Turkish") + ":\n\t" + \
+				"transorlate <iloveshorts@hotmail.com>\n" \
 		)
 		logo_file = os.path.abspath(os.path.join(images_dir, 'griffith.png'))
 		logo = gtk.gdk.pixbuf_new_from_file(logo_file)

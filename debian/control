@@ -6,8 +6,8 @@ Build-Depends: debhelper (>= 5.0.38)
 Build-Depends-Indep: python (>= 2.3.5-11), python-central (>= 0.5.6)
 Standards-Version: 3.7.2
 XS-Python-Version: current, >=2.3
-XS-Vcs-Svn: svn://svn.berlios.de/griffith/trunk
-XS-Vcs-Browser: http://svn.berlios.de/wsvn/griffith/?sc=1
+XS-Vcs-Svn: svn://svn.berlios.de/griffith/trunk/debian
+XS-Vcs-Browser: http://svn.berlios.de/wsvn/griffith/debian/?sc=1
 
 Package: griffith
 Architecture: all
