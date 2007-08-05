@@ -552,7 +552,7 @@ class ExportPlugin(gtk.Window):
 			try:
 				gutils.copytree(data_path, config['exported_dir'])
 			except Exception, err:
-				gutils.warning(err)
+				gutils.warning(self, str(err))
 
 		if fields['image']:
 			# import modules needed later
