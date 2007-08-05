@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-08-05  Piotr Ożarowski
+	* FDb movie plugin updated
+
 2007-08-04  Piotr Ożarowski
 	* Removing tags function fixed
 	* Copy all files from "data" subdirectory to the exported location in HTML export plugin
