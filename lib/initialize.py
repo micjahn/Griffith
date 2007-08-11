@@ -40,6 +40,8 @@ except:
 
 def locations(self):
 	defaultLang, defaultEnc = getdefaultlocale()
+	if defaultEnc is None:
+		defaultEnc = 'UTF-8'
 	locations = {}
 	locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
 	locations['lib']  = os.path.dirname(__file__)
