@@ -36,9 +36,9 @@
 		\item {@TITLE@: @DATA@}
 </@o_site><@trailer>
 		\item {@TITLE@: @DATA@}
-</@trailer><@medium_id>
+</@trailer><@media_num>
 		\item {@TITLE@: @DATA@}
-</@medium_id><@seen>
+</@media_num><@seen>
 		\item {@TITLE@: @DATA@}
 </@seen><@loaned>
 		\item {@TITLE@: @DATA@}

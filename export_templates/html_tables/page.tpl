@@ -64,11 +64,11 @@
 	<tr class="links">
 		<th>@TITLE@</th>
 		<td><a href="@DATA@">@DATA@</a></td>
-	</tr></@trailer><@medium_id>
+	</tr></@trailer><@media_num>
 	<tr class="media">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@medium_id><@seen>
+	</tr></@media_num><@seen>
 	<tr class="seen">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>

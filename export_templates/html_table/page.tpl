@@ -25,8 +25,8 @@
 			<th>@TITLE@</th></@genre><@site>
 			<th>@TITLE@</th></@site><@o_site>
 			<th>@TITLE@</th></@o_site><@trailer>
-			<th>@TITLE@</th></@trailer><@medium_id>
-			<th>@TITLE@</th></@medium_id><@seen>
+			<th>@TITLE@</th></@trailer><@media_num>
+			<th>@TITLE@</th></@media_num><@seen>
 			<th>@TITLE@</th></@seen><@loaned>
 			<th>@TITLE@</th></@loaned><@classification>
 			<th>@TITLE@</th></@classification><@studio>
@@ -51,8 +51,8 @@
 		<td class="genre">@DATA@</td></@genre><@site>
 		<td class="links"><a href="@DATA@">link</a></td></@site><@o_site>
 		<td class="links"><a href="@DATA@">link</a></td></@o_site><@trailer>
-		<td class="links"><a href="@DATA@">link</a></td></@trailer><@medium_id>
-		<td class="media">@DATA@</td></@medium_id><@seen>
+		<td class="links"><a href="@DATA@">link</a></td></@trailer><@media_num>
+		<td class="media">@DATA@</td></@media_num><@seen>
 		<td class="seen">@DATA@</td></@seen><@loaned>
 		<td class="loaned">@DATA@</td></@loaned><@classification>
 		<td class="classification">@DATA@</td></@classification><@studio>

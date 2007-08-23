@@ -15,8 +15,8 @@
 		<genre>@DATA@</genre></@genre><@site>
 		<imdb>@DATA@</imdb></@site><@o_site>
 		<site>@DATA@</site></@o_site><@trailer>
-		<trailer>@DATA@</trailer></@trailer><@medium_id>
-		<media>@DATA@</media></@medium_id><@seen>
+		<trailer>@DATA@</trailer></@trailer><@media_num>
+		<media>@DATA@</media></@media_num><@seen>
 		<seen>@DATA@</seen></@seen><@loaned>
 		<loaned>@DATA@</loaned></@loaned><@classification>
 		<classification>@DATA@</classification></@classification><@studio>
