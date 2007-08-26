@@ -50,9 +50,10 @@ def backup(self):
 			except:
 				gutils.error(self, _("Error creating backup"), self.widgets['window'])
 				return False
-			mzip.write(os.path.join(self.locations['home'],'griffith.cfg'))
+			mzip.write(os.path.join(self.locations['home'],'griffith.cfg').encode('utf-8'))
 			if self.db.metadata.engine.name == 'sqlite':
-				mzip.write(os.path.join(self.locations['home'], self.config.get('name','griffith', section='database') + '.db'))
+				fileName = os.path.join(self.locations['home'], self.config.get('name','griffith', section='database') + '.db').encode('utf-8')
+				mzip.write(fileName)
 			else:
 				gutils.error(self, _("Backup function is available only for SQLite engine for now"), self.widgets['window'])
 				return False
@@ -72,7 +73,7 @@ def backup(self):
 #				for i in self.db.metadata.tables
 #				tmp_db.
 
-				tmp_file = os.path.join(tmp_dir, tmp_config.get('file', 'griffith.db', section='database'))
+				tmp_file = os.path.join(tmp_dir, tmp_config.get('file', 'griffith.db', section='database')).encode('utf-8')
 				tmp_metadata = BoundMetaData("sqlite:///%s" % tmp_file)
 				tmp_metadata.tables = self.db.metadata.tables
 				tmp_metadata.create_all()
@@ -90,7 +91,7 @@ def backup(self):
 			for movie in self.db.Movie.select():
 				if movie.image is not None:
 					filename = str(movie.image)+".jpg"
-					filename = os.path.join(posters_dir, filename.encode('utf-8'))
+					filename = os.path.join(posters_dir, filename).encode('utf-8')
 					if os.path.isfile(filename):
 						try:
 							mzip.write(filename)
