@@ -13,10 +13,10 @@
 
 @python.exe -OO winsetup.py py2exe
 
-@xcopy c:\gtk\etc c:\griffith\dist\etc /s /e
-@xcopy c:\gtk\lib c:\griffith\dist\lib /s /e
-@xcopy c:\gtk\share\locale c:\griffith\dist\share\locale /s /e
+@xcopy "C:\Programas\Ficheiros comuns\GTK\2.0\etc" c:\griffith\dist\etc /s /e
+@xcopy "C:\Programas\Ficheiros comuns\GTK\2.0\lib" c:\griffith\dist\lib /s /e
+@xcopy "C:\Programas\Ficheiros comuns\GTK\2.0\share\locale" c:\griffith\dist\share\locale /s /e
 
-@copy c:\gtk\share\themes\MS-Windows\gtk-2.0\*.* c:\griffith\dist\
-@copy c:\gtk\bin\jpeg62.dll c:\griffith\dist\
+@copy "C:\Programas\Ficheiros comuns\GTK\2.0\share\themes\MS-Windows\gtk-2.0\*.*" c:\griffith\dist\
+@copy "C:\Programas\Ficheiros comuns\GTK\2.0\bin\jpeg62.dll" c:\griffith\dist\
 @rem **** pause so we can see the exit codes 

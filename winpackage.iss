@@ -26,14 +26,22 @@ AppVersion=0.9.4
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl
-Name: por; MessagesFile: compiler:Portuguese.isl
-Name: por; MessagesFile: compiler:BrazilianPortuguese.isl
-Name: pol; MessagesFile: compiler:Polish.isl
-Name: ger; MessagesFile: compiler:German.isl
-Name: cze; MessagesFile: compiler:Czech.isl
-Name: fre; MessagesFile: compiler:French.isl
-Name: chi; MessagesFile: compiler:ChineseSimp-11-5.1.0.isl
-Name: gre; MessagesFile: compiler:Greek-4-5.1.11.isl
+Name: por; MessagesFile: compiler:languages\Portuguese.isl
+Name: por; MessagesFile: compiler:languages\BrazilianPortuguese.isl
+Name: pol; MessagesFile: compiler:languages\Polish.isl
+Name: ger; MessagesFile: compiler:languages\German.isl
+Name: cze; MessagesFile: compiler:languages\Czech.isl
+Name: dut; MessagesFile: compiler:languages\Dutch.isl
+Name: fin; MessagesFile: compiler:languages\Finnish.isl
+Name: ita; MessagesFile: compiler:languages\Italian.isl
+Name: fre; MessagesFile: compiler:languages\French.isl
+Name: nor; MessagesFile: compiler:languages\Norwegian.isl
+Name: hun; MessagesFile: compiler:languages\Hungarian.isl
+Name: spa; MessagesFile: compiler:languages\Spanish.isl
+Name: chi; MessagesFile: compiler:languages\ChineseSimp-11-5.1.0.isl
+Name: gre; MessagesFile: compiler:languages\Greek-4-5.1.11.isl
+Name: jap; MessagesFile: compiler:languages\Japanese-5-5.1.11.isl
+Name: bul; MessagesFile: compiler:languages\Bulgarian-5.1.11.isl
 
 [LangOptions]
 LanguageCodePage=0
