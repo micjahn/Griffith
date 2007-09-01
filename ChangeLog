@@ -4,12 +4,15 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-09-01  Piotr Ożarowski
+	* Respect medium and video codec's default value in add window (closes: #11864)
+
 2007-09-01  Michael Jahn
 	* Kino.de plugin updated
 	* Fix encoding of --home argument
 
 2007-09-01  Vasco Nunes
-	Several changes on loan e-mail reminder system:
+	* Several changes on loan e-mail reminder system:
 		+ Loan E-mail reminder timeout implemented
 		+ Support for TLS smtp auth handshaking
 		+ Added smtp server port usage

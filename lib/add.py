@@ -171,7 +171,7 @@ def set_details(self, item=None):#{{{
 	if item.has_key('medium_id') and item['medium_id']:
 		pos = gutils.findKey(item['medium_id'], self.media_ids)
 	else:
-		pos = gutils.findKey(self.config.get('media', 0, section='defaults'), self.media_ids)
+		pos = gutils.findKey(int(self.config.get('media', 0, section='defaults')), self.media_ids)
 	if pos is not None:
 		w['media'].set_active(int(pos))
 	else:
@@ -180,7 +180,7 @@ def set_details(self, item=None):#{{{
 	if item.has_key('vcodec_id') and item['vcodec_id']:
 		pos = gutils.findKey(item['vcodec_id'], self.vcodecs_ids)
 	else:
-		pos = gutils.findKey(self.config.get('vcodec', 0, section='defaults'), self.vcodecs_ids)
+		pos = gutils.findKey(int(self.config.get('vcodec', 0, section='defaults')), self.vcodecs_ids)
 	if pos is not None:
 		w['vcodec'].set_active(int(pos))
 	else:
