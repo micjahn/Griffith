@@ -88,7 +88,7 @@ def locations(self):
 	locations['temp'] = gettempdir()
 	
 	if self._tmp_home is not None: # see gconsole.check_args
-		locations['home'] = self._tmp_home
+		locations['home'] = self._tmp_home.decode(defaultEnc)
 		del self._tmp_home
 
 	try:
