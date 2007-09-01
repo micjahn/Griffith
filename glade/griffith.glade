@@ -758,7 +758,7 @@
 		    <widget class="GtkToolButton" id="t_delete_poster">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Removes poster</property>
-		      <property name="stock_id">gtk-delete</property>
+		      <property name="stock_id">gtk-clear</property>
 		      <property name="visible_horizontal">True</property>
 		      <property name="visible_vertical">True</property>
 		      <property name="is_important">False</property>
