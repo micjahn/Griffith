@@ -139,6 +139,8 @@ class Config:
 		self._cfg.set('mail', 'smtp_server', 'localhost')
 		self._cfg.set('mail', 'use_auth', 'False')
 		self._cfg.set('mail', 'username', '')
+		self._cfg.set('mail', 'mail_smtp_port', '25')
+		self._cfg.set('mail', 'mail_use_tls', 'False')
 		self._cfg.set('main', 'default_movie_plugin', 'IMDB')
 		self._cfg.set('main', 'font', '')
 		self._cfg.set('main', 'pdf_reader', 'xpdf')

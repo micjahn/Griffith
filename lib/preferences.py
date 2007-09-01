@@ -25,6 +25,7 @@ from gettext import gettext as _
 import os
 import initialize
 import gutils
+import socket
 
 try:
 	import gtkspell
@@ -65,8 +66,14 @@ def show_preferences(self):
 		w['mail_use_auth'].set_active(False)
 	else:
 		w['mail_use_auth'].set_active(True)
+		
+	if self.config.get('mail_use_tls', False, section='mail') == False:
+		w['mail_use_tls'].set_active(False)
+	else:
+		w['mail_use_tls'].set_active(True)
 
 	w['mail_smtp_server'].set_text(self.config.get('smtp_server', 'localhost', section='mail'))
+	w['mail_smtp_port'].set_text(self.config.get('mail_smtp_port', '25', section='mail'))
 	w['mail_username'].set_text(self.config.get('username', '', section='mail'))
 	w['mail_password'].set_text(self.config.get('password', '', section='mail'))
 	w['mail_email'].set_text(self.config.get('email', 'griffith@localhost', section='mail'))
@@ -252,8 +259,15 @@ def save_preferences(self):
 		c.set('use_auth', True, section='mail')
 	else:
 		c.set('use_auth', False, section='mail')
+		
+	if w['mail_use_tls'].get_active():
+		c.set('mail_use_tls', True, section='mail')
+	else:
+		c.set('mail_use_tls', False, section='mail')
 
 	c.set('smtp_server', w['mail_smtp_server'].get_text(), section='mail')
+	c.set('mail_smtp_port', w['mail_smtp_port'].get_text(), section='mail')
+
 	c.set('username', w['mail_username'].get_text(), section='mail')
 	c.set('password', w['mail_password'].get_text(), section='mail')
 	c.set('email', w['mail_email'].get_text(), section='mail')

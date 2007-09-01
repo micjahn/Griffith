@@ -193,6 +193,8 @@ def define_widgets(self, gladefile):
 		'mail_username':	get('mail_username'),
 		'mail_password':	get('mail_password'),
 		'mail_email':		get('mail_email'),
+		'mail_smtp_port':		get('mail_smtp_port'),
+		'mail_use_tls':		get('mail_use_tls'),
 		'lang_name':		get('lang_name_combo'),
 		'tag_name':		get('tag_name_combo'),
 		'acodec_name':		get('acodec_name_combo'),

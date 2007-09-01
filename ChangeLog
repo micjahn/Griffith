@@ -4,6 +4,13 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-09-01  Vasco Nunes
+	Several changes on loan e-mail reminder system:
+		+ Loan E-mail reminder timeout implemented
+		+ Support for TLS smtp auth handshaking
+		+ Added smtp server port usage
+		+ Added gmail smtp server support
+
 2007-08-31  Vasco Nunes
 	* Brazilian portuguese translation file updated
 
