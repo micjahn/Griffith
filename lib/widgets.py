@@ -306,6 +306,8 @@ def define_widgets(self, gladefile):
 	self.widgets['tooltips'].set_tip(self.widgets['preferences']['spell_lang'], _("Here you can define the desired language to use while spell checking some fields. Use you locale setting. For example, to use european portuguese spell checking enter 'pt'"))
 	self.widgets['tooltips'].set_tip(self.widgets['preferences']['mail_smtp_server'], _("Use this entry to define the SMTP server you want to use to send e-mails. On *nix systems, 'localhost' should work. Alternatively, you can use your Internet Service Provider's SMTP server address."))
 	self.widgets['tooltips'].set_tip(self.widgets['preferences']['mail_email'], _("This is the from e-mail address that should be used to all outgoing e-mail. You want to include your own e-mail address here probably."))
+	self.widgets['tooltips'].set_tip(self.widgets['preferences']['mail_smtp_port'], _("Here you can define the smtp server port to use. If you want to use your gmail account service to send e-mails, try to enter '587' here. Default (and the most common one) is '25'"))
+	self.widgets['tooltips'].set_tip(self.widgets['preferences']['mail_use_tls'], _("If you need TLS support, please check this checkbox. This is needed, for example, when using gmail service to send your reminder e-mails."))
 
 	# define handlers for general events
 	gladefile.signal_autoconnect({#{{{
