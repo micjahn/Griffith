@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-09-01  Piotr Ożarowski
 	* Respect medium and video codec's default value in add window (closes: #11864)
+	* griffith.glade file converted to glade3 format
 
 2007-09-01  Michael Jahn
 	* Kino.de plugin updated
