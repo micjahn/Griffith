@@ -2,28 +2,31 @@
 <movies>
 <!-- ITEMS -->
 	<movie><@id>
-		<id>@DATA@</id></@id><@image>
-		<image>@DATA@</image></@image><@title>
-		<title>@DATA@</title></@title><@o_title>
-		<otitle>@DATA@</otitle></@o_title><@number>
-		<number>@DATA@</number></@number><@year>
-		<year>@DATA@</year></@year><@director>
-		<director>@DATA@</director></@director><@rating>
-		<rating>@DATA@</rating></@rating><@runtime>
-		<runtime>@DATA@</runtime></@runtime><@country>
-		<country>@DATA@</country></@country><@genre>
-		<genre>@DATA@</genre></@genre><@site>
-		<imdb>@DATA@</imdb></@site><@o_site>
-		<site>@DATA@</site></@o_site><@trailer>
-		<trailer>@DATA@</trailer></@trailer><@media_num>
-		<media>@DATA@</media></@media_num><@seen>
-		<seen>@DATA@</seen></@seen><@loaned>
-		<loaned>@DATA@</loaned></@loaned><@classification>
-		<classification>@DATA@</classification></@classification><@studio>
-		<studio>@DATA@</studio></@studio><@cast>
-		<cast>@DATA@</cast></@cast><@plot>
-		<plot>@DATA@</plot></@plot><@notes>
-		<notes>@DATA@</notes></@notes>
+		<id>@DATA@</id></@id><@movies_image>
+		<image>@DATA@</image></@movies_image><@movies_title>
+		<title>@DATA@</title></@movies_title><@movies_o_title>
+		<otitle>@DATA@</otitle></@movies_o_title><@movies_number>
+		<number>@DATA@</number></@movies_number><@movies_year>
+		<year>@DATA@</year></@movies_year><@movies_director>
+		<director>@DATA@</director></@movies_director><@movies_rating>
+		<rating>@DATA@</rating></@movies_rating><@movies_runtime>
+		<runtime>@DATA@</runtime></@movies_runtime><@movies_country>
+		<country>@DATA@</country></@movies_country><@movies_genre>
+		<genre>@DATA@</genre></@movies_genre><@movies_site>
+		<imdb>@DATA@</imdb></@movies_site><@movies_o_site>
+		<site>@DATA@</site></@movies_o_site><@movies_trailer>
+		<trailer>@DATA@</trailer></@movies_trailer><@media_name>
+		<media_name>@DATA@</media_name></@media_name><@movies_media_num>
+		<media>@DATA@</media></@movies_media_num><@collections_name>
+		<collection>@DATA@</collection></@collections_name><@volumes_name>
+		<volume>@DATA@</volume></@volumes_name><@movies_seen>
+		<seen>@DATA@</seen></@movies_seen><@movies_loaned>
+		<loaned>@DATA@</loaned></@movies_loaned><@movies_classification>
+		<classification>@DATA@</classification></@movies_classification><@movies_studio>
+		<studio>@DATA@</studio></@movies_studio><@movies_cast>
+		<cast>@DATA@</cast></@movies_cast><@movies_plot>
+		<plot>@DATA@</plot></@movies_plot><@movies_notes>
+		<notes>@DATA@</notes></@movies_notes>
 	</movie>
 <!-- /ITEMS -->
 </movies>

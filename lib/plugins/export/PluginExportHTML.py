@@ -41,7 +41,7 @@ plugin_version      = '3.8'
 class ExportPlugin(gtk.Window):
 	#==[ configuration - default values ]==========={{{
 	config = {
-		'sorting'           : 'title',
+		'sorting'           : 'movies_title',
 		'sorting2'          : 'ASC',
 		'exported_dir'      : 'griffith_movies',
 		'template'          : 0,
@@ -60,63 +60,102 @@ class ExportPlugin(gtk.Window):
 		'poster_format'     : 'jpg'
 	}
 	fields = {
-		'cast'         : False,
-		'classification' : False,
-		'country'        : True,
-		'genre'          : True,
-		'director'       : True,
-		'image'          : True,
-		'o_site'         : True,
-		'site'           : True,
-		'trailer'        : True,
-		'loaned'         : False,
-		'media_num'      : True,
-		'number'         : True,
-		'o_title'        : True,
-		'plot'           : False,
-		'rating'         : True,
-		'runtime'        : True,
-		'studio'         : False,
-		'seen'           : True,
-		'title'          : True,
-		'year'           : True,
-		'notes'          : False,
-#		'region'         : False,
-#		'layers'         : False,
-#		'condition'      : False,
-#		'color'          : False,
-#		'volume_id'      : False,
-#		'collection_id'  : False,
+		'movies_cast'           : False,
+		'movies_classification' : False,
+		'movies_country'        : True,
+		'movies_genre'          : True,
+		'movies_director'       : True,
+		'movies_image'          : True,
+		'movies_o_site'         : True,
+		'movies_site'           : True,
+		'movies_trailer'        : True,
+		'movies_loaned'         : False,
+		'movies_media_num'      : True,
+		'movies_number'         : True,
+		'movies_o_title'        : True,
+		'movies_plot'           : False,
+		'movies_rating'         : True,
+		'movies_runtime'        : True,
+		'movies_studio'         : False,
+		'movies_seen'           : True,
+		'movies_title'          : True,
+		'movies_year'           : True,
+		'movies_notes'          : False,
+#		'movies_region'         : False,
+#		'movies_layers'         : False,
+#		'movies_condition'      : False,
+#		'movies_color'          : False,
+#		'movies_volume_id'      : False,
+#		'movies_collection_id'  : False,
+		'media_name'            : True,
+		'collections_name'      : True,
+		'volumes_name'          : True,
+	}
+	
+	fields_as_columns = {
+		'movies_cast'           : 'cast',
+		'movies_classification' : 'classification',
+		'movies_country'        : 'country',
+		'movies_genre'          : 'genre',
+		'movies_director'       : 'director',
+		'movies_image'          : 'image',
+		'movies_o_site'         : 'o_site',
+		'movies_site'           : 'site',
+		'movies_trailer'        : 'trailer',
+		'movies_loaned'         : 'loaned',
+		'movies_media_num'      : 'media_num',
+		'movies_number'         : 'number',
+		'movies_o_title'        : 'o_title',
+		'movies_plot'           : 'plot',
+		'movies_rating'         : 'rating',
+		'movies_runtime'        : 'runtime',
+		'movies_studio'         : 'studio',
+		'movies_seen'           : 'seen',
+		'movies_title'          : 'title',
+		'movies_year'           : 'year',
+		'movies_notes'          : 'notes',
+#		'movies_region'         : 'region',
+#		'movies_layers'         : 'layers',
+#		'movies_condition'      : 'condition',
+#		'movies_color'          : 'color',
+#		'movies_volume_id'      : 'volume_id',
+#		'movies_collection_id'  : 'collection_id',
+		'media_name'            : 'name',
+		'collections_name'      : 'name',
+		'volumes_name'          : 'name',
 	}
 	
 	names = {
-		_('Cast')           : 'cast',
-		_('Classification') : 'classification',
-		_('Country')        : 'country',
-		_('Director')       : 'director',
-		_('Genre')          : 'genre',
-		_('Image')          : 'image',
-		_('Official site')  : 'o_site',
-		_('Site')           : 'site',
-		_('Trailer')        : 'trailer',
-		_('Loaned')         : 'loaned',
-		_('Discs')          : 'media_num',
-		_('Number')         : 'number',
-		_('Original Title') : 'o_title',
-		_('Plot')           : 'plot',
-		_('Rating')         : 'rating',
-		_('Runtime')        : 'runtime',
-		_('Studio')         : 'studio',
-		_('Seen it')        : 'seen',
-		_('Title')          : 'title',
-		_('Year')           : 'year',
-		_('Notes')          : 'notes',
-#		_('Region')         : 'region',
-#		_('Layers')         : 'layers',
-#		_('Condition')      : 'condition',
-#		_('Color')          : 'color',
-#		_('Volume')         : 'volume_id',
-#		_('Collection')     : 'collection_id',
+		_('Cast')           : 'movies_cast',
+		_('Classification') : 'movies_classification',
+		_('Country')        : 'movies_country',
+		_('Director')       : 'movies_director',
+		_('Genre')          : 'movies_genre',
+		_('Image')          : 'movies_image',
+		_('Official site')  : 'movies_o_site',
+		_('Site')           : 'movies_site',
+		_('Trailer')        : 'movies_trailer',
+		_('Loaned')         : 'movies_loaned',
+		_('Discs')          : 'movies_media_num',
+		_('Number')         : 'movies_number',
+		_('Original Title') : 'movies_o_title',
+		_('Plot')           : 'movies_plot',
+		_('Rating')         : 'movies_rating',
+		_('Runtime')        : 'movies_runtime',
+		_('Studio')         : 'movies_studio',
+		_('Seen it')        : 'movies_seen',
+		_('Title')          : 'movies_title',
+		_('Year')           : 'movies_year',
+		_('Notes')          : 'movies_notes',
+#		_('Region')         : 'movies_region',
+#		_('Layers')         : 'movies_layers',
+#		_('Condition')      : 'movies_condition',
+#		_('Color')          : 'movies_color',
+#		_('Volume')         : 'movies_volume_id',
+#		_('Collection')     : 'movies_collection_id',
+		_('Media')          : 'media_name',
+		_('Collection')     : 'collections_name',
+		_('Volume')         : 'volumes_name',
 	}
 	#}}}
 
@@ -483,19 +522,38 @@ class ExportPlugin(gtk.Window):
 		
 		# columns to select
 		columns = []
-		for i in self.fields:
-			columns.append(self.db.Movie.c[i])
-		
+		for i in self.fields_as_columns:
+			try:
+				columns.append(self.db.Movie.c[self.fields_as_columns[i]])
+			except:
+				pass
+		# use outer join to media table to get the name of the media
+		from sqlalchemy import outerjoin
+		columns.append(self.db.Medium.c['name'])
+		media_join = outerjoin(self.db.metadata.tables['movies'], \
+			self.db.metadata.tables['media'], \
+			self.db.metadata.tables['movies'].c.medium_id==self.db.metadata.tables['media'].c.medium_id)
+		# use outer join to collections table to get the name of the collection
+		columns.append(self.db.Collection.c['name'])
+		collection_join = media_join.outerjoin( \
+			self.db.metadata.tables['collections'], \
+			self.db.metadata.tables['movies'].c.collection_id==self.db.metadata.tables['collections'].c.collection_id)
+		# use outer join to volumes table to get the name of the volume
+		columns.append(self.db.Volume.c['name'])
+		volume_join = collection_join.outerjoin( \
+			self.db.metadata.tables['volumes'], \
+			self.db.metadata.tables['movies'].c.volume_id==self.db.metadata.tables['volumes'].c.volume_id)
+
 		# sort order	TODO: more than one sort column
 		sort_columns = []
 		if config['sorting2'] == 'ASC':
 			from sqlalchemy import asc
-			sort_columns.append(asc(self.db.Movie.c[config['sorting']]))
+			sort_columns.append(asc(self.db.Movie.c[self.fields_as_columns[config['sorting']]]))
 		elif config['sorting2'] == 'DESC':
 			from sqlalchemy import desc
-			sort_columns.append(desc(self.db.Movie.c[config['sorting']]))
+			sort_columns.append(desc(self.db.Movie.c[self.fields_as_columns[config['sorting']]]))
 
-		statement = select(columns=columns, order_by=sort_columns)
+		statement = select(columns=columns, order_by=sort_columns, from_obj=[media_join, collection_join, volume_join], use_labels = True)
 
 		# where clause
 		if config['seen_only'] == 1:
@@ -554,7 +612,7 @@ class ExportPlugin(gtk.Window):
 			except Exception, err:
 				gutils.warning(self, str(err))
 
-		if fields['image']:
+		if fields['movies_image']:
 			# import modules needed later
 			if config['poster_convert']:
 				from PIL import Image
@@ -684,9 +742,9 @@ class ExportPlugin(gtk.Window):
 			tmp = self.fill_template(tmp, 'item', str(i))
 			for j in self.names:
 				if self.fields[self.names[j]] == True:
-					if self.names[j] == 'image':
-						if row['image']:
-							image = row['image'] + '.' + config['poster_format'].lower()
+					if self.names[j] == 'movies_image':
+						if row['movies_image']:
+							image = row['movies_image'] + '.' + config['poster_format'].lower()
 							tmp = self.fill_template(tmp, self.names[j], image, j)
 						else:
 							tmp = self.fill_template(tmp, self.names[j], '', j)
@@ -712,9 +770,9 @@ class ExportPlugin(gtk.Window):
 			# ---------------------------------------------
 			
 			# copy poster
-			if fields['image']:
-				if row['image'] is not None:
-					image_file = os.path.join(self.locations['posters'], str(row['image']) + '.jpg')
+			if fields['movies_image']:
+				if row['movies_image'] is not None:
+					image_file = os.path.join(self.locations['posters'], str(row['movies_image']) + '.jpg')
 					if not config['poster_convert']:	# copy file
 						try:
 							shutil.copy(image_file,	posters_dir)
@@ -724,7 +782,7 @@ class ExportPlugin(gtk.Window):
 						try:
 							im = Image.open(image_file, 'r').convert(config['poster_mode'])
 							im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
-							im.save(os.path.join(posters_dir, row['image']) + '.' + config['poster_format'].lower(), config['poster_format'])
+							im.save(os.path.join(posters_dir, row['movies_image']) + '.' + config['poster_format'].lower(), config['poster_format'])
 						except:
 							self.debug.show("Can't convert %s" % image_file)
 

@@ -12,54 +12,60 @@
 
 <table>
 	<thead>
-		<tr><@image>
-			<th>@TITLE@</th></@image><@number>
-			<th>@TITLE@</th></@number><@title>
-			<th>@TITLE@</th></@title><@o_title>
-			<th>@TITLE@</th></@o_title><@year>
-			<th>@TITLE@</th></@year><@director>
-			<th>@TITLE@</th></@director><@rating>
-			<th>@TITLE@</th></@rating><@runtime>
-			<th>@TITLE@</th></@runtime><@country>
-			<th>@TITLE@</th></@country><@genre>
-			<th>@TITLE@</th></@genre><@site>
-			<th>@TITLE@</th></@site><@o_site>
-			<th>@TITLE@</th></@o_site><@trailer>
-			<th>@TITLE@</th></@trailer><@media_num>
-			<th>@TITLE@</th></@media_num><@seen>
-			<th>@TITLE@</th></@seen><@loaned>
-			<th>@TITLE@</th></@loaned><@classification>
-			<th>@TITLE@</th></@classification><@studio>
-			<th>@TITLE@</th></@studio><@cast>
-			<th>@TITLE@</th></@cast><@plot>
-			<th>@TITLE@</th></@plot><@notes>
-			<th>@TITLE@</th></@notes>
+		<tr><@movies_image>
+			<th>@TITLE@</th></@movies_image><@movies_number>
+			<th>@TITLE@</th></@movies_number><@movies_title>
+			<th>@TITLE@</th></@movies_title><@movies_o_title>
+			<th>@TITLE@</th></@movies_o_title><@movies_year>
+			<th>@TITLE@</th></@movies_year><@movies_director>
+			<th>@TITLE@</th></@movies_director><@movies_rating>
+			<th>@TITLE@</th></@movies_rating><@movies_runtime>
+			<th>@TITLE@</th></@movies_runtime><@movies_country>
+			<th>@TITLE@</th></@movies_country><@movies_genre>
+			<th>@TITLE@</th></@movies_genre><@movies_site>
+			<th>@TITLE@</th></@movies_site><@movies_o_site>
+			<th>@TITLE@</th></@movies_o_site><@movies_trailer>
+			<th>@TITLE@</th></@movies_trailer><@media_name>
+			<th>@TITLE@</th></@media_name><@movies_media_num>
+			<th>@TITLE@</th></@movies_media_num><@collections_name>
+			<th>@TITLE@</th></@collections_name><@volumes_name>
+			<th>@TITLE@</th></@volumes_name><@movies_seen>
+			<th>@TITLE@</th></@movies_seen><@movies_loaned>
+			<th>@TITLE@</th></@movies_loaned><@movies_classification>
+			<th>@TITLE@</th></@movies_classification><@movies_studio>
+			<th>@TITLE@</th></@movies_studio><@movies_cast>
+			<th>@TITLE@</th></@movies_cast><@movies_plot>
+			<th>@TITLE@</th></@movies_plot><@movies_notes>
+			<th>@TITLE@</th></@movies_notes>
 		</tr>
 	</thead>
 
 <!-- ITEMS -->
-	<tr<@id> id="i@DATA@"</@id>><@image>
-		<td class="image"><img src="./posters/@DATA@" alt="poster" /></td></@image><@number>
-		<td class="number">@DATA@</td></@number><@title>
-		<td class="title">@DATA@</td></@title><@o_title>
-		<td class="otitle">@DATA@</td></@o_title><@year>
-		<td class="year">@DATA@</td></@year><@director>
-		<td class="director">@DATA@</td></@director><@rating>
-		<td class="rating">@DATA@</td></@rating><@runtime>
-		<td class="runtime">@DATA@</td></@runtime><@country>
-		<td class="country">@DATA@</td></@country><@genre>
-		<td class="genre">@DATA@</td></@genre><@site>
-		<td class="links"><a href="@DATA@">link</a></td></@site><@o_site>
-		<td class="links"><a href="@DATA@">link</a></td></@o_site><@trailer>
-		<td class="links"><a href="@DATA@">link</a></td></@trailer><@media_num>
-		<td class="media">@DATA@</td></@media_num><@seen>
-		<td class="seen">@DATA@</td></@seen><@loaned>
-		<td class="loaned">@DATA@</td></@loaned><@classification>
-		<td class="classification">@DATA@</td></@classification><@studio>
-		<td class="studio">@DATA@</td></@studio><@cast>
-		<td class="cast">@DATA@</td></@cast><@plot>
-		<td class="plot">@DATA@</td></@plot><@notes>
-		<td class="notes">@DATA@</td></@notes>
+	<tr<@id> id="i@DATA@"</@id>><@movies_image>
+		<td class="image"><img src="./posters/@DATA@" alt="poster" /></td></@movies_image><@movies_number>
+		<td class="number">@DATA@</td></@movies_number><@movies_title>
+		<td class="title">@DATA@</td></@movies_title><@movies_o_title>
+		<td class="otitle">@DATA@</td></@movies_o_title><@movies_year>
+		<td class="year">@DATA@</td></@movies_year><@movies_director>
+		<td class="director">@DATA@</td></@movies_director><@movies_rating>
+		<td class="rating">@DATA@</td></@movies_rating><@movies_runtime>
+		<td class="runtime">@DATA@</td></@movies_runtime><@movies_country>
+		<td class="country">@DATA@</td></@movies_country><@movies_genre>
+		<td class="genre">@DATA@</td></@movies_genre><@movies_site>
+		<td class="links"><a href="@DATA@">link</a></td></@movies_site><@movies_o_site>
+		<td class="links"><a href="@DATA@">link</a></td></@movies_o_site><@movies_trailer>
+		<td class="links"><a href="@DATA@">link</a></td></@movies_trailer><@media_name>
+		<td class="media">@DATA@</td></@media_name><@movies_media_num>
+		<td class="media">@DATA@</td></@movies_media_num><@collections_name>
+		<td class="media">@DATA@</td></@collections_name><@volumes_name>
+		<td class="media">@DATA@</td></@volumes_name><@movies_seen>
+		<td class="seen">@DATA@</td></@movies_seen><@movies_loaned>
+		<td class="loaned">@DATA@</td></@movies_loaned><@movies_classification>
+		<td class="classification">@DATA@</td></@movies_classification><@movies_studio>
+		<td class="studio">@DATA@</td></@movies_studio><@movies_cast>
+		<td class="cast">@DATA@</td></@movies_cast><@movies_plot>
+		<td class="plot">@DATA@</td></@movies_plot><@movies_notes>
+		<td class="notes">@DATA@</td></@movies_notes>
 	</tr>
 <!-- /ITEMS -->
 

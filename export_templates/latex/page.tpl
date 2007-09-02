@@ -7,52 +7,58 @@
 \begin{document}
 \maketitle
 <!-- ITEMS -->
-<@image>\includegraphics{./posters/@DATA@}
-</@image><@title>
-\section{@DATA@}</@title>
+<@movies_image>\includegraphics{./posters/@DATA@}
+</@movies_image><@movies_title>
+\section{@DATA@}</@movies_title>
 
 \begin{itemize}
-<@number>
+<@movies_number>
 		\item {@TITLE@: @DATA@}
-</@number><@title>
+</@movies_number><@movies_title>
 		\item {@TITLE@: @DATA@}
-</@title><@o_title>
+</@movies_title><@movies_o_title>
 		\item {@TITLE@: @DATA@}
-</@o_title><@year>
+</@movies_o_title><@movies_year>
 		\item {@TITLE@: @DATA@}
-</@year><@director>
+</@movies_year><@movies_director>
 		\item {@TITLE@: @DATA@}
-</@director><@rating>
+</@movies_director><@movies_rating>
 		\item {@TITLE@: @DATA@}
-</@rating><@runtime>
+</@movies_rating><@movies_runtime>
 		\item {@TITLE@: @DATA@}
-</@runtime><@country>
+</@movies_runtime><@movies_country>
 		\item {@TITLE@: @DATA@ min.}
-</@country><@genre>
+</@movies_country><@movies_genre>
 		\item {@TITLE@: @DATA@}
-</@genre><@site>
+</@movies_genre><@movies_site>
 		\item {@TITLE@: @DATA@}
-</@site><@o_site>
+</@movies_site><@movies_o_site>
 		\item {@TITLE@: @DATA@}
-</@o_site><@trailer>
+</@movies_o_site><@movies_trailer>
 		\item {@TITLE@: @DATA@}
-</@trailer><@media_num>
+</@movies_trailer><@media_name>
 		\item {@TITLE@: @DATA@}
-</@media_num><@seen>
+</@media_name><@movies_media_num>
 		\item {@TITLE@: @DATA@}
-</@seen><@loaned>
+</@movies_media_num><@collections_name>
 		\item {@TITLE@: @DATA@}
-</@loaned><@classification>
+</@collections_name><@volumes_name>
 		\item {@TITLE@: @DATA@}
-</@classification><@studio>
+</@volumes_name><@movies_seen>
 		\item {@TITLE@: @DATA@}
-</@studio><@cast>
+</@movies_seen><@movies_loaned>
 		\item {@TITLE@: @DATA@}
-</@cast><@plot>
+</@movies_loaned><@movies_classification>
 		\item {@TITLE@: @DATA@}
-</@plot><@notes>
+</@movies_classification><@movies_studio>
 		\item {@TITLE@: @DATA@}
-</@notes>
+</@movies_studio><@movies_cast>
+		\item {@TITLE@: @DATA@}
+</@movies_cast><@movies_plot>
+		\item {@TITLE@: @DATA@}
+</@movies_plot><@movies_notes>
+		\item {@TITLE@: @DATA@}
+</@movies_notes>
 \end{itemize}
 
 <!-- /ITEMS -->
