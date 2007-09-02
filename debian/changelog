@@ -1,10 +1,11 @@
-griffith (0.9.4+svn-1) UNRELEASED; urgency=low
+griffith (0.9.5-1) unstable; urgency=low
 
-  * watch file updated
+  * debian/watch file updated
   * Add python-sqlalchemy (< 0.4~) to depends (Griffith doesn't work with SA
     0.4 for now)
+  * python-sqlite package moved to Recommends
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 23 Aug 2007 20:55:33 +0200
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 02 Sep 2007 10:52:47 +0200
 
 griffith (0.9.4-1) unstable; urgency=low
 

@@ -5,17 +5,11 @@
 
 	1.1.1 Debian GNU/Linux and Ubuntu
 
-		Griffith is available in official repositories,
-		all you have to do is execute:
-
-			# aptitude install griffith
+		# aptitude install griffith
 	
 	1.1.2 Arch Linux
 		
-		Download PKGBUILD file from:
-			http://aur.archlinux.org/packages.php?K=griffith
-		and follow this guide:
-			http://wiki.archlinux.org/index.php/New_AUR_user_guidelines
+		# pacman -S griffith
 
 	1.1.3 Gentoo Linux
 
@@ -55,9 +49,12 @@
 1.4 Making Debian package
 
 	If you want to make your own Debian package, follow these steps:
+
 	* change your working directory to griffith source
 	* edit debian/changelog file, f.e. like this:
+
 		$ dch -v <version> -D UNRELEASED -i NOT RELEASED YET
+
 	* type `debuild` or `dpkg-buildpackage -rfakeroot` to build package
 	* install new package (`dpkg -i ../griffith_<version>_all.deb`)
 

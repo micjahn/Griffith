@@ -1,3 +1,18 @@
+Griffith 0.9.5
+==============
+* Backup function fixed
+* Updated movie plugins: 7arte, IMDB-de, KinoDE
+* Several changes on loan e-mail reminder system:
+  + Loan E-mail reminder timeout implemented
+  + Support for TLS smtp auth handshaking
+  + Added smtp server port usage
+  + Added gmail smtp server support
+* Translation changes:
+  + new: 
+  + uptaded: Portuguese, Brazilian portuguese
+* [Bug #11864] Fixed medium and video codec's default value in add window
+
+
 Griffith 0.9.4
 ==============
 * Fixed volume/colection loaning problem
@@ -89,7 +104,7 @@ Griffith 0.9~rc1 "Christmas Edition"
 ====================================
 This release is marked as "Release Candidate" due to:
  - database format change (if you have any problems send us the
-   ~/.griffith/griffith.gri file or `griffith --debug' output)
+   ~/.griffith/griffith.gri file or `griffith --debug` output)
  - translations are not finished (translators need more time)
 
 * SQLAlchemy transition, i.e.

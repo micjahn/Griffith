@@ -1,7 +1,7 @@
-Griffith 0.9.4 README
+Griffith 0.9.5 README
 =====================
 
-This document was last updated on Thu Jan 09 2007.
+This document was last updated on Thu Sep 02 2007.
 Please see the file COPYING for licensing and warranty information.
 The latest version of this software is available at the following URL:
 http://griffith.berlios.de/
@@ -32,14 +32,15 @@ System Requirements
   * Python		2.3 or higher		http://www.python.org/
   * GTK+		tested on 2.6.4		http://www.gtk.org/
   * PyGTK (with glade2)	tested on 2.6.1		http://www.pygtk.org/
-  * SQLAlchemy		0.3.0			http://www.sqlalchemy.org/
+  * SQLAlchemy		0.3.10			http://www.sqlalchemy.org/			0.4 is not supported yet
   * pysqlite2		2			http://initd.org/tracker/pysqlite		Python 2.5's sqlite3 module will be used if available
   * PIL						http://www.pythonware.com/products/pil/
   * PyXML					http://pyxml.sf.net/
   * ReportLab		1.19			http://www.reportlab.org
 
-  Other (optional) dependencies:
-  ------------------------------
+Other (optional) dependencies:
+------------------------------
+
   PostgreSQL support:
   * Psycopg2		2			http://initd.org/tracker/psycopg/wiki/PsycopgTwo
   MySQL support:
@@ -70,22 +71,24 @@ External databases
 
 You need to prepare a new database and a new user by yourself
 
-  PostgreSQL
-  ----------
+PostgreSQL
+----------
+
 	CREATE USER griffith UNENCRYPTED PASSWORD 'gRiFiTh' NOCREATEDB NOCREATEUSER;
 	CREATE DATABASE griffith WITH OWNER = griffith ENCODING = 'UNICODE';
 	GRANT ALL ON DATABASE griffith TO griffith;
 
-  MySQL
-  -----
+MySQL
+-----
+
 	CREATE DATABASE `griffith` DEFAULT CHARACTER SET utf8;
 	CREATE USER 'griffith'@'localhost' IDENTIFIED BY 'gRiFiTh';
 	CREATE USER 'griffith'@'%' IDENTIFIED BY 'gRiFiTh';
 	GRANT ALL ON `griffith` . * TO 'griffith'@'localhost';
 	GRANT ALL ON `griffith` . * TO 'griffith'@'%';
 
-  Microsoft SQL Server
-  --------------------
+Microsoft SQL Server
+--------------------
 	CREATE DATABASE griffith
 	EXEC sp_addlogin @loginame='griffith', @passwd='gRiFiTh', @defdb='griffith'
 	GO
