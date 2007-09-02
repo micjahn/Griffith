@@ -89,6 +89,42 @@ class Config:
 			except:
 				print 'Cannot parse config file'
 				return False
+			# check values for number datatypes
+			# if current value could not be converted to number datatype
+			# the default is set instead
+			# some older config files need that correction but also in
+			# newer files is it possible, that the user inserts non-convertable
+			# values for number fields. The special problem is the string None.
+			tmp_value = self.get('color', 0, 'defaults')
+			try:
+				int(tmp_value)
+			except:
+				self.set('color', 0, 'defaults')
+			tmp_value = self.get('condition', 0, 'defaults')
+			try:
+				int(tmp_value)
+			except:
+				self.set('condition', 0, 'defaults')
+			tmp_value = self.get('layers', 0, 'defaults')
+			try:
+				int(tmp_value)
+			except:
+				self.set('layers', 0, 'defaults')
+			tmp_value = self.get('media', 0, 'defaults')
+			try:
+				int(tmp_value)
+			except:
+				self.set('media', 0, 'defaults')
+			tmp_value = self.get('region', 0, 'defaults')
+			try:
+				int(tmp_value)
+			except:
+				self.set('region', 0, 'defaults')
+			tmp_value = self.get('vcodec', 0, 'defaults')
+			try:
+				int(tmp_value)
+			except:
+				self.set('vcodec', 0, 'defaults')
 			return True
 		else:
 			return False

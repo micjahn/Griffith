@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-09-02  Michael Jahn
+	* added "auto-fixing" of config file values for defaults section
+
 2007-09-01  Piotr Ożarowski
 	* Respect medium and video codec's default value in add window (closes: #11864)
 	* griffith.glade file converted to glade3 format
