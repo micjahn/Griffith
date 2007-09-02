@@ -4,10 +4,10 @@
 # Daniel Nylander <po@danielnylander.se>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.6.2\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-01-04 09:01+0100\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:40+0200\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -89,10 +89,11 @@ msgid "Main Authors"
 msgstr "Upphovsmän"
 
 #: ../lib/about.py:41
-msgid "Programmer"
+#, fuzzy
+msgid "Programmers"
 msgstr "Programmerare"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Bidragsgivare:"
 
@@ -2047,152 +2048,3 @@ msgstr "Insticksmodul"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Källa"
-
-#~ msgid "Sorry. This poster image format is not supported."
-#~ msgstr "Tyvärr, formatet på den här posterbilden stöds inte."
-
-#~ msgid "Add person"
-#~ msgstr "Lägg till person"
-
-#, fuzzy
-#~ msgid "Merge"
-#~ msgstr "Genre"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Select"
-#~ msgstr "Välj"
-
-#~ msgid "Update"
-#~ msgstr "Uppdatera"
-
-#~ msgid "Region 9 (Often used as region free)"
-#~ msgstr "Region 9 (Används ofta som regionsfri)"
-
-#, fuzzy
-#~ msgid "To buy"
-#~ msgstr " av "
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "Spell Checker"
-#~ msgstr "Stavningskontroll"
-
-#~ msgid "min."
-#~ msgstr "min."
-
-#~ msgid "by Peek <peekpt@gmail.com>."
-#~ msgstr "av Peek <peekpt@gmail.com>."
-
-#~ msgid ""
-#~ "\n"
-#~ "Please visit http://www.peekmambo.com/"
-#~ msgstr ""
-#~ "\n"
-#~ "Besök http://www.peekmambo.com/"
-
-#~ msgid "General Public License.\n"
-#~ msgstr "General Public License.\n"
-
-#~ msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-#~ msgstr "Besök http://www.gnu.org/copyleft/gpl.html för detaljer."
-
-#~ msgid "that I'm really needing the following movie I have loaned you "
-#~ msgstr "att jag verkligen behöver följande filmer som jag har lånat "
-
-#~ msgid ""
-#~ "recently:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Loaned on %s"
-#~ msgstr ""
-#~ "ut till dig:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Lånades ut den %s"
-
-#~ msgid "IMDb page"
-#~ msgstr "IMDb-sida"
-
-#~ msgid ""
-#~ "Please install the aspell-%s package or adjust the spellchekcer "
-#~ "preferences."
-#~ msgstr ""
-#~ "Installera paketet aspell-%s eller justera inställningarna för "
-#~ "stavningskontroll."
-
-#~ msgid "You have to fill in languages list in preferences window"
-#~ msgstr "Du behöver fylla i språklistan i inställningsfönstret"
-
-#~ msgid "Movie returned"
-#~ msgstr "Filmen tillbakalämnad"
-
-#~ msgid "You can't change collection while it is loaned!"
-#~ msgstr "Du kan inte ändra samlingen när den är utlånad!"
-
-#~ msgid "You can't change volume while it is loaned!"
-#~ msgstr "Du kan inte ändra volymen när den är utlånad!"
-
-#~ msgid "You should fill the original title"
-#~ msgstr "Du bör fylla i den ursprungliga titeln"
-
-#~ msgid "Add language"
-#~ msgstr "Lägg till språk"
-
-#~ msgid "Add new language entry"
-#~ msgstr "Lägg till nytt språkobjekt"
-
-#~ msgid "Backup"
-#~ msgstr "Säkerhetskopia"
-
-#~ msgid "IMDB page"
-#~ msgstr "IMDB-sida"
-
-#~ msgid "Oficial Site"
-#~ msgstr "Officiell webbsida"
-
-#~ msgid "Open image in poster window"
-#~ msgstr "Öppna bild i posterfönster"
-
-#~ msgid "Remove language"
-#~ msgstr "Ta bort språk"
-
-#~ msgid "Remove last language entry"
-#~ msgstr "Ta bort sista språkobjektet"
-
-#~ msgid "Restore"
-#~ msgstr "Återskapa"
-
-#~ msgid "Save preferences"
-#~ msgstr "Spara inställningar"
-
-#~ msgid "Technical info"
-#~ msgstr "Teknisk information"
-
-#~ msgid "Visit the Internet Movie Database (IMDB) related page"
-#~ msgstr "Besök relaterad sida på Internet Movie Database (IMDB)"
-
-#~ msgid "_Movies"
-#~ msgstr "_Filmer"
-
-#~ msgid "add entered name to languages list"
-#~ msgstr "lägg till angivet namn till språklistan"
-
-#~ msgid "remove selected language"
-#~ msgstr "ta bort valt språk"
-
-#~ msgid "rename collection assigned to movie"
-#~ msgstr "byt namn på samlingen tilldelad till filmen"
-
-#~ msgid "rename selected language"
-#~ msgstr "byt namn på valt språk"
-
-#~ msgid "rename volume assigned to movie"
-#~ msgstr "byt namn på volymen tilldelad till filmen"
-
-#~ msgid "Actors"
-#~ msgstr "Skådespelare"

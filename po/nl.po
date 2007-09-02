@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.9.2\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-09-01 09:37+0000\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:37+0200\n"
 "Last-Translator: Tominator <lambik+launchpad@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -89,10 +89,11 @@ msgid "Main Authors"
 msgstr "Geschreven door"
 
 #: ../lib/about.py:41
-msgid "Programmer"
+#, fuzzy
+msgid "Programmers"
 msgstr "Programmeur"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Met dank aan:"
 

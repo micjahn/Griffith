@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.5\n"
+"Project-Id-Version: griffith 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-08-28 19:51+0000\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:41+0200\n"
 "Last-Translator: antou <antoou+inscriptions@gmail.com>\n"
 "Language-Team: Français\n"
 "MIME-Version: 1.0\n"
@@ -88,10 +88,11 @@ msgid "Main Authors"
 msgstr "Auteurs principaux"
 
 #: ../lib/about.py:41
-msgid "Programmer"
+#, fuzzy
+msgid "Programmers"
 msgstr "Programmeur"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Contributeurs:"
 
@@ -2055,215 +2056,3 @@ msgstr "Plugin"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Source"
-
-#~ msgid "Sorry. This poster image format is not supported."
-#~ msgstr "Désolé. Le format d'image de l'affiche n'est pas supporté"
-
-#~ msgid "Add person"
-#~ msgstr "Ajouter la personne"
-
-#, fuzzy
-#~ msgid "Merge"
-#~ msgstr "Genre"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Select"
-#~ msgstr "Choisissez"
-
-#~ msgid "Update"
-#~ msgstr "Mettre à jour"
-
-#~ msgid "Region 9 (Often used as region free)"
-#~ msgstr "Region 9 (Souvent utilisé comme région libre)"
-
-#, fuzzy
-#~ msgid "To buy"
-#~ msgstr " par "
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "Spell Checker"
-#~ msgstr "Correcteur orthographique"
-
-#~ msgid "min."
-#~ msgstr "min."
-
-#~ msgid "by Peek <peekpt@gmail.com>."
-#~ msgstr "par Peek <peekpt@gmail.com>."
-
-#~ msgid ""
-#~ "\n"
-#~ "Please visit http://www.peekmambo.com/"
-#~ msgstr ""
-#~ "\n"
-#~ "Svp visitez http://www.peekmambo.com/"
-
-#~ msgid "General Public License.\n"
-#~ msgstr "General Public License.\n"
-
-#~ msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-#~ msgstr "Visitez http://www.gnu.org/copyleft/gpl.html pour plus de détails."
-
-#~ msgid "that I'm really needing the following movie I have loaned you "
-#~ msgstr "que j'ai vraiment besoin de ce film que je t'ai prêté "
-
-#~ msgid ""
-#~ "recently:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Loaned on %s"
-#~ msgstr ""
-#~ "récemment:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Prêté le %s"
-
-#~ msgid "IMDb page"
-#~ msgstr "Page IMDb"
-
-#~ msgid ""
-#~ "Please install the aspell-%s package or adjust the spellchekcer "
-#~ "preferences."
-#~ msgstr ""
-#~ "Svp installez le paquet aspell-%s ou changez les préférences de "
-#~ "correction orthographique."
-
-#~ msgid "You have to fill in languages list in preferences window"
-#~ msgstr ""
-#~ "Vous devez remplir la liste des langues dans la fenêtre des préférences"
-
-#~ msgid "Movie returned"
-#~ msgstr "Film rendu"
-
-#~ msgid "You can't change collection while it is loaned!"
-#~ msgstr "Vous ne pouvez pas changer la collection tant qu'il est prêté !"
-
-#~ msgid "You can't change volume while it is loaned!"
-#~ msgstr "Vous ne pouvez pas changer de volume tant qu'il est prêté !"
-
-#~ msgid "You should fill the original title"
-#~ msgstr "Vous devriez remplir le champ titre original"
-
-#~ msgid "Add language"
-#~ msgstr "Ajouter une langue"
-
-#~ msgid "Add new language entry"
-#~ msgstr "Ajouter une nouvelle langue"
-
-#~ msgid "Backup"
-#~ msgstr "Sauver"
-
-#~ msgid "IMDB page"
-#~ msgstr "Page IMDB"
-
-#~ msgid "Oficial Site"
-#~ msgstr "Site officiel"
-
-#~ msgid "Remove language"
-#~ msgstr "Supprimer la langue"
-
-#~ msgid "Remove last language entry"
-#~ msgstr "Supprimer la dernière langue"
-
-#~ msgid "Restore"
-#~ msgstr "Restaurer"
-
-#~ msgid "Save preferences"
-#~ msgstr "Sauver les préférences"
-
-#~ msgid "Technical info"
-#~ msgstr "Info technique"
-
-#~ msgid "Visit the Internet Movie Database (IMDB) related page"
-#~ msgstr ""
-#~ "Visiter la page correspondante sur le site Internet Movie Database (IMDB)"
-
-#~ msgid "_Movies"
-#~ msgstr "_Films"
-
-#~ msgid "add entered name to languages list"
-#~ msgstr "ajouter l'entrée à la liste des langues"
-
-#~ msgid "remove selected language"
-#~ msgstr "supprimer la langue sélectionnée"
-
-#~ msgid "rename collection assigned to movie"
-#~ msgstr "renommer la collection associé au film"
-
-#~ msgid "rename selected language"
-#~ msgstr "renommer la langue sélectionnée"
-
-#~ msgid "rename volume assigned to movie"
-#~ msgstr "renommer le volume associé au film"
-
-#~ msgid "Actors"
-#~ msgstr "Acteurs"
-
-#, fuzzy
-#~ msgid "Oficial site"
-#~ msgstr "Site officiel"
-
-#, fuzzy
-#~ msgid "IMDb"
-#~ msgstr "Page IMDb"
-
-#, fuzzy
-#~ msgid "Seen"
-#~ msgstr "Déjà vu"
-
-#~ msgid "Seen It"
-#~ msgstr "Déjà vu"
-
-#~ msgid "Official Site"
-#~ msgstr "Site Officiel"
-
-#~ msgid ""
-#~ "Number\n"
-#~ "Original Title\n"
-#~ "Title\n"
-#~ "Director\n"
-#~ "Genre\n"
-#~ "Rating\n"
-#~ "Cast\n"
-#~ "Year"
-#~ msgstr ""
-#~ "Nombre\n"
-#~ "Titre Original\n"
-#~ "Titre\n"
-#~ "Réalisateur\n"
-#~ "Genre\n"
-#~ "Note\n"
-#~ "Avec\n"
-#~ "Année"
-
-#~ msgid "Are you sure you want to restore?\n"
-#~ msgstr "Etes-vous sûr de vouloir restaurer ?\n"
-
-#~ msgid "You can't undo this operation."
-#~ msgstr "Vous ne pouvez pas annuler cette opération."
-
-#~ msgid "<b>Preview</b>"
-#~ msgstr "<b>Prévisualisation</b>"
-
-#~ msgid "The Wizard of OZ :)"
-#~ msgstr "Le Magicien d'Oz :)"
-
-#~ msgid "Language not available. Defaulting to english."
-#~ msgstr "Langue non disponible. Défaut : anglais"
-
-#~ msgid "Create a new Griffith document"
-#~ msgstr "Créer un nouveau document Griffith"
-
-#~ msgid "Internet"
-#~ msgstr "Internet"
-
-#~ msgid "Summary"
-#~ msgstr "Sommaire"
-
-#~ msgid "_About"
-#~ msgstr "_A Propos"

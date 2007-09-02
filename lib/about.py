@@ -38,12 +38,12 @@ class AboutDialog:
 		dialog.set_authors([
 			_("Main Authors") + ':',
 			version.pauthor.replace(', ', '\n') + "\n",
-			_("Programmer") + ':',
-			'Jessica Katharina Parth <Jessica.K.P@women-at-work.org>\n',
+			_("Programmers") + ':',
+			'Jessica Katharina Parth <Jessica.K.P@women-at-work.org>',
+			'Michael Jahn <mikej06@hotmail.com>\n',
 			_('Contributors:'), # FIXME: remove ":"
 			'Christian Sagmueller <christian@sagmueller.net>\n' \
-			'Arjen Schwarz <arjen.schwarz@gmail.com>\n' \
-			'Michael Jahn <mikej06@hotmail.com>'
+			'Arjen Schwarz <arjen.schwarz@gmail.com>'
 		])
 		dialog.set_artists([_("Logo, icon and general artwork " + \
 			"by Peek <peekpt@gmail.com>." + \

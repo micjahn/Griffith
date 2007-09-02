@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: griffith\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-08-11 15:22+0000\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:35+0200\n"
 "Last-Translator: Anders Oftedal <anders.oftedal@gmail.com>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -90,10 +90,10 @@ msgid "Main Authors"
 msgstr ""
 
 #: ../lib/about.py:41
-msgid "Programmer"
+msgid "Programmers"
 msgstr ""
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Bidragsytere:"
 

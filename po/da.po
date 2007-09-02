@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: griffith\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-06-25 14:17+0000\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:36+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -89,10 +89,11 @@ msgid "Main Authors"
 msgstr "Hovedforfattere"
 
 #: ../lib/about.py:41
-msgid "Programmer"
+#, fuzzy
+msgid "Programmers"
 msgstr "Udvikler"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Bidragydere:"
 

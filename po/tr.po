@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: griffith\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-07-24 13:03+0000\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:34+0200\n"
 "Last-Translator: transorlate <iloveshorts@hotmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -94,10 +94,11 @@ msgid "Main Authors"
 msgstr "Baş Yazarlar"
 
 #: ../lib/about.py:41
-msgid "Programmer"
+#, fuzzy
+msgid "Programmers"
 msgstr "Programcı"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Katkıda bulunanlar:"
 

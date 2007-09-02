@@ -4,10 +4,10 @@
 # Daniel Ucero <escaranbujo@gmail.comvasco>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.5.2\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-07-16 11:42+0000\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:37+0200\n"
 "Last-Translator: Rebeca <schw.holes+lpad@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -88,10 +88,11 @@ msgid "Main Authors"
 msgstr "Autores Principales"
 
 #: ../lib/about.py:41
-msgid "Programmer"
+#, fuzzy
+msgid "Programmers"
 msgstr "Programador"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Contribuidores:"
 

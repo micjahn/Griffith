@@ -4,10 +4,10 @@
 # Piotr Ożarowski <ozarow@gmail.com>, 2005-2007
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith-0.9.5\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-09-02 22:32+0200\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:40+0200\n"
 "Last-Translator: Piotr Ożarowski <ozarow+griffith@gmail.com>\n"
 "Language-Team: Polski\n"
 "MIME-Version: 1.0\n"
@@ -86,10 +86,10 @@ msgid "Main Authors"
 msgstr "Główni autorzy"
 
 #: ../lib/about.py:41
-msgid "Programmer"
-msgstr "Programista"
+msgid "Programmers"
+msgstr "Programiści"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Współpracownicy:"
 
@@ -1957,6 +1957,3 @@ msgstr "Wtyczka"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Żródło"
-
-#~ msgid "25"
-#~ msgstr "25"

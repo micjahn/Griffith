@@ -6,16 +6,16 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: griffith\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-08-14 13:24+0000\n"
-"Last-Translator: Nkolay Parukhin <nik@sevpinro.ru>\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:34+0200\n"
+"Last-Translator: Taras Cavin <tasctasc@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Export-Date: 2007-09-01 18:58:37+0000\n"
+"X-Rosetta-Export-Date: 2007-09-02 21:08:14+0000\n"
 
 #: ../griffith:189 ../griffith:799 ../lib/delete.py:33 ../lib/edit.py:44
 #: ../lib/edit.py:128
@@ -90,10 +90,11 @@ msgid "Main Authors"
 msgstr "Главные Авторы"
 
 #: ../lib/about.py:41
-msgid "Programmer"
+#, fuzzy
+msgid "Programmers"
 msgstr "Программист"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Помощники:"
 
@@ -107,7 +108,7 @@ msgstr "Португальский (Бразильский)"
 
 #: ../lib/about.py:59
 msgid "Bulgarian"
-msgstr "Болгарская"
+msgstr "Болгарский"
 
 #: ../lib/about.py:61
 #, fuzzy
@@ -125,7 +126,7 @@ msgstr "Датская"
 
 #: ../lib/about.py:69
 msgid "Dutch"
-msgstr "Голландская"
+msgstr "Голландский"
 
 #: ../lib/about.py:73 ../lib/dbupgrade.py:89
 #: ../lib/plugins/movie/PluginMovieAllocine.py:32
@@ -228,7 +229,7 @@ msgstr ""
 #: ../lib/add.py:380 ../lib/add.py:386
 msgid "Movie with that title already exists, are you sure you want to add?"
 msgstr ""
-"Фильм с таким названием уже существует, вы действтельно хотите добавить?"
+"Фильм с таким названием уже существует, вы действительно хотите добавить?"
 
 #: ../lib/add.py:555
 msgid "No results"
@@ -251,7 +252,7 @@ msgstr "Сохранить резервную копию Griffith"
 #: ../lib/plugins/export/PluginExportPDF.py:72
 #: ../lib/plugins/export/PluginExportXML.py:51
 msgid "File exists. Do you want to overwrite it?"
-msgstr "Такой файл уже существует. Заменить его?"
+msgstr "Файл с таким именем уже существует. Заменить?"
 
 #: ../lib/backup.py:51
 msgid "Error creating backup"
@@ -392,7 +393,7 @@ msgstr "Получение постера"
 #: ../lib/edit.py:199 ../lib/movie.py:121 ../lib/movie.py:147
 #: ../lib/movie.py:240
 msgid "Wait a moment"
-msgstr "Пожалуйста, одождите"
+msgstr "Пожалуйста, подождите"
 
 #: ../lib/edit.py:211
 msgid "Sorry. A connection error has occurred."
@@ -404,11 +405,11 @@ msgstr "Извините. Этот фильм перечислен, но пос�
 
 #: ../lib/edit.py:243
 msgid "Do you want to use this poster instead?"
-msgstr "Вы хотите использовать этот посте вместо?"
+msgstr "Вы хотите использовать новый постер?"
 
 #: ../lib/gconsole.py:133
 msgid "No movie found"
-msgstr "Фильмы не найдены"
+msgstr "Фильм не найден"
 
 #: ../lib/gemail.py:39
 #, fuzzy
@@ -434,7 +435,7 @@ msgid "Movie loan reminder"
 msgstr "Напоминание об одолженных фильмах"
 
 #: ../lib/gemail.py:77
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Hi, %s!\n"
 "\n"
@@ -496,7 +497,7 @@ msgstr "дубляж"
 
 #: ../lib/initialize.py:261 ../lib/initialize.py:538
 msgid "commentary"
-msgstr "rjvvtynfhbq"
+msgstr "комментарий"
 
 #: ../lib/initialize.py:268 ../glade/griffith.glade.h:148
 msgid "Type"
@@ -630,7 +631,7 @@ msgstr "Видео кодек"
 #: ../lib/initialize.py:534 ../lib/plugins/export/PluginExportHTML.py:158
 #: ../glade/griffith.glade.h:157
 msgid "Volume"
-msgstr "Объем"
+msgstr "Громкость"
 
 #: ../lib/initialize.py:535 ../lib/plugins/export/PluginExportHTML.py:148
 #: ../glade/griffith.glade.h:159
@@ -645,11 +646,11 @@ msgstr "н/д"
 
 #: ../lib/initialize.py:536
 msgid "Damaged"
-msgstr "Повреждённый"
+msgstr "Повреждён"
 
 #: ../lib/initialize.py:536
 msgid "Poor"
-msgstr "Плохой"
+msgstr "Плохо"
 
 #: ../lib/initialize.py:536
 msgid "Fair"
@@ -657,11 +658,11 @@ msgstr "Удовлетворительно"
 
 #: ../lib/initialize.py:536
 msgid "Good"
-msgstr "Хороший"
+msgstr "Хорошо"
 
 #: ../lib/initialize.py:536
 msgid "Excellent"
-msgstr "Отличный"
+msgstr "Отлично"
 
 #: ../lib/initialize.py:537
 msgid "Black and White"
@@ -701,17 +702,18 @@ msgid ""
 "South Africa)"
 msgstr ""
 "Регион 2 (Европа, включая Францию, Грецию, Турцию, Египет, арабские страны, "
-"Японию  и Южную Африку)"
+"Японию  и ЮАР)"
 
 #: ../lib/initialize.py:544
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
-msgstr "Регион 3 (Корея, Тайланд, Вьетнам, Борнео и Индонезия)"
+msgstr "Регион 3 (Корея, Таиланд, Вьетнам, Борнео и Индонезия)"
 
 #: ../lib/initialize.py:545
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
-msgstr "Регион 4 (Австралия, Новая Зеландия, Мексика, Карибы и Южная Америка)"
+msgstr ""
+"Регион 4 (Австралия, Новая Зеландия, Мексика, Карибские о-ва и Южная Америка)"
 
 #: ../lib/initialize.py:546
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
@@ -719,7 +721,7 @@ msgstr "Регион 5 (Индия, Африка, Россия и страны �
 
 #: ../lib/initialize.py:547
 msgid "Region 6 (Popular Republic of China)"
-msgstr "Регион 6 (Китайская народная республика)"
+msgstr "Регион 6 (Китайская Народная Республика)"
 
 #: ../lib/initialize.py:548
 msgid "Region 7 (Reserved for Unspecified Special Use)"
@@ -747,7 +749,7 @@ msgstr "Фильм одолжен"
 
 #: ../lib/main_treeview.py:244
 msgid "This movie has been loaned to "
-msgstr "Этот ильм одолжен "
+msgstr "Этот фильм одолжен "
 
 #: ../lib/main_treeview.py:244
 msgid " on "
@@ -783,7 +785,7 @@ msgstr "Запись обновлена"
 
 #: ../lib/people.py:111
 msgid "This person has loaned films from you. Return them first."
-msgstr "Этот человек одолжил у вас фильмы. Вначале верните их."
+msgstr "Этот человек одолжил у вас фильмы. Сначала верните их."
 
 #: ../lib/people.py:116
 msgid ""
@@ -800,13 +802,15 @@ msgid ""
 "Are you sure you want to delete this person?"
 msgstr ""
 "%s\n"
-"Действительно хотите удалить этого человека?"
+"Вы действительно хотите удалить этого человека?"
 
 #: ../lib/sql.py:61 ../lib/sql.py:123
 msgid ""
 "This item is in use.\n"
 "Operation aborted!"
-msgstr "Этот элемент используется.Действие отменено!"
+msgstr ""
+"Этот элемент используется.\n"
+"Действие отменено!"
 
 #: ../lib/sql.py:82
 msgid "This name is already in use!"
@@ -848,12 +852,12 @@ msgstr "Фильтр активирован. Показаны только од�
 #: ../lib/view.py:43
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
-msgstr "Фильтр включен. Показаны фильмы только из тома: %s"
+msgstr "Фильтр активирован. Показаны только фильмы из тома: %s"
 
 #: ../lib/view.py:50
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
-msgstr "Фильтр включен. Показаны фильмы только из коллекции: %s"
+msgstr "Фильтр активирован. Показаны только фильмы из коллекции: %s"
 
 #: ../lib/widgets.py:305
 msgid ""
@@ -861,9 +865,9 @@ msgid ""
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
 "and working first."
 msgstr ""
-"Задайте здесь читалку PDF которую вы хотите использовать с Griffith. "
-"Популярный выбор xpdf, gpdf, evince или kpdf. Сначала убедитесь, что эта "
-"программа установлена и работает."
+"Задайте здесь просмотрщик PDF, который вы хотите использовать с Griffith. "
+"Популярный программы: xpdf, gpdf, evince или kpdf. Сначала убедитесь, что "
+"эта программа установлена и работает."
 
 #: ../lib/widgets.py:306
 msgid ""
@@ -873,7 +877,7 @@ msgid ""
 msgstr ""
 "Здесь вы можете задать желаемый язык для проверки орфографии в некоторых "
 "полях. Используйте настройки вашей локали. Например, для проверки "
-"европейского португальского введите 'pt'"
+"португальского введите 'pt'"
 
 #: ../lib/widgets.py:307
 msgid ""
@@ -883,7 +887,7 @@ msgid ""
 msgstr ""
 "Используйте этот пункт для определения SMTP сервера, который вы хотите "
 "использовать для отправки электронной почты. На *nix системах должен "
-"работать 'localhost'. Иначе вы можете использовать адрес сервера вашего "
+"работать 'localhost'. Также, вы можете использовать адрес сервера вашего "
 "интернет провайдера."
 
 #: ../lib/widgets.py:308
@@ -931,7 +935,7 @@ msgstr "<b>Аудио</b>"
 
 #: ../lib/plugins/export/PluginExportCSV.py:31
 msgid "Full CSV list export plugin"
-msgstr "Дополнение экспорта списка в CSV"
+msgstr "Плугин экспорта списка в CSV"
 
 #: ../lib/plugins/export/PluginExportCSV.py:45
 #: ../lib/plugins/export/PluginExportiPod.py:106
@@ -944,11 +948,11 @@ msgstr "Экспорт %s документа"
 #: ../lib/plugins/export/PluginExportXML.py:83
 #, python-format
 msgid "%s file has been created."
-msgstr "%s файл был создан."
+msgstr "%s файл создан."
 
 #: ../lib/plugins/export/PluginExportHTML.py:36
 msgid "Plugin exports data using templates"
-msgstr "Дополнение экспортирует данные используя шаблоны"
+msgstr "Плугин экспортирует данные, используя шаблоны"
 
 #: ../lib/plugins/export/PluginExportHTML.py:48
 msgid "Griffith's movies list"
@@ -982,12 +986,12 @@ msgid ""
 "Do you want to overwrite it?"
 msgstr ""
 "Каталог %s уже существует.\n"
-"Действительно хотите перезаписать его?"
+"Вы действительно хотите перезаписать его?"
 
 #: ../lib/plugins/export/PluginExportHTML.py:642
 #, python-format
 msgid "Can't remove %s!"
-msgstr "Невозможно переместить %s!"
+msgstr "Невозможно удалить %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:657
 #: ../lib/plugins/export/PluginExportHTML.py:670
@@ -1019,7 +1023,7 @@ msgstr "Документ был сформирован."
 
 #: ../lib/plugins/export/PluginExportiPod.py:36
 msgid "iPod Notes export plugin"
-msgstr "Расширение экспорта заметок на iPod"
+msgstr "Плугн экспорта заметок на iPod"
 
 #: ../lib/plugins/export/PluginExportiPod.py:85
 msgid "My Movies List"
@@ -1043,7 +1047,7 @@ msgstr ""
 
 #: ../lib/plugins/export/PluginExportPDF.py:44
 msgid "PDF export plugin"
-msgstr "Расширение экспорта в PDF"
+msgstr "Плугин экспорта в PDF"
 
 #: ../lib/plugins/export/PluginExportPDF.py:68
 msgid "Export a PDF"
@@ -1069,11 +1073,11 @@ msgstr "Страница %d"
 
 #: ../lib/plugins/export/PluginExportXML.py:32
 msgid "Full XML list export plugin"
-msgstr "Расширение экспорта в XML"
+msgstr "Плугин экспорта списка в XML"
 
 #: ../lib/plugins/imp/CSV.py:43
 msgid "Full CSV list import plugin"
-msgstr "Расширение импорта из CSV"
+msgstr "Плугин импорта списка из CSV"
 
 #: ../lib/plugins/imp/CSV.py:192
 msgid "Please assign at least one field first!"
@@ -1195,7 +1199,7 @@ msgstr "элементов на странице"
 
 #: ../glade/exporthtml.glade.h:28
 msgid "files"
-msgstr "файлов"
+msgstr "файла(ов)"
 
 #: ../glade/exporthtml.glade.h:29
 msgid "loaned only"
@@ -1219,7 +1223,7 @@ msgstr "только непросмотренные"
 
 #: ../glade/griffith.glade.h:1
 msgid "0 means no limits"
-msgstr "0 означает без пределов"
+msgstr "0 означает без ограничений"
 
 #: ../glade/griffith.glade.h:2
 msgid "<b>Audio channels</b>"
@@ -1267,7 +1271,7 @@ msgstr "<b>Выберите базу данных для использован�
 
 #: ../glade/griffith.glade.h:14
 msgid "<b>Show only the following columns</b>"
-msgstr "<b>Показать только следующие столбцы</b>"
+msgstr "<b>Показать только следующие поля</b>"
 
 #: ../glade/griffith.glade.h:16
 msgid "<b>Subtitle formats</b>"
@@ -1323,7 +1327,7 @@ msgstr "По коллекции"
 
 #: ../glade/griffith.glade.h:31
 msgid "Choose Image"
-msgstr "Выберите изображение"
+msgstr "Выбрать изображение"
 
 #: ../glade/griffith.glade.h:33
 msgid "Clears filter"
@@ -1363,11 +1367,11 @@ msgstr "Напоминание по E-mail"
 
 #: ../glade/griffith.glade.h:49
 msgid "E_xport"
-msgstr "_Экспорт"
+msgstr "Э_кспорт"
 
 #: ../glade/griffith.glade.h:50
 msgid "Edit a person"
-msgstr "Изменить человека"
+msgstr "Редактировать человека"
 
 #: ../glade/griffith.glade.h:51
 msgid "Edit movie details"
@@ -1375,11 +1379,11 @@ msgstr "Изменить сведения о фильме"
 
 #: ../glade/griffith.glade.h:52
 msgid "Favorite Movie Plugin"
-msgstr "Расширение Любимые фильмы"
+msgstr "Плугин Любимые фильмы"
 
 #: ../glade/griffith.glade.h:53
 msgid "Fetch from Amazon"
-msgstr "Получение с Amazon"
+msgstr "Получить с Amazon"
 
 #: ../glade/griffith.glade.h:54
 msgid "Fill empty fields only"
@@ -1403,11 +1407,11 @@ msgstr "Найденные результаты"
 
 #: ../glade/griffith.glade.h:60
 msgid "Get from web"
-msgstr "Получить из сети"
+msgstr "Получить из интернета"
 
 #: ../glade/griffith.glade.h:61
 msgid "Get movie data from:"
-msgstr "Получение данных о фильме из:"
+msgstr "Получить данных о фильме с:"
 
 #: ../glade/griffith.glade.h:62
 msgid "Griffith"
@@ -1467,7 +1471,7 @@ msgstr "Одолженные фильмы"
 
 #: ../glade/griffith.glade.h:78
 msgid "Loans"
-msgstr "Одалживание"
+msgstr "Одолжены"
 
 #: ../glade/griffith.glade.h:79
 msgid "Main list"
@@ -1511,7 +1515,7 @@ msgstr "Прочие"
 
 #: ../glade/griffith.glade.h:96
 msgid "PDF reader"
-msgstr "PDF читалка"
+msgstr "просмотрщик PDF"
 
 #: ../glade/griffith.glade.h:97
 msgid "Password"
@@ -1531,7 +1535,7 @@ msgstr "Пожалуйста, подождите..."
 
 #: ../glade/griffith.glade.h:102
 msgid "Plugins"
-msgstr "Дополнения"
+msgstr "Плугины"
 
 #: ../glade/griffith.glade.h:103
 msgid "Port"
@@ -1547,7 +1551,7 @@ msgstr "Просмотр постеров"
 
 #: ../glade/griffith.glade.h:106
 msgid "Preferences"
-msgstr "Параметры"
+msgstr "Установки"
 
 #: ../glade/griffith.glade.h:107
 msgid "Print Cover"
@@ -1579,7 +1583,7 @@ msgstr "Переименовать"
 
 #: ../glade/griffith.glade.h:116
 msgid "Report bug"
-msgstr "Отчёт об ошибке"
+msgstr "Сообщить об ошибке"
 
 #: ../glade/griffith.glade.h:117
 msgid "Return"
@@ -1596,7 +1600,7 @@ msgstr "SMTP сервер"
 
 #: ../glade/griffith.glade.h:122
 msgid "Searching on the web"
-msgstr "Поиск в сети"
+msgstr "Поиск в интернете"
 
 #: ../glade/griffith.glade.h:124
 msgid "Select A File"
@@ -1682,12 +1686,12 @@ msgid ""
 "i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
 "Введите оригинальное название фильма, выберите источник и нажмите "
-"<i>Получить из Интернета</i>. Гриффит попытается заполучить всю связанную с "
-"фильмом информацию из Интернета."
+"<i>Получить из интернета</i>. Griffith попытается заполучить всю связанную с "
+"фильмом информацию из интернета."
 
 #: ../glade/griffith.glade.h:150
 msgid "Use Spellchecker"
-msgstr "Использовать Корректор Орфографии"
+msgstr "Использовать корректор орфографии"
 
 #: ../glade/griffith.glade.h:151
 msgid "Use TLS?"
@@ -1711,7 +1715,7 @@ msgstr "Посетить официальный веб-сайт"
 
 #: ../glade/griffith.glade.h:158
 msgid "Watch the trailer"
-msgstr "Посмотреть отрывок"
+msgstr "Смотреть трейлер"
 
 #: ../glade/griffith.glade.h:160
 msgid "_Edit"
@@ -1751,7 +1755,7 @@ msgstr "классификация"
 
 #: ../glade/griffith.glade.h:169
 msgid "click here if movie was returned"
-msgstr "нажмите сюда, если фильм был возвращен"
+msgstr "нажмите здесь, если фильм был возвращен"
 
 #: ../glade/griffith.glade.h:170
 msgid "collection details"
@@ -1804,7 +1808,7 @@ msgstr ""
 
 #: ../glade/importcsv.glade.h:6
 msgid "Assigned Fields (CSV > Griffith)"
-msgstr "Соответствие полей (CSV > Griffith)"
+msgstr "Соответствующие полей (CSV > Griffith)"
 
 #: ../glade/importcsv.glade.h:7
 msgid "CSV Fields"
@@ -1957,7 +1961,7 @@ msgstr ""
 "cp860 (Португальский)\n"
 "cp861 (Исландский)\n"
 "cp862 (Иврит)\n"
-"cp863 (Канадский?)\n"
+"cp863 (Канадский Английский)\n"
 "cp864 (Арабский)\n"
 "cp865 (Датский, норвежский)\n"
 "cp866 (Русский)\n"
@@ -2033,16 +2037,16 @@ msgstr "<b>Импортировать только отмеченные ниже
 
 #: ../glade/import.glade.h:2
 msgid "<b>Importing...</b>"
-msgstr "Импортирование"
+msgstr "<b>Импортирование...</b>"
 
 #: ../glade/import.glade.h:7
 msgid "Import window"
-msgstr "Окно импортирования"
+msgstr "Окно импорта"
 
 #: ../glade/import.glade.h:8
 msgid "Plugin"
-msgstr "Дополнение"
+msgstr "Плугин"
 
 #: ../glade/import.glade.h:9
 msgid "Source"
-msgstr "Источники"
+msgstr "Источник"

@@ -1,4 +1,4 @@
-# Czech translation of Griffith 0.6.2 
+# Czech translation of Griffith
 # Copyright (C) 2006 Vasco Nunes <vasco.m.nunes@gmail.com>
 # This file is distributed under the same license as the griffith package.
 # Ondra 'Kepi' Kudlík <kepi@igloonet.cz>, 2006.
@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.6.2\n"
+"Project-Id-Version: griffith 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-02 22:32+0200\n"
-"PO-Revision-Date: 2007-07-24 21:50+0000\n"
+"POT-Creation-Date: 2007-09-02 23:38+0200\n"
+"PO-Revision-Date: 2007-09-02 23:41+0200\n"
 "Last-Translator: Kamil Páral <ripper42@gmail.com>\n"
 "Language-Team: Gnome Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -89,10 +89,11 @@ msgid "Main Authors"
 msgstr "Hlavní autoři"
 
 #: ../lib/about.py:41
-msgid "Programmer"
+#, fuzzy
+msgid "Programmers"
 msgstr "Programátor"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Contributors:"
 msgstr "Přispěvatelé:"
 
@@ -2041,150 +2042,3 @@ msgstr "Zásuvné moduly"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Zdroj"
-
-#~ msgid "Sorry. This poster image format is not supported."
-#~ msgstr "Je mi líto, ale formát obrázku není podporován."
-
-#~ msgid "by Peek <peekpt@gmail.com>."
-#~ msgstr "Peek <peekpt@gmail.com>."
-
-#~ msgid ""
-#~ "\n"
-#~ "Please visit http://www.peekmambo.com/"
-#~ msgstr ""
-#~ "\n"
-#~ "Prosím navštivte http://peekmambo.com/"
-
-#~ msgid " by "
-#~ msgstr " od "
-
-#~ msgid "General Public License.\n"
-#~ msgstr "General Public License.\n"
-
-#~ msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-#~ msgstr "Pro detaily navštivte http://www.gnu.org/copyleft/gpl.html ."
-
-#~ msgid "that I'm really needing the following movie I have loaned you "
-#~ msgstr ", že opravdu potřebuji film, který máš pujčený "
-
-#~ msgid ""
-#~ "recently:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Loaned on %s"
-#~ msgstr ""
-#~ "nově:\n"
-#~ "\n"
-#~ "%s (%s)\n"
-#~ "\n"
-#~ "Vypůjčeno %s"
-
-#~ msgid "Region 9 (Often used as region free)"
-#~ msgstr "Region 9 (Často použito jako bez omezení)"
-
-#~ msgid "With"
-#~ msgstr "Hrají"
-
-#~ msgid "IMDb page"
-#~ msgstr "Stránka IMDB"
-
-#~ msgid ""
-#~ "Please install the aspell-%s package or adjust the spellchekcer "
-#~ "preferences."
-#~ msgstr ""
-#~ "Prosím nainstalujte balíček aspell-%s nebo upravte nastavení kontroly "
-#~ "pravopisu."
-
-#~ msgid "You have to fill in languages list in preferences window"
-#~ msgstr "Je třeba vyplnit jazyk v okně předvoleb"
-
-#~ msgid "Movie returned"
-#~ msgstr "Film vrácen"
-
-#~ msgid "You can't change collection while it is loaned!"
-#~ msgstr "Nemůžete měnit kolekci, pokud je vypůjčena!"
-
-#~ msgid "You can't change volume while it is loaned!"
-#~ msgstr "Nemůžete měnit svazek, pokud je vypůjčen!"
-
-#~ msgid "You should fill the original title"
-#~ msgstr "Musíte vyplnit originální název"
-
-#~ msgid "Add language"
-#~ msgstr "Přidat jazyk"
-
-#~ msgid "Add new language entry"
-#~ msgstr "Přidat nový jazyk"
-
-#~ msgid "Add person"
-#~ msgstr "Přidat osobu"
-
-#~ msgid "Backup"
-#~ msgstr "Záloha"
-
-#~ msgid "IMDB page"
-#~ msgstr "Stránka IMDB"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Oficial Site"
-#~ msgstr "Oficiální stránky"
-
-#~ msgid "Open image in poster window"
-#~ msgstr "Otevřít obrázek v okně plakátu"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "Remove language"
-#~ msgstr "Odebrat jazyk"
-
-#~ msgid "Remove last language entry"
-#~ msgstr "Odebrat poslední jazyk"
-
-#~ msgid "Restore"
-#~ msgstr "Obnovit"
-
-#~ msgid "Save preferences"
-#~ msgstr "Uložit předvolby"
-
-#~ msgid "Select"
-#~ msgstr "Zvolte"
-
-#~ msgid "Spell Checker"
-#~ msgstr "Kontrola pravopisu"
-
-#~ msgid "Technical info"
-#~ msgstr "Technické info"
-
-#~ msgid "Update"
-#~ msgstr "Upravit"
-
-#~ msgid "Visit the Internet Movie Database (IMDB) related page"
-#~ msgstr "Navštívit stránky IMDB"
-
-#~ msgid "_Movies"
-#~ msgstr "_Filmy"
-
-#~ msgid "add entered name to languages list"
-#~ msgstr "přidat zadané jméno do seznamu jazyků"
-
-#~ msgid "min."
-#~ msgstr "min."
-
-#~ msgid "remove selected language"
-#~ msgstr "odstranit vybraný jazyk"
-
-#~ msgid "rename collection assigned to movie"
-#~ msgstr "přejmenovat kolekci připojenou k filmu"
-
-#~ msgid "rename selected language"
-#~ msgstr "odstranit vybraný jazyk"
-
-#~ msgid "rename volume assigned to movie"
-#~ msgstr "přejmenovat svazek připojený k filmu"
-
-#~ msgid "Actors"
-#~ msgstr "Herci"
