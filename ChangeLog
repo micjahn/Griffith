@@ -11,6 +11,7 @@ Griffith ChangeLog
 	  + new: Catalan, Norwegian Bokmal
 	  + uptaded: Brazilian Portuguese, Cech, Dutch, French, German, Italian, Portuguese, Russian
 	* Polish translation updated
+	* Print cover function fixed (reportlab doesn't like unicode)
 
 2007-09-02  Michael Jahn
 	* added support for media type, collection and volume in HTML export plugin

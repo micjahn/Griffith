@@ -166,7 +166,7 @@ def cover_simple(self, number):
 		c.rotate(-90)
 		if movie.image is not None and movie.image != '':
 			tmp_dest = self.locations['posters']
-			image = os.path.join(tmp_dest, str(movie.image)+".jpg")
+			image = str(os.path.join(tmp_dest, str(movie.image)+".jpg"))
 			c.drawImage(image, x=(pageWidth-30)/2, y=470, width=30, height=50)
 		# print movie info
 		c.setFont(fontName, 8)
