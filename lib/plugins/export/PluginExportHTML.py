@@ -310,14 +310,21 @@ class ExportPlugin(gtk.Window):
 			self.widgets['combo_theme'].insert_text(i, self.templates[i]['name'])
 
 		# sortby combo
-		for i in self.names:
+		keys = self.names.keys()
+		keys.sort()
+		j = 0
+		pos_o_title = 0
+		for i in keys:
 			self.widgets['combo_sortby'].append_text(i)
+			if i == _('Original Title'):
+				pos_o_title = j
+			j = j + 1
 		self.widgets['combo_sortby'].set_wrap_width(3)
 
 		# include data
 		j = 0
 		k = math.ceil( len(self.names) / float(3) )
-		for i in self.names:
+		for i in keys:
 			j = j + 1
 			field = self.names[i]
 			self.widgets['cb_'+field] = gtk.CheckButton(i)
@@ -337,7 +344,7 @@ class ExportPlugin(gtk.Window):
 		# set defaults --------------------------------
 		self.widgets['entry_header'].set_text(self.config['title'])
 		self.widgets['combo_theme'].set_active(2)	# html_tables
-		self.widgets['combo_sortby'].set_active(17)	# orginal title
+		self.widgets['combo_sortby'].set_active(pos_o_title)	# orginal title
 		# spliting
 		self.widgets['sb_split_num'].set_value(self.config['split_num'])
 		if self.config['split_by'] == 0:
