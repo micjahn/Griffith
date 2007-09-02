@@ -8,8 +8,8 @@ Griffith 0.9.5
   + Added smtp server port usage
   + Added gmail smtp server support
 * Translation changes:
-  + new: 
-  + uptaded: Portuguese, Brazilian portuguese
+  + new: Catalan, Norwegian Bokmal
+  + uptaded: Brazilian Portuguese, Cech, Dutch, French, German, Italian, Polish, Portuguese, Russian
 * [Bug #11864] Fixed medium and video codec's default value in add window
 
 

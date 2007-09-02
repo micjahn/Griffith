@@ -4,6 +4,14 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+---- 0.9.5 ---
+
+2007-09-02  Piotr Ożarowski
+	* Translation files synchronized with Rosetta
+	  + new: Catalan, Norwegian Bokmal
+	  + uptaded: Brazilian Portuguese, Cech, Dutch, French, German, Italian, Portuguese, Russian
+	* Polish translation updated
+
 2007-09-02  Michael Jahn
 	* added support for media type, collection and volume in HTML export plugin
 	* added "auto-fixing" of config file values for defaults section
