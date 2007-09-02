@@ -12,7 +12,7 @@ XS-Vcs-Browser: http://svn.berlios.de/wsvn/griffith/debian/?sc=1
 Package: griffith
 Architecture: all
 Depends: ${python:Depends}, python-gtk2 (>= 2.8.6-1), python-glade2 (>= 2.8.6-1),
- python-sqlalchemy (>= 0.3.0-1), python-sqlalchemy (< 0.4~),
+ python-sqlalchemy (>= 0.3.0-1), python-sqlalchemy (<< 0.4~),
  python (>= 2.5) | python-pysqlite2 (>= 2.3.0-1),
  python-reportlab (>= 1.20debian-6), python-imaging (>= 1.1.5-6)
 Recommends: python-gnome2-extras (>= 2.14.0-1), python-chardet,

@@ -1,5 +1,5 @@
 ?package(griffith):needs="X11" \
-	section="Apps/Databases" \
+	section="Applications/Data Management" \
 	hints="Gnome" \
 	title="Griffith" \
 	longtitle="Film collection manager" \
