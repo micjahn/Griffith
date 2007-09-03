@@ -67,6 +67,46 @@
 	A separated GTK+ Runtime Environment for Win32 is NOT necessary.
 	For now, Griffith is only known to work under Microsoft Windows XP
 	Professional Edition but should work on other windows flavours too.
+	
+2.2 Compiling and making a custom installer
+
+	2.2.1 	This was tested with Griffith 0.9.5. Should work with later versions.
+			You will need the following packages installed on your system. You can grab them from the pointed urls:
+	
+			* Python - python 2.5.1 (http://www.python.org/download/)
+			* GTK development environment - gtk-dev-2.10.11-win32-1 (http://gladewin32.sourceforge.net/modules/wfdownloads/)
+			* PyGTK - pygtk-2.10.4-1.win32-py2.5 (http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/2.10/)
+			* Glade 3 - glade-3-0-2-win32-1 (http://gladewin32.sourceforge.net/modules/wfdownloads/viewcat.php?cid=2)
+			* PyCairo - pycairo-1.2.6-1.win32-py2.5 (http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/1.2/)
+			* PyGObject - pygobject-2.12.3-1.win32-py2.5 (http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/2.12/)
+			* ReportLab - ReportLab_2_1 (http://www.reportlab.org/downloads.html#dlls)
+			* winshell - winshell-0.2 (http://timgolden.me.uk/python/winshell.html)
+			* PIL - PIL-1.1.6.win32-py2.5 (http://www.pythonware.com/products/pil/#pil116)
+			* py2exe - py2exe-0.6.6.win32-py2.5 (http://sourceforge.net/project/showfiles.php?group_id=15583&package_id=35995&release_id=474800)
+			* Python For Windows Extensions (pywin32) - pywin32-210.win32-py2.5 (http://sourceforge.net/project/platformdownload.php?group_id=78018)
+			* SQLAlchemy - SQLAlchemy-0.3.10 (http://www.sqlalchemy.org/download.html)
+			* PyXML - PyXML-0.8.4 (http://downloads.nerdynick.org/files/Python/PyXML-0.8.4.win32-py2.5.exe)
+			* psycopg2 - psycopg2-2.0.6.win32-py2.5 (http://www.stickpeople.com/projects/python/win-psycopg/#Version2)
+			* MySQLPython - MySQL-python-1.2.2.win32-py2.5 (http://sourceforge.net/project/showfiles.php?group_id=22307&package_id=15775&release_id=491012)
+			* Python-chardet - chardet-1.0 (http://chardet.feedparser.org/download/)
+			* Python SQLite - pysqlite-2.3.5.win32-py2.5 (http://www.initd.org/tracker/pysqlite/wiki/pysqlite)
+			* Inno Setup - isetup-5.1.14 (http://www.jrsoftware.org/isdl.php)
+			
+	2.2.2	After installing all the above packages, get griffith from SVN
+			or download the latest source tarball from the official site (http://griffith.berlios.de)
+			
+	2.2.3	Put the whole Griffith tree under "c:\griffith"
+	
+	2.2.4	Open a command prompt window and type:
+	
+			- cd c:\griffith
+			- winsetup.bat
+			
+	2.2.5	When the process is finished, locate 'c:\griffith\winpackage.iss' file using the explorer, 
+			right click it and choose 'compile'. This will create a single file installer 
+			using Inno Setup application.
+			
+	2.2.6 	You can find the final installer in 'c:\griffith\installer'
 
 3. Apple MacOSX
 ===============
