@@ -312,6 +312,8 @@ def define_widgets(self, gladefile):
 	# define handlers for general events
 	gladefile.signal_autoconnect({#{{{
 		'gtk_main_quit'				: self.destroy,
+		'on_window_state'			: self.on_window_state,
+		'on_configure'				: self.on_configure,
 		'on_about1_activate'			: self.about_dialog,
 		'on_quit1_activate'			: self.destroy,
 		'on_toolbar_quit_clicked'		: self.destroy,

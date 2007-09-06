@@ -170,6 +170,27 @@ class Griffith:
 		self.save_state()
 		gtk.main_quit()
 
+	def on_configure(self, widget, data=None):
+		# size should only be saved on microsoft windows systems
+		# on other systems the window manager should manage the windows
+		if self.windows and not data is None:
+			if not hasattr(self, 'mainwindow_state') or self.mainwindow_state is None:
+				self.mainwindow_state = {}
+			self.mainwindow_state['left'] = data.x
+			self.mainwindow_state['top'] = data.y
+			self.mainwindow_state['height'] = data.height
+			self.mainwindow_state['width'] = data.width
+
+	def on_window_state(self, widget, windowstate=None):
+		# size should only be saved on microsoft windows systems
+		# on other systems the window manager should manage the windows
+		# here: save the window state
+		if self.windows and not windowstate is None:
+			if not hasattr(self, 'mainwindow_state') or self.mainwindow_state is None:
+				self.mainwindow_state = {}
+			self.mainwindow_state['state'] = int(windowstate.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
+
+
 	# about dialog	-------------------------------------------------------			
 
 	def about_dialog(self, *args):
@@ -334,14 +355,16 @@ class Griffith:
 	def toggle_seen(self, *args):
 		m_number, m_iter = self.get_maintree_selection()
 		movie = self.db.Movie.get_by(number=m_number)
-		if movie.seen:
-			movie.seen = False
-		else:
-			movie.seen = True
-		movie.update()
-		movie.flush()
-		movie.refresh()
-		self.treeview_clicked()
+		if movie is not None:
+			if movie.seen:
+				movie.seen = False
+			else:
+				movie.seen = True
+			movie.update()
+			movie.flush()
+			movie.refresh()
+			self.treemodel.set_value(m_iter,6,movie.seen)
+			self.treeview_clicked()
 
 	def sugest_movie(self, *args):
 		if not self.widgets['menu']['not_seen_movies'].get_active():
@@ -920,25 +943,34 @@ You can't undo this operation."""), \
 		reconnect_add_signals(self)
 		self.widgets['results']['window'].hide()
 
-	def save_state(self): # FIXME: somehow it always saves default window size
+	def save_state(self): 
 		"""Saves main window state"""
-		pos = self.widgets['window'].get_position()
-		size = self.widgets['window'].get_size()
-		self.config.set('width', size[0], section='window')
-		self.config.set('height', size[1], section='window')
-		self.config.set('left', pos[0], section='window')
-		self.config.set('top', pos[1], section='window')
-		self.config.save()
+		# size should only be saved on microsoft windows systems
+		# on other systems the window manager should manage the windows
+		if self.windows and hasattr(self, 'mainwindow_state') and not self.mainwindow_state is None:
+			self.config.set('width',  self.mainwindow_state['width'],  section='window')
+			self.config.set('height', self.mainwindow_state['height'], section='window')
+			self.config.set('left',   self.mainwindow_state['left'],   section='window')
+			self.config.set('top',    self.mainwindow_state['top'],    section='window')
+			if self.mainwindow_state.has_key('state'):
+				self.config.set('state',  self.mainwindow_state['state'],  section='window')
+			else:
+				self.config.set('state',  0,  section='window')
+			self.config.save()
 
 	def restore_state(self):
 		"""Restores main window state"""
 		if self.config.get("left", None, section='window') == None:
 			pass
 		else:
-			self.widgets['window'].move(int(self.config.get('left', section='window')), \
-				int(self.config.get('top', section='window')))
-			self.widgets['window'].resize(int(self.config.get('width', section='window')), \
-				int(self.config.get('height', section='window')))
+			state = self.config.get('state', '0', section='window')
+			if state == str(int(gtk.gdk.WINDOW_STATE_MAXIMIZED)):
+				self.widgets['window'].maximize()
+			else:
+				self.widgets['window'].move(int(self.config.get('left', section='window')), \
+					int(self.config.get('top', section='window')))
+				self.widgets['window'].resize(int(self.config.get('width', section='window')), \
+					int(self.config.get('height', section='window')))
 		self.widgets['window'].show()
 
 	def on_delete_event_r(self, *args):
