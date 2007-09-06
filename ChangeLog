@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-09-06  Michael Jahn
 	* save window state, position and size on windows systems
+	* save selected quick filter criteria
 
 2007-09-03  Vasco Nunes
 	* Some documentations updates

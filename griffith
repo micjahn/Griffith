@@ -905,6 +905,11 @@ You can't undo this operation."""), \
 
 	# quick filter operations ---------------------------------------------
 
+	def on_filter_criteria_changed(self, *args):
+		selected_criteria = self.widgets['filter']['criteria'].get_active_text()
+		self.config.set('criteria', selected_criteria, section='mainlist')
+		quick_filter.change_filter(self)
+
 	def filter_txt(self, *args):
 		quick_filter.change_filter(self)
 

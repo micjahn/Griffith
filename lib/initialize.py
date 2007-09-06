@@ -466,10 +466,15 @@ def combos(self):
 		self.widgets['add']['layers'].insert_text(i, layer)
 		i += 1
 	i = 0
+	pos_to_activate = 0
+	selected_criteria = self.config.get('criteria', None, section='mainlist')
 	for criteria in self.search_criteria:
-		self.widgets['filter']['criteria'].insert_text(i, self.field_names[criteria])
+		new_criteria = self.field_names[criteria]
+		self.widgets['filter']['criteria'].insert_text(i, new_criteria)
+		if selected_criteria == new_criteria:
+			pos_to_activate = i
 		i += 1
-	self.widgets['filter']['criteria'].set_active(0)
+	self.widgets['filter']['criteria'].set_active(pos_to_activate)
 	i = 0
 	for field in self.sort_criteria:
 		if field != 'movie_id':
