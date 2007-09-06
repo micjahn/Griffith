@@ -12,6 +12,7 @@ Griffith ChangeLog
 	* added auto-test feature for movie plugins (only used by developers; execute
 	  test_movieplugins.py directly)
 	* FilmeVonAZ plugin updated
+	* fixed saving media and vcodec defaults in preferences dialog
 
 2007-09-03  Vasco Nunes
 	* Some documentations updates

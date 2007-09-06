@@ -247,8 +247,14 @@ def save_preferences(self):
 	c['rating_image'] = str(w['rating_image'].get_active())
 
 	#defaults
-	c.set('media', self.media_ids[w['media'].get_active()], section='defaults')
-	c.set('vcodec', self.vcodecs_ids[w['vcodec'].get_active()], section='defaults')
+	media_id = self.media_ids[w['media'].get_active()]
+	if media_id is None:
+		media_id = 0
+	c.set('media', media_id, section='defaults')
+	vcodec_id = self.vcodecs_ids[w['vcodec'].get_active()]
+	if vcodec_id is None:
+		vcodec_id = 0
+	c.set('vcodec', vcodec_id, section='defaults')
 	c.set('condition', str(w['condition'].get_active()), section='defaults')
 	c.set('region', str(w['region'].get_active()), section='defaults')
 	c.set('layers', str(w['layers'].get_active()), section='defaults')
