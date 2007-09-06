@@ -965,6 +965,12 @@ You can't undo this operation."""), \
 
 	def restore_state(self):
 		"""Restores main window state"""
+		if self.windows:
+			# windows systems: static gravity needed otherwise we have a
+			# left offset of 4 points (Windows XP border size) and a top
+			# offset of 30 points (height of the title bar) every time the
+			# application is started. The window would move right-down.
+			self.widgets['window'].set_gravity(gtk.gdk.GRAVITY_STATIC)
 		if self.config.get("left", None, section='window') == None:
 			pass
 		else:
