@@ -9,6 +9,9 @@ Griffith ChangeLog
 	* save selected quick filter criteria
 	* fixed backup if path or filename contains special characters (like german umlauts)
 	* use deflate for backup if available
+	* added auto-test feature for movie plugins (only used by developers; execute
+	  test_movieplugins.py directly)
+	* FilmeVonAZ plugin updated
 
 2007-09-03  Vasco Nunes
 	* Some documentations updates
