@@ -35,7 +35,8 @@ def backup(self):
 		name=self.config.get('name','griffith', section='database') + '_backup.zip')
 	if filename and filename[0]:
 		overwrite = None
-		if os.path.isfile(filename[0]):
+		zipfilename = filename[0].decode('utf-8')
+		if os.path.isfile(zipfilename):
 			response = gutils.question(self, \
 				_("File exists. Do you want to overwrite it?"), \
 				1, self.widgets['window'])
@@ -46,7 +47,10 @@ def backup(self):
 
 		if overwrite == True or overwrite is None:
 			try:
-				mzip = zipfile.ZipFile(filename[0], 'w')
+				if zipfile.zlib is not None:
+					mzip = zipfile.ZipFile(zipfilename, 'w', zipfile.ZIP_DEFLATED)
+				else:
+					mzip = zipfile.ZipFile(zipfilename, 'w')
 			except:
 				gutils.error(self, _("Error creating backup"), self.widgets['window'])
 				return False
