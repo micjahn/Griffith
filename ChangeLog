@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-09-20 Vasco Nunes
+	* Italian language file updated
+
 2007-09-06 Vasco Nunes
 	* Berlios task [#003126] complete. Griffith's dir should point to 'Application Data' on windows systems.
 
