@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-10-15  Michael Jahn
+	* Kino.de plugin updated
+	* Fetch from Amazon function fixed
+
 2007-09-20 Vasco Nunes
 	* Italian language file updated
 
