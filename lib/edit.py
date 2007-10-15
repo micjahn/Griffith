@@ -195,20 +195,21 @@ def get_poster(self, f, result, current_poster):
 	file_to_copy = tempfile.mktemp(suffix=self.widgets['movie']['number'].get_text(), \
 		dir=self.locations['temp'])
 	file_to_copy += ".jpg"
-	try:
-		progress = movie.Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
-		retriever = movie.Retriever(result[f].ImageUrlLarge, self.widgets['window'], progress, file_to_copy)
-		retriever.start()
-		while retriever.isAlive():
-			progress.pulse()
-			if progress.status:
-				retriever.suspend()
-			while gtk.events_pending():
-				gtk.main_iteration()
-		progress.close()
-		urlcleanup()
-	except:
-		gutils.warning(self, _("Sorry. A connection error has occurred."))
+	if len(result[f].ImageUrlLarge):
+		try:
+			progress = movie.Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
+			retriever = movie.Retriever(result[f].ImageUrlLarge, self.widgets['window'], progress, file_to_copy)
+			retriever.start()
+			while retriever.isAlive():
+				progress.pulse()
+				if progress.status:
+					retriever.suspend()
+				while gtk.events_pending():
+					gtk.main_iteration()
+			progress.close()
+			urlcleanup()
+		except:
+			gutils.warning(self, _("Sorry. A connection error has occurred."))
 
 	if  os.path.isfile(file_to_copy):
 		try:
@@ -248,9 +249,9 @@ def get_poster(self, f, result, current_poster):
 		else:
 			self.debug.show("Reverting to previous poster and deleting new one from disk.")
 			try:
-                            os.remove(file_to_copy)
-                        except:
-                            self.debug.show("no permission for %s"%file_to_copy)
+				os.remove(file_to_copy)
+			except:
+				self.debug.show("no permission for %s"%file_to_copy)
 
 		self.widgets['poster_window'].hide()
 	else:
