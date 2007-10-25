@@ -45,7 +45,7 @@ def change_poster(self):
 		return False
 	filename = gutils.file_chooser(_("Select image"), action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK), name="", folder=self.locations['desktop'], picture=True)
 	if filename and filename[0]:
-		filename = filename[0]
+		filename = filename[0].decode('UTF-8')
 		update_image(self, number, filename)
 
 def update_image(self, number, file_path):
