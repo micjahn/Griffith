@@ -122,7 +122,6 @@ class Griffith:
 		self.restore_state()
 		self.clear_details()
 		self.populate_treeview()
-		self.count_statusbar()
 
 		# adding some completion fields
 		self.completion = gtk.EntryCompletion()
@@ -891,10 +890,10 @@ You can't undo this operation."""), \
 	# statusbar -----------------------------------------------------------
 
 	def count_statusbar(self):
-		text = str(self.total)
+		allmovies = self.db.Movie.count_by()
 		loaned = self.db.Movie.count_by(loaned=True)
 		not_seen = self.db.Movie.count_by(seen=False)
-		self.update_statusbar(str(text) + _(' movie(s) in collection. ')
+		self.update_statusbar(str(allmovies) + ' (' + str(self.total) + ')' + _(' movie(s) in collection. ')
 			+ str(loaned) + _(' movie(s) loaned. ')
 			+ _('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
 		)

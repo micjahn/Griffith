@@ -33,7 +33,6 @@ def filter_loaned(self):
 
 def filter_all(self):
 	self.populate_treeview()
-	self.count_statusbar()
 
 def filter_by_volume(self, volume_id):
 	from quick_filter import clear_filter

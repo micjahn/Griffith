@@ -445,6 +445,7 @@ def populate(self, movies=None, where=None):#{{{
 	self.widgets['treeview'].set_model(self.treemodel)
 	self.widgets['treeview'].thaw_child_notify()
 	self.widgets['treeview'].set_cursor_on_cell(0)
+	self.count_statusbar()
 #}}}
 
 # vim: fdm=marker

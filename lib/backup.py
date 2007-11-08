@@ -171,7 +171,6 @@ def restore(self):
 		# let's refresh the treeview
 		self.clear_details()
 		self.populate_treeview()
-		self.count_statusbar()
 		gutils.info(self, _("Backup restored"), self.widgets['window'])
 
 def merge(self):	# FIXME
@@ -260,7 +259,5 @@ def merge(self):	# FIXME
 		# let's refresh the treeview
 		self.clear_details()
 		self.populate_treeview(self.db.Movie.select())
-		self.total = self.db.Movie.count()
-		self.count_statusbar()
 		#gutils.info(self, _("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
 

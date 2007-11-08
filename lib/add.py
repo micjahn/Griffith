@@ -679,9 +679,7 @@ def clone_movie(self):
 		image_path = os.path.join(self.locations['images'], "default.png")
 	handler = self.Image.set_from_file(image_path)
 
-	#update statusbar
-	self.total = self.total + 1
-	self.count_statusbar()
-	self.populate_treeview()
+	# change_filter calls populate_treeview which updates the status bar
+	quick_filter.change_filter(self)
 
 # vim: fdm=marker
