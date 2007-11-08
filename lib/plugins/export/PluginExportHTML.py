@@ -282,6 +282,7 @@ class ExportPlugin(gtk.Window):
 			'sb_width'              : get('sb_width'),
 			'cb_black'              : get('cb_black'),
 			'combo_format'          : get('combo_format'),
+			'cb_convert'            : get('cb_convert'),
 		}
 
 		# define handlers for general events
@@ -366,9 +367,11 @@ class ExportPlugin(gtk.Window):
 			self.widgets['rb_loaned'].set_active(True)
 		# posters
 		self.widgets['combo_format'].set_active(0)
-		if self.config['poster_convert']:
+		if self.config['poster_convert'] and self.config['poster_convert'] == True:
+			self.widgets['cb_convert'].set_active(True)
 			self.widgets['vb_posters'].set_sensitive(True)
 		else:
+			self.widgets['cb_convert'].set_active(False)
 			self.widgets['vb_posters'].set_sensitive(False)
 	#}}}
 
@@ -621,17 +624,17 @@ class ExportPlugin(gtk.Window):
 
 		if fields['movies_image']:
 			# import modules needed later
-			if config['poster_convert']:
-				from PIL import Image
-				# py2exe problem workaround:
-				# if self.windows:
-				from PIL import PngImagePlugin
-				from PIL import GifImagePlugin
-				from PIL import JpegImagePlugin
-				Image._initialized=2
-				# end if
-			else:
-				config['poster_format'] = 'jpg' # replace 'jpeg'
+			# modules are needed at least to convert griffith.png to nopic.(gif|jpeg|png)
+			from PIL import Image
+			# py2exe problem workaround:
+			# if self.windows:
+			from PIL import PngImagePlugin
+			from PIL import GifImagePlugin
+			from PIL import JpegImagePlugin
+			Image._initialized=2
+			# end if
+			if not config['poster_convert']:
+				config['poster_format'] = 'jpeg' # replace 'jpeg'
 			
 			posters_dir = os.path.join(config['exported_dir'], 'posters')
 			if os.path.isdir(posters_dir):
@@ -751,10 +754,11 @@ class ExportPlugin(gtk.Window):
 				if self.fields[self.names[j]] == True:
 					if self.names[j] == 'movies_image':
 						if row['movies_image']:
-							image = row['movies_image'] + '.' + config['poster_format'].lower()
+							#image = row['movies_image'] + '.' + config['poster_format'].lower()
+							image = '%d' % row['movies_number'] + '.' + config['poster_format'].lower()
 							tmp = self.fill_template(tmp, self.names[j], image, j)
 						else:
-							tmp = self.fill_template(tmp, self.names[j], '', j)
+							tmp = self.fill_template(tmp, self.names[j], 'nopic.' + config['poster_format'].lower(), j)
 					elif row[self.names[j]] is None:
 						tmp = self.fill_template(tmp, self.names[j], '', j)
 					elif row[self.names[j]] is True:
@@ -765,10 +769,10 @@ class ExportPlugin(gtk.Window):
 						try:
 							tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]).encode('utf-8'), j)
 						except UnicodeDecodeError:
-							self.debug.show("Unicode Decode Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['number']))
+							self.debug.show("Unicode Decode Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['movies_number']))
 							tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]), j)
 						except Exception, ex:
-							self.debug.show("Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['number']))
+							self.debug.show("Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['movies_number']))
 				else:
 					tmp = self.fill_template(tmp, self.names[j], remove=True)
 				tmp = gutils.convert_entities(tmp)
@@ -779,19 +783,20 @@ class ExportPlugin(gtk.Window):
 			# copy poster
 			if fields['movies_image']:
 				if row['movies_image'] is not None:
-					image_file = os.path.join(self.locations['posters'], str(row['movies_image']) + '.jpg')
+					image_file_src = os.path.join(self.locations['posters'], str(row['movies_image']) + '.jpg')
+					image_file_dst = os.path.join(posters_dir, '%d' % row['movies_number']) + '.' + config['poster_format'].lower()
 					if not config['poster_convert']:	# copy file
 						try:
-							shutil.copy(image_file,	posters_dir)
+							shutil.copy(image_file_src,	image_file_dst)
 						except:
-							self.debug.show("Can't copy %s" % image_file)
+							self.debug.show("Can't copy %s" % image_file_src)
 					else:	# convert posters
 						try:
-							im = Image.open(image_file, 'r').convert(config['poster_mode'])
+							im = Image.open(image_file_src, 'r').convert(config['poster_mode'])
 							im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
-							im.save(os.path.join(posters_dir, row['movies_image']) + '.' + config['poster_format'].lower(), config['poster_format'])
+							im.save(image_file_dst, config['poster_format'])
 						except:
-							self.debug.show("Can't convert %s" % image_file)
+							self.debug.show("Can't convert %s" % image_file_src)
 
 			# close file if last item
 			if ((page-1)*self.entries_per_page)+item == number_of_exported_movies:
@@ -812,6 +817,18 @@ class ExportPlugin(gtk.Window):
 				item=item+1
 			i=i+1
 		#}}}
+		# convert/copy the griffith picture for movies without a poster
+		image_file_src = os.path.join(self.locations['images'], 'griffith.png')
+		image_file_dst = os.path.join(posters_dir, 'nopic.' + config['poster_format'].lower())
+		try:
+			if config['poster_convert']:
+				im = Image.open(image_file_src, 'r').convert(config['poster_mode'])
+				im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
+			else:
+				im = Image.open(image_file_src, 'r')
+			im.save(image_file_dst, config['poster_format'])
+		except:
+			self.debug.show("Can't convert %s" % image_file_src)
 		gutils.info(self, _("Document has been generated."), self)
 		self.on_quit()
 	#}}}

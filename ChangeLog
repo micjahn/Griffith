@@ -6,6 +6,9 @@ Griffith ChangeLog
 
 2007-11-08  Michael Jahn
 	* status bar shows count of movies after applying a filter
+	* changed HTML export:
+	  + exported poster file names contain the movie number instead of the random name
+	  + movies without a poster get the griffith picture
 
 2007-10-15  Michael Jahn
 	* Kino.de plugin updated
