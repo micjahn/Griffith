@@ -28,6 +28,7 @@ from reportlab.lib.units import mm, inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.rl_config import defaultPageSize
+from reportlab.rl_config import defaultEncoding
 from reportlab.platypus import Image, SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from xml.sax import saxutils
@@ -38,6 +39,7 @@ import string
 import sys
 import config
 from locale import getdefaultlocale
+from sqlalchemy import Select
 
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
@@ -78,10 +80,16 @@ class ExportPlugin:
                     overwrite = False
                     
             if overwrite == True or overwrite is None:
+                # filename encoding
                 defaultLang, defaultEnc = getdefaultlocale()
                 if defaultEnc is None:
                     defaultEnc = 'UTF-8'
                 c = SimpleDocTemplate(pdffilename.encode(defaultEnc))
+                # data encoding
+                if defaultEncoding == 'WinAnsiEncoding':
+                    defaultEnc = 'cp1252'
+                else:
+                    defaultEnc = 'utf-8'
                 style = self.styles["Normal"]
                 Story = [Spacer(1,2*inch)]
                 # define some custom stylesheetfont
@@ -92,17 +100,27 @@ class ExportPlugin:
                 p = Paragraph("<font name='" + self.fontName +"' size=\"10\">" + saxutils.escape((_("Total Movies: %s") % str(total)).encode('utf-8'))  + '</font>', self.styles["Heading3"])
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
-                movies = self.db.Movie.select()
+                movies = Select(self.db.Movie.c)
+                # select sort column
+                sort_column_name = self.config.get('sortby', 'number', section='mainlist')
+                sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
+                for i in sort_column_name.split(','):
+                    if self.db.Movie.c.has_key(i):
+                        if sort_reverse:
+                            movies.order_by_clause.append(desc(self.db.Movie.c[i]))
+                        else:
+                            movies.order_by_clause.append(self.db.Movie.c[i])
+                movies = movies.execute().fetchall()
                 for movie in movies:
                     number = movie.number
-                    original_title = str(movie.o_title)
-                    title = str(movie.title)
+                    original_title = str(movie.o_title).encode(defaultEnc)
+                    title = str(movie.title).encode(defaultEnc)
                     if movie.year:
                         year = ' - ' + str(movie.year)
                     else:
                         year = ""
                     if movie.director:
-                        director = ' - ' + str(movie.director)
+                        director = ' - ' + str(movie.director).encode(defaultEnc)
                     else:
                         director = ""
                     p = Paragraph("<font name=" + self.fontName + " size=\"7\">" + \
