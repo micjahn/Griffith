@@ -37,6 +37,7 @@ import gutils
 import string
 import sys
 import config
+from locale import getdefaultlocale
 
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
@@ -51,7 +52,7 @@ class ExportPlugin:
         self.db = database
         self.locations = locations
         self.parent = parent_window
-	self.config = kwargs['config']
+        self.config = kwargs['config']
         self.styles = getSampleStyleSheet()
         self.export_simple_pdf()
         self.fontName = ""
@@ -68,7 +69,8 @@ class ExportPlugin:
         filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf")
         if filename[0]:
             overwrite = None
-            if os.path.isfile(filename[0]):
+            pdffilename = filename[0].decode('utf-8')
+            if os.path.isfile(pdffilename):
                 response = gutils.question(self,_("File exists. Do you want to overwrite it?"),1,self.parent)
                 if response==-8:
                     overwrite = True
@@ -76,7 +78,10 @@ class ExportPlugin:
                     overwrite = False
                     
             if overwrite == True or overwrite is None:
-                c = SimpleDocTemplate(filename[0])
+                defaultLang, defaultEnc = getdefaultlocale()
+                if defaultEnc is None:
+                    defaultEnc = 'UTF-8'
+                c = SimpleDocTemplate(pdffilename.encode(defaultEnc))
                 style = self.styles["Normal"]
                 Story = [Spacer(1,2*inch)]
                 # define some custom stylesheetfont
@@ -88,7 +93,7 @@ class ExportPlugin:
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
                 movies = self.db.Movie.select()
-		for movie in movies:
+                for movie in movies:
                     number = movie.number
                     original_title = str(movie.o_title)
                     title = str(movie.title)

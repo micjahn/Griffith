@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2007-11-12  Michael Jahn
 	* Kino.de plugin updated
+	* fixed pdf export with non-ascii characters in filename
 
 2007-11-08  Michael Jahn
 	* status bar shows count of movies after applying a filter
