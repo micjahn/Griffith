@@ -4,6 +4,11 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-11-22  Michael Jahn
+	* added columns genre, seen, runtime and year to the mainlist
+	* enabled reorderable columns
+	* column order is saved
+
 2007-11-12  Michael Jahn
 	* Kino.de plugin updated
 	* fixed pdf export with non-ascii characters in filenames and data

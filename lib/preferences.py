@@ -60,6 +60,26 @@ def show_preferences(self):
 		w['view_director'].set_active(False)
 	else:
 		w['view_director'].set_active(True)
+	# genre
+	if self.config.get('genre', True, 'mainlist') == False:
+		w['view_genre'].set_active(False)
+	else:
+		w['view_genre'].set_active(True)
+	# seen
+	if self.config.get('seen', True, 'mainlist') == False:
+		w['view_seen'].set_active(False)
+	else:
+		w['view_seen'].set_active(True)
+	# year
+	if self.config.get('year', True, 'mainlist') == False:
+		w['view_year'].set_active(False)
+	else:
+		w['view_year'].set_active(True)
+	# runtime
+	if self.config.get('runtime', True, 'mainlist') == False:
+		w['view_runtime'].set_active(False)
+	else:
+		w['view_runtime'].set_active(True)
 
 	# email reminder
 	if self.config.get('use_auth', False, section='mail') == False:
@@ -212,6 +232,26 @@ def save_preferences(self):
 		c.set('director', 'True', section='mainlist')
 	else:
 		c.set('director', 'False', section='mainlist')
+	# genre
+	if w['view_genre'].get_active():
+		c.set('genre', 'True', section='mainlist')
+	else:
+		c.set('genre', 'False', section='mainlist')
+	# seen
+	if w['view_seen'].get_active():
+		c.set('seen', 'True', section='mainlist')
+	else:
+		c.set('seen', 'False', section='mainlist')
+	# year
+	if w['view_year'].get_active():
+		c.set('year', 'True', section='mainlist')
+	else:
+		c.set('year', 'False', section='mainlist')
+	# runtime
+	if w['view_runtime'].get_active():
+		c.set('runtime', 'True', section='mainlist')
+	else:
+		c.set('runtime', 'False', section='mainlist')
 	
 	# sortby
 	if w['sortby'].get_active():

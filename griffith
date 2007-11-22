@@ -961,6 +961,40 @@ You can't undo this operation."""), \
 			else:
 				self.config.set('state',  0,  section='window')
 			self.config.save()
+		# save the order of the columns in the mainlist
+		treeview_columns = self.widgets['treeview'].get_columns()
+		columnorder = ''
+		delimiter = ''
+		for treeview_column in treeview_columns:
+			if treeview_column == self.number_column:
+				columnorder = columnorder + delimiter + 'number'
+				delimiter = ','
+			elif treeview_column == self.image_column:
+				columnorder = columnorder + delimiter + 'image'
+				delimiter = ','
+			elif treeview_column == self.otitle_column:
+				columnorder = columnorder + delimiter + 'otitle'
+				delimiter = ','
+			elif treeview_column == self.title_column:
+				columnorder = columnorder + delimiter + 'title'
+				delimiter = ','
+			elif treeview_column == self.director_column:
+				columnorder = columnorder + delimiter + 'director'
+				delimiter = ','
+			elif treeview_column == self.genre_column:
+				columnorder = columnorder + delimiter + 'genre'
+				delimiter = ','
+			elif treeview_column == self.seen_column:
+				columnorder = columnorder + delimiter + 'seen'
+				delimiter = ','
+			elif treeview_column == self.year_column:
+				columnorder = columnorder + delimiter + 'year'
+				delimiter = ','
+			elif treeview_column == self.runtime_column:
+				columnorder = columnorder + delimiter + 'runtime'
+				delimiter = ','
+		self.config.set('columnorder',  columnorder,  section='mainlist')
+		self.config.save()
 
 	def restore_state(self):
 		"""Restores main window state"""

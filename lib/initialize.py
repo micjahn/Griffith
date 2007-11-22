@@ -29,6 +29,7 @@ import gutils
 import gobject
 import gettext
 import platform
+import re
 from gettext import gettext as _
 from locale import getdefaultlocale
 
@@ -178,7 +179,7 @@ def toolbar(self):
 		self.widgets['menu']['toolbar'].set_active(False)
 
 def treeview(self):
-	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
+	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str)
 	self.widgets['treeview'].set_model(self.treemodel)
 	self.widgets['treeview'].set_headers_visible(True)
 	# number column
@@ -186,30 +187,100 @@ def treeview(self):
 	self.number_column=gtk.TreeViewColumn(_('N.'), renderer, text=0)
 	self.number_column.set_resizable(True)
 	self.number_column.set_sort_column_id(0)
+	self.number_column.set_reorderable(True)
 	self.widgets['treeview'].append_column(self.number_column)
 	# pic column
 	renderer=gtk.CellRendererPixbuf()
 	self.image_column=gtk.TreeViewColumn(_('Image'), renderer, pixbuf=1)
 	self.image_column.set_resizable(False)
+	self.image_column.set_reorderable(True)
 	self.widgets['treeview'].append_column(self.image_column)
 	# original title column
 	renderer=gtk.CellRendererText()
 	self.otitle_column=gtk.TreeViewColumn(_('Original Title'), renderer, text=2)
 	self.otitle_column.set_resizable(True)
 	self.otitle_column.set_sort_column_id(2)
+	self.otitle_column.set_reorderable(True)
 	self.widgets['treeview'].append_column(self.otitle_column)
 	# title column
 	renderer=gtk.CellRendererText()
 	self.title_column=gtk.TreeViewColumn(_('Title'), renderer, text=3)
 	self.title_column.set_resizable(True)
 	self.title_column.set_sort_column_id(3)
+	self.title_column.set_reorderable(True)
 	self.widgets['treeview'].append_column(self.title_column)
 	# director column
 	renderer=gtk.CellRendererText()
 	self.director_column=gtk.TreeViewColumn(_('Director'), renderer, text=4)
 	self.director_column.set_sort_column_id(4)
 	self.director_column.set_resizable(True)
+	self.director_column.set_reorderable(True)
 	self.widgets['treeview'].append_column(self.director_column)
+	# genre column
+	renderer=gtk.CellRendererText()
+	self.genre_column=gtk.TreeViewColumn(_('Genre'), renderer, text=5)
+	self.genre_column.set_sort_column_id(5)
+	self.genre_column.set_resizable(True)
+	self.genre_column.set_reorderable(True)
+	self.widgets['treeview'].append_column(self.genre_column)
+	# seen column
+	renderer=gtk.CellRendererToggle()
+	self.seen_column=gtk.TreeViewColumn(_('Seen it'), renderer, active=6)
+	self.seen_column.set_sort_column_id(6)
+	self.seen_column.set_resizable(True)
+	self.seen_column.set_reorderable(True)
+	self.widgets['treeview'].insert_column(self.seen_column, 1)
+	# year column
+	renderer=gtk.CellRendererText()
+	renderer.set_property('xalign', 0.5)
+	self.year_column=gtk.TreeViewColumn(_('Year'), renderer, text=7)
+	self.year_column.set_sort_column_id(7)
+	self.year_column.set_resizable(True)
+	self.year_column.set_alignment(0.5)
+	self.year_column.set_reorderable(True)
+	self.widgets['treeview'].append_column(self.year_column)
+	# runtime column
+	renderer=gtk.CellRendererText()
+	renderer.set_property('xalign', 1)
+	self.runtime_column=gtk.TreeViewColumn(_('Runtime'), renderer, text=8)
+	self.runtime_column.set_sort_column_id(8)
+	self.runtime_column.set_resizable(True)
+	self.runtime_column.set_alignment(1)
+	self.runtime_column.set_reorderable(True)
+	self.widgets['treeview'].append_column(self.runtime_column)
+	# reflect saved column order
+	columnorder = self.config.get('columnorder', None, section='mainlist')
+	if not columnorder is None:
+		currentcol = None
+		columnordersplitted = re.split('[ \t]*,[ \t]*', columnorder)
+		for col in columnordersplitted:
+			if col == 'number':
+				self.widgets['treeview'].move_column_after(self.number_column, currentcol)
+				currentcol = self.number_column
+			elif col == 'image':
+				self.widgets['treeview'].move_column_after(self.image_column, currentcol)
+				currentcol = self.image_column
+			elif col == 'otitle':
+				self.widgets['treeview'].move_column_after(self.otitle_column, currentcol)
+				currentcol = self.otitle_column
+			elif col == 'title':
+				self.widgets['treeview'].move_column_after(self.title_column, currentcol)
+				currentcol = self.title_column
+			elif col == 'director':
+				self.widgets['treeview'].move_column_after(self.director_column, currentcol)
+				currentcol = self.director_column
+			elif col == 'genre':
+				self.widgets['treeview'].move_column_after(self.genre_column, currentcol)
+				currentcol = self.genre_column
+			elif col == 'seen':
+				self.widgets['treeview'].move_column_after(self.seen_column, currentcol)
+				currentcol = self.seen_column
+			elif col == 'year':
+				self.widgets['treeview'].move_column_after(self.year_column, currentcol)
+				currentcol = self.year_column
+			elif col == 'runtime':
+				self.widgets['treeview'].move_column_after(self.runtime_column, currentcol)
+				currentcol = self.runtime_column
 	# add data to treeview
 	self.total = int(self.db.Movie.count())
 	self.widgets['treeview'].show()

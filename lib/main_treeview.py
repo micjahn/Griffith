@@ -341,7 +341,9 @@ def populate(self, movies=None, where=None):#{{{
 	if movies is None:
 		movies = Select([self.db.Movie.c.number,
 			self.db.Movie.c.o_title, self.db.Movie.c.title,
-			self.db.Movie.c.director, self.db.Movie.c.image])
+			self.db.Movie.c.director, self.db.Movie.c.image,
+			self.db.Movie.c.genre, self.db.Movie.c.seen,
+			self.db.Movie.c.year, self.db.Movie.c.runtime])
 
 	if isinstance(movies, Select):
 		if not where: # because of possible 'seen', 'loaned', 'collection_id' in where
@@ -383,7 +385,7 @@ def populate(self, movies=None, where=None):#{{{
 	sort_column_id, order = self.treemodel.get_sort_column_id()
 
 	# new treemodel (faster and prevents some problems)
-	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str)
+	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str)
 
 	# check preferences to hide or show columns
 	if self.config.get('number', True, 'mainlist') == True:
@@ -406,6 +408,22 @@ def populate(self, movies=None, where=None):#{{{
 		self.image_column.set_visible(True)
 	else:
 		self.image_column.set_visible(False)
+	if self.config.get('genre', True, 'mainlist') == True:
+		self.genre_column.set_visible(True)
+	else:
+		self.genre_column.set_visible(False)
+	if self.config.get('seen', True, 'mainlist') == True:
+		self.seen_column.set_visible(True)
+	else:
+		self.seen_column.set_visible(False)
+	if self.config.get('year', True, 'mainlist') == True:
+		self.year_column.set_visible(True)
+	else:
+		self.year_column.set_visible(False)
+	if self.config.get('runtime', True, 'mainlist') == True:
+		self.runtime_column.set_visible(True)
+	else:
+		self.runtime_column.set_visible(False)
 		
 	for movie in movies:
 		myiter = self.treemodel.append(None)
@@ -436,6 +454,11 @@ def populate(self, movies=None, where=None):#{{{
 		self.treemodel.set_value(myiter,2,movie.o_title)
 		self.treemodel.set_value(myiter,3,movie.title)
 		self.treemodel.set_value(myiter,4,movie.director)
+		self.treemodel.set_value(myiter,5,movie.genre)
+		self.treemodel.set_value(myiter,6,movie.seen)
+		self.treemodel.set_value(myiter,7,movie.year)
+		if movie.runtime is not None:
+			self.treemodel.set_value(myiter,8, '%003d' % movie.runtime + _(' min'))
 		
 	# restore user sort column
 	if sort_column_id is not None:

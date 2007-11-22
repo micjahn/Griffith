@@ -360,8 +360,18 @@ def update_movie(self):
 		# update main treelist
 		tmp_model.set_value(tmp_iter,0,'%004d' % int(movie.number))
 		tmp_model.set_value(tmp_iter,2, movie.o_title)
-		tmp_model.set_value(tmp_iter,3,	movie.title)
+		tmp_model.set_value(tmp_iter,3, movie.title)
 		tmp_model.set_value(tmp_iter,4, movie.director)
+		tmp_model.set_value(tmp_iter,5, movie.genre)
+		tmp_model.set_value(tmp_iter,6, movie.seen)
+		if movie.year is None:
+			tmp_model.set_value(tmp_iter,7, '')
+		else:
+			tmp_model.set_value(tmp_iter,7, movie.year)
+		if movie.runtime is None:
+			tmp_model.set_value(tmp_iter,8, '')
+		else:
+			tmp_model.set_value(tmp_iter,8, '%003d' % int(movie.runtime) + _(' min'))
 		# close add window
 		self.widgets['add']['window'].hide()
 		# refresh
@@ -420,6 +430,16 @@ def add_movie_db(self, close):
 	self.treemodel.set_value(myiter, 2, details['o_title'])
 	self.treemodel.set_value(myiter, 3, details['title'])
 	self.treemodel.set_value(myiter, 4, details['director'])
+	self.treemodel.set_value(myiter, 5, details['genre'])
+	self.treemodel.set_value(myiter, 6, details['seen'])
+	if details['year'] is None:
+		self.treemodel.set_value(myiter, 7, '')
+	else:
+		self.treemodel.set_value(myiter, 7, details['year'])
+	if details['runtime'] is None:
+		self.treemodel.set_value(myiter, 8, '')
+	else:
+		self.treemodel.set_value(myiter, 8, '%003d' % int(details['runtime']) + _(' min'))
 	#update statusbar
 	self.total += 1
 	self.count_statusbar()
