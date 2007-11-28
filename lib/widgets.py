@@ -191,6 +191,7 @@ def define_widgets(self, gladefile):
 		'spell_notes':		get('spell_notes'),
 		'spell_plot':		get('spell_plot'),
 		'spell_lang':		get('spell_lang'),
+		'vbox_spellchecker':	get('vbox_spellchecker'),
 		'default_plugin':	get('default_plugin'),
 		'mail_smtp_server':	get('mail_smtp_server'),
 		'mail_use_auth':	get('mail_use_auth'),
@@ -212,6 +213,7 @@ def define_widgets(self, gladefile):
 	}
 	self.widgets['preferences']['treeview'].connect('button_press_event', self.on_p_tree_button_press_event)
 	self.widgets['preferences']['window'].connect('delete_event', self.on_delete_event_p)
+	self.widgets['preferences']['spellchecker'].connect('toggled', self.on_cb_spellchecker_pref_toggled)
 	self.widgets['preferences']['window'].set_transient_for(self.widgets['window'])
 	#}}}
 

@@ -5414,6 +5414,7 @@ JP</property>
                         <property name="can_focus">True</property>
                         <property name="response_id">0</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="on_cb_spellchecker_pref_toggled" last_modification_time="Wed, 28 Nov 2007 21:16:00 GMT"/>
                         <child>
                           <widget class="GtkAlignment" id="alignment26">
                             <property name="visible">True</property>

@@ -283,6 +283,9 @@ class Griffith:
 			self.widgets['preferences']['db_port'].set_sensitive(True)
 			self.widgets['preferences']['db_host'].set_sensitive(True)
 
+	def on_cb_spellchecker_pref_toggled(self, widget):
+		self.widgets['preferences']['vbox_spellchecker'].set_sensitive(widget.get_active())
+
 	# movie related operations --------------------------------------------
 
 	def add_movie(self, *args):
