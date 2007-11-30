@@ -27,7 +27,8 @@
 			<th>@TITLE@</th></@movies_o_site><@movies_trailer>
 			<th>@TITLE@</th></@movies_trailer><@media_name>
 			<th>@TITLE@</th></@media_name><@movies_media_num>
-			<th>@TITLE@</th></@movies_media_num><@collections_name>
+			<th>@TITLE@</th></@movies_media_num><@vcodecs_name>
+			<th>@TITLE@</th></@vcodecs_name><@collections_name>
 			<th>@TITLE@</th></@collections_name><@volumes_name>
 			<th>@TITLE@</th></@volumes_name><@movies_seen>
 			<th>@TITLE@</th></@movies_seen><@movies_loaned>
@@ -56,7 +57,8 @@
 		<td class="links"><a href="@DATA@">link</a></td></@movies_o_site><@movies_trailer>
 		<td class="links"><a href="@DATA@">link</a></td></@movies_trailer><@media_name>
 		<td class="media">@DATA@</td></@media_name><@movies_media_num>
-		<td class="media">@DATA@</td></@movies_media_num><@collections_name>
+		<td class="media">@DATA@</td></@movies_media_num><@vcodecs_name>
+		<td class="media">@DATA@</td></@vcodecs_name><@collections_name>
 		<td class="media">@DATA@</td></@collections_name><@volumes_name>
 		<td class="media">@DATA@</td></@volumes_name><@movies_seen>
 		<td class="seen">@DATA@</td></@movies_seen><@movies_loaned>

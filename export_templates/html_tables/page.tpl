@@ -72,7 +72,11 @@
 	<tr class="media">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@movies_media_num><@collections_name>
+	</tr></@movies_media_num><@vcodecs_name>
+	<tr class="media">
+		<th>@TITLE@</th>
+		<td>@DATA@</td>
+	</tr></@vcodecs_name><@collections_name>
 	<tr class="collection">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>

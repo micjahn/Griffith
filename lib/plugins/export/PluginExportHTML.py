@@ -90,6 +90,8 @@ class ExportPlugin(gtk.Window):
 		'media_name'            : True,
 		'collections_name'      : True,
 		'volumes_name'          : True,
+#		'acodecs_name'          : True,
+		'vcodecs_name'          : True,
 	}
 	
 	fields_as_columns = {
@@ -123,6 +125,8 @@ class ExportPlugin(gtk.Window):
 		'media_name'            : 'name',
 		'collections_name'      : 'name',
 		'volumes_name'          : 'name',
+#		'acodecs_name'          : 'name',
+		'vcodecs_name'          : 'name',
 	}
 	
 	names = {
@@ -156,6 +160,8 @@ class ExportPlugin(gtk.Window):
 		_('Media')          : 'media_name',
 		_('Collection')     : 'collections_name',
 		_('Volume')         : 'volumes_name',
+#		_('Audio codecs')   : 'acodecs_name',
+		_('Video codec')    : 'vcodecs_name',
 	}
 	#}}}
 
@@ -163,6 +169,10 @@ class ExportPlugin(gtk.Window):
 		self.db = database
 		self.debug = debug
 		self.locations = locations
+		if kwargs.has_key('config'):
+			self.persistent_config = kwargs['config']
+		else:
+			self.persistent_config = None
 		self.widgets = {}
 		self.style_list = {}
 		self.templates = self.make_template_list()
@@ -373,6 +383,11 @@ class ExportPlugin(gtk.Window):
 		else:
 			self.widgets['cb_convert'].set_active(False)
 			self.widgets['vb_posters'].set_sensitive(False)
+		# persistent config
+		if not self.persistent_config is None:
+			tmp = self.persistent_config.get('exported_dir', None, section='export-html')
+			if not tmp is None:
+				self.widgets['fcw'].set_current_folder(tmp)
 	#}}}
 
 	#==[ callbacks ]================================{{{
@@ -553,7 +568,24 @@ class ExportPlugin(gtk.Window):
 		volume_join = collection_join.outerjoin( \
 			self.db.metadata.tables['volumes'], \
 			self.db.metadata.tables['movies'].c.volume_id==self.db.metadata.tables['volumes'].c.volume_id)
-
+		# use outer join to volumes table to get the name of the volume
+		columns.append(self.db.VCodec.c['name'])
+		vcodec_join = volume_join.outerjoin( \
+			self.db.metadata.tables['vcodecs'], \
+			self.db.metadata.tables['movies'].c.vcodec_id==self.db.metadata.tables['vcodecs'].c.vcodec_id)
+		#
+		# selecting the audio codec doesn't work with joins because if more than one codec per movie is
+		# added it would duplicate the movie in the result set as many as audio codecs are added to the movie
+		#
+		# use outer join to language and acodec table to get the name of the audio codec
+		#movie_lang_join = vcodec_join.outerjoin( \
+		#	self.db.metadata.tables['movie_lang'], \
+		#	self.db.metadata.tables['movies'].c.movie_id==self.db.metadata.tables['movie_lang'].c.movie_id)
+		#columns.append(self.db.ACodec.c['name'])
+		#acodec_join = movie_lang_join.outerjoin( \
+		#	self.db.metadata.tables['acodec'], \
+		#	self.db.metadata.tables['movie_lang'].c.acodec_id==self.db.metadata.tables['acodec'].c.acodec_id)
+		
 		# sort order	TODO: more than one sort column
 		sort_columns = []
 		if config['sorting2'] == 'ASC':
@@ -563,7 +595,7 @@ class ExportPlugin(gtk.Window):
 			from sqlalchemy import desc
 			sort_columns.append(desc(self.db.Movie.c[self.fields_as_columns[config['sorting']]]))
 
-		statement = select(columns=columns, order_by=sort_columns, from_obj=[media_join, collection_join, volume_join], use_labels = True)
+		statement = select(columns=columns, order_by=sort_columns, from_obj=[media_join, collection_join, volume_join, vcodec_join], use_labels = True)
 
 		# where clause
 		if config['seen_only'] == 1:
@@ -621,6 +653,11 @@ class ExportPlugin(gtk.Window):
 				gutils.copytree(data_path, config['exported_dir'])
 			except Exception, err:
 				gutils.warning(self, str(err))
+		
+		# persist config
+		if not self.persistent_config is None:
+			self.persistent_config.set('exported_dir', config['exported_dir'], section='export-html')
+			self.persistent_config.save()
 
 		if fields['movies_image']:
 			# import modules needed later

@@ -17,7 +17,8 @@
 		<site>@DATA@</site></@movies_o_site><@movies_trailer>
 		<trailer>@DATA@</trailer></@movies_trailer><@media_name>
 		<media_name>@DATA@</media_name></@media_name><@movies_media_num>
-		<media>@DATA@</media></@movies_media_num><@collections_name>
+		<media>@DATA@</media></@movies_media_num><@vcodecs_name>
+		<vcodec_name>@DATA@</vcodec_name></@vcodecs_name><@collections_name>
 		<collection>@DATA@</collection></@collections_name><@volumes_name>
 		<volume>@DATA@</volume></@volumes_name><@movies_seen>
 		<seen>@DATA@</seen></@movies_seen><@movies_loaned>

@@ -40,7 +40,9 @@
 		\item {@TITLE@: @DATA@}
 </@media_name><@movies_media_num>
 		\item {@TITLE@: @DATA@}
-</@movies_media_num><@collections_name>
+</@movies_media_num><@vcodecs_name>
+		\item {@TITLE@: @DATA@}
+</@vcodecs_name><@collections_name>
 		\item {@TITLE@: @DATA@}
 </@collections_name><@volumes_name>
 		\item {@TITLE@: @DATA@}
