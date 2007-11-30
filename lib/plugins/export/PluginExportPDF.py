@@ -68,8 +68,17 @@ class ExportPlugin:
         else:
                 self.fontName = "Helvetica"
 
-        filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf")
+        basedir = None
+        if not self.config is None:
+            basedir = self.config.get('export_dir', None, section='export-pdf')
+        if basedir is None:
+            filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf")
+        else:
+            filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf",folder=basedir)
         if filename[0]:
+            if not self.config is None and filename[1]:
+                self.config.set('export_dir', filename[1], section='export-pdf')
+                self.config.save()
             overwrite = None
             pdffilename = filename[0].decode('utf-8')
             if os.path.isfile(pdffilename):

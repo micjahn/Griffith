@@ -7,6 +7,7 @@ Griffith ChangeLog
 2007-11-30  Michael Jahn
 	* HTML export supports video codec name
 	* quick filter for volumes
+	* export plugins remember the last directory which was used
 
 2007-11-29 Vasco Nunes
 	* Russian language file updated

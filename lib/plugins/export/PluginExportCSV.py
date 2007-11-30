@@ -39,12 +39,26 @@ class ExportPlugin:
         self.db = database
         self.locations = locations
         self.parent = parent
+        if kwargs.has_key('config'):
+            self.persistent_config = kwargs['config']
+        else:
+            self.persistent_config = None
         self.export_csv()
 
     def export_csv(self):
-        filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-            buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.csv')
+        basedir = None
+        if not self.persistent_config is None:
+            basedir = self.persistent_config.get('export_dir', None, section='export-csv')
+        if basedir is None:
+            filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.csv')
+        else:
+            filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.csv',folder=basedir)
         if filename[0]:
+            if not self.persistent_config is None and filename[1]:
+                self.persistent_config.set('export_dir', filename[1], section='export-csv')
+                self.persistent_config.save()
             overwrite = None
             if os.path.isfile(filename[0]):
                 response = gutils.question(self, _("File exists. Do you want to overwrite it?"), 1, self.parent)
@@ -55,7 +69,7 @@ class ExportPlugin:
                     
             if overwrite == True or overwrite is None:
                 writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
-		for movie in self.db.Movie.select():
+                for movie in self.db.Movie.select():
                     t = []
                     for s in ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
                             'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',

@@ -385,7 +385,7 @@ class ExportPlugin(gtk.Window):
 			self.widgets['vb_posters'].set_sensitive(False)
 		# persistent config
 		if not self.persistent_config is None:
-			tmp = self.persistent_config.get('exported_dir', None, section='export-html')
+			tmp = self.persistent_config.get('export_dir', None, section='export-html')
 			if not tmp is None:
 				self.widgets['fcw'].set_current_folder(tmp)
 	#}}}
@@ -656,7 +656,7 @@ class ExportPlugin(gtk.Window):
 		
 		# persist config
 		if not self.persistent_config is None:
-			self.persistent_config.set('exported_dir', config['exported_dir'], section='export-html')
+			self.persistent_config.set('export_dir', config['exported_dir'], section='export-html')
 			self.persistent_config.save()
 
 		if fields['movies_image']:
