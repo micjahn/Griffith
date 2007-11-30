@@ -358,6 +358,10 @@ def populate(self, movies=None, where=None):#{{{
 			col_id = self.collection_combo_ids[self.widgets['filter']['collection'].get_active()]
 			if col_id > 0:
 				movies.append_whereclause(self.db.Movie.c.collection_id==col_id)
+			# volume
+			vol_id = self.volume_combo_ids[self.widgets['filter']['volume'].get_active()]
+			if vol_id > 0:
+				movies.append_whereclause(self.db.Movie.c.volume_id==vol_id)
 		
 		# select sort column
 		sort_column_name = self.config.get('sortby', 'number', section='mainlist')

@@ -725,6 +725,38 @@
               </packing>
             </child>
             <child>
+              <widget class="GtkToolItem" id="toolitem14">
+                <property name="visible">True</property>
+                <child>
+                  <widget class="GtkLabel" id="label291">
+                    <property name="visible">True</property>
+                    <property name="xpad">6</property>
+                    <property name="label" translatable="yes">By Volume</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolItem" id="toolitem15">
+                <property name="visible">True</property>
+                <child>
+                  <widget class="GtkComboBox" id="f_volume">
+                    <property name="visible">True</property>
+                    <property name="items" translatable="yes"></property>
+                    <signal name="changed" handler="on_f_volume_changed"/>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">False</property>
+              </packing>
+            </child>
+            <child>
               <widget class="GtkToolItem" id="toolitem13">
                 <property name="visible">True</property>
                 <child>

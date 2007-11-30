@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-11-30  Michael Jahn
+	* HTML export supports video codec name
+	* quick filter for volumes
+
 2007-11-29 Vasco Nunes
 	* Russian language file updated
 

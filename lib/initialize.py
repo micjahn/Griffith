@@ -696,6 +696,7 @@ def preferences(self):
 
 def fill_volumes_combo(self, default=0):
 	self.widgets['add']['volume'].get_model().clear()
+	self.widgets['filter']['volume'].get_model().clear()
 	for i in self.volume_combo_ids:
 		vol_id = self.volume_combo_ids[i]
 		if vol_id>0:
@@ -703,7 +704,10 @@ def fill_volumes_combo(self, default=0):
 		else:
 			name = ''
 		self.widgets['add']['volume'].insert_text(int(i), str(name))
+		self.widgets['filter']['volume'].insert_text(int(i), str(name))
 	self.widgets['add']['volume'].show_all()
+	self.widgets['filter']['volume'].show_all()
+	self.widgets['filter']['volume'].set_active(0)
 	i = gutils.findKey(default, self.volume_combo_ids)
 	if i is not None:
 		self.widgets['add']['volume'].set_active(int(i))

@@ -276,6 +276,7 @@ def define_widgets(self, gladefile):
 		'text':		get('filter_txt'),
 		'criteria':	get('filter_criteria'),
 		'collection':	get('f_col'),
+		'volume':	get('f_volume'),
 	}#}}}
 	
 	self.widgets['menu'] = {#{{{
@@ -416,6 +417,7 @@ def define_widgets(self, gladefile):
 		'on_am_remove_volume_button_clicked'	: self.remove_volume,
 		'on_am_remove_collection_button_clicked': self.remove_collection,
 		'on_f_col_changed'			: self.filter_collection,
+		'on_f_volume_changed'			: self.filter_volume,
 		'on_results_cancel_clicked'		: self.results_cancel_ck,
 		# languages
 		'on_lang_add_clicked'			: self.on_lang_add_clicked,
