@@ -431,7 +431,7 @@ def save_preferences(self):
 		self.debug.show("New database Engine: %s" % self.db.metadata.engine.name)
 		
 		# initialize new database
-		self.total = int(self.db.Movie.count())
+		self.total = int(self.db.Movie.query.count())
 		self.count_statusbar()
 		from initialize	import dictionaries, people_treeview, location_posters
 		c['posters'] = None # force update

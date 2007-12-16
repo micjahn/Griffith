@@ -202,7 +202,7 @@ class Griffith:
 		add.clear(self)
 
 	def edit_movie(self, *args):
-		movie = self.db.Movie.get_by(movie_id=self._movie_id)
+		movie = self.db.Movie.query.get_by(movie_id=self._movie_id)
 		if movie is not None:
 			add.edit_movie(self, movie)
 		else:
@@ -334,7 +334,7 @@ class Griffith:
 		if tmp_iter is None:
 			return
 		number = tmp_model.get_value(tmp_iter, 0)
-		movie = self.db.Movie.get_by(number=number)
+		movie = self.db.Movie.query.get_by(number=number)
 		if movie is not None:
 			tmp_dest = self.locations['posters']
 			tmp_img = os.path.join(tmp_dest, str(movie.image)+".jpg")
@@ -356,7 +356,7 @@ class Griffith:
 
 	def toggle_seen(self, *args):
 		m_number, m_iter = self.get_maintree_selection()
-		movie = self.db.Movie.get_by(number=m_number)
+		movie = self.db.Movie.query.get_by(number=m_number)
 		if movie is not None:
 			if movie.seen:
 				movie.seen = False
@@ -410,7 +410,7 @@ class Griffith:
 	def remove_volume(self, widget):
 		from update import update_volume_combo_ids
 		vol_id = self._selected_volume
-		vol = self.db.Volume.get_by(volume_id=vol_id)
+		vol = self.db.Volume.query.get_by(volume_id=vol_id)
 		if vol and vol.remove_from_db():
 			update_volume_combo_ids(self)
 			initialize.fill_volumes_combo(self, id)
@@ -418,7 +418,7 @@ class Griffith:
 	def remove_collection(self, widget):
 		from update import update_collection_combo_ids
 		col_id = self._selected_collection
-		col = self.db.Collection.get_by(collection_id=col_id)
+		col = self.db.Collection.query.get_by(collection_id=col_id)
 		if col and col.remove_from_db():
 			update_collection_combo_ids(self)
 			initialize.fill_collections_combo(self, id)
@@ -427,7 +427,7 @@ class Griffith:
 		vol_id = self._selected_volume
 		if vol_id != 0:
 			new_name = self.widgets['add']['volume'].get_active_text()
-			vol = self.db.Volume.get_by(volume_id=vol_id)
+			vol = self.db.Volume.query.get_by(volume_id=vol_id)
 			if vol:
 				vol.name=new_name
 				if vol.update_in_db():
@@ -437,7 +437,7 @@ class Griffith:
 		col_id = self.e_selected_collection
 		if col_id != 0:
 			new_name = self.widgets['add']['collection'].get_active_text()
-			col = self.db.Collection.get_by(collection_id=col_id)
+			col = self.db.Collection.query.get_by(collection_id=col_id)
 			if col is not None:
 				col.name=new_name
 				if col.update_in_db():
@@ -445,11 +445,11 @@ class Griffith:
 
 	def show_volume(self, widget):
 		from view import filter_by_volume
-		vol_id = self.db.Movie.get_by(movie_id=self._movie_id).volume_id
+		vol_id = self.db.Movie.query.get_by(movie_id=self._movie_id).volume_id
 		filter_by_volume(self, vol_id)
 
 	def show_collection(self, widget):
-		col_id = self.db.Movie.get_by(movie_id=self._movie_id).collection_id
+		col_id = self.db.Movie.query.get_by(movie_id=self._movie_id).collection_id
 		pos = gutils.findKey(col_id, self.collection_combo_ids)
 		self.widgets['filter']['collection'].set_active(pos)
 	#}}}
@@ -533,7 +533,7 @@ class Griffith:
 		active = self.widgets['preferences']['lang_name'].get_active()
 		if active>0:
 			lang_id = self.languages_ids[active]
-			lang = self.db.Lang.get_by(lang_id=lang_id)
+			lang = self.db.Lang.query.get_by(lang_id=lang_id)
 			if lang and lang.remove_from_db():
 				initialize.language_combos(self)
 		else:
@@ -546,7 +546,7 @@ class Griffith:
 			return False
 		lang_id = self.languages_ids[active]
 		if lang_id>0:
-			lang = self.db.Lang.get_by(lang_id=lang_id)
+			lang = self.db.Lang.query.get_by(lang_id=lang_id)
 			if lang is not None:
 				lang.name = self.widgets['preferences']['lang_name'].get_active_text()
 				if lang.update_in_db():
@@ -569,7 +569,7 @@ class Griffith:
 		active = self.widgets['preferences']['tag_name'].get_active()
 		if active>-1:
 			tag_id = self.tags_ids[active]
-			tag = self.db.Tag.get_by(tag_id=tag_id)
+			tag = self.db.Tag.query.get_by(tag_id=tag_id)
 			if tag and tag.remove_from_db():
 				initialize.fill_preferences_tags_combo(self)
 				initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
@@ -582,7 +582,7 @@ class Griffith:
 		except:
 			return False
 		tag_id = self.tags_ids[active]
-		tag = self.db.Tag.get_by(tag_id=tag_id)
+		tag = self.db.Tag.query.get_by(tag_id=tag_id)
 		if tag is not None:
 			tag.name = self.widgets['preferences']['tag_name'].get_active_text()
 			if tag.update_in_db():
@@ -605,7 +605,7 @@ class Griffith:
 		active = self.widgets['preferences']['acodec_name'].get_active()
 		if active>0:
 			acodec_id = self.acodecs_ids[active]
-			acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
+			acodec = self.db.ACodec.query.get_by(acodec_id=acodec_id)
 			if acodec and acodec.remove_from_db():
 				initialize.acodec_combos(self)
 		else:
@@ -617,7 +617,7 @@ class Griffith:
 		except:
 			return False
 		acodec_id = self.acodecs_ids[active]
-		acodec = self.db.ACodec.get_by(acodec_id=acodec_id)
+		acodec = self.db.ACodec.query.get_by(acodec_id=acodec_id)
 		if acodec is not None:
 			acodec.name = self.widgets['preferences']['acodec_name'].get_active_text()
 			if acodec.update_in_db():
@@ -639,7 +639,7 @@ class Griffith:
 		active = self.widgets['preferences']['achannel_name'].get_active()
 		if active>0:
 			achannel_id = self.achannels_ids[active]
-			achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
+			achannel = self.db.AChannel.query.get_by(achannel_id=achannel_id)
 			if achannel and achannel.remove_from_db():
 				initialize.achannel_combos(self)
 		else:
@@ -651,7 +651,7 @@ class Griffith:
 		except:
 			return False
 		achannel_id = self.achannels_ids[active]
-		achannel = self.db.AChannel.get_by(achannel_id=achannel_id)
+		achannel = self.db.AChannel.query.get_by(achannel_id=achannel_id)
 		if achannel is not None:
 			achannel.name = self.widgets['preferences']['achannel_name'].get_active_text()
 			if achannel.update_in_db():
@@ -673,7 +673,7 @@ class Griffith:
 		active = self.widgets['preferences']['subformat_name'].get_active()
 		if active>0:
 			subformat_id = self.subformats_ids[active]
-			subformat = self.db.SubFormat.get_by(subformat_id=subformat_id)
+			subformat = self.db.SubFormat.query.get_by(subformat_id=subformat_id)
 			if subformat and subformat.remove_from_db():
 				initialize.subformat_combos(self)
 		else:
@@ -685,7 +685,7 @@ class Griffith:
 		except:
 			return False
 		subformat_id = self.subformats_ids[active]
-		subformat = self.db.SubFormat.get_by(subformat_id=subformat_id)
+		subformat = self.db.SubFormat.query.get_by(subformat_id=subformat_id)
 		if subformat is not None:
 			subformat.name = self.widgets['preferences']['subformat_name'].get_active_text()
 			if subformat.update_in_db():
@@ -707,7 +707,7 @@ class Griffith:
 		active = self.widgets['preferences']['medium_name'].get_active()
 		if active>-1:
 			medium_id = self.media_ids[active]
-			medium = self.db.Medium.get_by(medium_id=medium_id)
+			medium = self.db.Medium.query.get_by(medium_id=medium_id)
 			if medium and medium.remove_from_db():
 				initialize.media_combos(self)
 		else:
@@ -719,7 +719,7 @@ class Griffith:
 		except:
 			return False
 		medium_id = self.media_ids[active]
-		medium = self.db.Medium.get_by(medium_id=medium_id)
+		medium = self.db.Medium.query.get_by(medium_id=medium_id)
 		if medium is not None:
 			medium.name = self.widgets['preferences']['medium_name'].get_active_text()
 			if medium.update_in_db():
@@ -741,7 +741,7 @@ class Griffith:
 		active = self.widgets['preferences']['vcodec_name'].get_active()
 		if active>-1:
 			vcodec_id = self.vcodecs_ids[active]
-			vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
+			vcodec = self.db.VCodec.query.get_by(vcodec_id=vcodec_id)
 			if vcodec and vcodec.remove_from_db():
 				initialize.vcodec_combos(self)
 		else:
@@ -753,7 +753,7 @@ class Griffith:
 		except:
 			return False
 		vcodec_id = self.vcodecs_ids[active]
-		vcodec = self.db.VCodec.get_by(vcodec_id=vcodec_id)
+		vcodec = self.db.VCodec.query.get_by(vcodec_id=vcodec_id)
 		if vcodec is not None:
 			vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text()
 			if vcodec.update_in_db():
@@ -893,9 +893,9 @@ You can't undo this operation."""), \
 	# statusbar -----------------------------------------------------------
 
 	def count_statusbar(self):
-		allmovies = self.db.Movie.count_by()
-		loaned = self.db.Movie.count_by(loaned=True)
-		not_seen = self.db.Movie.count_by(seen=False)
+		allmovies = self.db.Movie.query.count_by()
+		loaned = self.db.Movie.query.count_by(loaned=True)
+		not_seen = self.db.Movie.query.count_by(seen=False)
 		self.update_statusbar(str(allmovies) + ' (' + str(self.total) + ')' + _(' movie(s) in collection. ')
 			+ str(loaned) + _(' movie(s) loaned. ')
 			+ _('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")

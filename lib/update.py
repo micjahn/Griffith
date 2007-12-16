@@ -29,7 +29,7 @@ def update_volume_combo_ids(self):
 	self.volume_combo_ids = {}
 	self.volume_combo_ids[0] = 0
 	i = 1
-	for volume in self.db.Volume.select():
+	for volume in self.db.Volume.query.select():
 		self.volume_combo_ids[i] = volume.volume_id
 		i += 1
 
@@ -37,7 +37,7 @@ def update_collection_combo_ids(self):
 	self.collection_combo_ids = {}
 	self.collection_combo_ids[0] = 0
 	i = 1
-	for collection in self.db.Collection.select():
+	for collection in self.db.Collection.query.select():
 		self.collection_combo_ids[i] = collection.collection_id
 		i += 1
 

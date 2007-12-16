@@ -61,7 +61,7 @@ def find_next_available(db):
 	"""
 	first = 0
 
-	movies = db.Movie.select(order_by="number ASC")
+	movies = db.Movie.query.select(order_by="number ASC")
 	for movie in movies:
 		second = int(movie.number)
 		if second is None:
@@ -348,7 +348,7 @@ def clean_posters_dir(self):
 			for name in names:
 				if name.startswith('poster'):
 					# lets check if this poster is orphan
-					used = self.db.Movie.count_by(image=string.replace(name,".jpg",""))
+					used = self.db.Movie.query.count_by(image=string.replace(name,".jpg",""))
 					if not used:
 						counter += 1
 						os.unlink(os.path.join(posters_dir, name))

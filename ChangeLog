@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2007-12-16  Piotr Ożarowski
+	* Version changed to 0.10~svn
+	* Started working on SQLAlchemy 0.4.x compatibility (NOT YET READY)
+
 2007-12-08  Vasco Nunes
 	* Danish language file updated
 

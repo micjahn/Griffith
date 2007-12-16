@@ -36,8 +36,9 @@ def treeview_clicked(self):
 			self.debug.show('Treeview: no selection')
 			return False
 		number = tmp_model.get_value(tmp_iter,0)
-		movie = self.db.Movie.get_by(number=number)
-		movie.refresh() # loan data can be obsolete in cache
+		movie = self.db.Movie.query.get_by(number=number)
+        # FIXME
+		#movie.refresh() # loan data can be obsolete in cache
 		if movie is None:
 			self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
 		set_details(self, movie)
@@ -237,7 +238,7 @@ def set_details(self, item=None):#{{{
 		if data_loan is None:
 			item.loaned = False
 		else:
-			data_person = self.db.Person.get_by(person_id=data_loan.person.person_id)
+			data_person = self.db.Person.query.get_by(person_id=data_loan.person.person_id)
 			self.person_name = str(data_person.name)
 			self.person_email = str(data_person.email)
 			self.loan_date = str(data_loan.date)
@@ -265,7 +266,7 @@ def set_details(self, item=None):#{{{
 				self.loans_treemodel.set_value(myiter, 1, str(loan.return_date)[:10])
 			else:
 				self.loans_treemodel.set_value(myiter, 1, "---")
-			person = self.db.Person.get_by(person_id=loan.person.person_id)
+			person = self.db.Person.query.get_by(person_id=loan.person.person_id)
 			self.loans_treemodel.set_value(myiter, 2, person.name)
 
 	# volumes/collections
@@ -336,16 +337,17 @@ def set_details(self, item=None):#{{{
 def populate(self, movies=None, where=None):#{{{
 	if self.initialized is False:
 		return False
-	from sqlalchemy import Select, desc
+	from sqlalchemy import select, desc
 	
 	if movies is None:
-		movies = Select([self.db.Movie.c.number,
+		movies = select([self.db.Movie.c.number,
 			self.db.Movie.c.o_title, self.db.Movie.c.title,
 			self.db.Movie.c.director, self.db.Movie.c.image,
 			self.db.Movie.c.genre, self.db.Movie.c.seen,
 			self.db.Movie.c.year, self.db.Movie.c.runtime])
 
-	if isinstance(movies, Select):
+	#if isinstance(movies, Select):
+	if 1==1: # FIXME
 		if not where: # because of possible 'seen', 'loaned', 'collection_id' in where
 			# seen / loaned
 			loaned_only = self.widgets['menu']['loaned_movies'].get_active()
@@ -369,9 +371,9 @@ def populate(self, movies=None, where=None):#{{{
 		for i in sort_column_name.split(','):
 			if self.db.Movie.c.has_key(i):
 				if sort_reverse:
-					movies.order_by_clause.append(desc(self.db.Movie.c[i]))
+					movies.append_order_by(desc(self.db.Movie.c[i]))
 				else:
-					movies.order_by_clause.append(self.db.Movie.c[i])
+					movies.append_order_by(self.db.Movie.c[i])
 		
 		# additional whereclause (volume_id, collection_id, ...)
 		if where:

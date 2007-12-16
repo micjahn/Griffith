@@ -23,6 +23,8 @@ __revision__ = '$Id$'
 
 from gettext import gettext as _
 from sqlalchemy import *
+from sqlalchemy.orm import *
+from sqlalchemy.exceptions import *
 import os.path
 import gutils
 import gtk
@@ -35,7 +37,7 @@ class DBTable(object):#{{{
 			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
 		# check if achannel already exists
-		if self.get_by(name=self.name) is not None:
+		if self.query.get_by(name=self.name) is not None:
 			debug.show("%s: '%s' already exists" % (self.__class__.__name__, self.name))
 			return False
 		debug.show("%s: adding '%s' to database..." % (self.__class__.__name__, self.name))
@@ -77,7 +79,7 @@ class DBTable(object):#{{{
 		if self.name is None or len(self.name)==0:
 			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
-		tmp = self.get_by(name=self.name)
+		tmp = self.query.get_by(name=self.name)
 		if tmp is not None and tmp is not self:
 			gutils.warning(self, msg=_("This name is already in use!"))
 			return False
@@ -132,10 +134,10 @@ class GriffithSQL:
 			return "Loan:%s (movie:%s person:%s)" % (self.loan_id, self.movie_id, self.person_id)
 		def __setitem__(self, key, value):
 			if key == 'movie_id' and value:
-				if GriffithSQL.Movie.get_by(movie_id=value) is None:
+				if GriffithSQL.Movie.query.get_by(movie_id=value) is None:
 					raise ValueError('wrong movie_id')
 			elif key == 'person_id' and value:
-				if GriffithSQL.Person.get_by(person_id=value) is None:
+				if GriffithSQL.Person.query.get_by(person_id=value) is None:
 					raise ValueError('wrong movie_id')
 			self[key] = value
 		def _validate(self):
@@ -144,19 +146,19 @@ class GriffithSQL:
 			if self.person_id is None:
 				raise ValueError('person_id is not set')
 			if self.movie is None:
-				self.movie = GriffithSQL.Movie.get_by(movie_id=self.movie_id)
+				self.movie = GriffithSQL.Movie.query.get_by(movie_id=self.movie_id)
 				if self.movie is None:
 					raise ValueError('wrong movie_id')
 			if self.person is None:
-				self.person = GriffithSQL.Person.get_by(person_id=self.person_id)
+				self.person = GriffithSQL.Person.query.get_by(person_id=self.person_id)
 				if self.person is None:
 					raise ValueError('wrong person_id')
 			if self.collection_id>0 and self.collection is None:
-				self.collection = GriffithSQL.Collection.get_by(collection_id=self.collection_id)
+				self.collection = GriffithSQL.Collection.query.get_by(collection_id=self.collection_id)
 				if self.collection is None:
 					raise ValueError('wrong collection_id')
 			if self.volume_id>0 and self.volume is None:
-				self.volume = GriffithSQL.Volume.get_by(volume_id=self.volume_id)
+				self.volume = GriffithSQL.Volume.query.get_by(volume_id=self.volume_id)
 				if self.volume is None:
 					raise ValueError('wrong volume_id')
 			return True
@@ -176,7 +178,7 @@ class GriffithSQL:
 				self.volume.loaned = True
 				self.volume.update()
 			if self.movie is None:
-				self.movie = Movie.get_by(movie_id=self.movie_id)
+				self.movie = Movie.query.get_by(movie_id=self.movie_id)
 			self.movie.loaned = True
 			self.movie.update()
 			if self.date is None:
@@ -282,8 +284,9 @@ class GriffithSQL:
 		#}}}
 
 	def __init__(self, config, gdebug, griffith_dir):
-		from sqlalchemy.mods.threadlocal import assign_mapper
-		from sqlalchemy.exceptions import InvalidRequestError
+		from sqlalchemy.orm import scoped_session, sessionmaker
+		Session = scoped_session(sessionmaker(autoflush=True, transactional=True))
+		mapper = Session.mapper
 		global debug
 		debug = gdebug
 		if config.get('type', None, section='database') is None:
@@ -341,23 +344,23 @@ class GriffithSQL:
 			config.set('type', 'sqlite', section='database')
 			url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
 		try:
-			self.metadata = BoundMetaData(url)
+			self.metadata = MetaData(url)
 		except Exception, e:	# InvalidRequestError, ImportError
-			debug.show("BoundMetaData: %s" % e)
+			debug.show("MetaData: %s" % e)
 			config.set('type', 'sqlite', section='database')
 			gutils.warning(self, "%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
-			self.metadata = BoundMetaData("sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db'))
+			self.metadata = MetaData("sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db'))
 
 		# try to establish a db connection
 		try:
-			self.metadata.engine.connect()
+			self.metadata.bind.connect()
 		except Exception, e:
 			debug.show("engine connection: %s" % e)
 			gutils.error(self, _('Database connection failed.'))
 			config.set('type', 'sqlite', section='database')
 			url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
-			self.metadata = BoundMetaData(url)
-			self.metadata.engine.connect()
+			self.metadata = MetaData(url)
+			self.metadata.bind.connect()
 		#}}}
 
 		# prepare tables interface ---------------------------------{{{
@@ -370,12 +373,12 @@ class GriffithSQL:
 			Column('vcodec_id', Integer, ForeignKey('vcodecs.vcodec_id')),
 			Column('loaned', Boolean, nullable=False, default=False),
 			Column('seen', Boolean, nullable=False, default=False),
-			Column('rating', Smallinteger(2)),
-			Column('color', Smallinteger),
-			Column('cond', Smallinteger),	# MySQL will not accept name "condition"
-			Column('layers', Smallinteger),
-			Column('region', Smallinteger),
-			Column('media_num', Smallinteger),
+			Column('rating', SmallInteger(2)),
+			Column('color', SmallInteger),
+			Column('cond', SmallInteger),	# MySQL will not accept name "condition"
+			Column('layers', SmallInteger),
+			Column('region', SmallInteger),
+			Column('media_num', SmallInteger),
 			Column('runtime', Integer),
 			Column('year', Integer),
 			Column('o_title', VARCHAR(255)),
@@ -436,7 +439,7 @@ class GriffithSQL:
 			Column('name', VARCHAR(64), nullable=False, unique=True))
 		movie_lang = Table('movie_lang', self.metadata,
 			Column('ml_id', Integer, primary_key=True),
-			Column('type', Smallinteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle 
+			Column('type', SmallInteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle 
 			Column('movie_id', Integer, ForeignKey('movies.movie_id'), nullable=False),
 			Column('lang_id', Integer, ForeignKey('languages.lang_id'), nullable=False),
 			Column('acodec_id', Integer, ForeignKey('acodecs.acodec_id')),
@@ -451,37 +454,37 @@ class GriffithSQL:
 			Column('value', VARCHAR(128), nullable=False))#}}}
 
 		# mappers -------------------------------------------------#{{{
-		assign_mapper(self.Configuration, configuration)
-		assign_mapper(self.Volume,volumes, properties={
+		mapper(self.Configuration, configuration)
+		mapper(self.Volume,volumes, properties={
 			'movies': relation(self.Movie, backref='volume')})
-		assign_mapper(self.Collection, collections, properties={
+		mapper(self.Collection, collections, properties={
 			'movies': relation(self.Movie, backref='collection')})
-		assign_mapper(self.Medium, media, properties={
+		mapper(self.Medium, media, properties={
 			'movies': relation(self.Movie, backref='medium')})
-		assign_mapper(self.VCodec, vcodecs, properties={
+		mapper(self.VCodec, vcodecs, properties={
 			'movies': relation(self.Movie, backref='vcodec')})
-		assign_mapper(self.Person, people, properties = {
+		mapper(self.Person, people, properties = {
 			'loans'    : relation(self.Loan, backref='person', cascade='all, delete-orphan')})
-		assign_mapper(self.MovieLang, movie_lang, primary_key=[movie_lang.c.ml_id], properties = {
+		mapper(self.MovieLang, movie_lang, primary_key=[movie_lang.c.ml_id], properties = {
 			'movie'    : relation(self.Movie, lazy=False),
 			'language' : relation(self.Lang, lazy=False),
 			'achannel' : relation(self.AChannel),
 			'acodec'   : relation(self.ACodec),
 			'subformat': relation(self.SubFormat)})
-		assign_mapper(self.ACodec, acodecs, properties={
+		mapper(self.ACodec, acodecs, properties={
 			'movielangs': relation(self.MovieLang, lazy=False)})
-		assign_mapper(self.AChannel, achannels, properties={
+		mapper(self.AChannel, achannels, properties={
 			'movielangs': relation(self.MovieLang, lazy=False)})
-		assign_mapper(self.SubFormat, subformats, properties={
+		mapper(self.SubFormat, subformats, properties={
 			'movielangs': relation(self.MovieLang, lazy=False)})
-		assign_mapper(self.Lang, languages, properties={
+		mapper(self.Lang, languages, properties={
 			'movielangs': relation(self.MovieLang, lazy=False)})
-		assign_mapper(self.MovieTag, movie_tag)
-		assign_mapper(self.Tag, tags, properties={'movietags': relation(self.MovieTag, backref='tag')})
-		assign_mapper(self.Loan, loans, properties = {
+		mapper(self.MovieTag, movie_tag)
+		mapper(self.Tag, tags, properties={'movietags': relation(self.MovieTag, backref='tag')})
+		mapper(self.Loan, loans, properties = {
 			'volume'    : relation(self.Volume),
 			'collection': relation(self.Collection)})
-		assign_mapper(self.Movie, movies, order_by=movies.c.number , properties = {
+		mapper(self.Movie, movies, order_by=movies.c.number , properties = {
 			'loans'     : relation(self.Loan, backref='movie', cascade='all, delete-orphan'),
 			#'tags'       : relation(self.Tag, cascade='all, delete-orphan', secondary=movie_tag,
 			'tags'      : relation(self.Tag, secondary=movie_tag,
@@ -489,18 +492,20 @@ class GriffithSQL:
 					secondaryjoin=movie_tag.c.tag_id==tags.c.tag_id),
 			'languages' : relation(self.MovieLang, cascade='all, delete-orphan')})#}}}
 		
+		self.metadata.create_all()
 		# check if database needs upgrade
 		try:
-			v = self.Configuration.get_by(param='version')	# returns None if table exists && param ISNULL
-		except exceptions.SQLError, e:	# table doesn't exist
+			v = self.Configuration.query.get_by(param='version')	# returns None if table exists && param ISNULL
+		except SQLError, e:	# table doesn't exist
 			debug.show("DB version: %s" % e)
 			v = 0
 
 		if v is not None and v>1:
 			v = int(v.value)
-		if v < self.version:
-			from dbupgrade import upgrade_database
-			upgrade_database(self, v)
+		# FIXME:
+#		if v < self.version:
+#			from dbupgrade import upgrade_database
+#			upgrade_database(self, v)
 
 # for debugging (run: ipython sql.py)
 if __name__ == '__main__':
@@ -522,7 +527,7 @@ if __name__ == '__main__':
 	check_args_with_db(tmp)
 	
 	print '\nGriffithSQL test drive\n======================'
-	print "Engine: %s" % (db.metadata.engine.name)
+	print "Engine: %s" % (db.metadata.bind.name)
 	print 'Database object name: db\n'
 
 # vim: fdm=marker

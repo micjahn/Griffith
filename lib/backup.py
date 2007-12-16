@@ -92,7 +92,7 @@ def backup(self):
 				mzip.write(tmp_file)
 				rmtree(tmp_dir)
 			posters_dir = os.path.join(self.locations['posters'])
-			for movie in self.db.Movie.select():
+			for movie in self.db.Movie.query.select():
 				if movie.image is not None:
 					filename = str(movie.image)+".jpg"
 					filename = os.path.join(posters_dir, filename).encode('utf-8')
@@ -225,8 +225,8 @@ def merge(self):	# FIXME
 
 		merged=0
 		movies = tmp_db.Movie.count()
-		for movie in tmp_db.Movie.select():
-			if self.db.Movie.get_by(o_title=movie.o_title) is not None:
+		for movie in tmp_db.Movie.query.select():
+			if self.db.Movie.query.get_by(o_title=movie.o_title) is not None:
 				continue
 			t_movies = {}
 			for column in movie.mapper.c.keys():
@@ -258,6 +258,6 @@ def merge(self):	# FIXME
 		people_treeview(self)
 		# let's refresh the treeview
 		self.clear_details()
-		self.populate_treeview(self.db.Movie.select())
+		self.populate_treeview(self.db.Movie.query.select())
 		#gutils.info(self, _("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
 
