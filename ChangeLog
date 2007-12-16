@@ -4,10 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
-2007-12-08 Vasco Nunes
+2007-12-08  Vasco Nunes
 	* Danish language file updated
 
-2007-12-07 Vasco Nunes
+2007-12-07  Vasco Nunes
 	* Spanish language file updated
 
 2007-11-30  Michael Jahn
@@ -15,7 +15,7 @@ Griffith ChangeLog
 	* quick filter for volumes
 	* export plugins remember the last directory which was used
 
-2007-11-29 Vasco Nunes
+2007-11-29  Vasco Nunes
 	* Russian language file updated
 
 2007-11-28  Michael Jahn
@@ -41,10 +41,10 @@ Griffith ChangeLog
 	* Kino.de plugin updated
 	* Fetch from Amazon function fixed
 
-2007-09-20 Vasco Nunes
+2007-09-20  Vasco Nunes
 	* Italian language file updated
 
-2007-09-06 Vasco Nunes
+2007-09-06  Vasco Nunes
 	* Berlios task [#003126] complete. Griffith's dir should point to 'Application Data' on windows systems.
 
 2007-09-06  Michael Jahn
