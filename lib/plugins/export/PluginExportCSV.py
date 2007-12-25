@@ -69,7 +69,7 @@ class ExportPlugin:
                     
             if overwrite == True or overwrite is None:
                 writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
-                for movie in self.db.Movie.select():
+                for movie in self.db.Movie.all():
                     t = []
                     for s in ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
                             'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',

@@ -36,7 +36,7 @@ def treeview_clicked(self):
 			self.debug.show('Treeview: no selection')
 			return False
 		number = tmp_model.get_value(tmp_iter,0)
-		movie = self.db.Movie.query.get_by(number=number)
+		movie = self.db.Movie.query.filter_by(number=number).first()
         # FIXME
 		#movie.refresh() # loan data can be obsolete in cache
 		if movie is None:
@@ -238,7 +238,7 @@ def set_details(self, item=None):#{{{
 		if data_loan is None:
 			item.loaned = False
 		else:
-			data_person = self.db.Person.query.get_by(person_id=data_loan.person.person_id)
+			data_person = self.db.Person.query.filter_by(person_id=data_loan.person.person_id).first()
 			self.person_name = str(data_person.name)
 			self.person_email = str(data_person.email)
 			self.loan_date = str(data_loan.date)
@@ -266,7 +266,7 @@ def set_details(self, item=None):#{{{
 				self.loans_treemodel.set_value(myiter, 1, str(loan.return_date)[:10])
 			else:
 				self.loans_treemodel.set_value(myiter, 1, "---")
-			person = self.db.Person.query.get_by(person_id=loan.person.person_id)
+			person = self.db.Person.query.filter_by(person_id=loan.person.person_id).first()
 			self.loans_treemodel.set_value(myiter, 2, person.name)
 
 	# volumes/collections

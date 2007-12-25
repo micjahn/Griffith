@@ -61,7 +61,7 @@ def find_next_available(db):
 	"""
 	first = 0
 
-	movies = db.Movie.query.select(order_by="number ASC")
+	movies = db.Movie.query.order_by(db.Movie.c.number.asc()).all()
 	for movie in movies:
 		second = int(movie.number)
 		if second is None:

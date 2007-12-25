@@ -101,13 +101,13 @@ def upgrade_database(self, version):
 	if version == 1: # fix changes between v1 and v2
 		version+=1
 		self.metadata.engine.execute("UPDATE loans SET return_date = '2007-01-01' WHERE return_date='None';")
-		db_version = self.Configuration.query.get_by(param='version')
+		db_version = self.Configuration.query.filter_by(param='version').one()
 		db_version.value = version
 		db_version.update()
 		db_version.flush()
 	#if version == 2:	# fix changes between v2 and v3
 	#	version+=1
-	#	self.Configuration.query.get_by(param='version').value = version
+	#	self.Configuration.query.filter_by(param='version').onr().value = version
 
 
 # ---------------------------------------------------
@@ -252,7 +252,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	language_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
 	old_cursor.execute("SELECT id, name FROM languages;")
 	for i in old_cursor.fetchall():
-		o = new_db.Lang.query.get_by(name=i[1])
+		o = new_db.Lang.query.filter_by(name=i[1]).first()
 		if o is not None:
 			language_mapper[i[0]] = o.lang_id
 		else:
@@ -268,7 +268,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	medium_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
 	old_cursor.execute("SELECT id, name FROM media;")
 	for i in old_cursor.fetchall():
-		o = new_db.Medium.query.get_by(name=i[1])
+		o = new_db.Medium.query.filter_by(name=i[1]).first()
 		if o is not None:
 			medium_mapper[i[0]] = o.medium_id
 		else:
@@ -284,7 +284,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	tag_mapper = {}
 	old_cursor.execute("SELECT id, name FROM tags;")
 	for i in old_cursor.fetchall():
-		o = new_db.Tag.query.get_by(name=i[1])
+		o = new_db.Tag.query.filter_by(name=i[1]).first()
 		if o is not None:
 			tag_mapper[i[0]] = o.tag_id
 		else:
@@ -348,10 +348,10 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	# movie tag
 	old_cursor.execute("SELECT movie_id, tag_id FROM movie_tag WHERE movie_id IN (SELECT id FROM movies);")
 	for i in old_cursor.fetchall():
-		o = new_db.MovieTag.query.get_by(movie_id=movie_mapper[i[0]], tag_id=tag_mapper[i[1]])
+		o = new_db.MovieTag.query.filter_by(movie_id=movie_mapper[i[0]], tag_id=tag_mapper[i[1]]).first()
 		if o is None:
-			m = new_db.Movie.query.get_by(movie_id=movie_mapper[i[0]])
-			t = new_db.Tag.query.get_by(tag_id=tag_mapper[i[1]])
+			m = new_db.Movie.query.filter_by(movie_id=movie_mapper[i[0]]).one()
+			t = new_db.Tag.query.filter_by(tag_id=tag_mapper[i[1]]).one()
 			t.save()
 			m.tags.append(t)
 			try:
@@ -363,9 +363,9 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 	# movie lang
 	old_cursor.execute("SELECT movie_id, lang_id, type FROM movie_lang WHERE movie_id IN (SELECT id FROM movies);")
 	for i in old_cursor.fetchall():
-		o = new_db.MovieLang.query.get_by(movie_id=movie_mapper[i[0]], lang_id=language_mapper[i[1]], type=i[2])
+		o = new_db.MovieLang.query.filter_by(movie_id=movie_mapper[i[0]], lang_id=language_mapper[i[1]], type=i[2]).first()
 		if o is None:
-			m = new_db.Movie.query.get_by(movie_id=movie_mapper[i[0]])
+			m = new_db.Movie.query.filter_by(movie_id=movie_mapper[i[0]]).one()
 			l = new_db.MovieLang(lang_id=language_mapper[i[1]], type=i[2])
 			l.save()
 			m.languages.append(l)
@@ -383,13 +383,13 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 
 		if int(i[2]) > 0:
 			try:
-				vol = new_db.Volume.query.get_by(volume_id=volume_mapper[i[2]])
+				vol = new_db.Volume.query.filter_by(volume_id=volume_mapper[i[2]]).one()
 			except Exception, e:
 				self.debug.show(str(e))
 				continue
 		if int(i[3]) > 0:
 			try:
-				col = new_db.Collection.query.get_by(collection_id=collection_mapper[i[3]])
+				col = new_db.Collection.query.filter_by(collection_id=collection_mapper[i[3]]).one()
 			except Exception, e:
 				self.debug.show(str(e))
 				continue
@@ -403,7 +403,7 @@ def convert_from_old_db(self, source_file, destination_file):	#{{{
 				continue
 		else:
 			try:
-				m = new_db.Movie.query.get_by(movie_id=movie_mapper[i[1]])
+				m = new_db.Movie.query.filter_by(movie_id=movie_mapper[i[1]]).one()
 			except Exception, e:
 				self.debug.show(str(e))
 				continue

@@ -332,7 +332,7 @@ def validate_details(t_movies, allow_only=None):
 				t_movies.pop(i)
 
 def update_movie(self):
-	movie = self.db.Movie.query.get_by(movie_id=self._movie_id)
+	movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).one()
 	if movie is None: # movie was deleted in the meantime
 		return add_movie_db(self, True)
 	old_image = movie.image
@@ -385,13 +385,13 @@ def add_movie_db(self, close):
 		return False
 
 	if details['o_title']:
-		tmp_movie = self.db.Movie.query.get_by(o_title=details['o_title'])
+		tmp_movie = self.db.Movie.query.filter_by(o_title=details['o_title']).first()
 		if tmp_movie is not None:
 			response = gutils.question(self, msg=_('Movie with that title already exists, are you sure you want to add?'), cancel=0, parent=self.widgets['add']['window'])
 			if response == gtk.RESPONSE_NO:
 				return False
 	if details['title']:
-		tmp_movie = self.db.Movie.query.get_by(title=details['title'])
+		tmp_movie = self.db.Movie.query.filter_by(title=details['title']).first()
 		if tmp_movie is not None:
 			response = gutils.question(self, msg=_('Movie with that title already exists, are you sure you want to add?'), cancel=0, parent=self.widgets['add']['window'])
 			if response == gtk.RESPONSE_NO:
@@ -622,7 +622,7 @@ def clone_movie(self):
 	if tmp_iter is None:
 		return False
 	number = tmp_model.get_value(tmp_iter, 0)
-	movie = self.db.Movie.query.get_by(number=number)
+	movie = self.db.Movie.query.filter_by(number=number).first()
 
 	if movie is None:
 		return False

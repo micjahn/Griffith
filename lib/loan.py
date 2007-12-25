@@ -27,7 +27,7 @@ import gtk
 import datetime
 
 def loan_movie(self):
-	people = self.db.Person.query.select(order_by='name ASC')
+	people = self.db.Person.query.order_by(self.db.Person.name.asc()).all()
 	model = gtk.ListStore(str)
 	if len(people)>0:
 		for person in people:
@@ -48,12 +48,12 @@ def commit_loan(self):
 		return False
 	self.widgets['w_loan_to'].hide()
 
-	person = self.db.Person.query.get_by(name=person_name)
+	person = self.db.Person.query.filter_by(name=person_name).first()
 	if person is None:
 		self.debug.show("commit_loan: person doesn't exist")
 		return False
 	if self._movie_id:
-		movie = self.db.Movie.query.get_by(movie_id=self._movie_id)
+		movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
 		if not movie:
 			self.debug.show("commit_loan: wrong movie_id")
 			return False
@@ -81,21 +81,21 @@ def commit_loan(self):
 
 def return_loan(self):
 	if self._movie_id:
-		loan = self.db.Loan.query.get_by(movie_id=self._movie_id, return_date=None)
+		loan = self.db.Loan.query.filter_by(movie_id=self._movie_id, return_date=None).first()
 		if loan is None:
-			movie = self.db.Movie.query.get_by(movie_id=self._movie_id)
+			movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
 			if movie.collection is not None and movie.collection.loaned:
 				#print len(movie.loans) # FIXME: why it's == 0? (mappers problem?)
-				loan = self.db.Loan.query.get_by(collection_id=movie.collection.collection_id, return_date=None)
+				loan = self.db.Loan.query.filter_by(collection_id=movie.collection.collection_id, return_date=None).first()
 			if movie.volume is not None and movie.volume.loaned:
-				loan = self.db.Loan.query.get_by(volume_id=movie.volume.volume_id, return_date=None)
+				loan = self.db.Loan.query.filter_by(volume_id=movie.volume.volume_id, return_date=None).first()
 		if loan and loan.set_returned():
 			self.treeview_clicked()
 
 def get_loan_info(db, movie_id, volume_id=None, collection_id=None):
 	"""Returns current collection/volume/movie loan data"""
 	from sqlalchemy import and_, or_
-	movie = db.Movie.query.get_by(movie_id=movie_id)
+	movie = db.Movie.query.filter_by(movie_id=movie_id).first()
 	if movie is None:
 		return False
 	
@@ -106,39 +106,39 @@ def get_loan_info(db, movie_id, volume_id=None, collection_id=None):
 		volume_id = movie.volume_id
 	
 	if collection_id>0 and volume_id>0:
-		return db.Loan.query.get_by(
+		return db.Loan.query.filter(
 				and_(or_(db.Loan.c.collection_id==collection_id,
 						db.Loan.c.volume_id==volume_id,
 						db.Loan.c.movie_id==movie_id),
-					db.Loan.c.return_date==None))
+					db.Loan.c.return_date==None)).first()
 	elif collection_id>0:
-		return db.Loan.query.get_by(
+		return db.Loan.query.filter(
 				and_(or_(db.Loan.c.collection_id==collection_id,
 						db.Loan.c.movie_id==movie_id)),
-					db.Loan.c.return_date==None)
+					db.Loan.c.return_date==None).first()
 	elif volume_id>0:
-		return db.Loan.query.get_by(and_(or_(db.Loan.c.volume_id==volume_id,
+		return db.Loan.query.filter(and_(or_(db.Loan.c.volume_id==volume_id,
 							db.Loan.c.movie_id==movie_id)),
-						db.Loan.c.return_date==None)
+						db.Loan.c.return_date==None).first()
 	else:
-		return db.Loan.query.get_by(db.Loan.c.movie_id==movie_id,db.Loan.c.return_date==None)
+		return db.Loan.query.filter(db.Loan.c.movie_id==movie_id).filter(db.Loan.c.return_date==None).first()
 
 def get_loan_history(db, movie_id, volume_id=None, collection_id=None):
 	"""Returns collection/volume/movie loan history"""
 	from sqlalchemy import and_, or_, not_
 	if collection_id>0 and volume_id>0:
-		return db.Loan.query.select_by(and_(or_(db.Loan.c.collection_id==collection_id,
+		return db.Loan.query.filter(and_(or_(db.Loan.c.collection_id==collection_id,
 							db.Loan.c.volume_id==volume_id,
 							db.Loan.c.movie_id==movie_id),
-						not_(db.Loan.c.return_date==None)))
+						not_(db.Loan.c.return_date==None))).all()
 	elif collection_id>0:
-		return db.Loan.query.select_by(and_(or_(db.Loan.c.collection_id==collection_id,
+		return db.Loan.query.filter(and_(or_(db.Loan.c.collection_id==collection_id,
 							db.Loan.c.movie_id==movie_id),
-						not_(db.Loan.c.return_date==None)))
+						not_(db.Loan.c.return_date==None))).all()
 	elif volume_id>0:
-		return db.Loan.query.select_by(and_(or_(db.Loan.c.volume_id==volume_id,
+		return db.Loan.query.filter(and_(or_(db.Loan.c.volume_id==volume_id,
 							db.Loan.c.movie_id==movie_id),
-						not_(db.Loan.c.return_date==None)))
+						not_(db.Loan.c.return_date==None))).all()
 	else:
-		return db.Loan.query.select_by(db.Loan.c.movie_id==movie_id,not_(db.Loan.c.return_date==None))
+		return db.Loan.query.filter(db.Loan.c.movie_id==movie_id).filter(~(db.Loan.c.return_date==None)).all()
 

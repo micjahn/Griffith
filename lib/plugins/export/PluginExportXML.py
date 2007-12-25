@@ -75,7 +75,7 @@ class ExportPlugin:
 				root = doc.documentElement
 				
 				# create object
-				for movie in self.db.Movie.select():
+				for movie in self.db.Movie.all():
 					e = doc.createElement('movie')
 					root.appendChild(e)
 					for key in movie.c.keys():

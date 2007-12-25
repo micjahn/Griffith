@@ -38,13 +38,13 @@ def filter_by_volume(self, volume_id):
 	from quick_filter import clear_filter
 	clear_filter(self)
 	self.populate_treeview(where={'volume_id':volume_id})
-	volume_name = self.db.Volume.query.get_by(volume_id=volume_id).name
+	volume_name = self.db.Volume.query.filter_by(volume_id=volume_id).one().name
 	self.update_statusbar(_("Filter activated. Showing only movies from volume: %s")%volume_name)
 
 def filter_by_collection(self, collection_id):
 	from quick_filter import clear_filter
 	clear_filter(self)
 	self.populate_treeview(where={'collection_id':collection_id})
-	collection_name = self.db.Collection.query.get_by(collection_id=collection_id).name
+	collection_name = self.db.Collection.query.filter_by(collection_id=collection_id).one().name
 	self.update_statusbar(_("Filter activated. Showing only movies from collection: %s")%collection_name)
 

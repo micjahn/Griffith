@@ -88,7 +88,7 @@ def cover_image_process(self, filename, number):
 		_("Released Under the GNU/GPL License").encode('utf-8'))
 
 	# get movie information from db
-	movie = self.db.Movie.query.get_by(number=number)
+	movie = self.db.Movie.query.filter_by(number=number).first()
 	if movie is not None:
 		c.drawImage(filename, pos_x, pos_y, cover_x, cover_y)
 		if print_number == True:
@@ -154,7 +154,7 @@ def cover_simple(self, number):
 	c.rect(pos_x, pos_y, cover_x, cover_y)
 
 	# get movie information from db
-	movie = self.db.Movie.query.get_by(number=number)
+	movie = self.db.Movie.query.filter_by(number=number).first()
 	if movie is not None:
 		if print_number == True:
 			c.setFont(fontName, 10)

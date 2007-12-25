@@ -65,7 +65,7 @@ def edit_person(self):
 		name = tmp_model.get_value(tmp_iter,0)
 	except:
 		return
-	p = self.db.Person.query.get_by(name=name)
+	p = self.db.Person.query.filter_by(name=name).first()
 	if p is not None:
 		self.widgets['person']['e_name'].set_text(str(p.name))
 		self.widgets['person']['e_email'].set_text(str(p.email))
@@ -78,7 +78,7 @@ def edit_person_cancel(self):
 	self.widgets['people']['window'].present()
 
 def update_person(self):
-	p = self.db.Person.query.get_by(person_id=self.widgets['person']['e_id'].get_text())
+	p = self.db.Person.query.filter_by(person_id=self.widgets['person']['e_id'].get_text()).first()
 	if p is None:
 		return False
 	p.name = self.widgets['person']['e_name'].get_text()
@@ -88,7 +88,7 @@ def update_person(self):
 		self.update_statusbar(_("Record updated"))
 		edit_person_cancel(self)
 		self.p_treemodel.clear()
-		for p in self.db.Person.query.select(order_by='name ASC'):
+		for p in self.db.Person.query.order_by(self.db.Person.c.name.asc()).all():
 			myiter = self.p_treemodel.insert_before(None, None)
 			self.p_treemodel.set_value(myiter, 0, str(p.name))
 			self.p_treemodel.set_value(myiter, 1, str(p.email))
@@ -103,14 +103,14 @@ def delete_person(self):
 		person = tmp_model.get_value(tmp_iter,0)
 	except:
 		return
-	person = self.db.Person.query.get_by(name=person)
+	person = self.db.Person.query.filter_by(name=person).first()
 	if not person:
 		return False
-	data = self.db.Loan.query.select_by(person_id=person.person_id, return_date=None)
+	data = self.db.Loan.query.filter_by(person_id=person.person_id, return_date=None).all()
 	if len(data)>0:
 		gutils.info(self, _("This person has loaned films from you. Return them first."), self.widgets['people']['window'])
 		return False
-	data = self.db.Loan.query.select_by(person_id=person.person_id)
+	data = self.db.Loan.query.filter_by(person_id=person.person_id).all()
 	if len(data)>0:
 		has_history = True
 		has_history_msg = _("This person has data in the loan history. This data will be erased if you continue.")

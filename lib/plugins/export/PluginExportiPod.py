@@ -79,7 +79,7 @@ class ExportPlugin:
 		griffith_list = open(os.path.join(tmp_dir,"movies"),"w")
 		t = []
 		
-		for movie in self.db.Movie.select():
+		for movie in self.db.Movie.all():
 			t.append("%s | %s | %s | %s"%(movie['number'],movie['o_title'],movie['title'],movie['director']))
 	
 		griffith_list.write("<title>%s</title><br><br>"%_("My Movies List"))

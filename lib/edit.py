@@ -60,15 +60,15 @@ def update_image(self, number, file_path):
 
 	filename = os.path.basename(file_path)
 	new_image = os.path.splitext(filename)[0]
-	if self.db.Movie.query.get_by(image=new_image) is not None:
+	if self.db.Movie.query.filter_by(image=new_image).first() is not None:
 		i = 0
 		while True:
 			i += 1
-			if self.db.Movie.query.get_by(image="%s_%s" % (new_image, i)) is None:
+			if self.db.Movie.query.filter_by(image="%s_%s" % (new_image, i)).first() is None:
 				new_image = "%s_%s" % (new_image, i)
 				break
 
-	movie = self.db.Movie.query.get_by(number=number)
+	movie = self.db.Movie.query.filter_by(number=number).one()
 	old_image = os.path.join(self.locations['posters'], "%s.jpg" % movie.image)
 	delete.delete_poster(self, old_image)
 	movie.image = new_image
@@ -88,7 +88,7 @@ def update_image(self, number, file_path):
 	self.update_statusbar(_("Image has been updated"))
 
 def delete_poster(self):
-	movie = self.db.Movie.query.get_by(movie_id=self._movie_id)
+	movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
 	if not movie:
 		self.debug.show("Can't delete unknown movie's poster!")
 		return False
@@ -123,7 +123,7 @@ def update_tree_thumbnail(self, t_image_path):
 def fetch_bigger_poster(self):
 	match = 0
 	self.debug.show("fetching poster from amazon")
-	movie = self.db.Movie.query.get_by(movie_id=self._movie_id)
+	movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
 	if movie is None:
 		gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
 		return False

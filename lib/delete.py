@@ -28,7 +28,7 @@ import os
 def delete_movie(self):
 	m_id = None
 	number, m_iter = self.get_maintree_selection()
-	movie = self.db.Movie.query.get_by(number=number)
+	movie = self.db.Movie.query.filter_by(number=number).first()
 	if movie is None:
 		gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
 		return False

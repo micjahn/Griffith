@@ -37,7 +37,7 @@ class DBTable(object):#{{{
 			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
 		# check if achannel already exists
-		if self.query.get_by(name=self.name) is not None:
+		if self.query.filter_by(name=self.name).first() is not None:
 			debug.show("%s: '%s' already exists" % (self.__class__.__name__, self.name))
 			return False
 		debug.show("%s: adding '%s' to database..." % (self.__class__.__name__, self.name))
@@ -79,7 +79,7 @@ class DBTable(object):#{{{
 		if self.name is None or len(self.name)==0:
 			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
-		tmp = self.query.get_by(name=self.name)
+		tmp = self.query.filter_by(name=self.name).first()
 		if tmp is not None and tmp is not self:
 			gutils.warning(self, msg=_("This name is already in use!"))
 			return False
@@ -134,10 +134,10 @@ class GriffithSQL:
 			return "Loan:%s (movie:%s person:%s)" % (self.loan_id, self.movie_id, self.person_id)
 		def __setitem__(self, key, value):
 			if key == 'movie_id' and value:
-				if GriffithSQL.Movie.query.get_by(movie_id=value) is None:
+				if GriffithSQL.Movie.query.filter_by(movie_id=value).first() is None:
 					raise ValueError('wrong movie_id')
 			elif key == 'person_id' and value:
-				if GriffithSQL.Person.query.get_by(person_id=value) is None:
+				if GriffithSQL.Person.query.filter_by(person_id=value).first() is None:
 					raise ValueError('wrong movie_id')
 			self[key] = value
 		def _validate(self):
@@ -146,19 +146,19 @@ class GriffithSQL:
 			if self.person_id is None:
 				raise ValueError('person_id is not set')
 			if self.movie is None:
-				self.movie = GriffithSQL.Movie.query.get_by(movie_id=self.movie_id)
+				self.movie = GriffithSQL.Movie.query.filter_by(movie_id=self.movie_id).first()
 				if self.movie is None:
 					raise ValueError('wrong movie_id')
 			if self.person is None:
-				self.person = GriffithSQL.Person.query.get_by(person_id=self.person_id)
+				self.person = GriffithSQL.Person.query.filter_by(person_id=self.person_id).first()
 				if self.person is None:
 					raise ValueError('wrong person_id')
 			if self.collection_id>0 and self.collection is None:
-				self.collection = GriffithSQL.Collection.query.get_by(collection_id=self.collection_id)
+				self.collection = GriffithSQL.Collection.query.filter_by(collection_id=self.collection_id).first()
 				if self.collection is None:
 					raise ValueError('wrong collection_id')
 			if self.volume_id>0 and self.volume is None:
-				self.volume = GriffithSQL.Volume.query.get_by(volume_id=self.volume_id)
+				self.volume = GriffithSQL.Volume.query.filter_by(volume_id=self.volume_id).first()
 				if self.volume is None:
 					raise ValueError('wrong volume_id')
 			return True
@@ -178,7 +178,7 @@ class GriffithSQL:
 				self.volume.loaned = True
 				self.volume.update()
 			if self.movie is None:
-				self.movie = Movie.query.get_by(movie_id=self.movie_id)
+				self.movie = Movie.query.filter_by(movie_id=self.movie_id).first()
 			self.movie.loaned = True
 			self.movie.update()
 			if self.date is None:
@@ -495,7 +495,7 @@ class GriffithSQL:
 		self.metadata.create_all()
 		# check if database needs upgrade
 		try:
-			v = self.Configuration.query.get_by(param='version')	# returns None if table exists && param ISNULL
+			v = self.Configuration.query.filter_by(param='version').one()	# returns None if table exists && param ISNULL
 		except SQLError, e:	# table doesn't exist
 			debug.show("DB version: %s" % e)
 			v = 0
