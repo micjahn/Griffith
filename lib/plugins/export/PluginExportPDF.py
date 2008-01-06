@@ -132,14 +132,15 @@ class ExportPlugin:
                         director = ' - ' + str(movie.director).encode(defaultEnc)
                     else:
                         director = ""
-                    p = Paragraph("<font name=" + self.fontName + " size=\"7\">" + \
-                        saxutils.escape(str(number) + " | " + original_title) + \
-                        "</font><font name=" + self.fontName + " size=\"7\">" + \
-                        saxutils.escape(" (" + title + ")" + year + director) + \
-                        "</font>", self.styles["Normal"])
+                    paragraph_text = '<font name=' + self.fontName + ' size="7">' + \
+                        saxutils.escape(str(number) + ' | ' + original_title) + \
+                        '</font><font name=' + self.fontName + ' size="7">' + \
+                        saxutils.escape(' (' + title + ')' + year + director) + \
+                        '</font>'
+                    p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                     Story.append(p)
                 c.build(Story, onFirstPage=self.page_template, onLaterPages=self.page_template)
-                gutils.info(self, _("PDF has been created."), self.parent)
+                gutils.info(self, _('PDF has been created.'), self.parent)
             
     def page_template(self, canvas, doc):
         canvas.saveState()
