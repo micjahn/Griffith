@@ -4,6 +4,12 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2008-01-10  Michael Jahn
+	* OFDb plugin updated
+
+2008-01-06  Michael Jahn
+	* fixed pdf export with non-ascii characters [#174463]
+
 2007-12-16  Piotr Ożarowski
 	* Version changed to 0.10~svn
 	* Started working on SQLAlchemy 0.4.x compatibility (NOT YET READY)
