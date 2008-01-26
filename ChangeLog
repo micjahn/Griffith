@@ -4,6 +4,14 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2007  Vasco Nunes, Piotr Ożarowski
 
+2008-01-26  Piotr Ożarowski
+	* Translators tab (about dialog) filled in automatically
+
+2008-01-13  Piotr Ożarowski
+	* Distribute local copy of SQLAlchemy 0.3.11 (Griffith 0.10 which will work with SQLAlchemy 0.4.x is not ready yet)
+	* Version changed to 0.9.6
+	* Update .desktop file to Desktop Entry Specification's version 1.0
+
 2008-01-10  Michael Jahn
 	* OFDb plugin updated
 

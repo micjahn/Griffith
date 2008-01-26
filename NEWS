@@ -1,3 +1,15 @@
+Griffith 0.9.6
+==============
+* Distribute local copy of SQLAlchemy 0.3.11 (Griffith 0.10 which will work with SQLAlchemy 0.4.x is not ready yet)
+* Updated movie plugins: OFDb, Kino.de, FilmeVonAZ
+* Translation changes:
+  + new: Estonian, Hungarian, Indonesian, Korean, Occitan (post 1500), Pashto, Slovak
+  + updated: almost all :-)
+* Quick filter for volumes
+* Added columns genre, seen, runtime and year to the mainlist
+* See ChangeLog for more changes
+
+
 Griffith 0.9.5
 ==============
 * Backup function fixed
@@ -9,7 +21,7 @@ Griffith 0.9.5
   + Added gmail smtp server support
 * Translation changes:
   + new: Catalan, Norwegian Bokmal
-  + uptaded: Brazilian Portuguese, Cech, Dutch, French, German, Italian, Polish, Portuguese, Russian
+  + updated: Brazilian Portuguese, Cech, Dutch, French, German, Italian, Polish, Portuguese, Russian
 * [Bug #11864] Fixed medium and video codec's default value in add window
 
 
@@ -21,7 +33,7 @@ Griffith 0.9.4
 * New movie plugins: FilmTipset
 * Translation files synchronized with Rosetta
   + new: Japanese, Russian and Turkish
-  + uptaded: Czech, Spanish, Bulgarian, Greek
+  + updated: Czech, Spanish, Bulgarian, Greek
 * Few bugs fixed
 
 

@@ -381,7 +381,7 @@ class Griffith:
 			self.treeview_clicked()
 		else:
 			gutils.info(self, \
-				_("You saw all movies in your collection!"), \
+				_("You have seen all films in your collection!"), \
 				self.widgets['window'])
 
 	# volumes/collections ----------------------------------------------{{{
