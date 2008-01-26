@@ -357,13 +357,17 @@ def populate(self, movies=None, where=None):#{{{
 			if not_seen_only:
 				movies.append_whereclause(self.db.Movie.c.seen==False)
 			# collection
-			col_id = self.collection_combo_ids[self.widgets['filter']['collection'].get_active()]
-			if col_id > 0:
-				movies.append_whereclause(self.db.Movie.c.collection_id==col_id)
+			pos = self.widgets['filter']['collection'].get_active()
+			if pos >= 0:
+				col_id = self.collection_combo_ids[pos]
+				if col_id > 0:
+					movies.append_whereclause(self.db.Movie.c.collection_id==col_id)
 			# volume
-			vol_id = self.volume_combo_ids[self.widgets['filter']['volume'].get_active()]
-			if vol_id > 0:
-				movies.append_whereclause(self.db.Movie.c.volume_id==vol_id)
+			pos = self.widgets['filter']['volume'].get_active()
+			if pos >= 0:
+				vol_id = self.volume_combo_ids[pos]
+				if vol_id > 0:
+					movies.append_whereclause(self.db.Movie.c.volume_id==vol_id)
 		
 		# select sort column
 		sort_column_name = self.config.get('sortby', 'number', section='mainlist')
