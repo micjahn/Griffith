@@ -1,7 +1,7 @@
 Griffith 0.9.6
 ==============
 * Distribute local copy of SQLAlchemy 0.3.11 (Griffith 0.10 which will work with SQLAlchemy 0.4.x is not ready yet)
-* Updated movie plugins: AniDb, OFDb, Kino.de, FilmeVonAZ, Zelluloid
+* Updated movie plugins: AniDb, FilmeVonAZ, Kino.de, OFDb, Stopklatka, Zelluloid
 * Translation changes:
   + new: Estonian, Hungarian, Indonesian, Korean, Occitan (post 1500), Pashto, Slovak
   + updated: almost all :-)

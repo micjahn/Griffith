@@ -8,7 +8,7 @@ Copyright Holders: Vasco Nunes <vasco.m.nunes@gmail.com>,
 
 License:
 
- Copyright (c) 2005-2007 Vasco Nunes, Piotr Ożarowski
+ Copyright (c) 2005-2008 Vasco Nunes, Piotr Ożarowski
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -37,5 +37,5 @@ by Mark Pilgrim <f8dy@diveintomark.org>
 Python licence can be found on http://www.python.org/psf/license/
 
 
-The Debian packaging is (C) 2005-2007, Piotr Ożarowski <piotr@debian.org> and
+The Debian packaging is (C) 2005-2008, Piotr Ożarowski <piotr@debian.org> and
 is licensed under the GPL.

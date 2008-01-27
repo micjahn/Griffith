@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.9.5
+AppVerName=Griffith 0.9.6
 AppPublisher=Vasco Nunes, Piotr Ożarowski
 AppPublisherURL=http://griffith.berlios.de/
 AppSupportURL=http://griffith.berlios.de/
@@ -14,7 +14,7 @@ AllowNoIcons=true
 LicenseFile=COPYING
 InfoAfterFile=README
 OutputDir=installer
-OutputBaseFilename=griffith-0.9.5-win32
+OutputBaseFilename=griffith-0.9.6-win32
 SetupIconFile=images\griffith.ico
 Compression=lzma
 SolidCompression=true
@@ -22,8 +22,8 @@ WizardImageFile=images\griffith_win32_installer.bmp
 InternalCompressLevel=ultra
 AppCopyright=Vasco Nunes/Piotr Ozarowski
 DisableStartupPrompt=false
-AppVersion=0.9.5
-VersionInfoVersion=0.9.5
+AppVersion=0.9.6
+VersionInfoVersion=0.9.6
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl

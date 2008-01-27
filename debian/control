@@ -4,10 +4,11 @@ Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
 Build-Depends: debhelper (>= 5.0.38)
 Build-Depends-Indep: python (>= 2.3.5-11), python-central (>= 0.5.6)
-Standards-Version: 3.7.2
-XS-Python-Version: current, >=2.3
-XS-Vcs-Svn: svn://svn.berlios.de/griffith/trunk/debian
-XS-Vcs-Browser: http://svn.berlios.de/wsvn/griffith/debian/?sc=1
+Standards-Version: 3.7.3
+XS-Python-Version: >=2.3
+Vcs-Svn: svn://svn.berlios.de/griffith/trunk/debian
+Vcs-Browser: http://svn.berlios.de/wsvn/griffith/debian/?sc=1
+Homepage: http://griffith.berlios.de/
 
 Package: griffith
 Architecture: all
@@ -23,5 +24,3 @@ Description: film collection manager
  Adding items to the movie collection is as quick and easy as typing the film
  title and selecting a supported source. Griffith will then try to fetch all
  the related information from the Web.
- .
-  Homepage: http://griffith.berlios.de/

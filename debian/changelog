@@ -1,5 +1,24 @@
+griffith (0.10~svn-1) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET 
+
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 28 Jan 2008 00:01:22 +0100
+
+griffith (0.9.6-1) unstable; urgency=low
+
+  * New upstream release
+    + includes local copy of SQLAlchemy 0.3.11 (closes: #453736)
+  * python-sqlalchemy dependency temporary removed
+    (0.10 will require SQLAlchemy 0.4 so it closes: #443199)
+  * Remove "XS-" prefix from Vcs-* fields (dpkg supports them now)
+  * Add Homepage field
+  * Bump Standards-Version to 3.7.3 (no changes needed)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 27 Jan 2008 23:28:39 +0100
+
 griffith (0.9.5-1) unstable; urgency=low
 
+  * New upstream release 
   * debian/watch file updated
   * debian/menu file updated
   * Add python-sqlalchemy (<< 0.4~) to depends (Griffith doesn't work with SA
