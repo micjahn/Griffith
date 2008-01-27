@@ -11,18 +11,19 @@ AppUpdatesURL=http://griffith.berlios.de/
 DefaultDirName={pf}\Griffith
 DefaultGroupName=Griffith
 AllowNoIcons=true
-LicenseFile=C:\griffith\COPYING
-InfoAfterFile=C:\griffith\README
-OutputDir=C:\griffith\installer
+LicenseFile=COPYING
+InfoAfterFile=README
+OutputDir=installer
 OutputBaseFilename=griffith-0.9.5-win32
-SetupIconFile=C:\griffith\images\griffith.ico
+SetupIconFile=images\griffith.ico
 Compression=lzma
 SolidCompression=true
-WizardImageFile=C:\griffith\images\griffith_win32_installer.bmp
+WizardImageFile=images\griffith_win32_installer.bmp
 InternalCompressLevel=ultra
 AppCopyright=Vasco Nunes/Piotr Ozarowski
 DisableStartupPrompt=false
 AppVersion=0.9.5
+VersionInfoVersion=0.9.5
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl
@@ -51,8 +52,8 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: C:\griffith\dist\griffith.exe; DestDir: {app}; Flags: ignoreversion
-Source: C:\griffith\dist\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: dist\griffith.exe; DestDir: {app}; Flags: ignoreversion
+Source: dist\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [INI]
