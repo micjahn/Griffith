@@ -58,6 +58,12 @@ class AboutDialog:
 		elif os.path.isfile(TRANSLATORS_FILE+'.gz'):
 			from gutils import decompress
 			data = decompress(open(TRANSLATORS_FILE + '.gz').read())
+		elif os.name == 'posix':
+			if os.path.isfile('/usr/share/doc/griffith/TRANSLATORS'):
+				data = open('/usr/share/doc/griffith/TRANSLATORS').read()
+			elif os.path.isfile('/usr/share/doc/griffith/TRANSLATORS.gz'):
+				from gutils import decompress
+				data = decompress(open('/usr/share/doc/griffith/TRANSLATORS.gz').read())
 		translator_credits = ''
 		if data:
 			for line in data.split('\n'):
