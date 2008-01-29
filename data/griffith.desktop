@@ -6,6 +6,7 @@ Version=1.0
 Exec=griffith
 Icon=griffith
 Terminal=false
+Type=Application
 StartupNotify=true
 StartupWMClass=Griffith
 Categories=GNOME;GTK;Database;AudioVideo;

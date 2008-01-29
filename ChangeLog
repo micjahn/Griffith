@@ -4,9 +4,6 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
-2008-01-27  Piotr Ożarowski
-	* Remove Type from .desktop file (we don't really want to open executable files with Griffith)
-
 ---- 0.9.6 ---
 
 2008-01-27  Michael Jahn
