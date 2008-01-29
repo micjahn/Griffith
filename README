@@ -32,7 +32,7 @@ System Requirements
   * Python		2.3 or higher		http://www.python.org/
   * GTK+		tested on 2.6.4		http://www.gtk.org/
   * PyGTK (with glade2)	tested on 2.6.1		http://www.pygtk.org/
-  * SQLAlchemy		0.3.10			http://www.sqlalchemy.org/			0.4 is not supported yet
+  * SQLAlchemy		0.4			http://www.sqlalchemy.org/
   * pysqlite2		2			http://initd.org/tracker/pysqlite		Python 2.5's sqlite3 module will be used if available
   * PIL						http://www.pythonware.com/products/pil/
   * PyXML					http://pyxml.sf.net/

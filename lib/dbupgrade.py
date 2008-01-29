@@ -83,23 +83,30 @@ def upgrade_database(self, version):
 		self.Movie.mapper.mapped_table.create()
 		self.Loan.mapper.mapped_table.create()
 		self.Lang.mapper.mapped_table.create()
-		self.Lang.mapper.mapped_table.insert().execute(name=_('English'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Brazilian Portuguese'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Bulgarian'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Catalan'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Czech'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Danish'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Dutch'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('English'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Estonian'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('French'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('German'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Greek'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Hungarian'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Indonesian'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Italian'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Japanese'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Korean'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Norwegian Bokmal'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Occitan'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Pashto'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Polish'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Portuguese'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Russian'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Simplified Chinese'))
+		self.Lang.mapper.mapped_table.insert().execute(name=_('Slovak'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Spanish'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Swedish'))
 		self.Lang.mapper.mapped_table.insert().execute(name=_('Turkish'))
@@ -118,7 +125,7 @@ def upgrade_database(self, version):
 		db_version.flush()
 	#if version == 2:	# fix changes between v2 and v3
 	#	version+=1
-	#	self.Configuration.query.filter_by(param='version').onr().value = version
+	#	self.Configuration.query.filter_by(param='version').one().value = version
 
 
 # ---------------------------------------------------

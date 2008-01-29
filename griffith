@@ -27,8 +27,7 @@ import sys, os.path
 lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
 #lib = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lib'))
 if os.path.isdir(lib):
-	sys.path.append(lib)
-	sys.path.insert(1, os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))) # FIXME: just for SQLAlchemy tests
+	sys.path.insert(1, lib)
 del lib
 
 # check dependencies

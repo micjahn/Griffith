@@ -410,10 +410,10 @@ def get_dependencies():
 		version = False
 	depend.append({'module': 'sqlalchemy',
 		'version'	: version,
-		'module_req'	: '0.3',
+		'module_req'	: '0.4',
 		'url'		: 'http://www.sqlalchemy.org/',
 		'debian'	: 'python-sqlalchemy',
-		'debian_req'	: '0.3.0-1'
+		'debian_req'	: '0.4.0-1'
 	})
 	try:
 		import sqlite3
