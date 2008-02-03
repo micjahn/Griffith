@@ -767,6 +767,12 @@ class ExportPlugin(gtk.Window):
 			else:
 				tpl_header = self.fill_template(tpl_header, self.names[j], remove=True)
 
+		# check if line break needs conversion
+		if tpl_header.find('XHTML 1.0') > -1:
+			linebreak_replacement = '<br />'
+		else:
+			linebreak_replacement = None
+
 		item=1	# item's position on page (1 - first, ...)
 		i = 1
 		page=1	# page number
@@ -804,10 +810,18 @@ class ExportPlugin(gtk.Window):
 						tmp = self.fill_template(tmp, self.names[j], _('No'), j)
 					else:
 						try:
-							tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]).encode('utf-8'), j)
+							data = str(row[self.names[j]]).encode('utf-8')
+							if linebreak_replacement is not None:
+								data = data.replace('\r\n', linebreak_replacement)
+								data = data.replace('\n', linebreak_replacement)
+							tmp = self.fill_template(tmp, self.names[j], data, j)
 						except UnicodeDecodeError:
 							self.debug.show("Unicode Decode Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['movies_number']))
-							tmp = self.fill_template(tmp, self.names[j], str(row[self.names[j]]), j)
+							data = str(row[self.names[j]])
+							if linebreak_replacement is not None:
+								data = data.replace('\r\n', linebreak_replacement)
+								data = data.replace('\n', linebreak_replacement)
+							tmp = self.fill_template(tmp, self.names[j], data, j)
 						except Exception, ex:
 							self.debug.show("Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['movies_number']))
 				else:

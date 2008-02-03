@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2008-02-03  Michael Jahn
 	* hit enter key in title/original title box starts retrieving data from web for a new entry
+	* HTML export: replace linebreaks with <br /> in the data if "XHTML 1.0" is found in the template header
 
 ---- 0.9.6 ---
 
