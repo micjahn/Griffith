@@ -138,6 +138,8 @@ def define_widgets(self, gladefile):
 	}
 	self.widgets['add']['window'].connect('delete_event', self.on_delete_event_am)
 	self.widgets['add']['lang_treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
+	self.widgets['add']['o_title'].connect('activate', self.on_enter)
+	self.widgets['add']['title'].connect('activate', self.on_enter)
 	self.widgets['add']['window'].set_transient_for(self.widgets['window'])
 	#}}}
 

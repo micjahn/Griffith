@@ -225,6 +225,11 @@ class Griffith:
 	def source_changed(self, *args):
 		add.source_changed(self)
 
+	def on_enter(self, *args):
+		# push Get From Web button if return key is pressed in title box 
+		if self._am_movie_id is None:
+			self.widgets['add']['b_get_from_web'].clicked()
+
 	# preferences ---------------------------------------------------------
 
 	def show_preferences(self, *args):

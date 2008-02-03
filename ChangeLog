@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-02-03  Michael Jahn
+	* hit enter key in title/original title box starts retrieving data from web for a new entry
+
 ---- 0.9.6 ---
 
 2008-01-27  Michael Jahn
