@@ -174,6 +174,7 @@ def show_preferences(self):
 		w['spellchecker'].set_active(False)
 	else:
 		w['spellchecker'].set_active(True)
+	self.on_cb_spellchecker_pref_toggled(w['spellchecker'])
 
 	if self.config.get('notes', True, section='spell') == False:
 		w['spell_notes'].set_active(False)
