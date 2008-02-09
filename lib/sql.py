@@ -455,9 +455,9 @@ class GriffithSQL:
 
 		# mappers -------------------------------------------------#{{{
 		mapper(self.Configuration, configuration)
-		mapper(self.Volume,volumes, properties={
+		mapper(self.Volume, volumes, order_by=volumes.c.name, properties={
 			'movies': relation(self.Movie, backref='volume')})
-		mapper(self.Collection, collections, properties={
+		mapper(self.Collection, collections, order_by=collections.c.name, properties={
 			'movies': relation(self.Movie, backref='collection')})
 		mapper(self.Medium, media, properties={
 			'movies': relation(self.Movie, backref='medium')})
