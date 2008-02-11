@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-02-11  Vasco Nunes
+	* Added serbian language file (thanks to Sasa Petrovic) 
+
 2008-02-09  Michael Jahn
 	* sort collection list and volume list by name
 
