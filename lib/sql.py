@@ -36,7 +36,7 @@ class DBTable(object):#{{{
 		if self.name is None or len(self.name)==0:
 			debug.show("%s: name can't be empty" % self.__class__.__name__)
 			return False
-		# check if achannel already exists
+		# check if item already exists
 		if self.query.filter_by(name=self.name).first() is not None:
 			debug.show("%s: '%s' already exists" % (self.__class__.__name__, self.name))
 			return False

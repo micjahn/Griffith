@@ -47,7 +47,7 @@ def locations(self):
 	locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
 	locations['lib']  = os.path.dirname(__file__)
 	
-	if os.name == 'nt' or os.name == 'win32':
+	if os.name == 'nt' or os.name.startswith('win'): # win32, win64
 		import winshell
 		from win32com.shell import shellcon, shell
 		import shutil
@@ -144,7 +144,7 @@ def location_posters(locations, config):
 def gui(self):
 	self._ = None
 	self.debug.show("running on %s - %s" % (os.name, platform.system()))
-	if os.name == 'win32' or os.name == 'nt':
+	if os.name == 'nt' or os.name.startswith('win'):
 		self.windows = True
 	else:
 		self.windows = False

@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-02-18  Piotr Ożarowski
+	* Filmweb movie plugin updated (thanks to Mariusz)
+	* Windows 64 bit is not detected correctly
+
 2008-02-12  Michael Jahn
 	* fixed selecting of quick filter volume and collection in main view
 
