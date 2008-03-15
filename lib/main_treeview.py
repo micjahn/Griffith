@@ -368,6 +368,19 @@ def populate(self, movies=None, where=None):#{{{
 				vol_id = self.volume_combo_ids[pos]
 				if vol_id > 0:
 					movies.append_whereclause(self.db.Movie.c.volume_id==vol_id)
+			# loaned to
+			pos = self.widgets['filter']['loanedto'].get_active()
+			if pos >= 0:
+				per_id = self.loanedto_combo_ids[pos]
+				if per_id > 0:
+					from sqlalchemy import join, exists, and_
+					loan_exists = exists([self.db.Loan.c.movie_id], \
+						and_(self.db.Movie.c.movie_id==self.db.Loan.c.movie_id, self.db.Loan.c.person_id==per_id, self.db.Loan.c.return_date==None))
+					movies.append_whereclause(loan_exists)
+					#loan_join = join(self.db.metadata.tables['movies'], \
+					#	self.db.metadata.tables['loans'], \
+					#	self.db.metadata.tables['movies'].c.movie_id==self.db.metadata.tables['loans'].c.movie_id)
+					#movies = movies.select_from(loan_join)
 		
 		# select sort column
 		sort_column_name = self.config.get('sortby', 'number', section='mainlist')

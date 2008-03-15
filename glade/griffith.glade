@@ -756,7 +756,39 @@
                 <property name="homogeneous">False</property>
               </packing>
             </child>
-            <child>
+             <child>
+                <widget class="GtkToolItem" id="toolitem16">
+                   <property name="visible">True</property>
+                   <child>
+                      <widget class="GtkLabel" id="label292">
+                         <property name="visible">True</property>
+                         <property name="xpad">6</property>
+                         <property name="label" translatable="yes">Loaned to</property>
+                      </widget>
+                   </child>
+                </widget>
+                <packing>
+                   <property name="expand">False</property>
+                   <property name="homogeneous">False</property>
+                </packing>
+             </child>
+             <child>
+                <widget class="GtkToolItem" id="toolitem17">
+                   <property name="visible">True</property>
+                   <child>
+                      <widget class="GtkComboBox" id="f_loanedto">
+                         <property name="visible">True</property>
+                         <property name="items" translatable="yes"></property>
+                         <signal name="changed" handler="on_f_loanedto_changed"/>
+                      </widget>
+                   </child>
+                </widget>
+                <packing>
+                   <property name="expand">False</property>
+                   <property name="homogeneous">False</property>
+                </packing>
+             </child>
+             <child>
               <widget class="GtkToolItem" id="toolitem13">
                 <property name="visible">True</property>
                 <child>

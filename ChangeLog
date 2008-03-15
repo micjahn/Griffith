@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-03-15  Michael Jahn
+	* quick filter for loaned-to
+
 2008-03-04  Vasco Nunes
 	* Serbian language file updated (thanks to Sasa Petrovic) 
 	* Portuguese language file updated

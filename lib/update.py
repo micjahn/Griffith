@@ -41,3 +41,11 @@ def update_collection_combo_ids(self):
 		self.collection_combo_ids[i] = collection.collection_id
 		i += 1
 
+def update_loanedto_combo_ids(self):
+	self.loanedto_combo_ids = {}
+	self.loanedto_combo_ids[0] = 0
+	i = 1
+	for person in self.db.Person.query.order_by('name').all():
+		self.loanedto_combo_ids[i] = person.person_id
+		i += 1
+

@@ -953,6 +953,9 @@ You can't undo this operation."""), \
 	def filter_volume(self, *args):
 		quick_filter.change_filter(self)
 
+	def filter_loanedto(self, *args):
+		quick_filter.change_filter(self)
+
 	# windows/dialogs -----------------------------------------------------
 
 	def results_cancel_ck(self, *args):
