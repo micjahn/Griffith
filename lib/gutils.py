@@ -463,7 +463,7 @@ def get_dependencies():
 	})
 	try:
 		import xml
-		version	= '.'.join([str(i) for i in xml.version_info])
+		version = xml.__version__
 	except:
 		version = False
 	depend.append({'module': 'xml',
