@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-04-01  Michael Jahn
+	* fixed html export if sorted by collection, media, video codec or volume
+
 2008-03-22  Piotr Ożarowski
 	* Python>=2.4's xml module compatibility added
 

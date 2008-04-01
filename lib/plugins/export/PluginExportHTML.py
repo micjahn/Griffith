@@ -588,12 +588,13 @@ class ExportPlugin(gtk.Window):
 		
 		# sort order	TODO: more than one sort column
 		sort_columns = []
+		sorting_parts = config['sorting'].split('_')
 		if config['sorting2'] == 'ASC':
 			from sqlalchemy import asc
-			sort_columns.append(asc(self.db.Movie.c[self.fields_as_columns[config['sorting']]]))
+			sort_columns.append(asc(self.db.metadata.tables[sorting_parts[0]].c[sorting_parts[1]]))
 		elif config['sorting2'] == 'DESC':
 			from sqlalchemy import desc
-			sort_columns.append(desc(self.db.Movie.c[self.fields_as_columns[config['sorting']]]))
+			sort_columns.append(desc(self.db.metadata.tables[sorting_parts[0]].c[sorting_parts[1]]))
 
 		statement = select(columns=columns, order_by=sort_columns, from_obj=[media_join, collection_join, volume_join, vcodec_join], use_labels = True)
 
