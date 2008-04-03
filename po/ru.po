@@ -659,7 +659,7 @@ msgstr "Видео кодек"
 #: ../lib/initialize.py:617 ../lib/plugins/export/PluginExportHTML.py:162
 #: ../glade/griffith.glade.h:158
 msgid "Volume"
-msgstr "Том"
+msgstr "Громкость"
 
 #: ../lib/initialize.py:619 ../lib/initialize.py:620 ../lib/initialize.py:622
 #: ../lib/initialize.py:816 ../lib/initialize.py:817 ../lib/initialize.py:848
