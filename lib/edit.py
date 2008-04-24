@@ -131,19 +131,20 @@ def fetch_bigger_poster(self):
 	amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 
 	locale = self.config.get('amazon_locale', 0, section='add')
-	if locale == 1:
+	keyword = self.widgets['movie']['o_title'].get_text()
+	if locale == '1':
 		locale = 'uk'
-	elif locale == 2:
+	elif locale == '2':
 		locale = 'de'
-	elif locale == 3:
+		keyword = self.widgets['movie']['title'].get_text()
+	elif locale == '3':
 		locale = 'uk'
 	else:
 		locale = None
 
 	try:
-		result = amazon.searchByKeyword(self.widgets['movie']['o_title'].get_text(), \
-						type="lite", product_line="dvd", locale=locale)
-		self.debug.show("Posters found on amazon: %s posters" % len(result))
+		result = amazon.searchByKeyword(keyword, type="Large", product_line="DVD", locale=locale)
+		self.debug.show("Posters found on amazon: %s posters" % result.TotalResults)
 	except:
 		gutils.warning(self, _("No posters found for this movie."))
 		return
@@ -151,23 +152,23 @@ def fetch_bigger_poster(self):
 	from widgets import connect_poster_signals, reconnect_add_signals
 	connect_poster_signals(self, get_poster_select_dc, result, current_poster)
 
-	if not len(result):
+	if not len(result.Item):
 		gutils.warning(self, _("No posters found for this movie."))
 		reconnect_add_signals(self)
 		return
 
-	for f in range(len(result)):
-		if self.widgets['movie']['o_title'].get_text() == result[f].ProductName:
+	for f in range(len(result.Item)):
+		if self.widgets['movie']['o_title'].get_text() == result.Item[f].ItemAttributes.Title:
 			get_poster(self, f, result, current_poster)
 			return
 
 	self.treemodel_results.clear()
 	self.widgets['add']['b_get_from_web'].set_sensitive(False) # disable movie plugins (result window is shared)
 
-	for f in range(len(result)):
+	for f in range(len(result.Item)):
 
-		if (len(result[f].ImageUrlLarge)):
-			title = result[f].ProductName
+		if (len(result.Item[f].LargeImage.URL)):
+			title = result.Item[f].ItemAttributes.Title
 			myiter = self.treemodel_results.insert_before(None, None)
 			self.treemodel_results.set_value(myiter, 0, str(f))
 			self.treemodel_results.set_value(myiter, 1, title)
@@ -195,10 +196,10 @@ def get_poster(self, f, result, current_poster):
 	file_to_copy = tempfile.mktemp(suffix=self.widgets['movie']['number'].get_text(), \
 		dir=self.locations['temp'])
 	file_to_copy += ".jpg"
-	if len(result[f].ImageUrlLarge):
+	if len(result.Item[f].LargeImage.URL):
 		try:
 			progress = movie.Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
-			retriever = movie.Retriever(result[f].ImageUrlLarge, self.widgets['window'], progress, file_to_copy)
+			retriever = movie.Retriever(result.Item[f].LargeImage.URL, self.widgets['window'], progress, file_to_copy)
 			retriever.start()
 			while retriever.isAlive():
 				progress.pulse()
@@ -219,7 +220,7 @@ def get_poster(self, f, result, current_poster):
 
 		if im.size == (1,1):
 			from urllib import FancyURLopener, urlretrieve
-			url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result[f].Asin).read()
+			url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result.Item[f].ASIN).read()
 			if url.find('no-img-sm._V47056216_.gif') > 0:
 				self.debug.show('No image available')
 				gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
