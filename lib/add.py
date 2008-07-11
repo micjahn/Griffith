@@ -449,7 +449,6 @@ def add_movie_db(self, close):
 	clear(self)
 
 	if close:
-		self.widgets['window'].present()
 		self.hide_add_window()
 
 def change_rating_from_slider(self):
