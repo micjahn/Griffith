@@ -570,9 +570,11 @@ def dictionaries(self):
 	update.update_volume_combo_ids(self)
 	update.update_collection_combo_ids(self)
 	update.update_loanedto_combo_ids(self)
+	update.update_bytag_combo_ids(self)
 	fill_volumes_combo(self)
 	fill_collections_combo(self)
 	fill_loanedto_combo(self)
+	fill_bytag_combo(self)
 	fill_preferences_tags_combo(self)
 	language_combos(self)
 	acodec_combos(self)
@@ -745,6 +747,18 @@ def fill_loanedto_combo(self):
 		self.widgets['filter']['loanedto'].insert_text(int(i), str(name))
 	self.widgets['filter']['loanedto'].show_all()
 	self.widgets['filter']['loanedto'].set_active(0)
+
+def fill_bytag_combo(self):
+	self.widgets['filter']['tag'].get_model().clear()
+	for i in self.bytag_combo_ids:
+		id = self.bytag_combo_ids[i]
+		if id>0:
+			name = self.db.Tag.query.filter_by(tag_id=id).first().name
+		else:
+			name = ''
+		self.widgets['filter']['tag'].insert_text(int(i), str(name))
+	self.widgets['filter']['tag'].show_all()
+	self.widgets['filter']['tag'].set_active(0)
 
 def fill_preferences_tags_combo(self):
 	self.widgets['preferences']['tag_name'].get_model().clear()

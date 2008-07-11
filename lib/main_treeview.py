@@ -381,6 +381,15 @@ def populate(self, movies=None, where=None):#{{{
 					#	self.db.metadata.tables['loans'], \
 					#	self.db.metadata.tables['movies'].c.movie_id==self.db.metadata.tables['loans'].c.movie_id)
 					#movies = movies.select_from(loan_join)
+			# tag
+			pos = self.widgets['filter']['tag'].get_active()
+			if pos >= 0:
+				tag_id = self.bytag_combo_ids[pos]
+				if tag_id > 0:
+					from sqlalchemy import join, exists, and_
+					tag_exists = exists([self.db.MovieTag.c.movie_id], \
+						and_(self.db.Movie.c.movie_id==self.db.MovieTag.c.movie_id, self.db.MovieTag.c.tag_id==tag_id))
+					movies.append_whereclause(tag_exists)
 		
 		# select sort column
 		sort_column_name = self.config.get('sortby', 'number', section='mainlist')

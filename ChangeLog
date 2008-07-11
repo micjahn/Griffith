@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-07-11  Michael Jahn
+	* added quick filter for tags
+
 2008-07-10  Michael Jahn
 	* updated Filmtipset plugin
 

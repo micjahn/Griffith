@@ -280,6 +280,7 @@ def define_widgets(self, gladefile):
 		'collection':	get('f_col'),
 		'volume':	get('f_volume'),
 		'loanedto':	get('f_loanedto'),
+		'tag':	get('f_bytag'),
 	}#}}}
 	
 	self.widgets['menu'] = {#{{{
@@ -422,6 +423,7 @@ def define_widgets(self, gladefile):
 		'on_f_col_changed'			: self.filter_collection,
 		'on_f_volume_changed'			: self.filter_volume,
 		'on_f_loanedto_changed'			: self.filter_loanedto,
+		'on_f_bytag_changed'			: self.filter_bytag,
 		'on_results_cancel_clicked'		: self.results_cancel_ck,
 		# languages
 		'on_lang_add_clicked'			: self.on_lang_add_clicked,

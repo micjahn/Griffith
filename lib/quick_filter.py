@@ -51,6 +51,7 @@ def clear_filter(self):
 	self.widgets['filter']['criteria'].set_active(0)
 	self.widgets['filter']['collection'].set_active(0)
 	self.widgets['filter']['volume'].set_active(0)
+	self.widgets['filter']['tag'].set_active(0)
 	self.initialized = True
 	self.populate_treeview()
 
