@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2008-07-11  Michael Jahn
 	* added quick filter for tags
+	* [#244676] Griffith loses focus
 
 2008-07-10  Michael Jahn
 	* updated Filmtipset plugin
