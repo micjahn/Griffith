@@ -242,6 +242,7 @@ def set_details(self, item=None):#{{{
 			self.person_name = str(data_person.name)
 			self.person_email = str(data_person.email)
 			self.loan_date = str(data_loan.date)
+			w['loan_info'].set_use_markup(False)
 			w['loan_info'].set_label(_("This movie has been loaned to ") + self.person_name + _(" on ") + self.loan_date[:10])
 	if item.has_key('loaned') and item['loaned'] != True: # "loaned" status can be changed above, so don't use "else:" in this line
 		self.widgets['popups']['loan'].set_sensitive(True)
