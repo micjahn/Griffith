@@ -707,11 +707,13 @@ def fill_volumes_combo(self, default=0):
 			name = self.db.Volume.query.filter_by(volume_id=vol_id).first().name
 		else:
 			name = ''
-		self.widgets['add']['volume'].insert_text(int(i), str(name))
-		self.widgets['filter']['volume'].insert_text(int(i), str(name))
+		# add some white spaces to prevent scrollbar hides parts of the names	
+		self.widgets['add']['volume'].insert_text(int(i), str(name) + '   ')
+		self.widgets['filter']['volume'].insert_text(int(i), str(name) + '   ')
 	self.widgets['add']['volume'].show_all()
 	self.widgets['filter']['volume'].show_all()
 	self.widgets['filter']['volume'].set_active(0)
+	self.widgets['filter']['volume'].set_wrap_width(2)
 	i = gutils.findKey(default, self.volume_combo_ids)
 	if i is not None:
 		self.widgets['add']['volume'].set_active(int(i))
@@ -726,11 +728,13 @@ def fill_collections_combo(self, default=0):
 			name = self.db.Collection.query.filter_by(collection_id=col_id).first().name
 		else:
 			name = ''
-		self.widgets['add']['collection'].insert_text(int(i), str(name))
-		self.widgets['filter']['collection'].insert_text(int(i), str(name))
+		# add some white spaces to prevent scrollbar hides parts of the names	
+		self.widgets['add']['collection'].insert_text(int(i), str(name) + '   ')
+		self.widgets['filter']['collection'].insert_text(int(i), str(name) + '   ')
 	self.widgets['add']['collection'].show_all()
 	self.widgets['filter']['collection'].show_all()
 	self.widgets['filter']['collection'].set_active(0)
+	self.widgets['filter']['volume'].set_wrap_width(2)
 	i = gutils.findKey(default, self.collection_combo_ids)
 	if i is not None:
 		self.widgets['add']['collection'].set_active(int(i))
@@ -744,7 +748,8 @@ def fill_loanedto_combo(self):
 			name = self.db.Person.query.filter_by(person_id=per_id).first().name
 		else:
 			name = ''
-		self.widgets['filter']['loanedto'].insert_text(int(i), str(name))
+		# add some white spaces to prevent scrollbar hides parts of the names	
+		self.widgets['filter']['loanedto'].insert_text(int(i), str(name) + '   ')
 	self.widgets['filter']['loanedto'].show_all()
 	self.widgets['filter']['loanedto'].set_active(0)
 
@@ -756,7 +761,8 @@ def fill_bytag_combo(self):
 			name = self.db.Tag.query.filter_by(tag_id=id).first().name
 		else:
 			name = ''
-		self.widgets['filter']['tag'].insert_text(int(i), str(name))
+		# add some white spaces to prevent scrollbar hides parts of the names	
+		self.widgets['filter']['tag'].insert_text(int(i), str(name) + '   ')
 	self.widgets['filter']['tag'].show_all()
 	self.widgets['filter']['tag'].set_active(0)
 
