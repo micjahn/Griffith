@@ -80,6 +80,11 @@ def show_preferences(self):
 		w['view_runtime'].set_active(False)
 	else:
 		w['view_runtime'].set_active(True)
+	# rating
+	if self.config.get('rating', True, 'mainlist') == False:
+		w['view_rating'].set_active(False)
+	else:
+		w['view_rating'].set_active(True)
 
 	# email reminder
 	if self.config.get('use_auth', False, section='mail') == False:
@@ -253,6 +258,11 @@ def save_preferences(self):
 		c.set('runtime', 'True', section='mainlist')
 	else:
 		c.set('runtime', 'False', section='mainlist')
+	# rating
+	if w['view_rating'].get_active():
+		c.set('rating', 'True', section='mainlist')
+	else:
+		c.set('rating', 'False', section='mainlist')
 	
 	# sortby
 	if w['sortby'].get_active():

@@ -188,6 +188,7 @@ def define_widgets(self, gladefile):
 		'view_seen':	get('view_seen'),
 		'view_year':	get('view_year'),
 		'view_runtime':	get('view_runtime'),
+		'view_rating':	get('view_rating'),
 		'rating_image':		get('rating_image'),
 		'spellchecker':		get('spellchecker_pref'),
 		'spell_notes':		get('spell_notes'),

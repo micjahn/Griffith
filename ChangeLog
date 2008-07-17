@@ -6,6 +6,8 @@ Griffith ChangeLog
 
 2008-07-17  Michael Jahn
 	* updated OFDb plugin
+	* added column rating to the mainlist
+	* [#226269] default folders hardcoded (not fully fixed)
 
 2008-07-13  Michael Jahn
 	* updated DVDEmpire plugin

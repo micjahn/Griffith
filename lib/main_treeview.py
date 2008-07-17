@@ -345,8 +345,8 @@ def populate(self, movies=None, where=None):#{{{
 			self.db.Movie.c.o_title, self.db.Movie.c.title,
 			self.db.Movie.c.director, self.db.Movie.c.image,
 			self.db.Movie.c.genre, self.db.Movie.c.seen,
-			self.db.Movie.c.year, self.db.Movie.c.runtime])
-
+			self.db.Movie.c.year, self.db.Movie.c.runtime,
+			self.db.Movie.c.rating])
 	#if isinstance(movies, Select):
 	if 1==1: # FIXME
 		if not where: # because of possible 'seen', 'loaned', 'collection_id' in where
@@ -418,7 +418,7 @@ def populate(self, movies=None, where=None):#{{{
 	sort_column_id, order = self.treemodel.get_sort_column_id()
 
 	# new treemodel (faster and prevents some problems)
-	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str)
+	self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str, int)
 
 	# check preferences to hide or show columns
 	if self.config.get('number', True, 'mainlist') == True:
@@ -457,6 +457,10 @@ def populate(self, movies=None, where=None):#{{{
 		self.runtime_column.set_visible(True)
 	else:
 		self.runtime_column.set_visible(False)
+	if self.config.get('rating', True, 'mainlist') == True:
+		self.rating_column.set_visible(True)
+	else:
+		self.rating_column.set_visible(False)
 		
 	for movie in movies:
 		myiter = self.treemodel.append(None)
@@ -492,6 +496,7 @@ def populate(self, movies=None, where=None):#{{{
 		self.treemodel.set_value(myiter,7,movie.year)
 		if movie.runtime is not None:
 			self.treemodel.set_value(myiter,8, '%003d' % movie.runtime + _(' min'))
+		self.treemodel.set_value(myiter,9,movie.rating)
 		
 	# restore user sort column
 	if sort_column_id is not None:

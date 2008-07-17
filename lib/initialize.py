@@ -248,6 +248,15 @@ def treeview(self):
 	self.runtime_column.set_alignment(1)
 	self.runtime_column.set_reorderable(True)
 	self.widgets['treeview'].append_column(self.runtime_column)
+	# rating column
+	renderer=gtk.CellRendererText()
+	renderer.set_property('xalign', 0.5)
+	self.rating_column=gtk.TreeViewColumn(_('Rating'), renderer, text=9)
+	self.rating_column.set_sort_column_id(9)
+	self.rating_column.set_resizable(True)
+	self.rating_column.set_alignment(0.5)
+	self.rating_column.set_reorderable(True)
+	self.widgets['treeview'].append_column(self.rating_column)
 	# reflect saved column order
 	columnorder = self.config.get('columnorder', None, section='mainlist')
 	if not columnorder is None:
@@ -281,6 +290,9 @@ def treeview(self):
 			elif col == 'runtime':
 				self.widgets['treeview'].move_column_after(self.runtime_column, currentcol)
 				currentcol = self.runtime_column
+			elif col == 'rating':
+				self.widgets['treeview'].move_column_after(self.rating_column, currentcol)
+				currentcol = self.rating_column
 	# add data to treeview
 	self.total = int(self.db.Movie.query.count())
 	self.widgets['treeview'].show()

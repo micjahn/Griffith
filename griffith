@@ -51,7 +51,7 @@ del missing
 
 # other imports
 import gtk, gtk.glade
-import add, config, gconsole, gutils, gdebug, initialize, main_treeview, quick_filter
+import add, config, gconsole, gutils, gdebug, initialize, main_treeview, quick_filter, update
 from gettext import gettext as _
 
 class Griffith:
@@ -137,12 +137,13 @@ class Griffith:
 
 		# add default folders to some select widgets
 		if self.windows:
-			fonts_dir = os.path.join(os.environ['SYSTEMROOT'],'fonts')
+			from win32com.shell import shellcon, shell
+			fonts_dir = shell.SHGetFolderPath(0, shellcon.CSIDL_FONTS, 0, 0)
 			self.widgets['preferences']['font'].set_current_folder(fonts_dir)
 		elif self.mac:
 			self.widgets['preferences']['font'].set_current_folder("/System/Library/Fonts/")
 		else:
-			self.widgets['preferences']['font'].set_current_folder("/usr/share/fonts/")
+			self.widgets['preferences']['font'].set_current_folder(os.path.join(sys.prefix, 'share', 'fonts'))
 
 	def main(self):
 		gtk.gdk.threads_init()
@@ -238,6 +239,7 @@ class Griffith:
 		show_preferences(self)
 
 	def hide_preferences(self, *args):
+		self.widgets['window'].present()
 		self.widgets['preferences']['window'].hide()
 
 	def save_preferences(self, *args):
@@ -1018,6 +1020,9 @@ You can't undo this operation."""), \
 				delimiter = ','
 			elif treeview_column == self.runtime_column:
 				columnorder = columnorder + delimiter + 'runtime'
+				delimiter = ','
+			elif treeview_column == self.rating_column:
+				columnorder = columnorder + delimiter + 'rating'
 				delimiter = ','
 		self.config.set('columnorder',  columnorder,  section='mainlist')
 		self.config.save()
