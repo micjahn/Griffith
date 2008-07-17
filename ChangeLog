@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-07-17  Michael Jahn
+	* updated OFDb plugin
+
 2008-07-13  Michael Jahn
 	* updated DVDEmpire plugin
 	* [#236598] scroll bar in filter "by volume" appears
