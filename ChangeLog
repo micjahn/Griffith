@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-07-18  Michael Jahn
+	* added User-Agent support, because some web sites doesn't like the Python urllib default
+
 2008-07-17  Michael Jahn
 	* updated OFDb plugin
 	* added column rating to the mainlist
