@@ -7,6 +7,7 @@ Griffith ChangeLog
 2008-07-18  Michael Jahn
 	* added User-Agent support, because some web sites doesn't like the Python urllib default
 	* updated Zelluloid plugin
+	* support for accents in titles for searching if plugin needs it (Zelluloid needs german umlauts)
 
 2008-07-17  Michael Jahn
 	* updated OFDb plugin
