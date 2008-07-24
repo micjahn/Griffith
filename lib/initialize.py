@@ -725,7 +725,6 @@ def fill_volumes_combo(self, default=0):
 	self.widgets['add']['volume'].show_all()
 	self.widgets['filter']['volume'].show_all()
 	self.widgets['filter']['volume'].set_active(0)
-	self.widgets['filter']['volume'].set_wrap_width(2)
 	i = gutils.findKey(default, self.volume_combo_ids)
 	if i is not None:
 		self.widgets['add']['volume'].set_active(int(i))
@@ -746,7 +745,6 @@ def fill_collections_combo(self, default=0):
 	self.widgets['add']['collection'].show_all()
 	self.widgets['filter']['collection'].show_all()
 	self.widgets['filter']['collection'].set_active(0)
-	self.widgets['filter']['volume'].set_wrap_width(2)
 	i = gutils.findKey(default, self.collection_combo_ids)
 	if i is not None:
 		self.widgets['add']['collection'].set_active(int(i))

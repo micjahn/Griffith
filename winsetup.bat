@@ -45,7 +45,14 @@ xcopy "%GTKDIR%\lib" "%GRIFFITHDIR%\dist\lib" /s /e
 xcopy "%GTKDIR%\share\locale" "%GRIFFITHDIR%\dist\share\locale" /s /e
 
 copy "%GTKDIR%\share\themes\MS-Windows\gtk-2.0\*.*" "%GRIFFITHDIR%\dist\"
-copy "%GTKDIR%\bin\jpeg62.dll" "%GRIFFITHDIR%\dist\"
+copy "%GTKDIR%\bin\jpeg62.dll"   "%GRIFFITHDIR%\dist\"
+copy "%GRIFFITHDIR%\AUTHORS"     "%GRIFFITHDIR%\dist\"
+copy "%GRIFFITHDIR%\COPYING"     "%GRIFFITHDIR%\dist\"
+copy "%GRIFFITHDIR%\INSTALL"     "%GRIFFITHDIR%\dist\"
+copy "%GRIFFITHDIR%\NEWS"        "%GRIFFITHDIR%\dist\"
+copy "%GRIFFITHDIR%\README"      "%GRIFFITHDIR%\dist\"
+copy "%GRIFFITHDIR%\THANKS"      "%GRIFFITHDIR%\dist\"
+copy "%GRIFFITHDIR%\TRANSLATORS" "%GRIFFITHDIR%\dist\"
 
 :END
 

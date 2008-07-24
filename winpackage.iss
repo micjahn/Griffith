@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.9.6
+AppVerName=Griffith 0.9.7
 AppPublisher=Vasco Nunes, Piotr Ożarowski
 AppPublisherURL=http://griffith.berlios.de/
 AppSupportURL=http://griffith.berlios.de/
@@ -14,7 +14,7 @@ AllowNoIcons=true
 LicenseFile=COPYING
 InfoAfterFile=README
 OutputDir=installer
-OutputBaseFilename=griffith-0.9.6-win32
+OutputBaseFilename=griffith-0.9.7-win32
 SetupIconFile=images\griffith.ico
 Compression=lzma
 SolidCompression=true
@@ -22,8 +22,8 @@ WizardImageFile=images\griffith_win32_installer.bmp
 InternalCompressLevel=ultra
 AppCopyright=Vasco Nunes/Piotr Ozarowski
 DisableStartupPrompt=false
-AppVersion=0.9.6
-VersionInfoVersion=0.9.6
+AppVersion=0.9.7
+VersionInfoVersion=0.9.7
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl
@@ -56,12 +56,9 @@ Source: dist\griffith.exe; DestDir: {app}; Flags: ignoreversion
 Source: dist\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
-[INI]
-Filename: {app}\griffith.url; Section: InternetShortcut; Key: URL; String: http://griffith.berlios.de/
-
 [Icons]
 Name: {group}\Griffith; Filename: {app}\griffith.exe
-Name: {group}\{cm:ProgramOnTheWeb,Griffith}; Filename: {app}\griffith.url
+Name: {group}\{cm:ProgramOnTheWeb,Griffith}; Filename: http://griffith.berlios.de
 Name: {group}\{cm:UninstallProgram,Griffith}; Filename: {uninstallexe}
 Name: {userdesktop}\Griffith; Filename: {app}\griffith.exe; Tasks: desktopicon
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\Griffith; Filename: {app}\griffith.exe; Tasks: quicklaunchicon
@@ -70,5 +67,8 @@ Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\Griffith; Filename:
 Filename: {app}\griffith.exe; Description: {cm:LaunchProgram,Griffith}; Flags: nowait postinstall skipifsilent
 
 [UninstallDelete]
-Type: files; Name: {app}\griffith.url
+Type: files; Name: {app}\lib\*.pyo
+Type: files; Name: {app}\lib\plugins\export\*.pyo
+Type: files; Name: {app}\lib\plugins\movie\*.pyo
+Type: files; Name: {app}\lib\plugins\imp\*.pyo
 
