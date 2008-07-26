@@ -1,63 +1,79 @@
-.TH griffith 1 "Dec 22, 2006"  
+'\" -*- coding: iso-8859-2 -*-
+.if \n(.g .ds T< \\FC
+.if \n(.g .ds T> \\F[\n[.fam]]
+.de URL
+\\$2 \(la\\$1\(ra\\$3
+..
+.if \n(.g .mso www.tmac
+.TH griffith 1 "Dec 22, 2006" "" ""
 .SH NAME
 griffith \- zarz±dca kolekcji film\('ow
 .SH SYNOPSIS
-\fBgriffith\fR [OPCJE]
+'nh
+.fi
+.ad l
+\fBgriffith\fR \kx
+.if (\nx>(\n(.l/2)) .nr x (\n(.l/5)
+'in \n(.iu+\nxu
+'in \n(.iu-\nxu
+.ad b
+'hy
 .SH OPIS
 Griffith zarz±dza kolekcj± film\('ow.
 Dodawanie kolejnych pozycji jest tak \(/latwe i szybkie, jak wpisanie tytu\(/lu filmu i wybranie
 odpowiedniego ¼r\('od\(/la. Griffith nastêpnie sam pobierze z internetu potrzebne informacje.
 .SH OPCJE
 .TP 
-\fB\-h\fR, \fB\-\-help\fR 
+\*(T<\fB\-h\fR\*(T>, \*(T<\fB\-\-help\fR\*(T> 
 Pokazuje informacje o sposobie u¿ycia.
 .TP 
-\fB\-D\fR \fB\-\-debug\fR 
+\*(T<\fB\-D\fR\*(T> \*(T<\fB\-\-debug\fR\*(T> 
 Uruchamia program w trybie debugowania.
 .TP 
-\fB\-C\fR \fB\-\-clean\fR 
+\*(T<\fB\-C\fR\*(T> \*(T<\fB\-\-clean\fR\*(T> 
 znajduje i usuwa niepotrzebne pliki w katalogu z plakatami.
 .TP 
-\fB\-\-check\-dep\fR 
-sprawdza zale¿no¶ci \- je¿eli wszystkie potrzebne modu\(/ly Pythona s±
+\*(T<\fB\-\-check\-dep\fR\*(T> 
+sprawdza zale¿no¶ci - je¿eli wszystkie potrzebne modu\(/ly Pythona s±
 zainstalowane, polecenie nie wy¶wietla ¿adnych komunikat\('ow.
 .TP 
-\fB\-\-sqlecho\fR 
+\*(T<\fB\-\-sqlecho\fR\*(T> 
 Wy¶wietla wszystkie zapytania SQL na standardowym wyj¶ciu.
 .TP 
-\fB\-\-home DIR\fR 
+\*(T<\fB\-\-home DIR\fR\*(T> 
 Ustawia katalog domowy Griffith'a. U¿yj tej opcji, je¿eli chcesz zmieniæ
 domy¶lny katalog ~/.griffith
 .PP
 Wyszukiwanie listy film\('ow:
 .TP 
-\fB\-c <wyra¿enie>\fR \fB\-\-cast=<wyra¿enie>\fR 
+\*(T<\fB\-c <wyra¿enie>\fR\*(T> \*(T<\fB\-\-cast=<wyra¿enie>\fR\*(T> 
 pole obsada musi zawieraæ <wyra¿enie>
 .TP 
-\fB\-d <wyra¿enie>\fR \fB\-\-director=<wyra¿enie>\fR 
+\*(T<\fB\-d <wyra¿enie>\fR\*(T> \*(T<\fB\-\-director=<wyra¿enie>\fR\*(T> 
 pole dyrektor musi zawieraæ <wyra¿enie>
 .TP 
-\fB\-o <wyra¿enie>\fR \fB\-\-original_title=<wyra¿enie>\fR 
+\*(T<\fB\-o <wyra¿enie>\fR\*(T> \*(T<\fB\-\-original_title=<wyra¿enie>\fR\*(T> 
 pole tytu\(/l oryginalny musi zawieraæ <wyra¿enie>
 .TP 
-\fB\-t <wyra¿enie>\fR \fB\-\-title=<wyra¿enie>\fR 
+\*(T<\fB\-t <wyra¿enie>\fR\*(T> \*(T<\fB\-\-title=<wyra¿enie>\fR\*(T> 
 pole tytu\(/lu musi zawieraæ <wyra¿enie>
 .TP 
-\fB\-y <numer>\fR \fB\-\-year=<numer>\fR 
+\*(T<\fB\-y <numer>\fR\*(T> \*(T<\fB\-\-year=<numer>\fR\*(T> 
 film musi byæ wydany w roku <numer>
 .TP 
-\fB\-s <kolumny>\fR \fB\-\-sort=<kolumny>\fR 
+\*(T<\fB\-s <kolumny>\fR\*(T> \*(T<\fB\-\-sort=<kolumny>\fR\*(T> 
 ustaw metodê sortowania na <columns>. Przyk\(/lad u¿ycia: \-\-sort=o_title,number,director
 .SH "ZOBACZ TAK¯E"
-Strona domowa: http://www.griffith.cc/
+Strona domowa: \(lahttp://www.griffith.cc/\(ra
 .SH B\(/LÊDY
 Je¿eli szukasz pomocy lub chcesz zg\(/losiæ b\(/l±d, odwied¼
-stronê domow± lub
-https://bugs.launchpad.net/griffith
+.URL http://www.griffith.cc/ "stronê domow±"
+lub
+\(lahttps://bugs.launchpad.net/griffith\(ra
 .SH AUTORZY
 Griffith zosta\(/l napisany przez Vasco Nunesa i Piotra O¿arowskiego. Zobacz plik AUTHORS z list± wsp\('o\(/lpracownik\('ow
 .PP
-Copyright (C) 2005\-2008 Vasco Nunes vasco.m.nunes@gmail.com,
-Piotr O¿arowski ozarow+griffith@gmail.com,
+Copyright (C) 2005-2008 Vasco Nunes <\*(T<vasco.m.nunes@gmail.com\*(T>>,
+Piotr O¿arowski <\*(T<ozarow+griffith@gmail.com\*(T>>,
 .PP
 Ta strona podrêcznika zosta\(/la napisana przez Piotra O¿arowskiego
