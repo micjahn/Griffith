@@ -1,10 +1,10 @@
-Griffith 0.9.6 README
-=====================
+Griffith 0.9.7.1 README
+=======================
 
 This document was last updated on Thu Sep 02 2007.
 Please see the file COPYING for licensing and warranty information.
 The latest version of this software is available at the following URL:
-http://griffith.berlios.de/
+http://www.griffith.cc/
 
 
 Table of Contents
@@ -32,7 +32,7 @@ System Requirements
   * Python		2.3 or higher		http://www.python.org/
   * GTK+		tested on 2.6.4		http://www.gtk.org/
   * PyGTK (with glade2)	tested on 2.6.1		http://www.pygtk.org/
-  * SQLAlchemy		0.4			http://www.sqlalchemy.org/
+  * SQLAlchemy		0.5			http://www.sqlalchemy.org/
   * pysqlite2		2			http://initd.org/tracker/pysqlite		Python 2.5's sqlite3 module will be used if available
   * PIL						http://www.pythonware.com/products/pil/
   * PyXML					http://pyxml.sf.net/
@@ -106,7 +106,7 @@ Reporting Bugs
 ==============
 	
 If you want to help or report any bugs founded please visit:
-  http://griffith.berlios.de/
+  http://www.griffith.cc/
 or
   https://bugs.launchpad.net/griffith/
 

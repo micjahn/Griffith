@@ -93,7 +93,7 @@
 			* Inno Setup     - isetup-5.2.3                   (http://www.jrsoftware.org/isdl.php)
 			
 	2.2.2	After installing all the above packages, get griffith from SVN
-			or download the latest source tarball from the official site (http://griffith.berlios.de)
+			or download the latest source tarball from the official site (http://www.griffith.cc/)
 			
 	2.2.3	Put the whole Griffith tree under "c:\griffith"
 	

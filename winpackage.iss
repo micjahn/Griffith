@@ -3,18 +3,18 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.9.7
+AppVerName=Griffith 0.9.7.1
 AppPublisher=Vasco Nunes, Piotr Ożarowski
-AppPublisherURL=http://griffith.berlios.de/
-AppSupportURL=http://griffith.berlios.de/
-AppUpdatesURL=http://griffith.berlios.de/
+AppPublisherURL=http://griffith.cc/
+AppSupportURL=http://griffith.cc/
+AppUpdatesURL=http://griffith.cc/
 DefaultDirName={pf}\Griffith
 DefaultGroupName=Griffith
 AllowNoIcons=true
 LicenseFile=COPYING
 InfoAfterFile=README
 OutputDir=installer
-OutputBaseFilename=griffith-0.9.7-win32
+OutputBaseFilename=griffith-0.9.7.1-win32
 SetupIconFile=images\griffith.ico
 Compression=lzma
 SolidCompression=true
@@ -22,8 +22,8 @@ WizardImageFile=images\griffith_win32_installer.bmp
 InternalCompressLevel=ultra
 AppCopyright=Vasco Nunes/Piotr Ozarowski
 DisableStartupPrompt=false
-AppVersion=0.9.7
-VersionInfoVersion=0.9.7
+AppVersion=0.9.7.1
+VersionInfoVersion=0.9.7.1
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl
@@ -58,7 +58,7 @@ Source: dist\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsub
 
 [Icons]
 Name: {group}\Griffith; Filename: {app}\griffith.exe
-Name: {group}\{cm:ProgramOnTheWeb,Griffith}; Filename: http://griffith.berlios.de
+Name: {group}\{cm:ProgramOnTheWeb,Griffith}; Filename: http://griffith.cc
 Name: {group}\{cm:UninstallProgram,Griffith}; Filename: {uninstallexe}
 Name: {userdesktop}\Griffith; Filename: {app}\griffith.exe; Tasks: desktopicon
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\Griffith; Filename: {app}\griffith.exe; Tasks: quicklaunchicon

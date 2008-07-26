@@ -4,7 +4,7 @@
 	[
 	<!ENTITY program   "griffith">
 	<!ENTITY command   "<command>&program;</command>">
-	<!ENTITY homepage  "http://griffith.berlios.de/">
+	<!ENTITY homepage  "http://www.griffith.cc/">
 	]>
 <refentry>
 	<refentryinfo>
@@ -15,7 +15,7 @@
 		</author>
 		<address>ozarow+griffith@gmail.com</address>
 		<copyright>
-			<year>2005-2007</year>
+			<year>2005-2008</year>
 			<holder>Piotr Ozarowski</holder>
 		</copyright>
 		<date>Dec 20, 2006</date>
@@ -160,8 +160,8 @@
 		<title>BUGS</title>
 		<para>If you want to help or report any bugs founded please visit
 			<ulink url="&homepage;">homepage</ulink> or
-			<ulink url="http://developer.berlios.de/bugs/?group_id=4891">
-				http://developer.berlios.de/bugs/?group_id=4891
+			<ulink url="https://bugs.launchpad.net/griffith">
+				https://bugs.launchpad.net/griffith
 			</ulink>
 		</para>
 	</refsect1>
@@ -171,7 +171,7 @@
 			See the AUTHORS and THANKS files for a list of other
 			contributors.</para>
 		<para>
-			Copyright (C) 2005-2007 Vasco Nunes <email>vasco.m.nunes@gmail.com</email>,
+			Copyright (C) 2005-2008 Vasco Nunes <email>vasco.m.nunes@gmail.com</email>,
 			Piotr Ożarowski <email>ozarow+griffith@gmail.com</email>,
 		</para>
 		<para>This man page was written by Piotr Ozarowski</para>

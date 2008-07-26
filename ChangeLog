@@ -4,6 +4,31 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+---- 0.9.7.1 ---
+
+2008-07-26  Piotr Ożarowski
+	* Links to Griffith's homepage and bug tracker updated
+	* Version changed to 0.9.7
+
+2008-07-24  Michael Jahn
+	* main treeview doesn't accept DB-NULL or empty strings for the int-fields rating, year and runtime
+
+2008-07-24  Michael Jahn
+	* Windows only: set_wrap_width doesn't work in filter toolbar without side effects if GTK 2.12.9 is used
+	* updated INSTALL file to new versions (GTK, Glade, PyGTK, py2exe, pywin32, Inno Setup)
+	* fixed URL creation in setup script; added removing of .pyo files if deinstalled
+
+---- 0.9.7 ---
+
+2008-07-21  Piotr Ożarowski
+	* Fixed HTML export plugin (sorting issue)
+	* Amazon posters - don't fail if LargeImage attribute is not set
+	* Filmweb movie plugin updated (thanks to mariusz2806)
+	* Added Latvian translation (thanks to Aleksandrs Zdancuks)
+	* Added Ukrainian translation (thanks to vazaz)
+	* Updated translations: bg, ca, da, de, el, es, fr, it, nb, pt, pt_BR, ru, sv, tr
+	* Version changed to 0.9.7
+
 2008-07-18  Michael Jahn
 	* added User-Agent support, because some web sites doesn't like the Python urllib default
 	* updated Zelluloid plugin

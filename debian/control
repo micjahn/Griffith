@@ -2,18 +2,18 @@ Source: griffith
 Section: gnome
 Priority: optional
 Maintainer: Piotr Ożarowski <piotr@debian.org>
-Build-Depends: debhelper (>= 5.0.38)
+Build-Depends: debhelper (>= 5)
 Build-Depends-Indep: python (>= 2.3.5-11), python-central (>= 0.5.6)
-Standards-Version: 3.7.3
+Standards-Version: 3.8.0
 XS-Python-Version: >=2.3
 Vcs-Svn: svn://svn.berlios.de/griffith/trunk/debian
 Vcs-Browser: http://svn.berlios.de/wsvn/griffith/debian/?sc=1
-Homepage: http://griffith.berlios.de/
+Homepage: http://www.griffith.cc/
 
 Package: griffith
 Architecture: all
 Depends: ${python:Depends}, python-gtk2 (>= 2.8.6-1), python-glade2 (>= 2.8.6-1),
- python-sqlalchemy (>= 0.3.0-1), python-sqlalchemy (<< 0.4~),
+ python-sqlalchemy (>= 0.5),
  python (>= 2.5) | python-pysqlite2 (>= 2.3.0-1),
  python-reportlab (>= 1.20debian-6), python-imaging (>= 1.1.5-6)
 Recommends: python-gnome2-extras (>= 2.14.0-1), python-chardet,

@@ -54,11 +54,11 @@ opts = {
 
 setup(
     name = "Griffith",
-    version = "0.9.6",
+    version = "0.9.7.1",
 	description = 'Griffith - A film manager',
     author = 'Vasco Nunes/Piotr Ozarowski',
     author_email = 'vasco.m.nunes@gmail.com',
-    url = 'http://griffith.berlios.de',
+    url = 'http://griffith.cc/',
     license = 'GPL',
     windows = [
         {

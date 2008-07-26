@@ -1097,9 +1097,9 @@ You can't undo this operation."""), \
 			gutils.run_browser(self._trailer_url)
 
 	def on_goto_homepage_activate(site, *args):
-		gutils.run_browser("http://griffith.berlios.de/")
+		gutils.run_browser("http://www.griffith.cc/")
 	def on_goto_forum_activate(site, *args):
-		gutils.run_browser("http://griffith.berlios.de/forum/")
+		gutils.run_browser("http://forum.griffith.cc/")
 	def on_goto_report_bug_activate(site, *args):
 		gutils.run_browser("https://bugs.launchpad.net/griffith/")
 

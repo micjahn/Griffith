@@ -4,7 +4,7 @@
 	[
 	<!ENTITY program   "griffith">
 	<!ENTITY command   "<command>&program;</command>">
-	<!ENTITY homepage  "http://griffith.berlios.de/">
+	<!ENTITY homepage  "http://www.griffith.cc/">
 	]>
 <refentry>
 	<refentryinfo>
@@ -15,7 +15,7 @@
 		</author>
 		<address>ozarow+griffith@gmail.com</address>
 		<copyright>
-			<year>2005-2007</year>
+			<year>2005-2008</year>
 			<holder>Piotr Ożarowski</holder>
 		</copyright>
 		<date>Dec 22, 2006</date>
@@ -160,8 +160,8 @@
 		<title>BŁĘDY</title>
 		<para>Jeżeli szukasz pomocy lub chcesz zgłosić błąd, odwiedź
 			<ulink url="&homepage;">stronę domową</ulink> lub
-			<ulink url="http://developer.berlios.de/bugs/?group_id=4891">
-			http://developer.berlios.de/bugs/?group_id=4891
+			<ulink url="https://bugs.launchpad.net/griffith">
+			https://bugs.launchpad.net/griffith
 			</ulink>
 		</para>
 	</refsect1>
@@ -169,7 +169,7 @@
 		<title>AUTORZY</title>
 		<para>Griffith został napisany przez Vasco Nunesa i Piotra Ożarowskiego. Zobacz plik AUTHORS z listą współpracowników</para>
 		<para>
-			Copyright (C) 2005-2007 Vasco Nunes <email>vasco.m.nunes@gmail.com</email>,
+			Copyright (C) 2005-2008 Vasco Nunes <email>vasco.m.nunes@gmail.com</email>,
 			Piotr Ożarowski <email>ozarow+griffith@gmail.com</email>,
 		</para>
 		<para>Ta strona podręcznika została napisana przez Piotra Ożarowskiego</para>

@@ -1,3 +1,20 @@
+Griffith 0.9.7.1
+================
+* Fixed crash when database (rating/year/runtime fields) contains empty data
+
+
+Griffith 0.9.7 ("Michael Jahn's release" :-)
+==============
+* Fixed fetching posters from Amazon
+* Updated movie plugins: DVDEmpire, Filmtipset, Filmweb, OFDb, Zelluloid
+* Update export plugins: HTML, PDF
+* Translation changes:
+  + new: Latvian, Ukrainian 
+  + updated: bg, ca, da, de, el, es, fr, it, nb, pt, pt_BR, ru, sv, tr
+* Few quick filter combos added (advanced search function not ready yet)
+* See ChangeLog for more changes
+
+
 Griffith 0.9.6
 ==============
 * Distribute local copy of SQLAlchemy 0.3.11 (Griffith 0.10 which will work with SQLAlchemy 0.4.x is not ready yet)
