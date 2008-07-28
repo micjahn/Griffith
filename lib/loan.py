@@ -25,120 +25,121 @@ from gettext import gettext as _
 import gutils
 import gtk
 import datetime
+import db
 
 def loan_movie(self):
-	people = self.db.Person.query.order_by(self.db.Person.name.asc()).all()
-	model = gtk.ListStore(str)
-	if len(people)>0:
-		for person in people:
-			model.append([person.name])
-		self.widgets['movie']['loan_to'].set_model(model)
-		self.widgets['movie']['loan_to'].set_text_column(0)
-		self.widgets['movie']['loan_to'].set_active(0)
-		self.widgets['w_loan_to'].show()
-	else:
-		gutils.info(self, _("No person is defined yet."), self.widgets['window'])
+    people = self.db.session.query(db.Person).order_by(db.people_table.c.name.asc()).all()
+    model = gtk.ListStore(str)
+    if len(people)>0:
+        for person in people:
+            model.append([person.name])
+        self.widgets['movie']['loan_to'].set_model(model)
+        self.widgets['movie']['loan_to'].set_text_column(0)
+        self.widgets['movie']['loan_to'].set_active(0)
+        self.widgets['w_loan_to'].show()
+    else:
+        gutils.info(self, _("No person is defined yet."), self.widgets['window'])
 
 def cancel_loan(self):
-	self.widgets['w_loan_to'].hide()
+    self.widgets['w_loan_to'].hide()
 
 def commit_loan(self):
-	person_name = gutils.on_combo_box_entry_changed(self.widgets['movie']['loan_to'])
-	if person_name == '' or person_name is None:
-		return False
-	self.widgets['w_loan_to'].hide()
+    person_name = gutils.on_combo_box_entry_changed(self.widgets['movie']['loan_to'])
+    if person_name == '' or person_name is None:
+        return False
+    self.widgets['w_loan_to'].hide()
 
-	person = self.db.Person.query.filter_by(name=person_name).first()
-	if person is None:
-		self.debug.show("commit_loan: person doesn't exist")
-		return False
-	if self._movie_id:
-		movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
-		if not movie:
-			self.debug.show("commit_loan: wrong movie_id")
-			return False
-	else:
-		self.debug.show("commit_loan: movie not selected")
-		return False
+    person = self.db.session.query(db.Person).filter_by(name=person_name).first()
+    if person is None:
+        self.debug.show("commit_loan: person doesn't exist")
+        return False
+    if self._movie_id:
+        movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
+        if not movie:
+            self.debug.show("commit_loan: wrong movie_id")
+            return False
+    else:
+        self.debug.show("commit_loan: movie not selected")
+        return False
 
-	# ask if user wants to loan whole collection
-	loan_whole_collection = False
-	if movie.collection_id>0:
-		response = gutils.question(self, msg=_("Do you want to loan whole collection?"), parent=self.widgets['window'])
-		if response == gtk.RESPONSE_YES:
-			loan_whole_collection = True
-		elif response == gtk.RESPONSE_CANCEL:
-			return False
-	
-	loan = self.db.Loan(movie_id=movie.movie_id, person_id=person.person_id)
-	if loan_whole_collection:
-		loan.collection_id = movie.collection_id
-	if movie.volume_id>0:
-		loan.volume_id = movie.volume_id
-	if loan.set_loaned():
-		self.update_statusbar(_("Movie loaned"))
-		self.treeview_clicked()
+    # ask if user wants to loan whole collection
+    loan_whole_collection = False
+    if movie.collection_id>0:
+        response = gutils.question(self, msg=_("Do you want to loan whole collection?"), parent=self.widgets['window'])
+        if response == gtk.RESPONSE_YES:
+            loan_whole_collection = True
+        elif response == gtk.RESPONSE_CANCEL:
+            return False
+    
+    loan = db.Loan(movie_id=movie.movie_id, person_id=person.person_id)
+    if loan_whole_collection:
+        loan.collection_id = movie.collection_id
+    if movie.volume_id>0:
+        loan.volume_id = movie.volume_id
+    if loan.set_loaned():
+        self.update_statusbar(_("Movie loaned"))
+        self.treeview_clicked()
 
 def return_loan(self):
-	if self._movie_id:
-		loan = self.db.Loan.query.filter_by(movie_id=self._movie_id, return_date=None).first()
-		if loan is None:
-			movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
-			if movie.collection is not None and movie.collection.loaned:
-				#print len(movie.loans) # FIXME: why it's == 0? (mappers problem?)
-				loan = self.db.Loan.query.filter_by(collection_id=movie.collection.collection_id, return_date=None).first()
-			if movie.volume is not None and movie.volume.loaned:
-				loan = self.db.Loan.query.filter_by(volume_id=movie.volume.volume_id, return_date=None).first()
-		if loan and loan.set_returned():
-			self.treeview_clicked()
+    if self._movie_id:
+        loan = self.db.session.query(db.Loan).filter_by(movie_id=self._movie_id, return_date=None).first()
+        if loan is None:
+            movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
+            if movie.collection is not None and movie.collection.loaned:
+                #print len(movie.loans) # FIXME: why it's == 0? (mappers problem?)
+                loan = self.db.session.query(db.Loan).filter_by(collection_id=movie.collection.collection_id, return_date=None).first()
+            if movie.volume is not None and movie.volume.loaned:
+                loan = self.db.session.query(db.Loan).filter_by(volume_id=movie.volume.volume_id, return_date=None).first()
+        if loan and loan.set_returned():
+            self.treeview_clicked()
 
-def get_loan_info(db, movie_id, volume_id=None, collection_id=None):
-	"""Returns current collection/volume/movie loan data"""
-	from sqlalchemy import and_, or_
-	movie = db.Movie.query.filter_by(movie_id=movie_id).first()
-	if movie is None:
-		return False
-	
-	# fix or add volume/collection data:
-	if movie.collection_id is not None:
-		collection_id = movie.collection_id
-	if movie.volume_id is not None:
-		volume_id = movie.volume_id
-	
-	if collection_id>0 and volume_id>0:
-		return db.Loan.query.filter(
-				and_(or_(db.Loan.c.collection_id==collection_id,
-						db.Loan.c.volume_id==volume_id,
-						db.Loan.c.movie_id==movie_id),
-					db.Loan.c.return_date==None)).first()
-	elif collection_id>0:
-		return db.Loan.query.filter(
-				and_(or_(db.Loan.c.collection_id==collection_id,
-						db.Loan.c.movie_id==movie_id)),
-					db.Loan.c.return_date==None).first()
-	elif volume_id>0:
-		return db.Loan.query.filter(and_(or_(db.Loan.c.volume_id==volume_id,
-							db.Loan.c.movie_id==movie_id)),
-						db.Loan.c.return_date==None).first()
-	else:
-		return db.Loan.query.filter(db.Loan.c.movie_id==movie_id).filter(db.Loan.c.return_date==None).first()
+def get_loan_info(griffithSql, movie_id, volume_id=None, collection_id=None):
+    """Returns current collection/volume/movie loan data"""
+    from sqlalchemy import and_, or_
+    movie = griffithSql.session.query(db.Movie).filter_by(movie_id=movie_id).first()
+    if movie is None:
+        return False
+    
+    # fix or add volume/collection data:
+    if movie.collection_id is not None:
+        collection_id = movie.collection_id
+    if movie.volume_id is not None:
+        volume_id = movie.volume_id
+    
+    if collection_id>0 and volume_id>0:
+        return griffithSql.session.query(db.Loan).filter(
+                and_(or_(db.loans_table.c.collection_id==collection_id,
+                        db.loans_table.c.volume_id==volume_id,
+                        db.loans_table.c.movie_id==movie_id),
+                    db.loans_table.c.return_date==None)).first()
+    elif collection_id>0:
+        return griffithSql.session.query(db.Loan).filter(
+                and_(or_(db.loans_table.c.collection_id==collection_id,
+                        db.loans_table.c.movie_id==movie_id)),
+                    db.loans_table.c.return_date==None).first()
+    elif volume_id>0:
+        return griffithSql.session.query(db.Loan).filter(and_(or_(db.loans_table.c.volume_id==volume_id,
+                            db.loans_table.c.movie_id==movie_id)),
+                        db.loans_table.c.return_date==None).first()
+    else:
+        return griffithSql.session.query(db.Loan).filter(db.loans_table.c.movie_id==movie_id).filter(db.loans_table.c.return_date==None).first()
 
-def get_loan_history(db, movie_id, volume_id=None, collection_id=None):
-	"""Returns collection/volume/movie loan history"""
-	from sqlalchemy import and_, or_, not_
-	if collection_id>0 and volume_id>0:
-		return db.Loan.query.filter(and_(or_(db.Loan.c.collection_id==collection_id,
-							db.Loan.c.volume_id==volume_id,
-							db.Loan.c.movie_id==movie_id),
-						not_(db.Loan.c.return_date==None))).all()
-	elif collection_id>0:
-		return db.Loan.query.filter(and_(or_(db.Loan.c.collection_id==collection_id,
-							db.Loan.c.movie_id==movie_id),
-						not_(db.Loan.c.return_date==None))).all()
-	elif volume_id>0:
-		return db.Loan.query.filter(and_(or_(db.Loan.c.volume_id==volume_id,
-							db.Loan.c.movie_id==movie_id),
-						not_(db.Loan.c.return_date==None))).all()
-	else:
-		return db.Loan.query.filter(db.Loan.c.movie_id==movie_id).filter(~(db.Loan.c.return_date==None)).all()
+def get_loan_history(griffithSql, movie_id, volume_id=None, collection_id=None):
+    """Returns collection/volume/movie loan history"""
+    from sqlalchemy import and_, or_, not_
+    if collection_id>0 and volume_id>0:
+        return griffithSql.session.query(db.Loan).filter(and_(or_(db.loans_table.c.collection_id==collection_id,
+                            db.loans_table.c.volume_id==volume_id,
+                            db.loans_table.c.movie_id==movie_id),
+                        not_(db.loans_table.c.return_date==None))).all()
+    elif collection_id>0:
+        return griffithSql.session.query(db.Loan).filter(and_(or_(db.loans_table.c.collection_id==collection_id,
+                            db.loans_table.c.movie_id==movie_id),
+                        not_(db.loans_table.c.return_date==None))).all()
+    elif volume_id>0:
+        return griffithSql.session.query(db.Loan).filter(and_(or_(db.loans_table.c.volume_id==volume_id,
+                            db.loans_table.c.movie_id==movie_id),
+                        not_(db.loans_table.c.return_date==None))).all()
+    else:
+        return griffithSql.session.query(db.Loan).filter(db.loans_table.c.movie_id==movie_id).filter(~(db.loans_table.c.return_date==None)).all()
 

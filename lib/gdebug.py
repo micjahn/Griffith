@@ -22,14 +22,14 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 class GriffithDebug:
-	debug_mode = None
-	
-	def __init__(self, mode=False):
-		self.debug_mode = mode
+    debug_mode = None
+    
+    def __init__(self, mode=False):
+        self.debug_mode = mode
 
-	def set_debug(self, mode=True):
-		self.debug_mode = mode
+    def set_debug(self, mode=True):
+        self.debug_mode = mode
 
-	def show(self, txt):
-		if self.debug_mode:
-			print txt.encode('utf8')
+    def show(self, txt):
+        if self.debug_mode:
+            print txt.encode('utf8')

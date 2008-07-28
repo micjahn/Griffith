@@ -71,48 +71,48 @@ class ExportPlugin:
         self.parent = parent_window
         self.export_iPod()
 
-	def split_file(self, filename):
-		pass
+    def split_file(self, filename):
+        pass
 
     def export_iPod(self):
-		tmp_dir = mkdtemp()
-		griffith_list = open(os.path.join(tmp_dir,"movies"),"w")
-		t = []
-		
-		for movie in self.db.Movie.all():
-			t.append("%s | %s | %s | %s"%(movie['number'],movie['o_title'],movie['title'],movie['director']))
-	
-		griffith_list.write("<title>%s</title><br><br>"%_("My Movies List"))
-		
-		for movie in t:
-			griffith_list.write(str(movie))
-			griffith_list.write("<br>")
-			
-		griffith_list.close()
-		
-		# this is a mac, lets export to iPod's notes folder
-		# TODO: windows and linux iPod autodetection
-		if platform.system() == 'Darwin':
-			thisPod=Path2iPod()
-			thisPath=thisPod.returnPath()
-		
-			if thisPath:
-				commands.getoutput('mv '+os.path.join(tmp_dir,"movies")+' "'+thisPath+'/Notes/"')
-				gutils.info(self, _("List was successful exported to iPod."), self.parent)		
-			else:
-				gutils.info(self, _("iPod is not connected."), self.parent)
-		# this is not a mac, lets save the file
-		else:
-			filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-				buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='ipod_griffith_list')
-			if filename[0]:
-				overwrite = None
-				if os.path.isfile(filename[0]):
-					response = gutils.question(self, _("File exists. Do you want to overwrite it?"), 1, self.parent)
-					if response==-8:
-						overwrite = True
-					else:
-						overwrite = False
-				if overwrite == True or overwrite is None:
-					shutil.copyfile(os.path.join(tmp_dir,"movies"), filename[0])
-					gutils.info(self, _("List was successful exported. Now you should move it to the 'Notes' folder on your iPod."), self.parent)
+        tmp_dir = mkdtemp()
+        griffith_list = open(os.path.join(tmp_dir,"movies"),"w")
+        t = []
+        
+        for movie in self.db.Movie.all():
+            t.append("%s | %s | %s | %s"%(movie['number'],movie['o_title'],movie['title'],movie['director']))
+    
+        griffith_list.write("<title>%s</title><br><br>"%_("My Movies List"))
+        
+        for movie in t:
+            griffith_list.write(str(movie))
+            griffith_list.write("<br>")
+            
+        griffith_list.close()
+        
+        # this is a mac, lets export to iPod's notes folder
+        # TODO: windows and linux iPod autodetection
+        if platform.system() == 'Darwin':
+            thisPod=Path2iPod()
+            thisPath=thisPod.returnPath()
+        
+            if thisPath:
+                commands.getoutput('mv '+os.path.join(tmp_dir,"movies")+' "'+thisPath+'/Notes/"')
+                gutils.info(self, _("List was successful exported to iPod."), self.parent)        
+            else:
+                gutils.info(self, _("iPod is not connected."), self.parent)
+        # this is not a mac, lets save the file
+        else:
+            filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='ipod_griffith_list')
+            if filename[0]:
+                overwrite = None
+                if os.path.isfile(filename[0]):
+                    response = gutils.question(self, _("File exists. Do you want to overwrite it?"), 1, self.parent)
+                    if response==-8:
+                        overwrite = True
+                    else:
+                        overwrite = False
+                if overwrite == True or overwrite is None:
+                    shutil.copyfile(os.path.join(tmp_dir,"movies"), filename[0])
+                    gutils.info(self, _("List was successful exported. Now you should move it to the 'Notes' folder on your iPod."), self.parent)

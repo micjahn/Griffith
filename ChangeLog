@@ -4,6 +4,11 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+
+2008-07-28  Piotr Ożarowski
+	* Switch back to 4 spaces indentation
+	* Rewrite SQLAlchemy related data to use session (to ease accessing simultaneously multiple databases)
+
 ---- 0.9.7.1 ---
 
 2008-07-26  Piotr Ożarowski

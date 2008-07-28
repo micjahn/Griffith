@@ -24,35 +24,36 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import gutils
 import os
+import db
 
 def update_volume_combo_ids(self):
-	self.volume_combo_ids = {}
-	self.volume_combo_ids[0] = 0
-	i = 1
-	for volume in self.db.Volume.query.all():
-		self.volume_combo_ids[i] = volume.volume_id
-		i += 1
+    self.volume_combo_ids = {}
+    self.volume_combo_ids[0] = 0
+    i = 1
+    for volume in self.db.session.query(db.Volume).all():
+        self.volume_combo_ids[i] = volume.volume_id
+        i += 1
 
 def update_collection_combo_ids(self):
-	self.collection_combo_ids = {}
-	self.collection_combo_ids[0] = 0
-	i = 1
-	for collection in self.db.Collection.query.all():
-		self.collection_combo_ids[i] = collection.collection_id
-		i += 1
+    self.collection_combo_ids = {}
+    self.collection_combo_ids[0] = 0
+    i = 1
+    for collection in self.db.session.query(db.Collection).all():
+        self.collection_combo_ids[i] = collection.collection_id
+        i += 1
 
 def update_loanedto_combo_ids(self):
-	self.loanedto_combo_ids = {}
-	self.loanedto_combo_ids[0] = 0
-	i = 1
-	for person in self.db.Person.query.order_by('name').all():
-		self.loanedto_combo_ids[i] = person.person_id
-		i += 1
+    self.loanedto_combo_ids = {}
+    self.loanedto_combo_ids[0] = 0
+    i = 1
+    for person in self.db.session.query(db.Person).order_by('name').all():
+        self.loanedto_combo_ids[i] = person.person_id
+        i += 1
 
 def update_bytag_combo_ids(self):
-	self.bytag_combo_ids = {}
-	self.bytag_combo_ids[0] = 0
-	i = 1
-	for tag in self.db.Tag.query.order_by('name').all():
-		self.bytag_combo_ids[i] = tag.tag_id
-		i += 1
+    self.bytag_combo_ids = {}
+    self.bytag_combo_ids[0] = 0
+    i = 1
+    for tag in self.db.session.query(db.Tag).order_by('name').all():
+        self.bytag_combo_ids[i] = tag.tag_id
+        i += 1

@@ -23,35 +23,37 @@ __revision__ = '$Id$'
 
 from gettext import gettext as _
 import gutils
+import db
 
 def change_filter(self):
-	x = 0
-	text = gutils.gescape(self.widgets['filter']['text'].get_text())
-	
-	from sqlalchemy import select
-	statement = select(self.db.Movie.c)
-	
-	if text:
-		criteria = self.search_criteria[self.widgets['filter']['criteria'].get_active()]
-		if criteria in ('year', 'runtime', 'media_num', 'rating'):
-			statement.append_whereclause(self.db.Movie.c[criteria]==text)
-		else:
-			statement.append_whereclause(self.db.Movie.c[criteria].like('%'+text+'%'))
-	if self.widgets['filter']['text'].is_focus():
-		if len(text)<4: # filter mode
-			limit = int(self.config.get('limit', 0, section='mainlist'))
-			if limit > 0:
-				statement.limit = limit
-	self.populate_treeview(statement)
+    x = 0
+    text = gutils.gescape(self.widgets['filter']['text'].get_text())
+    
+    from sqlalchemy import select
+    from sqlalchemy.orm.util import class_mapper, object_mapper
+    statement = select(db.movies_table.columns, bind=self.db.session.bind)
+    
+    if text:
+        criteria = self.search_criteria[self.widgets['filter']['criteria'].get_active()]
+        if criteria in ('year', 'runtime', 'media_num', 'rating'):
+            statement.append_whereclause(db.movies_table.c[criteria]==text)
+        else:
+            statement.append_whereclause(db.movies_table.c[criteria].like('%'+text+'%'))
+    if self.widgets['filter']['text'].is_focus():
+        if len(text)<4: # filter mode
+            limit = int(self.config.get('limit', 0, section='mainlist'))
+            if limit > 0:
+                statement.limit = limit
+    self.populate_treeview(statement)
 
 def clear_filter(self):
-	# prevent multiple treeview updates
-	self.initialized = False
-	self.widgets['filter']['text'].set_text('')
-	self.widgets['filter']['criteria'].set_active(0)
-	self.widgets['filter']['collection'].set_active(0)
-	self.widgets['filter']['volume'].set_active(0)
-	self.widgets['filter']['tag'].set_active(0)
-	self.initialized = True
-	self.populate_treeview()
+    # prevent multiple treeview updates
+    self.initialized = False
+    self.widgets['filter']['text'].set_text('')
+    self.widgets['filter']['criteria'].set_active(0)
+    self.widgets['filter']['collection'].set_active(0)
+    self.widgets['filter']['volume'].set_active(0)
+    self.widgets['filter']['tag'].set_active(0)
+    self.initialized = True
+    self.populate_treeview()
 

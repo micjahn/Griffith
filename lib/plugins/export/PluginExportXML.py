@@ -36,62 +36,62 @@ plugin_version = "0.1"
 
 class ExportPlugin:
 
-	def __init__(self, database, locations, parent_window, debug, **kwargs):
-		self.db = database
-		self.locations = locations
-		self.parent = parent_window
-		if kwargs.has_key('config'):
-			self.persistent_config = kwargs['config']
-		else:
-			self.persistent_config = None
-		self.export_xml()
+    def __init__(self, database, locations, parent_window, debug, **kwargs):
+        self.db = database
+        self.locations = locations
+        self.parent = parent_window
+        if kwargs.has_key('config'):
+            self.persistent_config = kwargs['config']
+        else:
+            self.persistent_config = None
+        self.export_xml()
 
-	def export_xml(self):
-		basedir = None
-		if not self.persistent_config is None:
-			basedir = self.persistent_config.get('export_dir', None, section='export-xml')
-		if basedir is None:
-			filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-				buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml')
-		else:
-			filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-				buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml',folder=basedir)
-		if filename[0]:
-			if not self.persistent_config is None and filename[1]:
-				self.persistent_config.set('export_dir', filename[1], section='export-xml')
-				self.persistent_config.save()
-			overwrite = None
-			if os.path.isfile(filename[0]):
-				response = gutils.question(self, _("File exists. Do you want to overwrite it?"), 1, self.parent)
-				if response==-8:
-					overwrite = True
-				else:
-					overwrite = False
-					
-			if overwrite == True or overwrite is None:
-				# create document
-				impl = xml.dom.minidom.getDOMImplementation()
-				doc  = impl.createDocument(None, "root", None)
-				root = doc.documentElement
-				
-				# create object
-				for movie in self.db.Movie.all():
-					e = doc.createElement('movie')
-					root.appendChild(e)
-					for key in movie.c.keys():
-						e2 = doc.createElement(key)
-						if movie[key] is None:
-							value = ''
-						elif movie[key] in (True, False):
-							value = str(int(movie[key]))
-						else:
-							value = str(movie[key])
-						t = doc.createTextNode(value)
-						e2.appendChild(t)
-						e.appendChild(e2)
-					
-				# write XML to file
-				fp = open(filename[0], "w")
-				xml.dom.ext.PrettyPrint(doc, fp)
-				fp.close()
-				gutils.info(self, _("%s file has been created.")%"XML", self.parent)
+    def export_xml(self):
+        basedir = None
+        if not self.persistent_config is None:
+            basedir = self.persistent_config.get('export_dir', None, section='export-xml')
+        if basedir is None:
+            filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml')
+        else:
+            filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml',folder=basedir)
+        if filename[0]:
+            if not self.persistent_config is None and filename[1]:
+                self.persistent_config.set('export_dir', filename[1], section='export-xml')
+                self.persistent_config.save()
+            overwrite = None
+            if os.path.isfile(filename[0]):
+                response = gutils.question(self, _("File exists. Do you want to overwrite it?"), 1, self.parent)
+                if response==-8:
+                    overwrite = True
+                else:
+                    overwrite = False
+                    
+            if overwrite == True or overwrite is None:
+                # create document
+                impl = xml.dom.minidom.getDOMImplementation()
+                doc  = impl.createDocument(None, "root", None)
+                root = doc.documentElement
+                
+                # create object
+                for movie in self.db.Movie.all():
+                    e = doc.createElement('movie')
+                    root.appendChild(e)
+                    for key in movie.c.keys():
+                        e2 = doc.createElement(key)
+                        if movie[key] is None:
+                            value = ''
+                        elif movie[key] in (True, False):
+                            value = str(int(movie[key]))
+                        else:
+                            value = str(movie[key])
+                        t = doc.createTextNode(value)
+                        e2.appendChild(t)
+                        e.appendChild(e2)
+                    
+                # write XML to file
+                fp = open(filename[0], "w")
+                xml.dom.ext.PrettyPrint(doc, fp)
+                fp.close()
+                gutils.info(self, _("%s file has been created.")%"XML", self.parent)

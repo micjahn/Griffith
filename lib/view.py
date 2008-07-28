@@ -24,27 +24,27 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 
 def filter_not_seen(self):
-	self.populate_treeview()
-	self.update_statusbar(_("Filter activated. Showing only not seen movies."))
+    self.populate_treeview()
+    self.update_statusbar(_("Filter activated. Showing only not seen movies."))
 
 def filter_loaned(self):
-	self.populate_treeview()
-	self.update_statusbar(_("Filter activated. Showing only loaned movies."))
+    self.populate_treeview()
+    self.update_statusbar(_("Filter activated. Showing only loaned movies."))
 
 def filter_all(self):
-	self.populate_treeview()
+    self.populate_treeview()
 
 def filter_by_volume(self, volume_id):
-	from quick_filter import clear_filter
-	clear_filter(self)
-	self.populate_treeview(where={'volume_id':volume_id})
-	volume_name = self.db.Volume.query.filter_by(volume_id=volume_id).one().name
-	self.update_statusbar(_("Filter activated. Showing only movies from volume: %s")%volume_name)
+    from quick_filter import clear_filter
+    clear_filter(self)
+    self.populate_treeview(where={'volume_id':volume_id})
+    volume_name = self.db.Volume.query.filter_by(volume_id=volume_id).one().name
+    self.update_statusbar(_("Filter activated. Showing only movies from volume: %s")%volume_name)
 
 def filter_by_collection(self, collection_id):
-	from quick_filter import clear_filter
-	clear_filter(self)
-	self.populate_treeview(where={'collection_id':collection_id})
-	collection_name = self.db.Collection.query.filter_by(collection_id=collection_id).one().name
-	self.update_statusbar(_("Filter activated. Showing only movies from collection: %s")%collection_name)
+    from quick_filter import clear_filter
+    clear_filter(self)
+    self.populate_treeview(where={'collection_id':collection_id})
+    collection_name = self.db.Collection.query.filter_by(collection_id=collection_id).one().name
+    self.update_statusbar(_("Filter activated. Showing only movies from collection: %s")%collection_name)
 

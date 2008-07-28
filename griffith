@@ -27,7 +27,7 @@ import sys, os.path
 lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
 #lib = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lib'))
 if os.path.isdir(lib):
-	sys.path.insert(1, lib)
+    sys.path.insert(1, lib)
 del lib
 
 # check dependencies
@@ -35,1215 +35,1216 @@ from gutils import get_dependencies
 (required, extra) = get_dependencies()
 missing = []
 for i in required:
-	if i['version'] is False or (i['version'] is not True and i['version'][0] == '-'):
-		missing.append(i)
+    if i['version'] is False or (i['version'] is not True and i['version'][0] == '-'):
+        missing.append(i)
 if len(missing) > 0:
-	print 'Error: missing modules:'
-	for i in missing:
-		print "%(module)s" % i,
-		if i.has_key('module_req'):
-			print "\t:: required version: %(module_req)s" % i,
-			if i['version'] is not False and i['version'][0] == '-':
-				print "\t:: detected: %(version)s" % i
-		print "\n",
-	sys.exit(1)
+    print 'Error: missing modules:'
+    for i in missing:
+        print "%(module)s" % i,
+        if i.has_key('module_req'):
+            print "\t:: required version: %(module_req)s" % i,
+            if i['version'] is not False and i['version'][0] == '-':
+                print "\t:: detected: %(version)s" % i
+        print "\n",
+    sys.exit(1)
 del missing
 
 # other imports
 import gtk, gtk.glade
 import add, config, gconsole, gutils, gdebug, initialize, main_treeview, quick_filter, update
 from gettext import gettext as _
+import db
 
 class Griffith:
-	"""The main application class"""
-
-	Image = gtk.Image()
-	founded_results_id = None
-	initialized = False
-	lang = {}
-
-	def __init__(self):
-		"""main griffith application constructor"""	
-
-		# debug object
-		global debug
-		debug = self.debug = gdebug.GriffithDebug()
-		
-		gconsole.check_args(self)
-		initialize.locations(self)
-		
-		initialize.i18n(self, self.locations['i18n'])
-		self.posix = (os.name == 'posix')
-	
-		# Configuration
-		if self._tmp_config.find('/') >=0 or self._tmp_config.find('\\') >=0:
-			configFileName = self._tmp_config
-		else:
-			configFileName = os.path.join(self.locations['home'], self._tmp_config)
-		self.config = config.Config(file=configFileName)
-		initialize.location_posters(self.locations, self.config)
-
-		# convert old database
-		filename = os.path.join(self.locations['home'], self.config.get('file', 'griffith.db', section='database'))
-		if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
-			debug.show('Old database format detected. Converting...')
-			from dbupgrade import convert_from_old_db
-			if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
-				self.config.save()
-				initialize.location_posters(self.locations, self.config)
-			else:
-				print 'Cant convert old database, exiting.'
-				sys.exit(4)
-		
-		# create/connect db
-		from sql import GriffithSQL
-		self.db = GriffithSQL(self.config, self.debug, self.locations['home'])
-
-		# let's check any console arguments to parse
-		gconsole.check_args_with_db(self)
-
-		gtk.window_set_auto_startup_notification(True)
-		self.Image = gtk.Image()
-		self.filter_l = False
-		initialize.gui(self)
-		initialize.toolbar(self)
-		initialize.treeview(self)
-		initialize.loans_treeview(self)
-		initialize.lang_treeview(self)
-		initialize.dictionaries(self)
-		initialize.combos(self)
-		initialize.preferences(self)
-		initialize.movie_plugins(self)
-		initialize.export_plugins(self)
-		initialize.people_treeview(self)
-		initialize.web_results(self)
-		self.initialized = True
-
-		self.restore_state()
-		self.clear_details()
-		self.populate_treeview()
-
-		# adding some completion fields
-		self.completion = gtk.EntryCompletion()
-		self.widgets['add']['o_title'].set_completion(self.completion)
-		self.completion.set_model(self.treemodel)
-		self.completion.set_text_column(3)
-		self.completion_t = gtk.EntryCompletion()
-		self.widgets['add']['title'].set_completion(self.completion_t)
-		self.completion_t.set_model(self.treemodel)
-		self.completion_t.set_text_column(4)
-		
-		initialize.gtkspell(self)
-
-		# add default folders to some select widgets
-		if self.windows:
-			from win32com.shell import shellcon, shell
-			fonts_dir = shell.SHGetFolderPath(0, shellcon.CSIDL_FONTS, 0, 0)
-			self.widgets['preferences']['font'].set_current_folder(fonts_dir)
-		elif self.mac:
-			self.widgets['preferences']['font'].set_current_folder("/System/Library/Fonts/")
-		else:
-			self.widgets['preferences']['font'].set_current_folder(os.path.join(sys.prefix, 'share', 'fonts'))
-
-	def main(self):
-		gtk.gdk.threads_init()
-		gtk.gdk.threads_enter()
-		gtk.main()
-		gtk.gdk.threads_leave()
-		return 0
-
-	###########
-	# callbacks
-	###########		
-
-	def on_export_activate(self, menu_iter, plugin_name):
-		export_plugin = __import__('PluginExport%s' % plugin_name)
-		export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], self.debug, config=self.config)
-
-	def on_import_activate(self, *args):
-		if self.widgets.has_key('import'):
-			self.widgets['import']['window'].show()
-		else:
-			initialize.import_plugins(self)
-
-	def destroy(self, widget, data=None):
-		self.save_state()
-		gtk.main_quit()
-
-	def on_configure(self, widget, data=None):
-		# size should only be saved on microsoft windows systems
-		# on other systems the window manager should manage the windows
-		if self.windows and not data is None:
-			if not hasattr(self, 'mainwindow_state') or self.mainwindow_state is None:
-				self.mainwindow_state = {}
-			self.mainwindow_state['left'] = data.x
-			self.mainwindow_state['top'] = data.y
-			self.mainwindow_state['height'] = data.height
-			self.mainwindow_state['width'] = data.width
-
-	def on_window_state(self, widget, windowstate=None):
-		# size should only be saved on microsoft windows systems
-		# on other systems the window manager should manage the windows
-		# here: save the window state
-		if self.windows and not windowstate is None:
-			if not hasattr(self, 'mainwindow_state') or self.mainwindow_state is None:
-				self.mainwindow_state = {}
-			self.mainwindow_state['state'] = int(windowstate.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-
-
-	# about dialog	-------------------------------------------------------			
-
-	def about_dialog(self, *args):
-		from about import AboutDialog
-		about_dialog = AboutDialog(self.locations)
-
-	# add movie -----------------------------------------------------------
-
-	def clear_add_dialog(self, *args):
-		add.clear(self)
-
-	def edit_movie(self, *args):
-		movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
-		if movie is not None:
-			add.edit_movie(self, movie)
-		else:
-			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
-
-	def hide_add_window(self, *args):
-		#if self.widgets['add']['b_get_from_web'].is_sensitive() is True: # fetch from amazon is not working
-		self.widgets['window'].present()
-		self.widgets['results']['window'].hide()
-		self.widgets['add']['window'].hide()
-
-	def get_from_web(self, *args):
-		add.get_from_web(self)
-
-	def show_search_results(self, results):
-		add.show_websearch_results(self)
-
-	def populate_dialog_with_results(self, *args):
-		add.populate_with_results(self)
-
-	def source_changed(self, *args):
-		add.source_changed(self)
-
-	def on_enter(self, *args):
-		# push Get From Web button if return key is pressed in title box 
-		if self._am_movie_id is None:
-			self.widgets['add']['b_get_from_web'].clicked()
-
-	# preferences ---------------------------------------------------------
-
-	def show_preferences(self, *args):
-		from preferences import show_preferences
-		show_preferences(self)
-
-	def hide_preferences(self, *args):
-		self.widgets['window'].present()
-		self.widgets['preferences']['window'].hide()
-
-	def save_preferences(self, *args):
-		from preferences import save_preferences
-		save_preferences(self)
-		self.hide_preferences()
-
-	def on_p_db_type_changed(self, widget):
-		active = widget.get_active()
-		if active == 0:
-			# change port number if it is something useful at the moment; for clearness
-			if self.widgets['preferences']['db_port'].get_value() == 0 or \
-				self.widgets['preferences']['db_port'].get_value() == 3306 or \
-				self.widgets['preferences']['db_port'].get_value() == 5432 or \
-				self.widgets['preferences']['db_port'].get_value() == 1433:
-				self.widgets['preferences']['db_port'].set_value(0)
-			self.widgets['preferences']['db_passwd'].set_sensitive(False)
-			self.widgets['preferences']['db_user'].set_sensitive(False)
-			self.widgets['preferences']['db_port'].set_sensitive(False)
-			self.widgets['preferences']['db_host'].set_sensitive(False)
-		elif active == 1:
-			# change port number IF previous one was MySQL's or MSSQL one
-			if self.widgets['preferences']['db_port'].get_value() == 0 or \
-				self.widgets['preferences']['db_port'].get_value() == 3306 or \
-				self.widgets['preferences']['db_port'].get_value() == 1433:
-				self.widgets['preferences']['db_port'].set_value(5432)
-			self.widgets['preferences']['db_passwd'].set_sensitive(True)
-			self.widgets['preferences']['db_user'].set_sensitive(True)
-			self.widgets['preferences']['db_port'].set_sensitive(True)
-			self.widgets['preferences']['db_host'].set_sensitive(True)
-		elif active == 2:
-			# change port number IF previous one was PostgreSQL's or MSSQL one
-			if self.widgets['preferences']['db_port'].get_value() == 0 or \
-				self.widgets['preferences']['db_port'].get_value() == 5432 or \
-				self.widgets['preferences']['db_port'].get_value() == 1433:
-				self.widgets['preferences']['db_port'].set_value(3306)
-			self.widgets['preferences']['db_passwd'].set_sensitive(True)
-			self.widgets['preferences']['db_user'].set_sensitive(True)
-			self.widgets['preferences']['db_port'].set_sensitive(True)
-			self.widgets['preferences']['db_host'].set_sensitive(True)
-		elif active == 3:
-			# change port number IF previous one was PostgreSQL's or MySQL one
-			if self.widgets['preferences']['db_port'].get_value() == 0 or \
-				self.widgets['preferences']['db_port'].get_value() == 5432 or \
-				self.widgets['preferences']['db_port'].get_value() == 3306:
-				self.widgets['preferences']['db_port'].set_value(1433)
-			self.widgets['preferences']['db_passwd'].set_sensitive(True)
-			self.widgets['preferences']['db_user'].set_sensitive(True)
-			self.widgets['preferences']['db_port'].set_sensitive(True)
-			self.widgets['preferences']['db_host'].set_sensitive(True)
-
-	def on_cb_spellchecker_pref_toggled(self, widget):
-		self.widgets['preferences']['vbox_spellchecker'].set_sensitive(widget.get_active())
-
-	# movie related operations --------------------------------------------
-
-	def add_movie(self, *args):
-		add.add_movie(self)
-
-	def add_movie_db(self, *args):
-		add.add_movie_db(self, 0)
-
-	def add_movie_close_db(self, *args):
-		add.add_movie_db(self, 1)
-
-	def delete_movie(self, *args):
-		from delete import delete_movie
-		delete_movie(self)
-
-	def update_movie(self, *args):
-		add.update_movie(self)
-
-	def clear_details(self):
-		main_treeview.set_details(self)
-
-	def loan_movie(self, *args):
-		from loan import loan_movie
-		loan_movie(self)
-
-	def clone_movie(self, *args):
-		add.clone_movie(self)
-
-	def on_m_seen_icon_button_press_event(self, widget, event):
-		if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
-			self.toggle_seen()
-
-	# poster --------------------------------------------------------------
-
-	def change_poster(self, *args):
-		from edit import change_poster
-		change_poster(self)
-
-	def del_poster(self, *args):
-		from edit import delete_poster
-		delete_poster(self)
-
-	def z_poster(self, *args):
-		treeselection = self.widgets['treeview'].get_selection()
-		(tmp_model, tmp_iter) = treeselection.get_selected()
-		if tmp_iter is None:
-			return
-		number = tmp_model.get_value(tmp_iter, 0)
-		movie = self.db.Movie.query.filter_by(number=number).first()
-		if movie is not None:
-			tmp_dest = self.locations['posters']
-			tmp_img = os.path.join(tmp_dest, str(movie.image)+".jpg")
-			self.widgets['big_poster'].set_from_file(tmp_img)
-			self.widgets['poster_window'].show()
-
-	def z_poster_hide(self, *args):
-		self.widgets['poster_window'].hide()
-
-	def get_poster(self, *args):
-		"""tries to fetch a new big poster from amazon"""
-		from edit import fetch_bigger_poster
-		fetch_bigger_poster(self)
-
-	# rating --------------------------------------------------------------
-
-	def scale_rating_change_add(self, *args):
-		add.change_rating_from_slider(self)
-
-	def toggle_seen(self, *args):
-		m_number, m_iter = self.get_maintree_selection()
-		movie = self.db.Movie.query.filter_by(number=m_number).first()
-		if movie is not None:
-			if movie.seen:
-				movie.seen = False
-			else:
-				movie.seen = True
-			movie.update()
-			movie.flush()
-			movie.refresh()
-			self.treemodel.set_value(m_iter,6,movie.seen)
-			self.treeview_clicked()
-
-	def sugest_movie(self, *args):
-		if not self.widgets['menu']['not_seen_movies'].get_active():
-			self.widgets['menu']['not_seen_movies'].set_active(True)
-		subtotal = len(self.widgets['treeview'].get_model())
-		self.count_statusbar()
-		if subtotal > 0:
-			import random
-			number = random.randrange(subtotal)
-			self.widgets['treeview'].set_cursor(number)
-			self.treeview_clicked()
-		else:
-			gutils.info(self, \
-				_("You have seen all films in your collection!"), \
-				self.widgets['window'])
-
-	# volumes/collections ----------------------------------------------{{{
-	def on_am_collection_combo_changed(self,widget):
-		if widget.get_active()!=-1:
-			self._selected_collection = self.collection_combo_ids[widget.get_active()]
-	def on_am_volume_combo_changed(self,widget):
-		if widget.get_active()!=-1:
-			self._selected_volume = self.volume_combo_ids[widget.get_active()]
-
-	def add_volume(self, widget):
-		from update import update_volume_combo_ids
-		name = self.widgets['add']['volume'].get_active_text()
-		vol = self.db.Volume(name=name)
-		if vol and vol.add_to_db():
-			update_volume_combo_ids(self)
-			initialize.fill_volumes_combo(self, id)
-
-	def add_collection(self, widget):
-		from update import update_collection_combo_ids
-		name = self.widgets['add']['collection'].get_active_text()
-		col = self.db.Collection(name=name)
-		if col and col.add_to_db():
-			update_collection_combo_ids(self)
-			initialize.fill_collections_combo(self, id)
-
-	def remove_volume(self, widget):
-		from update import update_volume_combo_ids
-		vol_id = self._selected_volume
-		vol = self.db.Volume.query.filter_by(volume_id=vol_id).first()
-		if vol and vol.remove_from_db():
-			update_volume_combo_ids(self)
-			initialize.fill_volumes_combo(self, id)
-
-	def remove_collection(self, widget):
-		from update import update_collection_combo_ids
-		col_id = self._selected_collection
-		col = self.db.Collection.query.filter_by(collection_id=col_id).first()
-		if col and col.remove_from_db():
-			update_collection_combo_ids(self)
-			initialize.fill_collections_combo(self, id)
-
-	def rename_volume(self, widget):
-		vol_id = self._selected_volume
-		if vol_id != 0:
-			new_name = self.widgets['add']['volume'].get_active_text()
-			vol = self.db.Volume.query.filter_by(volume_id=vol_id).first()
-			if vol:
-				vol.name=new_name
-				if vol.update_in_db():
-					initialize.fill_volumes_combo(self, default=vol_id)
-
-	def rename_collection(self, widget):
-		col_id = self.e_selected_collection
-		if col_id != 0:
-			new_name = self.widgets['add']['collection'].get_active_text()
-			col = self.db.Collection.query.filter_by(collection_id=col_id).first()
-			if col is not None:
-				col.name=new_name
-				if col.update_in_db():
-					initialize.fill_collections_combo(self, default=col_id)
-
-	def show_volume(self, widget):
-		quick_filter.clear_filter(self)
-		vol_id = self.db.Movie.query.filter_by(movie_id=self._movie_id).first().volume_id
-		pos = gutils.findKey(vol_id, self.volume_combo_ids)
-		self.widgets['filter']['volume'].set_active(pos)
-
-	def show_collection(self, widget):
-		quick_filter.clear_filter(self)
-		col_id = self.db.Movie.query.filter_by(movie_id=self._movie_id).first().collection_id
-		pos = gutils.findKey(col_id, self.collection_combo_ids)
-		self.widgets['filter']['collection'].set_active(pos)
-	#}}}
-
-	# languages -------------------------------------------------------{{{
-	def on_lang_treeview_button_press_event(self, widget, event):
-		"""add a right click menu to lang tree"""
-		if event.button == 3:
-			x = int(event.x)
-			y = int(event.y)
-			time = event.time
-			pthinfo = self.widgets['add']['lang_treeview'].get_path_at_pos(x, y)
-			if pthinfo is not None:
-				path, col, cellx, celly = pthinfo
-				self.widgets['add']['lang_treeview'].grab_focus()
-				self.widgets['add']['lang_treeview'].set_cursor( path, col, 0)
-			self.widgets['add']['lang_menu'].popup(None, None, None, event.button, time)
-	
-	def create_language_row(self, lang=None):
-		if len(self.languages_ids) == 1:
-			return False
-
-		def get_text(model, id):
-			if id == -1:
-				return model[0][1]
-			else:
-				for i in model:
-					if i[0] == id:
-						return i[1]
-
-		model = self.widgets['add']['lang_treeview'].get_model()
-		myiter = model.append(None)
-		if lang:
-			model.set_value(myiter, 0, get_text(self.lang['lang'], lang.lang_id))
-			model.set_value(myiter, 1, get_text(self.lang['type'], lang.type))
-			model.set_value(myiter, 2, get_text(self.lang['acodec'], lang.acodec_id))
-			model.set_value(myiter, 3, get_text(self.lang['achannel'], lang.achannel_id))
-			model.set_value(myiter, 4, get_text(self.lang['subformat'], lang.subformat_id))
-		else:
-			model.set_value(myiter, 0, get_text(self.lang['lang'], -1))
-	
-	def on_tv_lang_combo_edited(self, widget, path, new_text, column):
-		model = self.widgets['add']['lang_treeview'].get_model()
-		model[path][column] = new_text
-		mymodel = widget.get_property('model')
-		if column == 1:	# type
-			my_type = 0
-			for i in mymodel:
-				if i[1] == new_text:
-					my_type = i[0]
-			if my_type == 3:	# subtitles
-				model[path][2] = ''
-				model[path][3] = ''
-			else:
-				model[path][4] = ''
-		if column == 4:	# subtitle format
-			model[path][1] = _('subtitles')
-			model[path][2] = ''
-			model[path][3] = ''
-		if column in (2,3):
-			model[path][4] = ''
-			if model[path][1] == _('subtitles'):
-				model[path][1] = ''
-
-	def on_am_lang_add_clicked(self, widget):
-		self.create_language_row()
-	def on_am_lang_remove_clicked(self, widget):
-		treeselection = self.widgets['add']['lang_treeview'].get_selection()
-		if treeselection:
-			(tmp_model, tmp_iter) = treeselection.get_selected()
-			if tmp_iter:
-				tmp_model.remove(tmp_iter)
-
-	# preferences
-	def on_lang_add_clicked(self, widget):
-		lang = self.db.Lang(name=self.widgets['preferences']['lang_name'].get_active_text())
-		if lang and lang.add_to_db():
-			initialize.language_combos(self)
-
-	def on_lang_remove_clicked(self, widget):
-		active = self.widgets['preferences']['lang_name'].get_active()
-		if active>0:
-			lang_id = self.languages_ids[active]
-			lang = self.db.Lang.query.filter_by(lang_id=lang_id).first()
-			if lang and lang.remove_from_db():
-				initialize.language_combos(self)
-		else:
-			self.debug.show("You have to select language first")
-
-	def on_lang_rename_clicked(self, widget):
-		try:
-			active = self.lang_name_active
-		except:
-			return False
-		lang_id = self.languages_ids[active]
-		if lang_id>0:
-			lang = self.db.Lang.query.filter_by(lang_id=lang_id).first()
-			if lang is not None:
-				lang.name = self.widgets['preferences']['lang_name'].get_active_text()
-				if lang.update_in_db():
-					initialize.language_combos(self)
-
-	def on_lang_name_combo_changed(self, widget):
-		active = self.widgets['preferences']['lang_name'].get_active()
-		if active>-1:
-			self.lang_name_active = active
-	#}}}
-
-	# tags -------------------------------------------------------------{{{
-	def on_tag_add_clicked(self, widget):
-		tag = self.db.Tag(name=self.widgets['preferences']['tag_name'].get_active_text())
-		if tag and tag.add_to_db():
-			initialize.fill_preferences_tags_combo(self)
-			initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-			update.update_bytag_combo_ids(self)
-			initialize.fill_bytag_combo(self)
-
-	def on_tag_remove_clicked(self, widget):
-		active = self.widgets['preferences']['tag_name'].get_active()
-		if active>-1:
-			tag_id = self.tags_ids[active]
-			tag = self.db.Tag.query.filter_by(tag_id=tag_id).first()
-			if tag and tag.remove_from_db():
-				initialize.fill_preferences_tags_combo(self)
-				initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-				update.update_bytag_combo_ids(self)
-				initialize.fill_bytag_combo(self)
-		else:
-			self.debug.show("You have to select tag first")
-
-	def on_tag_rename_clicked(self, widget):
-		try:
-			active = self.tag_name_active
-		except:
-			return False
-		tag_id = self.tags_ids[active]
-		tag = self.db.Tag.query.filter_by(tag_id=tag_id).first()
-		if tag is not None:
-			tag.name = self.widgets['preferences']['tag_name'].get_active_text()
-			if tag.update_in_db():
-				initialize.fill_preferences_tags_combo(self)
-				initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-				update.update_bytag_combo_ids(self)
-				initialize.fill_bytag_combo(self)
-
-	def on_tag_name_combo_changed(self, widget):
-		active = self.widgets['preferences']['tag_name'].get_active()
-		if active>-1:
-			self.tag_name_active = active
-	# }}}
-
-	# audio codecs ------------------------------------------------------{{{
-	def on_acodec_add_clicked(self, widget):
-		acodec = self.db.ACodec(name=self.widgets['preferences']['acodec_name'].get_active_text())
-		if acodec and acodec.add_to_db():
-			initialize.acodec_combos(self)
-
-	def on_acodec_remove_clicked(self, widget):
-		active = self.widgets['preferences']['acodec_name'].get_active()
-		if active>0:
-			acodec_id = self.acodecs_ids[active]
-			acodec = self.db.ACodec.query.filter_by(acodec_id=acodec_id).first()
-			if acodec and acodec.remove_from_db():
-				initialize.acodec_combos(self)
-		else:
-			self.debug.show("You have to select audio codec first")
-
-	def on_acodec_rename_clicked(self, widget):
-		try:
-			active = self.acodec_name_active
-		except:
-			return False
-		acodec_id = self.acodecs_ids[active]
-		acodec = self.db.ACodec.query.filter_by(acodec_id=acodec_id).first()
-		if acodec is not None:
-			acodec.name = self.widgets['preferences']['acodec_name'].get_active_text()
-			if acodec.update_in_db():
-				initialize.acodec_combos(self)
-
-	def on_acodec_name_combo_changed(self, widget):
-		active = self.widgets['preferences']['acodec_name'].get_active()
-		if active>-1:
-			self.acodec_name_active = active
-	# }}}
-
-	# audio channels ----------------------------------------------------{{{
-	def on_achannel_add_clicked(self, widget):
-		achannel = self.db.AChannel(name=self.widgets['preferences']['achannel_name'].get_active_text())
-		if achannel and achannel.add_to_db():
-			initialize.achannel_combos(self)
-
-	def on_achannel_remove_clicked(self, widget):
-		active = self.widgets['preferences']['achannel_name'].get_active()
-		if active>0:
-			achannel_id = self.achannels_ids[active]
-			achannel = self.db.AChannel.query.filter_by(achannel_id=achannel_id).first()
-			if achannel and achannel.remove_from_db():
-				initialize.achannel_combos(self)
-		else:
-			self.debug.show("You have to select audio channel first")
-
-	def on_achannel_rename_clicked(self, widget):
-		try:
-			active = self.achannel_name_active
-		except:
-			return False
-		achannel_id = self.achannels_ids[active]
-		achannel = self.db.AChannel.query.filter_by(achannel_id=achannel_id).first()
-		if achannel is not None:
-			achannel.name = self.widgets['preferences']['achannel_name'].get_active_text()
-			if achannel.update_in_db():
-				initialize.achannel_combos(self)
-
-	def on_achannel_name_combo_changed(self, widget):
-		active = self.widgets['preferences']['achannel_name'].get_active()
-		if active>-1:
-			self.achannel_name_active = active
-	# }}}
-
-	# subformats -------------------------------------------------------------{{{
-	def on_subformat_add_clicked(self, widget):
-		subformat = self.db.SubFormat(name=self.widgets['preferences']['subformat_name'].get_active_text())
-		if subformat and subformat.add_to_db():
-			initialize.subformat_combos(self)
-
-	def on_subformat_remove_clicked(self, widget):
-		active = self.widgets['preferences']['subformat_name'].get_active()
-		if active>0:
-			subformat_id = self.subformats_ids[active]
-			subformat = self.db.SubFormat.query.filter_by(subformat_id=subformat_id).first()
-			if subformat and subformat.remove_from_db():
-				initialize.subformat_combos(self)
-		else:
-			self.debug.show("You have to select subtitle format first")
-
-	def on_subformat_rename_clicked(self, widget):
-		try:
-			active = self.subformat_name_active
-		except:
-			return False
-		subformat_id = self.subformats_ids[active]
-		subformat = self.db.SubFormat.query.filter_by(subformat_id=subformat_id).first()
-		if subformat is not None:
-			subformat.name = self.widgets['preferences']['subformat_name'].get_active_text()
-			if subformat.update_in_db():
-				initialize.subformat_combos(self)
-
-	def on_subformat_name_combo_changed(self, widget):
-		active = self.widgets['preferences']['subformat_name'].get_active()
-		if active>-1:
-			self.subformat_name_active = active
-	# }}}
-
-	# media ------------------------------------------------------------{{{
-	def on_medium_add_clicked(self, widget):
-		medium = self.db.Medium(name=self.widgets['preferences']['medium_name'].get_active_text())
-		if medium and medium.add_to_db():
-			initialize.media_combos(self)
-
-	def on_medium_remove_clicked(self, widget):
-		active = self.widgets['preferences']['medium_name'].get_active()
-		if active>-1:
-			medium_id = self.media_ids[active]
-			medium = self.db.Medium.query.filter_by(medium_id=medium_id).first()
-			if medium and medium.remove_from_db():
-				initialize.media_combos(self)
-		else:
-			self.debug.show("You have to select medium first")
-
-	def on_medium_rename_clicked(self, widget):
-		try:
-			active = self.medium_name_active
-		except:
-			return False
-		medium_id = self.media_ids[active]
-		medium = self.db.Medium.query.filter_by(medium_id=medium_id).first()
-		if medium is not None:
-			medium.name = self.widgets['preferences']['medium_name'].get_active_text()
-			if medium.update_in_db():
-				initialize.media_combos(self)
-
-	def on_medium_name_combo_changed(self, widget):
-		active = self.widgets['preferences']['medium_name'].get_active()
-		if active>-1:
-			self.medium_name_active = active
-	# }}}
-
-	# vcodecs -------------------------------------------------------------{{{
-	def on_vcodec_add_clicked(self, widget):
-		vcodec = self.db.VCodec(name=self.widgets['preferences']['vcodec_name'].get_active_text())
-		if vcodec and vcodec.add_to_db():
-			initialize.vcodec_combos(self)
-
-	def on_vcodec_remove_clicked(self, widget):
-		active = self.widgets['preferences']['vcodec_name'].get_active()
-		if active>-1:
-			vcodec_id = self.vcodecs_ids[active]
-			vcodec = self.db.VCodec.query.filter_by(vcodec_id=vcodec_id).first()
-			if vcodec and vcodec.remove_from_db():
-				initialize.vcodec_combos(self)
-		else:
-			self.debug.show("You have to select video codec first")
-
-	def on_vcodec_rename_clicked(self, widget):
-		try:
-			active = self.vcodec_name_active
-		except:
-			return False
-		vcodec_id = self.vcodecs_ids[active]
-		vcodec = self.db.VCodec.query.filter_by(vcodec_id=vcodec_id).first()
-		if vcodec is not None:
-			vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text()
-			if vcodec.update_in_db():
-				initialize.vcodec_combos(self)
-
-	def on_vcodec_name_combo_changed(self, widget):
-		active = self.widgets['preferences']['vcodec_name'].get_active()
-		if active>-1:
-			self.vcodec_name_active = active
-	# }}}
-
-	# main treeview -------------------------------------------------------
-	def treeview_clicked(self, *args):
-		main_treeview.treeview_clicked(self)
-
-	def populate_treeview(self, statement=None, where=None):
-		main_treeview.populate(self, statement, where)
-
-	def get_maintree_selection(self):
-		treeselection = self.widgets['treeview'].get_selection()
-		(tmp_model, tmp_iter) = treeselection.get_selected()
-		if tmp_model and tmp_iter:
-			return tmp_model.get_value(tmp_iter, 0), tmp_iter
-		else:
-			return None, None
-
-	# backup/restore ------------------------------------------------------	
-
-	def backup(self, *args):
-		from backup import backup
-		backup(self)
-
-	def restore(self, *args):
-		response = gutils.question(self, \
-			_("""Are you sure you want to restore?
+    """The main application class"""
+
+    Image = gtk.Image()
+    founded_results_id = None
+    initialized = False
+    lang = {}
+
+    def __init__(self):
+        """main griffith application constructor"""    
+
+        # debug object
+        global debug
+        debug = self.debug = gdebug.GriffithDebug()
+        
+        gconsole.check_args(self)
+        initialize.locations(self)
+        
+        initialize.i18n(self, self.locations['i18n'])
+        self.posix = (os.name == 'posix')
+    
+        # Configuration
+        if self._tmp_config.find('/') >=0 or self._tmp_config.find('\\') >=0:
+            configFileName = self._tmp_config
+        else:
+            configFileName = os.path.join(self.locations['home'], self._tmp_config)
+        self.config = config.Config(file=configFileName)
+        initialize.location_posters(self.locations, self.config)
+
+        # convert old database
+        filename = os.path.join(self.locations['home'], self.config.get('file', 'griffith.db', section='database'))
+        if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
+            debug.show('Old database format detected. Converting...')
+            from dbupgrade import convert_from_old_db
+            if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
+                self.config.save()
+                initialize.location_posters(self.locations, self.config)
+            else:
+                print 'Cant convert old database, exiting.'
+                sys.exit(4)
+        
+        # create/connect db
+        from sql import GriffithSQL
+        self.db = GriffithSQL(self.config, self.debug, self.locations['home'])
+
+        # let's check any console arguments to parse
+        gconsole.check_args_with_db(self)
+
+        gtk.window_set_auto_startup_notification(True)
+        self.Image = gtk.Image()
+        self.filter_l = False
+        initialize.gui(self)
+        initialize.toolbar(self)
+        initialize.treeview(self)
+        initialize.loans_treeview(self)
+        initialize.lang_treeview(self)
+        initialize.dictionaries(self)
+        initialize.combos(self)
+        initialize.preferences(self)
+        initialize.movie_plugins(self)
+        initialize.export_plugins(self)
+        initialize.people_treeview(self)
+        initialize.web_results(self)
+        self.initialized = True
+
+        self.restore_state()
+        self.clear_details()
+        self.populate_treeview()
+
+        # adding some completion fields
+        self.completion = gtk.EntryCompletion()
+        self.widgets['add']['o_title'].set_completion(self.completion)
+        self.completion.set_model(self.treemodel)
+        self.completion.set_text_column(3)
+        self.completion_t = gtk.EntryCompletion()
+        self.widgets['add']['title'].set_completion(self.completion_t)
+        self.completion_t.set_model(self.treemodel)
+        self.completion_t.set_text_column(4)
+        
+        initialize.gtkspell(self)
+
+        # add default folders to some select widgets
+        if self.windows:
+            from win32com.shell import shellcon, shell
+            fonts_dir = shell.SHGetFolderPath(0, shellcon.CSIDL_FONTS, 0, 0)
+            self.widgets['preferences']['font'].set_current_folder(fonts_dir)
+        elif self.mac:
+            self.widgets['preferences']['font'].set_current_folder("/System/Library/Fonts/")
+        else:
+            self.widgets['preferences']['font'].set_current_folder(os.path.join(sys.prefix, 'share', 'fonts'))
+
+    def main(self):
+        gtk.gdk.threads_init()
+        gtk.gdk.threads_enter()
+        gtk.main()
+        gtk.gdk.threads_leave()
+        return 0
+
+    ###########
+    # callbacks
+    ###########        
+
+    def on_export_activate(self, menu_iter, plugin_name):
+        export_plugin = __import__('PluginExport%s' % plugin_name)
+        export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], self.debug, config=self.config)
+
+    def on_import_activate(self, *args):
+        if self.widgets.has_key('import'):
+            self.widgets['import']['window'].show()
+        else:
+            initialize.import_plugins(self)
+
+    def destroy(self, widget, data=None):
+        self.save_state()
+        gtk.main_quit()
+
+    def on_configure(self, widget, data=None):
+        # size should only be saved on microsoft windows systems
+        # on other systems the window manager should manage the windows
+        if self.windows and not data is None:
+            if not hasattr(self, 'mainwindow_state') or self.mainwindow_state is None:
+                self.mainwindow_state = {}
+            self.mainwindow_state['left'] = data.x
+            self.mainwindow_state['top'] = data.y
+            self.mainwindow_state['height'] = data.height
+            self.mainwindow_state['width'] = data.width
+
+    def on_window_state(self, widget, windowstate=None):
+        # size should only be saved on microsoft windows systems
+        # on other systems the window manager should manage the windows
+        # here: save the window state
+        if self.windows and not windowstate is None:
+            if not hasattr(self, 'mainwindow_state') or self.mainwindow_state is None:
+                self.mainwindow_state = {}
+            self.mainwindow_state['state'] = int(windowstate.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
+
+
+    # about dialog    -------------------------------------------------------            
+
+    def about_dialog(self, *args):
+        from about import AboutDialog
+        about_dialog = AboutDialog(self.locations)
+
+    # add movie -----------------------------------------------------------
+
+    def clear_add_dialog(self, *args):
+        add.clear(self)
+
+    def edit_movie(self, *args):
+        movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
+        if movie is not None:
+            add.edit_movie(self, movie)
+        else:
+            gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
+
+    def hide_add_window(self, *args):
+        #if self.widgets['add']['b_get_from_web'].is_sensitive() is True: # fetch from amazon is not working
+        self.widgets['window'].present()
+        self.widgets['results']['window'].hide()
+        self.widgets['add']['window'].hide()
+
+    def get_from_web(self, *args):
+        add.get_from_web(self)
+
+    def show_search_results(self, results):
+        add.show_websearch_results(self)
+
+    def populate_dialog_with_results(self, *args):
+        add.populate_with_results(self)
+
+    def source_changed(self, *args):
+        add.source_changed(self)
+
+    def on_enter(self, *args):
+        # push Get From Web button if return key is pressed in title box 
+        if self._am_movie_id is None:
+            self.widgets['add']['b_get_from_web'].clicked()
+
+    # preferences ---------------------------------------------------------
+
+    def show_preferences(self, *args):
+        from preferences import show_preferences
+        show_preferences(self)
+
+    def hide_preferences(self, *args):
+        self.widgets['window'].present()
+        self.widgets['preferences']['window'].hide()
+
+    def save_preferences(self, *args):
+        from preferences import save_preferences
+        save_preferences(self)
+        self.hide_preferences()
+
+    def on_p_db_type_changed(self, widget):
+        active = widget.get_active()
+        if active == 0:
+            # change port number if it is something useful at the moment; for clearness
+            if self.widgets['preferences']['db_port'].get_value() == 0 or \
+                self.widgets['preferences']['db_port'].get_value() == 3306 or \
+                self.widgets['preferences']['db_port'].get_value() == 5432 or \
+                self.widgets['preferences']['db_port'].get_value() == 1433:
+                self.widgets['preferences']['db_port'].set_value(0)
+            self.widgets['preferences']['db_passwd'].set_sensitive(False)
+            self.widgets['preferences']['db_user'].set_sensitive(False)
+            self.widgets['preferences']['db_port'].set_sensitive(False)
+            self.widgets['preferences']['db_host'].set_sensitive(False)
+        elif active == 1:
+            # change port number IF previous one was MySQL's or MSSQL one
+            if self.widgets['preferences']['db_port'].get_value() == 0 or \
+                self.widgets['preferences']['db_port'].get_value() == 3306 or \
+                self.widgets['preferences']['db_port'].get_value() == 1433:
+                self.widgets['preferences']['db_port'].set_value(5432)
+            self.widgets['preferences']['db_passwd'].set_sensitive(True)
+            self.widgets['preferences']['db_user'].set_sensitive(True)
+            self.widgets['preferences']['db_port'].set_sensitive(True)
+            self.widgets['preferences']['db_host'].set_sensitive(True)
+        elif active == 2:
+            # change port number IF previous one was PostgreSQL's or MSSQL one
+            if self.widgets['preferences']['db_port'].get_value() == 0 or \
+                self.widgets['preferences']['db_port'].get_value() == 5432 or \
+                self.widgets['preferences']['db_port'].get_value() == 1433:
+                self.widgets['preferences']['db_port'].set_value(3306)
+            self.widgets['preferences']['db_passwd'].set_sensitive(True)
+            self.widgets['preferences']['db_user'].set_sensitive(True)
+            self.widgets['preferences']['db_port'].set_sensitive(True)
+            self.widgets['preferences']['db_host'].set_sensitive(True)
+        elif active == 3:
+            # change port number IF previous one was PostgreSQL's or MySQL one
+            if self.widgets['preferences']['db_port'].get_value() == 0 or \
+                self.widgets['preferences']['db_port'].get_value() == 5432 or \
+                self.widgets['preferences']['db_port'].get_value() == 3306:
+                self.widgets['preferences']['db_port'].set_value(1433)
+            self.widgets['preferences']['db_passwd'].set_sensitive(True)
+            self.widgets['preferences']['db_user'].set_sensitive(True)
+            self.widgets['preferences']['db_port'].set_sensitive(True)
+            self.widgets['preferences']['db_host'].set_sensitive(True)
+
+    def on_cb_spellchecker_pref_toggled(self, widget):
+        self.widgets['preferences']['vbox_spellchecker'].set_sensitive(widget.get_active())
+
+    # movie related operations --------------------------------------------
+
+    def add_movie(self, *args):
+        add.add_movie(self)
+
+    def add_movie_db(self, *args):
+        add.add_movie_db(self, 0)
+
+    def add_movie_close_db(self, *args):
+        add.add_movie_db(self, 1)
+
+    def delete_movie(self, *args):
+        from delete import delete_movie
+        delete_movie(self)
+
+    def update_movie(self, *args):
+        add.update_movie(self)
+
+    def clear_details(self):
+        main_treeview.set_details(self)
+
+    def loan_movie(self, *args):
+        from loan import loan_movie
+        loan_movie(self)
+
+    def clone_movie(self, *args):
+        add.clone_movie(self)
+
+    def on_m_seen_icon_button_press_event(self, widget, event):
+        if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+            self.toggle_seen()
+
+    # poster --------------------------------------------------------------
+
+    def change_poster(self, *args):
+        from edit import change_poster
+        change_poster(self)
+
+    def del_poster(self, *args):
+        from edit import delete_poster
+        delete_poster(self)
+
+    def z_poster(self, *args):
+        treeselection = self.widgets['treeview'].get_selection()
+        (tmp_model, tmp_iter) = treeselection.get_selected()
+        if tmp_iter is None:
+            return
+        number = tmp_model.get_value(tmp_iter, 0)
+        movie = self.db.session.query(db.Movie).filter_by(number=number).first()
+        if movie is not None:
+            tmp_dest = self.locations['posters']
+            tmp_img = os.path.join(tmp_dest, str(movie.image)+".jpg")
+            self.widgets['big_poster'].set_from_file(tmp_img)
+            self.widgets['poster_window'].show()
+
+    def z_poster_hide(self, *args):
+        self.widgets['poster_window'].hide()
+
+    def get_poster(self, *args):
+        """tries to fetch a new big poster from amazon"""
+        from edit import fetch_bigger_poster
+        fetch_bigger_poster(self)
+
+    # rating --------------------------------------------------------------
+
+    def scale_rating_change_add(self, *args):
+        add.change_rating_from_slider(self)
+
+    def toggle_seen(self, *args):
+        m_number, m_iter = self.get_maintree_selection()
+        movie = self.db.session.query(db.Movie).filter_by(number=m_number).first()
+        if movie is not None:
+            if movie.seen:
+                movie.seen = False
+            else:
+                movie.seen = True
+            movie.update()
+            movie.flush()
+            movie.refresh()
+            self.treemodel.set_value(m_iter,6,movie.seen)
+            self.treeview_clicked()
+
+    def sugest_movie(self, *args):
+        if not self.widgets['menu']['not_seen_movies'].get_active():
+            self.widgets['menu']['not_seen_movies'].set_active(True)
+        subtotal = len(self.widgets['treeview'].get_model())
+        self.count_statusbar()
+        if subtotal > 0:
+            import random
+            number = random.randrange(subtotal)
+            self.widgets['treeview'].set_cursor(number)
+            self.treeview_clicked()
+        else:
+            gutils.info(self, \
+                _("You have seen all films in your collection!"), \
+                self.widgets['window'])
+
+    # volumes/collections ----------------------------------------------{{{
+    def on_am_collection_combo_changed(self,widget):
+        if widget.get_active()!=-1:
+            self._selected_collection = self.collection_combo_ids[widget.get_active()]
+    def on_am_volume_combo_changed(self,widget):
+        if widget.get_active()!=-1:
+            self._selected_volume = self.volume_combo_ids[widget.get_active()]
+
+    def add_volume(self, widget):
+        from update import update_volume_combo_ids
+        name = self.widgets['add']['volume'].get_active_text()
+        vol = self.db.Volume(name=name)
+        if vol and vol.add_to_db():
+            update_volume_combo_ids(self)
+            initialize.fill_volumes_combo(self, id)
+
+    def add_collection(self, widget):
+        from update import update_collection_combo_ids
+        name = self.widgets['add']['collection'].get_active_text()
+        col = self.db.Collection(name=name)
+        if col and col.add_to_db():
+            update_collection_combo_ids(self)
+            initialize.fill_collections_combo(self, id)
+
+    def remove_volume(self, widget):
+        from update import update_volume_combo_ids
+        vol_id = self._selected_volume
+        vol = self.db.session.query(db.Volume).filter_by(volume_id=vol_id).first()
+        if vol and vol.remove_from_db():
+            update_volume_combo_ids(self)
+            initialize.fill_volumes_combo(self, id)
+
+    def remove_collection(self, widget):
+        from update import update_collection_combo_ids
+        col_id = self._selected_collection
+        col = self.db.session.query(db.Collection).filter_by(collection_id=col_id).first()
+        if col and col.remove_from_db():
+            update_collection_combo_ids(self)
+            initialize.fill_collections_combo(self, id)
+
+    def rename_volume(self, widget):
+        vol_id = self._selected_volume
+        if vol_id != 0:
+            new_name = self.widgets['add']['volume'].get_active_text()
+            vol = self.db.session.query(db.Volume).filter_by(volume_id=vol_id).first()
+            if vol:
+                vol.name=new_name
+                if vol.update_in_db():
+                    initialize.fill_volumes_combo(self, default=vol_id)
+
+    def rename_collection(self, widget):
+        col_id = self.e_selected_collection
+        if col_id != 0:
+            new_name = self.widgets['add']['collection'].get_active_text()
+            col = self.db.session.query(db.Collection).filter_by(collection_id=col_id).first()
+            if col is not None:
+                col.name=new_name
+                if col.update_in_db():
+                    initialize.fill_collections_combo(self, default=col_id)
+
+    def show_volume(self, widget):
+        quick_filter.clear_filter(self)
+        vol_id = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first().volume_id
+        pos = gutils.findKey(vol_id, self.volume_combo_ids)
+        self.widgets['filter']['volume'].set_active(pos)
+
+    def show_collection(self, widget):
+        quick_filter.clear_filter(self)
+        col_id = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first().collection_id
+        pos = gutils.findKey(col_id, self.collection_combo_ids)
+        self.widgets['filter']['collection'].set_active(pos)
+    #}}}
+
+    # languages -------------------------------------------------------{{{
+    def on_lang_treeview_button_press_event(self, widget, event):
+        """add a right click menu to lang tree"""
+        if event.button == 3:
+            x = int(event.x)
+            y = int(event.y)
+            time = event.time
+            pthinfo = self.widgets['add']['lang_treeview'].get_path_at_pos(x, y)
+            if pthinfo is not None:
+                path, col, cellx, celly = pthinfo
+                self.widgets['add']['lang_treeview'].grab_focus()
+                self.widgets['add']['lang_treeview'].set_cursor( path, col, 0)
+            self.widgets['add']['lang_menu'].popup(None, None, None, event.button, time)
+    
+    def create_language_row(self, lang=None):
+        if len(self.languages_ids) == 1:
+            return False
+
+        def get_text(model, id):
+            if id == -1:
+                return model[0][1]
+            else:
+                for i in model:
+                    if i[0] == id:
+                        return i[1]
+
+        model = self.widgets['add']['lang_treeview'].get_model()
+        myiter = model.append(None)
+        if lang:
+            model.set_value(myiter, 0, get_text(self.lang['lang'], lang.lang_id))
+            model.set_value(myiter, 1, get_text(self.lang['type'], lang.type))
+            model.set_value(myiter, 2, get_text(self.lang['acodec'], lang.acodec_id))
+            model.set_value(myiter, 3, get_text(self.lang['achannel'], lang.achannel_id))
+            model.set_value(myiter, 4, get_text(self.lang['subformat'], lang.subformat_id))
+        else:
+            model.set_value(myiter, 0, get_text(self.lang['lang'], -1))
+    
+    def on_tv_lang_combo_edited(self, widget, path, new_text, column):
+        model = self.widgets['add']['lang_treeview'].get_model()
+        model[path][column] = new_text
+        mymodel = widget.get_property('model')
+        if column == 1:    # type
+            my_type = 0
+            for i in mymodel:
+                if i[1] == new_text:
+                    my_type = i[0]
+            if my_type == 3:    # subtitles
+                model[path][2] = ''
+                model[path][3] = ''
+            else:
+                model[path][4] = ''
+        if column == 4:    # subtitle format
+            model[path][1] = _('subtitles')
+            model[path][2] = ''
+            model[path][3] = ''
+        if column in (2,3):
+            model[path][4] = ''
+            if model[path][1] == _('subtitles'):
+                model[path][1] = ''
+
+    def on_am_lang_add_clicked(self, widget):
+        self.create_language_row()
+    def on_am_lang_remove_clicked(self, widget):
+        treeselection = self.widgets['add']['lang_treeview'].get_selection()
+        if treeselection:
+            (tmp_model, tmp_iter) = treeselection.get_selected()
+            if tmp_iter:
+                tmp_model.remove(tmp_iter)
+
+    # preferences
+    def on_lang_add_clicked(self, widget):
+        lang = self.db.Lang(name=self.widgets['preferences']['lang_name'].get_active_text())
+        if lang and lang.add_to_db():
+            initialize.language_combos(self)
+
+    def on_lang_remove_clicked(self, widget):
+        active = self.widgets['preferences']['lang_name'].get_active()
+        if active>0:
+            lang_id = self.languages_ids[active]
+            lang = self.db.session.query(db.Lang).filter_by(lang_id=lang_id).first()
+            if lang and lang.remove_from_db():
+                initialize.language_combos(self)
+        else:
+            self.debug.show("You have to select language first")
+
+    def on_lang_rename_clicked(self, widget):
+        try:
+            active = self.lang_name_active
+        except:
+            return False
+        lang_id = self.languages_ids[active]
+        if lang_id>0:
+            lang = self.db.session.query(db.Lang).filter_by(lang_id=lang_id).first()
+            if lang is not None:
+                lang.name = self.widgets['preferences']['lang_name'].get_active_text()
+                if lang.update_in_db():
+                    initialize.language_combos(self)
+
+    def on_lang_name_combo_changed(self, widget):
+        active = self.widgets['preferences']['lang_name'].get_active()
+        if active>-1:
+            self.lang_name_active = active
+    #}}}
+
+    # tags -------------------------------------------------------------{{{
+    def on_tag_add_clicked(self, widget):
+        tag = self.db.Tag(name=self.widgets['preferences']['tag_name'].get_active_text())
+        if tag and tag.add_to_db():
+            initialize.fill_preferences_tags_combo(self)
+            initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
+            update.update_bytag_combo_ids(self)
+            initialize.fill_bytag_combo(self)
+
+    def on_tag_remove_clicked(self, widget):
+        active = self.widgets['preferences']['tag_name'].get_active()
+        if active>-1:
+            tag_id = self.tags_ids[active]
+            tag = self.db.session.query(db.Tag).filter_by(tag_id=tag_id).first()
+            if tag and tag.remove_from_db():
+                initialize.fill_preferences_tags_combo(self)
+                initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
+                update.update_bytag_combo_ids(self)
+                initialize.fill_bytag_combo(self)
+        else:
+            self.debug.show("You have to select tag first")
+
+    def on_tag_rename_clicked(self, widget):
+        try:
+            active = self.tag_name_active
+        except:
+            return False
+        tag_id = self.tags_ids[active]
+        tag = self.db.session.query(db.Tag).filter_by(tag_id=tag_id).first()
+        if tag is not None:
+            tag.name = self.widgets['preferences']['tag_name'].get_active_text()
+            if tag.update_in_db():
+                initialize.fill_preferences_tags_combo(self)
+                initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
+                update.update_bytag_combo_ids(self)
+                initialize.fill_bytag_combo(self)
+
+    def on_tag_name_combo_changed(self, widget):
+        active = self.widgets['preferences']['tag_name'].get_active()
+        if active>-1:
+            self.tag_name_active = active
+    # }}}
+
+    # audio codecs ------------------------------------------------------{{{
+    def on_acodec_add_clicked(self, widget):
+        acodec = self.db.ACodec(name=self.widgets['preferences']['acodec_name'].get_active_text())
+        if acodec and acodec.add_to_db():
+            initialize.acodec_combos(self)
+
+    def on_acodec_remove_clicked(self, widget):
+        active = self.widgets['preferences']['acodec_name'].get_active()
+        if active>0:
+            acodec_id = self.acodecs_ids[active]
+            acodec = self.db.session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
+            if acodec and acodec.remove_from_db():
+                initialize.acodec_combos(self)
+        else:
+            self.debug.show("You have to select audio codec first")
+
+    def on_acodec_rename_clicked(self, widget):
+        try:
+            active = self.acodec_name_active
+        except:
+            return False
+        acodec_id = self.acodecs_ids[active]
+        acodec = self.db.session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
+        if acodec is not None:
+            acodec.name = self.widgets['preferences']['acodec_name'].get_active_text()
+            if acodec.update_in_db():
+                initialize.acodec_combos(self)
+
+    def on_acodec_name_combo_changed(self, widget):
+        active = self.widgets['preferences']['acodec_name'].get_active()
+        if active>-1:
+            self.acodec_name_active = active
+    # }}}
+
+    # audio channels ----------------------------------------------------{{{
+    def on_achannel_add_clicked(self, widget):
+        achannel = self.db.AChannel(name=self.widgets['preferences']['achannel_name'].get_active_text())
+        if achannel and achannel.add_to_db():
+            initialize.achannel_combos(self)
+
+    def on_achannel_remove_clicked(self, widget):
+        active = self.widgets['preferences']['achannel_name'].get_active()
+        if active>0:
+            achannel_id = self.achannels_ids[active]
+            achannel = self.db.session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
+            if achannel and achannel.remove_from_db():
+                initialize.achannel_combos(self)
+        else:
+            self.debug.show("You have to select audio channel first")
+
+    def on_achannel_rename_clicked(self, widget):
+        try:
+            active = self.achannel_name_active
+        except:
+            return False
+        achannel_id = self.achannels_ids[active]
+        achannel = self.db.session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
+        if achannel is not None:
+            achannel.name = self.widgets['preferences']['achannel_name'].get_active_text()
+            if achannel.update_in_db():
+                initialize.achannel_combos(self)
+
+    def on_achannel_name_combo_changed(self, widget):
+        active = self.widgets['preferences']['achannel_name'].get_active()
+        if active>-1:
+            self.achannel_name_active = active
+    # }}}
+
+    # subformats -------------------------------------------------------------{{{
+    def on_subformat_add_clicked(self, widget):
+        subformat = self.db.SubFormat(name=self.widgets['preferences']['subformat_name'].get_active_text())
+        if subformat and subformat.add_to_db():
+            initialize.subformat_combos(self)
+
+    def on_subformat_remove_clicked(self, widget):
+        active = self.widgets['preferences']['subformat_name'].get_active()
+        if active>0:
+            subformat_id = self.subformats_ids[active]
+            subformat = self.db.session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
+            if subformat and subformat.remove_from_db():
+                initialize.subformat_combos(self)
+        else:
+            self.debug.show("You have to select subtitle format first")
+
+    def on_subformat_rename_clicked(self, widget):
+        try:
+            active = self.subformat_name_active
+        except:
+            return False
+        subformat_id = self.subformats_ids[active]
+        subformat = self.db.session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
+        if subformat is not None:
+            subformat.name = self.widgets['preferences']['subformat_name'].get_active_text()
+            if subformat.update_in_db():
+                initialize.subformat_combos(self)
+
+    def on_subformat_name_combo_changed(self, widget):
+        active = self.widgets['preferences']['subformat_name'].get_active()
+        if active>-1:
+            self.subformat_name_active = active
+    # }}}
+
+    # media ------------------------------------------------------------{{{
+    def on_medium_add_clicked(self, widget):
+        medium = self.db.Medium(name=self.widgets['preferences']['medium_name'].get_active_text())
+        if medium and medium.add_to_db():
+            initialize.media_combos(self)
+
+    def on_medium_remove_clicked(self, widget):
+        active = self.widgets['preferences']['medium_name'].get_active()
+        if active>-1:
+            medium_id = self.media_ids[active]
+            medium = self.db.session.query(db.Medium).filter_by(medium_id=medium_id).first()
+            if medium and medium.remove_from_db():
+                initialize.media_combos(self)
+        else:
+            self.debug.show("You have to select medium first")
+
+    def on_medium_rename_clicked(self, widget):
+        try:
+            active = self.medium_name_active
+        except:
+            return False
+        medium_id = self.media_ids[active]
+        medium = self.db.session.query(db.Medium).filter_by(medium_id=medium_id).first()
+        if medium is not None:
+            medium.name = self.widgets['preferences']['medium_name'].get_active_text()
+            if medium.update_in_db():
+                initialize.media_combos(self)
+
+    def on_medium_name_combo_changed(self, widget):
+        active = self.widgets['preferences']['medium_name'].get_active()
+        if active>-1:
+            self.medium_name_active = active
+    # }}}
+
+    # vcodecs -------------------------------------------------------------{{{
+    def on_vcodec_add_clicked(self, widget):
+        vcodec = self.db.VCodec(name=self.widgets['preferences']['vcodec_name'].get_active_text())
+        if vcodec and vcodec.add_to_db():
+            initialize.vcodec_combos(self)
+
+    def on_vcodec_remove_clicked(self, widget):
+        active = self.widgets['preferences']['vcodec_name'].get_active()
+        if active>-1:
+            vcodec_id = self.vcodecs_ids[active]
+            vcodec = self.db.session.query(db.VCodec).filter_by(vcodec_id=vcodec_id).first()
+            if vcodec and vcodec.remove_from_db():
+                initialize.vcodec_combos(self)
+        else:
+            self.debug.show("You have to select video codec first")
+
+    def on_vcodec_rename_clicked(self, widget):
+        try:
+            active = self.vcodec_name_active
+        except:
+            return False
+        vcodec_id = self.vcodecs_ids[active]
+        vcodec = self.db.session.query(db.VCodec).filter_by(vcodec_id=vcodec_id).first()
+        if vcodec is not None:
+            vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text()
+            if vcodec.update_in_db():
+                initialize.vcodec_combos(self)
+
+    def on_vcodec_name_combo_changed(self, widget):
+        active = self.widgets['preferences']['vcodec_name'].get_active()
+        if active>-1:
+            self.vcodec_name_active = active
+    # }}}
+
+    # main treeview -------------------------------------------------------
+    def treeview_clicked(self, *args):
+        main_treeview.treeview_clicked(self)
+
+    def populate_treeview(self, statement=None, where=None):
+        main_treeview.populate(self, statement, where)
+
+    def get_maintree_selection(self):
+        treeselection = self.widgets['treeview'].get_selection()
+        (tmp_model, tmp_iter) = treeselection.get_selected()
+        if tmp_model and tmp_iter:
+            return tmp_model.get_value(tmp_iter, 0), tmp_iter
+        else:
+            return None, None
+
+    # backup/restore ------------------------------------------------------    
+
+    def backup(self, *args):
+        from backup import backup
+        backup(self)
+
+    def restore(self, *args):
+        response = gutils.question(self, \
+            _("""Are you sure you want to restore?
 Your current movie collection will be replaced.
 You can't undo this operation."""), \
-			1, self.widgets['window'])
-		if response == gtk.RESPONSE_YES:
-			from backup import restore
-			restore(self)
+            1, self.widgets['window'])
+        if response == gtk.RESPONSE_YES:
+            from backup import restore
+            restore(self)
 
-	def merge(self, *args):
-		response = gutils.question(self, \
-			_("""Are you sure you want to mix?
+    def merge(self, *args):
+        response = gutils.question(self, \
+            _("""Are you sure you want to mix?
 Your current movie collection will be mixed with a backup.
 You can't undo this operation."""), \
-			1, self.widgets['window'])
-		if response == gtk.RESPONSE_YES:
-			from backup import merge
-			merge(self)
+            1, self.widgets['window'])
+        if response == gtk.RESPONSE_YES:
+            from backup import merge
+            merge(self)
 
-	# cover ---------------------------------------------------------------
+    # cover ---------------------------------------------------------------
 
-	def print_cover_simple_show(self, *args):
-		self.widgets['print_cover']['cs_size'].set_active(0)
-		self.widgets['print_cover']['window_simple'].show()
+    def print_cover_simple_show(self, *args):
+        self.widgets['print_cover']['cs_size'].set_active(0)
+        self.widgets['print_cover']['window_simple'].show()
 
-	def print_cover_simple_hide(self, *args):
-		self.widgets['print_cover']['window_simple'].hide()
+    def print_cover_simple_hide(self, *args):
+        self.widgets['print_cover']['window_simple'].hide()
 
-	def print_cover_simple_process(self, *args):
-		from cover import cover_simple
-		movie_number, movie_iter = self.get_maintree_selection()
-		if movie_number is not None:
-			cover_simple(self, movie_number)
-		else:
-			gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
+    def print_cover_simple_process(self, *args):
+        from cover import cover_simple
+        movie_number, movie_iter = self.get_maintree_selection()
+        if movie_number is not None:
+            cover_simple(self, movie_number)
+        else:
+            gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
 
-	def print_cover_image(self, *args):
-		self.widgets['print_cover']['ci_size'].set_active(0)
-		self.widgets['print_cover']['window_image'].show()
+    def print_cover_image(self, *args):
+        self.widgets['print_cover']['ci_size'].set_active(0)
+        self.widgets['print_cover']['window_image'].show()
 
-	def print_cover_image_process(self, *args):
-		from cover import cover_image
-		self.widgets['print_cover']['window_image'].hide()
-		movie_number, movie_iter = self.get_maintree_selection()
-		cover_image(self, movie_number)
+    def print_cover_image_process(self, *args):
+        from cover import cover_image
+        self.widgets['print_cover']['window_image'].hide()
+        movie_number, movie_iter = self.get_maintree_selection()
+        cover_image(self, movie_number)
 
-	def print_cover_image_hide(self, *args):
-		self.widgets['print_cover']['window_image'].hide()
+    def print_cover_image_hide(self, *args):
+        self.widgets['print_cover']['window_image'].hide()
 
-	# loans management ----------------------------------------------------	
+    # loans management ----------------------------------------------------    
 
-	def show_people_window(self, *args):
-		from people import show_people_window
-		show_people_window(self)
+    def show_people_window(self, *args):
+        from people import show_people_window
+        show_people_window(self)
 
-	def hide_people_window(self, *args):
-		from people import  hide_people_window
-		hide_people_window(self)
+    def hide_people_window(self, *args):
+        from people import  hide_people_window
+        hide_people_window(self)
 
-	def add_person(self, *args):
-		from people import add_person
-		add_person(self)
+    def add_person(self, *args):
+        from people import add_person
+        add_person(self)
 
-	def add_person_cancel(self, *args):
-		from people import add_person_cancel
-		add_person_cancel(self)
+    def add_person_cancel(self, *args):
+        from people import add_person_cancel
+        add_person_cancel(self)
 
-	def add_person_db(self, *args):
-		from people import add_person_db
-		add_person_db(self)
+    def add_person_db(self, *args):
+        from people import add_person_db
+        add_person_db(self)
 
-	def delete_person(self, *args):
-		from people import delete_person
-		delete_person(self)
+    def delete_person(self, *args):
+        from people import delete_person
+        delete_person(self)
 
-	def edit_person(self, *args):
-		from people import edit_person
-		edit_person(self)
+    def edit_person(self, *args):
+        from people import edit_person
+        edit_person(self)
 
-	def update_person(self, *args):
-		from people import update_person
-		update_person(self)
+    def update_person(self, *args):
+        from people import update_person
+        update_person(self)
 
-	def edit_person_cancel(self, *args):
-		from people import edit_person_cancel
-		edit_person_cancel(self)
+    def edit_person_cancel(self, *args):
+        from people import edit_person_cancel
+        edit_person_cancel(self)
 
-	def cancel_loan(self, *args):
-		from loan import cancel_loan
-		cancel_loan(self)
+    def cancel_loan(self, *args):
+        from loan import cancel_loan
+        cancel_loan(self)
 
-	def commit_loan(self, *args):
-		from loan import commit_loan
-		commit_loan(self)
+    def commit_loan(self, *args):
+        from loan import commit_loan
+        commit_loan(self)
 
-	def return_loan(self, *args):
-		from loan import return_loan
-		return_loan(self)
+    def return_loan(self, *args):
+        from loan import return_loan
+        return_loan(self)
 
-	def email_reminder(self, *args):
-		from gemail import send_email
-		send_email(self)
+    def email_reminder(self, *args):
+        from gemail import send_email
+        send_email(self)
 
-	# statusbar -----------------------------------------------------------
+    # statusbar -----------------------------------------------------------
 
-	def count_statusbar(self):
-		allmovies = self.db.Movie.query.count()
-		loaned = self.db.Movie.query.filter_by(loaned=True).count()
-		not_seen = self.db.Movie.query.filter_by(seen=False).count()
-		self.update_statusbar(str(allmovies) + ' (' + str(self.total) + ')' + _(' movie(s) in collection. ')
-			+ str(loaned) + _(' movie(s) loaned. ')
-			+ _('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
-		)
+    def count_statusbar(self):
+        allmovies = self.db.session.query(db.Movie).count()
+        loaned = self.db.session.query(db.Movie).filter_by(loaned=True).count()
+        not_seen = self.db.session.query(db.Movie).filter_by(seen=False).count()
+        self.update_statusbar(str(allmovies) + ' (' + str(self.total) + ')' + _(' movie(s) in collection. ')
+            + str(loaned) + _(' movie(s) loaned. ')
+            + _('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
+        )
 
-	def update_statusbar(self, text):
-		context_id = self.widgets['statusbar'].get_context_id(text)
-		message_id = self.widgets['statusbar'].push(context_id, text)
+    def update_statusbar(self, text):
+        context_id = self.widgets['statusbar'].get_context_id(text)
+        message_id = self.widgets['statusbar'].push(context_id, text)
 
-	# quick filter operations ---------------------------------------------
+    # quick filter operations ---------------------------------------------
 
-	def on_filter_criteria_changed(self, *args):
-		selected_criteria = self.widgets['filter']['criteria'].get_active_text()
-		self.config.set('criteria', selected_criteria, section='mainlist')
-		quick_filter.change_filter(self)
+    def on_filter_criteria_changed(self, *args):
+        selected_criteria = self.widgets['filter']['criteria'].get_active_text()
+        self.config.set('criteria', selected_criteria, section='mainlist')
+        quick_filter.change_filter(self)
 
-	def filter_txt(self, *args):
-		quick_filter.change_filter(self)
+    def filter_txt(self, *args):
+        quick_filter.change_filter(self)
 
-	def clear_filter(self, *args):
-		quick_filter.clear_filter(self)
+    def clear_filter(self, *args):
+        quick_filter.clear_filter(self)
 
-	# menu filter ---------------------------------------------------------
+    # menu filter ---------------------------------------------------------
 
-	def filter_loaned(self, *args):
-		from view import filter_loaned
-		filter_loaned(self)
+    def filter_loaned(self, *args):
+        from view import filter_loaned
+        filter_loaned(self)
 
-	def filter_not_seen(self, *args):
-		from view import filter_not_seen
-		filter_not_seen(self)
+    def filter_not_seen(self, *args):
+        from view import filter_not_seen
+        filter_not_seen(self)
 
-	def filter_all(self, *args):
-		from view import filter_all
-		filter_all(self)
+    def filter_all(self, *args):
+        from view import filter_all
+        filter_all(self)
 
-	def on_delete_event_am(self, *args):
-		self.widgets['add']['window'].hide()
-		return True
+    def on_delete_event_am(self, *args):
+        self.widgets['add']['window'].hide()
+        return True
 
-	def on_delete_event_pw(self, *args):
-		self.widgets['poster_window'].hide()
-		return True
+    def on_delete_event_pw(self, *args):
+        self.widgets['poster_window'].hide()
+        return True
 
-	def filter_collection(self, *args):
-		quick_filter.change_filter(self)
+    def filter_collection(self, *args):
+        quick_filter.change_filter(self)
 
-	def filter_volume(self, *args):
-		quick_filter.change_filter(self)
+    def filter_volume(self, *args):
+        quick_filter.change_filter(self)
 
-	def filter_loanedto(self, *args):
-		quick_filter.change_filter(self)
+    def filter_loanedto(self, *args):
+        quick_filter.change_filter(self)
 
-	def filter_bytag(self, *args):
-		quick_filter.change_filter(self)
+    def filter_bytag(self, *args):
+        quick_filter.change_filter(self)
 
-	# windows/dialogs -----------------------------------------------------
+    # windows/dialogs -----------------------------------------------------
 
-	def results_cancel_ck(self, *args):
-		from widgets import reconnect_add_signals
-		reconnect_add_signals(self)
-		self.widgets['results']['window'].hide()
+    def results_cancel_ck(self, *args):
+        from widgets import reconnect_add_signals
+        reconnect_add_signals(self)
+        self.widgets['results']['window'].hide()
 
-	def save_state(self): 
-		"""Saves main window state"""
-		# size should only be saved on microsoft windows systems
-		# on other systems the window manager should manage the windows
-		if self.windows and hasattr(self, 'mainwindow_state') and not self.mainwindow_state is None:
-			self.config.set('width',  self.mainwindow_state['width'],  section='window')
-			self.config.set('height', self.mainwindow_state['height'], section='window')
-			self.config.set('left',   self.mainwindow_state['left'],   section='window')
-			self.config.set('top',    self.mainwindow_state['top'],    section='window')
-			if self.mainwindow_state.has_key('state'):
-				self.config.set('state',  self.mainwindow_state['state'],  section='window')
-			else:
-				self.config.set('state',  0,  section='window')
-			self.config.save()
-		# save the order of the columns in the mainlist
-		treeview_columns = self.widgets['treeview'].get_columns()
-		columnorder = ''
-		delimiter = ''
-		for treeview_column in treeview_columns:
-			if treeview_column == self.number_column:
-				columnorder = columnorder + delimiter + 'number'
-				delimiter = ','
-			elif treeview_column == self.image_column:
-				columnorder = columnorder + delimiter + 'image'
-				delimiter = ','
-			elif treeview_column == self.otitle_column:
-				columnorder = columnorder + delimiter + 'otitle'
-				delimiter = ','
-			elif treeview_column == self.title_column:
-				columnorder = columnorder + delimiter + 'title'
-				delimiter = ','
-			elif treeview_column == self.director_column:
-				columnorder = columnorder + delimiter + 'director'
-				delimiter = ','
-			elif treeview_column == self.genre_column:
-				columnorder = columnorder + delimiter + 'genre'
-				delimiter = ','
-			elif treeview_column == self.seen_column:
-				columnorder = columnorder + delimiter + 'seen'
-				delimiter = ','
-			elif treeview_column == self.year_column:
-				columnorder = columnorder + delimiter + 'year'
-				delimiter = ','
-			elif treeview_column == self.runtime_column:
-				columnorder = columnorder + delimiter + 'runtime'
-				delimiter = ','
-			elif treeview_column == self.rating_column:
-				columnorder = columnorder + delimiter + 'rating'
-				delimiter = ','
-		self.config.set('columnorder',  columnorder,  section='mainlist')
-		self.config.save()
+    def save_state(self): 
+        """Saves main window state"""
+        # size should only be saved on microsoft windows systems
+        # on other systems the window manager should manage the windows
+        if self.windows and hasattr(self, 'mainwindow_state') and not self.mainwindow_state is None:
+            self.config.set('width',  self.mainwindow_state['width'],  section='window')
+            self.config.set('height', self.mainwindow_state['height'], section='window')
+            self.config.set('left',   self.mainwindow_state['left'],   section='window')
+            self.config.set('top',    self.mainwindow_state['top'],    section='window')
+            if self.mainwindow_state.has_key('state'):
+                self.config.set('state',  self.mainwindow_state['state'],  section='window')
+            else:
+                self.config.set('state',  0,  section='window')
+            self.config.save()
+        # save the order of the columns in the mainlist
+        treeview_columns = self.widgets['treeview'].get_columns()
+        columnorder = ''
+        delimiter = ''
+        for treeview_column in treeview_columns:
+            if treeview_column == self.number_column:
+                columnorder = columnorder + delimiter + 'number'
+                delimiter = ','
+            elif treeview_column == self.image_column:
+                columnorder = columnorder + delimiter + 'image'
+                delimiter = ','
+            elif treeview_column == self.otitle_column:
+                columnorder = columnorder + delimiter + 'otitle'
+                delimiter = ','
+            elif treeview_column == self.title_column:
+                columnorder = columnorder + delimiter + 'title'
+                delimiter = ','
+            elif treeview_column == self.director_column:
+                columnorder = columnorder + delimiter + 'director'
+                delimiter = ','
+            elif treeview_column == self.genre_column:
+                columnorder = columnorder + delimiter + 'genre'
+                delimiter = ','
+            elif treeview_column == self.seen_column:
+                columnorder = columnorder + delimiter + 'seen'
+                delimiter = ','
+            elif treeview_column == self.year_column:
+                columnorder = columnorder + delimiter + 'year'
+                delimiter = ','
+            elif treeview_column == self.runtime_column:
+                columnorder = columnorder + delimiter + 'runtime'
+                delimiter = ','
+            elif treeview_column == self.rating_column:
+                columnorder = columnorder + delimiter + 'rating'
+                delimiter = ','
+        self.config.set('columnorder',  columnorder,  section='mainlist')
+        self.config.save()
 
-	def restore_state(self):
-		"""Restores main window state"""
-		if self.windows:
-			# windows systems: static gravity needed otherwise we have a
-			# left offset of 4 points (Windows XP border size) and a top
-			# offset of 30 points (height of the title bar) every time the
-			# application is started. The window would move right-down.
-			self.widgets['window'].set_gravity(gtk.gdk.GRAVITY_STATIC)
-		if self.config.get("left", None, section='window') == None:
-			pass
-		else:
-			state = self.config.get('state', '0', section='window')
-			if state == str(int(gtk.gdk.WINDOW_STATE_MAXIMIZED)):
-				self.widgets['window'].maximize()
-			else:
-				self.widgets['window'].move(int(self.config.get('left', section='window')), \
-					int(self.config.get('top', section='window')))
-				self.widgets['window'].resize(int(self.config.get('width', section='window')), \
-					int(self.config.get('height', section='window')))
-		self.widgets['window'].show()
+    def restore_state(self):
+        """Restores main window state"""
+        if self.windows:
+            # windows systems: static gravity needed otherwise we have a
+            # left offset of 4 points (Windows XP border size) and a top
+            # offset of 30 points (height of the title bar) every time the
+            # application is started. The window would move right-down.
+            self.widgets['window'].set_gravity(gtk.gdk.GRAVITY_STATIC)
+        if self.config.get("left", None, section='window') == None:
+            pass
+        else:
+            state = self.config.get('state', '0', section='window')
+            if state == str(int(gtk.gdk.WINDOW_STATE_MAXIMIZED)):
+                self.widgets['window'].maximize()
+            else:
+                self.widgets['window'].move(int(self.config.get('left', section='window')), \
+                    int(self.config.get('top', section='window')))
+                self.widgets['window'].resize(int(self.config.get('width', section='window')), \
+                    int(self.config.get('height', section='window')))
+        self.widgets['window'].show()
 
-	def on_delete_event_r(self, *args):
-		self.widgets['results']['window'].hide()
-		return True
+    def on_delete_event_r(self, *args):
+        self.widgets['results']['window'].hide()
+        return True
 
-	def on_delete_event_poster(self, *args):
-		self.widgets['poster_window'].hide()
-		return True
+    def on_delete_event_poster(self, *args):
+        self.widgets['poster_window'].hide()
+        return True
 
-	def on_delete_event_wp(self, *args):
-		self.widgets['people']['window'].hide()
-		return True
+    def on_delete_event_wp(self, *args):
+        self.widgets['people']['window'].hide()
+        return True
 
-	def on_delete_event_ap(self, *args):
-		self.widgets['person']['window'].hide()
-		return True
+    def on_delete_event_ap(self, *args):
+        self.widgets['person']['window'].hide()
+        return True
 
-	def on_delete_event_ep(self, *args):
-		self.widgets['person']['e_window'].hide()
-		return True
+    def on_delete_event_ep(self, *args):
+        self.widgets['person']['e_window'].hide()
+        return True
 
-	def on_delete_event_lt(self, *args):
-		self.widgets['w_loan_to'].hide()
-		return True
+    def on_delete_event_lt(self, *args):
+        self.widgets['w_loan_to'].hide()
+        return True
 
-	def on_delete_event_pcs(self, *args):
-		self.widgets['print_cover']['window_simple'].hide()
-		return True
+    def on_delete_event_pcs(self, *args):
+        self.widgets['print_cover']['window_simple'].hide()
+        return True
 
-	def on_delete_event_pci(self, *args):
-		self.widgets['print_cover']['window_image'].hide()
-		return True
+    def on_delete_event_pci(self, *args):
+        self.widgets['print_cover']['window_image'].hide()
+        return True
 
-	def on_delete_event_p(self, *args):
-		self.widgets['preferences']['window'].hide()
-		return True
+    def on_delete_event_p(self, *args):
+        self.widgets['preferences']['window'].hide()
+        return True
 
-	def go_oficial_site(self, *args):
-		if self._o_site_url:
-			gutils.run_browser(self._o_site_url)
+    def go_oficial_site(self, *args):
+        if self._o_site_url:
+            gutils.run_browser(self._o_site_url)
 
-	def go_site(self, *args):
-		if self._site_url:
-			gutils.run_browser(self._site_url)
+    def go_site(self, *args):
+        if self._site_url:
+            gutils.run_browser(self._site_url)
 
-	def go_trailer_site(self, *args):
-		if self._trailer_url:
-			gutils.run_browser(self._trailer_url)
+    def go_trailer_site(self, *args):
+        if self._trailer_url:
+            gutils.run_browser(self._trailer_url)
 
-	def on_goto_homepage_activate(site, *args):
-		gutils.run_browser("http://www.griffith.cc/")
-	def on_goto_forum_activate(site, *args):
-		gutils.run_browser("http://forum.griffith.cc/")
-	def on_goto_report_bug_activate(site, *args):
-		gutils.run_browser("https://bugs.launchpad.net/griffith/")
+    def on_goto_homepage_activate(site, *args):
+        gutils.run_browser("http://www.griffith.cc/")
+    def on_goto_forum_activate(site, *args):
+        gutils.run_browser("http://forum.griffith.cc/")
+    def on_goto_report_bug_activate(site, *args):
+        gutils.run_browser("https://bugs.launchpad.net/griffith/")
 
-	# toolbar -------------------------------------------------------------
-	def toggle_toolbar(self, *args):
-		state = self.widgets['menu']['toolbar'].get_active()
-		if state == False:
-			self.widgets['toolbar'].hide()
-		else:
-			self.widgets['toolbar'].show()
-		self.config.set('view_toolbar', state, section='window')
-		self.config.save()
+    # toolbar -------------------------------------------------------------
+    def toggle_toolbar(self, *args):
+        state = self.widgets['menu']['toolbar'].get_active()
+        if state == False:
+            self.widgets['toolbar'].hide()
+        else:
+            self.widgets['toolbar'].show()
+        self.config.set('view_toolbar', state, section='window')
+        self.config.save()
 
-	def new_dbb(self, *args):
-		"""initializes a new Griffith Database file"""
-		response = gutils.question(self, \
-			_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
-			1, self.widgets['window'])
-		if response == gtk.RESPONSE_YES:
-			response_sec = gutils.question(self, \
-				_('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
-				1, self.widgets['window'])
-			if response_sec == gtk.RESPONSE_YES:
-				from sqlalchemy import Select
-				from sql import GriffithSQL
-				# delete images
-				posters_dir = self.locations['posters']
-				# NOTE: only used images are removed (posters are shared between various db)
-				debug.show('NEW DB: Removing old images...')
-				
-				movies = Select([self.db.Movie.c.image]).execute().fetchall()
-				for movie in movies:
-					if movie.image is not None:
-						name = movie.image.encode('utf-8')
-						p_file = os.path.join(posters_dir, name+'.jpg')
-						m_file = os.path.join(posters_dir, 'm_'+name+'.jpg')
-						t_file = os.path.join(posters_dir, 't_'+name+'jpg')
-						try:
-							os.remove(p_file)
-							os.remove(m_file)
-							os.remove(t_file)
-						except:
-							pass
-				self.db.metadata.drop_all()
-				from sqlalchemy.orm import clear_mappers
-				clear_mappers()
-				if self.config.get('type', 'sqlite', section='database') == 'sqlite':
-					os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
-					if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
-						self.config.set('file', 'griffith.db', section='database')
-				# create/connect db
-				self.db = GriffithSQL(self.config, debug, self.griffith_dir)
-				self.clear_details()
-				self.total = 0
-				self.count_statusbar()
-				self.treemodel.clear()
-				from initialize	import dictionaries, people_treeview
-				dictionaries(self)
-				people_treeview(self)
+    def new_dbb(self, *args):
+        """initializes a new Griffith Database file"""
+        response = gutils.question(self, \
+            _('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
+            1, self.widgets['window'])
+        if response == gtk.RESPONSE_YES:
+            response_sec = gutils.question(self, \
+                _('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
+                1, self.widgets['window'])
+            if response_sec == gtk.RESPONSE_YES:
+                from sqlalchemy import select
+                from sql import GriffithSQL
+                # delete images
+                posters_dir = self.locations['posters']
+                # NOTE: only used images are removed (posters are shared between various db)
+                debug.show('NEW DB: Removing old images...')
+                
+                movies = select([db.movies_table.c.image], bind=self.db.session.bind).execute().fetchall()
+                for movie in movies:
+                    if movie.image is not None:
+                        name = movie.image.encode('utf-8')
+                        p_file = os.path.join(posters_dir, name+'.jpg')
+                        m_file = os.path.join(posters_dir, 'm_'+name+'.jpg')
+                        t_file = os.path.join(posters_dir, 't_'+name+'jpg')
+                        try:
+                            os.remove(p_file)
+                            os.remove(m_file)
+                            os.remove(t_file)
+                        except:
+                            pass
+                db.metadata.drop_all(self.db.session.bind.engine)
+                #from sqlalchemy.orm import clear_mappers
+                #clear_mappers()
+                if self.config.get('type', 'sqlite', section='database') == 'sqlite':
+                    os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
+                    if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
+                        self.config.set('file', 'griffith.db', section='database')
+                # create/connect db
+                self.db = GriffithSQL(self.config, debug, self.griffith_dir)
+                self.clear_details()
+                self.total = 0
+                self.count_statusbar()
+                self.treemodel.clear()
+                from initialize    import dictionaries, people_treeview
+                dictionaries(self)
+                people_treeview(self)
 
-	# key events ----------------------------------------------------------
+    # key events ----------------------------------------------------------
 
-	def on_key_press_event(self, widget, event):
-		"""some key events actions"""
-		keyname = gtk.gdk.keyval_name(event.keyval)
-		if keyname == 'Delete' and self.widgets['treeview'].is_focus() == True:
-			self.delete_movie()
+    def on_key_press_event(self, widget, event):
+        """some key events actions"""
+        keyname = gtk.gdk.keyval_name(event.keyval)
+        if keyname == 'Delete' and self.widgets['treeview'].is_focus() == True:
+            self.delete_movie()
 
-	def on_p_tree_button_press_event(self, widget, event):
-		"""add a double click event to people tree"""				
-		if event.type == gtk.gdk._2BUTTON_PRESS:
-			from people import edit_person
-			edit_person(self)
+    def on_p_tree_button_press_event(self, widget, event):
+        """add a double click event to people tree"""                
+        if event.type == gtk.gdk._2BUTTON_PRESS:
+            from people import edit_person
+            edit_person(self)
 
-	def on_maintree_button_press_event(self, widget, event):
-		"""add a left click menu to main tree"""
-		if event.button == 3:
-			x = int(event.x)
-			y = int(event.y)
-			time = event.time
-			pthinfo = self.widgets['treeview'].get_path_at_pos(x, y)
-			if pthinfo is not None:
-				path, col, cellx, celly = pthinfo
-				self.widgets['treeview'].grab_focus()
-				self.widgets['treeview'].set_cursor( path, col, 0)
-				self.widgets['popups']['main'].popup( None, None, None, event.button, time)
-			return 1
-		elif event.type == gtk.gdk._2BUTTON_PRESS:
-			self.edit_movie()
+    def on_maintree_button_press_event(self, widget, event):
+        """add a left click menu to main tree"""
+        if event.button == 3:
+            x = int(event.x)
+            y = int(event.y)
+            time = event.time
+            pthinfo = self.widgets['treeview'].get_path_at_pos(x, y)
+            if pthinfo is not None:
+                path, col, cellx, celly = pthinfo
+                self.widgets['treeview'].grab_focus()
+                self.widgets['treeview'].set_cursor( path, col, 0)
+                self.widgets['popups']['main'].popup( None, None, None, event.button, time)
+            return 1
+        elif event.type == gtk.gdk._2BUTTON_PRESS:
+            self.edit_movie()
 
-	def on_results_button_press_event(self, widget, event):
-		"""add a double click event to add movie results"""
-		if event.type == gtk.gdk._2BUTTON_PRESS:
-			add.populate_with_results(self)
+    def on_results_button_press_event(self, widget, event):
+        """add a double click event to add movie results"""
+        if event.type == gtk.gdk._2BUTTON_PRESS:
+            add.populate_with_results(self)
 
-	def on_poster_results_button_press_event(self, widget, event):
-		"""add a double click event to poster results"""
-		if event.type == gtk.gdk._2BUTTON_PRESS:
-			add.populate_with_results(self)
-	
-	# -=[ treeview ]=------------------------------------------------------
-	def go_first(self, *args):
-		self.click_on(self.widgets['treeview'], 'first')
-	def go_last(self, *args):
-		self.click_on(self.widgets['treeview'], 'last')
-	def go_prev(self, *args):
-		self.click_on(self.widgets['treeview'], 'prev')
-	def go_next(self, *args):
-		self.click_on(self.widgets['treeview'], 'next')
-	# TODO: remove total_filter var.
-	
-	def click_on(self, treeview, direction):
-		treeselection = treeview.get_selection()
-		if not treeselection:
-			treeview.set_cursor_on_cell(0)
-			return 2 # no selection => selecting first movie
-		(treemodel, treeiter) = treeselection.get_selected()
-		if treemodel is None:
-			return False
-		if treeiter is None or direction=='first':
-			treeview.set_cursor_on_cell(0)
-		elif direction == 'next':
-			nextiter = treemodel.iter_next(treeiter)
-			if nextiter is None:
-				direction = 'last'
-			else:
-				iterpath = treemodel.get_path(nextiter)
-				treeview.set_cursor_on_cell(iterpath[0])
-		elif direction == 'prev':
-			iterpath = treemodel.get_path(treeiter)
-			row = iterpath[0]
-			if row>0:
-				treeview.set_cursor_on_cell(row-1)
-			else:
-				treeview.set_cursor_on_cell(0)
-		if direction == 'last':
-			rows = len(treemodel)
-			if rows>0:
-				treeview.set_cursor_on_cell(rows-1)
-			else:
-				treeview.set_cursor_on_cell(0)
+    def on_poster_results_button_press_event(self, widget, event):
+        """add a double click event to poster results"""
+        if event.type == gtk.gdk._2BUTTON_PRESS:
+            add.populate_with_results(self)
+    
+    # -=[ treeview ]=------------------------------------------------------
+    def go_first(self, *args):
+        self.click_on(self.widgets['treeview'], 'first')
+    def go_last(self, *args):
+        self.click_on(self.widgets['treeview'], 'last')
+    def go_prev(self, *args):
+        self.click_on(self.widgets['treeview'], 'prev')
+    def go_next(self, *args):
+        self.click_on(self.widgets['treeview'], 'next')
+    # TODO: remove total_filter var.
+    
+    def click_on(self, treeview, direction):
+        treeselection = treeview.get_selection()
+        if not treeselection:
+            treeview.set_cursor_on_cell(0)
+            return 2 # no selection => selecting first movie
+        (treemodel, treeiter) = treeselection.get_selected()
+        if treemodel is None:
+            return False
+        if treeiter is None or direction=='first':
+            treeview.set_cursor_on_cell(0)
+        elif direction == 'next':
+            nextiter = treemodel.iter_next(treeiter)
+            if nextiter is None:
+                direction = 'last'
+            else:
+                iterpath = treemodel.get_path(nextiter)
+                treeview.set_cursor_on_cell(iterpath[0])
+        elif direction == 'prev':
+            iterpath = treemodel.get_path(treeiter)
+            row = iterpath[0]
+            if row>0:
+                treeview.set_cursor_on_cell(row-1)
+            else:
+                treeview.set_cursor_on_cell(0)
+        if direction == 'last':
+            rows = len(treemodel)
+            if rows>0:
+                treeview.set_cursor_on_cell(rows-1)
+            else:
+                treeview.set_cursor_on_cell(0)
 
 if __name__ == "__main__":
-	griffith = Griffith()
-	griffith.main()
+    griffith = Griffith()
+    griffith.main()
 
 # vim: fdm=marker
