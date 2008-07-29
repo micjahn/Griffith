@@ -21,17 +21,19 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-from gettext import gettext as _
-import gutils
 import os
-import update
 import gtk
-import amazon
-from urllib import urlcleanup
 import tempfile
-import movie
+import shutil
+from gettext import gettext as _
+from PIL     import Image
+from urllib  import urlcleanup, FancyURLopener, urlretrieve
+import amazon
+import db
 import delete
-from PIL import Image
+import gutils
+import movie
+import update
 
 def change_poster(self):
     """
@@ -49,7 +51,6 @@ def change_poster(self):
         update_image(self, number, filename)
 
 def update_image(self, number, file_path):
-    import shutil
     try:
         self.widgets['movie']['picture'].set_from_pixbuf(\
                 gtk.gdk.pixbuf_new_from_file(file_path).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
@@ -60,20 +61,20 @@ def update_image(self, number, file_path):
 
     filename = os.path.basename(file_path)
     new_image = os.path.splitext(filename)[0]
-    if self.db.Movie.query.filter_by(image=new_image).first() is not None:
+    if self.db.session.query(db.Movie).filter_by(image=new_image).first() is not None:
         i = 0
         while True:
             i += 1
-            if self.db.Movie.query.filter_by(image="%s_%s" % (new_image, i)).first() is None:
+            if self.db.session.query(db.Movie).filter_by(image="%s_%s" % (new_image, i)).first() is None:
                 new_image = "%s_%s" % (new_image, i)
                 break
 
-    movie = self.db.Movie.query.filter_by(number=number).one()
+    movie = self.db.session.query(db.Movie).filter_by(number=number).one()
     old_image = os.path.join(self.locations['posters'], "%s.jpg" % movie.image)
     delete.delete_poster(self, old_image)
     movie.image = new_image
-    movie.update()
-    movie.flush()
+    self.db.session.add(movie)
+    self.db.session.commit()
 
     shutil.copyfile(file_path, os.path.join(self.locations['posters'], "%s.jpg" % new_image))
 
@@ -88,7 +89,7 @@ def update_image(self, number, file_path):
     self.update_statusbar(_("Image has been updated"))
 
 def delete_poster(self):
-    movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
+    movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
     if not movie:
         self.debug.show("Can't delete unknown movie's poster!")
         return False
@@ -101,8 +102,8 @@ def delete_poster(self):
         # update in database
         old_image = movie.image
         movie.image = None
-        movie.update()
-        movie.flush()
+        self.db.session.add(movie)
+        self.db.session.commit()
         self.update_statusbar(_("Image has been updated"))
 
         self.widgets['add']['delete_poster'].set_sensitive(False)
@@ -123,7 +124,7 @@ def update_tree_thumbnail(self, t_image_path):
 def fetch_bigger_poster(self):
     match = 0
     self.debug.show("fetching poster from amazon")
-    movie = self.db.Movie.query.filter_by(movie_id=self._movie_id).first()
+    movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
     if movie is None:
         gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
         return False
@@ -152,7 +153,7 @@ def fetch_bigger_poster(self):
     from widgets import connect_poster_signals, reconnect_add_signals
     connect_poster_signals(self, get_poster_select_dc, result, current_poster)
 
-    if not len(result.Item):
+    if not hasattr(result, "Item") or not len(result.Item):
         gutils.warning(self, _("No posters found for this movie."))
         reconnect_add_signals(self)
         return
@@ -212,14 +213,13 @@ def get_poster(self, f, result, current_poster):
         except:
             gutils.warning(self, _("Sorry. A connection error has occurred."))
 
-    if  os.path.isfile(file_to_copy):
+    if os.path.isfile(file_to_copy):
         try:
             im = Image.open(file_to_copy)
         except IOError:
             self.debug.show("failed to identify %s"%file_to_copy)
 
         if im.size == (1,1):
-            from urllib import FancyURLopener, urlretrieve
             url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result.Item[f].ASIN).read()
             if url.find('no-img-sm._V47056216_.gif') > 0:
                 self.debug.show('No image available')

@@ -21,6 +21,11 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
+import gtk
+import os
+import pango
+import string
+import sys
 from gettext import gettext as _
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
@@ -29,12 +34,9 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Image
 from reportlab.lib import colors
-import sys
-import string
-import os, gtk
-import version
+import db
 import gutils
-import pango
+import version
 
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
@@ -88,7 +90,7 @@ def cover_image_process(self, filename, number):
         _("Released Under the GNU/GPL License").encode('utf-8'))
 
     # get movie information from db
-    movie = self.db.Movie.query.filter_by(number=number).first()
+    movie = self.db.session.query(db.Movie).filter_by(number=number).first()
     if movie is not None:
         c.drawImage(filename, pos_x, pos_y, cover_x, cover_y)
         if print_number == True:
@@ -154,7 +156,7 @@ def cover_simple(self, number):
     c.rect(pos_x, pos_y, cover_x, cover_y)
 
     # get movie information from db
-    movie = self.db.Movie.query.filter_by(number=number).first()
+    movie = self.db.session.query(db.Movie).filter_by(number=number).first()
     if movie is not None:
         if print_number == True:
             c.setFont(fontName, 10)

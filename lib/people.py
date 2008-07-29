@@ -46,12 +46,17 @@ def clear_person(self):
 
 def add_person_db(self):
     if (self.widgets['person']['name'].get_text()<>''):
-        p = self.db.Person()
+        p = db.Person()
         p.name = self.widgets['person']['name'].get_text()
         p.email = self.widgets['person']['email'].get_text()
         p.phone = self.widgets['person']['phone'].get_text()
         self.widgets['person']['window'].hide()
-        if p.add_to_db():
+        self.db.session.add(p)
+        try:
+            self.db.session.commit()
+        except Exception, e:
+            self.debug.show(str(e))
+        else:
             myiter = self.p_treemodel.insert_after(None, None)
             self.p_treemodel.set_value(myiter,0,str(self.widgets['person']['name'].get_text()))
             self.p_treemodel.set_value(myiter,1,str(self.widgets['person']['email'].get_text()))
@@ -85,11 +90,16 @@ def update_person(self):
     p.name = self.widgets['person']['e_name'].get_text()
     p.email = self.widgets['person']['e_email'].get_text()
     p.phone = self.widgets['person']['e_phone'].get_text()
-    if p.update_in_db():
+    self.db.session.add(p)
+    try:
+        self.db.session.commit()
+    except Exception, e:
+        self.debug.show(str(e))
+    else:
         self.update_statusbar(_("Record updated"))
         edit_person_cancel(self)
         self.p_treemodel.clear()
-        for p in self.db.session.query(db.Person).order_by(self.db.Person.c.name.asc()).all():
+        for p in self.db.session.query(db.Person).order_by(db.people_table.c.name.asc()).all():
             myiter = self.p_treemodel.insert_before(None, None)
             self.p_treemodel.set_value(myiter, 0, str(p.name))
             self.p_treemodel.set_value(myiter, 1, str(p.email))
@@ -121,7 +131,12 @@ def delete_person(self):
     if response == -8:
         treeselection = self.widgets['people']['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
-        if person.remove_from_db():
+        self.db.session.delete(person)
+        try:
+            self.db.session.commit()
+        except Exception, e:
+            self.debug.show(str(e))
+        else:
             self.p_treemodel.remove(tmp_iter)
             self.treeview_clicked()
     self.widgets['people']['window'].present()

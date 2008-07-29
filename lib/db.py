@@ -55,6 +55,7 @@ class Volume(object):
 class Loan(object):
     def __repr__(self):
         return "<Loan:%s (movie:%s person:%s)>" % (self.loan_id, self.movie_id, self.person_id)
+
 class Movie(object):
     def __repr__(self):
         return "<Movie:%s (number=%s)>" % (self.movie_id, self.number)
@@ -67,10 +68,19 @@ class Movie(object):
         else: raise AttributeError, name
 
 class MovieLang(object):
+    def __init__(self, lang_id=None, type=None, acodec_id=None, achannel_id=None, subformat_id=None):
+        self.lang_id      = lang_id
+        self.type         = type
+        self.acodec_id    = acodec_id
+        self.achannel_id  = achannel_id
+        self.subformat_id = subformat_id
     def __repr__(self):
         return "<MovieLang:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)>" % \
             (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id, self.subformat_id)
+
 class MovieTag(object):
+    def __init__(self, tag_id=None):
+        self.tag_id = tag_id
     def __repr__(self):
         return "<MovieTag:%s-%s>" % (self.movie_id, self.tag_id)
 #}}}
@@ -225,6 +235,7 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
 # for debugging (run: ipython db.py)
 if __name__ == '__main__':
     import os.path
+    import sqlalchemy
 
     ### ENGINE ###
     engine = create_engine('sqlite:///:memory:', echo=False)
@@ -240,12 +251,10 @@ if __name__ == '__main__':
     sess = Session()
     # work with sess
     myobject = Movie()
-    print myobject
     #sess.add(myobject)
     #sess.commit()
     # close when finished
     #sess.close()
-    import sqlalchemy
     print "SQLAlchemy version: %s" % sqlalchemy.__version__
 
 
@@ -255,8 +264,7 @@ if __name__ == '__main__':
     Session2 = sessionmaker(bind=engine2)
     sess2 = Session2()
 
-    """
-    movie1 = sess2.query(Movie)[503]
+    movie1 = sess2.query(Movie)[0]
     print movie1, movie1.title
     movie1_clone = sess.merge(movie1)
     movie1_clone.title = 'cos'
@@ -264,4 +272,3 @@ if __name__ == '__main__':
     sess.commit()
     for i in sess.query(Movie)[:3]:
         print i, i.title
-    """

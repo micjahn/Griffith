@@ -371,9 +371,8 @@ class Griffith:
                 movie.seen = False
             else:
                 movie.seen = True
-            movie.update()
-            movie.flush()
-            movie.refresh()
+            self.db.session.add(movie)
+            self.db.session.commit()
             self.treemodel.set_value(m_iter,6,movie.seen)
             self.treeview_clicked()
 

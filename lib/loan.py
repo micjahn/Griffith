@@ -71,12 +71,20 @@ def commit_loan(self):
         elif response == gtk.RESPONSE_CANCEL:
             return False
     
-    loan = db.Loan(movie_id=movie.movie_id, person_id=person.person_id)
+    loan = db.Loan()
+    loan.person = person
+    loan.movie = movie
+    # FIXME:
     if loan_whole_collection:
-        loan.collection_id = movie.collection_id
+        loan.collection = movie.collection
     if movie.volume_id>0:
-        loan.volume_id = movie.volume_id
-    if loan.set_loaned():
+        loan.volume = movie.volume
+    self.db.session.add(loan)
+    try:
+        self.db.session.commit()
+    except Exception, e:
+        self.debug.show(str(e))
+    else:
         self.update_statusbar(_("Movie loaned"))
         self.treeview_clicked()
 

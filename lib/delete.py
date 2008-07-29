@@ -24,11 +24,12 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import gutils
 import os
+import db
 
 def delete_movie(self):
     m_id = None
     number, m_iter = self.get_maintree_selection()
-    movie = self.db.Movie.query.filter_by(number=number).first()
+    movie = self.db.session.query(db.Movie).filter_by(number=number).first()
     if movie is None:
         gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
         return False
@@ -40,18 +41,25 @@ def delete_movie(self):
         1, self.widgets['window'])
     if response == -8:    # gtk.RESPONSE_YES == -8
         # try to delete poster image as well
-        if movie.image is not None:
+        if movie.image:
             delete_poster(self, movie.image)
-        if movie.remove_from_db():
-            # update main treelist
-            self.total -= 1
-            self.clear_details()
-            self.initialized = False
-            self.go_prev()
-            self.treemodel.remove(m_iter)
-            self.initialized = True
-            self.go_next()
-            self.count_statusbar()
+
+        self.db.session.delete(movie)
+        try:
+            self.db.session.commit()
+        except:
+            self.debug.show("Unexpected problem: %s" % e)
+            return False
+
+        # update main treelist
+        self.total -= 1
+        self.clear_details()
+        self.initialized = False
+        self.go_prev()
+        self.treemodel.remove(m_iter)
+        self.initialized = True
+        self.go_next()
+        self.count_statusbar()
     else:
         return False
 
