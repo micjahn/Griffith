@@ -107,6 +107,10 @@ def update_movie(self):
             tmp_model.set_value(tmp_iter,8, '')
         else:
             tmp_model.set_value(tmp_iter,8, '%003d' % int(movie.runtime) + _(' min'))
+        if movie.rating is None:
+            tmp_model.set_value(tmp_iter,9, '')
+        else:
+            tmp_model.set_value(tmp_iter,9, movie.rating)
         # close add window
         self.widgets['add']['window'].hide()
         # refresh
@@ -643,6 +647,10 @@ def add_movie_db(self, close):
         self.treemodel.set_value(myiter, 8, '')
     else:
         self.treemodel.set_value(myiter, 8, '%003d' % int(details['runtime']) + _(' min'))
+    if details['rating'] is None:
+        self.treemodel.set_value(myiter, 9, '')
+    else:
+        self.treemodel.set_value(myiter, 9, details['rating'])
     #update statusbar
     self.total += 1
     self.count_statusbar()
