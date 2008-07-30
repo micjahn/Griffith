@@ -32,14 +32,16 @@ from reportlab.rl_config import defaultEncoding
 from reportlab.platypus import Image, SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from xml.sax import saxutils
-import os, gtk
-import version
-import gutils
+import config
+import gtk
+import os
 import string
 import sys
-import config
 from locale import getdefaultlocale
 from sqlalchemy import select
+import db
+import gutils
+import version
 
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
@@ -102,16 +104,16 @@ class ExportPlugin:
                 style = self.styles["Normal"]
                 Story = [Spacer(1,2*inch)]
                 # build the query
-                movies = select(self.db.Movie.c)
+                movies = select(db.movies_table.c, bind=self.db.session.bind)
                 # select sort column
                 sort_column_name = self.config.get('sortby', 'number', section='mainlist')
                 sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
                 for i in sort_column_name.split(','):
-                    if self.db.Movie.c.has_key(i):
+                    if db.movies_table.c.has_key(i):
                         if sort_reverse:
-                            movies = movies.order_by(self.db.Movie.c[i].desc())
+                            movies = movies.order_by(db.movies_table.c[i].desc())
                         else:
-                            movies = movies.order_by(self.db.Movie.c[i])
+                            movies = movies.order_by(db.movies_table.c[i])
                 movies = movies.execute().fetchall()
                 # define some custom stylesheetfont
                 total = len(movies)

@@ -24,9 +24,10 @@ __revision__ = '$Id$'
 import xml.dom.minidom
 import xml.dom.ext
 import gtk
-import gutils
 import os
 from gettext import gettext as _
+import db
+import gutils
 
 plugin_name = "XML"
 plugin_description = _("Full XML list export plugin")
@@ -75,10 +76,10 @@ class ExportPlugin:
                 root = doc.documentElement
                 
                 # create object
-                for movie in self.db.Movie.all():
+                for movie in self.db.session.query(db.Movie).all():
                     e = doc.createElement('movie')
                     root.appendChild(e)
-                    for key in movie.c.keys():
+                    for key in db.movies_table.c.keys():
                         e2 = doc.createElement(key)
                         if movie[key] is None:
                             value = ''

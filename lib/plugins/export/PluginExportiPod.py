@@ -31,6 +31,7 @@ import platform
 import shutil
 from tempfile import mkdtemp
 from gettext import gettext as _
+import db
 
 plugin_name = "iPod"
 plugin_description = _("iPod Notes export plugin")
@@ -79,7 +80,7 @@ class ExportPlugin:
         griffith_list = open(os.path.join(tmp_dir,"movies"),"w")
         t = []
         
-        for movie in self.db.Movie.all():
+        for movie in self.db.session.query(db.Movie).all():
             t.append("%s | %s | %s | %s"%(movie['number'],movie['o_title'],movie['title'],movie['director']))
     
         griffith_list.write("<title>%s</title><br><br>"%_("My Movies List"))

@@ -31,6 +31,7 @@ import version
 import math
 from xml.dom import minidom
 from gettext import gettext as _
+import db
 
 plugin_name         = 'HTML'
 plugin_description  = _('Plugin exports data using templates')
@@ -542,71 +543,67 @@ class ExportPlugin(gtk.Window):
     #}}}
 
     def select(self):    #{{{
-        from sqlalchemy import select
+        from sqlalchemy import select, outerjoin
         config = self.config
         
         # columns to select
         columns = []
         for i in self.fields_as_columns:
             try:
-                columns.append(self.db.Movie.c[self.fields_as_columns[i]])
+                columns.append(db.movies_table.c[self.fields_as_columns[i]])
             except:
                 pass
         # use outer join to media table to get the name of the media
-        from sqlalchemy import outerjoin
-        columns.append(self.db.Medium.c['name'])
-        media_join = outerjoin(self.db.metadata.tables['movies'], \
-            self.db.metadata.tables['media'], \
-            self.db.metadata.tables['movies'].c.medium_id==self.db.metadata.tables['media'].c.medium_id)
+        columns.append(db.media_table.c['name'])
+        media_join = outerjoin(db.movies_table, db.media_table, \
+                db.movies_table.c.medium_id==db.media_table.c.medium_id)
         # use outer join to collections table to get the name of the collection
-        columns.append(self.db.Collection.c['name'])
-        collection_join = media_join.outerjoin( \
-            self.db.metadata.tables['collections'], \
-            self.db.metadata.tables['movies'].c.collection_id==self.db.metadata.tables['collections'].c.collection_id)
+        columns.append(db.collections_table.c['name'])
+        collection_join = media_join.outerjoin(db.collections_table, \
+            db.movies_table.c.collection_id==db.collections_table.c.collection_id)
         # use outer join to volumes table to get the name of the volume
-        columns.append(self.db.Volume.c['name'])
-        volume_join = collection_join.outerjoin( \
-            self.db.metadata.tables['volumes'], \
-            self.db.metadata.tables['movies'].c.volume_id==self.db.metadata.tables['volumes'].c.volume_id)
+        columns.append(db.volumes_table.c['name'])
+        volume_join = collection_join.outerjoin(db.volumes_table, \
+            db.movies_table.c.volume_id==db.volumes_table.c.volume_id)
         # use outer join to volumes table to get the name of the volume
-        columns.append(self.db.VCodec.c['name'])
-        vcodec_join = volume_join.outerjoin( \
-            self.db.metadata.tables['vcodecs'], \
-            self.db.metadata.tables['movies'].c.vcodec_id==self.db.metadata.tables['vcodecs'].c.vcodec_id)
+        columns.append(db.vcodecs_table.c['name'])
+        vcodec_join = volume_join.outerjoin(db.vcodecs_table, \
+            db.movies_table.c.vcodec_id==db.vcodecs_table.c.vcodec_id)
         #
         # selecting the audio codec doesn't work with joins because if more than one codec per movie is
         # added it would duplicate the movie in the result set as many as audio codecs are added to the movie
         #
         # use outer join to language and acodec table to get the name of the audio codec
         #movie_lang_join = vcodec_join.outerjoin( \
-        #    self.db.metadata.tables['movie_lang'], \
-        #    self.db.metadata.tables['movies'].c.movie_id==self.db.metadata.tables['movie_lang'].c.movie_id)
-        #columns.append(self.db.ACodec.c['name'])
+        #    db.movie_lang_table, \
+        #    db.movies_table.c.movie_id==db.movie_lang_table.c.movie_id)
+        #columns.append(db.acodec_table.c['name'])
         #acodec_join = movie_lang_join.outerjoin( \
-        #    self.db.metadata.tables['acodec'], \
-        #    self.db.metadata.tables['movie_lang'].c.acodec_id==self.db.metadata.tables['acodec'].c.acodec_id)
+        #    db.acodec_table, \
+        #    db.movie_lang_table.c.acodec_id==db.acodec_table.c.acodec_id)
         
         # sort order    TODO: more than one sort column
         sort_columns = []
         sorting_parts = config['sorting'].split('_')
         if config['sorting2'] == 'ASC':
             from sqlalchemy import asc
-            sort_columns.append(asc(self.db.metadata.tables[sorting_parts[0]].c['_'.join(sorting_parts[1:])]))
+            sort_columns.append(asc(db.metadata.tables[sorting_parts[0]].c['_'.join(sorting_parts[1:])]))
         elif config['sorting2'] == 'DESC':
             from sqlalchemy import desc
-            sort_columns.append(desc(self.db.metadata.tables[sorting_parts[0]].c['_'.join(sorting_parts[1:])]))
+            sort_columns.append(desc(db.metadata.tables[sorting_parts[0]].c['_'.join(sorting_parts[1:])]))
 
-        statement = select(columns=columns, order_by=sort_columns, from_obj=[media_join, collection_join, volume_join, vcodec_join], use_labels = True)
+        statement = select(columns=columns, order_by=sort_columns, bind=self.db.session.bind,
+                    from_obj=[media_join, collection_join, volume_join, vcodec_join], use_labels=True)
 
         # where clause
         if config['seen_only'] == 1:
-            statement.append_whereclause(self.db.Movie.c.seen==True)
+            statement.append_whereclause(db.movies_table.c.seen==True)
         elif config['seen_only'] == 2:
-            statement.append_whereclause(self.db.Movie.c.seen!=True)
+            statement.append_whereclause(db.movies_table.c.seen!=True)
         if config['loaned_only'] == 1:
-            statement.append_whereclause(self.db.Movie.c.loaned==True)
+            statement.append_whereclause(db.movies_table.c.loaned==True)
         elif config['loaned_only'] == 2:
-            statement.append_whereclause(self.db.Movie.c.loaned!=True)
+            statement.append_whereclause(db.movies_table.c.loaned!=True)
         
         return statement.execute()
     #}}}
@@ -665,12 +662,11 @@ class ExportPlugin(gtk.Window):
             # modules are needed at least to convert griffith.png to nopic.(gif|jpeg|png)
             from PIL import Image
             # py2exe problem workaround:
-            # if self.windows:
-            from PIL import PngImagePlugin
-            from PIL import GifImagePlugin
-            from PIL import JpegImagePlugin
-            Image._initialized=2
-            # end if
+            if os.name == 'nt' or os.name.startswith('win'): # win32, win64
+                from PIL import PngImagePlugin
+                from PIL import GifImagePlugin
+                from PIL import JpegImagePlugin
+                Image._initialized=2
             if not config['poster_convert']:
                 config['poster_format'] = 'jpeg' # replace 'jpeg'
             

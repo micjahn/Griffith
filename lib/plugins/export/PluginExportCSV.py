@@ -23,9 +23,10 @@ __revision__ = '$Id$'
 
 import csv
 import gtk
-import gutils
 import os
 from gettext import gettext as _
+import gutils
+import db
 
 plugin_name = "CSV"
 plugin_description = _("Full CSV list export plugin")
@@ -69,7 +70,7 @@ class ExportPlugin:
                     
             if overwrite == True or overwrite is None:
                 writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
-                for movie in self.db.Movie.all():
+                for movie in self.db.session.query(db.Movie).all():
                     t = []
                     for s in ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
                             'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',

@@ -402,7 +402,8 @@ class Griffith:
     def add_volume(self, widget):
         from update import update_volume_combo_ids
         name = self.widgets['add']['volume'].get_active_text()
-        vol = self.db.Volume(name=name)
+        vol = db.Volume()
+        vol.name = nae
         if vol and vol.add_to_db():
             update_volume_combo_ids(self)
             initialize.fill_volumes_combo(self, id)
@@ -410,7 +411,8 @@ class Griffith:
     def add_collection(self, widget):
         from update import update_collection_combo_ids
         name = self.widgets['add']['collection'].get_active_text()
-        col = self.db.Collection(name=name)
+        col = db.Collection()
+        col.name = name
         if col and col.add_to_db():
             update_collection_combo_ids(self)
             initialize.fill_collections_combo(self, id)
@@ -535,7 +537,8 @@ class Griffith:
 
     # preferences
     def on_lang_add_clicked(self, widget):
-        lang = self.db.Lang(name=self.widgets['preferences']['lang_name'].get_active_text())
+        lang = db.Lang()
+        lang.name = self.widgets['preferences']['lang_name'].get_active_text()
         if lang and lang.add_to_db():
             initialize.language_combos(self)
 
@@ -570,8 +573,15 @@ class Griffith:
 
     # tags -------------------------------------------------------------{{{
     def on_tag_add_clicked(self, widget):
-        tag = self.db.Tag(name=self.widgets['preferences']['tag_name'].get_active_text())
-        if tag and tag.add_to_db():
+        tag = db.Tag()
+        tag.name = self.widgets['preferences']['tag_name'].get_active_text()
+        self.db.session.add(tag)
+        try:
+            self.db.session.commit()
+        except Exception, e:
+            self.db.session.rollback()
+            self.debug.show("Cannot add tag: %s" % e.message)
+        else:
             initialize.fill_preferences_tags_combo(self)
             initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
             update.update_bytag_combo_ids(self)
@@ -582,11 +592,19 @@ class Griffith:
         if active>-1:
             tag_id = self.tags_ids[active]
             tag = self.db.session.query(db.Tag).filter_by(tag_id=tag_id).first()
-            if tag and tag.remove_from_db():
+            if tag and len(tag.movietags)==0:
+                self.db.session.delete(tag)
+                try:
+                    self.db.session.commit()
+                except Exception, e:
+                    self.db.session.rollback()
+                    self.debug.show("Cannot remove tag: %s" % e.message)
                 initialize.fill_preferences_tags_combo(self)
                 initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
                 update.update_bytag_combo_ids(self)
                 initialize.fill_bytag_combo(self)
+            else:
+                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
             self.debug.show("You have to select tag first")
 
@@ -597,9 +615,14 @@ class Griffith:
             return False
         tag_id = self.tags_ids[active]
         tag = self.db.session.query(db.Tag).filter_by(tag_id=tag_id).first()
-        if tag is not None:
+        if tag:
             tag.name = self.widgets['preferences']['tag_name'].get_active_text()
-            if tag.update_in_db():
+            try:
+                self.db.session.commit()
+            except Exception, e:
+                self.db.session.rollback()
+                self.debug.show("Cannot rename tag: %s" % e.message)
+            else:
                 initialize.fill_preferences_tags_combo(self)
                 initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
                 update.update_bytag_combo_ids(self)
@@ -613,7 +636,8 @@ class Griffith:
 
     # audio codecs ------------------------------------------------------{{{
     def on_acodec_add_clicked(self, widget):
-        acodec = self.db.ACodec(name=self.widgets['preferences']['acodec_name'].get_active_text())
+        acodec = self.db.ACodec()
+        acodec.name = self.widgets['preferences']['acodec_name'].get_active_text()
         if acodec and acodec.add_to_db():
             initialize.acodec_combos(self)
 
@@ -647,7 +671,8 @@ class Griffith:
 
     # audio channels ----------------------------------------------------{{{
     def on_achannel_add_clicked(self, widget):
-        achannel = self.db.AChannel(name=self.widgets['preferences']['achannel_name'].get_active_text())
+        achannel = self.db.AChannel()
+        achannel.name = self.widgets['preferences']['achannel_name'].get_active_text()
         if achannel and achannel.add_to_db():
             initialize.achannel_combos(self)
 
@@ -681,7 +706,8 @@ class Griffith:
 
     # subformats -------------------------------------------------------------{{{
     def on_subformat_add_clicked(self, widget):
-        subformat = self.db.SubFormat(name=self.widgets['preferences']['subformat_name'].get_active_text())
+        subformat = self.db.SubFormat()
+        subformat.name = self.widgets['preferences']['subformat_name'].get_active_text()
         if subformat and subformat.add_to_db():
             initialize.subformat_combos(self)
 
@@ -715,7 +741,8 @@ class Griffith:
 
     # media ------------------------------------------------------------{{{
     def on_medium_add_clicked(self, widget):
-        medium = self.db.Medium(name=self.widgets['preferences']['medium_name'].get_active_text())
+        medium = self.db.Medium()
+        medium.name = self.widgets['preferences']['medium_name'].get_active_text()
         if medium and medium.add_to_db():
             initialize.media_combos(self)
 
@@ -749,7 +776,8 @@ class Griffith:
 
     # vcodecs -------------------------------------------------------------{{{
     def on_vcodec_add_clicked(self, widget):
-        vcodec = self.db.VCodec(name=self.widgets['preferences']['vcodec_name'].get_active_text())
+        vcodec = self.db.VCodec()
+        vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text()
         if vcodec and vcodec.add_to_db():
             initialize.vcodec_combos(self)
 

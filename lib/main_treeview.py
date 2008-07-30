@@ -397,9 +397,7 @@ def populate(self, movies=None, where=None):#{{{
         sort_column_name = self.config.get('sortby', 'number', section='mainlist')
         sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
         
-        from sqlalchemy.orm.util import class_mapper, object_mapper
         for i in sort_column_name.split(','):
-            #if db.Movie.has_key(i):
             if db.movies_table.columns.has_key(i):
                 if sort_reverse:
                     movies.append_order_by(desc(db.movies_table.columns[i]))
