@@ -575,3 +575,8 @@ def copytree(src, dst, symlinks=False):
             errors.extend(err.args[0])
     if errors:
         raise EnvironmentError, errors
+
+def is_windows_system():
+    if os.name == 'nt' or os.name.startswith('win'): # win32, win64
+        return True
+    return False

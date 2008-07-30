@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2008-07-30  Michael Jahn
 	* [#253272] extra information columns not loaded on startup
+	* extended debug support on windows platforms
 
 2008-07-28  Piotr Ożarowski
 	* Switch back to 4 spaces indentation
