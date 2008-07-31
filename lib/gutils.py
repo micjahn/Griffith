@@ -580,3 +580,13 @@ def is_windows_system():
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         return True
     return False
+
+def md5sum(fobj):
+    """Returns an md5 hash for an object with read() method."""
+    m = md5.new()
+    while True:
+        d = fobj.read(8096)
+        if not d:
+            break
+        m.update(d)
+    return m.hexdigest()

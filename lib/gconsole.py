@@ -25,6 +25,8 @@ from gettext import gettext as _
 import getopt
 import sys
 import gutils
+import logging
+log = logging.getLogger("Griffith")
 
 options = ('hDCo:t:d:c:y:s:', ('help', 'debug', 'sqlecho', 'clean', 'check-dep',
     'show-dep', 'original_title=', 'title=', 'director=', 'cast=', 'year=',
@@ -47,7 +49,7 @@ def check_args(self):
                 con_usage()
                 sys.exit()
             elif o in ('-D', '--debug'):
-                self.debug.set_debug()
+                log.setLevel(logging.DEBUG)
             elif o == '--home':
                 self._tmp_home = a # see initialize.locations()
             elif o == '--config':

@@ -22,15 +22,17 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-from gettext import gettext as _
+from sqlalchemy.exceptions import IntegrityError
+from gettext               import gettext as _
 import gutils
 import os
 import gtk
 import string
 import shutil
+import logging
+log = logging.getLogger("Griffith")
 import quick_filter
 import db
-from sqlalchemy.exceptions import IntegrityError
 
 ### widgets ###################################################
 
@@ -137,7 +139,7 @@ def populate_with_results(self):
     w = self.widgets['add']
     m_id = None
     if self.founded_results_id:
-        self.debug.show("self.founded:results_id: %s" % self.founded_results_id)
+        log.info("self.founded:results_id: %s" % self.founded_results_id)
         m_id = self.founded_results_id
     else:
         self.founded_results_id = 0
@@ -791,9 +793,9 @@ def commit(self, session):
     except IntegrityError, e:
         session.rollback()
         gutils.warning(self, str(e.orig))
-        self.debug.show("Cannot commit movie: %s" % e.message)
+        log.warn("Cannot commit movie: %s" % e.message)
         return False
     except Exception, e:
-        self.debug.show("Unexpected problem: %s" % e)
+        log.error("Unexpected problem: %s" % e)
         return False
     return True

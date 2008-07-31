@@ -44,7 +44,6 @@ class ImportPlugin:
 
     def __init__(self, parent, fields_to_import):
         self.db        = parent.db
-        self.debug    = parent.debug
         self.locations    = parent.locations
         self.fields    = parent.field_names
         self.conditions    = parent._conditions
@@ -84,7 +83,7 @@ class ImportPlugin:
         import gtk
         
         if not self.set_source(name):
-            self.debug.show("Can't read data from file %s" % name)
+            log.info("Can't read data from file %s" % name)
             return False
         
         self.widgets['pwindow'].show()
@@ -128,13 +127,13 @@ class ImportPlugin:
                         statement.append_whereclause( func.lower(self.db.Movie.c.title)==details['title'].lower() )
                     tmp = statement.execute().fetchone()
                     if tmp is not None:
-                        self.debug.show("movie already exists (number=%s, o_title=%s)" % (tmp.number, details['o_title']))
+                        log.info("movie already exists (number=%s, o_title=%s)" % (tmp.number, details['o_title']))
                         continue
                 elif details.has_key('title') and details['title']:
                     statement.whereclause = func.lower(self.db.Movie.c.title)==details['title'].lower()
                     tmp = statement.execute().fetchone()
                     if tmp is not None:
-                        self.debug.show("movie already exists (number=%s, title=%s)" % (tmp.number, details['title']))
+                        log.info("movie already exists (number=%s, title=%s)" % (tmp.number, details['title']))
                         continue
                 validate_details(details, self.fields_to_import)
                 if self.edit is True:
@@ -152,9 +151,9 @@ class ImportPlugin:
                         self.db.Movie.mapper.mapped_table.insert().execute(details)
                         self.imported += 1
                     except Exception, e:
-                        self.debug.show("movie details are not unique, skipping: %s" % str(e))
+                        log.info("movie details are not unique, skipping: %s" % str(e))
             else:
-                self.debug.show('skipping movie without title or original title')
+                log.info('skipping movie without title or original title')
         self.widgets['pwindow'].hide()
         return True
 

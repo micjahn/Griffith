@@ -29,6 +29,8 @@ lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
 if os.path.isdir(lib):
     sys.path.insert(1, lib)
 del lib
+import logging
+log = logging.getLogger("Griffith")
 
 # check dependencies
 from gutils import get_dependencies
@@ -38,7 +40,7 @@ for i in required:
     if i['version'] is False or (i['version'] is not True and i['version'][0] == '-'):
         missing.append(i)
 if len(missing) > 0:
-    print 'Error: missing modules:'
+    log.error('Error: missing modules:')
     for i in missing:
         print "%(module)s" % i,
         if i.has_key('module_req'):
@@ -51,7 +53,7 @@ del missing
 
 # other imports
 import gtk, gtk.glade
-import add, config, gconsole, gutils, gdebug, initialize, main_treeview, quick_filter, update
+import add, config, gconsole, gutils, initialize, main_treeview, quick_filter, update
 from gettext import gettext as _
 import db
 
@@ -66,10 +68,6 @@ class Griffith:
     def __init__(self):
         """main griffith application constructor"""    
 
-        # debug object
-        global debug
-        debug = self.debug = gdebug.GriffithDebug()
-        
         gconsole.check_args(self)
         initialize.locations(self)
         
@@ -87,18 +85,18 @@ class Griffith:
         # convert old database
         filename = os.path.join(self.locations['home'], self.config.get('file', 'griffith.db', section='database'))
         if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
-            debug.show('Old database format detected. Converting...')
+            log.info('Old database format detected. Converting...')
             from dbupgrade import convert_from_old_db
             if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
                 self.config.save()
                 initialize.location_posters(self.locations, self.config)
             else:
-                print 'Cant convert old database, exiting.'
+                log.error('Cant convert old database, exiting.')
                 sys.exit(4)
         
         # create/connect db
         from sql import GriffithSQL
-        self.db = GriffithSQL(self.config, self.debug, self.locations['home'])
+        self.db = GriffithSQL(self.config, self.locations['home'])
 
         # let's check any console arguments to parse
         gconsole.check_args_with_db(self)
@@ -159,7 +157,7 @@ class Griffith:
 
     def on_export_activate(self, menu_iter, plugin_name):
         export_plugin = __import__('PluginExport%s' % plugin_name)
-        export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], self.debug, config=self.config)
+        export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], config=self.config)
 
     def on_import_activate(self, *args):
         if self.widgets.has_key('import'):
@@ -550,7 +548,7 @@ class Griffith:
             if lang and lang.remove_from_db():
                 initialize.language_combos(self)
         else:
-            self.debug.show("You have to select language first")
+            log.warn("You have to select language first")
 
     def on_lang_rename_clicked(self, widget):
         try:
@@ -580,7 +578,7 @@ class Griffith:
             self.db.session.commit()
         except Exception, e:
             self.db.session.rollback()
-            self.debug.show("Cannot add tag: %s" % e.message)
+            log.warn("Cannot add tag: %s" % e.message)
         else:
             initialize.fill_preferences_tags_combo(self)
             initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
@@ -598,7 +596,7 @@ class Griffith:
                     self.db.session.commit()
                 except Exception, e:
                     self.db.session.rollback()
-                    self.debug.show("Cannot remove tag: %s" % e.message)
+                    log.warn("Cannot remove tag: %s" % e.message)
                 initialize.fill_preferences_tags_combo(self)
                 initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
                 update.update_bytag_combo_ids(self)
@@ -606,7 +604,7 @@ class Griffith:
             else:
                 gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
-            self.debug.show("You have to select tag first")
+            log.warn("You have to select tag first")
 
     def on_tag_rename_clicked(self, widget):
         try:
@@ -621,7 +619,7 @@ class Griffith:
                 self.db.session.commit()
             except Exception, e:
                 self.db.session.rollback()
-                self.debug.show("Cannot rename tag: %s" % e.message)
+                log.warn("Cannot rename tag: %s" % e.message)
             else:
                 initialize.fill_preferences_tags_combo(self)
                 initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
@@ -649,7 +647,7 @@ class Griffith:
             if acodec and acodec.remove_from_db():
                 initialize.acodec_combos(self)
         else:
-            self.debug.show("You have to select audio codec first")
+            log.warn("You have to select audio codec first")
 
     def on_acodec_rename_clicked(self, widget):
         try:
@@ -684,7 +682,7 @@ class Griffith:
             if achannel and achannel.remove_from_db():
                 initialize.achannel_combos(self)
         else:
-            self.debug.show("You have to select audio channel first")
+            log.warn("You have to select audio channel first")
 
     def on_achannel_rename_clicked(self, widget):
         try:
@@ -719,7 +717,7 @@ class Griffith:
             if subformat and subformat.remove_from_db():
                 initialize.subformat_combos(self)
         else:
-            self.debug.show("You have to select subtitle format first")
+            log.warn("You have to select subtitle format first")
 
     def on_subformat_rename_clicked(self, widget):
         try:
@@ -754,7 +752,7 @@ class Griffith:
             if medium and medium.remove_from_db():
                 initialize.media_combos(self)
         else:
-            self.debug.show("You have to select medium first")
+            log.warn("You have to select medium first")
 
     def on_medium_rename_clicked(self, widget):
         try:
@@ -789,7 +787,7 @@ class Griffith:
             if vcodec and vcodec.remove_from_db():
                 initialize.vcodec_combos(self)
         else:
-            self.debug.show("You have to select video codec first")
+            log.warn("You have to select video codec first")
 
     def on_vcodec_rename_clicked(self, widget):
         try:
@@ -1156,7 +1154,7 @@ You can't undo this operation."""), \
                 # delete images
                 posters_dir = self.locations['posters']
                 # NOTE: only used images are removed (posters are shared between various db)
-                debug.show('NEW DB: Removing old images...')
+                log.info('NEW DB: Removing old images...')
                 
                 movies = select([db.movies_table.c.image], bind=self.db.session.bind).execute().fetchall()
                 for movie in movies:
@@ -1179,7 +1177,7 @@ You can't undo this operation."""), \
                     if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
                         self.config.set('file', 'griffith.db', section='database')
                 # create/connect db
-                self.db = GriffithSQL(self.config, debug, self.griffith_dir)
+                self.db = GriffithSQL(self.config, self.griffith_dir)
                 self.clear_details()
                 self.total = 0
                 self.count_statusbar()

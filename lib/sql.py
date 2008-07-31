@@ -27,18 +27,19 @@ __revision__ = '$Id$'
 from sqlalchemy.orm        import sessionmaker
 from sqlalchemy.exceptions import SQLError
 from gettext               import gettext as _
+import logging
+log = logging.getLogger("Griffith")
 import os.path
 import gutils
 
 from db import * # ORM data (SQLAlchemy stuff)
 
 class GriffithSQL:
-    version = 2    # database format version, incrase after any changes in data structures
+    version = 3    # database format version, incrase after any changes in data structures
 
-    def __init__(self, config, gdebug, griffith_dir):
+    def __init__(self, config, griffith_dir):
         #mapper = Session.mapper
-        global debug
-        debug = gdebug
+
         if config.get('type', None, section='database') is None:
             config.set('type', 'sqlite', section='database')
 
@@ -98,7 +99,7 @@ class GriffithSQL:
             engine = create_engine(url, echo=False)
             conn = engine.connect()
         except Exception, e:    # InvalidRequestError, ImportError
-            debug.show("MetaData: %s" % e)
+            log.info("MetaData: %s" % e)
             config.set('type', 'sqlite', section='database')
             gutils.warning(self, "%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
             url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
@@ -111,7 +112,7 @@ class GriffithSQL:
             self.session = Session()
             #self.metadata.bind.connect()
         except Exception, e:
-            debug.show("engine connection: %s" % e)
+            log.info("engine connection: %s" % e)
             gutils.error(self, _('Database connection failed.'))
             config.set('type', 'sqlite', section='database')
             url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
@@ -124,7 +125,7 @@ class GriffithSQL:
         try:
             v = self.session.query(Configuration).filter_by(param='version').one()    # returns None if table exists && param ISNULL
         except SQLError, e:    # table doesn't exist
-            debug.show("DB version: %s" % e)
+            log.info("DB version: %s" % e)
             v = 0
 
         if v is not None and v>1:

@@ -22,10 +22,15 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from gettext import gettext as _
-import config, edit, gutils, sql
 import gtk
 import os.path
 import zipfile
+import logging
+log = logging.getLogger("Griffith")
+import config
+import edit
+import gutils
+import sql
 
 def backup(self):
     """perform a compressed griffith database/posters/preferences backup"""
@@ -73,7 +78,7 @@ def backup(self):
                 tmp_config.set('file', section='database') == "griffith.db"
                 tmp_config.save()
 
-#                tmp_db = sql.GriffithSQL(tmp_config, self.debug, tmp_dir)
+#                tmp_db = sql.GriffithSQL(tmp_config, tmp_dir)
 #                for i in self.db.metadata.tables
 #                tmp_db.
 
@@ -100,7 +105,7 @@ def backup(self):
                         try:
                             mzip.write(filename)
                         except:
-                            self.debug.show("Can't compress %s" % filename)
+                            log.info("Can't compress %s" % filename)
             mzip.close()
             gutils.info(self, _("Backup has been created"), self.widgets['window'])
 
@@ -138,7 +143,7 @@ def restore(self):
         # restore config file
         self.config = config.Config(file=os.path.join(self.locations['home'],'griffith.cfg'))
         if old_config_file:
-            self.debug.show('Old config file detected. Please note that it will not be used.')
+            log.info('Old config file detected. Please note that it will not be used.')
             f = open(old_config_file, 'r')
             old_config_raw_data = f.read()
             f.close()
@@ -153,7 +158,7 @@ def restore(self):
 
         # check if file needs conversion
         if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
-            self.debug.show('Old database format detected. Converting...')
+            log.info('Old database format detected. Converting...')
             from dbupgrade import convert_from_old_db
             from initialize    import location_posters
             if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
@@ -164,7 +169,7 @@ def restore(self):
                 import sys
                 sys.exit(4)
 
-        self.db = sql.GriffithSQL(self.config, self.debug, self.locations['home'])
+        self.db = sql.GriffithSQL(self.config, self.locations['home'])
         from initialize    import dictionaries, people_treeview
         dictionaries(self)
         people_treeview(self)
@@ -214,14 +219,14 @@ def merge(self):    # FIXME
         # check if file needs conversion
         if filename.lower().endswith(".gri"):
             if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
-                self.debug.show("MERGE: SQLite2 database format detected. Converting...")
+                log.info("MERGE: SQLite2 database format detected. Converting...")
                 if not self.db.convert_from_sqlite2(filename, os.path.join(tmp_dir, self.config.get('file', 'griffith.db', section='database'))):
-                    self.debug.show("MERGE: Can't convert database, aborting.")
+                    log.info("MERGE: Can't convert database, aborting.")
                     return False
         tmp_dir, tmp_file = os.path.split(filename)
         self.config.get('file', tmp_file, section='database') 
 
-        tmp_db = sql.GriffithSQL(tmp_config, self.debug, tmp_dir)
+        tmp_db = sql.GriffithSQL(tmp_config, tmp_dir)
 
         merged=0
         movies = tmp_db.Movie.count()

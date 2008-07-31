@@ -36,14 +36,14 @@ def treeview_clicked(self):
         treeselection = self.widgets['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
         if tmp_iter is None:
-            self.debug.show('Treeview: no selection')
+            log.info('Treeview: no selection')
             return False
         number = tmp_model.get_value(tmp_iter,0)
         movie = self.db.session.query(db.Movie).filter_by(number=number).first()
         # FIXME
         #movie.refresh() # loan data can be obsolete in cache
         if movie is None:
-            self.debug.show("Treeview: movie doesn't exists (number=%s)"%number)
+            log.info("Treeview: movie doesn't exists (number=%s)"%number)
         set_details(self, movie)
     else:
         set_details(self, {})
@@ -103,7 +103,7 @@ def set_details(self, item=None):#{{{
             w['condition'].set_markup("<i>%s</i>" % self._conditions[item['cond']])
         else:
             w['condition'].set_text('')
-            self.debug.show("Wrong value in 'condition' field (movie_id=%s, cond=%s)" % (item['movie_id'], item['cond']))
+            log.info("Wrong value in 'condition' field (movie_id=%s, cond=%s)" % (item['movie_id'], item['cond']))
     else:
         w['condition'].set_text('')
     if 'region' in item and item['region']:
@@ -112,7 +112,7 @@ def set_details(self, item=None):#{{{
             if int(item['region']) < 9:
                 self.widgets['tooltips'].set_tip(w['region'], self._regions[int(item['region'])])
         else:
-            self.debug.show("Wrong value in 'region' field (movie_id=%s, region=%s)" % (item['movie_id'], item['region']))
+            log.info("Wrong value in 'region' field (movie_id=%s, region=%s)" % (item['movie_id'], item['region']))
             w['region'].set_text('')
             self.widgets['tooltips'].set_tip(w['region'], self._regions[0]) # N/A
     else:
@@ -122,7 +122,7 @@ def set_details(self, item=None):#{{{
         if str(item['layers']) in [ str(i) for i in range(len(self._layers)) ]:
             w['layers'].set_markup("<i>%s</i>" % self._layers[item['layers']])
         else:
-            self.debug.show("Wrong value in 'layers' field (movie_id=%s, layers=%s)" % (item['movie_id'], item['layers']))
+            log.info("Wrong value in 'layers' field (movie_id=%s, layers=%s)" % (item['movie_id'], item['layers']))
             w['layers'].set_text('')
     else:
         w['layers'].set_text('')
@@ -130,7 +130,7 @@ def set_details(self, item=None):#{{{
         if str(item['color']) in [ str(i) for i in range(len(self._colors)) ]:
             w['color'].set_markup("<i>%s</i>" % self._colors[item['color']])
         else:
-            self.debug.show("Wrong value in 'color' field (movie_id=%s, color=%s)" % (item['movie_id'], item['color']))
+            log.info("Wrong value in 'color' field (movie_id=%s, color=%s)" % (item['movie_id'], item['color']))
             w['color'].set_markup('')
     else:
         w['color'].set_markup('')

@@ -48,7 +48,7 @@ def delete_movie(self):
         try:
             self.db.session.commit()
         except:
-            self.debug.show("Unexpected problem: %s" % e)
+            log.info("Unexpected problem: %s" % e)
             return False
 
         # update main treelist
@@ -65,7 +65,7 @@ def delete_movie(self):
 
 def delete_poster(self, poster):
     if not poster:
-        self.debug.show('Delete poster: no poster to delete')
+        log.info('Delete poster: no poster to delete')
         return False
     posters_dir = os.path.join(self.locations['posters'])
     image_thumbnail = os.path.join(posters_dir, "t_" + poster + ".jpg")
@@ -75,15 +75,15 @@ def delete_poster(self, poster):
         try:
             os.remove(image_mini)
         except:
-            self.debug.show("Can't remove %s file"%image_mini)
+            log.info("Can't remove %s file"%image_mini)
     if os.path.isfile(image_full):
         try:
             os.remove(image_full)
         except:
-            self.debug.show("Can't remove %s file"%image_full)
+            log.info("Can't remove %s file"%image_full)
     if os.path.isfile(image_thumbnail):
         try:
             os.remove(image_thumbnail)
         except:
-            self.debug.show("Can't remove %s file"%image_thumbnail)
+            log.info("Can't remove %s file"%image_thumbnail)
 

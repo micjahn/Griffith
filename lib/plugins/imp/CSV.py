@@ -56,7 +56,7 @@ class ImportPlugin(IP):
         try:
             self.gtk = gtk.glade.XML(gf)
         except:
-            self.debug.show("Glade-file %s can not be loaded." % gf)
+            log.info("Glade-file %s can not be loaded." % gf)
             return False
         # open gtk window
         self.gtk.get_widget('d_import').set_transient_for( self.widgets['window'] )

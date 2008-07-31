@@ -55,7 +55,7 @@ def update_image(self, number, file_path):
         self.widgets['movie']['picture'].set_from_pixbuf(\
                 gtk.gdk.pixbuf_new_from_file(file_path).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
     except Exception, e:
-        self.debug.show(str(e))
+        log.error(str(e))
         gutils.error(self, _("Image not valid."), self.widgets['window'])
         return False
 
@@ -91,7 +91,7 @@ def update_image(self, number, file_path):
 def delete_poster(self):
     movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
     if not movie:
-        self.debug.show("Can't delete unknown movie's poster!")
+        log.error("Cannot delete unknown movie's poster!")
         return False
     response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.widgets['window'])
     if response==-8:
@@ -123,7 +123,7 @@ def update_tree_thumbnail(self, t_image_path):
 
 def fetch_bigger_poster(self):
     match = 0
-    self.debug.show("fetching poster from amazon")
+    log.info("fetching poster from amazon")
     movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
     if movie is None:
         gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
@@ -145,7 +145,7 @@ def fetch_bigger_poster(self):
 
     try:
         result = amazon.searchByKeyword(keyword, type="Large", product_line="DVD", locale=locale)
-        self.debug.show("Posters found on amazon: %s posters" % result.TotalResults)
+        log.info("Posters found on amazon: %s posters" % result.TotalResults)
     except:
         gutils.warning(self, _("No posters found for this movie."))
         return
@@ -217,12 +217,12 @@ def get_poster(self, f, result, current_poster):
         try:
             im = Image.open(file_to_copy)
         except IOError:
-            self.debug.show("failed to identify %s"%file_to_copy)
+            log.warn("failed to identify %s"%file_to_copy)
 
         if im.size == (1,1):
             url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result.Item[f].ASIN).read()
             if url.find('no-img-sm._V47056216_.gif') > 0:
-                self.debug.show('No image available')
+                log.warn('No image available')
                 gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
                 return False
             url = gutils.after(url, 'id="imageViewerDiv"><img src="')
@@ -231,7 +231,7 @@ def get_poster(self, f, result, current_poster):
             try:
                 im = Image.open(file_to_copy)
             except IOError:
-                self.debug.show("failed to identify %s"%file_to_copy)
+                log.warn("failed to identify %s"%file_to_copy)
 
         if im.mode != 'RGB': # convert GIFs
             im = im.convert('RGB')
@@ -245,14 +245,14 @@ def get_poster(self, f, result, current_poster):
                 _("Do you want to use this poster instead?"), \
                 1, self.widgets['window'])
         if response == -8:
-            self.debug.show("Using fetched poster, updating and removing old one from disk.")
+            log.info("Using fetched poster, updating and removing old one from disk.")
             update_image(self, self.widgets['movie']['number'].get_text(), file_to_copy)
         else:
-            self.debug.show("Reverting to previous poster and deleting new one from disk.")
+            log.info("Reverting to previous poster and deleting new one from disk.")
             try:
                 os.remove(file_to_copy)
             except:
-                self.debug.show("no permission for %s"%file_to_copy)
+                log.error("no permission for %s"%file_to_copy)
 
         self.widgets['poster_window'].hide()
     else:

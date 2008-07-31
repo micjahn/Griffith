@@ -52,7 +52,7 @@ plugin_author_email = "<vasco.m.nunes@gmail.com>"
 plugin_version = "0.4"
 
 class ExportPlugin:
-    def __init__(self, database, locations, parent_window, debug, **kwargs):
+    def __init__(self, database, locations, parent_window, **kwargs):
         self.db = database
         self.locations = locations
         self.parent = parent_window

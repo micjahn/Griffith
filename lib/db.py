@@ -25,33 +25,100 @@ __revision__ = '$Id: $'
 # imports
 from sqlalchemy     import *
 from sqlalchemy.orm import mapper, relation, sessionmaker
+import logging
+log = logging.getLogger("Griffith")
 
 metadata = MetaData()
 
+class DBTable(object):#{{{
+    def __repr__(self):
+        return "<%s:%s>" % (self.__class__.__name__, self.name)
+    def add_to_db(self):
+        if self.name is None or len(self.name)==0:
+            log.info("%s: name can't be empty" % self.__class__.__name__)
+            return False
+        # check if item already exists
+        if self.query.filter_by(name=self.name).first() is not None:
+            log.info("%s: '%s' already exists" % (self.__class__.__name__, self.name))
+            return False
+        log.info("%s: adding '%s' to database..." % (self.__class__.__name__, self.name))
+        self.save()
+        try:
+            self.flush()
+        except exceptions.SQLError, e:
+            log.info("%s: add_to_db: %s" % (self.__class__.__name__, e))
+            return False
+        self.refresh()
+        return True
+    def remove_from_db(self):
+        dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
+        if dbtable_id<1:
+            log.info("%s: none selected => none removed" % self.__class__.__name__)
+            return False
+        tmp = None
+        if hasattr(self,'movies'):
+            tmp = getattr(self,'movies')
+        elif hasattr(self,'movielangs'):
+            tmp = getattr(self,'movielangs')
+        if tmp and len(tmp)>0:
+            gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+            return False
+        log.info("%s: removing '%s' (id=%s) from database..."%(self.__class__.__name__, self.name, dbtable_id))
+        self.delete()
+        try:
+            self.flush()
+        except exceptions.SQLError, e:
+            log.info("%s: remove_from_db: %s" % (self.__class__.__name__, e))
+            return False
+        #self.refresh()
+        return True
+    def update_in_db(self):
+        dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
+        if dbtable_id<1:
+            log.info("%s: none selected => none updated" % self.__class__.__name__)
+            return False
+        if self.name is None or len(self.name)==0:
+            log.info("%s: name can't be empty" % self.__class__.__name__)
+            return False
+        tmp = self.query.filter_by(name=self.name).first()
+        if tmp is not None and tmp is not self:
+            gutils.warning(self, msg=_("This name is already in use!"))
+            return False
+        self.update()
+        try:
+            self.flush()
+        except exceptions.SQLError, e:
+            log.info("%s: update_in_db: %s" % (self.__class__.__name__, e))
+            return False
+        self.refresh()
+        return True#}}}
+
 ### clases #################################################### {{{
+class AChannel(DBTable):
+    pass
+class ACodec(DBTable):
+    pass
+class Collection(DBTable):
+    pass
+class Lang(DBTable):
+    pass
+class Medium(DBTable):
+    pass
+class Person(DBTable):
+    pass
+class SubFormat(DBTable):
+    pass
+class Tag(DBTable):
+    pass
+class VCodec(DBTable):
+    pass
+class Volume(DBTable):
+    pass
+class Poster(object):
+    pass
 class Configuration(object):
     def __repr__(self):
         return "<Config:%s=%s>" % (self.param, self.value)
-class AChannel(object):
-    pass
-class ACodec(object):
-    pass
-class Collection(object):
-    pass
-class Lang(object):
-    pass
-class Medium(object):
-    pass
-class Person(object):
-    pass
-class SubFormat(object):
-    pass
-class Tag(object):
-    pass
-class VCodec(object):
-    pass
-class Volume(object):
-    pass
 class Loan(object):
     def __repr__(self):
         return "<Loan:%s (movie:%s person:%s)>" % (self.loan_id, self.movie_id, self.person_id)
@@ -111,7 +178,7 @@ movies_table = Table('movies', metadata,
     Column('trailer', VARCHAR(256)),
     Column('country', VARCHAR(128)),
     Column('genre', VARCHAR(128)),
-    Column('image', VARCHAR(128)),
+    Column('image', VARCHAR(128)), # TODO: VARCHAR(32) is enough for MD5, use after transition
     Column('studio', VARCHAR(128)),
     Column('classification', VARCHAR(128)),
     Column('cast', TEXT),
@@ -188,6 +255,10 @@ movie_tag_table = Table('movie_tag', metadata,
 configuration_table = Table('configuration', metadata,
     Column('param', VARCHAR(16), primary_key=True),
     Column('value', VARCHAR(128), nullable=False))
+
+posters_table = Table('posters', metadata,
+    Column('md5sum', VARCHAR(32), ForeignKey('movies.image'), primary_key=True),
+    Column('data', BLOB, nullable=False))
 #}}}
 
 ### mappers ################################################### {{{
@@ -216,6 +287,8 @@ mapper(SubFormat, subformats_table, properties={
     'movielangs': relation(MovieLang, lazy=False)})
 mapper(Lang, languages_table, properties={
     'movielangs': relation(MovieLang, lazy=False)})
+mapper(Poster, posters_table, properties={
+    'movies': relation(Movie)})
 mapper(MovieTag, movie_tag_table)
 mapper(Tag, tags_table, properties={'movietags': relation(MovieTag, backref='tag')})
 mapper(Loan, loans_table, properties = {
@@ -236,6 +309,8 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
 if __name__ == '__main__':
     import os.path
     import sqlalchemy
+    logging.basicConfig()
+    log.setLevel(logging.INFO)
 
     ### ENGINE ###
     engine = create_engine('sqlite:///:memory:', echo=False)
@@ -255,7 +330,7 @@ if __name__ == '__main__':
     #sess.commit()
     # close when finished
     #sess.close()
-    print "SQLAlchemy version: %s" % sqlalchemy.__version__
+    log.info("SQLAlchemy version: %s" % sqlalchemy.__version__)
 
 
     griffith_dir = "/home/pox/.griffith/"

@@ -36,7 +36,7 @@ plugin_version = "0.2"
 
 class ExportPlugin:
 
-    def __init__(self, database, locations, parent, debug, **kwargs):
+    def __init__(self, database, locations, parent, **kwargs):
         self.db = database
         self.locations = locations
         self.parent = parent

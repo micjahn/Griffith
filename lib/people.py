@@ -24,6 +24,8 @@ __revision__ = '$Id$'
 from gettext import gettext as _
 import gutils
 import db
+import logging
+log = logging.getLogger("Griffith")
 
 def show_people_window(self):
     self.widgets['people']['window'].show()
@@ -55,7 +57,7 @@ def add_person_db(self):
         try:
             self.db.session.commit()
         except Exception, e:
-            self.debug.show(str(e))
+            log.info(str(e))
         else:
             myiter = self.p_treemodel.insert_after(None, None)
             self.p_treemodel.set_value(myiter,0,str(self.widgets['person']['name'].get_text()))
@@ -94,7 +96,7 @@ def update_person(self):
     try:
         self.db.session.commit()
     except Exception, e:
-        self.debug.show(str(e))
+        log.info(str(e))
     else:
         self.update_statusbar(_("Record updated"))
         edit_person_cancel(self)
@@ -135,7 +137,7 @@ def delete_person(self):
         try:
             self.db.session.commit()
         except Exception, e:
-            self.debug.show(str(e))
+            log.info(str(e))
         else:
             self.p_treemodel.remove(tmp_iter)
             self.treeview_clicked()

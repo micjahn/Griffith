@@ -26,11 +26,13 @@ from sqlalchemy import *
 import os.path
 import gutils
 import db
+import logging
+log = logging.getLogger("Griffith")
 
 def upgrade_database(self, version):
     """Create new db or update existing one to current format"""
+    b = self.session.bind
     if version == 0:
-        b = self.session.bind
         db.metadata.create_all(b)
         db.configuration_table.insert(bind=b).execute(param='version', value=self.version)
         db.media_table.insert(bind=b).execute(name='DVD')
@@ -102,15 +104,21 @@ def upgrade_database(self, version):
         db.tags_table.insert(bind=b).execute(name=_('Favourite'))
         return True # upgrade process finished
     if version == 1: # fix changes between v1 and v2
-        version+=1
-        self.session.bind.execute("UPDATE loans SET return_date='2007-01-01' WHERE return_date='None';")
-        db_version = self.Configuration.query.filter_by(param='version').one()
+        version += 1
+        log.info("Upgrading database to version %d..." % version)
+        b.execute("UPDATE loans SET return_date='2007-01-01' WHERE return_date='None';")
+        db_version = self.session.query(db.Configuration).filter_by(param='version').one()
         db_version.value = version
-        db_version.update()
-        db_version.flush()
-    #if version == 2:    # fix changes between v2 and v3
-    #    version+=1
-    #    self.Configuration.query.filter_by(param='version').one().value = version
+        self.session.add(db_version)
+        self.session.commit()
+    if version == 2:    # fix changes between v2 and v3
+        version += 1
+        log.info("Upgrading database to version %d..." % version)
+        db.posters_table.create(checkfirst=True, bind=b)
+        db_version = self.session.query(db.Configuration).filter_by(param='version').one()
+        db_version.value = version
+        self.session.add(db_version)
+        self.session.commit()
 
 
 # ---------------------------------------------------
@@ -130,7 +138,6 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
     if open(source_file).readline()[:47] == '** This file contains an SQLite 2.1 database **':
         try:
             import sqlite
-            from sqlite import DatabaseError
         except ImportError:
             print 'Old DB conversion: please install pysqlite legacy (v1.0)'
             gutils.warning(self,_("Old DB conversion: please install pysqlite legacy (v1.0)"))
@@ -138,10 +145,8 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
     else:
         try:    # Python 2.5
             from sqlite3 import dbapi2 as sqlite
-            from sqlite3.dbapi2 import DatabaseError
         except ImportError: # Python < 2.5 - try to use pysqlite2
             from pysqlite2 import dbapi2 as sqlite
-            from pysqlite2.dbapi2 import DatabaseError
 
     if os.path.isfile(destination_file):
         # rename destination_file if it already exist
@@ -155,7 +160,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
 
     try:
         old_db = sqlite.connect(source_file)
-    except DatabaseError, e:
+    except sqlite.DatabaseError, e:
         if str(e) == 'file is encrypted or is not a database':
             print 'Your database is most probably in wrong SQLite format, please convert it to SQLite3:'
             print '$ sqlite ~/.griffith/griffith.gri .dump | sqlite3 ~/.griffith/griffith.gri3'
@@ -213,7 +218,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
     self.config.set('region', 0, section='defaults')
     self.config.set('vcodec', 0, section='defaults')
     self.locations['posters'] = os.path.join(self.locations['home'], 'posters')
-    new_db = GriffithSQL(self.config, self.debug, self.locations['home'])
+    new_db = GriffithSQL(self.config, self.locations['home'])
 
     # collections
     collection_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
@@ -223,7 +228,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
         try:
             o.save(); o.flush()
         except Exception, e:
-            self.debug.show(str(e))
+            log.info(str(e))
             continue
         collection_mapper[i[0]] = o.collection_id
     
@@ -235,7 +240,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
         try:
             o.save(); o.flush()
         except Exception, e:
-            self.debug.show(str(e))
+            log.info(str(e))
             continue
         volume_mapper[i[0]] = o.volume_id
 
@@ -247,7 +252,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
         try:
             o.save(); o.flush()
         except Exception, e:
-            self.debug.show(str(e))
+            log.info(str(e))
             continue
         person_mapper[i[0]] = o.person_id
     
@@ -263,7 +268,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
             try:
                 o.save(); o.flush()
             except Exception, e:
-                self.debug.show(str(e))
+                log.info(str(e))
                 continue
             language_mapper[i[0]] = o.lang_id
 
@@ -279,7 +284,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
             try:
                 o.save(); o.flush()
             except Exception, e:
-                self.debug.show(str(e))
+                log.info(str(e))
                 continue
             medium_mapper[i[0]] = o.medium_id
     
@@ -295,7 +300,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
             try:
                 o.save(); o.flush()
             except Exception, e:
-                self.debug.show(str(e))
+                log.info(str(e))
                 continue
             tag_mapper[i[0]] = o.tag_id
     
@@ -344,7 +349,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
         try:
             o.save(); o.flush()
         except Exception, e:
-            self.debug.show(str(e))
+            log.info(str(e))
             continue
         movie_mapper[i[0]] = o.movie_id
 
@@ -360,7 +365,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
             try:
                 m.save(); m.flush()
             except Exception, e:
-                self.debug.show(str(e))
+                log.info(str(e))
                 continue
     
     # movie lang
@@ -375,7 +380,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
             try:
                 m.save(); m.flush()
             except Exception, e:
-                self.debug.show(str(e))
+                log.info(str(e))
                 continue
 
     # loans
@@ -388,13 +393,13 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
             try:
                 vol = new_db.Volume.query.filter_by(volume_id=volume_mapper[i[2]]).one()
             except Exception, e:
-                self.debug.show(str(e))
+                log.info(str(e))
                 continue
         if int(i[3]) > 0:
             try:
                 col = new_db.Collection.query.filter_by(collection_id=collection_mapper[i[3]]).one()
             except Exception, e:
-                self.debug.show(str(e))
+                log.info(str(e))
                 continue
         if int(i[1]) == 0:
             if vol is not None and len(vol.movies)>0:
@@ -402,13 +407,13 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
             elif col is not None and len(col.movies)>0:
                 m = col.movies[0]
             else:
-                self.debug.show("Cannot find associated movie for this loan (%s)" % i)
+                log.info("Cannot find associated movie for this loan (%s)" % i)
                 continue
         else:
             try:
                 m = new_db.Movie.query.filter_by(movie_id=movie_mapper[i[1]]).one()
             except Exception, e:
-                self.debug.show(str(e))
+                log.info(str(e))
                 continue
         
         l = new_db.Loan()
@@ -436,7 +441,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
         try:
             m.flush()
         except Exception, e:
-            self.debug.show(str(e))
+            log.info(str(e))
             continue
     clear_mappers()
     return True

@@ -31,6 +31,8 @@ import version
 import math
 from xml.dom import minidom
 from gettext import gettext as _
+import logging
+log = logging.getLogger("Griffith")
 import db
 
 plugin_name         = 'HTML'
@@ -166,9 +168,8 @@ class ExportPlugin(gtk.Window):
     }
     #}}}
 
-    def __init__(self, database, locations, parent_window, debug, **kwargs):#{{{
+    def __init__(self, database, locations, parent_window, **kwargs):#{{{
         self.db = database
-        self.debug = debug
         self.locations = locations
         if kwargs.has_key('config'):
             self.persistent_config = kwargs['config']
@@ -214,7 +215,7 @@ class ExportPlugin(gtk.Window):
                 try:
                     doc = minidom.parse(os.path.join(fileName, 'config.xml'))
                 except:
-                    self.debug.show("Can't parse configuration file for template: %s"%fileName)
+                    log.info("Can't parse configuration file for template: %s"%fileName)
                     continue
                 for template in doc.getElementsByTagName('template'):
                     tpl_name    = self.get_node_value_by_language(template, 'name', language)
@@ -635,7 +636,7 @@ class ExportPlugin(gtk.Window):
 
         # create directories
         if not config['exported_dir']:
-            self.debug.show("Error: Folder name not set!")
+            log.info("Error: Folder name not set!")
             return 1
         
         if not os.path.isdir(config['exported_dir']):
@@ -813,14 +814,14 @@ class ExportPlugin(gtk.Window):
                                 data = data.replace('\n', linebreak_replacement)
                             tmp = self.fill_template(tmp, self.names[j], data, j)
                         except UnicodeDecodeError:
-                            self.debug.show("Unicode Decode Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['movies_number']))
+                            log.info("Unicode Decode Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['movies_number']))
                             data = str(row[self.names[j]])
                             if linebreak_replacement is not None:
                                 data = data.replace('\r\n', linebreak_replacement)
                                 data = data.replace('\n', linebreak_replacement)
                             tmp = self.fill_template(tmp, self.names[j], data, j)
                         except Exception, ex:
-                            self.debug.show("Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['movies_number']))
+                            log.info("Error occurred while decoding %s (movie number: %s)" % (self.names[j], row['movies_number']))
                 else:
                     tmp = self.fill_template(tmp, self.names[j], remove=True)
                 tmp = gutils.convert_entities(tmp)
@@ -837,14 +838,14 @@ class ExportPlugin(gtk.Window):
                         try:
                             shutil.copy(image_file_src,    image_file_dst)
                         except:
-                            self.debug.show("Can't copy %s" % image_file_src)
+                            log.info("Can't copy %s" % image_file_src)
                     else:    # convert posters
                         try:
                             im = Image.open(image_file_src, 'r').convert(config['poster_mode'])
                             im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
                             im.save(image_file_dst, config['poster_format'])
                         except:
-                            self.debug.show("Can't convert %s" % image_file_src)
+                            log.info("Can't convert %s" % image_file_src)
 
             # close file if last item
             if ((page-1)*self.entries_per_page)+item == number_of_exported_movies:
@@ -876,7 +877,7 @@ class ExportPlugin(gtk.Window):
                 im = Image.open(image_file_src, 'r')
             im.save(image_file_dst, config['poster_format'])
         except:
-            self.debug.show("Can't convert %s" % image_file_src)
+            log.info("Can't convert %s" % image_file_src)
         gutils.info(self, _("Document has been generated."), self)
         self.on_quit()
     #}}}

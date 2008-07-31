@@ -23,9 +23,11 @@ __revision__ = '$Id$'
 
 from gettext import gettext as _
 import os
-import initialize
-import gutils
 import socket
+import logging
+log = logging.getLogger("Griffith")
+import gutils
+import initialize
 
 try:
     import gtkspell
@@ -422,7 +424,7 @@ def save_preferences(self):
             old['user'] != c.get('user', section='database') or \
             old['passwd'] != c.get('passwd', section='database'))) or \
             old['name'] != c.get('name', section='database'):
-        self.debug.show('DATABASE: connecting to new db server...')
+        log.info('DATABASE: connecting to new db server...')
         
         # new database connection
         import sql
@@ -432,14 +434,14 @@ def save_preferences(self):
         from sqlalchemy.exceptions import InvalidRequestError
         clear_mappers()
         try:
-            self.db = sql.GriffithSQL(c, self.debug, self.locations['home'])
+            self.db = sql.GriffithSQL(c, self.locations['home'])
         except InvalidRequestError, e:
-            self.debug.show(str(e))
+            log.info(str(e))
             c.set('type', 'sqlite', section='database')
             w['db_type'].set_active(0)
-            self.db = sql.GriffithSQL(c, self.debug, self.locations['home'])
+            self.db = sql.GriffithSQL(c, self.locations['home'])
 
-        self.debug.show("New database Engine: %s" % self.db.metadata.engine.name)
+        log.info("New database Engine: %s" % self.db.metadata.engine.name)
         
         # initialize new database
         self.total = int(self.db.Movie.query.count())

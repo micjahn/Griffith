@@ -26,6 +26,8 @@ import gutils
 import gtk
 import datetime
 import db
+import logging
+log = logging.getLogger("Griffith")
 
 def loan_movie(self):
     people = self.db.session.query(db.Person).order_by(db.people_table.c.name.asc()).all()
@@ -51,15 +53,15 @@ def commit_loan(self):
 
     person = self.db.session.query(db.Person).filter_by(name=person_name).first()
     if person is None:
-        self.debug.show("commit_loan: person doesn't exist")
+        log.info("commit_loan: person doesn't exist")
         return False
     if self._movie_id:
         movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
         if not movie:
-            self.debug.show("commit_loan: wrong movie_id")
+            log.info("commit_loan: wrong movie_id")
             return False
     else:
-        self.debug.show("commit_loan: movie not selected")
+        log.info("commit_loan: movie not selected")
         return False
 
     # ask if user wants to loan whole collection
@@ -83,7 +85,7 @@ def commit_loan(self):
     try:
         self.db.session.commit()
     except Exception, e:
-        self.debug.show(str(e))
+        log.info(str(e))
     else:
         self.update_statusbar(_("Movie loaned"))
         self.treeview_clicked()

@@ -32,6 +32,8 @@ import platform
 import re
 from gettext import gettext as _
 from locale import getdefaultlocale
+import logging
+log = logging.getLogger("Griffith")
 import db
 
 try:
@@ -102,17 +104,17 @@ def locations(self):
 
     try:
         if not os.path.exists(locations['home']):
-            self.debug.show('Creating %s' % locations['home'])
+            log.info('Creating %s' % locations['home'])
             os.makedirs(locations['home'])
         else:
-            self.debug.show("Using Griffith directory: %s" % locations['home'])
+            log.info("Using Griffith directory: %s" % locations['home'])
     except OSError:
-        self.debug.show('Unable to create griffith directory.')
+        log.info('Unable to create griffith directory.')
         raise
         sys.exit()
 
     if not os.access(locations['home'], os.W_OK):
-        self.debug.show('Cannot write to griffith directory, %s' % locations['home'])
+        log.info('Cannot write to griffith directory, %s' % locations['home'])
         sys.exit()
 
     # includes plugins in system path for easier importing
@@ -144,7 +146,7 @@ def location_posters(locations, config):
 
 def gui(self):
     self._ = None
-    self.debug.show("running on %s - %s" % (os.name, platform.system()))
+    log.info("running on %s - %s" % (os.name, platform.system()))
     if os.name == 'nt' or os.name.startswith('win'):
         self.windows = True
     else:
@@ -681,7 +683,7 @@ def gtkspell(self):
                 except:
                     spell_error = True
             if spell_error:
-                self.debug.show('Dictionary not available. Spellcheck will be disabled.')
+                log.info('Dictionary not available. Spellcheck will be disabled.')
                 if not self.config.get('notified', False, section='spell'):
                     gutils.info(self, _("Dictionary not available. Spellcheck will be disabled. \n" + \
                         "Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('lang', section='spell'), \
@@ -689,7 +691,7 @@ def gtkspell(self):
                     self.config.set('notified', True, section='spell')
                     self.config.save()
     else:
-        self.debug.show('Spellchecker is not available')
+        log.info('Spellchecker is not available')
 
 def preferences(self):
     self.widgets['preferences']['db_type'].insert_text(0,'SQLite3 (internal)')
@@ -927,6 +929,6 @@ def remove_hbox(self, widget, tab):
         tab.pop()
         widget.remove(widget.get_children().pop())
     except:
-        self.debug.show('List is empty')
+        log.info('List is empty')
     widget.show_all()
 
