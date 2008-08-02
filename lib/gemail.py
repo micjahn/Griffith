@@ -24,7 +24,8 @@ __revision__ = '$Id$'
 import socket
 import smtplib
 import gutils
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 
 socket.setdefaulttimeout(10)
 

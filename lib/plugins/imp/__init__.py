@@ -23,7 +23,8 @@ __revision__ = '$Id$'
 
 # detect all plugins:
 import glob, os.path
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 
 __all__ = [os.path.basename(x)[:-3] for x in glob.glob("%s/*.py" % os.path.dirname(__file__))]
 __all__.remove('__init__')

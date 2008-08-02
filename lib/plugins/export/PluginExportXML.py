@@ -25,7 +25,8 @@ import xml.dom.minidom
 import xml.dom.ext
 import gtk
 import os
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 import db
 import gutils
 

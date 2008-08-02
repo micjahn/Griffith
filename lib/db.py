@@ -170,17 +170,17 @@ movies_table = Table('movies', metadata,
     Column('media_num', SmallInteger),
     Column('runtime', Integer),
     Column('year', Integer),
-    Column('o_title', VARCHAR(255)),
-    Column('title', VARCHAR(255)),
-    Column('director', VARCHAR(255)),
-    Column('o_site', VARCHAR(255)),
-    Column('site', VARCHAR(255)),
-    Column('trailer', VARCHAR(256)),
-    Column('country', VARCHAR(128)),
-    Column('genre', VARCHAR(128)),
-    Column('image', VARCHAR(128)), # TODO: VARCHAR(32) is enough for MD5, use after transition
-    Column('studio', VARCHAR(128)),
-    Column('classification', VARCHAR(128)),
+    Column('o_title', Unicode(255)),
+    Column('title', Unicode(255)),
+    Column('director', Unicode(255)),
+    Column('o_site', Unicode(255)),
+    Column('site', Unicode(255)),
+    Column('trailer', Unicode(256)),
+    Column('country', Unicode(128)),
+    Column('genre', Unicode(128)),
+    Column('image', Unicode(128)), # TODO: Unicode(32) is enough for MD5, use after transition
+    Column('studio', Unicode(128)),
+    Column('classification', Unicode(128)),
     Column('cast', TEXT),
     Column('plot', TEXT),
     Column('notes', TEXT))
@@ -196,47 +196,47 @@ loans_table = Table('loans', metadata,
 
 people_table = Table('people', metadata,
     Column('person_id', Integer, primary_key=True),
-    Column('name', VARCHAR(255), nullable=False, unique=True),
-    Column('email', VARCHAR(128)),
-    Column('phone', VARCHAR(64)))
+    Column('name', Unicode(255), nullable=False, unique=True),
+    Column('email', Unicode(128)),
+    Column('phone', Unicode(64)))
 
 volumes_table = Table('volumes', metadata,
     Column('volume_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True),
+    Column('name', Unicode(64), nullable=False, unique=True),
     Column('loaned', Boolean, nullable=False, default=False))
 
 collections_table = Table('collections', metadata,
     Column('collection_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True),
+    Column('name', Unicode(64), nullable=False, unique=True),
     Column('loaned', Boolean, nullable=False, default=False))
 
 media_table = Table('media', metadata,
     Column('medium_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True))
+    Column('name', Unicode(64), nullable=False, unique=True))
 
 languages_table = Table('languages', metadata,
     Column('lang_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True))
+    Column('name', Unicode(64), nullable=False, unique=True))
 
 vcodecs_table = Table('vcodecs', metadata,
     Column('vcodec_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True))
+    Column('name', Unicode(64), nullable=False, unique=True))
 
 acodecs_table = Table('acodecs', metadata,
     Column('acodec_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True))
+    Column('name', Unicode(64), nullable=False, unique=True))
 
 achannels_table = Table('achannels', metadata,
     Column('achannel_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True))
+    Column('name', Unicode(64), nullable=False, unique=True))
 
 subformats_table = Table('subformats', metadata,
     Column('subformat_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True))
+    Column('name', Unicode(64), nullable=False, unique=True))
 
 tags_table = Table('tags', metadata,
     Column('tag_id', Integer, primary_key=True),
-    Column('name', VARCHAR(64), nullable=False, unique=True))
+    Column('name', Unicode(64), nullable=False, unique=True))
 
 movie_lang_table = Table('movie_lang', metadata,
     Column('ml_id', Integer, primary_key=True),
@@ -253,11 +253,11 @@ movie_tag_table = Table('movie_tag', metadata,
     Column('tag_id', Integer, ForeignKey('tags.tag_id')))
 
 configuration_table = Table('configuration', metadata,
-    Column('param', VARCHAR(16), primary_key=True),
-    Column('value', VARCHAR(128), nullable=False))
+    Column('param', Unicode(16), primary_key=True),
+    Column('value', Unicode(128), nullable=False))
 
 posters_table = Table('posters', metadata,
-    Column('md5sum', VARCHAR(32), ForeignKey('movies.image'), primary_key=True),
+    Column('md5sum', Unicode(32), ForeignKey('movies.image'), primary_key=True),
     Column('data', BLOB, nullable=False))
 #}}}
 
@@ -342,7 +342,7 @@ if __name__ == '__main__':
     movie1 = sess2.query(Movie)[0]
     print movie1, movie1.title
     movie1_clone = sess.merge(movie1)
-    movie1_clone.title = 'cos'
+    movie1_clone.title = u'cos'
     sess.add(movie1_clone)
     sess.commit()
     for i in sess.query(Movie)[:3]:

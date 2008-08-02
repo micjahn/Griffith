@@ -21,7 +21,8 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import mm, inch

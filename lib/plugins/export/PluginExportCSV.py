@@ -24,7 +24,8 @@ __revision__ = '$Id$'
 import csv
 import gtk
 import os
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 import gutils
 import db
 

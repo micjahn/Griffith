@@ -10,7 +10,8 @@ __revision__ = '$Id$'
 #
 ###########################################################################
 
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 from plugins.imp import ImportPlugin as IP
 import gtk
 import gtk.glade

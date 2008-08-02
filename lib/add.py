@@ -23,7 +23,8 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from sqlalchemy.exceptions import IntegrityError
-from gettext               import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 import gutils
 import os
 import gtk
@@ -307,25 +308,25 @@ def get_details(self): #{{{
     plot_buffer  = w['plot'].get_buffer()
     
     t_movies = {
-        'classification' : w['classification'].get_text(),
+        'classification' : w['classification'].get_text().decode('utf-8'),
         'color'          : w['color'].get_active(),
         'cond'           : w['condition'].get_active(),
-        'country'        : w['country'].get_text(),
-        'director'       : w['director'].get_text(),
-        'genre'          : w['genre'].get_text(),
-        'image'          : w['image'].get_text(),
+        'country'        : w['country'].get_text().decode('utf-8'),
+        'director'       : w['director'].get_text().decode('utf-8'),
+        'genre'          : w['genre'].get_text().decode('utf-8'),
+        'image'          : w['image'].get_text().decode('utf-8'),
         'layers'         : w['layers'].get_active(),
         'media_num'      : w['discs'].get_value(),
         'number'         : w['number'].get_value(),
-        'o_site'         : w['o_site'].get_text(),
-        'o_title'        : w['o_title'].get_text(),
+        'o_site'         : w['o_site'].get_text().decode('utf-8'),
+        'o_title'        : w['o_title'].get_text().decode('utf-8'),
         'rating'         : w['rating_slider'].get_value(),
         'region'         : w['region'].get_active(),
-        'runtime'        : w['runtime'].get_text(),
-        'site'           : w['site'].get_text(),
-        'studio'         : w['studio'].get_text(),
-        'title'          : w['title'].get_text(),
-        'trailer'        : w['trailer'].get_text(),
+        'runtime'        : w['runtime'].get_text().decode('utf-8'),
+        'site'           : w['site'].get_text().decode('utf-8'),
+        'studio'         : w['studio'].get_text().decode('utf-8'),
+        'title'          : w['title'].get_text().decode('utf-8'),
+        'trailer'        : w['trailer'].get_text().decode('utf-8'),
         'year'           : w['year'].get_value(),
         'collection_id'  : w['collection'].get_active(),
         'medium_id'      : w['media'].get_active(),

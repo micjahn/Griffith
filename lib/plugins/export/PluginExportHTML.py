@@ -30,7 +30,8 @@ import glob, shutil
 import version
 import math
 from xml.dom import minidom
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 import logging
 log = logging.getLogger("Griffith")
 import db

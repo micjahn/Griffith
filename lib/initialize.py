@@ -30,7 +30,8 @@ import gobject
 import gettext
 import platform
 import re
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 from locale import getdefaultlocale
 import logging
 log = logging.getLogger("Griffith")

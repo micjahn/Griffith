@@ -23,7 +23,8 @@ __revision__ = '$Id$'
 
 from sqlalchemy import select, desc
 from sqlalchemy.sql.expression import Select
-from gettext import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 import gutils
 import os
 import gtk

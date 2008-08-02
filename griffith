@@ -22,6 +22,9 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
+import gettext
+gettext.install('griffith', unicode=1)
+
 # set the PATH
 import sys, os.path
 lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
@@ -54,7 +57,6 @@ del missing
 # other imports
 import gtk, gtk.glade
 import add, config, gconsole, gutils, initialize, main_treeview, quick_filter, update
-from gettext import gettext as _
 import db
 
 class Griffith:

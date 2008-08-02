@@ -26,7 +26,8 @@ __revision__ = '$Id$'
 #from sqlalchemy            import *
 from sqlalchemy.orm        import sessionmaker
 from sqlalchemy.exceptions import SQLError
-from gettext               import gettext as _
+import gettext
+gettext.install('griffith', unicode=1)
 import logging
 log = logging.getLogger("Griffith")
 import os.path
@@ -123,7 +124,7 @@ class GriffithSQL:
         
         # check if database needs an upgrade
         try:
-            v = self.session.query(Configuration).filter_by(param='version').one()    # returns None if table exists && param ISNULL
+            v = self.session.query(Configuration).filter_by(param=u'version').one()    # returns None if table exists && param ISNULL
         except SQLError, e:    # table doesn't exist
             log.info("DB version: %s" % e)
             v = 0
