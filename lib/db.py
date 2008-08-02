@@ -178,7 +178,8 @@ movies_table = Table('movies', metadata,
     Column('trailer', Unicode(256)),
     Column('country', Unicode(128)),
     Column('genre', Unicode(128)),
-    Column('image', Unicode(128)), # TODO: Unicode(32) is enough for MD5, use after transition
+    Column('image', Unicode(128)), # XXX: deprecated
+    Column('poster_md5', Unicode(32), ForeignKey('posters.md5sum')),
     Column('studio', Unicode(128)),
     Column('classification', Unicode(128)),
     Column('cast', TEXT),
@@ -257,7 +258,7 @@ configuration_table = Table('configuration', metadata,
     Column('value', Unicode(128), nullable=False))
 
 posters_table = Table('posters', metadata,
-    Column('md5sum', Unicode(32), ForeignKey('movies.image'), primary_key=True),
+    Column('md5sum', Unicode(32), primary_key=True),
     Column('data', BLOB, nullable=False))
 #}}}
 
@@ -274,21 +275,19 @@ mapper(VCodec, vcodecs_table, properties={
 mapper(Person, people_table, properties = {
     'loans'    : relation(Loan, backref='person', cascade='all, delete-orphan')})
 mapper(MovieLang, movie_lang_table, primary_key=[movie_lang_table.c.ml_id], properties = {
-    'movie'    : relation(Movie, lazy=False),
-    'language' : relation(Lang, lazy=False),
+    'movie'    : relation(Movie),
+    'language' : relation(Lang),
     'achannel' : relation(AChannel),
     'acodec'   : relation(ACodec),
     'subformat': relation(SubFormat)})
 mapper(ACodec, acodecs_table, properties={
-    'movielangs': relation(MovieLang, lazy=False)})
+    'movielangs': relation(MovieLang)})
 mapper(AChannel, achannels_table, properties={
-    'movielangs': relation(MovieLang, lazy=False)})
+    'movielangs': relation(MovieLang)})
 mapper(SubFormat, subformats_table, properties={
-    'movielangs': relation(MovieLang, lazy=False)})
+    'movielangs': relation(MovieLang)})
 mapper(Lang, languages_table, properties={
-    'movielangs': relation(MovieLang, lazy=False)})
-mapper(Poster, posters_table, properties={
-    'movies': relation(Movie)})
+    'movielangs': relation(MovieLang)})
 mapper(MovieTag, movie_tag_table)
 mapper(Tag, tags_table, properties={'movietags': relation(MovieTag, backref='tag')})
 mapper(Loan, loans_table, properties = {
@@ -301,6 +300,8 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
                            primaryjoin=movies_table.c.movie_id==movie_tag_table.c.movie_id,
                            secondaryjoin=movie_tag_table.c.tag_id==tags_table.c.tag_id),
     'languages' : relation(MovieLang, cascade='all, delete-orphan')})
+mapper(Poster, posters_table, properties={
+    'movies': relation(Movie)})
 #}}}
 
 

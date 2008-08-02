@@ -113,13 +113,26 @@ def upgrade_database(self, version):
         self.session.add(db_version)
         self.session.commit()
     if version == 2:    # fix changes between v2 and v3
+        e_type = self.session.bind.engine.dialect.name
         version += 1
         log.info("Upgrading database to version %d..." % version)
+
+        # create new table
         db.posters_table.create(checkfirst=True, bind=b)
+
+        # add new column
+        query = "ALTER TABLE movies ADD COLUMN poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum)" # SQLite, PostgreSQL
+        if e_type == 'mysql':
+            pass
+        elif e_type == 'mssql':
+            pass
+        self.session.bind.execute(query)
+
         db_version = self.session.query(db.Configuration).filter_by(param='version').one()
         db_version.value = version
         self.session.add(db_version)
         self.session.commit()
+    return True
 
 
 # ---------------------------------------------------

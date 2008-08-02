@@ -29,6 +29,7 @@ import logging
 log = logging.getLogger("Griffith")
 import gutils
 import initialize
+import db
 
 try:
     import gtkspell
@@ -426,28 +427,25 @@ def save_preferences(self):
             old['passwd'] != c.get('passwd', section='database'))) or \
             old['name'] != c.get('name', section='database'):
         log.info('DATABASE: connecting to new db server...')
+        import sql
+        from sqlalchemy.exceptions import InvalidRequestError
+        from initialize            import dictionaries, people_treeview, location_posters
         
         # new database connection
-        import sql
         self.initialized = False
-        self.db.metadata.clear()
-        from sqlalchemy.orm import clear_mappers
-        from sqlalchemy.exceptions import InvalidRequestError
-        clear_mappers()
         try:
             self.db = sql.GriffithSQL(c, self.locations['home'])
         except InvalidRequestError, e:
-            log.info(str(e))
+            log.error(str(e))
             c.set('type', 'sqlite', section='database')
             w['db_type'].set_active(0)
             self.db = sql.GriffithSQL(c, self.locations['home'])
 
-        log.info("New database Engine: %s" % self.db.metadata.engine.name)
+        log.info("New database Engine: %s" % self.db.session.bind.engine.name)
         
         # initialize new database
-        self.total = int(self.db.Movie.query.count())
+        self.total = int(self.db.session.query(db.Movie).count())
         self.count_statusbar()
-        from initialize    import dictionaries, people_treeview, location_posters
         c['posters'] = None # force update
         location_posters(self.locations, self.config)
         dictionaries(self)

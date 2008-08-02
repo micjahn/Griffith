@@ -23,20 +23,19 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 # imports
-#from sqlalchemy            import *
+from sqlalchemy            import create_engine
 from sqlalchemy.orm        import sessionmaker
-from sqlalchemy.exceptions import SQLError
+from sqlalchemy.exceptions import SQLError, OperationalError
+import os.path
 import gettext
 gettext.install('griffith', unicode=1)
 import logging
 log = logging.getLogger("Griffith")
-import os.path
 import gutils
-
-from db import * # ORM data (SQLAlchemy stuff)
+import db # ORM data (SQLAlchemy stuff)
 
 class GriffithSQL:
-    version = 3    # database format version, incrase after any changes in data structures
+    version = 3    # database format version, increase after changing data structures
 
     def __init__(self, config, griffith_dir):
         #mapper = Session.mapper
@@ -123,10 +122,14 @@ class GriffithSQL:
         #}}}
         
         # check if database needs an upgrade
+        db.metadata.create_all(engine)
         try:
-            v = self.session.query(Configuration).filter_by(param=u'version').one()    # returns None if table exists && param ISNULL
-        except SQLError, e:    # table doesn't exist
-            log.info("DB version: %s" % e)
+            v = self.session.query(db.Configuration).filter_by(param=u'version').first()    # returns None if table exists && param ISNULL
+        except OperationalError, e:
+			log.info(str(e))
+            v = 0
+        except Exception, e:
+            log.error(str(e))
             v = 0
 
         if v is not None and v>1:

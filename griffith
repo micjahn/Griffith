@@ -32,7 +32,10 @@ lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
 if os.path.isdir(lib):
     sys.path.insert(1, lib)
 del lib
+
+# logging
 import logging
+logging.basicConfig()
 log = logging.getLogger("Griffith")
 
 # check dependencies
@@ -401,7 +404,7 @@ class Griffith:
 
     def add_volume(self, widget):
         from update import update_volume_combo_ids
-        name = self.widgets['add']['volume'].get_active_text()
+        name = self.widgets['add']['volume'].get_active_text().decode('utf-8')
         vol = db.Volume()
         vol.name = nae
         if vol and vol.add_to_db():
@@ -410,7 +413,7 @@ class Griffith:
 
     def add_collection(self, widget):
         from update import update_collection_combo_ids
-        name = self.widgets['add']['collection'].get_active_text()
+        name = self.widgets['add']['collection'].get_active_text().decode('utf-8')
         col = db.Collection()
         col.name = name
         if col and col.add_to_db():
@@ -436,7 +439,7 @@ class Griffith:
     def rename_volume(self, widget):
         vol_id = self._selected_volume
         if vol_id != 0:
-            new_name = self.widgets['add']['volume'].get_active_text()
+            new_name = self.widgets['add']['volume'].get_active_text().decode('utf-8')
             vol = self.db.session.query(db.Volume).filter_by(volume_id=vol_id).first()
             if vol:
                 vol.name=new_name
@@ -446,7 +449,7 @@ class Griffith:
     def rename_collection(self, widget):
         col_id = self.e_selected_collection
         if col_id != 0:
-            new_name = self.widgets['add']['collection'].get_active_text()
+            new_name = self.widgets['add']['collection'].get_active_text().decode('utf-8')
             col = self.db.session.query(db.Collection).filter_by(collection_id=col_id).first()
             if col is not None:
                 col.name=new_name
@@ -538,7 +541,7 @@ class Griffith:
     # preferences
     def on_lang_add_clicked(self, widget):
         lang = db.Lang()
-        lang.name = self.widgets['preferences']['lang_name'].get_active_text()
+        lang.name = self.widgets['preferences']['lang_name'].get_active_text().decode('utf-8')
         if lang and lang.add_to_db():
             initialize.language_combos(self)
 
@@ -561,7 +564,7 @@ class Griffith:
         if lang_id>0:
             lang = self.db.session.query(db.Lang).filter_by(lang_id=lang_id).first()
             if lang is not None:
-                lang.name = self.widgets['preferences']['lang_name'].get_active_text()
+                lang.name = self.widgets['preferences']['lang_name'].get_active_text().decode('utf-8')
                 if lang.update_in_db():
                     initialize.language_combos(self)
 
@@ -574,7 +577,7 @@ class Griffith:
     # tags -------------------------------------------------------------{{{
     def on_tag_add_clicked(self, widget):
         tag = db.Tag()
-        tag.name = self.widgets['preferences']['tag_name'].get_active_text()
+        tag.name = self.widgets['preferences']['tag_name'].get_active_text().decode('utf-8')
         self.db.session.add(tag)
         try:
             self.db.session.commit()
@@ -616,7 +619,7 @@ class Griffith:
         tag_id = self.tags_ids[active]
         tag = self.db.session.query(db.Tag).filter_by(tag_id=tag_id).first()
         if tag:
-            tag.name = self.widgets['preferences']['tag_name'].get_active_text()
+            tag.name = self.widgets['preferences']['tag_name'].get_active_text().decode('utf-8')
             try:
                 self.db.session.commit()
             except Exception, e:
@@ -637,7 +640,7 @@ class Griffith:
     # audio codecs ------------------------------------------------------{{{
     def on_acodec_add_clicked(self, widget):
         acodec = self.db.ACodec()
-        acodec.name = self.widgets['preferences']['acodec_name'].get_active_text()
+        acodec.name = self.widgets['preferences']['acodec_name'].get_active_text().decode('utf-8')
         if acodec and acodec.add_to_db():
             initialize.acodec_combos(self)
 
@@ -659,7 +662,7 @@ class Griffith:
         acodec_id = self.acodecs_ids[active]
         acodec = self.db.session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
         if acodec is not None:
-            acodec.name = self.widgets['preferences']['acodec_name'].get_active_text()
+            acodec.name = self.widgets['preferences']['acodec_name'].get_active_text().decode('utf-8')
             if acodec.update_in_db():
                 initialize.acodec_combos(self)
 
@@ -672,7 +675,7 @@ class Griffith:
     # audio channels ----------------------------------------------------{{{
     def on_achannel_add_clicked(self, widget):
         achannel = self.db.AChannel()
-        achannel.name = self.widgets['preferences']['achannel_name'].get_active_text()
+        achannel.name = self.widgets['preferences']['achannel_name'].get_active_text().decode('utf-8')
         if achannel and achannel.add_to_db():
             initialize.achannel_combos(self)
 
@@ -694,7 +697,7 @@ class Griffith:
         achannel_id = self.achannels_ids[active]
         achannel = self.db.session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
         if achannel is not None:
-            achannel.name = self.widgets['preferences']['achannel_name'].get_active_text()
+            achannel.name = self.widgets['preferences']['achannel_name'].get_active_text().decode('utf-8')
             if achannel.update_in_db():
                 initialize.achannel_combos(self)
 
@@ -707,7 +710,7 @@ class Griffith:
     # subformats -------------------------------------------------------------{{{
     def on_subformat_add_clicked(self, widget):
         subformat = self.db.SubFormat()
-        subformat.name = self.widgets['preferences']['subformat_name'].get_active_text()
+        subformat.name = self.widgets['preferences']['subformat_name'].get_active_text().decode('utf-8')
         if subformat and subformat.add_to_db():
             initialize.subformat_combos(self)
 
@@ -729,7 +732,7 @@ class Griffith:
         subformat_id = self.subformats_ids[active]
         subformat = self.db.session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
         if subformat is not None:
-            subformat.name = self.widgets['preferences']['subformat_name'].get_active_text()
+            subformat.name = self.widgets['preferences']['subformat_name'].get_active_text().decode('utf-8')
             if subformat.update_in_db():
                 initialize.subformat_combos(self)
 
@@ -742,7 +745,7 @@ class Griffith:
     # media ------------------------------------------------------------{{{
     def on_medium_add_clicked(self, widget):
         medium = self.db.Medium()
-        medium.name = self.widgets['preferences']['medium_name'].get_active_text()
+        medium.name = self.widgets['preferences']['medium_name'].get_active_text().decode('utf-8')
         if medium and medium.add_to_db():
             initialize.media_combos(self)
 
@@ -764,7 +767,7 @@ class Griffith:
         medium_id = self.media_ids[active]
         medium = self.db.session.query(db.Medium).filter_by(medium_id=medium_id).first()
         if medium is not None:
-            medium.name = self.widgets['preferences']['medium_name'].get_active_text()
+            medium.name = self.widgets['preferences']['medium_name'].get_active_text().decode('utf-8')
             if medium.update_in_db():
                 initialize.media_combos(self)
 
@@ -777,7 +780,7 @@ class Griffith:
     # vcodecs -------------------------------------------------------------{{{
     def on_vcodec_add_clicked(self, widget):
         vcodec = self.db.VCodec()
-        vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text()
+        vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text().decode('utf-8')
         if vcodec and vcodec.add_to_db():
             initialize.vcodec_combos(self)
 
@@ -799,7 +802,7 @@ class Griffith:
         vcodec_id = self.vcodecs_ids[active]
         vcodec = self.db.session.query(db.VCodec).filter_by(vcodec_id=vcodec_id).first()
         if vcodec is not None:
-            vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text()
+            vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text().decode('utf-8')
             if vcodec.update_in_db():
                 initialize.vcodec_combos(self)
 
@@ -937,9 +940,11 @@ You can't undo this operation."""), \
     # statusbar -----------------------------------------------------------
 
     def count_statusbar(self):
+        loaned = not_seen = 0
         allmovies = self.db.session.query(db.Movie).count()
-        loaned = self.db.session.query(db.Movie).filter_by(loaned=True).count()
-        not_seen = self.db.session.query(db.Movie).filter_by(seen=False).count()
+        if allmovies > 0:
+            loaned = self.db.session.query(db.Movie).filter_by(loaned=True).count()
+            not_seen = self.db.session.query(db.Movie).filter_by(seen=False).count()
         self.update_statusbar(str(allmovies) + ' (' + str(self.total) + ')' + _(' movie(s) in collection. ')
             + str(loaned) + _(' movie(s) loaned. ')
             + _('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
@@ -952,7 +957,7 @@ You can't undo this operation."""), \
     # quick filter operations ---------------------------------------------
 
     def on_filter_criteria_changed(self, *args):
-        selected_criteria = self.widgets['filter']['criteria'].get_active_text()
+        selected_criteria = self.widgets['filter']['criteria'].get_active_text().decode('utf-8')
         self.config.set('criteria', selected_criteria, section='mainlist')
         quick_filter.change_filter(self)
 

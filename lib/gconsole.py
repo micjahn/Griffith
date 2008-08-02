@@ -51,6 +51,9 @@ def check_args(self):
                 sys.exit()
             elif o in ('-D', '--debug'):
                 log.setLevel(logging.DEBUG)
+            elif o == '--sqlecho':
+                sa_log = logging.getLogger("sqlalchemy")
+                sa_log.setLevel(logging.INFO)
             elif o == '--home':
                 self._tmp_home = a # see initialize.locations()
             elif o == '--config':
@@ -77,8 +80,6 @@ def check_args_with_db(self):
             if o in ('-C', '--clean'):
                 gutils.clean_posters_dir(self)
                 sys.exit()
-            elif o == '--sqlecho':
-                self.db.metadata.engine.echo = True
             elif o in ('-s', '--sort'):
                 sort = a
             elif o in ('-o', '--original_title'):

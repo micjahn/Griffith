@@ -29,6 +29,8 @@ import gutils
 import os
 import gtk
 import db
+import logging
+log = logging.getLogger("Griffith")
 
 def treeview_clicked(self):
     if self.initialized is False:
