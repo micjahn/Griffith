@@ -190,6 +190,7 @@ def strip_tags(text):
     return text
 
 def save_pixmap(self, pixmap, filename):
+    """XXX: deprecated"""
     pixmap.save(filename, "jpeg", {"quality":"70"})
 
 def clean(text):
@@ -321,16 +322,18 @@ def garbage(handler):
     pass
 
 def make_thumbnail(self, file_name):
+    """XXX: deprecated"""
     source = os.path.join(self.locations['posters'], file_name)
     if os.path.isfile(source):
-        self.Image.set_from_file(source)
-        pixbuf = self.Image.get_pixbuf()
+        self.image.set_from_file(source)
+        pixbuf = self.image.get_pixbuf()
         pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
         save_pixmap(self, pixbuf, os.path.join(self.locations['posters'], "t_%s"%file_name))
     else:
         return 0
 
 def make_medium_image(self, file_name):
+    """XXX: deprecated"""
     source = os.path.join(self.locations['posters'], file_name)
     if os.path.isfile(source):
         self.Image.set_from_file(source)
@@ -584,10 +587,56 @@ def is_windows_system():
 
 def md5sum(fobj):
     """Returns an md5 hash for an object with read() method."""
+    import md5
     m = md5.new()
     while True:
         d = fobj.read(8096)
         if not d:
             break
         m.update(d)
-    return m.hexdigest()
+    return unicode(m.hexdigest())
+
+def create_image_cache(md5sum, gsql):
+    poster = gsql.session.query(db.Poster).filter_by(md5sum=md5sum).first()
+    if not poster:
+        log.warn("poster not available: %s" % md5sum)
+        return False
+    if not poster.data:
+        log.warn("poster not available: %s" % md5sum)
+        return False
+    
+    fn_big    = os.path.join(gsql.data_dir, 'posters', md5sum+'.jpg')
+    fn_small  = os.path.join(gsql.data_dir, 'posters', md5sum+'_s.jpg')
+    fn_medium = os.path.join(gsql.data_dir, 'posters', md5sum+'_m.jpg')
+
+    if not os.path.isfile(fn_big):
+        f = file(fn_big, 'wb')
+        f.write(poster.data)
+        f.close()
+    
+    image = gtk.Image()
+    image.set_from_file(fn_big)
+
+    if not os.path.isfile(fn_medium):
+        pixbuf = image.get_pixbuf()
+        pixbuf = pixbuf.scale_simple(100, 140, 'bilinear')
+        pixbuf.save(fn_medium, "jpeg", {"quality":"70"})
+    
+    if not os.path.isfile(fn_small):
+        pixbuf = image.get_pixbuf()
+        pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
+        pixbuf.save(fn_small, "jpeg", {"quality":"70"})
+        
+
+def get_image_fname(md5sum, gsql, size=None):
+    """size: s - small; m - medium, b or None - big"""
+
+    if not size or size=='b': size=''
+    else: size = "_%s" % size
+
+    file_name = os.path.join(gsql.data_dir, 'posters', md5sum+size+'.jpg')
+
+    if not os.path.isfile(file_name) and not create_image_cache(md5sum, gsql):
+        return False
+    return file_name
+

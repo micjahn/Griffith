@@ -191,12 +191,10 @@ def set_details(self, item=None):#{{{
         w['vcodec'].set_text('')
 
     # poster
-    if 'image' in item and item['image']:
-        tmp_dest = self.locations['posters']
-        tmp_img = os.path.join(tmp_dest, "m_%s.jpg"%item['image'])
-        tmp_img2 = os.path.join(tmp_dest, "%s.jpg"%item['image'])
-        if os.path.isfile(tmp_img2):
-            image_path = tmp_img
+    if 'poster_md5' in item and item['poster_md5']:
+        filename = gutils.get_image_fname(item['poster_md5'], self.db, 'm')
+        if os.path.isfile(filename):
+            image_path = filename
             self.widgets['add']['delete_poster'].set_sensitive(True)
             self.widgets['menu']['delete_poster'].set_sensitive(True)
             w['picture_button'].set_sensitive(True)
@@ -205,12 +203,6 @@ def set_details(self, item=None):#{{{
             self.widgets['add']['delete_poster'].set_sensitive(False)
             self.widgets['menu']['delete_poster'].set_sensitive(False)
             w['picture_button'].set_sensitive(False)
-        # lets see if we have a scaled down medium image already created
-        if not os.path.isfile(image_path):
-            # if not, lets make one for future use :D
-            original_image = os.path.join(tmp_dest, "%s.jpg"%item.image)
-            if os.path.isfile(original_image):
-                gutils.make_medium_image(self, "%s.jpg"%item.image)
     else:
         image_path = os.path.join(self.locations['images'], 'default.png')
         w['picture_button'].set_sensitive(False)
@@ -348,7 +340,7 @@ def populate(self, movies=None, where=None):#{{{
     if movies is None:
         movies = select([db.Movie.number,
                  db.Movie.o_title, db.Movie.title,
-                 db.Movie.director, db.Movie.image,
+                 db.Movie.director, db.Movie.poster_md5,
                  db.Movie.genre, db.Movie.seen,
                  db.Movie.year, db.Movie.runtime,
                  db.Movie.rating], bind=self.db.session.bind)
@@ -473,24 +465,13 @@ def populate(self, movies=None, where=None):#{{{
         self.treemodel.set_value(myiter,0,'%004d' % int(movie.number))
 
         if self.config.get('image', True, section='mainlist') == True:
-            tmp_dest = self.locations['posters']
-            tmp_img = os.path.join(tmp_dest, "t_%s.jpg" % str(movie.image))
-            if movie.image and os.path.isfile(tmp_img):
-                image_path = tmp_img
-            else:
-                image_path = os.path.join(self.locations['images'], 'default_thumbnail.png')
-            # lets see if we have a scaled down thumbnail already created
-            if os.path.isfile(os.path.join(tmp_dest, "t_%s.jpg" % str(movie.image))):
-                pass
-            else:
-                # if not, lets make one for future use :D
-                original_image = os.path.join(tmp_dest, "%s.jpg" % movie.image)
-                if os.path.isfile(original_image):
-                    gutils.make_thumbnail(self, "%s.jpg" % movie.image)
-                else:
-                    self.Image.set_from_file("%s/default_thumbnail.png" % self.locations['images'])
-                    pixbuf = self.Image.get_pixbuf()
-            self.Image.set_from_file(image_path)
+            filename = None
+            if movie.poster_md5:
+                filename = gutils.get_image_fname(movie.poster_md5, self.db, "s")
+            if not filename:
+                filename = os.path.join(self.locations['images'], 'default_thumbnail.png')
+
+            self.Image.set_from_file(filename)
             pixbuf = self.Image.get_pixbuf()
             self.treemodel.set_value(myiter, 1, pixbuf)
         self.treemodel.set_value(myiter,2,movie.o_title)

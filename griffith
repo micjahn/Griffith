@@ -347,10 +347,9 @@ class Griffith:
             return
         number = tmp_model.get_value(tmp_iter, 0)
         movie = self.db.session.query(db.Movie).filter_by(number=number).first()
-        if movie is not None:
-            tmp_dest = self.locations['posters']
-            tmp_img = os.path.join(tmp_dest, str(movie.image)+".jpg")
-            self.widgets['big_poster'].set_from_file(tmp_img)
+        if movie:
+            filename = gutils.get_image_fname(movie.poster_md5, self.db)
+            self.widgets['big_poster'].set_from_file(filename)
             self.widgets['poster_window'].show()
 
     def z_poster_hide(self, *args):

@@ -120,13 +120,42 @@ def upgrade_database(self, version):
         # create new table
         db.posters_table.create(checkfirst=True, bind=b)
 
-        # add new column
+        log.info("... adding new columns")
         query = "ALTER TABLE movies ADD COLUMN poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum)" # SQLite, PostgreSQL
         if e_type == 'mysql':
             pass
         elif e_type == 'mssql':
             pass
         self.session.bind.execute(query)
+        
+        log.info("... saving posters in database")
+        for movie in self.session.query(db.Movie).all():
+            poster_file_name = os.path.join(self.data_dir, self.config.get("poster", "posters"), movie.image + '.jpg')
+            if os.path.isfile(poster_file_name):
+                poster_md5  = gutils.md5sum(file(poster_file_name, 'rb'))
+                poster_file = file(poster_file_name, 'rb')
+                if poster_file:
+                    poster = self.session.query(db.Poster).filter_by(md5sum=poster_md5).first()
+                    if not poster:
+                        poster = db.Poster(md5sum=poster_md5, data=poster_file.read())
+                        self.session.add(poster)
+                    movie.md5sum = poster_md5
+                    self.session.add(movie)
+                    try:
+                        self.session.commit()
+                    except Exception, e:
+                        self.session.rollback()
+                        log.warn(str(e))
+                    else:
+                        try:
+                            os.remove(poster_file_name)
+                        except:
+                            log.warn("cannot remove %s" % poster_file_name)
+                    poster_file.close()
+                else:
+                    log.warn("cannot read %s" % poster_file_name)
+                
+                movie.poster_md5 = poster_md5
 
         db_version = self.session.query(db.Configuration).filter_by(param='version').one()
         db_version.value = version

@@ -37,8 +37,10 @@ import db # ORM data (SQLAlchemy stuff)
 class GriffithSQL:
     version = 3    # database format version, increase after changing data structures
 
-    def __init__(self, config, griffith_dir):
+    def __init__(self, config, griffith_dir, reconnect=True):
         #mapper = Session.mapper
+        self.config = config
+        self.data_dir = griffith_dir
 
         if config.get('type', None, section='database') is None:
             config.set('type', 'sqlite', section='database')
@@ -100,6 +102,8 @@ class GriffithSQL:
             conn = engine.connect()
         except Exception, e:    # InvalidRequestError, ImportError
             log.info("MetaData: %s" % e)
+            if not reconnect:
+                return False
             config.set('type', 'sqlite', section='database')
             gutils.warning(self, "%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
             url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
@@ -113,6 +117,8 @@ class GriffithSQL:
             #self.metadata.bind.connect()
         except Exception, e:
             log.info("engine connection: %s" % e)
+            if not reconnect:
+                return False
             gutils.error(self, _('Database connection failed.'))
             config.set('type', 'sqlite', section='database')
             url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
@@ -126,7 +132,7 @@ class GriffithSQL:
         try:
             v = self.session.query(db.Configuration).filter_by(param=u'version').first()    # returns None if table exists && param ISNULL
         except OperationalError, e:
-			log.info(str(e))
+            log.info(str(e))
             v = 0
         except Exception, e:
             log.error(str(e))

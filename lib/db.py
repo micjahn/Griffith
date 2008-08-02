@@ -31,6 +31,12 @@ log = logging.getLogger("Griffith")
 metadata = MetaData()
 
 class DBTable(object):#{{{
+    def __init__(self, **kwargs):
+        for i in kwargs:
+            if hasattr(self, i):
+                setattr(self, i, kwargs[i])
+            else:
+                log.warn("%s.%s not set" % (self.__class__.__name__, i))
     def __repr__(self):
         return "<%s:%s>" % (self.__class__.__name__, self.name)
     def add_to_db(self):
@@ -46,7 +52,7 @@ class DBTable(object):#{{{
         try:
             self.flush()
         except exceptions.SQLError, e:
-            log.info("%s: add_to_db: %s" % (self.__class__.__name__, e))
+            log.error("%s: add_to_db: %s" % (self.__class__.__name__, e))
             return False
         self.refresh()
         return True
@@ -115,7 +121,13 @@ class VCodec(DBTable):
 class Volume(DBTable):
     pass
 class Poster(object):
-    pass
+    def __init__(self, md5sum=None, data=None):
+        if md5sum and data:
+            if len(md5sum) == 32:
+                self.md5sum = md5sum
+                self.data = data
+            else:
+                log.error("md5sum has wrong size")
 class Configuration(object):
     def __repr__(self):
         return "<Config:%s=%s>" % (self.param, self.value)
