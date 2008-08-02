@@ -626,6 +626,7 @@ def create_image_cache(md5sum, gsql):
         pixbuf = image.get_pixbuf()
         pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
         pixbuf.save(fn_small, "jpeg", {"quality":"70"})
+    return True
         
 
 def get_image_fname(md5sum, gsql, size=None):

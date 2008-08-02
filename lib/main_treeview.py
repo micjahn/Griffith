@@ -193,7 +193,7 @@ def set_details(self, item=None):#{{{
     # poster
     if 'poster_md5' in item and item['poster_md5']:
         filename = gutils.get_image_fname(item['poster_md5'], self.db, 'm')
-        if os.path.isfile(filename):
+        if filename and os.path.isfile(filename):
             image_path = filename
             self.widgets['add']['delete_poster'].set_sensitive(True)
             self.widgets['menu']['delete_poster'].set_sensitive(True)
