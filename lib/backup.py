@@ -61,7 +61,7 @@ def backup(self):
                 gutils.error(self, _("Error creating backup"), self.widgets['window'])
                 return False
             mzip.write(os.path.join(self.locations['home'],'griffith.cfg').encode('utf-8'))
-            if self.db.metadata.engine.name == 'sqlite':
+            if self.db.session.bind.engine.name == 'sqlite':
                 fileName = os.path.join(self.locations['home'], self.config.get('name','griffith', section='database') + '.db').encode('utf-8')
                 mzip.write(fileName)
             else:
@@ -153,25 +153,23 @@ def restore(self):
 
         filename = os.path.join(self.locations['home'], self.config.get('name', 'griffith', section='database') + '.db')
 
-        self.db.metadata.engine.dispose() # close DB
-        from sqlalchemy.orm import clear_mappers
-        clear_mappers()
+        self.db.session.bind.engine.dispose() # close DB
 
         # check if file needs conversion
         if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
             log.info('Old database format detected. Converting...')
-            from dbupgrade import convert_from_old_db
-            from initialize    import location_posters
+            from dbupgrade  import convert_from_old_db
+            from initialize import location_posters
             if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
                 self.config.save()
                 location_posters(self.locations, self.config)
             else:
-                print 'Cant convert old database, exiting.'
+                log.error('Cant convert old database, exiting.')
                 import sys
                 sys.exit(4)
 
         self.db = sql.GriffithSQL(self.config, self.locations['home'])
-        from initialize    import dictionaries, people_treeview
+        from initialize import dictionaries, people_treeview
         dictionaries(self)
         people_treeview(self)
         # let's refresh the treeview

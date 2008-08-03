@@ -24,6 +24,8 @@ __revision__ = '$Id$'
 import gettext
 gettext.install('griffith', unicode=1)
 
+# TODO: rewrite it using advfilter (see get_def_conditions)
+
 def filter_not_seen(self):
     self.populate_treeview()
     self.update_statusbar(_("Filter activated. Showing only not seen movies."))

@@ -953,6 +953,21 @@ You can't undo this operation."""), \
         context_id = self.widgets['statusbar'].get_context_id(text)
         message_id = self.widgets['statusbar'].push(context_id, text)
 
+    # advfilter -----------------------------------------------------------    
+
+    def show_advfilter_window(self, *args):
+        from advfilter import show_window
+        show_window(self)
+
+    def hide_advfilter_window(self, *args):
+        from advfilter import hide_window
+        hide_window(self)
+
+    def on_apply_filter_clicked(self, *args):
+        from advfilter import create_select_query
+        statement = create_select_query(self).execute().fetchall()
+        main_treeview.populate(self, statement)
+
     # quick filter operations ---------------------------------------------
 
     def on_filter_criteria_changed(self, *args):

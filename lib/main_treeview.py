@@ -25,12 +25,12 @@ from sqlalchemy import select, desc
 from sqlalchemy.sql.expression import Select
 import gettext
 gettext.install('griffith', unicode=1)
-import gutils
 import os
 import gtk
-import db
 import logging
 log = logging.getLogger("Griffith")
+import db
+import gutils
 
 def treeview_clicked(self):
     if self.initialized is False:
@@ -334,59 +334,43 @@ def set_details(self, item=None):#{{{
     #}}}
     
 def populate(self, movies=None, where=None):#{{{
-    if self.initialized is False:
+    if self.initialized is False: # dont try to fill movie list if Griffith is not initialized yet
         return False
     
-    if movies is None:
-        movies = select([db.Movie.number,
-                 db.Movie.o_title, db.Movie.title,
-                 db.Movie.director, db.Movie.poster_md5,
-                 db.Movie.genre, db.Movie.seen,
-                 db.Movie.year, db.Movie.runtime,
-                 db.Movie.rating], bind=self.db.session.bind)
-    if isinstance(movies, Select):
-        if not where: # because of possible 'seen', 'loaned', 'collection_id' in where
+    if not movies or isinstance(movies, Select): # if ".execute().fetchall()" not invoked on movies yet
+        if not where: # due to possible 'seen', 'loaned', 'collection_id' in where
+            import advfilter
+            cond = advfilter.get_def_conditions()
+
             # seen / loaned
-            loaned_only = self.widgets['menu']['loaned_movies'].get_active()
-            not_seen_only = self.widgets['menu']['not_seen_movies'].get_active()
-            if loaned_only:
-                movies.append_whereclause(db.Movie.loaned==True)
-            if not_seen_only:
-                movies.append_whereclause(db.Movie.seen==False)
+            cond['loaned_only']   = self.widgets['menu']['loaned_movies'].get_active()
+            cond["not_seen_only"] = self.widgets['menu']['not_seen_movies'].get_active()
             # collection
             pos = self.widgets['filter']['collection'].get_active()
             if pos >= 0:
                 col_id = self.collection_combo_ids[pos]
                 if col_id > 0:
-                    movies.append_whereclause(db.Movie.collection_id==col_id)
+                    cond["collections"].append(col_id)
             # volume
             pos = self.widgets['filter']['volume'].get_active()
             if pos >= 0:
                 vol_id = self.volume_combo_ids[pos]
                 if vol_id > 0:
-                    movies.append_whereclause(db.Movie.volume_id==vol_id)
+                    cond["volumes"].append(vol_id)
             # loaned to
             pos = self.widgets['filter']['loanedto'].get_active()
             if pos >= 0:
                 per_id = self.loanedto_combo_ids[pos]
                 if per_id > 0:
-                    from sqlalchemy import join, exists, and_
-                    loan_exists = exists([db.loans_table.c.movie_id], \
-                        and_(db.Movie.movie_id==db.loans_table.c.movie_id, db.loans_table.c.person_id==per_id, db.loans_table.c.return_date==None))
-                    movies.append_whereclause(loan_exists)
-                    #loan_join = join(self.db.metadata.tables['movies'], \
-                    #    self.db.metadata.tables['loans'], \
-                    #    self.db.metadata.tables['movies'].movie_id==self.db.metadata.tables['loans'].movie_id)
-                    #movies = movies.select_from(loan_join)
+                    cond["loaned_to"].append(per_id)
             # tag
             pos = self.widgets['filter']['tag'].get_active()
             if pos >= 0:
                 tag_id = self.bytag_combo_ids[pos]
                 if tag_id > 0:
-                    from sqlalchemy import join, exists, and_
-                    tag_exists = exists([db.MovieTag.movie_id], \
-                        and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id))
-                    movies.append_whereclause(tag_exists)
+                    cond["tags"].append(tag_id)
+
+            movies = advfilter.create_select_query(self, movies, cond)
         
         # select sort column
         sort_column_name = self.config.get('sortby', 'number', section='mainlist')

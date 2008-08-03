@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
-
 __revision__ = '$Id: $'
 
 # Copyright (c) 2008 Vasco Nunes, Piotr Ożarowski
@@ -274,8 +273,25 @@ configuration_table = Table('configuration', metadata,
 posters_table = Table('posters', metadata,
     Column('md5sum', Unicode(32), primary_key=True),
     Column('data', BLOB, nullable=False))
-#}}}
 
+tables = {
+    'movies':         movies_table,
+    'loans':          loans_table,
+    'people':         people_table,
+    'volumes':        volumes_table,
+    'collections':    collections_table,
+    'media':          media_table,
+    'languages':      languages_table,
+    'vcodecs':        vcodecs_table,
+    'acodecs':        acodecs_table,
+    'achannels':      achannels_table,
+    'subformats':     subformats_table,
+    'tags':           tags_table,
+    'movie_lang':     movie_lang_table,
+    'movie_tag':      movie_tag_table,
+    'configuration':  configuration_table,
+    'posters':        posters_table}
+#}}}
 ### mappers ################################################### {{{
 mapper(Configuration, configuration_table)
 mapper(Volume, volumes_table, order_by=volumes_table.c.name, properties={

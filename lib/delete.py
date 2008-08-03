@@ -67,16 +67,15 @@ def delete_movie(self):
 
 def delete_poster(self, md5sum, commit=False):
     poster = self.db.session.query(db.Poster).filter_by(md5sum=md5sum).first()
-    if poster:
-        if len(poster.movies) == 1: # other movies are not using the same poster
-            self.db.session.delete(poster)
-            if commit:
-                try:
-                    self.session.delete(poster)
-                except Exception, e:
-                    log.warn("cannot delete poster from db: %s" % e)
-                    self.session.rollback()
-                    return False
+    if poster and len(poster.movies) <= 1: # other movies are not using the same poster
+        self.db.session.delete(poster)
+        if commit:
+            try:
+                self.db.session.commit()
+            except Exception, e:
+                log.warn("cannot delete poster from db: %s" % e)
+                self.db.session.rollback()
+                return False
 
     delete_poster_from_cache(self, md5sum)
     return True
