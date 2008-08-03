@@ -108,8 +108,8 @@ def upgrade_database(self, version):
         version += 1
         log.info("Upgrading database to version %d..." % version)
         b.execute("UPDATE loans SET return_date='2007-01-01' WHERE return_date='None';")
-        db_version = self.session.query(db.Configuration).filter_by(param='version').one()
-        db_version.value = version
+        db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
+        db_version.value = unicode(version)
         self.session.add(db_version)
         self.session.commit()
     if version == 2:    # fix changes between v2 and v3
@@ -130,35 +130,37 @@ def upgrade_database(self, version):
         
         log.info("... saving posters in database")
         for movie in self.session.query(db.Movie).all():
-            poster_file_name = os.path.join(self.data_dir, self.config.get("poster", "posters"), movie.image + '.jpg')
+            poster_file_name = os.path.join(self.data_dir, self.config.get("poster", "posters"), "%s.jpg" % movie.image)
             if os.path.isfile(poster_file_name):
                 poster_md5  = gutils.md5sum(file(poster_file_name, 'rb'))
-                poster_file = file(poster_file_name, 'rb')
-                if poster_file:
-                    poster = self.session.query(db.Poster).filter_by(md5sum=poster_md5).first()
-                    if not poster:
-                        poster = db.Poster(md5sum=poster_md5, data=poster_file.read())
-                        self.session.add(poster)
-                    movie.md5sum = poster_md5
-                    self.session.add(movie)
-                    try:
-                        self.session.commit()
-                    except Exception, e:
-                        self.session.rollback()
-                        log.warn(str(e))
-                    else:
-                        try:
-                            os.remove(poster_file_name)
-                        except:
-                            log.warn("cannot remove %s" % poster_file_name)
-                    poster_file.close()
-                else:
-                    log.warn("cannot read %s" % poster_file_name)
+                poster = self.session.query(db.Poster).filter_by(md5sum=poster_md5).first()
+                if not poster:
+                    poster = db.Poster(md5sum=poster_md5, data=file(poster_file_name, 'rb').read())
+                    self.session.add(poster)
                 
                 movie.poster_md5 = poster_md5
+                movie.image = None
+                self.session.add(movie)
 
-        db_version = self.session.query(db.Configuration).filter_by(param='version').one()
-        db_version.value = version
+                try:
+                    self.session.commit()
+                except Exception, e:
+                    self.session.rollback()
+                    log.warn(str(e))
+                else:
+                    try:
+                        os.remove(poster_file_name)
+                    except:
+                        log.warn("cannot remove %s" % poster_file_name)
+
+            else:
+                log.warn("file not found: number=%s, image=%s)" % (movie.number, movie.image))
+                movie.image = None
+                self.session.add(movie)
+                self.session.commit()
+
+        db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
+        db_version.value = unicode(version)
         self.session.add(db_version)
         self.session.commit()
     return True

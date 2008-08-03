@@ -71,30 +71,50 @@ def update_movie(self):
     movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).one()
     if movie is None: # movie was deleted in the meantime
         return add_movie_db(self, True)
-    old_image = movie.image
+    
     details = get_details(self)
+
+    old_poster_md5 = movie.poster_md5
+    new_poster_md5 = None
+    if details['image'] and old_poster_md5 != details['image']: # details["image"] can contain MD5 or file path
+        new_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
+        if not os.path.isfile(new_image_path):
+            log.warn("cannot read temporary file: %s" % new_image_path)
+        else:
+            new_poster_md5 = gutils.md5sum(file(new_image_path, 'rb'))
+            details["poster_md5"] = new_poster_md5
+            poster = self.db.session.query(db.Poster).filter_by(md5sum=new_poster_md5).first()
+            if not poster:
+                try:
+                    data = file(tmp_image_path, 'rb').read()
+                except Exception, e:
+                    log.warning("cannot read poster data")
+                else:
+                    poster = db.Poster(md5sum=new_poster_md5, data=data)
+                    del details["image"]
+                    details["poster_md5"] = new_poster_md5
+                    self.db.session.add(poster)
+
+                    # delete old image
+                    import delete
+                    old_poster = self.db.session.query(db.Poster).filter_by(md5sum=old_poster_md5).first()
+                    if old_poster and len(old_poster.movies) == 1: # other movies are not using the same poster
+                        self.db.session.delete(old_poster)
+                        delete.delete_poster_from_cache(self, old_poster_md5)
+
     update_movie_instance(movie, details, self.db.session)
-    self.db.session.update(movie)
+    
+    self.db.session.add(movie)
     if commit(self, self.db.session):
         treeselection = self.widgets['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
         
-        if details['image'] and details['image'] != old_image:
-            # TODO: fetch poster from amazon / load from disk
-            image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
-            if os.path.isfile(image_path):
-                # delete old image
-                import delete
-                delete.delete_poster(self, old_image)
-                new_image_path = os.path.join(self.locations['posters'], "%s.jpg" % details['image'])
-                shutil.move(image_path, new_image_path)
-                #lets make the thumbnail and medium image from poster for future use
-                gutils.make_thumbnail(self, "%s.jpg"%details['image'])
-                gutils.make_medium_image(self, "%s.jpg"%details['image'])
-                # update thumbnail in main list
-                handler = self.Image.set_from_file(new_image_path)
-                pixbuf = self.Image.get_pixbuf()
-                tmp_model.set_value(tmp_iter,1, pixbuf.scale_simple(30,40,3))
+        if new_poster_md5 and new_poster_md5 != old_poster_md5:
+            # update thumbnail in main list
+            new_image_path = gutils.get_image_fname(new_poster_md5, self.db)
+            handler = self.Image.set_from_file(new_image_path)
+            pixbuf = self.Image.get_pixbuf()
+            tmp_model.set_value(tmp_iter,1, pixbuf.scale_simple(30,40,3))
         # update main treelist
         tmp_model.set_value(tmp_iter,0,'%004d' % int(movie.number))
         tmp_model.set_value(tmp_iter,2, movie.o_title)
@@ -546,9 +566,18 @@ def set_details(self, item=None):#{{{
         for i in item['languages']:
             self.create_language_row(i)
     # poster
-    if 'image' in item and item['image']:
-        w['image'].set_text(item['image'])
-        image_path = os.path.join(self.locations['posters'], "m_%s.jpg" % item['image'])
+    if 'poster_md5' in item and item['poster_md5']:
+        image_path = gutils.get_image_fname(item["poster_md5"], self.db, 'm')
+        if not image_path: image_path = '' # isfile doesn't like bool
+        w['image'].set_text(item['poster_md5'])
+    elif 'image' in item and item['image']:
+        if len(item["image"])==32: # md5
+            image_path = gutils.get_image_fname(item["image"], self.db, 'm')
+            if not image_path: image_path = '' # isfile doesn't like bool
+            else: w['image'].set_text(item['image'])
+        else:
+            image_path = os.path.join(self.locations['posters'], "m_%s.jpg" % item['image'])
+            log.warn("TODO: image=%s" % item['image'])
     else:
         w['image'].set_text('')
         image_path = os.path.join(self.locations['images'], 'default.png')
@@ -605,24 +634,35 @@ def add_movie_db(self, close):
                 cancel=0, parent=self.widgets['add']['window'])
             if response == gtk.RESPONSE_NO:
                 return False
+    
+    if details['image']:
+        tmp_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
+        if os.path.isfile(tmp_image_path):
+            new_poster_md5 = gutils.md5sum(file(tmp_image_path, 'rb'))
+
+            poster = self.db.session.query(db.Poster).filter_by(md5sum=new_poster_md5).first()
+            if not poster:
+                try:
+                    data = file(tmp_image_path, 'rb').read()
+                except Exception, e:
+                    log.warning("cannot read poster data")
+                else:
+                    poster = db.Poster(md5sum=new_poster_md5, data=data)
+                    del details["image"]
+                    details["poster_md5"] = new_poster_md5
+                    self.db.session.add(poster)
+            try:
+                os.remove(tmp_image_path)
+            except Exception, e:
+                log.warn("cannot remove temporary file %s" % tmp_image_path)
+        else:
+            log.warn("cannot read temporary file: %s" % tmp_image_path)
+
 
     movie = update_movie_instance(None, details, self.db.session)
     self.db.session.add(movie)
     if not commit(self, self.db.session):
         return False
-
-    # lets move poster from tmp to posters dir
-    tmp_dest = self.locations['posters']
-
-    image_path = ''
-    if details['image']:
-        tmp_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
-        if os.path.isfile(tmp_image_path):
-            image_path = os.path.join(tmp_dest, "%s.jpg" % details['image'])
-            shutil.move(tmp_image_path, image_path)
-            #lets make the thumbnail and medium image from poster for future use
-            gutils.make_thumbnail(self, "%s.jpg"%details['image'])
-            gutils.make_medium_image(self, "%s.jpg"%details['image'])
 
     rows = len(self.treemodel)
     if rows>0:
@@ -631,7 +671,10 @@ def add_movie_db(self, close):
         insert_after = None
     myiter = self.treemodel.insert_after(None, insert_after)
 
-    if not os.path.isfile(image_path):
+    image_path = ''
+    if movie.poster_md5:
+        image_path = gutils.get_image_fname(movie.poster_md5, self.db)
+    if not image_path or not os.path.isfile(image_path):
         image_path = os.path.join(self.locations['images'], 'default.png')
     handler = self.Image.set_from_file(image_path)
     pixbuf = self.Image.get_pixbuf()
@@ -670,18 +713,16 @@ def clone_movie(self):
     treeselection = self.widgets['treeview'].get_selection()
     (tmp_model, tmp_iter) = treeselection.get_selected()
     if tmp_iter is None:
+        log.warn("cannot clone movie: no item selected")
         return False
     number = tmp_model.get_value(tmp_iter, 0)
     movie = self.db.session.query(db.Movie).filter_by(number=number).first()
 
     if movie is None:
+        log.warn("cannot clone movie: Movie(%s) not found" % number)
         return False
 
     next_number = gutils.find_next_available(self.db)
-    if movie.image is not None:
-        new_image = str(movie.image) + '_' + str(next_number)
-    else:
-        new_image = None
     
     # integer problem workaround
     if int(movie.seen)==1:
@@ -690,6 +731,7 @@ def clone_movie(self):
         seen = False
     new_movie = db.Movie()
     
+    # TODO: WARNING: loan problems (don't copy volume/collection data until resolved)
     new_movie.cast           = movie.cast
     new_movie.classification = movie.classification
     new_movie.vcodec_id      = movie.vcodec_id
@@ -700,7 +742,6 @@ def clone_movie(self):
     new_movie.country        = movie.country
     new_movie.director       = movie.director
     new_movie.genre          = movie.genre
-    new_movie.image          = new_image
     new_movie.site           = movie.site
     new_movie.loaned         = movie.loaned
     new_movie.layers         = movie.layers
@@ -710,6 +751,7 @@ def clone_movie(self):
     new_movie.notes          = movie.notes
     new_movie.o_title        = movie.o_title
     new_movie.plot           = movie.plot
+    new_movie.poster_md5     = movie.poster_md5
     new_movie.rating         = movie.rating
     new_movie.region         = movie.region
     new_movie.runtime        = movie.runtime
@@ -729,25 +771,9 @@ def clone_movie(self):
     if not commit(self, self.db.session):
         return False
 
-    # WARNING: loan problems (don't copy volume/collection data until resolved)
-
-    tmp_dest = self.locations['posters']
-    if movie.image is not None:
-        image_path = os.path.join(tmp_dest, str(movie.image)+".jpg")
-        clone_path = os.path.join(tmp_dest, new_image+".jpg")
-        # clone image
-        # catch IOError otherwise you would not see the cloned entry in
-        # the list before the next start of griffith or another refresh
-        # of the list
-        try:
-            shutil.copyfile(image_path, clone_path)
-            image_path = clone_path
-            gutils.make_thumbnail(self, "%s.jpg" % new_image)
-            gutils.make_medium_image(self, "%s.jpg" % new_image)
-        except IOError:
-            image_path = os.path.join(self.locations['images'], "default.png")
-    else:
-        image_path = os.path.join(self.locations['images'], "default.png")
+    image_path = gutils.get_image_fname(movie.poster_md5, self.db)
+    if not image_path or not os.path.isfile(image_path):
+        image_path = os.path.join(self.locations['images'], 'default.png')
     handler = self.Image.set_from_file(image_path)
 
     # change_filter calls populate_treeview which updates the status bar
@@ -785,6 +811,8 @@ def update_movie_instance(movie, details, session):
                 dbTag = session.query(db.Tag).filter_by(tag_id=tag).one()
                 #movie.tags.append(db.MovieTag(tag_id=tag))
                 movie.tags.append(dbTag)
+        if hasattr(movie, 'image') and movie.image: # TODO: remove it once image will be removed from movies_table
+            movie.image = None # remove MD5 or link
     return movie
 
 

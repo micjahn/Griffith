@@ -29,6 +29,8 @@ import gettext
 gettext.install('griffith', unicode=1)
 from PIL     import Image
 from urllib  import urlcleanup, FancyURLopener, urlretrieve
+import logging
+log = logging.getLogger("Griffith")
 import amazon
 import db
 import delete
@@ -51,37 +53,38 @@ def change_poster(self):
         filename = filename[0].decode('UTF-8')
         update_image(self, number, filename)
 
-def update_image(self, number, file_path):
+def update_image(self, number, filename):
     try:
         self.widgets['movie']['picture'].set_from_pixbuf(\
-                gtk.gdk.pixbuf_new_from_file(file_path).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+                gtk.gdk.pixbuf_new_from_file(filename).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
     except Exception, e:
         log.error(str(e))
-        gutils.error(self, _("Image not valid."), self.widgets['window'])
+        gutils.error(self, _("Image is not valid."), self.widgets['window'])
         return False
 
-    filename = os.path.basename(file_path)
-    new_image = os.path.splitext(filename)[0]
-    if self.db.session.query(db.Movie).filter_by(image=new_image).first() is not None:
-        i = 0
-        while True:
-            i += 1
-            if self.db.session.query(db.Movie).filter_by(image="%s_%s" % (new_image, i)).first() is None:
-                new_image = "%s_%s" % (new_image, i)
-                break
+    poster_md5 = gutils.md5sum(file(filename, 'rb'))
 
     movie = self.db.session.query(db.Movie).filter_by(number=number).one()
-    old_image = os.path.join(self.locations['posters'], "%s.jpg" % movie.image)
-    delete.delete_poster(self, old_image)
-    movie.image = new_image
+    old_poster_md5 = movie.poster_md5
+    movie.poster_md5 = poster_md5
+
+    if not self.db.session.query(db.Poster).filter_by(md5sum=poster_md5).first():
+        poster = db.Poster(md5sum=poster_md5, data=file(filename, 'rb').read())
+        self.db.session.add(poster)
+    
+    if old_poster_md5:
+        delete.delete_poster(self, old_poster_md5)
+
     self.db.session.add(movie)
-    self.db.session.commit()
-
-    shutil.copyfile(file_path, os.path.join(self.locations['posters'], "%s.jpg" % new_image))
-
-    gutils.make_thumbnail(self, '%s.jpg' % new_image)
-    gutils.make_medium_image(self, '%s.jpg' % new_image)
-    update_tree_thumbnail(self, os.path.join(self.locations['posters'], 't_%s.jpg' % new_image))
+    try:
+        self.db.session.commit()
+    except Exceptionm, e:
+        self.db.session.rollback()
+        log.error("cannot add poster to database: %s" % e)
+        return False
+   
+    filename = gutils.get_image_fname(poster_md5, self.db, 's')
+    update_tree_thumbnail(self, filename)
 
     self.widgets['movie']['picture_button'].set_sensitive(True)
     self.widgets['add']['delete_poster'].set_sensitive(True)
@@ -100,18 +103,23 @@ def delete_poster(self):
         handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
         gutils.garbage(handler)
         update_tree_thumbnail(self, os.path.join(self.locations['images'], 'default_thumbnail.png'))
+        
         # update in database
-        old_image = movie.image
-        movie.image = None
+        delete.delete_poster(self, movie.poster_md5)
+        movie.poster_md5 = None
         self.db.session.add(movie)
-        self.db.session.commit()
+        try:
+            self.db.session.commit()
+        except Exception, e:
+            self.db.session.rollback()
+            log.error("cannot delete poster: %s" % e)
+            return False
+
         self.update_statusbar(_("Image has been updated"))
 
         self.widgets['add']['delete_poster'].set_sensitive(False)
         self.widgets['menu']['delete_poster'].set_sensitive(False)
         self.widgets['movie']['picture_button'].set_sensitive(False)
-        if old_image:
-            delete.delete_poster(self, old_image)
     else:
         pass
 
@@ -124,12 +132,13 @@ def update_tree_thumbnail(self, t_image_path):
 
 def fetch_bigger_poster(self):
     match = 0
-    log.info("fetching poster from amazon")
+    log.info("fetching poster from amazon...")
     movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
     if movie is None:
         gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
         return False
-    current_poster = movie.image
+    current_poster_md5 = movie.poster_md5
+    current_poster = gutils.get_image_fname(current_poster_md5, self.db)
     amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 
     locale = self.config.get('amazon_locale', 0, section='add')
@@ -146,7 +155,7 @@ def fetch_bigger_poster(self):
 
     try:
         result = amazon.searchByKeyword(keyword, type="Large", product_line="DVD", locale=locale)
-        log.info("Posters found on amazon: %s posters" % result.TotalResults)
+        log.info("... %s posters found" % result.TotalResults)
     except:
         gutils.warning(self, _("No posters found for this movie."))
         return
@@ -161,7 +170,7 @@ def fetch_bigger_poster(self):
 
     for f in range(len(result.Item)):
         if self.widgets['movie']['o_title'].get_text() == result.Item[f].ItemAttributes.Title:
-            get_poster(self, f, result, current_poster)
+            get_poster(self, f, result)
             return
 
     self.treemodel_results.clear()
@@ -169,7 +178,7 @@ def fetch_bigger_poster(self):
 
     for f in range(len(result.Item)):
 
-        if (len(result.Item[f].LargeImage.URL)):
+        if hasattr(result.Item[f], "LargeImage") and len(result.Item[f].LargeImage.URL):
             title = result.Item[f].ItemAttributes.Title
             myiter = self.treemodel_results.insert_before(None, None)
             self.treemodel_results.set_value(myiter, 0, str(f))
@@ -180,12 +189,12 @@ def fetch_bigger_poster(self):
 
 def get_poster_select_dc(self, event, mself, result, current_poster):
     if event.type == gtk.gdk._2BUTTON_PRESS:
-        get_poster(mself, None, result, current_poster)
+        get_poster(mself, None, result)
 
-def get_poster_select(self, mself, result, current_poster):
-    get_poster(mself, None, result, current_poster)
+def get_poster_select(self, mself, result):
+    get_poster(mself, None, result)
 
-def get_poster(self, f, result, current_poster):
+def get_poster(self, f, result):
     from widgets import reconnect_add_signals
     if f is None:
         treeselection = self.widgets['results']['treeview'].get_selection()

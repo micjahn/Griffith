@@ -33,6 +33,8 @@ except:
 import htmlentitydefs
 import re
 import webbrowser
+import logging
+log = logging.getLogger("Griffith")
 import db
 
 url_re = re.compile('^\w+://')
@@ -253,7 +255,7 @@ def question(self, msg, cancel=1, parent=None):
     dialog.destroy()
     return response
 
-def file_chooser(title, action=None, buttons=None, name="", folder=os.path.expanduser("~"), picture = False):
+def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expanduser('~'), picture=False):
     dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
     dialog.set_default_response(gtk.RESPONSE_OK)
     if name:
@@ -261,7 +263,7 @@ def file_chooser(title, action=None, buttons=None, name="", folder=os.path.expan
     if folder:
         dialog.set_current_folder(folder)
     mfilter = gtk.FileFilter()
-    if picture==True:
+    if picture:
         preview = gtk.Image()
         dialog.set_preview_widget(preview)
         dialog.connect("update-preview", update_preview_cb, preview)
@@ -270,9 +272,9 @@ def file_chooser(title, action=None, buttons=None, name="", folder=os.path.expan
         mfilter.add_mime_type("image/jpeg")
         mfilter.add_mime_type("image/gif")
         mfilter.add_pattern("*.[pP][nN][gG]")
-        mfilter.add_pattern("*.[jJ][pP][gG]")
+        mfilter.add_pattern("*.[jJ][pP][eE]?[gG]")
         mfilter.add_pattern("*.[gG][iI][fF]")
-        mfilter.add_pattern("*.[tT][iI][fF]")
+        mfilter.add_pattern("*.[tT][iI][fF]{1,2}")
         mfilter.add_pattern("*.[xX][pP][mM]")
         dialog.add_filter(mfilter)
     mfilter = gtk.FileFilter()
@@ -321,28 +323,6 @@ def findKey(val, dict):
 def garbage(handler):
     pass
 
-def make_thumbnail(self, file_name):
-    """XXX: deprecated"""
-    source = os.path.join(self.locations['posters'], file_name)
-    if os.path.isfile(source):
-        self.image.set_from_file(source)
-        pixbuf = self.image.get_pixbuf()
-        pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
-        save_pixmap(self, pixbuf, os.path.join(self.locations['posters'], "t_%s"%file_name))
-    else:
-        return 0
-
-def make_medium_image(self, file_name):
-    """XXX: deprecated"""
-    source = os.path.join(self.locations['posters'], file_name)
-    if os.path.isfile(source):
-        self.Image.set_from_file(source)
-        pixbuf = self.Image.get_pixbuf()
-        pixbuf = pixbuf.scale_simple(100, 140, 'bilinear')
-        save_pixmap(self, pixbuf, os.path.join(self.locations['posters'], "m_%s"%file_name))
-    else:
-        return 0
-
 def clean_posters_dir(self):
     posters_dir = self.locations['posters']
 
@@ -351,9 +331,10 @@ def clean_posters_dir(self):
     for files in os.walk(posters_dir):
         for names in files:
             for name in names:
-                if name.startswith('poster'):
+                if not name.endswith('_m.jpg') and not name.endswith('_s.jpg'):
+                    poster_md5 = gutils.md5sum(file(name, 'rb'))
                     # lets check if this poster is orphan
-                    used = self.db.session.query(db.Movie).count_by(image=string.replace(name,".jpg",""))
+                    used = self.db.session.query(db.Poster).count_by(md5sum=poster_md5)
                     if not used:
                         counter += 1
                         os.unlink(os.path.join(posters_dir, name))
@@ -365,7 +346,7 @@ def clean_posters_dir(self):
                             os.unlink(t_file)
 
     if counter:
-        print "%d orphan files cleaned."%counter
+        print "%d orphan files cleaned." %counter
     else:
         print "No orphan files found."
 
@@ -602,12 +583,12 @@ def create_image_cache(md5sum, gsql):
         log.warn("poster not available: %s" % md5sum)
         return False
     if not poster.data:
-        log.warn("poster not available: %s" % md5sum)
+        log.warn("poster data not available: %s" % md5sum)
         return False
     
     fn_big    = os.path.join(gsql.data_dir, 'posters', md5sum+'.jpg')
-    fn_small  = os.path.join(gsql.data_dir, 'posters', md5sum+'_s.jpg')
     fn_medium = os.path.join(gsql.data_dir, 'posters', md5sum+'_m.jpg')
+    fn_small  = os.path.join(gsql.data_dir, 'posters', md5sum+'_s.jpg')
 
     if not os.path.isfile(fn_big):
         f = file(fn_big, 'wb')
@@ -631,6 +612,10 @@ def create_image_cache(md5sum, gsql):
 
 def get_image_fname(md5sum, gsql, size=None):
     """size: s - small; m - medium, b or None - big"""
+    if size not in (None, 's', 'm', 'b'):
+        raise TypeError("wrong size: %s" % size)
+    if not md5sum:
+        raise TypeError("md5sum not set")
 
     if not size or size=='b': size=''
     else: size = "_%s" % size

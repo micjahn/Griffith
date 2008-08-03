@@ -44,11 +44,11 @@ class DBTable(object):#{{{
             log.info("%s: name can't be empty" % self.__class__.__name__)
             return False
         # check if item already exists
-        if self.query.filter_by(name=self.name).first() is not None:
-            log.info("%s: '%s' already exists" % (self.__class__.__name__, self.name))
-            return False
+#        if self.query.filter_by(name=self.name).first() is not None:
+#            log.info("%s: '%s' already exists" % (self.__class__.__name__, self.name))
+#            return False
         log.info("%s: adding '%s' to database..." % (self.__class__.__name__, self.name))
-        self.save()
+        self.commit()
         try:
             self.flush()
         except exceptions.SQLError, e:
@@ -128,6 +128,8 @@ class Poster(object):
                 self.data = data
             else:
                 log.error("md5sum has wrong size")
+    def __repr__(self):
+        return "<Poster(%s)>" % self.md5sum
 class Configuration(object):
     def __repr__(self):
         return "<Config:%s=%s>" % (self.param, self.value)
@@ -324,39 +326,36 @@ if __name__ == '__main__':
     import sqlalchemy
     logging.basicConfig()
     log.setLevel(logging.INFO)
-
-    ### ENGINE ###
-    engine = create_engine('sqlite:///:memory:', echo=False)
-
-    # create tables
-    metadata.create_all(engine)
-
-
-    ### SESSION ###
-    # create a configured "Session" class
-    Session = sessionmaker(bind=engine)
-    # create a Session
-    sess = Session()
-    # work with sess
-    myobject = Movie()
-    #sess.add(myobject)
-    #sess.commit()
-    # close when finished
-    #sess.close()
     log.info("SQLAlchemy version: %s" % sqlalchemy.__version__)
 
+    ### ENGINE ###
+    engine_mem = create_engine('sqlite:///:memory:', echo=False)
 
-    griffith_dir = "/home/pox/.griffith/"
+    # create tables
+    metadata.create_all(engine_mem)
+
+    ### MEMORY SESSION ###
+    # create a configured "Session" class
+    Session = sessionmaker(bind=engine_mem)
+    # create a Session
+    sess_mem = Session()
+
+
+    griffith_dir = os.path.expanduser("~/.griffith/")
     url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
-    engine2 = create_engine(url, echo=False)
-    Session2 = sessionmaker(bind=engine2)
-    sess2 = Session2()
+    engine_my = create_engine(url, echo=False)
+    Session2 = sessionmaker(bind=engine_my)
+    sess_my = Session2()
 
-    movie1 = sess2.query(Movie)[0]
-    print movie1, movie1.title
-    movie1_clone = sess.merge(movie1)
-    movie1_clone.title = u'cos'
-    sess.add(movie1_clone)
-    sess.commit()
-    for i in sess.query(Movie)[:3]:
-        print i, i.title
+    print "\nAvailable variables:"
+    print "sess_my:  %s" % sess_my
+    print "sess_mem: %s" % sess_mem
+
+    movie1_my = sess_my.query(Movie).first()
+    if movie1_my:
+        movie1_mem = sess_mem.merge(movie1_my)
+        movie1_mem.title = u'updated movie title'
+        sess_mem.add(movie1_mem)
+        sess_mem.commit()
+        print "movie1_my:  %s - title: %s" % (movie1_my, movie1_my.title)
+        print "movie1_mem: %s - title: %s" % (movie1_mem, movie1_mem.title)
