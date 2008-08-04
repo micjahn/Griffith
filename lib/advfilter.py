@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker et ts=4 sw=4
-__revision__ = '$Id: $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2008 Vasco Nunes, Piotr Ożarowski
 #
@@ -33,16 +33,16 @@ __conditions = { # default
     'not_loaned_only' : False,
     'seen_only'       : False,
     'not_seen_only'   : False,
-    'collections'     : [],
-    'volumes'         : [],
-    'tags'            : [],
-    'loaned_to'       : [],
+    'collections'     : [], # list of collection_ids
+    'volumes'         : [], # list of volume_ids
+    'tags'            : [], # list of tag_ids
+    'loaned_to'       : [], # list of person_ids
     'sort_by'         : ["number"], # "number DESC"
-    'equals'          : [], # (column, value), (column, value), ...
-    'startswith'      : [], # see above
-    'contains'        : [], # see above
-    'like'            : [], # see above
-    'ilike'           : [], # see above
+    'equals'          : {}, # {column1: [value1, value2, ...], column2: []}
+    'startswith'      : {}, # see above
+    'contains'        : {}, # see above
+    'like'            : {}, # see above
+    'ilike'           : {}, # see above
     }
 
 # widgets -----------------------------------------------------{{{
@@ -66,8 +66,11 @@ def get_conditions(widgets): #{{{
     # TODO: get these from advfilter window
     cond.update({
             'seen_only' : True,
-            'tags'      : [1],
-            'sort_by'   : ["year", "movies.title" , "number"]
+            #'tags'      : [1],
+            'sort_by'   : ["title", "year", "number"],
+            'equals'    : {"year": [2003, 2004]},
+            #'startswith': {"o_title": [u"Ma", u"Ani"] }
+            'contains'  : {"o_title": [u"ma", u"ani"] }
             })
     return cond # }}}
 
@@ -103,10 +106,10 @@ def create_select_query(self, query=None, conditions=None, columns=None):
         query.append_whereclause(db.Movie.seen==False)
 
     if cond["collections"]:
-        query.append_whereclause(db.collections_table.collection_id.in_(cond["collections"]))
+        query.append_whereclause(db.Movie.collection_id.in_(cond["collections"]))
 
     if cond["volumes"]:
-        query.append_whereclause(db.volumes_table.volume_id.in_(cond["volumes"]))
+        query.append_whereclause(db.Movie.volume_id.in_(cond["volumes"]))
     
     loaned_to = []
     for per_id in cond["loaned_to"]:
@@ -122,29 +125,42 @@ def create_select_query(self, query=None, conditions=None, columns=None):
     if tags:
         query.append_whereclause(or_(*tags))
 
+    for field in cond["equals"]:
+        values = [ db.movies_table.columns[field]==value for value in cond["equals"][field] ]
+        query.append_whereclause(or_(*values))
+    
+    for field in cond["startswith"]:
+        values = [ db.movies_table.columns[field].startswith(value) for value in cond["startswith"][field] ]
+        query.append_whereclause(or_(*values))
+
+    for field in cond["like"]:
+        values = [ db.movies_table.columns[field].like(value) for value in cond["like"][field] ]
+        query.append_whereclause(or_(*values))
+    
+    for field in cond["ilike"]:
+        values = [ db.movies_table.columns[field].ilike(value) for value in cond["ilike"][field] ]
+        query.append_whereclause(or_(*values))
+    
+    for field in cond["contains"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
+        values = [ db.movies_table.columns[field].like('%'+value+'%') for value in cond["contains"][field] ]
+        query.append_whereclause(or_(*values))
+    
     # sorting
     for rule in cond["sort_by"]:
         if rule.endswith(" DESC"):
             reverse = True
             rule = rule.replace(" DESC", '')
         else:
-            reverse = True
-
-        table, column = get_tableNcolumn(rule)
+            reverse = False
 
         if reverse:
-            query.append_order_by(asc(db.tables[table].columns[column]))
+            query.append_order_by(desc(db.movies_table.columns[rule]))
         else:
-            query.append_order_by(desc(db.tables[table].columns[column]))
+            query.append_order_by(asc(db.movies_table.columns[rule]))
 
     return query
 
-def get_tableNcolumn(rule):
-        table = "movies"
-        pos = rule.find('.')
-        if pos > 0:
-            table = rule[:pos]
-            rule = rule[pos+1:]
-
-        return (table, rule)
-
+def save_conditions(cond, name, qsql):
+    raise NotImplemented
+def load_conditions(name, qsql):
+    raise NotImplemented

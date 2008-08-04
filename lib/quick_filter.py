@@ -47,7 +47,7 @@ def change_filter(self):
                 statement.limit = limit
     self.populate_treeview(statement)
 
-def clear_filter(self):
+def clear_filter(self, populate=True):
     # prevent multiple treeview updates
     self.initialized = False
     self.widgets['filter']['text'].set_text('')
@@ -56,5 +56,6 @@ def clear_filter(self):
     self.widgets['filter']['volume'].set_active(0)
     self.widgets['filter']['tag'].set_active(0)
     self.initialized = True
-    self.populate_treeview()
+    if populate:
+        self.populate_treeview()
 

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
-__revision__ = '$Id: $'
+__revision__ = '$Id$'
 
 # Copyright (c) 2008 Vasco Nunes, Piotr Ożarowski
 #
@@ -292,6 +292,7 @@ tables = {
     'configuration':  configuration_table,
     'posters':        posters_table}
 #}}}
+
 ### mappers ################################################### {{{
 mapper(Configuration, configuration_table)
 mapper(Volume, volumes_table, order_by=volumes_table.c.name, properties={
