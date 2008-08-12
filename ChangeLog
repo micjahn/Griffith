@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-08-12  Piotr Ożarowski
+	* Don't refresh movie list while updating quick filter combos
+
 2008-08-03  Piotr Ożarowski
 	* Initial advanced search/filter function implemented (alpha stage)
 

@@ -715,6 +715,8 @@ def preferences(self):
         self.widgets['preferences']['db_type'].set_active(0)
 
 def fill_volumes_combo(self, default=0):
+    _tmp = self.initialized
+    self.initialized = False # don't refresh main treeview
     self.widgets['add']['volume'].get_model().clear()
     self.widgets['filter']['volume'].get_model().clear()
     for i in self.volume_combo_ids:
@@ -726,6 +728,7 @@ def fill_volumes_combo(self, default=0):
         # add some white spaces to prevent scrollbar hides parts of the names    
         self.widgets['add']['volume'].insert_text(int(i), str(name) + '   ')
         self.widgets['filter']['volume'].insert_text(int(i), str(name) + '   ')
+    self.initialized = _tmp
     self.widgets['add']['volume'].show_all()
     self.widgets['filter']['volume'].show_all()
     self.widgets['filter']['volume'].set_active(0)
@@ -735,6 +738,8 @@ def fill_volumes_combo(self, default=0):
     self.widgets['add']['volume'].set_wrap_width(3)
 
 def fill_collections_combo(self, default=0):
+    _tmp = self.initialized
+    self.initialized = False # don't refresh main treeview
     self.widgets['add']['collection'].get_model().clear()
     self.widgets['filter']['collection'].get_model().clear()
     for i in self.collection_combo_ids:
@@ -746,6 +751,7 @@ def fill_collections_combo(self, default=0):
         # add some white spaces to prevent scrollbar hides parts of the names    
         self.widgets['add']['collection'].insert_text(int(i), str(name) + '   ')
         self.widgets['filter']['collection'].insert_text(int(i), str(name) + '   ')
+    self.initialized = _tmp
     self.widgets['add']['collection'].show_all()
     self.widgets['filter']['collection'].show_all()
     self.widgets['filter']['collection'].set_active(0)
@@ -755,6 +761,8 @@ def fill_collections_combo(self, default=0):
     self.widgets['add']['collection'].set_wrap_width(2)
 
 def fill_loanedto_combo(self):
+    _tmp = self.initialized
+    self.initialized = False # don't refresh main treeview
     self.widgets['filter']['loanedto'].get_model().clear()
     for i in self.loanedto_combo_ids:
         per_id = self.loanedto_combo_ids[i]
@@ -764,10 +772,13 @@ def fill_loanedto_combo(self):
             name = ''
         # add some white spaces to prevent scrollbar hides parts of the names    
         self.widgets['filter']['loanedto'].insert_text(int(i), str(name) + '   ')
+    self.initialized = _tmp
     self.widgets['filter']['loanedto'].show_all()
     self.widgets['filter']['loanedto'].set_active(0)
 
 def fill_bytag_combo(self):
+    _tmp = self.initialized
+    self.initialized = False # don't refresh main treeview
     self.widgets['filter']['tag'].get_model().clear()
     for i in self.bytag_combo_ids:
         id = self.bytag_combo_ids[i]
@@ -777,10 +788,13 @@ def fill_bytag_combo(self):
             name = ''
         # add some white spaces to prevent scrollbar hides parts of the names    
         self.widgets['filter']['tag'].insert_text(int(i), str(name) + '   ')
+    self.initialized = _tmp
     self.widgets['filter']['tag'].show_all()
     self.widgets['filter']['tag'].set_active(0)
 
 def fill_preferences_tags_combo(self):
+    _tmp = self.initialized
+    self.initialized = False # don't refresh main treeview
     self.widgets['preferences']['tag_name'].get_model().clear()
     self.tags_ids = {}
     i = 0
@@ -788,6 +802,7 @@ def fill_preferences_tags_combo(self):
         self.tags_ids[i] = tag.tag_id
         self.widgets['preferences']['tag_name'].insert_text(int(i), str(tag.name))
         i += 1
+    self.initialized = _tmp
     self.widgets['preferences']['tag_name'].show_all()
 
 def language_combos(self):
