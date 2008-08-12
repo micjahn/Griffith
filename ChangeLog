@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2008-08-12  Piotr Ożarowski
 	* Don't refresh movie list while updating quick filter combos
+	* FDb movie plugin updated (thanks to Bartosz Kurczewski)
 
 2008-08-03  Piotr Ożarowski
 	* Initial advanced search/filter function implemented (alpha stage)
