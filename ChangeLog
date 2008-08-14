@@ -5,6 +5,10 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-08-14  Michael Jahn
+	* pdf export: group movies with numbers 0-9 (thanks to Luigi Pantano)
+	* pdf export: [#174463] Database Export as PDF doesn't work under Ubuntu
+
 2008-08-12  Piotr Ożarowski
 	* Don't refresh movie list while updating quick filter combos
 	* FDb movie plugin updated (thanks to Bartosz Kurczewski)

@@ -98,10 +98,10 @@ class ExportPlugin:
                     defaultEnc = 'UTF-8'
                 c = SimpleDocTemplate(pdffilename.encode(defaultEnc))
                 # data encoding
-                if defaultEncoding == 'WinAnsiEncoding':
-                    defaultEnc = 'cp1252'
-                else:
-                    defaultEnc = 'utf-8'
+                #if defaultEncoding == 'WinAnsiEncoding':
+                #    defaultEnc = 'cp1252'
+                #else:
+                defaultEnc = 'utf-8'
                 style = self.styles["Normal"]
                 Story = [Spacer(1,2*inch)]
                 # build the query
@@ -136,10 +136,18 @@ class ExportPlugin:
                         director = ""
                     # group by first letter
                     if title[0] != first_letter:
-                        first_letter = title[0]
-                        paragraph_text = '<font name=' + self.fontName + ' size="15">' + saxutils.escape(first_letter) + '</fonts>'
-                        p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading2'])
-                        Story.append(p)
+                        if title[0] in '0123456789':
+                            # Group Numbers
+                            if first_letter != '0-9':
+                                first_letter = '0-9'
+                                paragraph_text = '<font name=' + self.fontName + ' size="15">' + saxutils.escape(first_letter) + '</fonts>'
+                                p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading2'])
+                                Story.append(p)
+                        else:
+                            first_letter = title[0]
+                            paragraph_text = '<font name=' + self.fontName + ' size="15">' + saxutils.escape(first_letter) + '</fonts>'
+                            p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading2'])
+                            Story.append(p)
                     # add movie title
                     paragraph_text = '<font name=' + self.fontName + ' size="7">' + \
                         '<b>'+ saxutils.escape(title) + '</b>' + \
