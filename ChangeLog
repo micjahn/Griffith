@@ -6,6 +6,10 @@ Griffith ChangeLog
 
 2008-08-16  Michael Jahn
 	* fixed support for german umlauts in OFDb plugin
+	* added Amazon plugin (supports search by UPC/EAN)
+	* added Amazon language support for CA and FR
+	* Amazon support is now closer to the current specification
+	* encoding error in plugins Kino.de and Zelluloid
 
 2008-08-14  Michael Jahn
 	* pdf export: group movies with numbers 0-9 (thanks to Luigi Pantano)
