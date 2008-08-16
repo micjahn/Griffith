@@ -4,6 +4,8 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-08-16  Michael Jahn
+	* fixed support for german umlauts in OFDb plugin
 
 2008-08-14  Michael Jahn
 	* pdf export: group movies with numbers 0-9 (thanks to Luigi Pantano)
