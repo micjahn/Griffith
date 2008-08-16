@@ -5384,8 +5384,9 @@ Stars</property>
                                     <property name="items">US
 UK
 DE
-JP
-FR</property>
+CA
+FR
+JP</property>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>

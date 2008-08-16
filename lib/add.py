@@ -177,6 +177,7 @@ def populate_with_results(self):
     plugin = __import__(plugin_name)
     self.movie = plugin.Plugin(m_id)
     self.movie.locations = self.locations
+    self.movie.config = self.config
     
     fields_to_fetch = ['o_title', 'title', 'director', 'plot', 'cast', 'country', 'genre',
                 'classification', 'studio', 'o_site', 'site', 'trailer', 'year',
@@ -278,6 +279,7 @@ def get_from_web(self):
         plugin_name = 'PluginMovie%s' % option
         plugin = __import__(plugin_name)
         self.search_movie = plugin.SearchPlugin()
+        self.search_movie.config = self.config
         if o_title:
             self.search_movie.url = self.search_movie.original_url_search
             if self.search_movie.remove_accents:

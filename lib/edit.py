@@ -149,7 +149,11 @@ def fetch_bigger_poster(self):
         locale = 'de'
         keyword = self.widgets['movie']['title'].get_text()
     elif locale == '3':
-        locale = 'uk'
+        locale = 'ca'
+    elif locale == '4':
+        locale = 'fr'
+    elif locale == '5':
+        locale = 'jp'
     else:
         locale = None
 
