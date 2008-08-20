@@ -380,7 +380,7 @@ def save_preferences(self):
             self.notes_spell.detach()
             self.plot_spell.detach()
         elif c.get('gtkspell', False, section='spell') == True and was_false:
-            initialize.initialize_gtkspell(self)
+            initialize.spellcheck(self)
         else:
             pass
 

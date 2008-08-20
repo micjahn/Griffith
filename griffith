@@ -137,7 +137,7 @@ class Griffith:
         self.completion_t.set_model(self.treemodel)
         self.completion_t.set_text_column(4)
         
-        initialize.gtkspell(self)
+        initialize.spellcheck(self)
 
         # add default folders to some select widgets
         if self.windows:

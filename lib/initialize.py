@@ -668,7 +668,7 @@ def web_results(self):
     self.column2.set_sort_column_id(1)
     self.widgets['results']['treeview'].append_column(self.column2)
 
-def gtkspell(self):
+def spellcheck(self):
     global spell_support
     spell_error = False
     if self.posix and spell_support:
