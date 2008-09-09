@@ -111,6 +111,8 @@ class Medium(DBTable):
     pass
 class Person(DBTable):
     pass
+class Ratio(DBTable):
+    pass
 class SubFormat(DBTable):
     pass
 class Tag(DBTable):
@@ -172,6 +174,7 @@ movies_table = Table('movies', metadata,
     Column('collection_id', Integer, ForeignKey('collections.collection_id')),
     Column('volume_id', Integer, ForeignKey('volumes.volume_id')),
     Column('medium_id', Integer, ForeignKey('media.medium_id')),
+    Column('ratio_id', Integer, ForeignKey('ratios.ratio_id')),
     Column('vcodec_id', Integer, ForeignKey('vcodecs.vcodec_id')),
     Column('loaned', Boolean, nullable=False, default=False),
     Column('seen', Boolean, nullable=False, default=False),
@@ -183,11 +186,13 @@ movies_table = Table('movies', metadata,
     Column('media_num', SmallInteger),
     Column('runtime', Integer),
     Column('year', Integer),
-    Column('o_title', Unicode(255)),
-    Column('title', Unicode(255)),
-    Column('director', Unicode(255)),
-    Column('o_site', Unicode(255)),
-    Column('site', Unicode(255)),
+    Column('o_title', Unicode(256)),
+    Column('title', Unicode(256)),
+    Column('director', Unicode(256)),
+    Column('screenplay', Unicode(256)),
+    Column('cameraman', Unicode(256)),
+    Column('o_site', Unicode(256)),
+    Column('site', Unicode(256)),
     Column('trailer', Unicode(256)),
     Column('country', Unicode(128)),
     Column('genre', Unicode(128)),
@@ -210,7 +215,7 @@ loans_table = Table('loans', metadata,
 
 people_table = Table('people', metadata,
     Column('person_id', Integer, primary_key=True),
-    Column('name', Unicode(255), nullable=False, unique=True),
+    Column('name', Unicode(256), nullable=False, unique=True),
     Column('email', Unicode(128)),
     Column('phone', Unicode(64)))
 
@@ -227,6 +232,10 @@ collections_table = Table('collections', metadata,
 media_table = Table('media', metadata,
     Column('medium_id', Integer, primary_key=True),
     Column('name', Unicode(64), nullable=False, unique=True))
+
+ratios_table = Table('ratios', metadata,
+    Column('ratio_id', Integer, primary_key=True),
+    Column('name', Unicode(5), nullable=False, unique=True))
 
 languages_table = Table('languages', metadata,
     Column('lang_id', Integer, primary_key=True),
@@ -281,6 +290,7 @@ tables = {
     'volumes':        volumes_table,
     'collections':    collections_table,
     'media':          media_table,
+    'ratios':         ratios_table,
     'languages':      languages_table,
     'vcodecs':        vcodecs_table,
     'acodecs':        acodecs_table,
@@ -301,6 +311,8 @@ mapper(Collection, collections_table, order_by=collections_table.c.name, propert
     'movies': relation(Movie, backref='collection')})
 mapper(Medium, media_table, properties={
     'movies': relation(Movie, backref='medium')})
+mapper(Ratio, media_table, properties={
+    'movies': relation(Movie, backref='ratios')})
 mapper(VCodec, vcodecs_table, properties={
     'movies': relation(Movie, backref='vcodec')})
 mapper(Person, people_table, properties = {

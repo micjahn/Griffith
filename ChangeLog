@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-09-09  Piotr Ożarowski
+	* Add aspect ratio, cameraman and screenplay to the database
+
 2008-08-16  Michael Jahn
 	* fixed support for german umlauts in OFDb plugin
 	* added Amazon plugin (supports search by UPC/EAN)

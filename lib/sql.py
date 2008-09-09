@@ -142,4 +142,6 @@ class GriffithSQL:
             v = int(v.value)
         if v < self.version:
             from dbupgrade import upgrade_database
-            upgrade_database(self, v)
+            if not upgrade_database(self, v):
+                import sys
+                sys.exit(1)

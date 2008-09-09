@@ -505,7 +505,7 @@ def get_dependencies():
 
 
 def html_encode(s):
-    if not isinstance(s, str):
+    if not isinstance(s, basestring):
         s = str(s)
     s = s.replace('&', '&amp;')
     s = s.replace('<', '&lt;')

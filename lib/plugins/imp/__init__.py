@@ -107,6 +107,11 @@ class ImportPlugin:
 
         statement = Select([self.db.Movie.c.number])
 
+        # move some stuff outside the loop to speed it up
+        set_fraction = self.widgets['progressbar'].set_fraction
+        set_text = self.widgets['progressbar'].set_text
+        main_iteration = gtk.main_iteration
+
         processed = 0
         while self._abort is False:
             details = self.get_movie_details()
@@ -115,11 +120,11 @@ class ImportPlugin:
 
             processed += 1
             if processed in update_on:
-                self.widgets['progressbar'].set_fraction(float(processed)/float(count))
-                gtk.main_iteration()
-                self.widgets['progressbar'].set_text("%s (%s/%s)" % (str(self.imported), str(processed), str(count)))
-                gtk.main_iteration()
-                gtk.main_iteration() # extra iteration for abort button
+                set_fraction(float(processed)/float(count))
+                main_iteration()
+                set_text("%s (%s/%s)" % (str(self.imported), str(processed), str(count)))
+                main_iteration()
+                main_iteration() # extra iteration for abort button
 
             if (details.has_key('o_title') and details['o_title']) or (details.has_key('title') and details['title']):
                 if details.has_key('o_title') and details['o_title']:

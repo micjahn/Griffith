@@ -49,6 +49,8 @@ def upgrade_database(self, version):
         db.media_table.insert(bind=b).execute(name=u'VHS')
         db.media_table.insert(bind=b).execute(name=u'BETACAM')
         db.media_table.insert(bind=b).execute(name=u'LaserDisc')
+        db.ratios_table.insert(bind=b).execute(name=u'16:9')
+        db.ratios_table.insert(bind=b).execute(name=u'4:3')
         db.acodecs_table.insert(bind=b).execute(name=u'AC-3 Dolby audio')
         db.acodecs_table.insert(bind=b).execute(name=u'OGG')
         db.acodecs_table.insert(bind=b).execute(name=u'MP3')
@@ -113,20 +115,34 @@ def upgrade_database(self, version):
         self.session.add(db_version)
         self.session.commit()
     if version == 2:    # fix changes between v2 and v3
-        e_type = self.session.bind.engine.dialect.name
+        #e_type = self.session.bind.engine.dialect.name
+        e_type = self.session.bind.name
         version += 1
         log.info("Upgrading database to version %d..." % version)
 
         # create new table
         db.posters_table.create(checkfirst=True, bind=b)
+        db.ratios_table.create(checkfirst=True, bind=b)
+        db.ratios_table.insert(bind=b).execute(name=u'16:9')
+        db.ratios_table.insert(bind=b).execute(name=u'4:3')
 
         log.info("... adding new columns")
-        query = "ALTER TABLE movies ADD COLUMN poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum)" # SQLite, PostgreSQL
+        # SQLite, PostgreSQL
+        queries = {'poster_md5': 'ALTER TABLE movies ADD COLUMN poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
+                   'ratio_id'  : 'ALTER TABLE movies ADD COLUMN ratio_id INTEGER NOT NULL REFERENCES ratios(ratio_id) DEFAULT 1;',
+                   'screenplay': 'ALTER TABLE movies ADD COLUMN screenplay VARCHAR(256) NULL;',
+                   'cameraman' : 'ALTER TABLE movies ADD COLUMN cameraman VARCHAR(256) NULL;'}
         if e_type == 'mysql':
             pass
         elif e_type == 'mssql':
+            #queries['ratio_id'] = "FIXME"
             pass
-        self.session.bind.execute(query)
+        for key, query in queries.items():
+            try:
+                self.session.bind.execute(query)
+            except Exception, e:
+                log.error("Cannot add '%s' column: %s" % (key, e.message))
+                return False
         
         log.info("... saving posters in database")
         for movie in self.session.query(db.Movie).all():
@@ -143,6 +159,8 @@ def upgrade_database(self, version):
                 self.session.add(movie)
 
                 try:
+                    # yeah, we're commiting inside the loop,
+                    # it slows down the process a lot, but at least we can skip buggy posters
                     self.session.commit()
                 except Exception, e:
                     self.session.rollback()
