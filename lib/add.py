@@ -737,6 +737,7 @@ def clone_movie(self):
     new_movie.cast           = movie.cast
     new_movie.classification = movie.classification
     new_movie.vcodec_id      = movie.vcodec_id
+    new_movie.cameraman      = movie.cameraman
     new_movie.collection_id  = movie.collection_id
     new_movie.volume_id      = movie.volume_id
     new_movie.color          = movie.color
@@ -754,9 +755,11 @@ def clone_movie(self):
     new_movie.o_title        = movie.o_title
     new_movie.plot           = movie.plot
     new_movie.poster_md5     = movie.poster_md5
+    new_movie.ratio_id       = movie.ratio_id
     new_movie.rating         = movie.rating
     new_movie.region         = movie.region
     new_movie.runtime        = movie.runtime
+    new_movie.screenplay     = movie.screenplay
     new_movie.seen           = seen
     new_movie.o_site         = movie.o_site
     new_movie.studio         = movie.studio

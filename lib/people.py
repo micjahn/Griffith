@@ -48,11 +48,12 @@ def clear_person(self):
     self.widgets['person']['phone'].set_text("")
 
 def add_person_db(self):
-    if (self.widgets['person']['name'].get_text()<>''):
+    name = self.widgets['person']['name'].get_text().decode('utf-8')
+    if name:
         p = db.Person()
-        p.name = self.widgets['person']['name'].get_text()
-        p.email = self.widgets['person']['email'].get_text()
-        p.phone = self.widgets['person']['phone'].get_text()
+        p.name = self.widgets['person']['name'].get_text().decode('utf-8')
+        p.email = self.widgets['person']['email'].get_text().decode('utf-8')
+        p.phone = gutils.digits_only(self.widgets['person']['phone'].get_text().decode('utf-8'))
         self.widgets['person']['window'].hide()
         self.db.session.add(p)
         try:
@@ -61,8 +62,8 @@ def add_person_db(self):
             log.info(str(e))
         else:
             myiter = self.p_treemodel.insert_after(None, None)
-            self.p_treemodel.set_value(myiter,0,str(self.widgets['person']['name'].get_text()))
-            self.p_treemodel.set_value(myiter,1,str(self.widgets['person']['email'].get_text()))
+            self.p_treemodel.set_value(myiter, 0, p.name)
+            self.p_treemodel.set_value(myiter, 1, p.email)
         self.widgets['people']['window'].present()
     else:
         gutils.error(self.widgets['results']['window'],_("You should fill the person name"))
@@ -87,12 +88,12 @@ def edit_person_cancel(self):
     self.widgets['people']['window'].present()
 
 def update_person(self):
-    p = self.db.session.query(db.Person).filter_by(person_id=self.widgets['person']['e_id'].get_text()).first()
+    p = self.db.session.query(db.Person).filter_by(person_id=self.widgets['person']['e_id'].get_text().decode('utf-8')).first()
     if p is None:
         return False
-    p.name = self.widgets['person']['e_name'].get_text()
-    p.email = self.widgets['person']['e_email'].get_text()
-    p.phone = self.widgets['person']['e_phone'].get_text()
+    p.name = self.widgets['person']['e_name'].get_text().decode('utf-8')
+    p.email = self.widgets['person']['e_email'].get_text().decode('utf-8')
+    p.phone = self.widgets['person']['e_phone'].get_text().decode('utf-8')
     self.db.session.add(p)
     try:
         self.db.session.commit()

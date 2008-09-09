@@ -147,9 +147,10 @@ def define_widgets(self, gladefile):
     self.widgets['advfilter'] = {#{{{
         'window':         get('w_advfilter'),
         'advfilter_vbox': get('advfilter_rules_vbox'),
-    }#}}}
+    }
     self.widgets['advfilter']['window'].connect('delete_event', self.hide_advfilter_window)
     self.widgets['advfilter']['window'].set_transient_for(self.widgets['window'])
+    #}}}
 
     self.widgets['preferences'] = {#{{{
         'window'            : get('w_preferences'),
