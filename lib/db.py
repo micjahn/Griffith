@@ -22,11 +22,15 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 # imports
+import gettext
+gettext.install('griffith', unicode=1)
 from sqlalchemy     import *
-from sqlalchemy.orm import mapper, relation, sessionmaker
+from sqlalchemy.orm import mapper, relation, sessionmaker, validates
+import re
 import logging
 log = logging.getLogger("Griffith")
 
+EMAIL_PATTERN = re.compile('^[a-z0-9]+[.a-z0-9_+-]*@[a-z0-9_-]+(\.[a-z0-9_-]+)+$', re.IGNORECASE)
 metadata = MetaData()
 
 class DBTable(object):#{{{
@@ -37,24 +41,15 @@ class DBTable(object):#{{{
             else:
                 log.warn("%s.%s not set" % (self.__class__.__name__, i))
     def __repr__(self):
-        return "<%s:%s>" % (self.__class__.__name__, self.name)
-    def add_to_db(self):
-        if self.name is None or len(self.name)==0:
-            log.info("%s: name can't be empty" % self.__class__.__name__)
-            return False
-        # check if item already exists
-#        if self.query.filter_by(name=self.name).first() is not None:
-#            log.info("%s: '%s' already exists" % (self.__class__.__name__, self.name))
-#            return False
-        log.info("%s: adding '%s' to database..." % (self.__class__.__name__, self.name))
-        self.commit()
-        try:
-            self.flush()
-        except exceptions.SQLError, e:
-            log.error("%s: add_to_db: %s" % (self.__class__.__name__, e))
-            return False
-        self.refresh()
-        return True
+        return "<%s:%s>" % (self.__class__.__name__, self.name.encode('utf-8'))
+
+    @validates('name')
+    def validate_name(self, key, name):
+        if not name or not name.strip():
+            log.warning("%s: empty name (%s)" % (self.__class__.__name__, name))
+            raise ValueError(_("Name cannot be empty"))
+        return name.strip()
+
     def remove_from_db(self):
         dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
         if dbtable_id<1:
@@ -82,9 +77,6 @@ class DBTable(object):#{{{
         if dbtable_id<1:
             log.info("%s: none selected => none updated" % self.__class__.__name__)
             return False
-        if self.name is None or len(self.name)==0:
-            log.info("%s: name can't be empty" % self.__class__.__name__)
-            return False
         tmp = self.query.filter_by(name=self.name).first()
         if tmp is not None and tmp is not self:
             gutils.warning(self, msg=_("This name is already in use!"))
@@ -110,7 +102,12 @@ class Lang(DBTable):
 class Medium(DBTable):
     pass
 class Person(DBTable):
-    pass
+    @validates('email')
+    def validate_email(self, key, address):
+        if not EMAIL_PATTERN.match(address):
+            log.warning("%s: email address is not valid (%s)" % (self.__class__.__name__, address))
+            raise ValueError(_("E-mail address is not valid"))
+        return address
 class Ratio(DBTable):
     pass
 class SubFormat(DBTable):

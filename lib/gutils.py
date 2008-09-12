@@ -25,6 +25,7 @@ import gettext
 gettext.install('griffith', unicode=1)
 import string
 import os
+import sys
 try:
     import gtk
     import gobject
@@ -362,21 +363,34 @@ def decompress(data):
 
 def get_dependencies():
     depend = []
+
+    # Python version
+    if sys.version_info[:2] < (2, 4):
+        depend.append({'module': 'python',
+            'version'    : '-'+'.'.join(map(str,sys.version_info)),
+            'module_req' : '2.4',
+            'url'        : 'http://www.python.org/',
+            'debian'     : 'python',
+            'debian_req' : '2.4'
+            # TODO: 'fedora', 'suse', etc.
+        })
+
     try:
         import gtk
-        version    = '.'.join([str(i) for i in gtk.pygtk_version])
+        version = '.'.join([str(i) for i in gtk.pygtk_version])
         if gtk.pygtk_version <= (2, 6, 0):
             version = '-%s' % version
     except:
         version = False
     depend.append({'module': 'gtk',
         'version'    : version,
-        'module_req'    : '2.6',
+        'module_req' : '2.6',
         'url'        : 'http://www.pygtk.org/',
-        'debian'    : 'python-gtk2',
-        'debian_req'    : '2.8.6-1'
+        'debian'     : 'python-gtk2',
+        'debian_req' : '2.8.6-1'
         # TODO: 'fedora', 'suse', etc.
     })
+
     try:
         import gtk.glade
         # (version == gtk.pygtk_version)
@@ -384,22 +398,25 @@ def get_dependencies():
         version = False
     depend.append({'module': 'gtk.glade',
         'version'    : version,
-        'module_req'    : '2.6',
+        'module_req' : '2.6',
         'url'        : 'http://www.pygtk.org/',
-        'debian'    : 'python-glade2',
-        'debian_req'    : '2.8.6-1'
+        'debian'     : 'python-glade2',
+        'debian_req' : '2.8.6-1'
     })
     try:
         import sqlalchemy
-        version = True
+        if map(int, sqlalchemy.__version__.split('.')[:2]) < [0, 5]:
+            version = False
+        else:
+            version = True
     except:
         version = False
     depend.append({'module': 'sqlalchemy',
         'version'    : version,
-        'module_req'    : '0.4',
+        'module_req' : '0.5rc1',
         'url'        : 'http://www.sqlalchemy.org/',
-        'debian'    : 'python-sqlalchemy',
-        'debian_req'    : '0.4.0-1'
+        'debian'     : 'python-sqlalchemy',
+        'debian_req' : '0.5~rc1'
     })
     try:
         import sqlite3
@@ -415,15 +432,15 @@ def get_dependencies():
         depend.append({'module': 'pysqlite2',
             'version'    : version,
             'url'        : 'http://initd.org/tracker/pysqlite',
-            'debian'    : 'python-pysqlite2',
-            'debian_req'    : '2.3.0-1'
+            'debian'     : 'python-pysqlite2',
+            'debian_req' : '2.3.0-1'
         })
     else:
         depend.append({'module': 'sqlite3',
             'version'    : version,
             'url'        : 'http://www.python.org',
-            'debian'    : 'python',
-            'debian_req'    : '2.5'
+            'debian'     : 'python',
+            'debian_req' : '2.5'
         })
     try:
         import reportlab
@@ -433,8 +450,8 @@ def get_dependencies():
     depend.append({'module': 'reportlab',
         'version'    : version,
         'url'        : 'http://www.reportlab.org/',
-        'debian'    : 'python-reportlab',
-        'debian_req'    : '1.20debian-6'
+        'debian'     : 'python-reportlab',
+        'debian_req' : '1.20debian-6'
     })
     try:
         import PIL
@@ -444,18 +461,8 @@ def get_dependencies():
     depend.append({'module': 'PIL',
         'version'    : version,
         'url'        : 'http://www.pythonware.com/products/pil/',
-        'debian'    : 'python-imaging',
-        'debian_req'    : '1.1.5-6'
-    })
-    try:
-        import xml
-        version = xml.__version__
-    except:
-        version = False
-    depend.append({'module': 'xml',
-        'version'    : version,
-        'url'        : 'http://pyxml.sf.net/',
-        'debian'    : 'python-xml'
+        'debian'     : 'python-imaging',
+        'debian_req' : '1.1.5-6'
     })
     # extra dependencies:
     optional = []
@@ -467,8 +474,8 @@ def get_dependencies():
     optional.append({'module': 'psycopg2',
         'version'    : version,
         'url'        : 'http://initd.org/tracker/psycopg/wiki/PsycopgTwo',
-        'debian'    : 'python-psycopg2',
-        'debian_req'    : '1.1.21-6'
+        'debian'     : 'python-psycopg2',
+        'debian_req' : '1.1.21-6'
     })
     try:
         import MySQLdb
@@ -478,8 +485,8 @@ def get_dependencies():
     optional.append({'module': 'MySQLdb',
         'version'    : version,
         'url'        : 'http://sourceforge.net/projects/mysql-python',
-        'debian'    : 'python-mysqldb',
-        'debian_req'    : '1.2.1-p2-2'
+        'debian'     : 'python-mysqldb',
+        'debian_req' : '1.2.1-p2-2'
     })
     try:
         import chardet
@@ -487,9 +494,9 @@ def get_dependencies():
     except:
         version = False
     optional.append({'module': 'chardet',
-        'version'    : version,
-        'url'        : 'http://chardet.feedparser.org/',
-        'debian'    : 'python-chardet'
+        'version' : version,
+        'url'     : 'http://chardet.feedparser.org/',
+        'debian'  : 'python-chardet'
     })
     try:
         import sqlite
@@ -497,12 +504,11 @@ def get_dependencies():
     except:
         version = False
     optional.append({'module': 'sqlite',
-        'version'    : version,
-        'url'        : 'http://initd.org/tracker/pysqlite',
-        'debian'    : 'python-sqlite'
+        'version' : version,
+        'url'     : 'http://initd.org/tracker/pysqlite',
+        'debian'  : 'python-sqlite'
     })
     return depend, optional
-
 
 def html_encode(s):
     if not isinstance(s, basestring):

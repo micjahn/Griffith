@@ -43,17 +43,21 @@ def add_person_cancel(self):
     self.widgets['people']['window'].present()
 
 def clear_person(self):
-    self.widgets['person']['name'].set_text("")
-    self.widgets['person']['email'].set_text("")
-    self.widgets['person']['phone'].set_text("")
+    self.widgets['person']['name'].set_text('')
+    self.widgets['person']['email'].set_text('')
+    self.widgets['person']['phone'].set_text('')
 
 def add_person_db(self):
     name = self.widgets['person']['name'].get_text().decode('utf-8')
     if name:
         p = db.Person()
-        p.name = self.widgets['person']['name'].get_text().decode('utf-8')
-        p.email = self.widgets['person']['email'].get_text().decode('utf-8')
-        p.phone = gutils.digits_only(self.widgets['person']['phone'].get_text().decode('utf-8'))
+        try:
+            p.name = self.widgets['person']['name'].get_text().decode('utf-8')
+            p.email = self.widgets['person']['email'].get_text().decode('utf-8')
+            p.phone = gutils.digits_only(self.widgets['person']['phone'].get_text().decode('utf-8'))
+        except ValueError, e:
+            gutils.warning(self, e.message)
+            return False
         self.widgets['person']['window'].hide()
         self.db.session.add(p)
         try:
@@ -72,14 +76,14 @@ def edit_person(self):
     try:
         treeselection = self.widgets['people']['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
-        name = tmp_model.get_value(tmp_iter,0)
+        name = tmp_model.get_value(tmp_iter,0).decode('utf-8')
     except:
         return
     p = self.db.session.query(db.Person).filter_by(name=name).first()
-    if p is not None:
-        self.widgets['person']['e_name'].set_text(str(p.name))
-        self.widgets['person']['e_email'].set_text(str(p.email))
-        self.widgets['person']['e_phone'].set_text(str(p.phone))
+    if p:
+        self.widgets['person']['e_name'].set_text(p.name)
+        self.widgets['person']['e_email'].set_text(p.email)
+        self.widgets['person']['e_phone'].set_text(p.phone)
         self.widgets['person']['e_id'].set_text(str(p.person_id))
     self.widgets['person']['e_window'].show()
 
@@ -89,11 +93,16 @@ def edit_person_cancel(self):
 
 def update_person(self):
     p = self.db.session.query(db.Person).filter_by(person_id=self.widgets['person']['e_id'].get_text().decode('utf-8')).first()
-    if p is None:
+    if not p:
+        log.warning('Person not found')
         return False
-    p.name = self.widgets['person']['e_name'].get_text().decode('utf-8')
-    p.email = self.widgets['person']['e_email'].get_text().decode('utf-8')
-    p.phone = self.widgets['person']['e_phone'].get_text().decode('utf-8')
+    try:
+        p.name = self.widgets['person']['e_name'].get_text().decode('utf-8')
+        p.email = self.widgets['person']['e_email'].get_text().decode('utf-8')
+        p.phone = self.widgets['person']['e_phone'].get_text().decode('utf-8')
+    except ValueError, e:
+        gutils.warning(self, e.message)
+        return False
     self.db.session.add(p)
     try:
         self.db.session.commit()
@@ -103,10 +112,10 @@ def update_person(self):
         self.update_statusbar(_("Record updated"))
         edit_person_cancel(self)
         self.p_treemodel.clear()
-        for p in self.db.session.query(db.Person).order_by(db.people_table.c.name.asc()).all():
+        for p in self.db.session.query(db.Person).order_by(db.Person.name.asc()).all():
             myiter = self.p_treemodel.insert_before(None, None)
-            self.p_treemodel.set_value(myiter, 0, str(p.name))
-            self.p_treemodel.set_value(myiter, 1, str(p.email))
+            self.p_treemodel.set_value(myiter, 0, p.name)
+            self.p_treemodel.set_value(myiter, 1, p.email)
 
 def delete_person(self):
     response = None

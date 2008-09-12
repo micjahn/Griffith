@@ -4,6 +4,11 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-09-12  Piotr Ożarowski
+	* Validate loan contact's email address
+	* Python required version bumped to 2.4 (it was required for a while aready)
+	* Use SQLAlchemy's validate decorator (minimum required SA version bumped to 0.5rc1)
+
 2008-09-09  Piotr Ożarowski
 	* Add aspect ratio, cameraman and screenplay to the database
 

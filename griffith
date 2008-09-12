@@ -52,7 +52,7 @@ if len(missing) > 0:
         if i.has_key('module_req'):
             print "\t:: required version: %(module_req)s" % i,
             if i['version'] is not False and i['version'][0] == '-':
-                print "\t:: detected: %(version)s" % i
+                print "\t:: detected: %s" % i['version'][1:]
         print "\n",
     sys.exit(1)
 del missing
@@ -107,7 +107,7 @@ class Griffith:
         gconsole.check_args_with_db(self)
 
         gtk.window_set_auto_startup_notification(True)
-        self.Image = gtk.Image()
+        #self.Image = gtk.Image()
         self.filter_l = False
         initialize.gui(self)
         initialize.toolbar(self)
@@ -1203,7 +1203,7 @@ You can't undo this operation."""), \
                 self.total = 0
                 self.count_statusbar()
                 self.treemodel.clear()
-                from initialize    import dictionaries, people_treeview
+                from initialize import dictionaries, people_treeview
                 dictionaries(self)
                 people_treeview(self)
 
