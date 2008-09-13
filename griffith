@@ -925,8 +925,8 @@ You can't undo this operation."""), \
         cancel_loan(self)
 
     def commit_loan(self, *args):
-        from loan import commit_loan
-        commit_loan(self)
+        from loan import commit
+        commit(self)
 
     def return_loan(self, *args):
         from loan import return_loan

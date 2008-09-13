@@ -21,12 +21,15 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-# imports
+
+# XXX: keep stdlib and SQLAlchemy imports only in this file
+
 import gettext
 gettext.install('griffith', unicode=1)
 from sqlalchemy     import *
 from sqlalchemy.orm import mapper, relation, sessionmaker, validates
 import re
+import string
 import logging
 log = logging.getLogger("Griffith")
 
@@ -44,7 +47,7 @@ class DBTable(object):#{{{
         return "<%s:%s>" % (self.__class__.__name__, self.name.encode('utf-8'))
 
     @validates('name')
-    def validate_name(self, key, name):
+    def _validate_name(self, key, name):
         if not name or not name.strip():
             log.warning("%s: empty name (%s)" % (self.__class__.__name__, name))
             raise ValueError(_("Name cannot be empty"))
@@ -88,36 +91,56 @@ class DBTable(object):#{{{
             log.info("%s: update_in_db: %s" % (self.__class__.__name__, e))
             return False
         self.refresh()
-        return True#}}}
+        return True
+     #}}}
 
 ### clases #################################################### {{{
 class AChannel(DBTable):
     pass
+
 class ACodec(DBTable):
     pass
+
 class Collection(DBTable):
     pass
+
 class Lang(DBTable):
     pass
+
 class Medium(DBTable):
     pass
+
 class Person(DBTable):
     @validates('email')
-    def validate_email(self, key, address):
+    def _validate_email(self, key, address):
+        address = address.strip()
         if not EMAIL_PATTERN.match(address):
             log.warning("%s: email address is not valid (%s)" % (self.__class__.__name__, address))
             raise ValueError(_("E-mail address is not valid"))
         return address
+
+    @validates('phone')
+    def _digits_only(self, key, value):
+        """removes non-digits"""
+        allchars = string.maketrans('', '')
+        delchars = allchars.translate(allchars, string.digits)
+        return unicode(str(value).translate(allchars, delchars))
+
 class Ratio(DBTable):
     pass
+
 class SubFormat(DBTable):
     pass
+
 class Tag(DBTable):
     pass
+
 class VCodec(DBTable):
     pass
+
 class Volume(DBTable):
     pass
+
 class Poster(object):
     def __init__(self, md5sum=None, data=None):
         if md5sum and data:
@@ -126,11 +149,14 @@ class Poster(object):
                 self.data = data
             else:
                 log.error("md5sum has wrong size")
+
     def __repr__(self):
         return "<Poster(%s)>" % self.md5sum
+
 class Configuration(object):
     def __repr__(self):
         return "<Config:%s=%s>" % (self.param, self.value)
+
 class Loan(object):
     def __repr__(self):
         return "<Loan:%s (movie:%s person:%s)>" % (self.loan_id, self.movie_id, self.person_id)

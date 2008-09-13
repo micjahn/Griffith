@@ -52,7 +52,7 @@ def treeview_clicked(self):
         set_details(self, {})
 
 def set_details(self, item=None):#{{{
-    from loan import get_loan_info, get_loan_history
+    from sql import get_loan_info, get_loan_history
     if item is None:
         item = {}
     if 'movie_id' in item and item['movie_id']:
@@ -221,7 +221,7 @@ def set_details(self, item=None):#{{{
     gutils.garbage(handler)
 
     # check loan status and adjust buttons and history box
-    if 'loaned' in item and item['loaned'] == True:
+    if 'loaned' in item and item['loaned'] is True:
         self.widgets['popups']['loan'].set_sensitive(False)
         self.widgets['popups']['email'].set_sensitive(True)
         self.widgets['popups']['return'].set_sensitive(True)
@@ -242,7 +242,7 @@ def set_details(self, item=None):#{{{
             self.loan_date = str(data_loan.date)
             w['loan_info'].set_use_markup(False)
             w['loan_info'].set_label(_("This movie has been loaned to ") + self.person_name + _(" on ") + self.loan_date[:10])
-    if 'loaned' in item and item['loaned'] != True: # "loaned" status can be changed above, so don't use "else:" in this line
+    if 'loaned' in item and not item['loaned']: # "loaned" status can be changed above, so don't use "else:" in this line
         self.widgets['popups']['loan'].set_sensitive(True)
         self.widgets['popups']['email'].set_sensitive(False)
         self.widgets['popups']['return'].set_sensitive(False)

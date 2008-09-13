@@ -22,16 +22,18 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-# imports
-from sqlalchemy            import create_engine
+
+# XXX: keep stdlib, griffith.db and SQLAlchemy imports only in this file
+
+from sqlalchemy            import create_engine, func, and_, or_
 from sqlalchemy.orm        import sessionmaker
-from sqlalchemy.exceptions import SQLError, OperationalError
+from sqlalchemy.exceptions import OperationalError
 import os.path
 import gettext
 gettext.install('griffith', unicode=1)
 import logging
 log = logging.getLogger("Griffith")
-import gutils
+import gutils # TODO: get rid of this import
 import db # ORM data (SQLAlchemy stuff)
 
 class GriffithSQL:
@@ -145,3 +147,153 @@ class GriffithSQL:
             if not upgrade_database(self, v):
                 import sys
                 sys.exit(1)
+
+
+# MOVIE LOAN related functions --------------------------------{{{
+def loan_movie(gsql, movie_id, person_id, whole_collection=False):
+    """loans a movie, movie's volume and optionally movie's collection"""
+
+    person = gsql.session.query(db.Person).filter_by(person_id=person_id).first()
+    if not person:
+        log.warn("loan_movie: person doesn't exist")
+        return False
+    movie = gsql.session.query(db.Movie).filter_by(movie_id=movie_id).first()
+    if not movie:
+        log.warn("loan_movie: wrong movie_id")
+        return False
+
+    loan = db.Loan()
+    loan.person = person
+    loan.movie = movie
+
+    if whole_collection:
+        # TODO: check if there are loaned movies inside the collection and return False if yes
+        loan.collection = movie.collection
+        movie.collection.loaned = True
+        for m in movie.collection.movies:
+            m.loaned = True
+            gsql.session.add(m)
+        gsql.session.add(movie.collection)
+
+    if movie.volume_id > 0:
+        loan.volume = movie.volume
+        movie.volume.loaned = True
+        for m in movie.volume.movies:
+            m.loaned = True
+            gsql.session.add(m)
+        gsql.session.add(movie.volume)
+
+    movie.loaned = True
+    gsql.session.add(movie)
+    gsql.session.add(loan)
+
+    try:
+        gsql.session.commit()
+    except Exception, e:
+        gsql.session.rollback()
+        log.error(str(e))
+        return False
+    return True
+
+def loan_return(gsql, movie_id):
+    """marks movie, movie's volume and movie's collection as returned"""
+
+    loan = gsql.session.query(db.Loan).filter_by(movie_id=movie_id, return_date=None).first()
+
+    if loan is None:
+        movie = gsql.session.query(db.Movie).filter_by(movie_id=movie_id).first()
+        if not movie:
+            log.warn("Cannot find ")
+            return False
+        # lets check if whole colletion was loaned
+        elif movie.collection and movie.collection.loaned:
+            loan = gsql.session.query(db.Loan).filter_by(collection_id=movie.collection_id, return_date=None).first()
+            if not loan:
+                log.error("Collection is marked as loaned but there's no such loan")
+                return False
+        elif movie.volume and movie.volume.loaned:
+            loan = gsql.session.query(db.Loan).filter_by(volume_id=movie.volume_id, return_date=None).first()
+        else:
+            log.error("Cannot find loan data")
+            return False
+
+    if loan.collection:
+        loan.collection.loaned = False
+        for m in loan.collection.movies:
+            m.loaned = False
+            gsql.session.add(m)
+        gsql.session.add(loan.collection)
+    elif loan.volume:
+        loan.volume.loaned = False
+        for m in loan.volume.movies:
+            m.loaned = False
+            gsql.session.add(m)
+        gsql.session.add(loan.volume)
+    else:
+        loan.movie.loaned = False
+        gsql.session.add(loan.movie)
+    loan.return_date = func.current_date()
+    gsql.session.add(loan)
+
+    try:
+        gsql.session.commit()
+    except Exception, e:
+        gsql.session.rollback()
+        log.error(str(e))
+        return False
+    return True
+
+def get_loan_info(gsql, movie_id, volume_id=None, collection_id=None):
+    """Returns current collection/volume/movie loan data"""
+
+    movie = gsql.session.query(db.Movie).filter_by(movie_id=movie_id).first()
+    if movie is None:
+        return False
+    
+    # fix or add volume/collection data:
+    if movie.collection_id is not None:
+        collection_id = movie.collection_id
+    if movie.volume_id is not None:
+        volume_id = movie.volume_id
+    
+    if collection_id > 0 and volume_id > 0:
+        return gsql.session.query(db.Loan).filter(and_(db.Loan.return_date==None,
+                                                              or_(db.Loan.collection_id==collection_id,
+                                                                  db.Loan.volume_id==volume_id,
+                                                                  db.Loan.movie_id==movie_id))).first()
+    elif collection_id > 0:
+        return gsql.session.query(db.Loan).filter(and_(db.Loan.return_date==None,
+                                                              or_(db.Loan.collection_id==collection_id,
+                                                                  db.Loan.movie_id==movie_id))
+                                                        ).first()
+    elif volume_id > 0:
+        return gsql.session.query(db.Loan).filter(and_(db.Loan.return_date==None,
+                                                              or_(db.Loan.volume_id==volume_id,
+                                                                  db.Loan.movie_id==movie_id),
+                                                        )).first()
+    else:
+        return gsql.session.query(db.Loan).filter(db.Loan.movie_id==movie_id).filter(db.Loan.return_date==None).first()
+
+def get_loan_history(gsql, movie_id, volume_id=None, collection_id=None):
+    """Returns collection/volume/movie loan history"""
+
+    if collection_id > 0 and volume_id > 0:
+        return gsql.session.query(db.Loan).filter(and_(db.Loan.return_date!=None,
+                                                          or_(db.Loan.collection_id==collection_id,
+                                                              db.Loan.volume_id==volume_id,
+                                                              db.Loan.movie_id==movie_id)
+                                                    )).all()
+    elif collection_id > 0:
+        return gsql.session.query(db.Loan).filter(and_(db.Loan.return_date!=None,
+                                                              or_(db.Loan.collection_id==collection_id,
+                                                                  db.Loan.movie_id==movie_id))
+                                                        ).all()
+    elif volume_id > 0:
+        return gsql.session.query(db.Loan).filter(and_(db.Loan.return_date!=None,
+                                                              or_(db.Loan.volume_id==volume_id,
+                                                                  db.Loan.movie_id==movie_id),
+                                                        )).all()
+    else:
+        return gsql.session.query(db.Loan).filter(db.Loan.movie_id==movie_id).filter(db.Loan.return_date!=None).all()
+
+#}}}

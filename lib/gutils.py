@@ -66,7 +66,7 @@ def find_next_available(griffithSql):
     """
     first = 0
 
-    movies = griffithSql.session.query(db.Movie).order_by(db.movies_table.c.number.asc()).all()
+    movies = griffithSql.session.query(db.Movie).order_by(db.Movie.number.asc()).all()
     for movie in movies:
         second = int(movie.number)
         if second is None:
@@ -134,7 +134,10 @@ def on_combo_box_entry_changed(widget):
     model = widget.get_model()
     m_iter = widget.get_active_iter()
     if m_iter:
-        return model.get_value(m_iter, 0)
+        value = model.get_value(m_iter, 0)
+        if type(value) is str:
+            value = value.decode('utf-8')
+        return value
     else:
         return 0
 
@@ -406,9 +409,9 @@ def get_dependencies():
     try:
         import sqlalchemy
         if map(int, sqlalchemy.__version__.split('.')[:2]) < [0, 5]:
-            version = False
+            version = "-%s" % sqlalchemy.__version__
         else:
-            version = True
+            version = sqlalchemy.__version__
     except:
         version = False
     depend.append({'module': 'sqlalchemy',

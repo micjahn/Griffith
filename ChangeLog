@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+2008-09-13  Piotr Ożarowski
+	* Loaning movies is working again
+
 2008-09-12  Piotr Ożarowski
 	* Validate loan contact's email address
 	* Python required version bumped to 2.4 (it was required for a while aready)
