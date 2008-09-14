@@ -172,10 +172,13 @@ def loan_movie(gsql, movie_id, person_id, whole_collection=False):
     loan.movie = movie
 
     if whole_collection:
-        # TODO: check if there are loaned movies inside the collection and return False if yes
         loan.collection = movie.collection
         movie.collection.loaned = True
         for m in movie.collection.movies:
+            if m.loaned:
+                log.warn("collection contains loaned movie (%s), cannot proceed" % m.number)
+                session.rollback()
+                return -1
             m.loaned = True
             session.add(m)
         session.add(movie.collection)

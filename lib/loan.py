@@ -75,7 +75,11 @@ def commit(self):
         elif response == gtk.RESPONSE_CANCEL:
             return False
     
-    if sql.loan_movie(self.db, movie.movie_id, person.person_id, loan_whole_collection):
+    resp = sql.loan_movie(self.db, movie.movie_id, person.person_id, loan_whole_collection)
+    if resp == -1:
+        gutils.warning(self, _("Collection contains loaned movie.\nLoan aborted!"))
+        return False
+    elif resp:
         self.update_statusbar(_("Movie loaned"))
         self.treeview_clicked()
 
