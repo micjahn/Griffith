@@ -350,25 +350,25 @@ def populate(self, movies=None, where=None, qf=True):#{{{
             if pos >= 0:
                 col_id = self.collection_combo_ids[pos]
                 if col_id > 0:
-                    cond["collections"].append(col_id)
+                    cond["collections"].add(col_id)
             # volume
             pos = self.widgets['filter']['volume'].get_active()
             if pos >= 0:
                 vol_id = self.volume_combo_ids[pos]
                 if vol_id > 0:
-                    cond["volumes"].append(vol_id)
+                    cond["volumes"].add(vol_id)
             # loaned to
             pos = self.widgets['filter']['loanedto'].get_active()
             if pos >= 0:
                 per_id = self.loanedto_combo_ids[pos]
                 if per_id > 0:
-                    cond["loaned_to"].append(per_id)
+                    cond["loaned_to"].add(per_id)
             # tag
             pos = self.widgets['filter']['tag'].get_active()
             if pos >= 0:
                 tag_id = self.bytag_combo_ids[pos]
                 if tag_id > 0:
-                    cond["tags"].append(tag_id)
+                    cond["tags"].add(tag_id)
 
             movies = advfilter.create_select_query(self, None, cond, movies)
         
