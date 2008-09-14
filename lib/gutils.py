@@ -246,9 +246,8 @@ def info(self, msg, parent=None):
     dialog.run()
     dialog.destroy()
 
-def question(self, msg, cancel=1, parent=None):
-    if not parent: parent = self
-    dialog = gtk.MessageDialog(parent,
+def question(msg, cancel=True, window=None):
+    dialog = gtk.MessageDialog(window,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE, msg)
     dialog.add_buttons(gtk.STOCK_YES, gtk.RESPONSE_YES,

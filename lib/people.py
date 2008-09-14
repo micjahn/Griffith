@@ -138,8 +138,8 @@ def delete_person(self):
     if len(data)>0:
         has_history = True
         has_history_msg = _("This person has data in the loan history. This data will be erased if you continue.")
-    response = gutils.question(self,_("%s\nAre you sure you want to delete this person?" % has_history_msg), \
-        1, self.widgets['people']['window'])
+    response = gutils.question(_("%s\nAre you sure you want to delete this person?" % has_history_msg), \
+                               True, self.widgets['people']['window'])
 
     if response == -8:
         treeselection = self.widgets['people']['treeview'].get_selection()

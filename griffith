@@ -39,8 +39,8 @@ logging.basicConfig()
 log = logging.getLogger("Griffith")
 
 # check dependencies
-from gutils import get_dependencies
-(required, extra) = get_dependencies()
+import gutils
+(required, extra) = gutils.get_dependencies()
 missing = []
 for i in required:
     if i['version'] is False or (i['version'] is not True and i['version'][0] == '-'):
@@ -58,9 +58,17 @@ if len(missing) > 0:
 del missing
 
 # other imports
-import gtk, gtk.glade
-import add, config, gconsole, gutils, initialize, main_treeview, quick_filter, update
+import gtk
+
+import add
+import config
 import db
+import gconsole
+import initialize
+import main_treeview
+import quick_filter
+import update
+import version
 
 class Griffith:
     """The main application class"""
@@ -402,37 +410,33 @@ class Griffith:
             self._selected_volume = self.volume_combo_ids[widget.get_active()]
 
     def add_volume(self, widget):
-        from update import update_volume_combo_ids
         name = self.widgets['add']['volume'].get_active_text().decode('utf-8')
         vol = db.Volume()
         vol.name = nae
         if vol and vol.add_to_db():
-            update_volume_combo_ids(self)
+            update.update_volume_combo_ids(self)
             initialize.fill_volumes_combo(self, id)
 
     def add_collection(self, widget):
-        from update import update_collection_combo_ids
         name = self.widgets['add']['collection'].get_active_text().decode('utf-8')
         col = db.Collection()
         col.name = name
         if col and col.add_to_db():
-            update_collection_combo_ids(self)
+            update.update_collection_combo_ids(self)
             initialize.fill_collections_combo(self, id)
 
     def remove_volume(self, widget):
-        from update import update_volume_combo_ids
         vol_id = self._selected_volume
         vol = self.db.session.query(db.Volume).filter_by(volume_id=vol_id).first()
         if vol and vol.remove_from_db():
-            update_volume_combo_ids(self)
+            update.update_volume_combo_ids(self)
             initialize.fill_volumes_combo(self, id)
 
     def remove_collection(self, widget):
-        from update import update_collection_combo_ids
         col_id = self._selected_collection
         col = self.db.session.query(db.Collection).filter_by(collection_id=col_id).first()
         if col and col.remove_from_db():
-            update_collection_combo_ids(self)
+            update.update_collection_combo_ids(self)
             initialize.fill_collections_combo(self, id)
 
     def rename_volume(self, widget):
@@ -575,13 +579,14 @@ class Griffith:
 
     # tags -------------------------------------------------------------{{{
     def on_tag_add_clicked(self, widget):
+        session = self.db.Session()
         tag = db.Tag()
         tag.name = self.widgets['preferences']['tag_name'].get_active_text().decode('utf-8')
-        self.db.session.add(tag)
+        session.add(tag)
         try:
-            self.db.session.commit()
+            session.commit()
         except Exception, e:
-            self.db.session.rollback()
+            session.rollback()
             log.warn("Cannot add tag: %s" % e.message)
         else:
             initialize.fill_preferences_tags_combo(self)
@@ -590,16 +595,17 @@ class Griffith:
             initialize.fill_bytag_combo(self)
 
     def on_tag_remove_clicked(self, widget):
+        session = self.db.Session()
         active = self.widgets['preferences']['tag_name'].get_active()
         if active>-1:
             tag_id = self.tags_ids[active]
-            tag = self.db.session.query(db.Tag).filter_by(tag_id=tag_id).first()
+            tag = session.query(db.Tag).filter_by(tag_id=tag_id).first()
             if tag and len(tag.movietags)==0:
-                self.db.session.delete(tag)
+                session.delete(tag)
                 try:
-                    self.db.session.commit()
+                    session.commit()
                 except Exception, e:
-                    self.db.session.rollback()
+                    session.rollback()
                     log.warn("Cannot remove tag: %s" % e.message)
                 initialize.fill_preferences_tags_combo(self)
                 initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
@@ -615,14 +621,15 @@ class Griffith:
             active = self.tag_name_active
         except:
             return False
+        session = self.db.Session()
         tag_id = self.tags_ids[active]
-        tag = self.db.session.query(db.Tag).filter_by(tag_id=tag_id).first()
+        tag = session.query(db.Tag).filter_by(tag_id=tag_id).first()
         if tag:
             tag.name = self.widgets['preferences']['tag_name'].get_active_text().decode('utf-8')
             try:
-                self.db.session.commit()
+                session.commit()
             except Exception, e:
-                self.db.session.rollback()
+                session.rollback()
                 log.warn("Cannot rename tag: %s" % e.message)
             else:
                 initialize.fill_preferences_tags_combo(self)
@@ -833,21 +840,17 @@ class Griffith:
         backup(self)
 
     def restore(self, *args):
-        response = gutils.question(self, \
-            _("""Are you sure you want to restore?
+        response = gutils.question(_("""Are you sure you want to restore?
 Your current movie collection will be replaced.
-You can't undo this operation."""), \
-            1, self.widgets['window'])
+You can't undo this operation."""), True, self.widgets['window'])
         if response == gtk.RESPONSE_YES:
             from backup import restore
             restore(self)
 
     def merge(self, *args):
-        response = gutils.question(self, \
-            _("""Are you sure you want to mix?
+        response = gutils.question(_("""Are you sure you want to mix?
 Your current movie collection will be mixed with a backup.
-You can't undo this operation."""), \
-            1, self.widgets['window'])
+You can't undo this operation."""), True, self.widgets['window'])
         if response == gtk.RESPONSE_YES:
             from backup import merge
             merge(self)
@@ -1162,13 +1165,11 @@ You can't undo this operation."""), \
 
     def new_dbb(self, *args):
         """initializes a new Griffith Database file"""
-        response = gutils.question(self, \
-            _('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
-            1, self.widgets['window'])
+        response = gutils.question(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
+            True, self.widgets['window'])
         if response == gtk.RESPONSE_YES:
-            response_sec = gutils.question(self, \
-                _('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
-                1, self.widgets['window'])
+            response_sec = gutils.question(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
+                True, self.widgets['window'])
             if response_sec == gtk.RESPONSE_YES:
                 from sqlalchemy import select
                 from sql import GriffithSQL
@@ -1290,6 +1291,16 @@ You can't undo this operation."""), \
                 treeview.set_cursor_on_cell(0)
 
 if __name__ == "__main__":
+    developer = False # TODO: get from config
+    if not developer and '~' in version.pversion or '-' in version.pversion:
+        response = gutils.question(_("""This is development version of Griffith.
+We're not providing upgrade path from dev. versions.
+Please make sure you have a backup!
+
+Do you want to proceed?"""))
+
+    if response != gtk.RESPONSE_YES:
+        sys.exit(2)
     griffith = Griffith()
     griffith.main()
 

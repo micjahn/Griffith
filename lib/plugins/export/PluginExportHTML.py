@@ -621,7 +621,7 @@ class ExportPlugin(gtk.Window):
         # get data from widgets
         self.config['exported_dir'] = self.widgets['fcw'].get_filename()
         self.config['title']        = self.widgets['entry_header'].get_text()
-        self.config['sorting']      = self.names[self.widgets['combo_sortby'].get_active_text()]
+        self.config['sorting']      = self.names[self.widgets['combo_sortby'].get_active_text().decode('utf-8')]
         if self.widgets['cb_reverse'].get_active():
             self.config['sorting2'] = 'DESC'
         else:
@@ -674,7 +674,7 @@ class ExportPlugin(gtk.Window):
             
             posters_dir = os.path.join(config['exported_dir'], 'posters')
             if os.path.isdir(posters_dir):
-                if gutils.question(self, _("Directory %s already exists.\nDo you want to overwrite it?") % posters_dir,1,self) == gtk.RESPONSE_YES:
+                if gutils.question(_("Directory %s already exists.\nDo you want to overwrite it?") % posters_dir, True, self) == gtk.RESPONSE_YES:
                     try:
                         shutil.rmtree(posters_dir)
                     except:

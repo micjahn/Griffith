@@ -4,6 +4,10 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
+
+2008-09-14  Piotr Ożarowski
+	* Warn about backups when starting develpement version
+
 2008-09-13  Piotr Ożarowski
 	* Loaning movies is working again
 

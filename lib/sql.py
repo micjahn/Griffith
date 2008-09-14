@@ -115,7 +115,7 @@ class GriffithSQL:
         # try to establish a db connection
         try:
             Session = sessionmaker(bind=engine)
-            self.session = Session()
+            session = Session()
             #self.metadata.bind.connect()
         except Exception, e:
             log.info("engine connection: %s" % e)
@@ -126,7 +126,10 @@ class GriffithSQL:
             url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
             engine = create_engine(url)
             Session = sessionmaker(bind=engine)
-            self.session = Session()
+            session = Session()
+
+        self.session = session # global session
+        self.Session = Session # create new sessions using this class
         #}}}
         
         # check if database needs an upgrade
@@ -152,12 +155,14 @@ class GriffithSQL:
 # MOVIE LOAN related functions --------------------------------{{{
 def loan_movie(gsql, movie_id, person_id, whole_collection=False):
     """loans a movie, movie's volume and optionally movie's collection"""
+            
+    session = gsql.Session() # create new session
 
-    person = gsql.session.query(db.Person).filter_by(person_id=person_id).first()
+    person = session.query(db.Person).filter_by(person_id=person_id).first()
     if not person:
         log.warn("loan_movie: person doesn't exist")
         return False
-    movie = gsql.session.query(db.Movie).filter_by(movie_id=movie_id).first()
+    movie = session.query(db.Movie).filter_by(movie_id=movie_id).first()
     if not movie:
         log.warn("loan_movie: wrong movie_id")
         return False
@@ -172,47 +177,49 @@ def loan_movie(gsql, movie_id, person_id, whole_collection=False):
         movie.collection.loaned = True
         for m in movie.collection.movies:
             m.loaned = True
-            gsql.session.add(m)
-        gsql.session.add(movie.collection)
+            session.add(m)
+        session.add(movie.collection)
 
     if movie.volume_id > 0:
         loan.volume = movie.volume
         movie.volume.loaned = True
         for m in movie.volume.movies:
             m.loaned = True
-            gsql.session.add(m)
-        gsql.session.add(movie.volume)
+            session.add(m)
+        session.add(movie.volume)
 
     movie.loaned = True
-    gsql.session.add(movie)
-    gsql.session.add(loan)
+    session.add(movie)
+    session.add(loan)
 
     try:
-        gsql.session.commit()
+        session.commit()
     except Exception, e:
-        gsql.session.rollback()
+        session.rollback()
         log.error(str(e))
         return False
     return True
 
 def loan_return(gsql, movie_id):
     """marks movie, movie's volume and movie's collection as returned"""
+    
+    session = gsql.Session() # create new session
 
-    loan = gsql.session.query(db.Loan).filter_by(movie_id=movie_id, return_date=None).first()
+    loan = session.query(db.Loan).filter_by(movie_id=movie_id, return_date=None).first()
 
     if loan is None:
-        movie = gsql.session.query(db.Movie).filter_by(movie_id=movie_id).first()
+        movie = session.query(db.Movie).filter_by(movie_id=movie_id).first()
         if not movie:
             log.warn("Cannot find ")
             return False
         # lets check if whole colletion was loaned
         elif movie.collection and movie.collection.loaned:
-            loan = gsql.session.query(db.Loan).filter_by(collection_id=movie.collection_id, return_date=None).first()
+            loan = session.query(db.Loan).filter_by(collection_id=movie.collection_id, return_date=None).first()
             if not loan:
                 log.error("Collection is marked as loaned but there's no such loan")
                 return False
         elif movie.volume and movie.volume.loaned:
-            loan = gsql.session.query(db.Loan).filter_by(volume_id=movie.volume_id, return_date=None).first()
+            loan = session.query(db.Loan).filter_by(volume_id=movie.volume_id, return_date=None).first()
         else:
             log.error("Cannot find loan data")
             return False
@@ -221,24 +228,24 @@ def loan_return(gsql, movie_id):
         loan.collection.loaned = False
         for m in loan.collection.movies:
             m.loaned = False
-            gsql.session.add(m)
-        gsql.session.add(loan.collection)
+            session.add(m)
+        session.add(loan.collection)
     elif loan.volume:
         loan.volume.loaned = False
         for m in loan.volume.movies:
             m.loaned = False
-            gsql.session.add(m)
-        gsql.session.add(loan.volume)
+            session.add(m)
+        session.add(loan.volume)
     else:
         loan.movie.loaned = False
-        gsql.session.add(loan.movie)
+        session.add(loan.movie)
     loan.return_date = func.current_date()
-    gsql.session.add(loan)
+    session.add(loan)
 
     try:
-        gsql.session.commit()
+        session.commit()
     except Exception, e:
-        gsql.session.rollback()
+        session.rollback()
         log.error(str(e))
         return False
     return True

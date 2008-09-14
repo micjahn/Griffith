@@ -54,6 +54,7 @@ def change_poster(self):
         update_image(self, number, filename)
 
 def update_image(self, number, filename):
+    session = self.db.Session()
     try:
         self.widgets['movie']['picture'].set_from_pixbuf(\
                 gtk.gdk.pixbuf_new_from_file(filename).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
@@ -64,22 +65,22 @@ def update_image(self, number, filename):
 
     poster_md5 = gutils.md5sum(file(filename, 'rb'))
 
-    movie = self.db.session.query(db.Movie).filter_by(number=number).one()
+    movie = session.query(db.Movie).filter_by(number=number).one()
     old_poster_md5 = movie.poster_md5
     movie.poster_md5 = poster_md5
 
-    if not self.db.session.query(db.Poster).filter_by(md5sum=poster_md5).first():
+    if not session.query(db.Poster).filter_by(md5sum=poster_md5).first():
         poster = db.Poster(md5sum=poster_md5, data=file(filename, 'rb').read())
-        self.db.session.add(poster)
+        session.add(poster)
     
     if old_poster_md5:
         delete.delete_poster(self, old_poster_md5)
 
-    self.db.session.add(movie)
+    session.add(movie)
     try:
-        self.db.session.commit()
+        session.commit()
     except Exceptionm, e:
-        self.db.session.rollback()
+        session.rollback()
         log.error("cannot add poster to database: %s" % e)
         return False
    
@@ -93,11 +94,12 @@ def update_image(self, number, filename):
     self.update_statusbar(_("Image has been updated"))
 
 def delete_poster(self):
-    movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
+    session = self.db.Session()
+    movie = session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
     if not movie:
         log.error("Cannot delete unknown movie's poster!")
         return False
-    response = gutils.question(self, _("Are you sure you want to delete this poster?"), 1, self.widgets['window'])
+    response = gutils.question(_("Are you sure you want to delete this poster?"), True, self.widgets['window'])
     if response==-8:
         image_path = os.path.join(self.locations['images'], 'default.png')
         handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
@@ -107,11 +109,11 @@ def delete_poster(self):
         # update in database
         delete.delete_poster(self, movie.poster_md5)
         movie.poster_md5 = None
-        self.db.session.add(movie)
+        session.add(movie)
         try:
-            self.db.session.commit()
+            session.commit()
         except Exception, e:
-            self.db.session.rollback()
+            session.rollback()
             log.error("cannot delete poster: %s" % e)
             return False
 
@@ -255,9 +257,7 @@ def get_poster(self, f, result):
 
         self.widgets['poster_window'].show()
         self.widgets['poster_window'].move(0,0)
-        response = gutils.question(self, \
-                _("Do you want to use this poster instead?"), \
-                1, self.widgets['window'])
+        response = gutils.question(_("Do you want to use this poster instead?"), True, self.widgets['window'])
         if response == -8:
             log.info("Using fetched poster, updating and removing old one from disk.")
             update_image(self, self.widgets['movie']['number'].get_text(), file_to_copy)

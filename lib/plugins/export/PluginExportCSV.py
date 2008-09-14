@@ -63,7 +63,7 @@ class ExportPlugin:
                 self.persistent_config.save()
             overwrite = None
             if os.path.isfile(filename[0]):
-                response = gutils.question(self, _("File exists. Do you want to overwrite it?"), 1, self.parent)
+                response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent)
                 if response==-8:
                     overwrite = True
                 else:
