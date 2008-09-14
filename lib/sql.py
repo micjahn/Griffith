@@ -25,7 +25,7 @@ __revision__ = '$Id$'
 
 # XXX: keep stdlib, griffith.db and SQLAlchemy imports only in this file
 
-from sqlalchemy            import create_engine, func, and_, or_
+from sqlalchemy            import *
 from sqlalchemy.orm        import sessionmaker
 from sqlalchemy.exceptions import OperationalError
 import os.path
@@ -152,6 +152,82 @@ class GriffithSQL:
                 sys.exit(1)
 
 
+def update_whereclause(query, cond): # {{{
+    if cond['loaned'] is True:
+        query.append_whereclause(db.Movie.loaned==True)
+    if cond['loaned'] is False:
+        query.append_whereclause(db.Movie.loaned==False)
+    if cond['seen'] is True:
+        query.append_whereclause(db.Movie.seen==True)
+    if cond['seen'] is False:
+        query.append_whereclause(db.Movie.seen==False)
+
+    if cond["collections"]:
+        query.append_whereclause(db.Movie.collection_id.in_(cond["collections"]))
+    if cond["no_collections"]:
+        query.append_whereclause(~db.Movie.collection_id.in_(cond["no_collections"]))
+
+    if cond["volumes"]:
+        query.append_whereclause(db.Movie.volume_id.in_(cond["volumes"]))
+    if cond["no_volumes"]:
+        query.append_whereclause(~db.Movie.volume_id.in_(cond["no_volumes"]))
+    
+    loaned_to = []
+    for per_id in cond["loaned_to"]:
+        loaned_to.append(exists([db.loans_table.c.movie_id],\
+                and_(db.Movie.movie_id==db.loans_table.c.movie_id, db.loans_table.c.person_id==per_id, db.loans_table.c.return_date==None)))
+    if loaned_to:
+        query.append_whereclause(or_(*loaned_to))
+    
+    tags = []
+    for tag_id in cond["tags"]:
+        tags.append(exists([db.MovieTag.movie_id], \
+            and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
+    if tags:
+        query.append_whereclause(or_(*tags))
+    
+    no_tags = []
+    for tag_id in cond["no_tags"]:
+        no_tags.append(~exists([db.MovieTag.movie_id], \
+            and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
+    if no_tags:
+        query.append_whereclause(and_(*no_tags))
+
+    for field in cond["equals"]:
+        values = [ db.movies_table.columns[field]==value for value in cond["equals"][field] ]
+        query.append_whereclause(or_(*values))
+    
+    for field in cond["startswith"]:
+        values = [ db.movies_table.columns[field].startswith(value) for value in cond["startswith"][field] ]
+        query.append_whereclause(or_(*values))
+
+    for field in cond["like"]:
+        values = [ db.movies_table.columns[field].like(value) for value in cond["like"][field] ]
+        query.append_whereclause(or_(*values))
+    
+    for field in cond["ilike"]:
+        values = [ db.movies_table.columns[field].ilike(value) for value in cond["ilike"][field] ]
+        query.append_whereclause(or_(*values))
+    
+    for field in cond["contains"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
+        values = [ db.movies_table.columns[field].like('%'+value+'%') for value in cond["contains"][field] ]
+        query.append_whereclause(or_(*values))
+    
+    # sorting
+    for rule in cond["sort_by"]:
+        if rule.endswith(" DESC"):
+            reverse = True
+            rule = rule.replace(" DESC", '')
+        else:
+            reverse = False
+
+        if reverse:
+            query.append_order_by(desc(db.movies_table.columns[rule]))
+        else:
+            query.append_order_by(asc(db.movies_table.columns[rule]))
+
+    return query #}}}
+
 # MOVIE LOAN related functions --------------------------------{{{
 def loan_movie(gsql, movie_id, person_id, whole_collection=False):
     """loans a movie, movie's volume and optionally movie's collection"""
@@ -183,7 +259,7 @@ def loan_movie(gsql, movie_id, person_id, whole_collection=False):
             session.add(m)
         session.add(movie.collection)
 
-    if movie.volume_id > 0:
+    if movie.volume:
         loan.volume = movie.volume
         movie.volume.loaned = True
         for m in movie.volume.movies:

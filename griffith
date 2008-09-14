@@ -947,10 +947,7 @@ You can't undo this operation."""), True, self.widgets['window'])
         if allmovies > 0:
             loaned = self.db.session.query(db.Movie).filter_by(loaned=True).count()
             not_seen = self.db.session.query(db.Movie).filter_by(seen=False).count()
-        self.update_statusbar(str(allmovies) + ' (' + str(self.total) + ')' + _(' movie(s) in collection. ')
-            + str(loaned) + _(' movie(s) loaned. ')
-            + _('You haven\'t seen ')+"%s"%str(not_seen)+ _(" movie(s)")
-        )
+        self.update_statusbar("%s (%s) movie(s) in collection. %s movie(s) loaned. You haven't seen %s movie(s)" % (allmovies, self.total, loaned, not_seen))
 
     def update_statusbar(self, text):
         context_id = self.widgets['statusbar'].get_context_id(text)
@@ -967,9 +964,10 @@ You can't undo this operation."""), True, self.widgets['window'])
         hide_window(self)
 
     def on_apply_filter_clicked(self, *args):
-        from advfilter import create_select_query
-        statement = create_select_query(self).execute().fetchall()
-        main_treeview.populate(self, statement)
+        from advfilter import create_select_query, hide_window
+        movies = create_select_query(self, None, None, None).execute().fetchall()
+        hide_window(self)
+        main_treeview.populate(self, movies, qf=False)
 
     # quick filter operations ---------------------------------------------
 
@@ -1298,9 +1296,9 @@ We're not providing upgrade path from dev. versions.
 Please make sure you have a backup!
 
 Do you want to proceed?"""))
+        if response != gtk.RESPONSE_YES:
+            sys.exit(2)
 
-    if response != gtk.RESPONSE_YES:
-        sys.exit(2)
     griffith = Griffith()
     griffith.main()
 

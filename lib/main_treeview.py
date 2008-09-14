@@ -333,11 +333,11 @@ def set_details(self, item=None):#{{{
         w['tags'].set_text(tmp)
     #}}}
     
-def populate(self, movies=None, where=None):#{{{
+def populate(self, movies=None, where=None, qf=True):#{{{
     if self.initialized is False: # dont try to fill movie list if Griffith is not initialized yet
         return False
     
-    if not movies or isinstance(movies, Select): # if ".execute().fetchall()" not invoked on movies yet
+    if qf and not movies or isinstance(movies, Select): # if ".execute().fetchall()" not invoked on movies yet
         if not where: # due to possible 'seen', 'loaned', 'collection_id' in where
             import advfilter
             cond = advfilter.get_def_conditions()
@@ -370,7 +370,7 @@ def populate(self, movies=None, where=None):#{{{
                 if tag_id > 0:
                     cond["tags"].append(tag_id)
 
-            movies = advfilter.create_select_query(self, movies, cond)
+            movies = advfilter.create_select_query(self, None, cond, movies)
         
         # select sort column
         sort_column_name = self.config.get('sortby', 'number', section='mainlist')

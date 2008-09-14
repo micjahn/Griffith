@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2008-09-14  Piotr Ożarowski
 	* Warn about backups when starting develpement version
+	* seen/loaned settings available in adv. filter window (much more to come soon)
 
 2008-09-13  Piotr Ożarowski
 	* Loaning movies is working again
