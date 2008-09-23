@@ -412,7 +412,7 @@ class Griffith:
     def add_volume(self, widget):
         name = self.widgets['add']['volume'].get_active_text().decode('utf-8')
         vol = db.Volume()
-        vol.name = nae
+        vol.name = name
         if vol and vol.add_to_db():
             update.update_volume_combo_ids(self)
             initialize.fill_volumes_combo(self, id)
@@ -460,15 +460,15 @@ class Griffith:
                     initialize.fill_collections_combo(self, default=col_id)
 
     def show_volume(self, widget):
-        quick_filter.clear_filter(self)
         vol_id = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first().volume_id
         pos = gutils.findKey(vol_id, self.volume_combo_ids)
+        quick_filter.clear_filter(self)
         self.widgets['filter']['volume'].set_active(pos)
 
     def show_collection(self, widget):
-        quick_filter.clear_filter(self)
         col_id = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first().collection_id
         pos = gutils.findKey(col_id, self.collection_combo_ids)
+        quick_filter.clear_filter(self)
         self.widgets['filter']['collection'].set_active(pos)
     #}}}
 

@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-09-23  Michael Jahn
+	* [#273172] "Properties/Volume/show...in this volume" is broken
+
 2008-09-14  Piotr Ożarowski
 	* Warn about backups when starting develpement version
 	* seen/loaned settings available in adv. filter window (much more to come soon)
