@@ -37,7 +37,7 @@ __conditions = { # default
     'no_volumes'      : set(), # list of volume_ids     (search for movies outside these volumes)
     'tags'            : set(), # list of tag_ids        (search for movies with these tags)
     'no_tags'         : set(), # list of tag_ids        (search for movies without these tags)
-    'loaned_to'       : set(), # list of person_ids	 (search for movies loaned to these people)
+    'loaned_to'       : set(), # list of person_ids	    (search for movies loaned to these people)
     'sort_by'         : set(("number",)), # "number DESC"
     'equals'          : {}, # {column1: [value1, value2, ...], column2: []}
     'startswith'      : {}, # see above

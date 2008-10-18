@@ -22,14 +22,21 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 # detect all plugins:
-import glob, os.path
+import glob
+import os.path
+import time
+import gc
 import gettext
 gettext.install('griffith', unicode=1)
+import logging
+log = logging.getLogger("Griffith")
+
+import db
 
 __all__ = [os.path.basename(x)[:-3] for x in glob.glob("%s/*.py" % os.path.dirname(__file__))]
 __all__.remove('__init__')
 
-class ImportPlugin:
+class ImportPlugin(object):
     description = None
     author = None
     email = None
@@ -44,17 +51,17 @@ class ImportPlugin:
     data = None
 
     def __init__(self, parent, fields_to_import):
-        self.db        = parent.db
-        self.locations    = parent.locations
-        self.fields    = parent.field_names
-        self.conditions    = parent._conditions
-        self.colors    = parent._colors
-        self.lang_types    = parent._lang_types
-        self.layers    = parent._layers
-        self.regions    = parent._regions
-        self.widgets    = parent.widgets['import']
+        self.db = parent.db
+        self.locations = parent.locations
+        self.fields = parent.field_names
+        self.conditions = parent._conditions
+        self.colors = parent._colors
+        self.lang_types = parent._lang_types
+        self.layers = parent._layers
+        self.regions = parent._regions
+        self.widgets = parent.widgets['import']
         self.fields_to_import = fields_to_import
-        self._abort    = False
+        self._continue = True
 
     def initialize(self):
         """Initializes plugin (get all parameters from user, etc.)"""
@@ -63,7 +70,7 @@ class ImportPlugin:
 
     def abort(self, *args):
         """called after abort button clicked"""
-        self._abort = True
+        self._continue = False
 
     def set_source(self, name):
         """Prepare source (open file, etc.)"""
@@ -80,11 +87,11 @@ class ImportPlugin:
         """Import movies, function called in a loop over source files"""
         from add import validate_details, edit_movie
         from gutils import find_next_available
-        from sqlalchemy import Select, func
+        from sqlalchemy import select, func
         import gtk
         
         if not self.set_source(name):
-            log.info("Can't read data from file %s" % name)
+            log.info("Can't read data from file %s", name)
             return False
         
         self.widgets['pwindow'].show()
@@ -98,68 +105,80 @@ class ImportPlugin:
             for i in range(0,100):
                 update_on.append(int(float(i)/100*count))
 
-        statement = Select( [ func.max(self.db.Movie.c.number) ] )
-        number = statement.execute().fetchone()[0]
+        session = self.db.Session()
+        session.bind = self.db.session.bind
+        
+        number = session.execute(select([func.max(db.Movie.number)])).fetchone()[0]
         if number is None:
             number = 1
         else:
             number += 1
-
-        statement = Select([self.db.Movie.c.number])
 
         # move some stuff outside the loop to speed it up
         set_fraction = self.widgets['progressbar'].set_fraction
         set_text = self.widgets['progressbar'].set_text
         main_iteration = gtk.main_iteration
 
+        gc_was_enabled = gc.isenabled()
+        if gc_was_enabled:
+            gc.collect()
+            gc.disable()
+
+        begin = time.time()
         processed = 0
-        while self._abort is False:
+        while self._continue:
             details = self.get_movie_details()
             if details is None:
                 break
-
+            
             processed += 1
             if processed in update_on:
-                set_fraction(float(processed)/float(count))
+                set_fraction(float(processed)/count)
                 main_iteration()
-                set_text("%s (%s/%s)" % (str(self.imported), str(processed), str(count)))
+                set_text("%s (%s/%s)" % (self.imported, processed, count))
                 main_iteration()
                 main_iteration() # extra iteration for abort button
 
-            if (details.has_key('o_title') and details['o_title']) or (details.has_key('title') and details['title']):
-                if details.has_key('o_title') and details['o_title']:
-                    statement.whereclause = func.lower(self.db.Movie.c.o_title)==details['o_title'].lower()
-                    if details.has_key('title') and details['title']:
-                        statement.append_whereclause( func.lower(self.db.Movie.c.title)==details['title'].lower() )
-                    tmp = statement.execute().fetchone()
+            statement = select([db.Movie.number])
+            o_title_avail = 'o_title' in details
+            title_avail = 'title' in details
+            if (o_title_avail and details['o_title']) or (title_avail and details['title']):
+                if o_title_avail and details['o_title']:
+                    statement.append_whereclause(func.lower(db.Movie.o_title)==details['o_title'].lower())
+                    if title_avail and details['title']:
+                        statement.append_whereclause(func.lower(db.Movie.title)==details['title'].lower())
+                    tmp = session.execute(statement).fetchone()
                     if tmp is not None:
-                        log.info("movie already exists (number=%s, o_title=%s)" % (tmp.number, details['o_title']))
+                        log.info("movie already exists (number=%s, o_title=%s)", tmp.number, details['o_title'])
                         continue
-                elif details.has_key('title') and details['title']:
-                    statement.whereclause = func.lower(self.db.Movie.c.title)==details['title'].lower()
-                    tmp = statement.execute().fetchone()
+                elif title_avail and details['title']:
+                    statement.append_whereclause(func.lower(db.Movie.title)==details['title'].lower())
+                    tmp = session.execute(statement).fetchone()
                     if tmp is not None:
-                        log.info("movie already exists (number=%s, title=%s)" % (tmp.number, details['title']))
+                        log.info("movie already exists (number=%s, title=%s)", tmp.number, details['title'])
                         continue
                 validate_details(details, self.fields_to_import)
-                if self.edit is True:
+                if self.edit:
                     response = edit_movie(self.parent, details)    # FIXME: wait until save or cancel button pressed
                     if response == 1:
                         self.imported += 1
                 else:
-                    if not details.has_key('number') or (details.has_key('number') and details['number'] is None):
+                    if not details.get('number'):
                         #details['number'] = find_next_available(self.db)
                         details['number'] = number
                         number += 1
-                    #movie = self.db.Movie()
+                    #movie = db.Movie()
                     #movie.add_to_db(details)
                     try:
-                        self.db.Movie.mapper.mapped_table.insert().execute(details)
+                        db.movies_table.insert(bind=self.db.session.bind).execute(details)
                         self.imported += 1
                     except Exception, e:
-                        log.info("movie details are not unique, skipping: %s" % str(e))
+                        log.info("movie details are not unique, skipping: %s", e)
             else:
                 log.info('skipping movie without title or original title')
+        log.info("Import process took %s s; %s/%s movies imported", (time.time() - begin), processed, count)
+        if gc_was_enabled:
+            gc.enable()
         self.widgets['pwindow'].hide()
         return True
 
@@ -168,7 +187,7 @@ class ImportPlugin:
         self.data = None
         self.imported = 0
         self.__source_name = None
-        self._abort = False
+        self._continue = True
     
     def destroy(self):
         """close all resources"""

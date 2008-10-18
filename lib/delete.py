@@ -41,8 +41,7 @@ def delete_movie(self):
         gutils.warning(self, msg=_("You can't delete movie while it is loaned."))
         return False
 
-    response = gutils.question(self, _("Are you sure you want to delete this movie?"), \
-        1, self.widgets['window'])
+    response = gutils.question(_("Are you sure you want to delete this movie?"), True, self.widgets['window'])
     if response == -8:    # gtk.RESPONSE_YES == -8
         delete_poster(self, movie.poster_md5)
 

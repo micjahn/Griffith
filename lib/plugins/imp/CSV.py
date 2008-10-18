@@ -57,7 +57,7 @@ class ImportPlugin(IP):
         try:
             self.gtk = gtk.glade.XML(gf)
         except:
-            log.info("Glade-file %s can not be loaded." % gf)
+            log.info("Glade-file %s can not be loaded.", gf)
             return False
         # open gtk window
         self.gtk.get_widget('d_import').set_transient_for( self.widgets['window'] )
@@ -372,7 +372,7 @@ class ImportPlugin(IP):
         import copy
         # start with the right line
         self.current_csv_row += 1
-        if (self.current_csv_row ) < self.start_row:
+        if self.current_csv_row < self.start_row:
             return None
         
         # assign the keys
@@ -390,15 +390,17 @@ class ImportPlugin(IP):
                     t_movies[field] = letters_only( item[ int(self.import_table[field]) ] )
                 elif field == 'cast':
                     try:
-                        if item[ int(self.import_table[field]) ].index(", ") != -1:
-                            t_movies[field] = string.replace( item[ int(self.import_table[field]) ], ", ", "\n" )
+                        if item[int(self.import_table[field])].index(", ") != -1:
+                            t_movies[field] = item[ int(self.import_table[field]) ].replace(', ', "\n")
                     except:
-                        t_movies[field] = string.replace( item[ int(self.import_table[field]) ], ",", "\n" )
+                        t_movies[field] = item[ int(self.import_table[field]) ].replace(',', "\n")
+                    t_movies[field] = unicode(t_movies[field])
                 else:
                     # 1:1 import
-                    t_movies[field] = item[ int(self.import_table[field]) ]
+                    t_movies[field] = unicode(item[ int(self.import_table[field])])
             except:
                 # error field can't be imported
+                log.debug("field %s cannot be imported (%s)", field, e)
                 t_movies.pop(field)
         
         return t_movies
