@@ -35,9 +35,9 @@ def letters_only(s):
     import string, re
     _match = re.compile(r"\D+")
     try:
-        s = reduce( string.join, _match.findall(s) )
+        s = reduce( unicode.join, _match.findall(s) )
     except:
-        s = s
+        s = unicode(s)
     return s
     
 class ImportPlugin(IP):
@@ -330,11 +330,11 @@ class ImportPlugin(IP):
                 if detector.done or lines == 50:
                     break
             detector.close()
-            encoding = string.replace( string.lower( detector.result['encoding'] ), '-', '' )
+            encoding = detector.result['encoding'].replace('-', '')
         except:
             encoding = 'utf_8'
         # remove - and _ for better detection
-        encoding = string.replace( encoding, '_', '' )
+        encoding = encoding.replace('_', '')
         
         model    = self.gtk.get_widget('e_encoding').get_model()
         itempos    = 0

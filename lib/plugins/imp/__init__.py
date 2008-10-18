@@ -108,16 +108,17 @@ class ImportPlugin(object):
         session = self.db.Session()
         session.bind = self.db.session.bind
         
-        number = session.execute(select([func.max(db.Movie.number)])).fetchone()[0]
-        if number is None:
-            number = 1
-        else:
-            number += 1
-
         # move some stuff outside the loop to speed it up
         set_fraction = self.widgets['progressbar'].set_fraction
         set_text = self.widgets['progressbar'].set_text
         main_iteration = gtk.main_iteration
+
+        # get some values from DB to avoid queries in the loop
+        statement = select([db.Movie.number, db.Movie.title, db.Movie.o_title])
+        data = session.execute(statement).fetchall()
+        numbers = set([i[0] for i in data])
+        titles = set(i[1].lower() for i in data)
+        o_titles = set(i[2].lower() for i in data)
 
         gc_was_enabled = gc.isenabled()
         if gc_was_enabled:
@@ -139,34 +140,27 @@ class ImportPlugin(object):
                 main_iteration()
                 main_iteration() # extra iteration for abort button
 
-            statement = select([db.Movie.number])
             o_title_avail = 'o_title' in details
             title_avail = 'title' in details
+
             if (o_title_avail and details['o_title']) or (title_avail and details['title']):
-                if o_title_avail and details['o_title']:
-                    statement.append_whereclause(func.lower(db.Movie.o_title)==details['o_title'].lower())
-                    if title_avail and details['title']:
-                        statement.append_whereclause(func.lower(db.Movie.title)==details['title'].lower())
-                    tmp = session.execute(statement).fetchone()
-                    if tmp is not None:
-                        log.info("movie already exists (number=%s, o_title=%s)", tmp.number, details['o_title'])
+                if o_title_avail and details['o_title'].lower() in o_titles:
+                    if title_avail and details['title'].lower() in titles:
+                        log.info("movie already exists (o_title=%s, title=%s)", details['o_title'], details['title'])
                         continue
-                elif title_avail and details['title']:
-                    statement.append_whereclause(func.lower(db.Movie.title)==details['title'].lower())
-                    tmp = session.execute(statement).fetchone()
-                    if tmp is not None:
-                        log.info("movie already exists (number=%s, title=%s)", tmp.number, details['title'])
-                        continue
+                elif title_avail and details['title'].lower() in titles: # o_title is not available so lets check title only
+                    log.info("movie already exists (title=%s)", details['title'])
+                    continue
                 validate_details(details, self.fields_to_import)
-                if self.edit:
+                if self.edit: # XXX: not used for now
                     response = edit_movie(self.parent, details)    # FIXME: wait until save or cancel button pressed
                     if response == 1:
                         self.imported += 1
                 else:
-                    if not details.get('number'):
-                        #details['number'] = find_next_available(self.db)
-                        details['number'] = number
+                    number = details.get('number', 1)
+                    while number in numbers:
                         number += 1
+                    details['number'] = number
                     #movie = db.Movie()
                     #movie.add_to_db(details)
                     try:
@@ -174,8 +168,9 @@ class ImportPlugin(object):
                         self.imported += 1
                     except Exception, e:
                         log.info("movie details are not unique, skipping: %s", e)
+                    numbers.add(number)
             else:
-                log.info('skipping movie without title or original title')
+                log.info('skipping movie without title and original title')
         log.info("Import process took %s s; %s/%s movies imported", (time.time() - begin), processed, count)
         if gc_was_enabled:
             gc.enable()
