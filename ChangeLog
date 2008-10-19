@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-10-19  Piotr Ożarowski
+	* Add tags/volumes/collections to adv. filter window
+
 2008-10-18  Piotr Ożarowski
 	* Speed up import movies function
 

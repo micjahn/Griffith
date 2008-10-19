@@ -179,6 +179,13 @@ def update_whereclause(query, cond): # {{{
     if loaned_to:
         query.append_whereclause(or_(*loaned_to))
     
+    required_tags = []
+    for tag_id in cond["required_tags"]:
+        required_tags.append(exists([db.MovieTag.movie_id], \
+            and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
+    if required_tags:
+        query.append_whereclause(and_(*required_tags))
+
     tags = []
     for tag_id in cond["tags"]:
         tags.append(exists([db.MovieTag.movie_id], \
