@@ -7900,7 +7900,7 @@ Double Slim</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Filter movies</property>
     <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
-    <property name="default_height">350</property>
+    <property name="default_height">550</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -7923,7 +7923,7 @@ Double Slim</property>
                     <property name="visible">True</property>
                     <property name="spacing">4</property>
                     <child>
-                      <widget class="GtkFrame" id="frame8">
+                      <widget class="GtkFrame" id="af_frame_limits">
                         <property name="visible">True</property>
                         <property name="label_xalign">0</property>
                         <child>
@@ -8052,7 +8052,7 @@ Double Slim</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkFrame" id="frame9">
+                      <widget class="GtkFrame" id="af_frame_tags">
                         <property name="visible">True</property>
                         <property name="label_xalign">0</property>
                         <child>
@@ -8063,6 +8063,7 @@ Double Slim</property>
                               <widget class="GtkScrolledWindow" id="scrolledwindow_advfilter_tags">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="border_width">4</property>
                                 <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
                                 <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                                 <child>
@@ -8099,7 +8100,7 @@ Double Slim</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkFrame" id="frame11">
+                      <widget class="GtkFrame" id="af_frame_volumes">
                         <property name="visible">True</property>
                         <property name="label_xalign">0</property>
                         <child>
@@ -8110,6 +8111,7 @@ Double Slim</property>
                               <widget class="GtkScrolledWindow" id="scrolledwindow_advfilter_volumes">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="border_width">4</property>
                                 <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
                                 <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                                 <child>
@@ -8146,7 +8148,7 @@ Double Slim</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkFrame" id="frame12">
+                      <widget class="GtkFrame" id="af_frame_collections">
                         <property name="visible">True</property>
                         <property name="label_xalign">0</property>
                         <child>
@@ -8157,6 +8159,7 @@ Double Slim</property>
                               <widget class="GtkScrolledWindow" id="scrolledwindow_advfilter_collections">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="border_width">4</property>
                                 <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
                                 <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                                 <child>
@@ -8193,7 +8196,7 @@ Double Slim</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkFrame" id="frame28">
+                      <widget class="GtkFrame" id="af_frame_loans">
                         <property name="visible">True</property>
                         <property name="label_xalign">0</property>
                         <child>
@@ -8204,6 +8207,7 @@ Double Slim</property>
                               <widget class="GtkScrolledWindow" id="scrolledwindow_advfilter_loans">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="border_width">4</property>
                                 <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
                                 <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                                 <child>
@@ -8240,7 +8244,14 @@ Double Slim</property>
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <widget class="GtkVBox" id="af_dynamic_vbox">
+                        <property name="visible">True</property>
+                        <property name="spacing">2</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">5</property>
+                      </packing>
                     </child>
                   </widget>
                 </child>
@@ -8256,6 +8267,22 @@ Double Slim</property>
             <property name="visible">True</property>
             <property name="layout_style">GTK_BUTTONBOX_END</property>
             <child>
+              <widget class="GtkButton" id="af_add_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-add</property>
+                <property name="use_stock">True</property>
+                <property name="response_id">0</property>
+              </widget>
+              <packing>
+                <property name="secondary">True</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
               <widget class="GtkButton" id="button3">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -8264,6 +8291,9 @@ Double Slim</property>
                 <property name="use_stock">True</property>
                 <property name="response_id">0</property>
               </widget>
+              <packing>
+                <property name="position">2</property>
+              </packing>
             </child>
             <child>
               <widget class="GtkButton" id="button4">
@@ -8275,7 +8305,7 @@ Double Slim</property>
                 <property name="response_id">0</property>
               </widget>
               <packing>
-                <property name="position">1</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child>
@@ -8288,7 +8318,7 @@ Double Slim</property>
                 <property name="response_id">0</property>
               </widget>
               <packing>
-                <property name="position">2</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child>
@@ -8296,13 +8326,13 @@ Double Slim</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="label" translatable="yes">gtk-close</property>
                 <property name="use_stock">True</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="on_advfilter_close"/>
               </widget>
               <packing>
-                <property name="position">3</property>
+                <property name="position">5</property>
               </packing>
             </child>
             <child>
@@ -8310,13 +8340,13 @@ Double Slim</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="label" translatable="yes">gtk-find</property>
                 <property name="use_stock">True</property>
                 <property name="response_id">0</property>
-                <signal name="clicked" handler="on_apply_filter_clicked"/>
+                <signal name="clicked" handler="on_af_find_clicked"/>
               </widget>
               <packing>
-                <property name="position">4</property>
+                <property name="position">6</property>
               </packing>
             </child>
           </widget>

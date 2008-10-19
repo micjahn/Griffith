@@ -963,10 +963,9 @@ You can't undo this operation."""), True, self.widgets['window'])
         from advfilter import hide_window
         hide_window(self)
 
-    def on_apply_filter_clicked(self, *args):
+    def on_af_find_clicked(self, *args):
         from advfilter import create_select_query, hide_window
         movies = create_select_query(self, None, None, None).execute().fetchall()
-        hide_window(self)
         main_treeview.populate(self, movies, qf=False)
 
     # quick filter operations ---------------------------------------------

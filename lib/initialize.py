@@ -608,6 +608,7 @@ def dictionaries(self):
         'runtime', 'country', 'genre', 'studio', 'media_num', 'rating')
     self.field_names = {
         'cast'           : _('Cast'),
+        'cameraman'      : _('Cameraman'),
         'classification' : _('Classification'),
         'collection_id'  : _('Collection'),
         'color'          : _('Color'),
@@ -628,6 +629,7 @@ def dictionaries(self):
         'rating'         : _('Rating'),
         'region'         : _('Region'),
         'runtime'        : _('Runtime'),
+        'screenplay'     : _('Screenplay'),
         'seen'           : _('Seen it'),
         'site'           : _('Site'),
         'studio'         : _('Studio'),

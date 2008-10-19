@@ -42,17 +42,22 @@ __conditions = { # default
     'loaned_to'       : set(), # list of person_ids	    (search for movies loaned to these people)
     'loan_history'    : set(), # list of person_ids	    (search for movies which were loaned by these people)
     'sort_by'         : set(("number",)), # "number DESC"
-    'equals'          : {}, # {column1: [value1, value2, ...], column2: []}
+    'equals'          : {}, # {column1: set(value1, value2), column2: set(value3)}
     'startswith'      : {}, # see above
     'contains'        : {}, # see above
     'like'            : {}, # see above
     'ilike'           : {}, # see above
     }
+    
+QUERY_FIELDS = ('title', 'o_title', 'director', 'plot', 'cast', 'notes', 'number',
+                'runtime', 'year', 'screenplay', 'cameraman', 'country', 'genre',
+                'studio', 'classification', 'o_site', 'site', 'trailer')
+QUERY_COMMANDS = ('equals', 'startswith', 'contains', 'like', 'ilike')
 
 # widgets -----------------------------------------------------{{{
 
 def show_window(self):
-    initialize(self.widgets['advfilter'], self.db)
+    initialize(self.widgets['advfilter'], self.db, self.field_names)
     self.widgets['advfilter']['window'].show()
     return True
 
@@ -68,6 +73,8 @@ def hide_window(self):
     for i in widgets['collections_vbox'].get_children():
         i.destroy()
     for i in widgets['loans_vbox'].get_children():
+        i.destroy()
+    for i in widgets['dynamic_vbox'].get_children():
         i.destroy()
 
     return True
@@ -94,7 +101,7 @@ def _fill_container(container, items, options, id_name):
         label_id.hide()
         container.pack_start(hbox)
 
-def initialize(widgets, gsql):
+def initialize(widgets, gsql, field_names):
     # tags
     items = gsql.session.query(db.Tag).all()
     options = (_('ignore'), _('with'), _('without'), _('require'))
@@ -114,7 +121,39 @@ def initialize(widgets, gsql):
     items = gsql.session.query(db.Person).all()
     options = (_('ignore'), _('loaned to '), _('loan history'))
     _fill_container(widgets["loans_vbox"], items, options, 'person_id')
+
+    add_query_widget(widgets['dynamic_vbox'], gsql, field_names)
+
+    # TODO: this has to be done only once, move it outside initialize()
+    widgets["add_button"].connect('clicked', lambda w: add_query_widget(widgets['dynamic_vbox'], gsql, field_names))
+    
     return True
+
+def add_query_widget(container, gsql, field_names):
+    hbox = gtk.HBox()
+
+    cb = gtk.combo_box_new_text()
+    for field in QUERY_FIELDS:
+        cb.append_text(field_names[field])
+    cb.set_active(0)
+
+    action_cb = gtk.combo_box_new_text()
+    for command in QUERY_COMMANDS:
+        action_cb.append_text(_(command))
+    action_cb.set_active(0)
+
+    entry = gtk.Entry()
+    
+    button = gtk.Button(stock=gtk.STOCK_DELETE)
+    button.connect("clicked", lambda w: hbox.destroy())
+
+    hbox.pack_start(cb, expand=False)
+    hbox.pack_start(action_cb, expand=False)
+    hbox.pack_start(entry, expand=True, padding=8)
+    hbox.pack_start(button, expand=False, fill=False)
+    hbox.show_all()
+
+    container.pack_start(hbox)
 #}}}
 
 # database related --------------------------------------------
@@ -168,17 +207,28 @@ def get_conditions(widgets): #{{{
             cond["loaned_to"].add(int(childs[0].get_label()))
         elif childs[3].get_active():
             cond["loan_history"].add(int(childs[0].get_label()))
+    
+    for hbox in widgets["dynamic_vbox"]:
+        childs = hbox.get_children()
 
-    # TODO: remove after tests
-    cond.update({
-        #'tags'      : [1],
-        #'no_tags'   : [1],
-        #'collections'   : set((1,)),
-        'sort_by'   : set(("title", "year", "number DESC")),
-        #'equals'    : {"year": [2003, 2004]},
-        #'startswith': {"o_title": [u"Ma", u"Ani"] }
-        #'contains'  : {"o_title": [u"ma", u"ani"] },
-        })
+        entry = childs[2].get_text().strip().decode('utf-8')
+        if not entry: # ignore if it's empty
+            continue
+
+        field = childs[0].get_active()
+        if 0 < field > len(QUERY_FIELDS):
+            continue
+        else:
+            field = QUERY_FIELDS[field]
+            
+            command = childs[1].get_active()
+            if 0 < command > len(QUERY_COMMANDS):
+                continue
+            else:
+                command = QUERY_COMMANDS[command]
+            
+        cond[command].setdefault(field, set()).add(entry)
+
     return cond # }}}
 
 def get_select_columns(config): # {{{

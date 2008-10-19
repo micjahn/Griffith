@@ -157,6 +157,8 @@ def define_widgets(self, gladefile):
         'volumes_vbox'     : get('af_volumes_vbox'),
         'collections_vbox' : get('af_collections_vbox'),
         'loans_vbox'       : get('af_loans_vbox'),
+        'dynamic_vbox'     : get('af_dynamic_vbox'),
+        'add_button'       : get('af_add_button'),
     }
     self.widgets['advfilter']['window'].connect('delete_event', self.hide_advfilter_window)
     self.widgets['advfilter']['window'].set_transient_for(self.widgets['window'])
@@ -484,7 +486,7 @@ def define_widgets(self, gladefile):
         'on_vcodec_name_combo_changed'           : self.on_vcodec_name_combo_changed,
         # advfilter
         'on_open_advfilterwindow_clicked'        : self.show_advfilter_window,
-        'on_apply_filter_clicked'                : self.on_apply_filter_clicked,
+        'on_af_find_clicked'                     : self.on_af_find_clicked,
         'on_advfilter_close'                     : self.hide_advfilter_window,
     })#}}}
 
