@@ -124,9 +124,6 @@ def initialize(widgets, gsql, field_names):
 
     add_query_widget(widgets['dynamic_vbox'], gsql, field_names)
 
-    # TODO: this has to be done only once, move it outside initialize()
-    widgets["add_button"].connect('clicked', lambda w: add_query_widget(widgets['dynamic_vbox'], gsql, field_names))
-    
     return True
 
 def add_query_widget(container, gsql, field_names):

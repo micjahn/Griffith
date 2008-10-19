@@ -25,6 +25,7 @@ import gettext
 gettext.install('griffith', unicode=1)
 import gtk
 import sys
+import advfilter
 
 def define_widgets(self, gladefile):
     get = lambda x: gladefile.get_widget(x)
@@ -142,6 +143,7 @@ def define_widgets(self, gladefile):
     self.widgets['add']['o_title'].connect('activate', self.on_enter)
     self.widgets['add']['title'].connect('activate', self.on_enter)
     self.widgets['add']['window'].set_transient_for(self.widgets['window'])
+    
     #}}}
     
     self.widgets['advfilter'] = {#{{{
@@ -162,6 +164,7 @@ def define_widgets(self, gladefile):
     }
     self.widgets['advfilter']['window'].connect('delete_event', self.hide_advfilter_window)
     self.widgets['advfilter']['window'].set_transient_for(self.widgets['window'])
+    self.widgets['advfilter']['add_button'].connect('clicked', lambda w: advfilter.add_query_widget(self.widgets['advfilter']['dynamic_vbox'], self.db, self.field_names))
     #}}}
 
     self.widgets['preferences'] = {#{{{
