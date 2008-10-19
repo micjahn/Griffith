@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2008-10-19  Piotr Ożarowski
 	* Add more filter movie rules to the search window
+	* Screenplay and cameraman added to main/add windows
 
 2008-10-18  Piotr Ożarowski
 	* Speed up import movies function

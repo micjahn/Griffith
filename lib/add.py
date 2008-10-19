@@ -330,6 +330,7 @@ def get_details(self): #{{{
     plot_buffer  = w['plot'].get_buffer()
     
     t_movies = {
+        'cameraman'      : w['cameraman'].get_text().decode('utf-8'),
         'classification' : w['classification'].get_text().decode('utf-8'),
         'color'          : w['color'].get_active(),
         'cond'           : w['condition'].get_active(),
@@ -345,6 +346,7 @@ def get_details(self): #{{{
         'rating'         : w['rating_slider'].get_value(),
         'region'         : w['region'].get_active(),
         'runtime'        : w['runtime'].get_text().decode('utf-8'),
+        'screenplay'     : w['screenplay'].get_text().decode('utf-8'),
         'site'           : w['site'].get_text().decode('utf-8'),
         'studio'         : w['studio'].get_text().decode('utf-8'),
         'title'          : w['title'].get_text().decode('utf-8'),
@@ -447,6 +449,14 @@ def set_details(self, item=None):#{{{
         w['runtime'].set_value( gutils.digits_only(item['runtime']))
     else:
         w['runtime'].set_value(0)
+    if 'cameraman' in item and item['cameraman']:
+        w['cameraman'].set_text(item['cameraman'])
+    else:
+        w['cameraman'].set_text('')
+    if 'screenplay' in item and item['screenplay']:
+        w['screenplay'].set_text(item['screenplay'])
+    else:
+        w['screenplay'].set_text('')
     if 'country' in item and item['country']:
         w['country'].set_text(item['country'])
     else:
@@ -475,10 +485,6 @@ def set_details(self, item=None):#{{{
         w['trailer'].set_text(item['trailer'])
     else:
         w['trailer'].set_text('')
-    if 'title' in item and item['title']:
-        w['title'].set_text(item['title'])
-    else:
-        w['title'].set_text('')
     if 'genre' in item and item['genre']:
         w['genre'].set_text(item['genre'])
     else:

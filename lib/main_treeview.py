@@ -89,6 +89,14 @@ def set_details(self, item=None):#{{{
         w['runtime'].set_text(str(int(item['runtime'])))
     else:
         w['runtime'].set_text('x')
+    if 'cameraman' in item and item['cameraman']:
+        w['cameraman'].set_markup("<i>%s</i>" % gutils.html_encode(item['cameraman']))
+    else:
+        w['cameraman'].set_text('')
+    if 'screenplay' in item and item['screenplay']:
+        w['screenplay'].set_markup("<i>%s</i>" % gutils.html_encode(item['screenplay']))
+    else:
+        w['screenplay'].set_text('')
     if 'cast' in item and item['cast']:
         w['cast'].set_text(str(item['cast']))
     else:
@@ -189,6 +197,13 @@ def set_details(self, item=None):#{{{
             w['vcodec'].set_text('')
     else:
         w['vcodec'].set_text('')
+    if 'ratio_id' in item:
+        if item.ratio is not None:
+            w['ratio'].set_markup("<i>%s</i>" % gutils.html_encode(item.ratio.name))
+        else:
+            w['ratio'].set_text('')
+    else:
+        w['ratio'].set_text('')
 
     # poster
     if 'poster_md5' in item and item['poster_md5']:

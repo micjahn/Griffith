@@ -461,7 +461,7 @@ def import_plugins(self):
     fields_to_import = ( 'number','title', 'o_title', 'director', 'year', 'runtime', 'country',
         'seen', 'rating', 'genre', 'studio', 'plot', 'cast', 'notes', 'classification',
         'site', 'o_site', 'trailer', 'medium_id', 'media_num', 'vcodec_id', 'color', 'cond',
-        'layers', 'region', 'collection_id', 'volume_id', 'image')
+        'layers', 'region', 'collection_id', 'volume_id', 'image', 'ratio_id')
 
     # glade
     glade_file = gtk.glade.XML(os.path.join(self.locations['glade'], 'import.glade'))
@@ -626,6 +626,7 @@ def dictionaries(self):
         'o_site'         : _('Official site'),
         'o_title'        : _('Original Title'),
         'plot'           : _('Plot'),
+        'ratio'          : _('Aspect ratio'),
         'rating'         : _('Rating'),
         'region'         : _('Region'),
         'runtime'        : _('Runtime'),
