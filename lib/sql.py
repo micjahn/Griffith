@@ -179,6 +179,13 @@ def update_whereclause(query, cond): # {{{
     if loaned_to:
         query.append_whereclause(or_(*loaned_to))
     
+    loan_history = []
+    for per_id in cond["loan_history"]:
+        loan_history.append(exists([db.loans_table.c.movie_id],\
+                and_(db.Movie.movie_id==db.loans_table.c.movie_id, db.loans_table.c.person_id==per_id)))
+    if loan_history:
+        query.append_whereclause(or_(*loan_history))
+    
     required_tags = []
     for tag_id in cond["required_tags"]:
         required_tags.append(exists([db.MovieTag.movie_id], \
@@ -233,6 +240,7 @@ def update_whereclause(query, cond): # {{{
         else:
             query.append_order_by(asc(db.movies_table.columns[rule]))
 
+    log.debug(query.compile())
     return query #}}}
 
 # MOVIE LOAN related functions --------------------------------{{{

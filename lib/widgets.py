@@ -156,6 +156,7 @@ def define_widgets(self, gladefile):
         'tags_vbox'        : get('af_tags_vbox'),
         'volumes_vbox'     : get('af_volumes_vbox'),
         'collections_vbox' : get('af_collections_vbox'),
+        'loans_vbox'       : get('af_loans_vbox'),
     }
     self.widgets['advfilter']['window'].connect('delete_event', self.hide_advfilter_window)
     self.widgets['advfilter']['window'].set_transient_for(self.widgets['window'])

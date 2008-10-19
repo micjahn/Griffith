@@ -40,6 +40,7 @@ __conditions = { # default
     'no_tags'         : set(), # list of tag_ids        (search for movies without these tags)
     'required_tags'   : set(), # like in tags, but movie must contain all listed tags
     'loaned_to'       : set(), # list of person_ids	    (search for movies loaned to these people)
+    'loan_history'    : set(), # list of person_ids	    (search for movies which were loaned by these people)
     'sort_by'         : set(("number",)), # "number DESC"
     'equals'          : {}, # {column1: [value1, value2, ...], column2: []}
     'startswith'      : {}, # see above
@@ -65,6 +66,8 @@ def hide_window(self):
     for i in widgets['volumes_vbox'].get_children():
         i.destroy()
     for i in widgets['collections_vbox'].get_children():
+        i.destroy()
+    for i in widgets['loans_vbox'].get_children():
         i.destroy()
 
     return True
@@ -107,6 +110,10 @@ def initialize(widgets, gsql):
     # use volume's options
     _fill_container(widgets["collections_vbox"], items, options, 'collection_id')
 
+    # loans
+    items = gsql.session.query(db.Person).all()
+    options = (_('ignore'), _('loaned to '), _('loan history'))
+    _fill_container(widgets["loans_vbox"], items, options, 'person_id')
     return True
 #}}}
 
@@ -154,6 +161,13 @@ def get_conditions(widgets): #{{{
             cond["collections"].add(int(childs[0].get_label()))
         elif childs[3].get_active():
             cond["no_collections"].add(int(childs[0].get_label()))
+    
+    for hbox in widgets["loans_vbox"]:
+        childs = hbox.get_children()
+        if childs[2].get_active():
+            cond["loaned_to"].add(int(childs[0].get_label()))
+        elif childs[3].get_active():
+            cond["loan_history"].add(int(childs[0].get_label()))
 
     # TODO: remove after tests
     cond.update({
