@@ -170,7 +170,6 @@ def define_widgets(self, gladefile):
     }
     self.widgets['advfilter']['window'].connect('delete_event', self.hide_advfilter_window)
     self.widgets['advfilter']['window'].set_transient_for(self.widgets['window'])
-    self.widgets['advfilter']['add_button'].connect('clicked', lambda w: advfilter.add_query_widget(self.widgets['advfilter']['dynamic_vbox'], self.db, self.field_names))
     #}}}
 
     self.widgets['preferences'] = {#{{{
@@ -497,6 +496,8 @@ def define_widgets(self, gladefile):
         'on_open_advfilterwindow_clicked'        : self.show_advfilter_window,
         'on_af_find_clicked'                     : self.on_af_find_clicked,
         'on_advfilter_close'                     : self.hide_advfilter_window,
+        'on_advfilter_add'                       : lambda w: advfilter.add_query_widget(self.widgets['advfilter']['dynamic_vbox'], self.field_names),
+        'on_advfilter_clear'                     : lambda w: advfilter.set_conditions(self.widgets['advfilter'], advfilter.get_def_conditions(), self.field_names)
     })#}}}
 
 def reconnect_add_signals(self):#{{{
