@@ -78,7 +78,7 @@ class ExportPlugin:
             filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf")
         else:
             filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf",folder=basedir)
-        if filename[0]:
+        if filename is not False and filename[0]:
             if not self.config is None and filename[1]:
                 self.config.set('export_dir', filename[1], section='export-pdf')
                 self.config.save()
@@ -109,7 +109,10 @@ class ExportPlugin:
                 # select sort column
                 sort_column_name = self.config.get('sortby', 'number', section='mainlist')
                 sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
+                do_grouping = True
                 for i in sort_column_name.split(','):
+                    if i <> 'title' and i <> 'o_title':
+                        do_grouping = False
                     if db.movies_table.c.has_key(i):
                         if sort_reverse:
                             movies = movies.order_by(db.movies_table.c[i].desc())
@@ -135,7 +138,7 @@ class ExportPlugin:
                     else:
                         director = ""
                     # group by first letter
-                    if title[0] != first_letter:
+                    if do_grouping and title[0] != first_letter:
                         if title[0] in '0123456789':
                             # Group Numbers
                             if first_letter != '0-9':
