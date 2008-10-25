@@ -108,7 +108,7 @@ def backup(self):
                         except:
                             log.info("Can't compress %s" % filename)
             mzip.close()
-            gutils.info(self, _("Backup has been created"), self.widgets['window'])
+            gutils.info(_("Backup has been created"), self.widgets['window'])
 
 def restore(self):
     """restores a griffith compressed backup"""
@@ -175,7 +175,7 @@ def restore(self):
         # let's refresh the treeview
         self.clear_details()
         self.populate_treeview()
-        gutils.info(self, _("Backup restored"), self.widgets['window'])
+        gutils.info(_("Backup restored"), self.widgets['window'])
 
 def merge(self):    # FIXME
     """
@@ -263,5 +263,5 @@ def merge(self):    # FIXME
         # let's refresh the treeview
         self.clear_details()
         self.populate_treeview(self.db.Movie.query.all())
-        #gutils.info(self, _("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
+        #gutils.info(_("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
 

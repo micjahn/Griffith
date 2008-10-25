@@ -132,7 +132,7 @@ def delete_person(self):
         return False
     data = self.db.session.query(db.Loan).filter_by(person_id=person.person_id, return_date=None).all()
     if len(data)>0:
-        gutils.info(self, _("This person has loaned films from you. Return them first."), self.widgets['people']['window'])
+        gutils.info(_("This person has loaned films from you. Return them first."), self.widgets['people']['window'])
         return False
     data = self.db.session.query(db.Loan).filter_by(person_id=person.person_id).all()
     if len(data)>0:

@@ -191,7 +191,7 @@ def upgrade_database(self, version):
 
 def convert_from_old_db(self, source_file, destination_file):    #{{{
     print 'Converting old database - it can take several minutes...'
-    gutils.info(self,_("Griffith will now convert your database to the new format. This can take several minutes if you have a large database."))
+    gutils.info(_("Griffith will now convert your database to the new format. This can take several minutes if you have a large database."))
     from sqlalchemy.orm import clear_mappers
     from sql import GriffithSQL
     from gutils import digits_only

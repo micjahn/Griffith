@@ -42,7 +42,7 @@ def loan_movie(self):
         self.widgets['movie']['loan_to'].set_active(0)
         self.widgets['w_loan_to'].show()
     else:
-        gutils.info(self, _("No person is defined yet."), self.widgets['window'])
+        gutils.info(_("No person is defined yet."), self.widgets['window'])
 
 def cancel_loan(self):
     self.widgets['w_loan_to'].hide()

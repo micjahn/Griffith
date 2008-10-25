@@ -55,7 +55,7 @@ def mailto(self, tls, port, server, auth, user, password, sender, to, subject, m
         % (sender, to, subject)
     try:
         smtpresult = session.sendmail(sender, to, headers+msg)
-        gutils.info(self, _("E-mail sent sucessfuly"), self.widgets['window'])
+        gutils.info(_("E-mail sent sucessfuly"), self.widgets['window'])
         return
     except:
         gutils.error(self, _("Error sending e-mail: %s")%"", self.widgets['window'])
@@ -83,5 +83,5 @@ def send_email(self):
         except:
             gutils.error(self, _("Mail could not be sent. Please check e-mail preferences."), self.widgets['window'])
     else:
-        gutils.info(self, _("This person has no e-mail address defined."), \
+        gutils.info(_("This person has no e-mail address defined."), \
             self.widgets['window'])
