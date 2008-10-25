@@ -68,7 +68,10 @@ def edit_movie(self, details={}):
 
 
 def update_movie(self):
-    movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).one()
+    if self._am_movie_id is not None:
+        movie = self.db.session.query(db.Movie).filter_by(movie_id=self._am_movie_id).one()
+    else:
+        movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).one()
     if movie is None: # movie was deleted in the meantime
         return add_movie_db(self, True)
     

@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2008-10-23  Michael Jahn
 	* PDF export: disabled movie grouping if movie list is not sorted by title or original title
+	* [#258817] The application doesn't save volume
 
 2008-10-25  Piotr Ożarowski
 	* add load/save search conditions
