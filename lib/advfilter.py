@@ -29,7 +29,7 @@ log = logging.getLogger("Griffith")
 import db
 import sql
 from gutils import info
-    
+
 __conditions = { # default
     'loaned'          : None,  # None, True, False
     'seen'            : None,  # None, True, False
@@ -44,16 +44,33 @@ __conditions = { # default
     'loan_history'    : set(), # list of person_ids	    (search for movies which were loaned by these people)
     'sort_by'         : set(("number",)), # "number DESC"
     'equals'          : {}, # {column1: set(value1, value2), column2: set(value3)}
+    'equals_n'        : {}, # see above
     'startswith'      : {}, # see above
+    'startswith_n'    : {}, # see above
     'contains'        : {}, # see above
+    'contains_n'      : {}, # see above
     'like'            : {}, # see above
+    'like_n'          : {}, # see above
     'ilike'           : {}, # see above
+    'ilike_n'         : {}, # see above
     }
-    
+
 QUERY_FIELDS = ('title', 'o_title', 'director', 'plot', 'cast', 'notes', 'number',
                 'runtime', 'year', 'screenplay', 'cameraman', 'country', 'genre',
                 'studio', 'classification', 'o_site', 'site', 'trailer')
-QUERY_COMMANDS = ('equals', 'startswith', 'contains', 'like', 'ilike')
+QUERY_COMMANDS = ('equals', 'equals_n', 'startswith', 'startswith_n', 'contains',
+                  'contains_n', 'like', 'like_n', 'ilike', 'ilike_n')
+QUERY_COMMAND_NAMES = {
+    'equals'      : _('is equal to'),
+    'equals_n'    : _('is not equal to'),
+    'startswith'  : _('starts with'),
+    'startswith_n': _("doesn't start with"),
+    'contains'    : _('contains'),
+    'contains_n'  : _("doesn't contain"),
+    'like'        : _('like'),
+    'like_n'      : _('not like'),
+    'ilike'       : _('ilike'),
+    'ilike_n'     : _('not ilike')}
 
 # widgets -----------------------------------------------------{{{
 
@@ -98,7 +115,7 @@ def _fill_container(container, items, options, id_name):
         for option in options[1:]: # create rest of the widgets, use first one as a group
             next_widget = gtk.RadioButton(widget, label=option)
             hbox.pack_start(next_widget, expand=False, padding=4)
-        
+
         label = gtk.Label()
         label.set_text(item.name)
         hbox.pack_start(label, padding=16, expand=False)
@@ -125,7 +142,7 @@ def initialize(widgets, gsql, field_names):
         widgets["volumes_frame"].show()
     else:
         widgets["volumes_frame"].hide()
-    
+
     # collections
     items = gsql.session.query(db.Collection).all()
     if len(items):
@@ -150,7 +167,7 @@ def initialize(widgets, gsql, field_names):
         widgets['cb_name'].append_text(filter_[0])
     return True
 
-def add_query_widget(container, field_names, sel_qf='title', sel_comm=0, text='' ):
+def add_query_widget(container, field_names, sel_qf='title', sel_comm='equals', text='' ):
     hbox = gtk.HBox()
 
     cb = gtk.combo_box_new_text()
@@ -166,12 +183,12 @@ def add_query_widget(container, field_names, sel_qf='title', sel_comm=0, text=''
     for i, command in enumerate(QUERY_COMMANDS):
         if sel_comm == command:
             select = i
-        action_cb.append_text(_(command))
+        action_cb.append_text(QUERY_COMMAND_NAMES[command])
     action_cb.set_active(select)
 
     entry = gtk.Entry()
     entry.set_text(text)
-    
+
     button = gtk.Button(stock=gtk.STOCK_DELETE)
     button.connect("clicked", lambda w: hbox.destroy())
 
@@ -185,7 +202,7 @@ def add_query_widget(container, field_names, sel_qf='title', sel_comm=0, text=''
 
 def set_conditions(widgets, cond, field_names): #{{{
     widgets['name'].set_text('')
-    
+
     # delete old widgets
     for i in widgets['dynamic_vbox'].get_children():
         i.destroy()
@@ -196,7 +213,7 @@ def set_conditions(widgets, cond, field_names): #{{{
         widgets["rb_seen_only"].set_active(True)
     elif cond["seen"] is False:
         widgets["rb_seen_only_n"].set_active(True)
-    
+
     if cond["loaned"] is None:
         widgets["rb_loaned"].set_active(True)
     elif cond["loaned"] is True:
@@ -215,7 +232,7 @@ def set_conditions(widgets, cond, field_names): #{{{
             hbox_items[4].set_active(True)
         else:
             hbox_items[1].set_active(True)
-    
+
     for hbox in widgets["volumes_vbox"]:
         hbox_items = hbox.get_children()
         id_ = int(hbox_items[0].get_text())
@@ -225,7 +242,7 @@ def set_conditions(widgets, cond, field_names): #{{{
             hbox_items[3].set_active(True)
         else:
             hbox_items[1].set_active(True)
-    
+
     for hbox in widgets["collections_vbox"]:
         hbox_items = hbox.get_children()
         id_ = int(hbox_items[0].get_text())
@@ -235,7 +252,7 @@ def set_conditions(widgets, cond, field_names): #{{{
             hbox_items[3].set_active(True)
         else:
             hbox_items[1].set_active(True)
-    
+
     for hbox in widgets["loans_vbox"]:
         hbox_items = hbox.get_children()
         id_ = int(hbox_items[0].get_text())
@@ -257,7 +274,7 @@ def set_conditions(widgets, cond, field_names): #{{{
                 for text in cond[rule][field]:
                     add_query_widget(vbox, field_names, field, rule, text)
     return True
-    
+
     #}}}
 
 def get_conditions(widgets): #{{{
@@ -269,7 +286,7 @@ def get_conditions(widgets): #{{{
         cond["seen"] = True
     elif widgets["rb_seen_only_n"].get_active():
         cond["seen"] = False
-    
+
     if widgets["rb_loaned"].get_active():
         cond["loaned"] = None
     elif widgets["rb_loaned_only"].get_active():
@@ -292,21 +309,21 @@ def get_conditions(widgets): #{{{
             cond["volumes"].add(int(hbox_items[0].get_label()))
         elif hbox_items[3].get_active():
             cond["no_volumes"].add(int(hbox_items[0].get_label()))
-    
+
     for hbox in widgets["collections_vbox"]:
         hbox_items = hbox.get_children()
         if hbox_items[2].get_active():
             cond["collections"].add(int(hbox_items[0].get_label()))
         elif hbox_items[3].get_active():
             cond["no_collections"].add(int(hbox_items[0].get_label()))
-    
+
     for hbox in widgets["loans_vbox"]:
         hbox_items = hbox.get_children()
         if hbox_items[2].get_active():
             cond["loaned_to"].add(int(hbox_items[0].get_label()))
         elif hbox_items[3].get_active():
             cond["loan_history"].add(int(hbox_items[0].get_label()))
-    
+
     for hbox in widgets["dynamic_vbox"]:
         hbox_items = hbox.get_children()
 
@@ -315,17 +332,17 @@ def get_conditions(widgets): #{{{
             continue
 
         field = hbox_items[0].get_active()
-        if 0 < field > len(QUERY_FIELDS):
+        if 0 > field or field > len(QUERY_FIELDS):
             continue
         else:
             field = QUERY_FIELDS[field]
-            
+
             command = hbox_items[1].get_active()
-            if 0 < command > len(QUERY_COMMANDS):
+            if 0 > command or command > len(QUERY_COMMANDS):
                 continue
             else:
                 command = QUERY_COMMANDS[command]
-            
+
         cond[command].setdefault(field, set()).add(entry)
 
     return cond # }}}
@@ -381,7 +398,7 @@ def create_select_query(self, columns, conditions, query):
         if not columns:
             columns = get_select_columns(self.config)
         query = select(columns, bind=self.db.session.bind)
-    
+
     self._search_conditions = conditions # save for later
     # TODO: remove after debugging:
     from pprint import pprint

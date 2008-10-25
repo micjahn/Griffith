@@ -131,7 +131,7 @@ class GriffithSQL:
         self.session = session # global session
         self.Session = Session # create new sessions using this class
         #}}}
-        
+
         # check if database needs an upgrade
         db.metadata.create_all(engine)
         try:
@@ -171,21 +171,21 @@ def update_whereclause(query, cond): # {{{
         query.append_whereclause(db.Movie.volume_id.in_(cond["volumes"]))
     if cond["no_volumes"]:
         query.append_whereclause(~db.Movie.volume_id.in_(cond["no_volumes"]))
-    
+
     loaned_to = []
     for per_id in cond["loaned_to"]:
         loaned_to.append(exists([db.loans_table.c.movie_id],\
                 and_(db.Movie.movie_id==db.loans_table.c.movie_id, db.loans_table.c.person_id==per_id, db.loans_table.c.return_date==None)))
     if loaned_to:
         query.append_whereclause(or_(*loaned_to))
-    
+
     loan_history = []
     for per_id in cond["loan_history"]:
         loan_history.append(exists([db.loans_table.c.movie_id],\
                 and_(db.Movie.movie_id==db.loans_table.c.movie_id, db.loans_table.c.person_id==per_id)))
     if loan_history:
         query.append_whereclause(or_(*loan_history))
-    
+
     required_tags = []
     for tag_id in cond["required_tags"]:
         required_tags.append(exists([db.MovieTag.movie_id], \
@@ -199,7 +199,7 @@ def update_whereclause(query, cond): # {{{
             and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
     if tags:
         query.append_whereclause(or_(*tags))
-    
+
     no_tags = []
     for tag_id in cond["no_tags"]:
         no_tags.append(~exists([db.MovieTag.movie_id], \
@@ -207,10 +207,30 @@ def update_whereclause(query, cond): # {{{
     if no_tags:
         query.append_whereclause(and_(*no_tags))
 
+    for field in cond["equals_n"]:
+        values = [ db.movies_table.columns[field]!=value for value in cond["equals_n"][field] ]
+        query.append_whereclause(and_(*values))
+
+    for field in cond["startswith_n"]:
+        values = [ not_(db.movies_table.columns[field].startswith(value)) for value in cond["startswith_n"][field] ]
+        query.append_whereclause(and_(*values))
+
+    for field in cond["like_n"]:
+        values = [ not_(db.movies_table.columns[field].like(value)) for value in cond["like_n"][field] ]
+        query.append_whereclause(and_(*values))
+
+    for field in cond["ilike_n"]:
+        values = [ not_(db.movies_table.columns[field].ilike(value)) for value in cond["ilike_n"][field] ]
+        query.append_whereclause(and_(*values))
+
+    for field in cond["contains_n"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
+        values = [ not_(db.movies_table.columns[field].like('%'+value+'%')) for value in cond["contains_n"][field] ]
+        query.append_whereclause(and_(*values))
+
     for field in cond["equals"]:
         values = [ db.movies_table.columns[field]==value for value in cond["equals"][field] ]
         query.append_whereclause(or_(*values))
-    
+
     for field in cond["startswith"]:
         values = [ db.movies_table.columns[field].startswith(value) for value in cond["startswith"][field] ]
         query.append_whereclause(or_(*values))
@@ -218,15 +238,15 @@ def update_whereclause(query, cond): # {{{
     for field in cond["like"]:
         values = [ db.movies_table.columns[field].like(value) for value in cond["like"][field] ]
         query.append_whereclause(or_(*values))
-    
+
     for field in cond["ilike"]:
         values = [ db.movies_table.columns[field].ilike(value) for value in cond["ilike"][field] ]
         query.append_whereclause(or_(*values))
-    
+
     for field in cond["contains"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
         values = [ db.movies_table.columns[field].like('%'+value+'%') for value in cond["contains"][field] ]
         query.append_whereclause(or_(*values))
-    
+
     # sorting
     for rule in cond["sort_by"]:
         if rule.endswith(" DESC"):
@@ -246,7 +266,7 @@ def update_whereclause(query, cond): # {{{
 # MOVIE LOAN related functions --------------------------------{{{
 def loan_movie(gsql, movie_id, person_id, whole_collection=False):
     """loans a movie, movie's volume and optionally movie's collection"""
-            
+
     session = gsql.Session() # create new session
 
     person = session.query(db.Person).filter_by(person_id=person_id).first()
@@ -296,7 +316,7 @@ def loan_movie(gsql, movie_id, person_id, whole_collection=False):
 
 def loan_return(gsql, movie_id):
     """marks movie, movie's volume and movie's collection as returned"""
-    
+
     session = gsql.Session() # create new session
 
     loan = session.query(db.Loan).filter_by(movie_id=movie_id, return_date=None).first()
@@ -350,13 +370,13 @@ def get_loan_info(gsql, movie_id, volume_id=None, collection_id=None):
     movie = gsql.session.query(db.Movie).filter_by(movie_id=movie_id).first()
     if movie is None:
         return False
-    
+
     # fix or add volume/collection data:
     if movie.collection_id is not None:
         collection_id = movie.collection_id
     if movie.volume_id is not None:
         volume_id = movie.volume_id
-    
+
     if collection_id > 0 and volume_id > 0:
         return gsql.session.query(db.Loan).filter(and_(db.Loan.return_date==None,
                                                               or_(db.Loan.collection_id==collection_id,

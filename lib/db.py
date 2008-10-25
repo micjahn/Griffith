@@ -301,7 +301,7 @@ tags_table = Table('tags', metadata,
 
 movie_lang_table = Table('movie_lang', metadata,
     Column('ml_id', Integer, primary_key=True),
-    Column('type', SmallInteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle 
+    Column('type', SmallInteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle
     Column('movie_id', Integer, ForeignKey('movies.movie_id'), nullable=False),
     Column('lang_id', Integer, ForeignKey('languages.lang_id'), nullable=False),
     Column('acodec_id', Integer, ForeignKey('acodecs.acodec_id')),
