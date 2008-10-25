@@ -243,7 +243,7 @@ def on_import_button_clicked(button, self, *args):
             self.widgets['import']['progressbar'].set_fraction(0)
             self.widgets['import']['progressbar'].set_text('')
             if ip.run(filename):
-                gutils.info(self, _("%s file has been imported. %s movies added.") \
+                gutils.info(_("%s file has been imported. %s movies added.") \
                     % (plugin_name, ip.imported), self.widgets['window'])
                 self.populate_treeview()
             ip.clear()

@@ -100,9 +100,9 @@ class ExportPlugin:
         
             if thisPath:
                 commands.getoutput('mv '+os.path.join(tmp_dir,"movies")+' "'+thisPath+'/Notes/"')
-                gutils.info(self, _("List was successful exported to iPod."), self.parent)        
+                gutils.info(_("List was successful exported to iPod."), self.parent)        
             else:
-                gutils.info(self, _("iPod is not connected."), self.parent)
+                gutils.info(_("iPod is not connected."), self.parent)
         # this is not a mac, lets save the file
         else:
             filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
@@ -117,4 +117,4 @@ class ExportPlugin:
                         overwrite = False
                 if overwrite == True or overwrite is None:
                     shutil.copyfile(os.path.join(tmp_dir,"movies"), filename[0])
-                    gutils.info(self, _("List was successful exported. Now you should move it to the 'Notes' folder on your iPod."), self.parent)
+                    gutils.info(_("List was successful exported. Now you should move it to the 'Notes' folder on your iPod."), self.parent)

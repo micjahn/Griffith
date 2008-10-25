@@ -190,7 +190,7 @@ class ImportPlugin(IP):
                         self.gtk.get_widget('d_import').hide()
                         self.gtk.get_widget('d_import').response(gtk.RESPONSE_OK)
                     else:
-                        gutils.info(self.gtk, _("Please assign at least one field first!"), self.gtk.get_widget('d_import') )
+                        gutils.info(_("Please assign at least one field first!"), self.gtk.get_widget('d_import') )
                         
         if widget == self.b_add:
             iterator = self.ls_assigned.append()
@@ -308,7 +308,7 @@ class ImportPlugin(IP):
                 self.ls_csv.set_value(iterator, 0, name)
             return True
         except:
-            gutils.info(self.gtk, _("Can't open the file %s") % self.__source_name, self.gtk.get_widget('d_import') )
+            gutils.info(_("Can't open the file %s") % self.__source_name, self.gtk.get_widget('d_import') )
             return False
             
 

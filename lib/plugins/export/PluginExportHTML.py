@@ -879,7 +879,7 @@ class ExportPlugin(gtk.Window):
             im.save(image_file_dst, config['poster_format'])
         except:
             log.info("Can't convert %s" % image_file_src)
-        gutils.info(self, _("Document has been generated."), self)
+        gutils.info(_("Document has been generated."), self)
         self.on_quit()
     #}}}
 

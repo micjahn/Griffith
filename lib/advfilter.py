@@ -28,6 +28,7 @@ import logging
 log = logging.getLogger("Griffith")
 import db
 import sql
+from gutils import info
     
 __conditions = { # default
     'loaned'          : None,  # None, True, False
@@ -109,24 +110,44 @@ def _fill_container(container, items, options, id_name):
 def initialize(widgets, gsql, field_names):
     # tags
     items = gsql.session.query(db.Tag).all()
-    options = (_('ignore'), _('with'), _('without'), _('require'))
-    _fill_container(widgets["tags_vbox"], items, options, 'tag_id')
+    if len(items):
+        options = (_('ignore'), _('with'), _('without'), _('require'))
+        _fill_container(widgets["tags_vbox"], items, options, 'tag_id')
+        widgets["tags_frame"].show()
+    else:
+        widgets["tags_frame"].hide()
 
     # volumes
     items = gsql.session.query(db.Volume).all()
     options = (_('ignore'), _('in'), _('not in'))
-    _fill_container(widgets["volumes_vbox"], items, options, 'volume_id')
+    if len(items):
+        _fill_container(widgets["volumes_vbox"], items, options, 'volume_id')
+        widgets["volumes_frame"].show()
+    else:
+        widgets["volumes_frame"].hide()
     
     # collections
     items = gsql.session.query(db.Collection).all()
-    # use volume's options
-    _fill_container(widgets["collections_vbox"], items, options, 'collection_id')
+    if len(items):
+        # use volume's options
+        _fill_container(widgets["collections_vbox"], items, options, 'collection_id')
+        widgets["collections_frame"].show()
+    else:
+        widgets["collections_frame"].hide()
 
     # loans
     items = gsql.session.query(db.Person).all()
-    options = (_('ignore'), _('loaned to '), _('loan history'))
-    _fill_container(widgets["loans_vbox"], items, options, 'person_id')
+    if len(items):
+        options = (_('ignore'), _('loaned to '), _('loan history'))
+        _fill_container(widgets["loans_vbox"], items, options, 'person_id')
+        widgets["loans_frame"].show()
+    else:
+        widgets["loans_frame"].hide()
 
+    widgets['cb_name'].get_model().clear()
+    search_filters = gsql.session.query(db.Filter.name).all()
+    for filter_ in search_filters:
+        widgets['cb_name'].append_text(filter_[0])
     return True
 
 def add_query_widget(container, field_names, sel_qf='title', sel_comm=0, text='' ):
@@ -163,6 +184,12 @@ def add_query_widget(container, field_names, sel_qf='title', sel_comm=0, text=''
     container.pack_start(hbox)
 
 def set_conditions(widgets, cond, field_names): #{{{
+    widgets['name'].set_text('')
+    
+    # delete old widgets
+    for i in widgets['dynamic_vbox'].get_children():
+        i.destroy()
+
     if cond["seen"] is None:
         widgets["rb_seen"].set_active(True)
     elif cond["seen"] is True:
@@ -229,7 +256,7 @@ def set_conditions(widgets, cond, field_names): #{{{
             for field in cond[rule]:
                 for text in cond[rule][field]:
                     add_query_widget(vbox, field_names, field, rule, text)
-
+    return True
     
     #}}}
 
@@ -302,6 +329,33 @@ def get_conditions(widgets): #{{{
         cond[command].setdefault(field, set()).add(entry)
 
     return cond # }}}
+
+def save(gsql, widgets):
+    """saves search conditions from current filter window"""
+
+    cond = get_conditions(widgets)
+    name = widgets['cb_name'].get_active_text().decode('utf-8')
+    if not name:
+        log.debug("search rule name is empty")
+        info(_("Name is empty"), widgets['window'])
+        return False
+
+    if sql.save_conditions(gsql, name, cond):
+        info(_("Search conditions saved"), widgets['window'])
+    else:
+        warning(_("Cannot save search conditions"), widgets['window'])
+
+def load(gsql, widgets, field_names):
+    name = widgets['cb_name'].get_active_text().decode('utf-8')
+    if not name:
+        log.debug("search rule name is empty")
+        return False
+    cond = sql.load_conditions(gsql, name)
+    if cond:
+        return set_conditions(widgets, cond, field_names)
+    else:
+        return False
+
 #}}}
 
 # database related --------------------------------------------{{{
@@ -335,8 +389,4 @@ def create_select_query(self, columns, conditions, query):
 
     return sql.update_whereclause(query, conditions)
 
-def save_conditions(cond, name, qsql):
-    raise NotImplemented
-def load_conditions(name, qsql):
-    raise NotImplemented
 #}}}

@@ -96,4 +96,4 @@ class ExportPlugin:
                 fp = open(filename[0], "w")
                 xml.dom.ext.PrettyPrint(doc, fp)
                 fp.close()
-                gutils.info(self, _("%s file has been created.")%"XML", self.parent)
+                gutils.info( _("%s file has been created.")%"XML", self.parent)

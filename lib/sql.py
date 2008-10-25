@@ -397,4 +397,28 @@ def get_loan_history(gsql, movie_id, volume_id=None, collection_id=None):
     else:
         return gsql.session.query(db.Loan).filter(db.Loan.movie_id==movie_id).filter(db.Loan.return_date!=None).all()
 
+def save_conditions(gsql, name, cond):
+    session = gsql.Session(bind=gsql.session.bind)
+    #session.bind = gsql.session.bind
+    filter_ = session.query(db.Filter).filter_by(name=name).first()
+    if filter_:
+        filter_.conditions = cond
+    else:
+        filter_ = db.Filter(name, cond)
+    session.add(filter_)
+    try:
+        session.commit()
+    except Exception, e:
+        session.rollback()
+        log.warn(str(e))
+        return False
+    return True
+
+def load_conditions(gsql, name):
+    filter_ = gsql.session.query(db.Filter).filter_by(name=name).first()
+    if filter_:
+        return filter_.conditions
+    else:
+        log.warn("Cannot find search conditions: %s" % name)
+        return None
 #}}}

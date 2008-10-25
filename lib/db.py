@@ -31,6 +31,7 @@ from sqlalchemy.orm import mapper, relation, sessionmaker, validates
 import re
 import string
 import logging
+import marshal
 log = logging.getLogger("Griffith")
 
 EMAIL_PATTERN = re.compile('^[a-z0-9]+[.a-z0-9_+-]*@[a-z0-9_-]+(\.[a-z0-9_-]+)+$', re.IGNORECASE)
@@ -188,6 +189,20 @@ class MovieTag(object):
         self.tag_id = tag_id
     def __repr__(self):
         return "<MovieTag:%s-%s>" % (self.movie_id, self.tag_id)
+
+class Filter(object):
+    def __init__(self, name=None, cond=None):
+        if name and cond:
+            self.name = name
+            #self.data = marshal.dumps(cond)
+            self.conditions = cond
+    def __repr__(self):
+        return "<Filter(%s)>" % self.name
+    def _set_cond(self, cond):
+        self.data = marshal.dumps(cond)
+    def _get_cond(self):
+        return marshal.loads(self.data)
+    conditions = property(_get_cond, _set_cond)
 #}}}
 
 ### table definitions ######################################### {{{
@@ -306,6 +321,10 @@ posters_table = Table('posters', metadata,
     Column('md5sum', Unicode(32), primary_key=True),
     Column('data', BLOB, nullable=False))
 
+filters_table = Table('filters', metadata,
+    Column('name', Unicode(64), primary_key=True),
+    Column('data', BLOB, nullable=False))
+
 tables = {
     'movies':         movies_table,
     'loans':          loans_table,
@@ -323,7 +342,8 @@ tables = {
     'movie_lang':     movie_lang_table,
     'movie_tag':      movie_tag_table,
     'configuration':  configuration_table,
-    'posters':        posters_table}
+    'posters':        posters_table,
+    'filters':        filters_table}
 #}}}
 
 ### mappers ################################################### {{{
@@ -368,6 +388,7 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
     'languages' : relation(MovieLang, cascade='all, delete-orphan')})
 mapper(Poster, posters_table, properties={
     'movies': relation(Movie)})
+mapper(Filter, filters_table)
 #}}}
 
 

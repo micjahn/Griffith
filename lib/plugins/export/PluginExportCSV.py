@@ -78,4 +78,4 @@ class ExportPlugin:
                             'plot', 'cast', 'notes','image'):
                         t.append(movie[s])
                     writer.writerow(t)
-                gutils.info(self, _("%s file has been created.")%"CSV", self.parent)
+                gutils.info(_("%s file has been created.")%"CSV", self.parent)

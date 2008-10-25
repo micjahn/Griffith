@@ -238,7 +238,7 @@ def warning(self, msg, parent=None):
     dialog.run()
     dialog.destroy()
 
-def info(self, msg, parent=None):
+def info(msg, parent=None):
     dialog = gtk.MessageDialog(parent,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_INFO, gtk.BUTTONS_OK, msg)

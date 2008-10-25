@@ -168,7 +168,7 @@ class ExportPlugin:
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
                 c.build(Story, onFirstPage=self.page_template, onLaterPages=self.page_template)
-                gutils.info(self, _('PDF has been created.'), self.parent)
+                gutils.info(_('PDF has been created.'), self.parent)
             
     def page_template(self, canvas, doc):
         canvas.saveState()

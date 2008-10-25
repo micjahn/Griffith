@@ -167,6 +167,12 @@ def define_widgets(self, gladefile):
         'loans_vbox'       : get('af_loans_vbox'),
         'dynamic_vbox'     : get('af_dynamic_vbox'),
         'add_button'       : get('af_add_button'),
+        'tags_frame'       : get('af_frame_tags'),
+        'volumes_frame'    : get('af_frame_volumes'),
+        'collections_frame': get('af_frame_collections'),
+        'loans_frame'      : get('af_frame_loans'),
+        'cb_name'          : get('af_cbe_name'),
+        'name'             : get('af_cbe_name_entry'),
     }
     self.widgets['advfilter']['window'].connect('delete_event', self.hide_advfilter_window)
     self.widgets['advfilter']['window'].set_transient_for(self.widgets['window'])
@@ -497,7 +503,9 @@ def define_widgets(self, gladefile):
         'on_af_find_clicked'                     : self.on_af_find_clicked,
         'on_advfilter_close'                     : self.hide_advfilter_window,
         'on_advfilter_add'                       : lambda w: advfilter.add_query_widget(self.widgets['advfilter']['dynamic_vbox'], self.field_names),
-        'on_advfilter_clear'                     : lambda w: advfilter.set_conditions(self.widgets['advfilter'], advfilter.get_def_conditions(), self.field_names)
+        'on_advfilter_clear'                     : lambda w: advfilter.set_conditions(self.widgets['advfilter'], advfilter.get_def_conditions(), self.field_names),
+        'on_advfilter_save'                      : lambda w: advfilter.save(self.db, self.widgets['advfilter']),
+        'on_advfilter_open'                      : lambda w: advfilter.load(self.db, self.widgets['advfilter'], self.field_names),
     })#}}}
 
 def reconnect_add_signals(self):#{{{

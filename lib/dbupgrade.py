@@ -122,6 +122,7 @@ def upgrade_database(self, version):
 
         # create new table
         db.posters_table.create(checkfirst=True, bind=b)
+        db.filters_table.create(checkfirst=True, bind=b)
         db.ratios_table.create(checkfirst=True, bind=b)
         db.ratios_table.insert(bind=b).execute(name=u'16:9')
         db.ratios_table.insert(bind=b).execute(name=u'4:3')

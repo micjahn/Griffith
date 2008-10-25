@@ -397,8 +397,7 @@ class Griffith:
             self.widgets['treeview'].set_cursor(number)
             self.treeview_clicked()
         else:
-            gutils.info(self, \
-                _("You have seen all films in your collection!"), \
+            gutils.info(_("You have seen all films in your collection!"), \
                 self.widgets['window'])
 
     # volumes/collections ----------------------------------------------{{{
@@ -956,6 +955,7 @@ You can't undo this operation."""), True, self.widgets['window'])
     # advfilter -----------------------------------------------------------    
 
     def show_advfilter_window(self, *args):
+        #if not self.widgets['advfilter']['window'].visible: # FIXME
         from advfilter import show_window
         show_window(self)
 
