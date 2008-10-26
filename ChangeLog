@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-10-26  Michael Jahn
+	* [#179618] During "Get from Web ", griffith window keeps stealing focus
+
 2008-10-23  Michael Jahn
 	* PDF export: disabled movie grouping if movie list is not sorted by title or original title
 	* [#258817] The application doesn't save volume
