@@ -30,7 +30,7 @@ import db
 import logging
 log = logging.getLogger("Griffith")
 
-def upgrade_database(self, version):
+def upgrade_database(self, version, locations):
     """Create new db or update existing one to current format"""
     b = self.session.bind
     if version == 0:
@@ -134,10 +134,15 @@ def upgrade_database(self, version):
                    'screenplay': 'ALTER TABLE movies ADD COLUMN screenplay VARCHAR(256) NULL;',
                    'cameraman' : 'ALTER TABLE movies ADD COLUMN cameraman VARCHAR(256) NULL;'}
         if e_type == 'mysql':
-            pass
+            queries = {'poster_md5': 'ALTER TABLE movies ADD COLUMN poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
+                       'ratio_id'  : 'ALTER TABLE movies ADD COLUMN ratio_id INTEGER NOT NULL DEFAULT 1 REFERENCES ratios(ratio_id);',
+                       'screenplay': 'ALTER TABLE movies ADD COLUMN screenplay VARCHAR(256) NULL;',
+                       'cameraman' : 'ALTER TABLE movies ADD COLUMN cameraman VARCHAR(256) NULL;'}
         elif e_type == 'mssql':
-            #queries['ratio_id'] = "FIXME"
-            pass
+            queries = {'poster_md5': 'ALTER TABLE movies ADD poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
+                       'ratio_id'  : 'ALTER TABLE movies ADD ratio_id INTEGER NOT NULL REFERENCES ratios(ratio_id) DEFAULT 1;',
+                       'screenplay': 'ALTER TABLE movies ADD screenplay VARCHAR(256) NULL;',
+                       'cameraman' : 'ALTER TABLE movies ADD cameraman VARCHAR(256) NULL;'}
         for key, query in queries.items():
             try:
                 self.session.bind.execute(query)
@@ -147,7 +152,7 @@ def upgrade_database(self, version):
         
         log.info("... saving posters in database")
         for movie in self.session.query(db.Movie).all():
-            poster_file_name = os.path.join(self.data_dir, self.config.get("poster", "posters"), "%s.jpg" % movie.image)
+            poster_file_name = os.path.join(locations['posters'], "%s.jpg" % movie.image)
             if os.path.isfile(poster_file_name):
                 poster_md5  = gutils.md5sum(file(poster_file_name, 'rb'))
                 poster = self.session.query(db.Poster).filter_by(md5sum=poster_md5).first()

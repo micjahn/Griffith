@@ -39,7 +39,7 @@ import db # ORM data (SQLAlchemy stuff)
 class GriffithSQL:
     version = 3    # database format version, increase after changing data structures
 
-    def __init__(self, config, griffith_dir, reconnect=True):
+    def __init__(self, config, griffith_dir, locations, reconnect=True):
         #mapper = Session.mapper
         self.config = config
         self.data_dir = griffith_dir
@@ -147,7 +147,7 @@ class GriffithSQL:
             v = int(v.value)
         if v < self.version:
             from dbupgrade import upgrade_database
-            if not upgrade_database(self, v):
+            if not upgrade_database(self, v, locations):
                 import sys
                 sys.exit(1)
 
