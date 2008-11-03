@@ -1288,7 +1288,7 @@ You can't undo this operation."""), True, self.widgets['window'])
                 treeview.set_cursor_on_cell(0)
 
 if __name__ == "__main__":
-    developer = True # TODO: get from config
+    developer = False # TODO: get from config
     if not developer and '~' in version.pversion or '-' in version.pversion:
         response = gutils.question(_("""This is development version of Griffith.
 We're not providing upgrade path from dev. versions.

@@ -168,7 +168,7 @@ def restore(self):
                 import sys
                 sys.exit(4)
 
-        self.db = sql.GriffithSQL(self.config, self.locations['home'])
+        self.db = sql.GriffithSQL(self.config, self.locations['home'], self.locations)
         from initialize import dictionaries, people_treeview
         dictionaries(self)
         people_treeview(self)
@@ -225,7 +225,7 @@ def merge(self):    # FIXME
         tmp_dir, tmp_file = os.path.split(filename)
         self.config.get('file', tmp_file, section='database') 
 
-        tmp_db = sql.GriffithSQL(tmp_config, tmp_dir)
+        tmp_db = sql.GriffithSQL(tmp_config, tmp_dir, self.locations)
 
         merged=0
         movies = tmp_db.Movie.count()

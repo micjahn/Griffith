@@ -33,7 +33,8 @@ log = logging.getLogger("Griffith")
 def upgrade_database(self, version, locations):
     """Create new db or update existing one to current format"""
     b = self.session.bind
-    if version == 0:
+    if version == 0 or version is None:
+        # version is 0 or none only for new databases
         db.metadata.create_all(b)
         db.configuration_table.insert(bind=b).execute(param=u'version', value=self.version)
         db.media_table.insert(bind=b).execute(name=u'DVD')
@@ -106,6 +107,10 @@ def upgrade_database(self, version, locations):
         db.languages_table.insert(bind=b).execute(name=_('Turkish'))
         db.tags_table.insert(bind=b).execute(name=_('Favourite'))
         return True # upgrade process finished
+    #
+    # next steps are only for existing databases with an outdated structure
+    # not for new created databases
+    #
     if version == 1: # fix changes between v1 and v2
         version += 1
         log.info("Upgrading database to version %d..." % version)
@@ -128,21 +133,16 @@ def upgrade_database(self, version, locations):
         db.ratios_table.insert(bind=b).execute(name=u'4:3')
 
         log.info("... adding new columns")
-        # SQLite, PostgreSQL
-        queries = {'poster_md5': 'ALTER TABLE movies ADD COLUMN poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
-                   'ratio_id'  : 'ALTER TABLE movies ADD COLUMN ratio_id INTEGER NOT NULL REFERENCES ratios(ratio_id) DEFAULT 1;',
-                   'screenplay': 'ALTER TABLE movies ADD COLUMN screenplay VARCHAR(256) NULL;',
-                   'cameraman' : 'ALTER TABLE movies ADD COLUMN cameraman VARCHAR(256) NULL;'}
+        # common SQL statements
+        queries = {'poster_md5': 'ALTER TABLE movies ADD poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
+                   'ratio_id'  : 'ALTER TABLE movies ADD ratio_id INTEGER NOT NULL DEFAULT 1 REFERENCES ratios(ratio_id);',
+                   'screenplay': 'ALTER TABLE movies ADD screenplay VARCHAR(256) NULL;',
+                   'cameraman' : 'ALTER TABLE movies ADD cameraman VARCHAR(256) NULL;'}
+        # if needed some db specific SQL statements
         if e_type == 'mysql':
-            queries = {'poster_md5': 'ALTER TABLE movies ADD COLUMN poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
-                       'ratio_id'  : 'ALTER TABLE movies ADD COLUMN ratio_id INTEGER NOT NULL DEFAULT 1 REFERENCES ratios(ratio_id);',
-                       'screenplay': 'ALTER TABLE movies ADD COLUMN screenplay VARCHAR(256) NULL;',
-                       'cameraman' : 'ALTER TABLE movies ADD COLUMN cameraman VARCHAR(256) NULL;'}
+            pass
         elif e_type == 'mssql':
-            queries = {'poster_md5': 'ALTER TABLE movies ADD poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
-                       'ratio_id'  : 'ALTER TABLE movies ADD ratio_id INTEGER NOT NULL REFERENCES ratios(ratio_id) DEFAULT 1;',
-                       'screenplay': 'ALTER TABLE movies ADD screenplay VARCHAR(256) NULL;',
-                       'cameraman' : 'ALTER TABLE movies ADD cameraman VARCHAR(256) NULL;'}
+            pass
         for key, query in queries.items():
             try:
                 self.session.bind.execute(query)
@@ -287,7 +287,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
     self.config.set('region', 0, section='defaults')
     self.config.set('vcodec', 0, section='defaults')
     self.locations['posters'] = os.path.join(self.locations['home'], 'posters')
-    new_db = GriffithSQL(self.config, self.locations['home'])
+    new_db = GriffithSQL(self.config, self.locations['home'], self.locations)
 
     # collections
     collection_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
