@@ -409,53 +409,95 @@ class Griffith:
             self._selected_volume = self.volume_combo_ids[widget.get_active()]
 
     def add_volume(self, widget):
+        session = self.db.Session()
         name = self.widgets['add']['volume'].get_active_text().decode('utf-8')
-        vol = db.Volume()
-        vol.name = name
-        if vol and vol.add_to_db():
+        vol = db.Volume(name=name)
+        session.add(vol)
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            log.warn("Cannot add volume: %s", e.message)
+        else:
             update.update_volume_combo_ids(self)
             initialize.fill_volumes_combo(self, id)
 
     def add_collection(self, widget):
+        session = self.db.Session()
         name = self.widgets['add']['collection'].get_active_text().decode('utf-8')
-        col = db.Collection()
-        col.name = name
-        if col and col.add_to_db():
+        col = db.Collection(name=name)
+        session.add(col)
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            log.warn("Cannot add collection: %s", e.message)
+        else:
             update.update_collection_combo_ids(self)
             initialize.fill_collections_combo(self, id)
 
     def remove_volume(self, widget):
+        session = self.db.Session()
         vol_id = self._selected_volume
-        vol = self.db.session.query(db.Volume).filter_by(volume_id=vol_id).first()
-        if vol and vol.remove_from_db():
-            update.update_volume_combo_ids(self)
-            initialize.fill_volumes_combo(self, id)
+        vol = session.query(db.Volume).filter_by(volume_id=vol_id).first()
+        if vol:
+            session.remove(vol)
+            try:
+                session.commi()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot remove volume: %s", e.message)
+            else:
+                update.update_volume_combo_ids(self)
+                initialize.fill_volumes_combo(self, id)
 
     def remove_collection(self, widget):
+        session = self.db.Session()
         col_id = self._selected_collection
-        col = self.db.session.query(db.Collection).filter_by(collection_id=col_id).first()
-        if col and col.remove_from_db():
-            update.update_collection_combo_ids(self)
-            initialize.fill_collections_combo(self, id)
+        col = session.query(db.Collection).filter_by(collection_id=col_id).first()
+        if col:
+            session.remove(col)
+            try:
+                session.commi()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot remove collection: %s", e.message)
+            else:
+                update.update_collection_combo_ids(self)
+                initialize.fill_collections_combo(self, id)
 
     def rename_volume(self, widget):
+        session = self.db.Session()
         vol_id = self._selected_volume
         if vol_id != 0:
             new_name = self.widgets['add']['volume'].get_active_text().decode('utf-8')
-            vol = self.db.session.query(db.Volume).filter_by(volume_id=vol_id).first()
+            vol = session.query(db.Volume).filter_by(volume_id=vol_id).first()
             if vol:
                 vol.name=new_name
-                if vol.update_in_db():
+                session.add(vol)
+                try:
+                    session.commit()
+                except Exception, e:
+                    session.rollback()
+                    log.warn("Cannot rename volume: %s", e.message)
+                else:
                     initialize.fill_volumes_combo(self, default=vol_id)
 
     def rename_collection(self, widget):
+        session = self.db.Session()
         col_id = self.e_selected_collection
         if col_id != 0:
             new_name = self.widgets['add']['collection'].get_active_text().decode('utf-8')
-            col = self.db.session.query(db.Collection).filter_by(collection_id=col_id).first()
-            if col is not None:
+            col = session.query(db.Collection).filter_by(collection_id=col_id).first()
+            if col:
                 col.name=new_name
-                if col.update_in_db():
+                session.add(col)
+                try:
+                    session.commit()
+                except Exception, e:
+                    session.rollback()
+                    log.warn("Cannot rename collection: %s", e.message)
+                else:
                     initialize.fill_collections_combo(self, default=col_id)
 
     def show_volume(self, widget):

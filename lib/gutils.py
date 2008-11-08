@@ -29,6 +29,7 @@ import sys
 try:
     import gtk
     import gobject
+    import db
 except:
     pass
 import htmlentitydefs
@@ -36,7 +37,6 @@ import re
 import webbrowser
 import logging
 log = logging.getLogger("Griffith")
-import db
 
 url_re = re.compile('^\w+://')
 entity = re.compile(r'\&.\w*?\;')
@@ -415,10 +415,10 @@ def get_dependencies():
         version = False
     depend.append({'module': 'sqlalchemy',
         'version'    : version,
-        'module_req' : '0.5rc1',
+        'module_req' : '0.5rc3',
         'url'        : 'http://www.sqlalchemy.org/',
         'debian'     : 'python-sqlalchemy',
-        'debian_req' : '0.5~rc1'
+        'debian_req' : '0.5~rc3'
     })
     try:
         import sqlite3
