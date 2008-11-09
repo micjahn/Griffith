@@ -367,13 +367,13 @@ def get_dependencies():
     depend = []
 
     # Python version
-    if sys.version_info[:2] < (2, 4):
+    if sys.version_info[:2] < (2, 5):
         depend.append({'module': 'python',
             'version'    : '-'+'.'.join(map(str,sys.version_info)),
-            'module_req' : '2.4',
+            'module_req' : '2.5',
             'url'        : 'http://www.python.org/',
             'debian'     : 'python',
-            'debian_req' : '2.4'
+            'debian_req' : '2.5'
             # TODO: 'fedora', 'suse', etc.
         })
 
@@ -588,10 +588,10 @@ def md5sum(fobj):
 def create_image_cache(md5sum, gsql):
     poster = gsql.session.query(db.Poster).filter_by(md5sum=md5sum).first()
     if not poster:
-        log.warn("poster not available: %s" % md5sum)
+        log.warn("poster not available: %s", md5sum)
         return False
     if not poster.data:
-        log.warn("poster data not available: %s" % md5sum)
+        log.warn("poster data not available: %s", md5sum)
         return False
     
     fn_big    = os.path.join(gsql.data_dir, 'posters', md5sum+'.jpg')

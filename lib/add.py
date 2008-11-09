@@ -82,7 +82,7 @@ def update_movie(self):
     if details['image'] and old_poster_md5 != details['image']: # details["image"] can contain MD5 or file path
         new_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
         if not os.path.isfile(new_image_path):
-            log.warn("cannot read temporary file: %s" % new_image_path)
+            log.warn("cannot read temporary file: %s", new_image_path)
         else:
             new_poster_md5 = gutils.md5sum(file(new_image_path, 'rb'))
             details["poster_md5"] = new_poster_md5
@@ -163,7 +163,7 @@ def populate_with_results(self):
     w = self.widgets['add']
     m_id = None
     if self.founded_results_id:
-        log.info("self.founded:results_id: %s" % self.founded_results_id)
+        log.info("self.founded:results_id: %s", self.founded_results_id)
         m_id = self.founded_results_id
     else:
         self.founded_results_id = 0
@@ -396,7 +396,6 @@ def get_details(self): #{{{
                 return i[0]
         return None
     # languages
-    from sets import Set as set # for python2.3 compatibility
     t_movies['languages'] = set()
     for row in self.lang['model']:
         lang_id   = get_id(self.lang['lang'], row[0])
@@ -588,7 +587,7 @@ def set_details(self, item=None):#{{{
             else: w['image'].set_text(item['image'])
         else:
             image_path = os.path.join(self.locations['posters'], "m_%s.jpg" % item['image'])
-            log.warn("TODO: image=%s" % item['image'])
+            log.warn("TODO: image=%s", item['image'])
     else:
         w['image'].set_text('')
         image_path = os.path.join(self.locations['images'], 'default.png')
@@ -663,9 +662,9 @@ def add_movie_db(self, close):
             try:
                 os.remove(tmp_image_path)
             except Exception, e:
-                log.warn("cannot remove temporary file %s" % tmp_image_path)
+                log.warn("cannot remove temporary file %s", tmp_image_path)
         else:
-            log.warn("cannot read temporary file: %s" % tmp_image_path)
+            log.warn("cannot read temporary file: %s", tmp_image_path)
 
 
     movie = update_movie_instance(None, details, self.db.session)
@@ -728,7 +727,7 @@ def clone_movie(self):
     movie = self.db.session.query(db.Movie).filter_by(number=number).first()
 
     if movie is None:
-        log.warn("cannot clone movie: Movie(%s) not found" % number)
+        log.warn("cannot clone movie: Movie(%s) not found", number)
         return False
 
     next_number = gutils.find_next_available(self.db)
@@ -834,9 +833,9 @@ def commit(self, session):
     except IntegrityError, e:
         session.rollback()
         gutils.warning(self, str(e.orig))
-        log.warn("Cannot commit movie: %s" % e.message)
+        log.warn("Cannot commit movie: %s", e.message)
         return False
     except Exception, e:
-        log.error("Unexpected problem: %s" % e)
+        log.error("Unexpected problem: %s", e)
         return False
     return True

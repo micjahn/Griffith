@@ -1,16 +1,13 @@
-next version
-============
-* Advanced sort/filter criteria
+near future
+===========
 * Export plugin system rewrite, new templates format (mako? jinja?)
 * Impor/export plugins for Excel files (.xls) (pyExcelerator?)
 * Customising main list view
 * New fields:
   + location of the DVD (room/box/case/etc) - will replace "Number" field
-  + screenplay
-  + aspect ratio
 
-near future
-===========
+future
+======
 * More import plugins
 * Nice PDF tabular report
 * Detecting audio/video parameters from file (mmpython?)

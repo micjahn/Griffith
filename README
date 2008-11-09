@@ -29,7 +29,7 @@ System Requirements
 
   Name			Minimum version		URL						NOTE
   ----			---------------		---						----
-  * Python		2.4 or higher		http://www.python.org/
+  * Python		2.5 or higher		http://www.python.org/
   * GTK+		tested on 2.6.4		http://www.gtk.org/
   * PyGTK (with glade2)	tested on 2.6.1		http://www.pygtk.org/
   * SQLAlchemy		0.5			http://www.sqlalchemy.org/
