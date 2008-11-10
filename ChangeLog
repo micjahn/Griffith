@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-11-10  Michael Jahn
+	* updated plugins IMDB-de, Amazon, Kino.de, FilmeVonAZ
+
 2008-11-01  Michael Jahn
 	* updated IMDB plugin
 
