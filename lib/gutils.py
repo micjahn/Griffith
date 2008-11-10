@@ -94,6 +94,19 @@ def trim(text,key1,key2):
         p2 = p1+p2
     return text[p1:p2]
 
+def regextrim(text,key1,key2):
+    obj = re.search(key1, text)
+    if obj is None:
+        return ''
+    else:
+        p1 = obj.end()
+    obj = re.search(key2, text[p1:])
+    if obj is None:
+        return ''
+    else:
+        p2 = p1 + obj.start()
+    return text[p1:p2]
+
 def after(text,key):
     p1 = string.find(text,key)
     return text[p1+len(key):]
