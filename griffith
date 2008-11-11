@@ -441,9 +441,9 @@ class Griffith(object):
         vol_id = self._selected_volume
         vol = session.query(db.Volume).filter_by(volume_id=vol_id).first()
         if vol:
-            session.remove(vol)
+            session.delete(vol)
             try:
-                session.commi()
+                session.commit()
             except Exception, e:
                 session.rollback()
                 log.warn("Cannot remove volume: %s", e.message)
@@ -456,9 +456,9 @@ class Griffith(object):
         col_id = self._selected_collection
         col = session.query(db.Collection).filter_by(collection_id=col_id).first()
         if col:
-            session.remove(col)
+            session.delete(col)
             try:
-                session.commi()
+                session.commit()
             except Exception, e:
                 session.rollback()
                 log.warn("Cannot remove collection: %s", e.message)
@@ -584,33 +584,55 @@ class Griffith(object):
 
     # preferences
     def on_lang_add_clicked(self, widget):
+        session = self.db.Session()
         lang = db.Lang()
         lang.name = self.widgets['preferences']['lang_name'].get_active_text().decode('utf-8')
-        if lang and lang.add_to_db():
+        session.add(lang)
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            log.warn("Cannot add language: %s" % e.message)
+        else:
             initialize.language_combos(self)
 
     def on_lang_remove_clicked(self, widget):
+        session = self.db.Session()
         active = self.widgets['preferences']['lang_name'].get_active()
-        if active>0:
+        if active>-1:
             lang_id = self.languages_ids[active]
-            lang = self.db.session.query(db.Lang).filter_by(lang_id=lang_id).first()
-            if lang and lang.remove_from_db():
-                initialize.language_combos(self)
+            lang = session.query(db.Lang).filter_by(lang_id=lang_id).first()
+            if lang and len(lang.movielangs)==0:
+                session.delete(lang)
+                try:
+                    session.commit()
+                except Exception, e:
+                    session.rollback()
+                    log.warn("Cannot remove language: %s" % e.message)
+                else:
+                    initialize.language_combos(self)
+            else:
+                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
-            log.warn("You have to select language first")
+            log.warn("You have to select a language first")
 
     def on_lang_rename_clicked(self, widget):
         try:
             active = self.lang_name_active
         except:
             return False
+        session = self.db.Session()
         lang_id = self.languages_ids[active]
-        if lang_id>0:
-            lang = self.db.session.query(db.Lang).filter_by(lang_id=lang_id).first()
-            if lang is not None:
-                lang.name = self.widgets['preferences']['lang_name'].get_active_text().decode('utf-8')
-                if lang.update_in_db():
-                    initialize.language_combos(self)
+        lang = session.query(db.Lang).filter_by(lang_id=lang_id).first()
+        if lang is not None:
+            lang.name = self.widgets['preferences']['lang_name'].get_active_text().decode('utf-8')
+            try:
+                session.commit()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot rename language: %s" % e.message)
+            else:
+                initialize.language_combos(self)
 
     def on_lang_name_combo_changed(self, widget):
         active = self.widgets['preferences']['lang_name'].get_active()
@@ -686,31 +708,54 @@ class Griffith(object):
 
     # audio codecs ------------------------------------------------------{{{
     def on_acodec_add_clicked(self, widget):
-        acodec = self.db.ACodec()
+        session = self.db.Session()
+        acodec = db.ACodec()
         acodec.name = self.widgets['preferences']['acodec_name'].get_active_text().decode('utf-8')
-        if acodec and acodec.add_to_db():
+        session.add(acodec)
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            log.warn("Cannot add tag: %s" % e.message)
+        else:
             initialize.acodec_combos(self)
 
     def on_acodec_remove_clicked(self, widget):
+        session = self.db.Session()
         active = self.widgets['preferences']['acodec_name'].get_active()
-        if active>0:
+        if active>-1:
             acodec_id = self.acodecs_ids[active]
-            acodec = self.db.session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
-            if acodec and acodec.remove_from_db():
-                initialize.acodec_combos(self)
+            acodec = session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
+            if acodec and len(acodec.movielangs)==0:
+                session.delete(acodec)
+                try:
+                    session.commit()
+                except Exception, e:
+                    session.rollback()
+                    log.warn("Cannot remove audio codec: %s" % e.message)
+                else:
+                    initialize.acodec_combos(self)
+            else:
+                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
-            log.warn("You have to select audio codec first")
+            log.warn("You have to select an audio codec first")
 
     def on_acodec_rename_clicked(self, widget):
         try:
             active = self.acodec_name_active
         except:
             return False
+        session = self.db.Session()
         acodec_id = self.acodecs_ids[active]
-        acodec = self.db.session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
+        acodec = session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
         if acodec is not None:
             acodec.name = self.widgets['preferences']['acodec_name'].get_active_text().decode('utf-8')
-            if acodec.update_in_db():
+            try:
+                session.commit()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot rename audio codec: %s" % e.message)
+            else:
                 initialize.acodec_combos(self)
 
     def on_acodec_name_combo_changed(self, widget):
@@ -721,31 +766,54 @@ class Griffith(object):
 
     # audio channels ----------------------------------------------------{{{
     def on_achannel_add_clicked(self, widget):
-        achannel = self.db.AChannel()
+        session = self.db.Session()
+        achannel = db.AChannel()
         achannel.name = self.widgets['preferences']['achannel_name'].get_active_text().decode('utf-8')
-        if achannel and achannel.add_to_db():
+        session.add(achannel)
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            log.warn("Cannot add audio channel: %s" % e.message)
+        else:
             initialize.achannel_combos(self)
 
     def on_achannel_remove_clicked(self, widget):
+        session = self.db.Session()
         active = self.widgets['preferences']['achannel_name'].get_active()
-        if active>0:
+        if active>-1:
             achannel_id = self.achannels_ids[active]
-            achannel = self.db.session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
-            if achannel and achannel.remove_from_db():
-                initialize.achannel_combos(self)
+            achannel = session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
+            if achannel and len(achannel.movielangs)==0:
+                session.delete(achannel)
+                try:
+                    session.commit()
+                except Exception, e:
+                    session.rollback()
+                    log.warn("Cannot remove audio channel: %s" % e.message)
+                else:
+                    initialize.achannel_combos(self)
+            else:
+                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
-            log.warn("You have to select audio channel first")
+            log.warn("You have to select an audio channel entry first")
 
     def on_achannel_rename_clicked(self, widget):
         try:
             active = self.achannel_name_active
         except:
             return False
+        session = self.db.Session()
         achannel_id = self.achannels_ids[active]
-        achannel = self.db.session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
+        achannel = session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
         if achannel is not None:
             achannel.name = self.widgets['preferences']['achannel_name'].get_active_text().decode('utf-8')
-            if achannel.update_in_db():
+            try:
+                session.commit()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot rename audio channel entry: %s" % e.message)
+            else:
                 initialize.achannel_combos(self)
 
     def on_achannel_name_combo_changed(self, widget):
@@ -756,31 +824,54 @@ class Griffith(object):
 
     # subformats -------------------------------------------------------------{{{
     def on_subformat_add_clicked(self, widget):
-        subformat = self.db.SubFormat()
+        session = self.db.Session()
+        subformat = db.SubFormat()
         subformat.name = self.widgets['preferences']['subformat_name'].get_active_text().decode('utf-8')
-        if subformat and subformat.add_to_db():
+        session.add(subformat)
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            log.warn("Cannot add subtitle format entry: %s" % e.message)
+        else:
             initialize.subformat_combos(self)
 
     def on_subformat_remove_clicked(self, widget):
+        session = self.db.Session()
         active = self.widgets['preferences']['subformat_name'].get_active()
-        if active>0:
+        if active>-1:
             subformat_id = self.subformats_ids[active]
-            subformat = self.db.session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
-            if subformat and subformat.remove_from_db():
-                initialize.subformat_combos(self)
+            subformat = session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
+            if subformat and len(subformat.movielangs)==0:
+                session.delete(subformat)
+                try:
+                    session.commit()
+                except Exception, e:
+                    session.rollback()
+                    log.warn("Cannot remove subtitle format entry: %s" % e.message)
+                else:
+                    initialize.subformat_combos(self)
+            else:
+                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
-            log.warn("You have to select subtitle format first")
+            log.warn("You have to select a subtitle format first")
 
     def on_subformat_rename_clicked(self, widget):
         try:
             active = self.subformat_name_active
         except:
             return False
+        session = self.db.Session()
         subformat_id = self.subformats_ids[active]
-        subformat = self.db.session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
+        subformat = session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
         if subformat is not None:
             subformat.name = self.widgets['preferences']['subformat_name'].get_active_text().decode('utf-8')
-            if subformat.update_in_db():
+            try:
+                session.commit()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot rename subtitle format entry: %s" % e.message)
+            else:
                 initialize.subformat_combos(self)
 
     def on_subformat_name_combo_changed(self, widget):
@@ -791,31 +882,54 @@ class Griffith(object):
 
     # media ------------------------------------------------------------{{{
     def on_medium_add_clicked(self, widget):
-        medium = self.db.Medium()
+        session = self.db.Session()
+        medium = db.Medium()
         medium.name = self.widgets['preferences']['medium_name'].get_active_text().decode('utf-8')
-        if medium and medium.add_to_db():
+        session.add(medium)
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            log.warn("Cannot add medium entry: %s" % e.message)
+        else:
             initialize.media_combos(self)
 
     def on_medium_remove_clicked(self, widget):
+        session = self.db.Session()
         active = self.widgets['preferences']['medium_name'].get_active()
         if active>-1:
             medium_id = self.media_ids[active]
-            medium = self.db.session.query(db.Medium).filter_by(medium_id=medium_id).first()
-            if medium and medium.remove_from_db():
-                initialize.media_combos(self)
+            medium = session.query(db.Medium).filter_by(medium_id=medium_id).first()
+            if medium and len(medium.movies)==0:
+                session.delete(medium)
+                try:
+                    session.commit()
+                except Exception, e:
+                    session.rollback()
+                    log.warn("Cannot remove medium entry: %s" % e.message)
+                else:
+                    initialize.media_combos(self)
+            else:
+                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
-            log.warn("You have to select medium first")
+            log.warn("You have to select a medium entry first")
 
     def on_medium_rename_clicked(self, widget):
         try:
             active = self.medium_name_active
         except:
             return False
+        session = self.db.Session()
         medium_id = self.media_ids[active]
-        medium = self.db.session.query(db.Medium).filter_by(medium_id=medium_id).first()
+        medium = session.query(db.Medium).filter_by(medium_id=medium_id).first()
         if medium is not None:
             medium.name = self.widgets['preferences']['medium_name'].get_active_text().decode('utf-8')
-            if medium.update_in_db():
+            try:
+                session.commit()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot rename medium entry: %s" % e.message)
+            else:
                 initialize.media_combos(self)
 
     def on_medium_name_combo_changed(self, widget):
@@ -826,31 +940,54 @@ class Griffith(object):
 
     # vcodecs -------------------------------------------------------------{{{
     def on_vcodec_add_clicked(self, widget):
-        vcodec = self.db.VCodec()
+        session = self.db.Session()
+        vcodec = db.VCodec()
         vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text().decode('utf-8')
-        if vcodec and vcodec.add_to_db():
+        session.add(vcodec)
+        try:
+            session.commit()
+        except Exception, e:
+            session.rollback()
+            log.warn("Cannot add video codec entry: %s" % e.message)
+        else:
             initialize.vcodec_combos(self)
 
     def on_vcodec_remove_clicked(self, widget):
+        session = self.db.Session()
         active = self.widgets['preferences']['vcodec_name'].get_active()
         if active>-1:
             vcodec_id = self.vcodecs_ids[active]
-            vcodec = self.db.session.query(db.VCodec).filter_by(vcodec_id=vcodec_id).first()
-            if vcodec and vcodec.remove_from_db():
-                initialize.vcodec_combos(self)
+            vcodec = session.query(db.VCodec).filter_by(vcodec_id=vcodec_id).first()
+            if vcodec and len(vcodec.movies)==0:
+                session.delete(vcodec)
+                try:
+                    session.commit()
+                except Exception, e:
+                    session.rollback()
+                    log.warn("Cannot remove video codec entry: %s" % e.message)
+                else:
+                    initialize.vcodec_combos(self)
+            else:
+                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
-            log.warn("You have to select video codec first")
+            log.warn("You have to select a video codec entry first")
 
     def on_vcodec_rename_clicked(self, widget):
         try:
             active = self.vcodec_name_active
         except:
             return False
+        session = self.db.Session()
         vcodec_id = self.vcodecs_ids[active]
-        vcodec = self.db.session.query(db.VCodec).filter_by(vcodec_id=vcodec_id).first()
+        vcodec = session.query(db.VCodec).filter_by(vcodec_id=vcodec_id).first()
         if vcodec is not None:
             vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text().decode('utf-8')
-            if vcodec.update_in_db():
+            try:
+                session.commit()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot rename video codec entry: %s" % e.message)
+            else:
                 initialize.vcodec_combos(self)
 
     def on_vcodec_name_combo_changed(self, widget):

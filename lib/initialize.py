@@ -807,6 +807,7 @@ def fill_preferences_tags_combo(self):
         i += 1
     self.initialized = _tmp
     self.widgets['preferences']['tag_name'].show_all()
+    self.widgets['preferences']['tag_name'].set_active(0)
 
 def language_combos(self):
     self.widgets['preferences']['lang_name'].get_model().clear()
@@ -819,6 +820,7 @@ def language_combos(self):
         self.widgets['preferences']['lang_name'].insert_text(int(i), str(lang.name))
         i += 1
     self.widgets['preferences']['lang_name'].show_all()
+    self.widgets['preferences']['lang_name'].set_active(0)
     # add movie languages treeview
     self.lang['lang'].clear()
     for i in self.db.session.query(db.Lang).all():
@@ -834,6 +836,7 @@ def acodec_combos(self):
         self.widgets['preferences']['acodec_name'].insert_text(int(i), str(acodec.name))
         i += 1
     self.widgets['preferences']['acodec_name'].show_all()
+    self.widgets['preferences']['acodec_name'].set_active(0)
     # add movie languages treeview
     self.lang['acodec'].clear()
     for i in self.db.session.query(db.ACodec).all():
@@ -849,6 +852,7 @@ def achannel_combos(self):
         self.widgets['preferences']['achannel_name'].insert_text(int(i), str(achannel.name))
         i += 1
     self.widgets['preferences']['achannel_name'].show_all()
+    self.widgets['preferences']['achannel_name'].set_active(0)
     # add movie languages treeview
     self.lang['achannel'].clear()
     for i in self.db.session.query(db.AChannel).all():
@@ -864,6 +868,7 @@ def subformat_combos(self):
         self.widgets['preferences']['subformat_name'].insert_text(int(i), str(subformat.name))
         i += 1
     self.widgets['preferences']['subformat_name'].show_all()
+    self.widgets['preferences']['subformat_name'].set_active(0)
     # add movie languages treeview
     self.lang['subformat'].clear()
     for i in self.db.session.query(db.SubFormat).all():
@@ -900,6 +905,7 @@ def media_combos(self):
             self.widgets['preferences']['media'].set_active(0)
     else:
         self.widgets['preferences']['media'].set_active(0)
+    self.widgets['preferences']['medium_name'].set_active(0)
 
 def vcodec_combos(self):
     # clear data
@@ -930,6 +936,7 @@ def vcodec_combos(self):
         self.widgets['preferences']['vcodec'].set_active(int(pos))
     else:
         self.widgets['preferences']['vcodec'].set_active(0)
+    self.widgets['preferences']['vcodec_name'].set_active(0)
 
 def create_tag_vbox(self, widget, tab):
     for i in widget.get_children():
