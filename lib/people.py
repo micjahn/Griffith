@@ -124,7 +124,7 @@ def delete_person(self):
     try:
         treeselection = self.widgets['people']['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
-        person = tmp_model.get_value(tmp_iter,0)
+        person = tmp_model.get_value(tmp_iter,0).decode('utf-8')
     except:
         return
     person = self.db.session.query(db.Person).filter_by(name=person).first()

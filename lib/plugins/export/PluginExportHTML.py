@@ -469,10 +469,12 @@ class ExportPlugin(gtk.Window):
     def on_combo_style_changed(self, widget):
         self.config['style'] = widget.get_active()
         self.widgets['cb_custom_style'].set_active(False)
+        preview_file = None
 
         tpl_id = self.config['template']
         template_dir = os.path.join(self.locations['share'], 'export_templates', self.templates[tpl_id]['dir'])
-        preview_file = self.templates[self.config['template']]['styles'][self.config['style']]['preview']
+        if self.config['style'] > -1:
+            preview_file = self.templates[self.config['template']]['styles'][self.config['style']]['preview']
         if preview_file is not None:
             preview_file = os.path.join(template_dir, preview_file)
         if preview_file is not None and not os.path.isfile(preview_file):
@@ -620,7 +622,7 @@ class ExportPlugin(gtk.Window):
         
         # get data from widgets
         self.config['exported_dir'] = self.widgets['fcw'].get_filename()
-        self.config['title']        = self.widgets['entry_header'].get_text()
+        self.config['title']        = self.widgets['entry_header'].get_text().decode('utf-8')
         self.config['sorting']      = self.names[self.widgets['combo_sortby'].get_active_text().decode('utf-8')]
         if self.widgets['cb_reverse'].get_active():
             self.config['sorting2'] = 'DESC'
