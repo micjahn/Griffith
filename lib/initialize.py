@@ -70,7 +70,7 @@ def locations(self):
         # this is changed on 0.9.5+svn so we need to make it backward compatible
         if os.path.exists(os.path.join(mydocs, 'griffith').decode(defaultEnc)):
             shutil.move(os.path.join(mydocs, 'griffith').decode(defaultEnc),os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(defaultEnc))
-        locations['home']           = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(defaultEnc)
+        locations['home'] = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(defaultEnc)
         
         # windows hack for locale setting
         lang = os.getenv('LANG')
@@ -175,6 +175,7 @@ def i18n(self, location):
     gettext.textdomain('griffith')
     gtk.glade.bindtextdomain('griffith', location)
     gtk.glade.textdomain('griffith')
+    gettext.install('griffith', location, unicode=1)
 
 def toolbar(self):
     """if toolbar is hide in config lets hide the widget"""

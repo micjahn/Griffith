@@ -9,6 +9,17 @@ Please note that Griffith requires Python >=2.5 and SQLAlchemy >= 0.5 now
 (see `./griffith --check-dep` or `./griffith --show-dep`)
 
 
+Griffith 0.9.8
+==============
+* New movie plugin: Amazon
+* Updated movie plugins: IMDb, IMDB-de, Kino.de, OFDb, FilmeVonAZ, Zelluloid
+* Translation changes:
+  + new: Persian, Finnish, Low German
+  + updated: bg, fi, pl, rs, fa
+* added compatibility with pysqlite2 2.5.0
+* bugs fixed: #179618, #258817, #273172, #253272 (see ChangeLog for more)
+
+
 Griffith 0.9.7.1
 ================
 * Fixed crash when database (rating/year/runtime fields) contains empty data

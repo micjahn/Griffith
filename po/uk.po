@@ -5,33 +5,40 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: griffith\n"
+"Project-Id-Version: Griffith 0.9.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-21 22:34+0200\n"
-"PO-Revision-Date: 2008-03-31 10:06+0000\n"
-"Last-Translator: vazaz <Unknown>\n"
+"POT-Creation-Date: 2008-11-13 23:26+0100\n"
+"PO-Revision-Date: 2008-07-23 17:59+0000\n"
+"Last-Translator: Piotr Ożarowski <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-07-21 17:20+0000\n"
+"X-Launchpad-Export-Date: 2008-11-11 14:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: ../griffith:210 ../griffith:840 ../lib/delete.py:33 ../lib/edit.py:44
-#: ../lib/edit.py:128
+#: ../griffith:222 ../griffith:1052 ../lib/delete.py:37 ../lib/edit.py:49
+#: ../lib/edit.py:140
 msgid "You have no movies in your database"
 msgstr "Ви не маєте фільмів в вашій базі даних"
 
-#: ../griffith:391
+#: ../griffith:400
 msgid "You have seen all films in your collection!"
 msgstr "Ви переглянули всі фільми з вашої колекції!"
 
-#: ../griffith:519 ../griffith:524 ../lib/initialize.py:350
-#: ../lib/initialize.py:637
+#: ../griffith:568 ../griffith:573 ../lib/initialize.py:355
+#: ../lib/initialize.py:645
 msgid "subtitles"
 msgstr "субтитри"
 
-#: ../griffith:807
+#: ../griffith:615 ../griffith:679 ../griffith:740 ../griffith:798
+#: ../griffith:856 ../griffith:914 ../griffith:972 ../lib/db.py:68
+msgid ""
+"This item is in use.\n"
+"Operation aborted!"
+msgstr "Цей пункт використовується."
+
+#: ../griffith:1022
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -41,7 +48,7 @@ msgstr ""
 "Ваша теперішня колекція фільмів буде замінена.\n"
 "Ви не можете відмінити цю дію."
 
-#: ../griffith:817
+#: ../griffith:1030
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
@@ -51,23 +58,7 @@ msgstr ""
 "Ваша теперішня колекція фільмів буде об'єднана з резервною базою.\n"
 "Ви не можете відмінити цю дію."
 
-#: ../griffith:915
-msgid " movie(s) in collection. "
-msgstr " фільм(ів) в колекції. "
-
-#: ../griffith:916
-msgid " movie(s) loaned. "
-msgstr " фільм(ів) позичено. "
-
-#: ../griffith:917
-msgid "You haven't seen "
-msgstr "Ви не бачили "
-
-#: ../griffith:917
-msgid " movie(s)"
-msgstr " фільм(ів)"
-
-#: ../griffith:1119
+#: ../griffith:1345
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -75,7 +66,7 @@ msgstr ""
 "Ви впевнені, що бажаєте створити нову базу даних?\n"
 "Ви втратите всі ваші дані!"
 
-#: ../griffith:1123
+#: ../griffith:1348
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -85,284 +76,394 @@ msgstr ""
 "Ви підтверджуєте, те що бажаєте\n"
 "втратити ваші теперішні дані?"
 
-#: ../lib/about.py:41
+#: ../griffith:1473
+msgid ""
+"This is development version of Griffith.\n"
+"We're not providing upgrade path from dev. versions.\n"
+"Please make sure you have a backup!\n"
+"\n"
+"Do you want to proceed?"
+msgstr ""
+
+#: ../lib/about.py:42
 msgid "Main Authors"
 msgstr "Основні Автори"
 
-#: ../lib/about.py:43
+#: ../lib/about.py:44
 msgid "Programmers"
 msgstr "Програмісти"
 
-#: ../lib/about.py:46
+#: ../lib/about.py:47
 msgid "Contributors:"
 msgstr "Розробники:"
 
-#: ../lib/about.py:50
+#: ../lib/about.py:51
 msgid "Logo, icon and general artwork "
 msgstr "Логотип, іконка і основні зображення "
 
-#: ../lib/about.py:76
+#: ../lib/about.py:77
 msgid "See TRANSLATORS file"
 msgstr "Дивитися файл ПЕРЕКЛАДАЧІ"
 
-#: ../lib/about.py:84
+#: ../lib/about.py:85
 msgid "This program is released under the GNU"
 msgstr "Ця программа розроблена під ліцензією GNU"
 
-#: ../lib/add.py:45 ../glade/griffith.glade.h:23
+#: ../lib/add.py:54 ../glade/griffith.glade.h:27
 msgid "Add a new movie"
 msgstr "Додати новий фільм"
 
-#: ../lib/add.py:56
+#: ../lib/add.py:66
 msgid "Edit movie"
 msgstr "Редагувати фільм"
 
-#: ../lib/add.py:374 ../lib/add.py:442 ../lib/cover.py:181
-#: ../lib/main_treeview.py:498
+#: ../lib/add.py:135 ../lib/add.py:703 ../lib/cover.py:184
+#: ../lib/main_treeview.py:484
 msgid " min"
 msgstr " хв"
 
-#: ../lib/add.py:379
+#: ../lib/add.py:144
 msgid "Movie information has been updated"
 msgstr "Інформація про фільм новлена"
 
-#: ../lib/add.py:384 ../lib/add.py:613
+#: ../lib/add.py:271
+msgid "No results"
+msgstr "Немає  результату"
+
+#: ../lib/add.py:311 ../lib/add.py:627
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
 msgstr ""
 
-#: ../lib/add.py:390 ../lib/add.py:396
+#: ../lib/add.py:320
+msgid "Url: "
+msgstr "Посилання: "
+
+#: ../lib/add.py:321
+msgid "Language: "
+msgstr "Мова: "
+
+#: ../lib/add.py:634 ../lib/add.py:641
 msgid "Movie with that title already exists, are you sure you want to add?"
 msgstr ""
 "Фільм з такою назвою вже існує в базі, ви впевнені що хочете додати цей "
 "фільм?"
 
-#: ../lib/add.py:575
-msgid "No results"
-msgstr "Немає  результату"
+#: ../lib/advfilter.py:64
+msgid "is equal to"
+msgstr ""
 
-#: ../lib/add.py:621
-msgid "Url: "
-msgstr "Посилання: "
+#: ../lib/advfilter.py:65
+msgid "is not equal to"
+msgstr ""
 
-#: ../lib/add.py:622
-msgid "Language: "
-msgstr "Мова: "
+#: ../lib/advfilter.py:66
+msgid "starts with"
+msgstr ""
 
-#: ../lib/backup.py:32
+#: ../lib/advfilter.py:67
+msgid "doesn't start with"
+msgstr ""
+
+#: ../lib/advfilter.py:68
+msgid "contains"
+msgstr ""
+
+#: ../lib/advfilter.py:69
+msgid "doesn't contain"
+msgstr ""
+
+#: ../lib/advfilter.py:70
+msgid "like"
+msgstr ""
+
+#: ../lib/advfilter.py:71
+msgid "not like"
+msgstr ""
+
+#: ../lib/advfilter.py:72
+#, fuzzy
+msgid "ilike"
+msgstr "Назва"
+
+#: ../lib/advfilter.py:73
+msgid "not ilike"
+msgstr ""
+
+#: ../lib/advfilter.py:131 ../lib/advfilter.py:139 ../lib/advfilter.py:158
+msgid "ignore"
+msgstr ""
+
+#: ../lib/advfilter.py:131
+msgid "with"
+msgstr ""
+
+#: ../lib/advfilter.py:131
+msgid "without"
+msgstr ""
+
+#: ../lib/advfilter.py:131
+msgid "require"
+msgstr ""
+
+#: ../lib/advfilter.py:139
+#, fuzzy
+msgid "in"
+msgstr " хв"
+
+#: ../lib/advfilter.py:139
+#, fuzzy
+msgid "not in"
+msgstr " хв"
+
+#: ../lib/advfilter.py:158
+#, fuzzy
+msgid "loaned to "
+msgstr "Позичено"
+
+#: ../lib/advfilter.py:158
+msgid "loan history"
+msgstr ""
+
+#: ../lib/advfilter.py:357
+msgid "Name is empty"
+msgstr ""
+
+#: ../lib/advfilter.py:361
+msgid "Search conditions saved"
+msgstr ""
+
+#: ../lib/advfilter.py:363
+msgid "Cannot save search conditions"
+msgstr ""
+
+#: ../lib/backup.py:38
 msgid "Save Griffith backup"
 msgstr "Зберегти резервну копію Griffith"
 
-#: ../lib/backup.py:41 ../lib/plugins/export/PluginExportCSV.py:64
-#: ../lib/plugins/export/PluginExportiPod.py:111
-#: ../lib/plugins/export/PluginExportPDF.py:85
-#: ../lib/plugins/export/PluginExportXML.py:65
+#: ../lib/backup.py:47 ../lib/plugins/export/PluginExportCSV.py:66
+#: ../lib/plugins/export/PluginExportiPod.py:113
+#: ../lib/plugins/export/PluginExportPDF.py:88
+#: ../lib/plugins/export/PluginExportXML.py:67
 msgid "File exists. Do you want to overwrite it?"
 msgstr "Файл вже є в базі. Хочете переписати?"
 
-#: ../lib/backup.py:55
+#: ../lib/backup.py:61
 msgid "Error creating backup"
 msgstr ""
 
-#: ../lib/backup.py:62
+#: ../lib/backup.py:68
 msgid "Backup function is available only for SQLite engine for now"
 msgstr ""
 
-#: ../lib/backup.py:105
+#: ../lib/backup.py:111
 msgid "Backup has been created"
 msgstr "Резервну копію створено"
 
-#: ../lib/backup.py:109 ../lib/backup.py:183
+#: ../lib/backup.py:115 ../lib/backup.py:187
 msgid "Restore Griffith backup"
 msgstr "Відновити Griffith з резервної копії"
 
-#: ../lib/backup.py:117 ../lib/backup.py:199
+#: ../lib/backup.py:123 ../lib/backup.py:203
 msgid "Can't read backup file"
 msgstr "Не можливо прочитати файл резервної копії"
 
-#: ../lib/backup.py:174
+#: ../lib/backup.py:178
 msgid "Backup restored"
 msgstr "Резервну копію відновлено"
 
-#: ../lib/cover.py:42 ../lib/edit.py:46
+#: ../lib/cover.py:45 ../lib/edit.py:51
 msgid "Select image"
 msgstr "Вибрати зображення"
 
-#: ../lib/cover.py:86 ../lib/cover.py:149
+#: ../lib/cover.py:89 ../lib/cover.py:152
 msgid "Cover generated by Griffith v"
 msgstr "Обкладинка створена Griffith v"
 
-#: ../lib/cover.py:88 ../lib/cover.py:151
+#: ../lib/cover.py:91 ../lib/cover.py:154
 #: ../lib/plugins/export/PluginExportHTML.py:743
-#: ../lib/plugins/export/PluginExportPDF.py:169
+#: ../lib/plugins/export/PluginExportPDF.py:183
 msgid "Released Under the GNU/GPL License"
 msgstr "Створено під ліцензією GNU/GPL"
 
-#: ../lib/cover.py:176 ../lib/initialize.py:200 ../lib/initialize.py:622
-#: ../lib/plugins/export/PluginExportHTML.py:145
-#: ../lib/plugins/export/PluginExportHTML.py:330 ../glade/griffith.glade.h:97
+#: ../lib/cover.py:179 ../lib/initialize.py:205 ../lib/initialize.py:628
+#: ../lib/plugins/export/PluginExportHTML.py:149
+#: ../lib/plugins/export/PluginExportHTML.py:333 ../glade/griffith.glade.h:105
 msgid "Original Title"
 msgstr "Оригінальна назва"
 
-#: ../lib/cover.py:177 ../lib/initialize.py:207 ../lib/initialize.py:630
-#: ../lib/plugins/export/PluginExportHTML.py:151 ../glade/griffith.glade.h:148
+#: ../lib/cover.py:180 ../lib/initialize.py:212 ../lib/initialize.py:638
+#: ../lib/plugins/export/PluginExportHTML.py:155 ../glade/griffith.glade.h:156
 msgid "Title"
 msgstr "Назва"
 
-#: ../lib/cover.py:179 ../lib/initialize.py:214 ../lib/initialize.py:612
-#: ../lib/plugins/export/PluginExportHTML.py:136 ../glade/griffith.glade.h:48
+#: ../lib/cover.py:182 ../lib/initialize.py:219 ../lib/initialize.py:618
+#: ../lib/plugins/export/PluginExportHTML.py:140 ../glade/griffith.glade.h:54
 msgid "Director"
 msgstr "Режисер"
 
-#: ../lib/cover.py:181
+#: ../lib/cover.py:184
 msgid "Running Time"
 msgstr "Час відтворення"
 
-#: ../lib/cover.py:182 ../lib/initialize.py:611
-#: ../lib/plugins/export/PluginExportHTML.py:135 ../glade/griffith.glade.h:41
+#: ../lib/cover.py:185 ../lib/initialize.py:617
+#: ../lib/plugins/export/PluginExportHTML.py:139 ../glade/griffith.glade.h:47
 msgid "Country"
 msgstr "Країна"
 
-#: ../lib/cover.py:183 ../lib/initialize.py:221 ../lib/initialize.py:613
-#: ../lib/plugins/export/PluginExportHTML.py:137
-#: ../lib/plugins/export/PluginExportPDF.py:149 ../glade/griffith.glade.h:62
+#: ../lib/cover.py:186 ../lib/initialize.py:226 ../lib/initialize.py:619
+#: ../lib/plugins/export/PluginExportHTML.py:141
+#: ../lib/plugins/export/PluginExportPDF.py:163 ../glade/griffith.glade.h:69
 msgid "Genre"
 msgstr "Жанр"
 
-#: ../lib/dbupgrade.py:86 ../lib/plugins/movie/PluginMovieE-Pipoca.py:34
+#: ../lib/db.py:54
+msgid "Name cannot be empty"
+msgstr ""
+
+#: ../lib/db.py:86
+msgid "This name is already in use!"
+msgstr "Це ім'я вже використовується!"
+
+#: ../lib/db.py:120
+#, fuzzy
+msgid "E-mail address is not valid"
+msgstr "Невірне зображення"
+
+#: ../lib/dbupgrade.py:81 ../lib/plugins/movie/PluginMovieE-Pipoca.py:35
 msgid "Brazilian Portuguese"
 msgstr "Бразильська португальська"
 
-#: ../lib/dbupgrade.py:87
+#: ../lib/dbupgrade.py:82
 msgid "Bulgarian"
 msgstr "Болгарська"
 
-#: ../lib/dbupgrade.py:88
+#: ../lib/dbupgrade.py:83
 msgid "Catalan"
 msgstr "Каталонська"
 
-#: ../lib/dbupgrade.py:89 ../lib/plugins/movie/PluginMovieCSFD.py:30
+#: ../lib/dbupgrade.py:84 ../lib/plugins/movie/PluginMovieCSFD.py:31
 msgid "Czech"
 msgstr "Чеська"
 
-#: ../lib/dbupgrade.py:90
+#: ../lib/dbupgrade.py:85
 msgid "Danish"
 msgstr "Данська"
 
-#: ../lib/dbupgrade.py:91
+#: ../lib/dbupgrade.py:86
 msgid "Dutch"
 msgstr "Голандська"
 
-#: ../lib/dbupgrade.py:92 ../lib/plugins/movie/PluginMovieAniDB.py:32
-#: ../lib/plugins/movie/PluginMovieDVDEmpire.py:32
-#: ../lib/plugins/movie/PluginMovieIMDB.py:31
-#: ../lib/plugins/movie/PluginMovieMediadis.py:16
-#: ../lib/plugins/movie/PluginMovieMoviefone.py:16
+#: ../lib/dbupgrade.py:87 ../lib/plugins/movie/PluginMovieAniDB.py:33
+#: ../lib/plugins/movie/PluginMovieDVDEmpire.py:33
+#: ../lib/plugins/movie/PluginMovieIMDB.py:32
+#: ../lib/plugins/movie/PluginMovieMediadis.py:17
+#: ../lib/plugins/movie/PluginMovieMoviefone.py:17
 msgid "English"
 msgstr "Англійська"
 
-#: ../lib/dbupgrade.py:93
+#: ../lib/dbupgrade.py:88
 msgid "Estonian"
 msgstr "Естонська"
 
-#: ../lib/dbupgrade.py:94 ../lib/plugins/movie/PluginMovieAllocine.py:32
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:31
+#: ../lib/dbupgrade.py:89 ../lib/plugins/movie/PluginMovieAllocine.py:33
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:32
 msgid "French"
 msgstr "Французька"
 
-#: ../lib/dbupgrade.py:95 ../lib/plugins/movie/PluginMovieDVDPalace.py:33
-#: ../lib/plugins/movie/PluginMovieFilmDb.py:32
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:33
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:31
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:33
-#: ../lib/plugins/movie/PluginMovieOFDb.py:17
-#: ../lib/plugins/movie/PluginMovieZelluloid.py:33
+#: ../lib/dbupgrade.py:90 ../lib/plugins/movie/PluginMovieDVDPalace.py:34
+#: ../lib/plugins/movie/PluginMovieFilmDb.py:33
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:34
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:32
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:34
+#: ../lib/plugins/movie/PluginMovieOFDb.py:18
+#: ../lib/plugins/movie/PluginMovieZelluloid.py:34
 msgid "German"
 msgstr "Німецька"
 
-#: ../lib/dbupgrade.py:96
+#: ../lib/dbupgrade.py:91
 msgid "Greek"
 msgstr "Грецька"
 
-#: ../lib/dbupgrade.py:97
+#: ../lib/dbupgrade.py:92
 msgid "Hungarian"
 msgstr "Угорська"
 
-#: ../lib/dbupgrade.py:98
+#: ../lib/dbupgrade.py:93
 msgid "Indonesian"
 msgstr "Індонезійська"
 
-#: ../lib/dbupgrade.py:99 ../lib/plugins/movie/PluginMovieCinematografo.py:30
+#: ../lib/dbupgrade.py:94 ../lib/plugins/movie/PluginMovieCinematografo.py:31
 msgid "Italian"
 msgstr "Італійська"
 
-#: ../lib/dbupgrade.py:100
+#: ../lib/dbupgrade.py:95
 msgid "Japanese"
 msgstr "Японська"
 
-#: ../lib/dbupgrade.py:101
+#: ../lib/dbupgrade.py:96
 msgid "Korean"
 msgstr "Корейська"
 
-#: ../lib/dbupgrade.py:102
+#: ../lib/dbupgrade.py:97
 msgid "Norwegian Bokmal"
 msgstr "Норвезька Бокмал"
 
-#: ../lib/dbupgrade.py:103
+#: ../lib/dbupgrade.py:98
 msgid "Occitan"
 msgstr "Провансальська"
 
-#: ../lib/dbupgrade.py:104
+#: ../lib/dbupgrade.py:99
 msgid "Pashto"
 msgstr "Пашто"
 
-#: ../lib/dbupgrade.py:105 ../lib/plugins/movie/PluginMovieFDb.py:33
-#: ../lib/plugins/movie/PluginMovieFilmweb.py:31
-#: ../lib/plugins/movie/PluginMovieOnet.py:31
-#: ../lib/plugins/movie/PluginMovieStopklatka.py:31
-#: ../lib/plugins/movie/PluginMovieTanukiAnime.py:31
-#: ../lib/plugins/movie/PluginMovieWP.py:32
+#: ../lib/dbupgrade.py:100 ../lib/plugins/movie/PluginMovieFDb.py:34
+#: ../lib/plugins/movie/PluginMovieFilmweb.py:32
+#: ../lib/plugins/movie/PluginMovieOnet.py:32
+#: ../lib/plugins/movie/PluginMovieStopklatka.py:32
+#: ../lib/plugins/movie/PluginMovieTanukiAnime.py:32
+#: ../lib/plugins/movie/PluginMovieWP.py:33
 msgid "Polish"
 msgstr "Польська"
 
-#: ../lib/dbupgrade.py:106 ../lib/plugins/movie/PluginMovie7arte.py:32
-#: ../lib/plugins/movie/PluginMovieCineteka.py:32
-#: ../lib/plugins/movie/PluginMoviePTGate.py:32
+#: ../lib/dbupgrade.py:101 ../lib/plugins/movie/PluginMovie7arte.py:33
+#: ../lib/plugins/movie/PluginMovieCineteka.py:33
+#: ../lib/plugins/movie/PluginMoviePTGate.py:33
 msgid "Portuguese"
 msgstr "Португальська"
 
-#: ../lib/dbupgrade.py:107
+#: ../lib/dbupgrade.py:102
 msgid "Russian"
 msgstr "Російська"
 
-#: ../lib/dbupgrade.py:108
+#: ../lib/dbupgrade.py:103
 msgid "Simplified Chinese"
 msgstr "Китайська спрощена"
 
-#: ../lib/dbupgrade.py:109
+#: ../lib/dbupgrade.py:104
 msgid "Slovak"
 msgstr "Словацька"
 
-#: ../lib/dbupgrade.py:110 ../lib/plugins/movie/PluginMovieCulturalia.py:32
-#: ../lib/plugins/movie/PluginMovieFilmAffinity.py:32
-#: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
+#: ../lib/dbupgrade.py:105 ../lib/plugins/movie/PluginMovieCulturalia.py:33
+#: ../lib/plugins/movie/PluginMovieFilmAffinity.py:33
+#: ../lib/plugins/movie/PluginMovieIMDB-es.py:33
 msgid "Spanish"
 msgstr "Іспанська"
 
-#: ../lib/dbupgrade.py:111 ../lib/plugins/movie/PluginMovieFilmtipset.py:33
+#: ../lib/dbupgrade.py:106 ../lib/plugins/movie/PluginMovieFilmtipset.py:34
 msgid "Swedish"
 msgstr "Шведська"
 
-#: ../lib/dbupgrade.py:112
+#: ../lib/dbupgrade.py:107
 msgid "Turkish"
 msgstr "Турецька"
 
-#: ../lib/dbupgrade.py:115
+#: ../lib/dbupgrade.py:108
 msgid "Favourite"
 msgstr "Улюблене"
 
-#: ../lib/dbupgrade.py:137
+#: ../lib/dbupgrade.py:199
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
@@ -370,11 +471,11 @@ msgstr ""
 "Griffith зараз перетворить вашу базу даних в новий формат. Це може тривати "
 "декілька хвилин, якщо ви маєте велику базу даних."
 
-#: ../lib/dbupgrade.py:151
+#: ../lib/dbupgrade.py:212
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr "Перетворення старої БД: будь-ласка встановіть pysqlite legacy (v1.0)"
 
-#: ../lib/dbupgrade.py:180
+#: ../lib/dbupgrade.py:239
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
@@ -382,77 +483,78 @@ msgstr ""
 "Ваша база даних є можливо в форматі SQLite2, будь-ласка переформатуйте в "
 "SQLite3"
 
-#: ../lib/delete.py:37
+#: ../lib/delete.py:41
 msgid "You can't delete movie while it is loaned."
 msgstr "Ви не можете знищити фільм, тому що він позичений."
 
-#: ../lib/delete.py:39
+#: ../lib/delete.py:44
 msgid "Are you sure you want to delete this movie?"
 msgstr "Ви впевнені, що хочете видалити цей фільм?"
 
-#: ../lib/edit.py:58
-msgid "Image not valid."
+#: ../lib/edit.py:63
+#, fuzzy
+msgid "Image is not valid."
 msgstr "Невірне зображення"
 
-#: ../lib/edit.py:88 ../lib/edit.py:106
+#: ../lib/edit.py:94 ../lib/edit.py:120
 msgid "Image has been updated"
 msgstr "Зображення оновлено"
 
-#: ../lib/edit.py:95
+#: ../lib/edit.py:102
 msgid "Are you sure you want to delete this poster?"
 msgstr "Ви впевнені, що бажаєте видалити цю афішу?"
 
-#: ../lib/edit.py:149 ../lib/edit.py:156
+#: ../lib/edit.py:166 ../lib/edit.py:173
 msgid "No posters found for this movie."
 msgstr "Немає афіш для цього фільму.."
 
-#: ../lib/edit.py:201 ../lib/movie.py:147
+#: ../lib/edit.py:218 ../lib/movie.py:168
 msgid "Fetching poster"
 msgstr "Отримання афіші"
 
-#: ../lib/edit.py:201 ../lib/movie.py:121 ../lib/movie.py:147
-#: ../lib/movie.py:241
+#: ../lib/edit.py:218 ../lib/movie.py:125 ../lib/movie.py:143
+#: ../lib/movie.py:168 ../lib/movie.py:265 ../lib/movie.py:286
 msgid "Wait a moment"
 msgstr "Зачекайте хвилинку"
 
-#: ../lib/edit.py:213
+#: ../lib/edit.py:230
 msgid "Sorry. A connection error has occurred."
 msgstr "Вибачте. Виникла помилка з'єднання"
 
-#: ../lib/edit.py:226 ../lib/edit.py:259
+#: ../lib/edit.py:242 ../lib/edit.py:273
 msgid "Sorry. This movie is listed but has no poster available at Amazon.com."
 msgstr "Вибачте. Цей фільм є в переліку, проте немає афіші на Amazon.com."
 
-#: ../lib/edit.py:245
+#: ../lib/edit.py:260
 msgid "Do you want to use this poster instead?"
 msgstr "Ви бажаєте використати цю афішу заново?"
 
-#: ../lib/gconsole.py:133
+#: ../lib/gconsole.py:137
 msgid "No movie found"
 msgstr "Фільму не знайдено"
 
-#: ../lib/gemail.py:39
+#: ../lib/gemail.py:40
 msgid "Connection timed out"
 msgstr "Час очікування з'єднання закінчився"
 
-#: ../lib/gemail.py:50 ../lib/gemail.py:60
+#: ../lib/gemail.py:51 ../lib/gemail.py:61
 #, python-format
 msgid "Error sending e-mail: %s"
 msgstr "Помилка відправлення пошти: %s"
 
-#: ../lib/gemail.py:50
+#: ../lib/gemail.py:51
 msgid "login failure"
 msgstr "Помилковий логін"
 
-#: ../lib/gemail.py:57
+#: ../lib/gemail.py:58
 msgid "E-mail sent sucessfuly"
 msgstr "Відправлення пошти завершено."
 
-#: ../lib/gemail.py:77
+#: ../lib/gemail.py:78
 msgid "Movie loan reminder"
 msgstr "Нагадування про позичені фільми"
 
-#: ../lib/gemail.py:77
+#: ../lib/gemail.py:78
 #, python-format
 msgid ""
 "Hi, %s!\n"
@@ -460,260 +562,277 @@ msgid ""
 "Just to remind you "
 msgstr "Привіт, %s "
 
-#: ../lib/gemail.py:83
+#: ../lib/gemail.py:84
 msgid "Mail could not be sent. Please check e-mail preferences."
 msgstr ""
 "Пошта не може бути відправлена. Будь-ласка перевірте налаштування пошти."
 
-#: ../lib/gemail.py:85
+#: ../lib/gemail.py:86
 msgid "This person has no e-mail address defined."
 msgstr "Не задано адресу електронної пошти для цієї особи."
 
-#: ../lib/gutils.py:265
+#: ../lib/gutils.py:286
 msgid "Images"
 msgstr "Зображення"
 
-#: ../lib/gutils.py:276 ../lib/plugins/imp/__init__.py:202
+#: ../lib/gutils.py:297 ../lib/plugins/imp/__init__.py:221
 msgid "All files"
 msgstr "Усі файли"
 
-#: ../lib/initialize.py:187
+#: ../lib/initialize.py:192
 msgid "N."
 msgstr ""
 
-#: ../lib/initialize.py:194 ../lib/initialize.py:614
-#: ../lib/plugins/export/PluginExportHTML.py:138 ../glade/griffith.glade.h:69
+#: ../lib/initialize.py:199 ../lib/initialize.py:620
+#: ../lib/plugins/export/PluginExportHTML.py:142 ../glade/griffith.glade.h:76
 msgid "Image"
 msgstr "Зображення"
 
-#: ../lib/initialize.py:228 ../lib/initialize.py:627
-#: ../lib/plugins/export/PluginExportHTML.py:150 ../glade/griffith.glade.h:127
+#: ../lib/initialize.py:233 ../lib/initialize.py:635
+#: ../lib/plugins/export/PluginExportHTML.py:154 ../glade/griffith.glade.h:136
 msgid "Seen it"
 msgstr "Дивився"
 
-#: ../lib/initialize.py:236 ../lib/initialize.py:634
-#: ../lib/plugins/export/PluginExportHTML.py:152 ../glade/griffith.glade.h:162
+#: ../lib/initialize.py:241 ../lib/initialize.py:642
+#: ../lib/plugins/export/PluginExportHTML.py:156 ../glade/griffith.glade.h:170
 msgid "Year"
 msgstr "Рік"
 
-#: ../lib/initialize.py:245 ../lib/initialize.py:626
-#: ../lib/plugins/export/PluginExportHTML.py:148 ../glade/griffith.glade.h:123
+#: ../lib/initialize.py:250 ../lib/initialize.py:633
+#: ../lib/plugins/export/PluginExportHTML.py:152 ../glade/griffith.glade.h:131
 msgid "Runtime"
 msgstr "Час відтворення"
 
-#: ../lib/initialize.py:254 ../lib/initialize.py:624
-#: ../lib/plugins/export/PluginExportHTML.py:147 ../glade/griffith.glade.h:113
+#: ../lib/initialize.py:259 ../lib/initialize.py:631
+#: ../lib/plugins/export/PluginExportHTML.py:151 ../glade/griffith.glade.h:121
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: ../lib/initialize.py:306
+#: ../lib/initialize.py:311
 msgid "Loan Date"
 msgstr "Дата позички"
 
-#: ../lib/initialize.py:312
+#: ../lib/initialize.py:317
 msgid "Return Date"
 msgstr "Дата повернення"
 
-#: ../lib/initialize.py:317
+#: ../lib/initialize.py:322
 msgid "Loaned To"
 msgstr "Позичено"
 
-#: ../lib/initialize.py:336 ../lib/plugins/movie/PluginMovieIMDB-de.py:145
-#: ../lib/plugins/movie/PluginMovieIMDB.py:140
+#: ../lib/initialize.py:341 ../lib/plugins/movie/PluginMovieIMDB-de.py:183
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:332
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:379
+#: ../lib/plugins/movie/PluginMovieIMDB.py:161
 msgid "Language"
 msgstr "Мова"
 
-#: ../lib/initialize.py:348 ../lib/initialize.py:637
+#: ../lib/initialize.py:353 ../lib/initialize.py:645
 msgid "lector"
 msgstr ""
 
-#: ../lib/initialize.py:349 ../lib/initialize.py:637
+#: ../lib/initialize.py:354 ../lib/initialize.py:645
 msgid "dubbing"
 msgstr ""
 
-#: ../lib/initialize.py:351 ../lib/initialize.py:637
+#: ../lib/initialize.py:356 ../lib/initialize.py:645
 msgid "commentary"
 msgstr ""
 
-#: ../lib/initialize.py:358 ../glade/griffith.glade.h:151
+#: ../lib/initialize.py:363 ../glade/griffith.glade.h:159
 msgid "Type"
 msgstr ""
 
-#: ../lib/initialize.py:373
+#: ../lib/initialize.py:378
 msgid "Codec"
 msgstr ""
 
-#: ../lib/initialize.py:388
+#: ../lib/initialize.py:393
 msgid "Channels"
 msgstr ""
 
-#: ../lib/initialize.py:403
+#: ../lib/initialize.py:408
 msgid "Subtitle format"
 msgstr ""
 
-#: ../lib/initialize.py:519 ../glade/griffith.glade.h:91
+#: ../lib/initialize.py:524 ../glade/griffith.glade.h:98
 msgid "Name"
 msgstr ""
 
-#: ../lib/initialize.py:525 ../glade/exporthtml.glade.h:16
-#: ../glade/griffith.glade.h:50 ../glade/import.glade.h:5
+#: ../lib/initialize.py:530 ../glade/exporthtml.glade.h:16
+#: ../glade/griffith.glade.h:56 ../glade/import.glade.h:5
 msgid "E-mail"
 msgstr ""
 
-#: ../lib/initialize.py:573
+#: ../lib/initialize.py:578
 msgid "Last added"
 msgstr ""
 
-#: ../lib/initialize.py:606 ../lib/plugins/export/PluginExportHTML.py:133
-#: ../lib/plugins/export/PluginExportPDF.py:155 ../glade/griffith.glade.h:33
+#: ../lib/initialize.py:611 ../lib/plugins/export/PluginExportHTML.py:137
+#: ../lib/plugins/export/PluginExportPDF.py:169 ../glade/griffith.glade.h:39
 msgid "Cast"
 msgstr "У ролях"
 
-#: ../lib/initialize.py:607 ../lib/plugins/export/PluginExportHTML.py:134
-#: ../glade/griffith.glade.h:35
+#: ../lib/initialize.py:612 ../glade/griffith.glade.h:38
+#, fuzzy
+msgid "Cameraman"
+msgstr "Німецька"
+
+#: ../lib/initialize.py:613 ../lib/plugins/export/PluginExportHTML.py:138
+#: ../glade/griffith.glade.h:41
 msgid "Classification"
 msgstr "Класифікація"
 
-#: ../lib/initialize.py:608 ../lib/plugins/export/PluginExportHTML.py:161
-#: ../glade/griffith.glade.h:38
+#: ../lib/initialize.py:614 ../lib/plugins/export/PluginExportHTML.py:165
+#: ../glade/griffith.glade.h:44
 msgid "Collection"
 msgstr "Колекція"
 
-#: ../lib/initialize.py:609 ../lib/initialize.py:636
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:149
-#: ../lib/plugins/movie/PluginMovieIMDB.py:144 ../glade/griffith.glade.h:39
+#: ../lib/initialize.py:615 ../lib/initialize.py:644
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:187
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:334
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:381
+#: ../lib/plugins/movie/PluginMovieIMDB.py:165 ../glade/griffith.glade.h:45
 msgid "Color"
 msgstr "Колір"
 
-#: ../lib/initialize.py:610 ../glade/griffith.glade.h:40
+#: ../lib/initialize.py:616 ../glade/griffith.glade.h:46
 msgid "Condition"
 msgstr "Стан"
 
-#: ../lib/initialize.py:615 ../glade/griffith.glade.h:73
+#: ../lib/initialize.py:621 ../glade/griffith.glade.h:80
 msgid "Layers"
 msgstr "Прошарки"
 
-#: ../lib/initialize.py:616 ../lib/plugins/export/PluginExportHTML.py:142
+#: ../lib/initialize.py:622 ../lib/plugins/export/PluginExportHTML.py:146
 msgid "Loaned"
 msgstr "Позичений"
 
-#: ../lib/initialize.py:617 ../lib/plugins/export/PluginExportHTML.py:143
-#: ../glade/griffith.glade.h:49
+#: ../lib/initialize.py:623 ../lib/plugins/export/PluginExportHTML.py:147
+#: ../glade/griffith.glade.h:55
 msgid "Discs"
 msgstr "Диски"
 
-#: ../lib/initialize.py:618 ../glade/griffith.glade.h:86
+#: ../lib/initialize.py:624 ../glade/griffith.glade.h:93
 msgid "Medium"
 msgstr "Середній"
 
-#: ../lib/initialize.py:619 ../lib/plugins/export/PluginExportHTML.py:153
-#: ../glade/griffith.glade.h:94
+#: ../lib/initialize.py:625 ../lib/plugins/export/PluginExportHTML.py:157
+#: ../glade/griffith.glade.h:101
 msgid "Notes"
 msgstr "Примітки"
 
-#: ../lib/initialize.py:620 ../lib/sql.py:280
-#: ../lib/plugins/export/PluginExportHTML.py:144 ../glade/griffith.glade.h:95
+#: ../lib/initialize.py:626 ../lib/plugins/export/PluginExportHTML.py:148
+#: ../glade/griffith.glade.h:102
 msgid "Number"
 msgstr "Число"
 
-#: ../lib/initialize.py:621 ../lib/plugins/export/PluginExportHTML.py:139
-#: ../glade/griffith.glade.h:96
+#: ../lib/initialize.py:627 ../lib/plugins/export/PluginExportHTML.py:143
+#: ../glade/griffith.glade.h:103
 msgid "Official site"
 msgstr "Офіційна інтернет сторінка"
 
-#: ../lib/initialize.py:623 ../lib/plugins/export/PluginExportHTML.py:146
-#: ../glade/griffith.glade.h:105
+#: ../lib/initialize.py:629 ../lib/plugins/export/PluginExportHTML.py:150
+#: ../glade/griffith.glade.h:113
 msgid "Plot"
 msgstr "Графік"
 
-#: ../lib/initialize.py:625 ../glade/griffith.glade.h:115
+#: ../lib/initialize.py:630 ../glade/griffith.glade.h:33
+msgid "Aspect ratio"
+msgstr ""
+
+#: ../lib/initialize.py:632 ../glade/griffith.glade.h:123
 msgid "Region"
 msgstr "Регіон"
 
-#: ../lib/initialize.py:628 ../lib/plugins/export/PluginExportHTML.py:140
-#: ../glade/griffith.glade.h:137
+#: ../lib/initialize.py:634 ../glade/griffith.glade.h:134
+msgid "Screenplay"
+msgstr ""
+
+#: ../lib/initialize.py:636 ../lib/plugins/export/PluginExportHTML.py:144
+#: ../glade/griffith.glade.h:145
 msgid "Site"
 msgstr "Інтернет сторінка"
 
-#: ../lib/initialize.py:629 ../lib/plugins/export/PluginExportHTML.py:149
-#: ../glade/griffith.glade.h:143
+#: ../lib/initialize.py:637 ../lib/plugins/export/PluginExportHTML.py:153
+#: ../glade/griffith.glade.h:151
 msgid "Studio"
 msgstr "Студія"
 
-#: ../lib/initialize.py:631 ../lib/plugins/export/PluginExportHTML.py:141
-#: ../glade/griffith.glade.h:150
+#: ../lib/initialize.py:639 ../lib/plugins/export/PluginExportHTML.py:145
+#: ../glade/griffith.glade.h:158
 msgid "Trailer"
 msgstr "Анонс"
 
-#: ../lib/initialize.py:632 ../lib/plugins/export/PluginExportHTML.py:164
-#: ../glade/griffith.glade.h:157
+#: ../lib/initialize.py:640 ../lib/plugins/export/PluginExportHTML.py:168
+#: ../glade/griffith.glade.h:165
 msgid "Video codec"
 msgstr "Відео кодек"
 
-#: ../lib/initialize.py:633 ../lib/plugins/export/PluginExportHTML.py:162
-#: ../glade/griffith.glade.h:160
+#: ../lib/initialize.py:641 ../lib/plugins/export/PluginExportHTML.py:166
+#: ../glade/griffith.glade.h:168
 msgid "Volume"
 msgstr "Гучність"
 
-#: ../lib/initialize.py:635 ../lib/initialize.py:636 ../lib/initialize.py:638
-#: ../lib/initialize.py:862 ../lib/initialize.py:863 ../lib/initialize.py:894
-#: ../lib/initialize.py:895
+#: ../lib/initialize.py:643 ../lib/initialize.py:644 ../lib/initialize.py:646
+#: ../lib/initialize.py:888 ../lib/initialize.py:889 ../lib/initialize.py:921
+#: ../lib/initialize.py:922
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../lib/initialize.py:635
+#: ../lib/initialize.py:643
 msgid "Damaged"
 msgstr "Пошкоджено"
 
-#: ../lib/initialize.py:635
+#: ../lib/initialize.py:643
 msgid "Poor"
 msgstr "Поганий"
 
-#: ../lib/initialize.py:635
+#: ../lib/initialize.py:643
 msgid "Fair"
 msgstr "Непогано"
 
-#: ../lib/initialize.py:635
+#: ../lib/initialize.py:643
 msgid "Good"
 msgstr "Добре"
 
-#: ../lib/initialize.py:635
+#: ../lib/initialize.py:643
 msgid "Excellent"
 msgstr "Чудовий"
 
-#: ../lib/initialize.py:636
+#: ../lib/initialize.py:644
 msgid "Black and White"
 msgstr "Чорно-білий"
 
-#: ../lib/initialize.py:636
+#: ../lib/initialize.py:644
 msgid "Mixed"
 msgstr "Змішаний"
 
-#: ../lib/initialize.py:638
+#: ../lib/initialize.py:646
 msgid "Single Side, Single Layer"
 msgstr "Односторонній, Одношаровий"
 
-#: ../lib/initialize.py:638
+#: ../lib/initialize.py:646
 msgid "Single Side, Dual Layer"
 msgstr "Односторонній, Двошаровий"
 
-#: ../lib/initialize.py:638
+#: ../lib/initialize.py:646
 msgid "Dual Side, Single Layer"
 msgstr "Двосторонній, Одношаровий"
 
-#: ../lib/initialize.py:638
+#: ../lib/initialize.py:646
 msgid "Dual Side, Dual Layer"
 msgstr "Двосторонній, Двошаровий"
 
-#: ../lib/initialize.py:640
+#: ../lib/initialize.py:648
 msgid "Region 0 (No Region Coding)"
 msgstr "Регіон 0 (код регіону)"
 
-#: ../lib/initialize.py:641
+#: ../lib/initialize.py:649
 msgid "Region 1 (United States of America, Canada)"
 msgstr "Регіон 1 (США, Канада)"
 
-#: ../lib/initialize.py:642
+#: ../lib/initialize.py:650
 msgid ""
 "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and "
 "South Africa)"
@@ -721,11 +840,11 @@ msgstr ""
 "Регіон 2 (містить Францію, Грецію, Туреччину, Єгипет, Арабські країни, "
 "Японію, ПАР)"
 
-#: ../lib/initialize.py:643
+#: ../lib/initialize.py:651
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
 msgstr "Регіон 3 (Корея, Тайланд, В'єтнам, Борнео та Індонезія)"
 
-#: ../lib/initialize.py:644
+#: ../lib/initialize.py:652
 msgid ""
 "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
 "America)"
@@ -733,79 +852,86 @@ msgstr ""
 "Регіон 4 (Австралія і Нова Зеландія, Мексика, Карибські острови та Південна "
 "Америка)"
 
-#: ../lib/initialize.py:645
+#: ../lib/initialize.py:653
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
 msgstr "Регіон 5 (Індія, Африка, Росія і колишні республіки СРСР)"
 
-#: ../lib/initialize.py:646
+#: ../lib/initialize.py:654
 msgid "Region 6 (Popular Republic of China)"
 msgstr "Регіон 6 (Китай)"
 
-#: ../lib/initialize.py:647
+#: ../lib/initialize.py:655
 msgid "Region 7 (Reserved for Unspecified Special Use)"
 msgstr "Регіон 7 (Зарезервовано для спеціальної мети)"
 
-#: ../lib/initialize.py:648
+#: ../lib/initialize.py:656
 msgid "Region 8 (Airlines/Cruise Ships)"
 msgstr "Регіон 8 (Авіа і Морські подорожі)"
 
-#: ../lib/initialize.py:685
+#: ../lib/initialize.py:693
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr "Словник не доступний. Перевірка орфографії не можлива. \n"
 
-#: ../lib/loan.py:40
+#: ../lib/loan.py:45
 msgid "No person is defined yet."
 msgstr "Осіб ще немає"
 
-#: ../lib/loan.py:67
+#: ../lib/loan.py:72
 msgid "Do you want to loan whole collection?"
 msgstr "Ви дійсно хочете позичити всю колекцію?"
 
-#: ../lib/loan.py:79
+#: ../lib/loan.py:80
+msgid ""
+"Collection contains loaned movie.\n"
+"Loan aborted!"
+msgstr ""
+
+#: ../lib/loan.py:83
 msgid "Movie loaned"
 msgstr "Фільм позичено"
 
-#: ../lib/main_treeview.py:246
+#: ../lib/main_treeview.py:259
 msgid "This movie has been loaned to "
 msgstr "Цей фільм позичено "
 
-#: ../lib/main_treeview.py:246
+#: ../lib/main_treeview.py:259
 msgid " on "
 msgstr " на "
 
-#: ../lib/main_treeview.py:257
+#: ../lib/main_treeview.py:270
 msgid "Movie not loaned"
 msgstr "Фільм не позичено"
 
-#: ../lib/movie.py:121
+#: ../lib/movie.py:125 ../lib/movie.py:143
 msgid "Fetching data"
 msgstr "Отримання даних"
 
-#: ../lib/movie.py:241
+#: ../lib/movie.py:265 ../lib/movie.py:286
 msgid "Searching"
 msgstr "Пошук"
 
-#: ../lib/movie.py:280
+#: ../lib/movie.py:320 ../lib/plugins/movie/PluginMovieAmazon.py:345
+#: ../lib/plugins/movie/PluginMovieAmazon.py:359
 msgid "Connection error"
 msgstr "Помилка з'єднання"
 
-#: ../lib/movie.py:320
+#: ../lib/movie.py:361
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: ../lib/people.py:59
+#: ../lib/people.py:73
 msgid "You should fill the person name"
 msgstr "Ви повинні ввести ім'я особи"
 
-#: ../lib/people.py:88
+#: ../lib/people.py:112
 msgid "Record updated"
 msgstr "Запис оновлено"
 
-#: ../lib/people.py:111
+#: ../lib/people.py:135
 msgid "This person has loaned films from you. Return them first."
 msgstr "Особа позичила у вас фільми. Повернути їх в першу чергу."
 
-#: ../lib/people.py:116
+#: ../lib/people.py:140
 msgid ""
 "This person has data in the loan history. This data will be erased if you "
 "continue."
@@ -813,159 +939,226 @@ msgstr ""
 "Ця особа має записи в історії позичок. Дані будуть видалені, якщо ви "
 "продовжите."
 
-#: ../lib/people.py:117
+#: ../lib/people.py:141
 #, python-format
 msgid ""
 "%s\n"
 "Are you sure you want to delete this person?"
 msgstr ""
 
-#: ../lib/sql.py:63 ../lib/sql.py:125
-msgid ""
-"This item is in use.\n"
-"Operation aborted!"
-msgstr "Цей пункт використовується."
-
-#: ../lib/sql.py:84
-msgid "This name is already in use!"
-msgstr "Це ім'я вже використовується!"
-
-#: ../lib/sql.py:280
-#, python-format
-msgid "Column \"%s\" is not unique"
-msgstr "Колонка \"%s\" не унікальна"
-
-#: ../lib/sql.py:351
+#: ../lib/sql.py:110
 msgid ""
 "Cannot connect to database.\n"
 "Falling back to SQLite."
 msgstr ""
 
-#: ../lib/sql.py:351
+#: ../lib/sql.py:110
 msgid "Please check debug output for more informations."
 msgstr ""
 
-#: ../lib/sql.py:359
+#: ../lib/sql.py:124
 msgid "Database connection failed."
 msgstr ""
 
-#: ../lib/version.py:30
+#: ../lib/version.py:31
 msgid "Griffith is a film collection manager."
 msgstr ""
 
-#: ../lib/view.py:28
+#: ../lib/view.py:31
 msgid "Filter activated. Showing only not seen movies."
 msgstr ""
 
-#: ../lib/view.py:32
+#: ../lib/view.py:35
 msgid "Filter activated. Showing only loaned movies."
 msgstr ""
 
-#: ../lib/view.py:42
+#: ../lib/view.py:45
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
 msgstr ""
 
-#: ../lib/view.py:49
+#: ../lib/view.py:52
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr ""
 
-#: ../lib/widgets.py:317
+#: ../lib/widgets.py:352
 msgid ""
 "Define here the PDF reader you want to use within Griffith. Popular choices "
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
 "and working first."
 msgstr ""
 
-#: ../lib/widgets.py:318
+#: ../lib/widgets.py:353
 msgid ""
 "Here you can define the desired language to use while spell checking some "
 "fields. Use you locale setting. For example, to use european portuguese "
 "spell checking enter 'pt'"
 msgstr ""
 
-#: ../lib/widgets.py:319
+#: ../lib/widgets.py:354
 msgid ""
 "Use this entry to define the SMTP server you want to use to send e-mails. On "
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
 "Internet Service Provider's SMTP server address."
 msgstr ""
 
-#: ../lib/widgets.py:320
+#: ../lib/widgets.py:355
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
 msgstr ""
 
-#: ../lib/widgets.py:321
+#: ../lib/widgets.py:356
 msgid ""
 "Here you can define the smtp server port to use. If you want to use your "
 "gmail account service to send e-mails, try to enter '587' here. Default (and "
 "the most common one) is '25'"
 msgstr ""
 
-#: ../lib/widgets.py:322
+#: ../lib/widgets.py:357
 msgid ""
 "If you need TLS support, please check this checkbox. This is needed, for "
 "example, when using gmail service to send your reminder e-mails."
 msgstr ""
 
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:93
-#: ../lib/plugins/movie/PluginMovieFDb.py:103
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:85
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:197
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:198
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:199
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:200
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:201
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:202
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:203
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:222
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:223
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:224
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:225
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:226
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:227
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:228
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:229
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:248
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:249
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:250
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:251
-#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:252
-#: ../lib/plugins/movie/PluginMovieFilmweb.py:106
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:100
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:101
-#: ../lib/plugins/movie/PluginMovieIMDB-es.py:101
-#: ../lib/plugins/movie/PluginMovieIMDB.py:93
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:155
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:330
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:331
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:332
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:333
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:334
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:335
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:336
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:337
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:407
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:408
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:409
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:410
-#: ../lib/plugins/movie/PluginMovieKinoDe.py:411
-#: ../lib/plugins/movie/PluginMovieOFDb.py:83
-#: ../lib/plugins/movie/PluginMovieOFDb.py:182
-#: ../lib/plugins/movie/PluginMovieOFDb.py:183
-#: ../lib/plugins/movie/PluginMovieOFDb.py:184
-#: ../lib/plugins/movie/PluginMovieOFDb.py:234
-#: ../lib/plugins/movie/PluginMovieOFDb.py:297
-#: ../lib/plugins/movie/PluginMovieOFDb.py:298
-#: ../lib/plugins/movie/PluginMovieOFDb.py:299
-#: ../lib/plugins/movie/PluginMovieOnet.py:102
-#: ../lib/plugins/movie/PluginMovieWP.py:96
-#: ../lib/plugins/movie/PluginMovieWP.py:98
-#: ../lib/plugins/movie/PluginMovieZelluloid.py:104
-#: ../lib/plugins/movie/PluginMovieZelluloid.py:201
+#: ../lib/plugins/movie/PluginMovieAmazon.py:41
+msgid "International"
+msgstr ""
+
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:94
+#: ../lib/plugins/movie/PluginMovieFDb.py:107
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:86
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:185
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:186
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:187
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:188
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:189
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:190
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:191
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:210
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:211
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:212
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:213
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:214
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:215
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:216
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:217
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:236
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:237
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:238
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:239
+#: ../lib/plugins/movie/PluginMovieFilmeVonAZ.py:240
+#: ../lib/plugins/movie/PluginMovieFilmweb.py:107
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:113
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:114
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:261
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:262
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:263
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:264
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:265
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:266
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:267
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:268
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:269
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:270
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:271
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:272
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:273
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:274
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:275
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:276
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:277
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:278
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:279
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:280
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:281
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:282
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:283
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:284
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:285
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:286
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:287
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:288
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:289
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:290
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:291
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:292
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:293
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:294
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:295
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:296
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:297
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:298
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:299
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:300
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:301
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:302
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:303
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:304
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:305
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:306
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:307
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:308
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:309
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:310
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:311
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:312
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:313
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:314
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:315
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:316
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:318
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:319
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:320
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:321
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:322
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:323
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:345
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:346
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:347
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:348
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:349
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:350
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:351
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:352
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:353
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:354
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:360
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:361
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:367
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:368
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:369
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:370
+#: ../lib/plugins/movie/PluginMovieIMDB-es.py:102
+#: ../lib/plugins/movie/PluginMovieIMDB.py:98
+#: ../lib/plugins/movie/PluginMovieIMDB.py:99
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:159
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:321
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:322
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:323
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:324
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:325
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:326
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:327
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:328
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:398
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:399
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:400
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:401
+#: ../lib/plugins/movie/PluginMovieKinoDe.py:402
+#: ../lib/plugins/movie/PluginMovieOFDb.py:84
+#: ../lib/plugins/movie/PluginMovieOFDb.py:171
+#: ../lib/plugins/movie/PluginMovieOFDb.py:172
+#: ../lib/plugins/movie/PluginMovieOFDb.py:173
+#: ../lib/plugins/movie/PluginMovieOFDb.py:223
+#: ../lib/plugins/movie/PluginMovieOFDb.py:286
+#: ../lib/plugins/movie/PluginMovieOFDb.py:287
+#: ../lib/plugins/movie/PluginMovieOFDb.py:288
+#: ../lib/plugins/movie/PluginMovieOnet.py:103
+#: ../lib/plugins/movie/PluginMovieWP.py:97
+#: ../lib/plugins/movie/PluginMovieWP.py:99
+#: ../lib/plugins/movie/PluginMovieZelluloid.py:105
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:202
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:203
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:204
@@ -977,7 +1170,7 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:210
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:211
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:212
-#: ../lib/plugins/movie/PluginMovieZelluloid.py:231
+#: ../lib/plugins/movie/PluginMovieZelluloid.py:213
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:232
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:233
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:234
@@ -1002,56 +1195,63 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:253
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:254
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:255
+#: ../lib/plugins/movie/PluginMovieZelluloid.py:256
 msgid " as "
 msgstr ""
 
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:147
-#: ../lib/plugins/movie/PluginMovieIMDB.py:142 ../glade/griffith.glade.h:4
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:185
+#: ../lib/plugins/movie/PluginMovieIMDB.py:163 ../glade/griffith.glade.h:4
 msgid "<b>Audio</b>"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportCSV.py:31
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:333
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:380
+#, fuzzy
+msgid "Audio"
+msgstr "Студія"
+
+#: ../lib/plugins/export/PluginExportCSV.py:33
 msgid "Full CSV list export plugin"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportCSV.py:53
-#: ../lib/plugins/export/PluginExportCSV.py:56
-#: ../lib/plugins/export/PluginExportiPod.py:106
-#: ../lib/plugins/export/PluginExportXML.py:54
-#: ../lib/plugins/export/PluginExportXML.py:57
+#: ../lib/plugins/export/PluginExportCSV.py:55
+#: ../lib/plugins/export/PluginExportCSV.py:58
+#: ../lib/plugins/export/PluginExportiPod.py:108
+#: ../lib/plugins/export/PluginExportXML.py:56
+#: ../lib/plugins/export/PluginExportXML.py:59
 #, python-format
 msgid "Export a %s document"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportCSV.py:79
-#: ../lib/plugins/export/PluginExportXML.py:97
+#: ../lib/plugins/export/PluginExportCSV.py:81
+#: ../lib/plugins/export/PluginExportXML.py:99
 #, python-format
 msgid "%s file has been created."
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportHTML.py:36
+#: ../lib/plugins/export/PluginExportHTML.py:40
 msgid "Plugin exports data using templates"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportHTML.py:48
+#: ../lib/plugins/export/PluginExportHTML.py:52
 msgid "Griffith's movies list"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportHTML.py:160 ../glade/griffith.glade.h:85
+#: ../lib/plugins/export/PluginExportHTML.py:164 ../glade/griffith.glade.h:92
 msgid "Media"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportHTML.py:504
-#: ../lib/plugins/export/PluginExportHTML.py:506
+#: ../lib/plugins/export/PluginExportHTML.py:509
+#: ../lib/plugins/export/PluginExportHTML.py:511
 msgid "previous"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportHTML.py:517
-#: ../lib/plugins/export/PluginExportHTML.py:519
+#: ../lib/plugins/export/PluginExportHTML.py:522
+#: ../lib/plugins/export/PluginExportHTML.py:524
 msgid "next"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportHTML.py:648
+#: ../lib/plugins/export/PluginExportHTML.py:649
 #: ../lib/plugins/export/PluginExportHTML.py:690
 #: ../lib/plugins/export/PluginExportHTML.py:787
 #, python-format
@@ -1082,7 +1282,7 @@ msgid "Can't open %s!"
 msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:741
-#: ../lib/plugins/export/PluginExportPDF.py:167
+#: ../lib/plugins/export/PluginExportPDF.py:181
 msgid "Document generated by Griffith v"
 msgstr ""
 
@@ -1098,73 +1298,73 @@ msgstr ""
 msgid "Document has been generated."
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportiPod.py:36
+#: ../lib/plugins/export/PluginExportiPod.py:38
 msgid "iPod Notes export plugin"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportiPod.py:85
+#: ../lib/plugins/export/PluginExportiPod.py:87
 msgid "My Movies List"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportiPod.py:101
+#: ../lib/plugins/export/PluginExportiPod.py:103
 msgid "List was successful exported to iPod."
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportiPod.py:103
+#: ../lib/plugins/export/PluginExportiPod.py:105
 msgid "iPod is not connected."
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportiPod.py:118
+#: ../lib/plugins/export/PluginExportiPod.py:120
 msgid ""
 "List was successful exported. Now you should move it to the 'Notes' folder "
 "on your iPod."
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportPDF.py:47
+#: ../lib/plugins/export/PluginExportPDF.py:50
 msgid "PDF export plugin"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportPDF.py:75
-#: ../lib/plugins/export/PluginExportPDF.py:77
+#: ../lib/plugins/export/PluginExportPDF.py:78
+#: ../lib/plugins/export/PluginExportPDF.py:80
 msgid "Export a PDF"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportPDF.py:118
+#: ../lib/plugins/export/PluginExportPDF.py:124
 msgid "List of films"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportPDF.py:121
+#: ../lib/plugins/export/PluginExportPDF.py:127
 #, python-format
 msgid "Total Movies: %s"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportPDF.py:160
+#: ../lib/plugins/export/PluginExportPDF.py:174
 msgid "PDF has been created."
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportPDF.py:165
+#: ../lib/plugins/export/PluginExportPDF.py:179
 #, python-format
 msgid "Page %d"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportXML.py:32
+#: ../lib/plugins/export/PluginExportXML.py:34
 msgid "Full XML list export plugin"
 msgstr ""
 
-#: ../lib/plugins/imp/CSV.py:43
+#: ../lib/plugins/imp/CSV.py:44
 msgid "Full CSV list import plugin"
 msgstr ""
 
-#: ../lib/plugins/imp/CSV.py:192
+#: ../lib/plugins/imp/CSV.py:193
 msgid "Please assign at least one field first!"
 msgstr ""
 
-#: ../lib/plugins/imp/CSV.py:310
+#: ../lib/plugins/imp/CSV.py:311
 #, python-format
 msgid "Can't open the file %s"
 msgstr ""
 
-#: ../lib/plugins/imp/__init__.py:227
+#: ../lib/plugins/imp/__init__.py:246
 #, python-format
 msgid "%s file has been imported. %s movies added."
 msgstr ""
@@ -1181,11 +1381,11 @@ msgstr ""
 msgid "<b>Header</b>"
 msgstr ""
 
-#: ../glade/exporthtml.glade.h:4
+#: ../glade/exporthtml.glade.h:4 ../glade/griffith.glade.h:10
 msgid "<b>Limits</b>"
 msgstr ""
 
-#: ../glade/exporthtml.glade.h:5 ../glade/griffith.glade.h:15
+#: ../glade/exporthtml.glade.h:5 ../glade/griffith.glade.h:18
 msgid "<b>Sort by</b>"
 msgstr ""
 
@@ -1253,7 +1453,7 @@ msgstr ""
 msgid "Posters"
 msgstr ""
 
-#: ../glade/exporthtml.glade.h:23 ../glade/griffith.glade.h:122
+#: ../glade/exporthtml.glade.h:23 ../glade/griffith.glade.h:130
 msgid "Reverse"
 msgstr ""
 
@@ -1277,23 +1477,23 @@ msgstr ""
 msgid "files"
 msgstr ""
 
-#: ../glade/exporthtml.glade.h:29
+#: ../glade/exporthtml.glade.h:29 ../glade/griffith.glade.h:182
 msgid "loaned only"
 msgstr ""
 
-#: ../glade/exporthtml.glade.h:30
+#: ../glade/exporthtml.glade.h:30 ../glade/griffith.glade.h:186
 msgid "none"
 msgstr ""
 
-#: ../glade/exporthtml.glade.h:31
+#: ../glade/exporthtml.glade.h:31 ../glade/griffith.glade.h:187
 msgid "not loaned only"
 msgstr ""
 
-#: ../glade/exporthtml.glade.h:32
+#: ../glade/exporthtml.glade.h:32 ../glade/griffith.glade.h:190
 msgid "seen only"
 msgstr ""
 
-#: ../glade/exporthtml.glade.h:33
+#: ../glade/exporthtml.glade.h:33 ../glade/griffith.glade.h:192
 msgid "unseen only"
 msgstr ""
 
@@ -1314,558 +1514,577 @@ msgid "<b>Collection</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:6
+#, fuzzy
+msgid "<b>Collections</b>"
+msgstr "Колекція"
+
+#: ../glade/griffith.glade.h:7
 msgid "<b>Defaults</b>"
 msgstr ""
 
-#: ../glade/griffith.glade.h:7
+#: ../glade/griffith.glade.h:8
 msgid "<b>E-mail reminder</b>"
 msgstr ""
 
-#: ../glade/griffith.glade.h:8
+#: ../glade/griffith.glade.h:9
 msgid "<b>Languages</b>"
 msgstr ""
 
-#: ../glade/griffith.glade.h:9
+#: ../glade/griffith.glade.h:11
 msgid "<b>Loan History</b>"
 msgstr ""
 
-#: ../glade/griffith.glade.h:10
-msgid "<b>Media</b>"
-msgstr ""
-
-#: ../glade/griffith.glade.h:11
-msgid "<b>Search for:</b>"
-msgstr ""
-
 #: ../glade/griffith.glade.h:12
-msgid "<b>Search results</b>"
+msgid "<b>Loans</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:13
-msgid "<b>Select database to use</b>"
+msgid "<b>Media</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:14
-msgid "<b>Show only the following columns</b>"
+msgid "<b>Search for:</b>"
+msgstr ""
+
+#: ../glade/griffith.glade.h:15
+msgid "<b>Search results</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:16
-msgid "<b>Subtitle formats</b>"
+msgid "<b>Select database to use</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:17
-msgid "<b>Subtitles</b>"
-msgstr ""
-
-#: ../glade/griffith.glade.h:18
-msgid "<b>Tags</b>"
+msgid "<b>Show only the following columns</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:19
-msgid "<b>Use spell checking on the following fields:</b>"
+msgid "<b>Subtitle formats</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:20
-msgid "<b>Video codecs</b>"
+msgid "<b>Subtitles</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:21
-msgid "<b>Volume</b>"
+msgid "<b>Tags</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:22
-msgid "Add"
+msgid "<b>Use spell checking on the following fields:</b>"
+msgstr ""
+
+#: ../glade/griffith.glade.h:23
+msgid "<b>Video codecs</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:24
-msgid "Add a new person"
+msgid "<b>Volume</b>"
 msgstr ""
 
 #: ../glade/griffith.glade.h:25
-msgid "Add movie"
-msgstr ""
+#, fuzzy
+msgid "<b>Volumes</b>"
+msgstr "Гучність"
 
 #: ../glade/griffith.glade.h:26
-msgid "Add movie and close"
-msgstr ""
-
-#: ../glade/griffith.glade.h:27
-msgid "Add new movie"
+msgid "Add"
 msgstr ""
 
 #: ../glade/griffith.glade.h:28
-msgid "All Movies"
+msgid "Add a new person"
 msgstr ""
 
 #: ../glade/griffith.glade.h:29
-msgid "Attempt to fetch a big poster from Amazon services Web site"
+msgid "Add movie"
 msgstr ""
 
 #: ../glade/griffith.glade.h:30
-msgid "By Collection"
+msgid "Add movie and close"
 msgstr ""
 
 #: ../glade/griffith.glade.h:31
-msgid "By Tag"
+msgid "Add new movie"
 msgstr ""
 
 #: ../glade/griffith.glade.h:32
-msgid "By Volume"
+msgid "All Movies"
 msgstr ""
 
 #: ../glade/griffith.glade.h:34
-msgid "Choose Image"
+msgid "Attempt to fetch a big poster from Amazon services Web site"
+msgstr ""
+
+#: ../glade/griffith.glade.h:35
+msgid "By Collection"
 msgstr ""
 
 #: ../glade/griffith.glade.h:36
-msgid "Clears filter"
+msgid "By Tag"
 msgstr ""
 
 #: ../glade/griffith.glade.h:37
-msgid "Clone"
+msgid "By Volume"
+msgstr ""
+
+#: ../glade/griffith.glade.h:40
+msgid "Choose Image"
 msgstr ""
 
 #: ../glade/griffith.glade.h:42
-msgid "DVD layers"
+msgid "Clears filter"
 msgstr ""
 
 #: ../glade/griffith.glade.h:43
+msgid "Clone"
+msgstr ""
+
+#: ../glade/griffith.glade.h:48
+msgid "DVD layers"
+msgstr ""
+
+#: ../glade/griffith.glade.h:49
 msgid "DVD region"
 msgstr ""
 
-#: ../glade/griffith.glade.h:44
+#: ../glade/griffith.glade.h:50
 msgid "Database"
 msgstr ""
 
-#: ../glade/griffith.glade.h:45
+#: ../glade/griffith.glade.h:51
 msgid "Delete a person"
 msgstr ""
 
-#: ../glade/griffith.glade.h:46
+#: ../glade/griffith.glade.h:52
 msgid "Details"
 msgstr ""
 
-#: ../glade/griffith.glade.h:47
+#: ../glade/griffith.glade.h:53
 msgid "Dictionaries"
 msgstr ""
 
-#: ../glade/griffith.glade.h:51
+#: ../glade/griffith.glade.h:57
 msgid "E-mail reminder"
 msgstr ""
 
-#: ../glade/griffith.glade.h:52
+#: ../glade/griffith.glade.h:58
 msgid "E_xport"
 msgstr ""
 
-#: ../glade/griffith.glade.h:53
+#: ../glade/griffith.glade.h:59
 msgid "Edit a person"
 msgstr ""
 
-#: ../glade/griffith.glade.h:54
+#: ../glade/griffith.glade.h:60
 msgid "Edit movie details"
 msgstr ""
 
-#: ../glade/griffith.glade.h:55
+#: ../glade/griffith.glade.h:61
 msgid "Favorite Movie Plugin"
 msgstr ""
 
-#: ../glade/griffith.glade.h:56
+#: ../glade/griffith.glade.h:62
 msgid "Fetch from Amazon"
 msgstr ""
 
-#: ../glade/griffith.glade.h:57
+#: ../glade/griffith.glade.h:63
 msgid "Fill empty fields only"
 msgstr ""
 
-#: ../glade/griffith.glade.h:58
+#: ../glade/griffith.glade.h:64
 msgid "Filter "
 msgstr ""
 
-#: ../glade/griffith.glade.h:59
+#: ../glade/griffith.glade.h:65
+#, fuzzy
+msgid "Filter movies"
+msgstr "Редагувати фільм"
+
+#: ../glade/griffith.glade.h:66
 msgid "Font for reports"
 msgstr ""
 
-#: ../glade/griffith.glade.h:60
+#: ../glade/griffith.glade.h:67
 msgid "Forum"
 msgstr ""
 
-#: ../glade/griffith.glade.h:61
+#: ../glade/griffith.glade.h:68
 msgid "Found Results"
 msgstr ""
 
-#: ../glade/griffith.glade.h:63
+#: ../glade/griffith.glade.h:70
 msgid "Get from web"
 msgstr ""
 
-#: ../glade/griffith.glade.h:64
+#: ../glade/griffith.glade.h:71
 msgid "Get movie data from:"
 msgstr ""
 
-#: ../glade/griffith.glade.h:65
+#: ../glade/griffith.glade.h:72
 msgid "Griffith"
 msgstr ""
 
-#: ../glade/griffith.glade.h:66
+#: ../glade/griffith.glade.h:73
 msgid "Homepage"
 msgstr ""
 
-#: ../glade/griffith.glade.h:67
+#: ../glade/griffith.glade.h:74
 msgid "Host"
 msgstr ""
 
-#: ../glade/griffith.glade.h:68
+#: ../glade/griffith.glade.h:75
 msgid "I_mport"
 msgstr ""
 
-#: ../glade/griffith.glade.h:70
+#: ../glade/griffith.glade.h:77
 msgid "Include Front Image"
 msgstr ""
 
-#: ../glade/griffith.glade.h:71
+#: ../glade/griffith.glade.h:78
 msgid "Include movie number"
 msgstr ""
 
-#: ../glade/griffith.glade.h:72
+#: ../glade/griffith.glade.h:79
 msgid "Languages"
 msgstr ""
 
-#: ../glade/griffith.glade.h:74
+#: ../glade/griffith.glade.h:81
 msgid "Limit search results to"
 msgstr ""
 
-#: ../glade/griffith.glade.h:75
+#: ../glade/griffith.glade.h:82
 msgid "Load poster from disk"
 msgstr ""
 
-#: ../glade/griffith.glade.h:76
+#: ../glade/griffith.glade.h:83
 msgid "Loan"
 msgstr ""
 
-#: ../glade/griffith.glade.h:77
+#: ../glade/griffith.glade.h:84
 msgid "Loan Management"
 msgstr ""
 
-#: ../glade/griffith.glade.h:78
+#: ../glade/griffith.glade.h:85
 msgid "Loan movie"
 msgstr ""
 
-#: ../glade/griffith.glade.h:79
+#: ../glade/griffith.glade.h:86
 msgid "Loan to"
 msgstr ""
 
-#: ../glade/griffith.glade.h:80
+#: ../glade/griffith.glade.h:87
 msgid "Loaned Movies"
 msgstr ""
 
-#: ../glade/griffith.glade.h:81
+#: ../glade/griffith.glade.h:88
 #, fuzzy
 msgid "Loaned to"
 msgstr "Позичено"
 
-#: ../glade/griffith.glade.h:82
+#: ../glade/griffith.glade.h:89
 msgid "Loans"
 msgstr ""
 
-#: ../glade/griffith.glade.h:83
+#: ../glade/griffith.glade.h:90
 msgid "Main list"
 msgstr ""
 
-#: ../glade/griffith.glade.h:84
+#: ../glade/griffith.glade.h:91
 msgid "Manage People"
 msgstr ""
 
-#: ../glade/griffith.glade.h:87
+#: ../glade/griffith.glade.h:94
 msgid ""
 "Meter\n"
 "Stars"
 msgstr ""
 
-#: ../glade/griffith.glade.h:89
+#: ../glade/griffith.glade.h:96
 msgid "Movie details"
 msgstr ""
 
-#: ../glade/griffith.glade.h:90
+#: ../glade/griffith.glade.h:97
 msgid "Movie information"
 msgstr ""
 
-#: ../glade/griffith.glade.h:92
+#: ../glade/griffith.glade.h:99
 msgid "Needs authentication"
 msgstr ""
 
-#: ../glade/griffith.glade.h:93
+#: ../glade/griffith.glade.h:100
 msgid "Not Seen Movies"
 msgstr ""
 
-#: ../glade/griffith.glade.h:98
-msgid "Original title"
-msgstr ""
-
-#: ../glade/griffith.glade.h:99
-msgid "Other"
-msgstr ""
-
-#: ../glade/griffith.glade.h:100
-msgid "PDF reader"
-msgstr ""
-
-#: ../glade/griffith.glade.h:101
-msgid "Password"
-msgstr ""
-
-#: ../glade/griffith.glade.h:102
-msgid "People"
-msgstr ""
-
-#: ../glade/griffith.glade.h:103
-msgid "Phone"
-msgstr ""
-
 #: ../glade/griffith.glade.h:104
-msgid "Please wait a moment..."
+msgid "Open search window"
 msgstr ""
 
 #: ../glade/griffith.glade.h:106
-msgid "Plugins"
+msgid "Original title"
 msgstr ""
 
 #: ../glade/griffith.glade.h:107
-msgid "Port"
+msgid "Other"
 msgstr ""
 
 #: ../glade/griffith.glade.h:108
-msgid "Poster image"
+msgid "PDF reader"
 msgstr ""
 
 #: ../glade/griffith.glade.h:109
-msgid "Poster viewer"
+msgid "Password"
 msgstr ""
 
 #: ../glade/griffith.glade.h:110
-msgid "Preferences"
+msgid "People"
 msgstr ""
 
 #: ../glade/griffith.glade.h:111
-msgid "Print Cover"
+msgid "Phone"
 msgstr ""
 
 #: ../glade/griffith.glade.h:112
-msgid "Print cover"
+msgid "Please wait a moment..."
 msgstr ""
 
 #: ../glade/griffith.glade.h:114
-msgid "Rating image"
+msgid "Plugins"
+msgstr ""
+
+#: ../glade/griffith.glade.h:115
+msgid "Port"
 msgstr ""
 
 #: ../glade/griffith.glade.h:116
-msgid "Remove"
+msgid "Poster image"
 msgstr ""
 
 #: ../glade/griffith.glade.h:117
-msgid "Remove selected movie"
+msgid "Poster viewer"
 msgstr ""
 
 #: ../glade/griffith.glade.h:118
-msgid "Removes poster"
+msgid "Preferences"
 msgstr ""
 
 #: ../glade/griffith.glade.h:119
-msgid "Rename"
+msgid "Print Cover"
 msgstr ""
 
 #: ../glade/griffith.glade.h:120
-msgid "Report bug"
+msgid "Print cover"
 msgstr ""
 
-#: ../glade/griffith.glade.h:121
-msgid "Return"
+#: ../glade/griffith.glade.h:122
+msgid "Rating image"
 msgstr ""
 
 #: ../glade/griffith.glade.h:124
-msgid "SMTP port"
+msgid "Remove"
 msgstr ""
 
 #: ../glade/griffith.glade.h:125
-msgid "SMTP server"
+msgid "Remove selected movie"
 msgstr ""
 
 #: ../glade/griffith.glade.h:126
-msgid "Searching on the web"
+msgid "Removes poster"
+msgstr ""
+
+#: ../glade/griffith.glade.h:127
+msgid "Rename"
 msgstr ""
 
 #: ../glade/griffith.glade.h:128
-msgid "Select A File"
+msgid "Report bug"
 msgstr ""
 
 #: ../glade/griffith.glade.h:129
-msgid "Select first movie"
-msgstr ""
-
-#: ../glade/griffith.glade.h:130
-msgid "Select last movie"
-msgstr ""
-
-#: ../glade/griffith.glade.h:131
-msgid "Select next movie"
+msgid "Return"
 msgstr ""
 
 #: ../glade/griffith.glade.h:132
-msgid "Select previous movie"
+msgid "SMTP port"
 msgstr ""
 
 #: ../glade/griffith.glade.h:133
-msgid "Sender E-mail address"
-msgstr ""
-
-#: ../glade/griffith.glade.h:134
-msgid "Show other movies in this collection"
+msgid "SMTP server"
 msgstr ""
 
 #: ../glade/griffith.glade.h:135
-msgid "Show other movies in this volume"
+msgid "Searching on the web"
 msgstr ""
 
-#: ../glade/griffith.glade.h:136
-msgid "Simple"
+#: ../glade/griffith.glade.h:137
+msgid "Select first movie"
 msgstr ""
 
 #: ../glade/griffith.glade.h:138
-msgid "Size"
+msgid "Select last movie"
 msgstr ""
 
 #: ../glade/griffith.glade.h:139
-msgid "Spell check the following language"
+msgid "Select next movie"
 msgstr ""
 
 #: ../glade/griffith.glade.h:140
+msgid "Select previous movie"
+msgstr ""
+
+#: ../glade/griffith.glade.h:141
+msgid "Sender E-mail address"
+msgstr ""
+
+#: ../glade/griffith.glade.h:142
+msgid "Show other movies in this collection"
+msgstr ""
+
+#: ../glade/griffith.glade.h:143
+msgid "Show other movies in this volume"
+msgstr ""
+
+#: ../glade/griffith.glade.h:144
+msgid "Simple"
+msgstr ""
+
+#: ../glade/griffith.glade.h:146
+msgid "Size"
+msgstr ""
+
+#: ../glade/griffith.glade.h:147
+msgid "Spell check the following language"
+msgstr ""
+
+#: ../glade/griffith.glade.h:148
 msgid ""
 "Standard\n"
 "Slim\n"
 "Double Slim"
 msgstr ""
 
-#: ../glade/griffith.glade.h:144
+#: ../glade/griffith.glade.h:152
 msgid "Suggest an unseen movie"
 msgstr ""
 
-#: ../glade/griffith.glade.h:145
+#: ../glade/griffith.glade.h:153
 msgid "Tags"
 msgstr ""
 
-#: ../glade/griffith.glade.h:146
+#: ../glade/griffith.glade.h:154
 msgid "Technical information"
 msgstr ""
 
-#: ../glade/griffith.glade.h:147
+#: ../glade/griffith.glade.h:155
 msgid "This movie is part of..."
 msgstr ""
 
-#: ../glade/griffith.glade.h:149
+#: ../glade/griffith.glade.h:157
 msgid "Toolbar"
 msgstr ""
 
-#: ../glade/griffith.glade.h:152
+#: ../glade/griffith.glade.h:160
 msgid ""
 "Type in the original film tile, select source and choose <i>Get from web</"
 "i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
 
-#: ../glade/griffith.glade.h:153
+#: ../glade/griffith.glade.h:161
 msgid "Use Spellchecker"
 msgstr ""
 
-#: ../glade/griffith.glade.h:154
+#: ../glade/griffith.glade.h:162
 msgid "Use TLS?"
 msgstr ""
 
-#: ../glade/griffith.glade.h:155
+#: ../glade/griffith.glade.h:163
 msgid "Use locale:"
 msgstr ""
 
-#: ../glade/griffith.glade.h:156
+#: ../glade/griffith.glade.h:164
 msgid "Username"
 msgstr ""
 
-#: ../glade/griffith.glade.h:158
+#: ../glade/griffith.glade.h:166
 msgid "Visit movie web site"
 msgstr ""
 
-#: ../glade/griffith.glade.h:159
+#: ../glade/griffith.glade.h:167
 msgid "Visit the oficial web site"
 msgstr ""
 
-#: ../glade/griffith.glade.h:161
+#: ../glade/griffith.glade.h:169
 msgid "Watch the trailer"
 msgstr ""
 
-#: ../glade/griffith.glade.h:163
+#: ../glade/griffith.glade.h:171
 msgid "_Edit"
 msgstr ""
 
-#: ../glade/griffith.glade.h:164
+#: ../glade/griffith.glade.h:172
 msgid "_File"
 msgstr ""
 
-#: ../glade/griffith.glade.h:165
+#: ../glade/griffith.glade.h:173
 msgid "_Help"
 msgstr ""
 
-#: ../glade/griffith.glade.h:166
+#: ../glade/griffith.glade.h:174
 msgid "_Loans"
 msgstr ""
 
-#: ../glade/griffith.glade.h:167
+#: ../glade/griffith.glade.h:175
 msgid "_Tools"
 msgstr ""
 
-#: ../glade/griffith.glade.h:168
+#: ../glade/griffith.glade.h:176
 msgid "_View"
 msgstr ""
 
-#: ../glade/griffith.glade.h:169
+#: ../glade/griffith.glade.h:177
 msgid "add entered name to collections list"
 msgstr ""
 
-#: ../glade/griffith.glade.h:170
+#: ../glade/griffith.glade.h:178
 msgid "add entered name to volumes list"
 msgstr ""
 
-#: ../glade/griffith.glade.h:171
+#: ../glade/griffith.glade.h:179
 msgid "classification"
 msgstr ""
 
-#: ../glade/griffith.glade.h:172
+#: ../glade/griffith.glade.h:180
 msgid "click here if movie was returned"
 msgstr ""
 
-#: ../glade/griffith.glade.h:173
+#: ../glade/griffith.glade.h:181
 msgid "collection details"
 msgstr ""
 
-#: ../glade/griffith.glade.h:174
+#: ../glade/griffith.glade.h:183
 msgid "loans movie or volume"
 msgstr ""
 
-#: ../glade/griffith.glade.h:175
+#: ../glade/griffith.glade.h:184
 msgid "minutes"
 msgstr ""
 
-#: ../glade/griffith.glade.h:176
+#: ../glade/griffith.glade.h:185
 msgid "movies"
 msgstr ""
 
-#: ../glade/griffith.glade.h:177
+#: ../glade/griffith.glade.h:188
 msgid "remove selected collection"
 msgstr ""
 
-#: ../glade/griffith.glade.h:178
+#: ../glade/griffith.glade.h:189
 msgid "remove selected volume"
 msgstr ""
 
-#: ../glade/griffith.glade.h:179
+#: ../glade/griffith.glade.h:191
 msgid "tags"
 msgstr ""
 
-#: ../glade/griffith.glade.h:180
+#: ../glade/griffith.glade.h:193
 msgid "volume details"
 msgstr ""
 
@@ -2037,3 +2256,22 @@ msgstr "Модуль"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Текст програми"
+
+#~ msgid "Column \"%s\" is not unique"
+#~ msgstr "Колонка \"%s\" не унікальна"
+
+#, fuzzy
+#~ msgid "No movie selected"
+#~ msgstr "Фільму не знайдено"
+
+#~ msgid " movie(s) in collection. "
+#~ msgstr " фільм(ів) в колекції. "
+
+#~ msgid " movie(s) loaned. "
+#~ msgstr " фільм(ів) позичено. "
+
+#~ msgid "You haven't seen "
+#~ msgstr "Ви не бачили "
+
+#~ msgid " movie(s)"
+#~ msgstr " фільм(ів)"
