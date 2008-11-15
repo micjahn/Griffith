@@ -22,8 +22,6 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import os
-import gettext
-gettext.install('griffith', unicode=1)
 import logging
 log = logging.getLogger("Griffith")
 import gutils

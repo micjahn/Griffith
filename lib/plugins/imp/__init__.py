@@ -21,18 +21,16 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-# detect all plugins:
 import glob
 import os.path
 import time
 import gc
-import gettext
-gettext.install('griffith', unicode=1)
 import logging
 log = logging.getLogger("Griffith")
 
 import db
 
+# detect all plugins:
 __all__ = [os.path.basename(x)[:-3] for x in glob.glob("%s/*.py" % os.path.dirname(__file__))]
 __all__.remove('__init__')
 
@@ -116,7 +114,7 @@ class ImportPlugin(object):
         # get some values from DB to avoid queries in the loop
         statement = select([db.Movie.number, db.Movie.title, db.Movie.o_title])
         data = session.execute(statement).fetchall()
-        numbers = set([i[0] for i in data])
+        numbers = set(i[0] for i in data)
         titles = set(i[1].lower() for i in data)
         o_titles = set(i[2].lower() for i in data)
 

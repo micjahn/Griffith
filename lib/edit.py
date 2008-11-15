@@ -25,8 +25,6 @@ import os
 import gtk
 import tempfile
 import shutil
-import gettext
-gettext.install('griffith', unicode=1)
 from PIL     import Image
 from urllib  import urlcleanup, FancyURLopener, urlretrieve
 import logging

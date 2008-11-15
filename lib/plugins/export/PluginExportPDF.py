@@ -21,8 +21,6 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import gettext
-gettext.install('griffith', unicode=1)
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import mm, inch
@@ -39,37 +37,33 @@ import os
 import string
 import sys
 from locale import getdefaultlocale
-from sqlalchemy import select
 import db
 import gutils
 import version
+from plugins.export import Base
 
-exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
+class ExportPlugin(Base):
+    name = "PDF"
+    description = _("PDF export plugin")
+    author = "Vasco Nunes"
+    email = "<vasco.m.nunes@gmail.com>"
+    version = "0.5"
+    
+    fields_to_export = ('number', 'o_title', 'title', 'director', 'genre', 'cast')
 
-plugin_name = "PDF"
-plugin_description = _("PDF export plugin")
-plugin_author = "Vasco Nunes"
-plugin_author_email = "<vasco.m.nunes@gmail.com>"
-plugin_version = "0.4"
-
-class ExportPlugin:
-    def __init__(self, database, locations, parent_window, **kwargs):
-        self.db = database
-        self.locations = locations
-        self.parent = parent_window
-        self.config = kwargs['config']
+    def initialize(self):
         self.styles = getSampleStyleSheet()
-        self.export_simple_pdf()
-        self.fontName = ""
+        self.fontName = ''
+        return True
 
-    def export_simple_pdf(self):
+    def run(self):
         """exports a simple movie list to a pdf file"""
         
         if self.config.get('font', '') != '':
-                self.fontName = 'custom_font'
-                pdfmetrics.registerFont(TTFont(self.fontName, self.config.get('font', '')))
+            self.fontName = 'custom_font'
+            pdfmetrics.registerFont(TTFont(self.fontName, self.config.get('font', '')))
         else:
-                self.fontName = "Helvetica"
+            self.fontName = "Helvetica"
 
         basedir = None
         if not self.config is None:
@@ -85,7 +79,7 @@ class ExportPlugin:
             overwrite = None
             pdffilename = filename[0].decode('utf-8')
             if os.path.isfile(pdffilename):
-                response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent)
+                response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent_window)
                 if response==-8:
                     overwrite = True
                 else:
@@ -104,21 +98,19 @@ class ExportPlugin:
                 defaultEnc = 'utf-8'
                 style = self.styles["Normal"]
                 Story = [Spacer(1,2*inch)]
-                # build the query
-                movies = select(db.movies_table.c, bind=self.db.session.bind)
-                # select sort column
+
+                # select sort column - FIXME
                 sort_column_name = self.config.get('sortby', 'number', section='mainlist')
                 sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
                 do_grouping = True
                 for i in sort_column_name.split(','):
-                    if i <> 'title' and i <> 'o_title':
+                    if i != 'title' and i != 'o_title':
                         do_grouping = False
-                    if db.movies_table.c.has_key(i):
-                        if sort_reverse:
-                            movies = movies.order_by(db.movies_table.c[i].desc())
-                        else:
-                            movies = movies.order_by(db.movies_table.c[i])
-                movies = movies.execute().fetchall()
+
+                # build the query
+                query = self.get_query()
+                movies = query.execute().fetchall()
+
                 # define some custom stylesheetfont
                 total = len(movies)
                 p = Paragraph("<font name='" + self.fontName +"' size=\"18\">" + saxutils.escape((_("List of films")).encode('utf-8')) + '</font>', self.styles["Heading1"] )
@@ -131,10 +123,10 @@ class ExportPlugin:
                 first_letter = '0'
                 for movie in movies:
                     number = movie.number
-                    original_title = str(movie.o_title).encode(defaultEnc)
-                    title = str(movie.title).encode(defaultEnc)
+                    original_title = movie.o_title.encode(defaultEnc)
+                    title = movie.title.encode(defaultEnc)
                     if movie.director:
-                        director = ' - ' + str(movie.director).encode(defaultEnc)
+                        director = ' - ' + movie.director.encode(defaultEnc)
                     else:
                         director = ""
                     # group by first letter
@@ -158,20 +150,20 @@ class ExportPlugin:
                         '</font>'
                     p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                     Story.append(p)
-                    if not movie.genre is None:
+                    if movie.genre is not None:
                         paragraph_text = '<font name=' + self.fontName + ' size="5">' + \
-                        '<b>' + _('Genre') + ': </b>' + saxutils.escape(str(movie.genre).encode(defaultEnc)) + \
+                        '<b>' + _('Genre') + ': </b>' + saxutils.escape(movie.genre.encode(defaultEnc)) + \
                         '</font>'
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
-                    if not movie.cast is None:
+                    if movie.cast is not None:
                         paragraph_text = '<i><font name=' + self.fontName + ' size="5">' + \
-                        '<b>' + _('Cast') + ': </b>' + saxutils.escape('; '.join(str(movie.cast).encode(defaultEnc).split("\n")[0:2])) + \
+                        '<b>' + _('Cast') + ': </b>' + saxutils.escape('; '.join(movie.cast.encode(defaultEnc).split("\n")[0:2])) + \
                             '</font></i>'
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
                 c.build(Story, onFirstPage=self.page_template, onLaterPages=self.page_template)
-                gutils.info(_('PDF has been created.'), self.parent)
+                gutils.info(_('PDF has been created.'), self.parent_window)
             
     def page_template(self, canvas, doc):
         canvas.saveState()

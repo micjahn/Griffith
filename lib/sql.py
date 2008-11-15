@@ -29,8 +29,6 @@ from sqlalchemy            import *
 from sqlalchemy.orm        import sessionmaker
 from sqlalchemy.exceptions import OperationalError
 import os.path
-import gettext
-gettext.install('griffith', unicode=1)
 import logging
 log = logging.getLogger("Griffith")
 import gutils # TODO: get rid of this import
@@ -251,14 +249,21 @@ def update_whereclause(query, cond): # {{{
     for rule in cond["sort_by"]:
         if rule.endswith(" DESC"):
             reverse = True
-            rule = rule.replace(" DESC", '')
+            column = rule.replace(" DESC", '')
         else:
+            column = rule.replace(" ASC", '') # note that " ASC" is optional
             reverse = False
 
+        table = 'movies'
+        tmp = column.split('.')
+        if len(tmp) > 1:
+            table = tmp[0]
+            column = tmp[1]
+
         if reverse:
-            query.append_order_by(desc(db.movies_table.columns[rule]))
+            query.append_order_by(desc(db.tables[table].columns[column]))
         else:
-            query.append_order_by(asc(db.movies_table.columns[rule]))
+            query.append_order_by(asc(db.tables[table].columns[column]))
 
     log.debug(query.compile())
     return query #}}}

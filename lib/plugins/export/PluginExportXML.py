@@ -25,69 +25,65 @@ import xml.dom.minidom
 import xml.dom.ext
 import gtk
 import os
-import gettext
-gettext.install('griffith', unicode=1)
 import db
 import gutils
+from plugins.export import Base
 
-plugin_name = "XML"
-plugin_description = _("Full XML list export plugin")
-plugin_author = "Vasco Nunes"
-plugin_author_email = "<vasco.m.nunes@gmail.com>"
-plugin_version = "0.1"
+class ExportPlugin(Base):
+    name = "XML"
+    description = _("Full XML list export plugin")
+    author = "Vasco Nunes"
+    email = "<vasco.m.nunes@gmail.com>"
+    version = "0.1"
 
-class ExportPlugin:
+    fields_to_export = ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
+                        'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',
+                        'plot', 'cast', 'notes', 'image', 'volumes.name', 'collections.name', 'media.name')
 
-    def __init__(self, database, locations, parent_window, **kwargs):
-        self.db = database
-        self.locations = locations
-        self.parent = parent_window
-        if kwargs.has_key('config'):
-            self.persistent_config = kwargs['config']
-        else:
-            self.persistent_config = None
-        self.export_xml()
-
-    def export_xml(self):
+    def run(self):
         basedir = None
-        if not self.persistent_config is None:
-            basedir = self.persistent_config.get('export_dir', None, section='export-xml')
+        if self.config is not None:
+            basedir = self.config.get('export_dir', None, section='export-xml')
         if basedir is None:
             filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
                 buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml')
         else:
             filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
                 buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml',folder=basedir)
-        if filename[0]:
-            if not self.persistent_config is None and filename[1]:
-                self.persistent_config.set('export_dir', filename[1], section='export-xml')
-                self.persistent_config.save()
+        if filename and filename[0]:
+            if self.config is not None and filename[1]:
+                self.config.set('export_dir', filename[1], section='export-xml')
+                self.config.save()
             overwrite = None
             if os.path.isfile(filename[0]):
-                response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent)
+                response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent_window)
                 if response==-8:
                     overwrite = True
                 else:
                     overwrite = False
                     
-            if overwrite == True or overwrite is None:
+            if overwrite or overwrite is None:
                 # create document
                 impl = xml.dom.minidom.getDOMImplementation()
                 doc  = impl.createDocument(None, "root", None)
                 root = doc.documentElement
                 
+                movies = self.get_query().execute().fetchall()
                 # create object
-                for movie in self.db.session.query(db.Movie).all():
+                for movie in movies:
                     e = doc.createElement('movie')
                     root.appendChild(e)
-                    for key in db.movies_table.c.keys():
-                        e2 = doc.createElement(key)
+                    for key in self.exported_columns:
+                        e2 = doc.createElement(str(key).replace('movies_', ''))
                         if movie[key] is None:
                             value = ''
                         elif movie[key] in (True, False):
                             value = str(int(movie[key]))
                         else:
-                            value = str(movie[key])
+                            if movie[key] is unicode:
+                                value = movie[key].encode('utf-8')
+                            else:
+                                value = str(movie[key])
                         t = doc.createTextNode(value)
                         e2.appendChild(t)
                         e.appendChild(e2)
@@ -96,4 +92,5 @@ class ExportPlugin:
                 fp = open(filename[0], "w")
                 xml.dom.ext.PrettyPrint(doc, fp)
                 fp.close()
-                gutils.info( _("%s file has been created.")%"XML", self.parent)
+                gutils.info( _("%s file has been created.")%"XML", self.parent_window)
+

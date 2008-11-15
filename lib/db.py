@@ -24,8 +24,6 @@ __revision__ = '$Id$'
 
 # XXX: keep stdlib and SQLAlchemy imports only in this file
 
-import gettext
-gettext.install('griffith', unicode=1)
 from sqlalchemy     import *
 from sqlalchemy.orm import mapper, relation, sessionmaker, validates
 import re

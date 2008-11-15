@@ -21,9 +21,6 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import gettext
-gettext.install('griffith', unicode=1)
-
 # TODO: rewrite it using advfilter (see get_def_conditions)
 
 def filter_not_seen(self):

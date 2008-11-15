@@ -30,19 +30,12 @@ import string
 import platform
 import shutil
 from tempfile import mkdtemp
-import gettext
-gettext.install('griffith', unicode=1)
 import db
-
-plugin_name = "iPod"
-plugin_description = _("iPod Notes export plugin")
-plugin_author = "Vasco Nunes"
-plugin_author_email = "<vasco.m.nunes@gmail.com>"
-plugin_version = "0.1"
+from plugins.export import Base
 
 # TODO: bypass the 4Kb file limit on the iPod notes folder, splitting the file in multiple ones and linking them.
 
-class Path2iPod:
+class Path2iPod(object):
 
   def __init__(self):
     self.thing_to_find="iPod_Control"
@@ -65,29 +58,28 @@ class Path2iPod:
     else:
       return self.path_to_pod
 
-class ExportPlugin:
+class ExportPlugin(Base):
+    name = "iPod"
+    description = _("iPod Notes export plugin")
+    author = "Vasco Nunes"
+    email = "<vasco.m.nunes@gmail.com>"
+    version = "0.2"
 
-    def __init__(self, database, locations, parent_window, **kwargs):
-        self.db = database
-        self.locations = locations
-        self.parent = parent_window
-        self.export_iPod()
+    fields_to_export = ('number', 'o_title', 'title', 'director' )
 
-    def split_file(self, filename):
-        pass
-
-    def export_iPod(self):
+    def run(self):
         tmp_dir = mkdtemp()
         griffith_list = open(os.path.join(tmp_dir,"movies"),"w")
         t = []
-        
-        for movie in self.db.session.query(db.Movie).all():
-            t.append("%s | %s | %s | %s"%(movie['number'],movie['o_title'],movie['title'],movie['director']))
+       
+        movies = self.get_query().execute().fetchall()
+        for movie in movies:
+            t.append("%s | %s | %s | %s" % (movie['number'], movie['o_title'].encode('utf-8'), movie['title'].encode('utf-8'), movie['director'].encode('utf-8')))
     
-        griffith_list.write("<title>%s</title><br><br>"%_("My Movies List"))
+        griffith_list.write("<title>%s</title><br><br>" % _("My Movies List"))
         
         for movie in t:
-            griffith_list.write(str(movie))
+            griffith_list.write(movie)
             griffith_list.write("<br>")
             
         griffith_list.close()
@@ -99,22 +91,22 @@ class ExportPlugin:
             thisPath=thisPod.returnPath()
         
             if thisPath:
-                commands.getoutput('mv '+os.path.join(tmp_dir,"movies")+' "'+thisPath+'/Notes/"')
-                gutils.info(_("List was successful exported to iPod."), self.parent)        
+                commands.getoutput('mv '+os.path.join(tmp_dir,"movies")+' "'+thisPath+'/Notes/"') # FIXME: WTF?
+                gutils.info(_("List was successful exported to iPod."), self.parent_window)
             else:
-                gutils.info(_("iPod is not connected."), self.parent)
+                gutils.info(_("iPod is not connected."), self.parent_window)
         # this is not a mac, lets save the file
         else:
             filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
                 buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='ipod_griffith_list')
-            if filename[0]:
+            if filename and filename[0]:
                 overwrite = None
                 if os.path.isfile(filename[0]):
-                    response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent)
+                    response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent_window)
                     if response==-8:
                         overwrite = True
                     else:
                         overwrite = False
                 if overwrite == True or overwrite is None:
                     shutil.copyfile(os.path.join(tmp_dir,"movies"), filename[0])
-                    gutils.info(_("List was successful exported. Now you should move it to the 'Notes' folder on your iPod."), self.parent)
+                    gutils.info(_("List was successful exported. Now you should move it to the 'Notes' folder on your iPod."), self.parent_window)

@@ -26,8 +26,6 @@ import os
 import pango
 import string
 import sys
-import gettext
-gettext.install('griffith', unicode=1)
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import mm

@@ -24,58 +24,51 @@ __revision__ = '$Id$'
 import csv
 import gtk
 import os
-import gettext
-gettext.install('griffith', unicode=1)
 import gutils
 import db
+from plugins.export import Base
 
-plugin_name = "CSV"
-plugin_description = _("Full CSV list export plugin")
-plugin_author = "Vasco Nunes"
-plugin_author_email = "<vasco.m.nunes@gmail.com>"
-plugin_version = "0.2"
+class ExportPlugin(Base):
+    name = "CSV"
+    description = _("Full CSV list export plugin")
+    author = "Vasco Nunes"
+    email = "<vasco.m.nunes@gmail.com>"
+    version = "0.3"
 
-class ExportPlugin:
+    fields_to_export = ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
+                        'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',
+                        'plot', 'cast', 'notes', 'image', 'volumes.name', 'collections.name', 'media.name')
 
-    def __init__(self, database, locations, parent, **kwargs):
-        self.db = database
-        self.locations = locations
-        self.parent = parent
-        if kwargs.has_key('config'):
-            self.persistent_config = kwargs['config']
-        else:
-            self.persistent_config = None
-        self.export_csv()
-
-    def export_csv(self):
+    def run(self):
         basedir = None
-        if not self.persistent_config is None:
-            basedir = self.persistent_config.get('export_dir', None, section='export-csv')
-        if basedir is None:
+        if not self.config is None:
+            basedir = self.config.get('export_dir', None, section='export-csv')
+        if not basedir:
             filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
                 buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.csv')
         else:
             filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
                 buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.csv',folder=basedir)
-        if filename[0]:
-            if not self.persistent_config is None and filename[1]:
-                self.persistent_config.set('export_dir', filename[1], section='export-csv')
-                self.persistent_config.save()
+        if filename and filename[0]:
+            if not self.config is None and filename[1]:
+                self.config.set('export_dir', filename[1], section='export-csv')
+                self.config.save()
             overwrite = None
             if os.path.isfile(filename[0]):
-                response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent)
+                response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent_window)
                 if response==-8:
                     overwrite = True
                 else:
                     overwrite = False
-                    
+            
             if overwrite == True or overwrite is None:
+                movies = self.get_query().execute()
+
                 writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
-                for movie in self.db.session.query(db.Movie).all():
+                for movie in movies:
                     t = []
-                    for s in ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
-                            'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',
-                            'plot', 'cast', 'notes','image'):
+                    for s in self.exported_columns:
                         t.append(movie[s])
                     writer.writerow(t)
-                gutils.info(_("%s file has been created.")%"CSV", self.parent)
+                gutils.info(_("%s file has been created.") % "CSV", self.parent_window)
+

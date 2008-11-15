@@ -25,13 +25,11 @@ import sys
 import os
 import string
 import gtk
+import gettext
 import gutils
 import gobject
-import gettext
 import platform
 import re
-import gettext
-gettext.install('griffith', unicode=1)
 from locale import getdefaultlocale
 import logging
 log = logging.getLogger("Griffith")

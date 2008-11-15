@@ -23,8 +23,6 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from sqlalchemy.exceptions import IntegrityError
-import gettext
-gettext.install('griffith', unicode=1)
 import gutils
 import os
 import gtk

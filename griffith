@@ -169,8 +169,14 @@ class Griffith(object):
     ###########        
 
     def on_export_activate(self, menu_iter, plugin_name):
-        export_plugin = __import__('PluginExport%s' % plugin_name)
-        export_plugin.ExportPlugin(self.db, self.locations, self.widgets['window'], config=self.config)
+        module = __import__('PluginExport%s' % plugin_name)
+        plugin = module.ExportPlugin(self.db, self.locations, self.widgets['window'], self._search_conditions, self.config)
+        if plugin.initialize():
+            try:
+                plugin.run()
+            except Exception, e:
+                log.error(str(e))
+            plugin.cleanup()
 
     def on_import_activate(self, *args):
         if self.widgets.has_key('import'):
