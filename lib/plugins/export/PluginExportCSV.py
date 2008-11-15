@@ -61,7 +61,7 @@ class ExportPlugin(Base):
                 else:
                     overwrite = False
             
-            if overwrite: or overwrite is None:
+            if overwrite or overwrite is None:
                 movies = self.get_query().execute()
 
                 writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
