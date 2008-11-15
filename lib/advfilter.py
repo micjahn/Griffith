@@ -42,7 +42,7 @@ __conditions = { # default
     'required_tags'   : set(), # like in tags, but movie must contain all listed tags
     'loaned_to'       : set(), # list of person_ids     (search for movies loaned to these people)
     'loan_history'    : set(), # list of person_ids     (search for movies which were loaned by these people)
-    'sort_by'         : ("number",), # "number DESC"
+    'sort_by'         : set(("number",)), # "number DESC"
     'equals'          : {}, # {column1: set(value1, value2), column2: set(value3)}
     'equals_n'        : {}, # see above
     'startswith'      : {}, # see above

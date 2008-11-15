@@ -41,15 +41,12 @@ class Base(object):
     version = None
     fields_to_export = ('number', 'o_title', 'title', 'director', 'year')
 
-    def __init__(self, database, locations, parent_window, search_conditions, config, **kwargs): #{{{
+    def __init__(self, database, locations, parent_window, search_conditions, config):
         self.db = database
+        self.config = config
         self.locations = locations
         self.parent_window = parent_window
         self.search_conditions = search_conditions
-
-        self.config = config
-        self.search_conditions = search_conditions
-    #}}}
     
     def initialize(self):
         """Initializes plugin (get all parameters from user, etc.)"""

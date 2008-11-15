@@ -41,16 +41,16 @@ class ExportPlugin(Base):
 
     def run(self):
         basedir = None
-        if not self.config is None:
+        if self.config is not None:
             basedir = self.config.get('export_dir', None, section='export-csv')
         if not basedir:
             filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.csv')
+                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK), name='griffith_list.csv')
         else:
             filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.csv',folder=basedir)
+                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE,gtk.RESPONSE_OK), name='griffith_list.csv', folder=basedir)
         if filename and filename[0]:
-            if not self.config is None and filename[1]:
+            if self.config is not None and filename[1]:
                 self.config.set('export_dir', filename[1], section='export-csv')
                 self.config.save()
             overwrite = None
@@ -61,7 +61,7 @@ class ExportPlugin(Base):
                 else:
                     overwrite = False
             
-            if overwrite == True or overwrite is None:
+            if overwrite: or overwrite is None:
                 movies = self.get_query().execute()
 
                 writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
