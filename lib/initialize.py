@@ -580,16 +580,12 @@ def combos(self):
 
 def dictionaries(self):
     """initializes data filled dynamically by users"""
-    import update
     self.am_tags = {} # dictionary for tag CheckBoxes
-    update.update_volume_combo_ids(self)
-    update.update_collection_combo_ids(self)
-    update.update_loanedto_combo_ids(self)
-    update.update_bytag_combo_ids(self)
+    update_volume_combo_ids(self)
+    update_collection_combo_ids(self)
     fill_volumes_combo(self)
     fill_collections_combo(self)
-    fill_loanedto_combo(self)
-    fill_bytag_combo(self)
+    fill_advfilter_combo(self)
     fill_preferences_tags_combo(self)
     language_combos(self)
     acodec_combos(self)
@@ -716,11 +712,26 @@ def preferences(self):
     else:
         self.widgets['preferences']['db_type'].set_active(0)
 
+def update_volume_combo_ids(self):
+    self.volume_combo_ids = {}
+    self.volume_combo_ids[0] = 0
+    i = 1
+    for volume in self.db.session.query(db.Volume).all():
+        self.volume_combo_ids[i] = volume.volume_id
+        i += 1
+
+def update_collection_combo_ids(self):
+    self.collection_combo_ids = {}
+    self.collection_combo_ids[0] = 0
+    i = 1
+    for collection in self.db.session.query(db.Collection).all():
+        self.collection_combo_ids[i] = collection.collection_id
+        i += 1
+
 def fill_volumes_combo(self, default=0):
     _tmp = self.initialized
     self.initialized = False # don't refresh main treeview
     self.widgets['add']['volume'].get_model().clear()
-    self.widgets['filter']['volume'].get_model().clear()
     for i in self.volume_combo_ids:
         vol_id = self.volume_combo_ids[i]
         if vol_id>0:
@@ -728,16 +739,12 @@ def fill_volumes_combo(self, default=0):
         else:
             name = ''
         self.widgets['add']['volume'].insert_text(int(i), str(name))
-        # add some white spaces to prevent scrollbar hides parts of the names    
-        self.widgets['filter']['volume'].insert_text(int(i), str(name) + '   ')
-    self.initialized = _tmp
     self.widgets['add']['volume'].show_all()
-    self.widgets['filter']['volume'].show_all()
-    self.widgets['filter']['volume'].set_active(0)
     i = gutils.findKey(default, self.volume_combo_ids)
     if i is not None:
         self.widgets['add']['volume'].set_active(int(i))
     self.widgets['add']['volume'].set_wrap_width(3)
+    self.initialized = _tmp
 
 def fill_collections_combo(self, default=0):
     _tmp = self.initialized
@@ -753,7 +760,6 @@ def fill_collections_combo(self, default=0):
         self.widgets['add']['collection'].insert_text(int(i), str(name))
         # add some white spaces to prevent scrollbar hides parts of the names    
         self.widgets['filter']['collection'].insert_text(int(i), str(name) + '   ')
-    self.initialized = _tmp
     self.widgets['add']['collection'].show_all()
     self.widgets['filter']['collection'].show_all()
     self.widgets['filter']['collection'].set_active(0)
@@ -761,38 +767,21 @@ def fill_collections_combo(self, default=0):
     if i is not None:
         self.widgets['add']['collection'].set_active(int(i))
     self.widgets['add']['collection'].set_wrap_width(2)
+    self.initialized = _tmp
 
-def fill_loanedto_combo(self):
+def fill_advfilter_combo(self):
     _tmp = self.initialized
     self.initialized = False # don't refresh main treeview
-    self.widgets['filter']['loanedto'].get_model().clear()
-    for i in self.loanedto_combo_ids:
-        per_id = self.loanedto_combo_ids[i]
-        if per_id>0:
-            name = self.db.session.query(db.Person).filter_by(person_id=per_id).first().name
-        else:
-            name = ''
+    self.widgets['filter']['advfilter'].get_model().clear()
+    self.widgets['filter']['advfilter'].insert_text(0, '') # empty one
+    i = 1
+    for item in self.db.session.query(db.Filter.name).all():
         # add some white spaces to prevent scrollbar hides parts of the names    
-        self.widgets['filter']['loanedto'].insert_text(int(i), str(name) + '   ')
+        self.widgets['filter']['advfilter'].insert_text(int(i), item.name + '   ')
+        i += 1
+    self.widgets['filter']['advfilter'].show_all()
+    self.widgets['filter']['advfilter'].set_active(0)
     self.initialized = _tmp
-    self.widgets['filter']['loanedto'].show_all()
-    self.widgets['filter']['loanedto'].set_active(0)
-
-def fill_bytag_combo(self):
-    _tmp = self.initialized
-    self.initialized = False # don't refresh main treeview
-    self.widgets['filter']['tag'].get_model().clear()
-    for i in self.bytag_combo_ids:
-        id = self.bytag_combo_ids[i]
-        if id>0:
-            name = self.db.session.query(db.Tag).filter_by(tag_id=id).first().name
-        else:
-            name = ''
-        # add some white spaces to prevent scrollbar hides parts of the names    
-        self.widgets['filter']['tag'].insert_text(int(i), str(name) + '   ')
-    self.initialized = _tmp
-    self.widgets['filter']['tag'].show_all()
-    self.widgets['filter']['tag'].set_active(0)
 
 def fill_preferences_tags_combo(self):
     _tmp = self.initialized
@@ -804,9 +793,9 @@ def fill_preferences_tags_combo(self):
         self.tags_ids[i] = tag.tag_id
         self.widgets['preferences']['tag_name'].insert_text(int(i), str(tag.name))
         i += 1
-    self.initialized = _tmp
     self.widgets['preferences']['tag_name'].show_all()
     self.widgets['preferences']['tag_name'].set_active(0)
+    self.initialized = _tmp
 
 def language_combos(self):
     self.widgets['preferences']['lang_name'].get_model().clear()

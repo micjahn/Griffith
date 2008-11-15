@@ -751,7 +751,7 @@
                   <widget class="GtkLabel" id="label291">
                     <property name="visible">True</property>
                     <property name="xpad">6</property>
-                    <property name="label" translatable="yes">By Volume</property>
+                    <property name="label">saved</property>
                   </widget>
                 </child>
               </widget>
@@ -764,87 +764,11 @@
               <widget class="GtkToolItem" id="toolitem15">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkComboBox" id="f_volume">
+                  <widget class="GtkComboBox" id="f_advfilter">
                     <property name="visible">True</property>
                     <property name="items" translatable="yes"></property>
-                    <signal name="changed" handler="on_f_volume_changed"/>
+                    <signal name="changed" handler="on_f_advfilter_changed"/>
                   </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkToolItem" id="toolitem16">
-                <property name="visible">True</property>
-                <child>
-                  <widget class="GtkLabel" id="label292">
-                    <property name="visible">True</property>
-                    <property name="xpad">6</property>
-                    <property name="label" translatable="yes">Loaned to</property>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkToolItem" id="toolitem17">
-                <property name="visible">True</property>
-                <child>
-                  <widget class="GtkComboBox" id="f_loanedto">
-                    <property name="visible">True</property>
-                    <property name="items" translatable="yes"></property>
-                    <signal name="changed" handler="on_f_loanedto_changed"/>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkToolItem" id="toolitem18">
-                <property name="visible">True</property>
-                <child>
-                  <widget class="GtkLabel" id="label293">
-                    <property name="visible">True</property>
-                    <property name="xpad">6</property>
-                    <property name="label" translatable="yes">By Tag</property>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkToolItem" id="toolitem19">
-                <property name="visible">True</property>
-                <child>
-                  <widget class="GtkComboBox" id="f_bytag">
-                    <property name="visible">True</property>
-                    <property name="items" translatable="yes"></property>
-                    <signal name="changed" handler="on_f_bytag_changed"/>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkToolItem" id="toolitem13">
-                <property name="visible">True</property>
-                <child>
-                  <placeholder/>
                 </child>
               </widget>
               <packing>
@@ -2772,12 +2696,6 @@
                             <property name="n_columns">5</property>
                             <property name="column_spacing">8</property>
                             <property name="row_spacing">8</property>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
                             <child>
                               <widget class="GtkCheckButton" id="view_image">
                                 <property name="visible">True</property>

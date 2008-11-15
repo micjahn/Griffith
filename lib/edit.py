@@ -34,7 +34,6 @@ import db
 import delete
 import gutils
 import movie
-import update
 
 def change_poster(self):
     """

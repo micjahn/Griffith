@@ -99,6 +99,9 @@ def hide_window(self):
         i.destroy()
     for i in widgets['dynamic_vbox'].get_children():
         i.destroy()
+    
+    from initialize import fill_advfilter_combo
+    fill_advfilter_combo(self)
 
     return True
 

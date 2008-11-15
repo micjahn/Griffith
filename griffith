@@ -67,7 +67,6 @@ import gconsole
 import initialize
 import main_treeview
 import quick_filter
-import update
 import version
 
 class Griffith(object):
@@ -425,7 +424,7 @@ class Griffith(object):
             session.rollback()
             log.warn("Cannot add volume: %s", e.message)
         else:
-            update.update_volume_combo_ids(self)
+            initialize.update_volume_combo_ids(self)
             initialize.fill_volumes_combo(self, id)
 
     def add_collection(self, widget):
@@ -439,7 +438,7 @@ class Griffith(object):
             session.rollback()
             log.warn("Cannot add collection: %s", e.message)
         else:
-            update.update_collection_combo_ids(self)
+            initialize.update_collection_combo_ids(self)
             initialize.fill_collections_combo(self, id)
 
     def remove_volume(self, widget):
@@ -454,7 +453,7 @@ class Griffith(object):
                 session.rollback()
                 log.warn("Cannot remove volume: %s", e.message)
             else:
-                update.update_volume_combo_ids(self)
+                initialize.update_volume_combo_ids(self)
                 initialize.fill_volumes_combo(self, id)
 
     def remove_collection(self, widget):
@@ -469,7 +468,7 @@ class Griffith(object):
                 session.rollback()
                 log.warn("Cannot remove collection: %s", e.message)
             else:
-                update.update_collection_combo_ids(self)
+                initialize.update_collection_combo_ids(self)
                 initialize.fill_collections_combo(self, id)
 
     def rename_volume(self, widget):
@@ -661,8 +660,6 @@ class Griffith(object):
         else:
             initialize.fill_preferences_tags_combo(self)
             initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-            update.update_bytag_combo_ids(self)
-            initialize.fill_bytag_combo(self)
 
     def on_tag_remove_clicked(self, widget):
         session = self.db.Session()
@@ -679,8 +676,6 @@ class Griffith(object):
                     log.warn("Cannot remove tag: %s", e.message)
                 initialize.fill_preferences_tags_combo(self)
                 initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-                update.update_bytag_combo_ids(self)
-                initialize.fill_bytag_combo(self)
             else:
                 gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
         else:
@@ -704,8 +699,6 @@ class Griffith(object):
             else:
                 initialize.fill_preferences_tags_combo(self)
                 initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-                update.update_bytag_combo_ids(self)
-                initialize.fill_bytag_combo(self)
 
     def on_tag_name_combo_changed(self, widget):
         active = self.widgets['preferences']['tag_name'].get_active()
@@ -1192,13 +1185,7 @@ You can't undo this operation."""), True, self.widgets['window'])
     def filter_collection(self, *args):
         quick_filter.change_filter(self)
 
-    def filter_volume(self, *args):
-        quick_filter.change_filter(self)
-
-    def filter_loanedto(self, *args):
-        quick_filter.change_filter(self)
-
-    def filter_bytag(self, *args):
+    def filter_using_advfilter_rule(self, *args):
         quick_filter.change_filter(self)
 
     # windows/dialogs -----------------------------------------------------
@@ -1208,7 +1195,7 @@ You can't undo this operation."""), True, self.widgets['window'])
         reconnect_add_signals(self)
         self.widgets['results']['window'].hide()
 
-    def save_state(self): 
+    def save_state(self):
         """Saves main window state"""
         # size should only be saved on microsoft windows systems
         # on other systems the window manager should manage the windows

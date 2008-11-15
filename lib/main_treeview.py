@@ -353,7 +353,16 @@ def populate(self, movies=None, where=None, qf=True):#{{{
     if qf and not movies or isinstance(movies, Select): # if ".execute().fetchall()" not invoked on movies yet
         if not where: # due to possible 'seen', 'loaned', 'collection_id' in where
             import advfilter
-            cond = advfilter.get_def_conditions()
+            
+            # saved in advfilter
+            name = self.widgets['filter']['advfilter'].get_active_text()[:-3].decode('utf-8') # :-3 due to additional '   ' in the name
+            if name:
+                from sql import load_conditions
+                cond = load_conditions(self.db, name)
+                if not cond:
+                    cond = advfilter.get_def_conditions()
+            else:
+                cond = advfilter.get_def_conditions()
 
             # seen / loaned
             cond['loaned_only']   = self.widgets['menu']['loaned_movies'].get_active()
@@ -364,24 +373,6 @@ def populate(self, movies=None, where=None, qf=True):#{{{
                 col_id = self.collection_combo_ids[pos]
                 if col_id > 0:
                     cond["collections"].add(col_id)
-            # volume
-            pos = self.widgets['filter']['volume'].get_active()
-            if pos >= 0:
-                vol_id = self.volume_combo_ids[pos]
-                if vol_id > 0:
-                    cond["volumes"].add(vol_id)
-            # loaned to
-            pos = self.widgets['filter']['loanedto'].get_active()
-            if pos >= 0:
-                per_id = self.loanedto_combo_ids[pos]
-                if per_id > 0:
-                    cond["loaned_to"].add(per_id)
-            # tag
-            pos = self.widgets['filter']['tag'].get_active()
-            if pos >= 0:
-                tag_id = self.bytag_combo_ids[pos]
-                if tag_id > 0:
-                    cond["tags"].add(tag_id)
 
             movies = advfilter.create_select_query(self, None, cond, movies)
         
