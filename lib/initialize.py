@@ -621,7 +621,7 @@ def dictionaries(self):
         'o_site'         : _('Official site'),
         'o_title'        : _('Original Title'),
         'plot'           : _('Plot'),
-        'ratio'          : _('Aspect ratio'),
+        'ratio_id'       : _('Aspect ratio'),
         'rating'         : _('Rating'),
         'region'         : _('Region'),
         'runtime'        : _('Runtime'),

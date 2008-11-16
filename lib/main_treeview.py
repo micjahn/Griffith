@@ -247,6 +247,7 @@ def set_details(self, item=None):#{{{
         
         data_loan = get_loan_info(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
         if data_loan is None:
+            log.warning("movie has no load data, changing 'loaned' status to False (movie_id: %s)", item['movie_id'])
             item.loaned = False
         else:
             data_person = self.db.session.query(db.Person).filter_by(person_id=data_loan.person.person_id).first()
