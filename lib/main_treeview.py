@@ -365,8 +365,10 @@ def populate(self, movies=None, where=None, qf=True):#{{{
                 cond = advfilter.get_def_conditions()
 
             # seen / loaned
-            cond['loaned_only']   = self.widgets['menu']['loaned_movies'].get_active()
-            cond["not_seen_only"] = self.widgets['menu']['not_seen_movies'].get_active()
+            if self.widgets['menu']['loaned_movies'].get_active():
+                cond['loaned'] = True
+            if self.widgets['menu']['not_seen_movies'].get_active():
+                cond["seen"] = False
             # collection
             pos = self.widgets['filter']['collection'].get_active()
             if pos >= 0:
