@@ -41,13 +41,14 @@ try:
 except:
     spell_support = 0
 
-def locations(self):
+def locations(self, home_dir):
     defaultLang, defaultEnc = getdefaultlocale()
     if defaultEnc is None:
         defaultEnc = 'UTF-8'
     locations = {}
     locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
     locations['lib']  = os.path.dirname(__file__)
+    locations['home'] = home_dir
     
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         import winshell
@@ -68,7 +69,6 @@ def locations(self):
         # this is changed on 0.9.5+svn so we need to make it backward compatible
         if os.path.exists(os.path.join(mydocs, 'griffith').decode(defaultEnc)):
             shutil.move(os.path.join(mydocs, 'griffith').decode(defaultEnc),os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(defaultEnc))
-        locations['home'] = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(defaultEnc)
         
         # windows hack for locale setting
         lang = os.getenv('LANG')
@@ -79,7 +79,6 @@ def locations(self):
             os.environ['LANG'] = lang
 
     elif os.name == 'posix':
-        locations['home']  = os.path.join(os.path.expanduser('~'), '.griffith').decode(defaultEnc)
         locations['share'] = os.path.abspath(os.path.join(locations['lib'], '..'))
         locations['glade'] = os.path.join(locations['share'], 'glade')
         locations['i18n']  = os.path.abspath(os.path.join(locations['share'], '..', 'locale'))
@@ -97,24 +96,24 @@ def locations(self):
     from tempfile import gettempdir
     locations['temp'] = gettempdir()
     
-    if self._tmp_home is not None: # see gconsole.check_args
-        locations['home'] = self._tmp_home.decode(defaultEnc)
-        del self._tmp_home
-
     try:
         if not os.path.exists(locations['home']):
-            log.info('Creating %s' % locations['home'])
+            log.info('Creating %s', locations['home'])
             os.makedirs(locations['home'])
         else:
-            log.info("Using Griffith directory: %s" % locations['home'])
+            log.info("Using Griffith directory: %s", locations['home'])
     except OSError:
         log.info('Unable to create griffith directory.')
         raise
         sys.exit()
 
     if not os.access(locations['home'], os.W_OK):
-        log.info('Cannot write to griffith directory, %s' % locations['home'])
+        log.info('Cannot write to griffith directory, %s', locations['home'])
         sys.exit()
+    
+    locations['posters'] = os.path.join(locations['home'], 'posters')
+    if not os.path.isdir(locations['posters']):
+        os.makedirs(locations['posters'])
 
     # includes plugins in system path for easier importing
     sys.path.append(locations['lib'])
@@ -124,33 +123,10 @@ def locations(self):
     self.locations = locations
     return locations
 
-def location_posters(locations, config):
-    if config.get('posters', None) is not None:
-        locations['posters']  = os.path.join(locations['home'], config.get('posters'))
-    elif config.get('type', 'sqlite', section='database') == 'sqlite':
-        dbname = config.get('name', 'griffith', section='database')
-        if dbname != 'griffith':
-            config['posters'] = 'posters_sqlite_' + dbname
-        else:
-            config['posters'] = 'posters'
-        locations['posters'] = os.path.join(locations['home'], config.get('posters'))
-        config.save()
-    else:
-        config['posters'] = "posters_%(type)s_%(host)s_%(port)s_%(name)s_%(user)s" % config.toDict('database')
-        locations['posters'] = os.path.join(locations['home'], config.get('posters'))
-        config.save()
-    # check if posters dir exists
-    if not os.path.isdir(locations['posters']):
-        os.makedirs(locations['posters'])
-
 def gui(self):
     self._ = None
-    log.info("running on %s - %s" % (os.name, platform.system()))
-    if os.name == 'nt' or os.name.startswith('win'):
-        self.windows = True
-    else:
-        self.windows = False
-        
+    log.info("running on %s - %s", os.name, platform.system())
+
     if platform.system() == 'Darwin':
         self.mac = True
     else:

@@ -34,7 +34,7 @@ log = logging.getLogger("Griffith")
 import gutils # TODO: get rid of this import
 import db # ORM data (SQLAlchemy stuff)
 
-class GriffithSQL:
+class GriffithSQL(object):
     version = 3    # database format version, increase after changing data structures
 
     def __init__(self, config, griffith_dir, locations, reconnect=True):

@@ -34,7 +34,7 @@ def upgrade_database(self, version, locations):
     if version == 0 or version is None:
         # version is 0 or none only for new databases
         db.metadata.create_all(b)
-        db.configuration_table.insert(bind=b).execute(param=u'version', value=self.version)
+        db.configuration_table.insert(bind=b).execute(param=u'version', value=unicode(self.version))
         db.media_table.insert(bind=b).execute(name=u'DVD')
         db.media_table.insert(bind=b).execute(name=u'DVD-R')
         db.media_table.insert(bind=b).execute(name=u'DVD-RW')
@@ -133,7 +133,7 @@ def upgrade_database(self, version, locations):
         log.info("... adding new columns")
         # common SQL statements
         queries = {'poster_md5': 'ALTER TABLE movies ADD poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
-                   'ratio_id'  : 'ALTER TABLE movies ADD ratio_id INTEGER NOT NULL DEFAULT 1 REFERENCES ratios(ratio_id);',
+                   'ratio_id'  : 'ALTER TABLE movies ADD ratio_id INTEGER NULL REFERENCES ratios(ratio_id);',
                    'screenplay': 'ALTER TABLE movies ADD screenplay VARCHAR(256) NULL;',
                    'cameraman' : 'ALTER TABLE movies ADD cameraman VARCHAR(256) NULL;'}
         # if needed some db specific SQL statements

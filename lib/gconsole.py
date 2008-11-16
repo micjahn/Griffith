@@ -22,19 +22,30 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import getopt
+import os
 import sys
 import gutils
 import logging
 log = logging.getLogger("Griffith")
+from locale import getdefaultlocale
 
 options = ('hDCo:t:d:c:y:s:', ('help', 'debug', 'sqlecho', 'clean', 'check-dep',
     'show-dep', 'original_title=', 'title=', 'director=', 'cast=', 'year=',
     'sort=', 'seen=', 'loaned=', 'number=', 'runtime=', 'rating=', 'home=',
     'config='))
 
-def check_args(self):
-    self._tmp_home = None
-    self._tmp_config = 'griffith.cfg'
+def check_args():
+    default_lang, default_enc = getdefaultlocale()
+    if not default_enc:
+        default_enc = 'UTF-8'
+    
+    if os.name == 'nt' or os.name.startswith('win'): # win32, win64
+        from win32com.shell import shellcon, shell
+        home = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(defaultEnc)
+    else:
+        home = os.path.join(os.path.expanduser('~'), '.griffith').decode(default_enc)
+    config = 'griffith.cfg'
+
     if len(sys.argv)>1:
         try:
             opts, args = getopt.getopt(sys.argv[1:], options[0], options[1])
@@ -53,15 +64,16 @@ def check_args(self):
                 sa_log = logging.getLogger("sqlalchemy")
                 sa_log.setLevel(logging.INFO)
             elif o == '--home':
-                self._tmp_home = a # see initialize.locations()
+                home = a
             elif o == '--config':
-                self._tmp_config = a # griffith.__init__
+                config = a
             elif o == '--check-dep':
                 check_dependencies()
                 sys.exit()
             elif o == '--show-dep':
                 show_dependencies()
                 sys.exit()
+    return home, config
 
 def check_args_with_db(self):
     if len(sys.argv)>1:

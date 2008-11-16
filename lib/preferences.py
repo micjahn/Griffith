@@ -427,13 +427,11 @@ def save_preferences(self):
         log.info('DATABASE: connecting to new db server...')
         import sql
         from sqlalchemy.exceptions import InvalidRequestError
-        from initialize            import dictionaries, people_treeview, location_posters
+        from initialize import dictionaries, people_treeview
         
         # new database connection
         self.initialized = False
         try:
-            c['posters'] = None # force update
-            location_posters(self.locations, self.config)
             self.db = sql.GriffithSQL(c, self.locations['home'], self.locations)
         except InvalidRequestError, e:
             log.error(str(e))
@@ -446,8 +444,6 @@ def save_preferences(self):
         # initialize new database
         self.total = int(self.db.session.query(db.Movie).count())
         self.count_statusbar()
-        c['posters'] = None # force update
-        location_posters(self.locations, self.config)
         dictionaries(self)
         people_treeview(self, False)
         self.initialized = True

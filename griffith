@@ -77,38 +77,32 @@ class Griffith(object):
     initialized = False
     lang = {}
 
-    def __init__(self):
+    def __init__(self, home_dir, config):
         """main griffith application constructor"""
 
-        gconsole.check_args(self)
-        initialize.locations(self)
-        
-        initialize.i18n(self, self.locations['i18n'])
-        self.posix = (os.name == 'posix')
-    
         # Configuration
-        if self._tmp_config.find('/') >=0 or self._tmp_config.find('\\') >=0:
-            configFileName = self._tmp_config
-        else:
-            configFileName = os.path.join(self.locations['home'], self._tmp_config)
-        self.config = config.Config(file=configFileName)
-        initialize.location_posters(self.locations, self.config)
+        self.config = config
+
+        self.windows = (os.name == 'nt' or os.name.startswith('win')) # win32, win64
+        self.posix = (os.name == 'posix')
+
+        initialize.locations(self, home_dir)
+        initialize.i18n(self, self.locations['i18n'])
 
         # convert old database
-        filename = os.path.join(self.locations['home'], self.config.get('file', 'griffith.db', section='database'))
-        if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
+        filename = os.path.join(self.locations['home'], config.get('file', 'griffith.db', section='database'))
+        if config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
             log.info('Old database format detected. Converting...')
             from dbupgrade import convert_from_old_db
             if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
-                self.config.save()
-                initialize.location_posters(self.locations, self.config)
+                config.save()
             else:
                 log.error('Cant convert old database, exiting.')
                 sys.exit(4)
         
         # create/connect db
         from sql import GriffithSQL
-        self.db = GriffithSQL(self.config, self.locations['home'], self.locations)
+        self.db = GriffithSQL(config, self.locations['home'], self.locations)
 
         # let's check any console arguments to parse
         gconsole.check_args_with_db(self)
@@ -1465,17 +1459,26 @@ You can't undo this operation."""), True, self.widgets['window'])
                 treeview.set_cursor_on_cell(0)
 
 if __name__ == "__main__":
-    developer = False # TODO: get from config
-    if not developer and '~' in version.pversion or '-' in version.pversion:
-        response = gutils.question(_("""This is development version of Griffith.
-We're not providing upgrade path from dev. versions.
+    # where Griffith should look for its data?
+    home_dir, config_name = gconsole.check_args()
+    if not (config_name.find('/') >= 0 or config_name.find('\\') >= 0):
+        config_name = os.path.join(home_dir, config_name)
+    config = config.Config(file=config_name)
+
+    if ('~' in version.pversion or '-' in version.pversion) and \
+       config.get('warned_version', section='devel') != version.pversion:
+
+        response = gutils.question(_("""You're trying to run development version of Griffith.
+Upgrade path from dev. versions will not be provided.
 Please make sure you have a backup!
 
 Do you want to proceed?"""))
         if response != gtk.RESPONSE_YES:
             sys.exit(2)
+        else:
+            config.set('warned_version', version.pversion, section='devel')
 
-    griffith = Griffith()
+    griffith = Griffith(home_dir, config)
     griffith.main()
 
 # vim: fdm=marker

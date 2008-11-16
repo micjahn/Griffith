@@ -157,10 +157,8 @@ def restore(self):
         if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
             log.info('Old database format detected. Converting...')
             from dbupgrade  import convert_from_old_db
-            from initialize import location_posters
             if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
                 self.config.save()
-                location_posters(self.locations, self.config)
             else:
                 log.error('Cant convert old database, exiting.')
                 import sys
