@@ -1369,7 +1369,7 @@ You can't undo this operation."""), True, self.widgets['window'])
                     if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
                         self.config.set('file', 'griffith.db', section='database')
                 # create/connect db
-                self.db = GriffithSQL(self.config, self.griffith_dir)
+                self.db = GriffithSQL(self.config, self.griffith_dir, self.locations)
                 self.clear_details()
                 self.total = 0
                 self.count_statusbar()

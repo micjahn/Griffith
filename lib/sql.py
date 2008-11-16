@@ -146,8 +146,11 @@ class GriffithSQL:
         if v < self.version:
             from dbupgrade import upgrade_database
             if not upgrade_database(self, v, locations):
-                import sys
-                sys.exit(1)
+                raise Exception("cannot upgrade database")
+        elif v > self.version:
+            log.error("database version mismatch (detacted:%s; current:%s)", v, self.version)
+            gutils.warning(_('This database requires newer version of Griffith.'))
+            raise Exception("database version mismatch")
 
 
 def update_whereclause(query, cond): # {{{
