@@ -29,28 +29,40 @@
                     <child>
                       <widget class="GtkImageMenuItem" id="new1">
                         <property name="visible">True</property>
-                        <property name="label">gtk-new</property>
+                        <property name="label" translatable="yes">New database</property>
                         <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
                         <signal name="activate" handler="on_new_activate"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="menu-item-image8">
+                            <property name="stock">gtk-new</property>
+                          </widget>
+                        </child>
                       </widget>
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="backup">
                         <property name="visible">True</property>
-                        <property name="label">gtk-save-as</property>
+                        <property name="label" translatable="yes">Create backup</property>
                         <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
                         <signal name="activate" handler="on_backup_activate"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="menu-item-image7">
+                            <property name="stock">gtk-save-as</property>
+                          </widget>
+                        </child>
                       </widget>
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="restore">
                         <property name="visible">True</property>
-                        <property name="label">gtk-revert-to-saved</property>
+                        <property name="label" translatable="yes">Restore from backup</property>
                         <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
                         <signal name="activate" handler="on_restore_activate"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="menu-item-image11">
+							<property name="stock">gtk-revert-to-saved</property>
+                          </widget>
+                        </child>
                       </widget>
                     </child>
                     <child>
