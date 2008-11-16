@@ -41,21 +41,21 @@ class DBTable(object):#{{{
             if hasattr(self, i):
                 setattr(self, i, kwargs[i])
             else:
-                log.warn("%s.%s not set" % (self.__class__.__name__, i))
+                log.warn("%s.%s not set", self.__class__.__name__, i)
     def __repr__(self):
         return "<%s:%s>" % (self.__class__.__name__, self.name.encode('utf-8'))
 
     @validates('name')
     def _validate_name(self, key, name):
         if not name or not name.strip():
-            log.warning("%s: empty name (%s)" % (self.__class__.__name__, name))
+            log.warning("%s: empty name (%s)", self.__class__.__name__, name)
             raise ValueError(_("Name cannot be empty"))
         return name.strip()
 
     def remove_from_db(self):
         dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
         if dbtable_id<1:
-            log.info("%s: none selected => none removed" % self.__class__.__name__)
+            log.info("%s: none selected => none removed", self.__class__.__name__)
             return False
         tmp = None
         if hasattr(self,'movies'):
@@ -65,19 +65,19 @@ class DBTable(object):#{{{
         if tmp and len(tmp)>0:
             gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
             return False
-        log.info("%s: removing '%s' (id=%s) from database..."%(self.__class__.__name__, self.name, dbtable_id))
+        log.info("%s: removing '%s' (id=%s) from database...", self.__class__.__name__, self.name, dbtable_id)
         self.delete()
         try:
             self.flush()
         except exceptions.SQLError, e:
-            log.info("%s: remove_from_db: %s" % (self.__class__.__name__, e))
+            log.info("%s: remove_from_db: %s", self.__class__.__name__, e)
             return False
         #self.refresh()
         return True
     def update_in_db(self):
         dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
         if dbtable_id<1:
-            log.info("%s: none selected => none updated" % self.__class__.__name__)
+            log.info("%s: none selected => none updated", self.__class__.__name__)
             return False
         tmp = self.query.filter_by(name=self.name).first()
         if tmp is not None and tmp is not self:
@@ -87,7 +87,7 @@ class DBTable(object):#{{{
         try:
             self.flush()
         except exceptions.SQLError, e:
-            log.info("%s: update_in_db: %s" % (self.__class__.__name__, e))
+            log.info("%s: update_in_db: %s", self.__class__.__name__, e)
             return False
         self.refresh()
         return True
@@ -114,7 +114,7 @@ class Person(DBTable):
     def _validate_email(self, key, address):
         address = address.strip()
         if not EMAIL_PATTERN.match(address):
-            log.warning("%s: email address is not valid (%s)" % (self.__class__.__name__, address))
+            log.warning("%s: email address is not valid (%s)", self.__class__.__name__, address)
             raise ValueError(_("E-mail address is not valid"))
         return address
 
@@ -397,7 +397,7 @@ if __name__ == '__main__':
     import sqlalchemy
     logging.basicConfig()
     log.setLevel(logging.INFO)
-    log.info("SQLAlchemy version: %s" % sqlalchemy.__version__)
+    log.info("SQLAlchemy version: %s", sqlalchemy.__version__)
 
     ### ENGINE ###
     engine_mem = create_engine('sqlite:///:memory:', echo=False)

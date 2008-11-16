@@ -506,10 +506,14 @@ class Griffith(object):
                     initialize.fill_collections_combo(self, default=col_id)
 
     def show_volume(self, widget):
+        import advfilter
         vol_id = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first().volume_id
-        pos = gutils.findKey(vol_id, self.volume_combo_ids)
-        quick_filter.clear_filter(self)
-        self.widgets['filter']['volume'].set_active(pos)
+        #quick_filter.clear_filter(self)
+        cond = advfilter.get_def_conditions()
+        cond["volumes"] = set((vol_id,))
+        movies = advfilter.create_select_query(self, None, cond, None).execute().fetchall()
+        self.populate_treeview(movies)
+
 
     def show_collection(self, widget):
         col_id = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first().collection_id

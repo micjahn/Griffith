@@ -21,7 +21,6 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-gettext.install('griffith', unicode=1)
 import gutils
 import gtk
 import datetime
