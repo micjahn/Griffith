@@ -51,7 +51,7 @@ def cover_image_process(self, filename, number):
     size = self.widgets['print_cover']['ci_size'].get_active()
     print_number = self.widgets['print_cover']['ci_number'].get_active()
 
-    if self.config.get('font', '')!='':
+    if self.config.get('font', '') != '':
         fontName = "custom_font"
         pdfmetrics.registerFont(TTFont(fontName,self.config.get('font', '')))
     else:
@@ -165,28 +165,28 @@ def cover_simple(self, number):
         c.rotate(90)
         c.drawString(60, (-pageWidth/2)-8, movie.o_title.encode('utf-8'))
         c.rotate(-90)
-        if movie.image is not None and movie.image != '':
-            tmp_dest = self.locations['posters']
-            image = str(os.path.join(tmp_dest, str(movie.image)+".jpg"))
-            c.drawImage(image, x=(pageWidth-30)/2, y=470, width=30, height=50)
+        if movie.poster_md5:
+            filename = gutils.get_image_fname(movie.poster_md5, self.db)
+            if filename:
+                c.drawImage(filename, x=(pageWidth-30)/2, y=470, width=30, height=50)
         # print movie info
         c.setFont(fontName, 8)
         textObject = c.beginText()
         textObject.setTextOrigin(pageWidth-cover_x, 300)
         textObject.setFont(fontName, 8)
-        textObject.textLine(_("Original Title").encode('utf-8')+': '+str(movie.o_title).encode('utf-8'))
-        textObject.textLine(_("Title").encode('utf-8')+': '+str(movie.title).encode('utf-8'))
+        textObject.textLine(_("Original Title").encode('utf-8')+': '+ movie.o_title.encode('utf-8'))
+        textObject.textLine(_("Title").encode('utf-8')+': '+ movie.title.encode('utf-8'))
         textObject.textLine("")
-        textObject.textLine(_("Director").encode('utf-8')+': '+str(movie.director).encode('utf-8'))
+        textObject.textLine(_("Director").encode('utf-8')+': '+ movie.director.encode('utf-8'))
         textObject.textLine("")
         textObject.textLine(_("Running Time").encode('utf-8')+': '+str(movie.runtime).encode('utf-8')+ _(" min").encode('utf-8'))
-        textObject.textLine(_("Country").encode('utf-8')+': '+str(movie.country).encode('utf-8'))
-        textObject.textLine(_("Genre").encode('utf-8')+': '+str(movie.genre).encode('utf-8'))
+        textObject.textLine(_("Country").encode('utf-8')+': ' + movie.country.encode('utf-8'))
+        textObject.textLine(_("Genre").encode('utf-8')+': '+ movie.genre.encode('utf-8'))
         textObject.textLine("")
         c.drawText(textObject)
         # draw bigger poster image
-        if poster == True and movie.image is not None:
-            c.drawImage(image, x=(pageWidth-(pageWidth-cover_x)-235), y=(pageHeight/2)-125, width=180, height=250)
+        if poster and movie.poster_md5 and filename:
+            c.drawImage(filename, x=(pageWidth-(pageWidth-cover_x)-235), y=(pageHeight/2)-125, width=180, height=250)
     c.showPage()
     c.save()
     self.widgets['print_cover']['window_simple'].hide()
@@ -197,3 +197,4 @@ def cover_simple(self, number):
         os.popen3("open -a Preview" + " " + cover_file)
     else:
         os.popen3(self.pdf_reader + " " + cover_file)
+
