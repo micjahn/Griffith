@@ -29,10 +29,10 @@ import logging
 log = logging.getLogger("Griffith")
 from locale import getdefaultlocale
 
-options = ('hDCo:t:d:c:y:s:', ('help', 'debug', 'sqlecho', 'clean', 'check-dep',
+options = ('hvDCo:t:d:c:y:s:', ('help', 'debug', 'sqlecho', 'clean', 'check-dep',
     'show-dep', 'original_title=', 'title=', 'director=', 'cast=', 'year=',
     'sort=', 'seen=', 'loaned=', 'number=', 'runtime=', 'rating=', 'home=',
-    'config='))
+    'config=', 'version' ))
 
 def check_args():
     default_lang, default_enc = getdefaultlocale()
@@ -57,6 +57,10 @@ def check_args():
         for o, a in opts:
             if o in ('-h', '--help'):
                 con_usage()
+                sys.exit()
+            if o in ('-v', '--version'):
+                import version
+                print version.pversion
                 sys.exit()
             elif o in ('-D', '--debug'):
                 log.setLevel(logging.DEBUG)
@@ -206,6 +210,7 @@ def con_usage():
     print "USAGE:", sys.argv[0], '[OPTIONS]'
     print "\nOPTIONS:"
     print "-h, --help\tprints this screen"
+    print "-v, --version\tprints Griffith's version"
     print "-D, --debug\trun with more debug info"
     print "-C, --clean\tfind and delete orphan files in posters directory"
     print "--check-dep\tcheck dependencies"

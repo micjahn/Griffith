@@ -431,8 +431,9 @@ def save_preferences(self):
         
         # new database connection
         self.initialized = False
-        try:
+        if c.has_key('posters'):
             c['posters'] = None # force update
+        try:
             self.db = sql.GriffithSQL(c, self.locations['home'], self.locations, fallback=True)
         except InvalidRequestError, e:
             log.error(str(e))

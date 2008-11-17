@@ -20,8 +20,9 @@ XGETTEXT ?= xgettext
 FIND ?= find
 DOC2MAN ?= docbook2x-man
 
-PREFIX = $(DESTDIR)/usr
+PREFIX ?= $(DESTDIR)/usr
 BINDIR = $(PREFIX)/bin
+ETCDIR = $(DESTDIR)/etc
 DATADIR = $(PREFIX)/share/griffith
 LIBDIR = $(DATADIR)/lib
 IMAGESDIR = $(DATADIR)/images
@@ -34,6 +35,7 @@ TPLDIR = $(DATADIR)/export_templates
 APPLICATIONSDIR = $(PREFIX)/share/applications
 ICONDIR = $(PREFIX)/share/pixmaps
 LOCALEDIR = $(PREFIX)/share/locale
+BASHCOMPDIR = $(ETCDIR)/bash_completion.d
 
 help:
 	@echo Usage:
@@ -52,7 +54,7 @@ install:
 	@echo "^^^^^^^^^^^^^^^^^^^"
 	$(INSTALL) -m 755 -d $(BINDIR) $(DATADIR) $(LIBDIR) $(PLUGINSDIR) $(MOVIEPLUGINSDIR) \
 		$(EXPORTPLUGINSDIR) $(IMPORTPLUGINSDIR) $(FONTSDIR) $(APPLICATIONSDIR) \
-		$(ICONDIR) $(TPLDIR) $(IMAGESDIR) $(GLADEDIR)
+		$(ICONDIR) $(TPLDIR) $(IMAGESDIR) $(GLADEDIR) $(ETCDIR) $(BASHCOMPDIR)
 	$(INSTALL) -m 755 griffith $(LIBDIR)
 	$(INSTALL) -m 644 lib/*.py $(LIBDIR)
 	$(INSTALL) -m 644 lib/plugins/*.py $(PLUGINSDIR)
@@ -65,6 +67,7 @@ install:
 	$(INSTALL) -m 644 images/griffith.png $(ICONDIR)
 	$(INSTALL) -m 644 images/griffith.xpm $(ICONDIR)
 	$(INSTALL) -m 644 data/griffith.desktop $(APPLICATIONSDIR)
+	$(INSTALL) -m 644 data/bash_completion $(BASHCOMPDIR)/griffith
 	
 	# installing language files
 	for lang in $(LANGUAGES); do \
@@ -104,6 +107,7 @@ uninstall:
 		${RM} -r $(LOCALEDIR)/$$lang/LC_MESSAGES/griffith.mo; \
 	done
 	${RM} -r $(BINDIR)/griffith
+	${RM} -r $(BASHCOMPDIR)/griffith
 	$(MAKE) -C docs uninstall
 	
 clean:
