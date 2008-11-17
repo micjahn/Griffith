@@ -5,9 +5,12 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+---- 0.10-beta1 ---
+
 2008-11-17  Piotr Ożarowski
 	* Add --version/-v command line options
 	* Add bash completion script
+	* Version changed to 0.10-beta1
 
 2008-11-16  Piotr Ożarowski
 	* fail if database requires newer Griffith version
