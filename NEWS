@@ -2,7 +2,12 @@ Griffith 0.10-beta1
 ===================
 * Filter movies using complex search criteria functionality
 * Posters stored in database (+local cache)
-* Unicode used internally (less problems with encodings)
+* New fields: aspect ratio, cameraman and screenplay
+* Lots of internal changes
+  + Unicode used internally (less problems with encodings, still needs some work)
+* Movie plugins updated
+* Export plugins are now exporting movies listed in main window only
+* Lots of bugs fixed, some speedups
 
 Note to package maintainers:
 Please note that Griffith requires Python >=2.5 and SQLAlchemy >= 0.5 now
