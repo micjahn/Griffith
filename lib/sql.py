@@ -37,7 +37,7 @@ import db # ORM data (SQLAlchemy stuff)
 class GriffithSQL(object):
     version = 3    # database format version, increase after changing data structures
 
-    def __init__(self, config, griffith_dir, locations, reconnect=True):
+    def __init__(self, config, griffith_dir, locations, fallback=True):
         #mapper = Session.mapper
         self.config = config
         self.data_dir = griffith_dir
@@ -101,9 +101,9 @@ class GriffithSQL(object):
             engine = create_engine(url, echo=False)
             conn = engine.connect()
         except Exception, e:    # InvalidRequestError, ImportError
-            log.info("MetaData: %s" % e)
-            if not reconnect:
-                return False
+            log.info("MetaData: %s", e)
+            if not fallback:
+                raise e
             config.set('type', 'sqlite', section='database')
             gutils.warning(self, "%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
             url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
@@ -116,9 +116,9 @@ class GriffithSQL(object):
             session = Session()
             #self.metadata.bind.connect()
         except Exception, e:
-            log.info("engine connection: %s" % e)
-            if not reconnect:
-                return False
+            log.info("engine connection error: %s", e)
+            if not fallback:
+                raise e
             gutils.error(self, _('Database connection failed.'))
             config.set('type', 'sqlite', section='database')
             url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
@@ -145,7 +145,7 @@ class GriffithSQL(object):
             v = int(v.value)
         if v < self.version:
             from dbupgrade import upgrade_database
-            if not upgrade_database(self, v, locations):
+            if not upgrade_database(self, v, locations, config):
                 raise Exception("cannot upgrade database")
         elif v > self.version:
             log.error("database version mismatch (detacted:%s; current:%s)", v, self.version)
@@ -295,7 +295,7 @@ def loan_movie(gsql, movie_id, person_id, whole_collection=False):
         movie.collection.loaned = True
         for m in movie.collection.movies:
             if m.loaned:
-                log.warn("collection contains loaned movie (%s), cannot proceed" % m.number)
+                log.warn("collection contains loaned movie (%s), cannot proceed", m.number)
                 session.rollback()
                 return -1
             m.loaned = True
@@ -332,18 +332,18 @@ def loan_return(gsql, movie_id):
     if loan is None:
         movie = session.query(db.Movie).filter_by(movie_id=movie_id).first()
         if not movie:
-            log.warn("Cannot find ")
+            log.warn("Cannot find movie: %s", movie_id)
             return False
         # lets check if whole colletion was loaned
         elif movie.collection and movie.collection.loaned:
             loan = session.query(db.Loan).filter_by(collection_id=movie.collection_id, return_date=None).first()
             if not loan:
-                log.error("Collection is marked as loaned but there's no such loan")
+                log.error("Collection is marked as loaned but there's no loan data")
                 return False
         elif movie.volume and movie.volume.loaned:
             loan = session.query(db.Loan).filter_by(volume_id=movie.volume_id, return_date=None).first()
         else:
-            log.error("Cannot find loan data")
+            log.error("Cannot find loan data (movie_id:%s)", movie_id)
             return False
 
     if loan.collection:
@@ -447,6 +447,6 @@ def load_conditions(gsql, name):
     if filter_:
         return filter_.conditions
     else:
-        log.warn("Cannot find search conditions: %s" % name)
+        log.warn("Cannot find search conditions: %s", name)
         return None
 #}}}

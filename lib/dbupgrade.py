@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+# vim: fdm=marker
 
 __revision__ = '$Id$'
 
@@ -28,7 +29,7 @@ import db
 import logging
 log = logging.getLogger("Griffith")
 
-def upgrade_database(self, version, locations):
+def upgrade_database(self, version, locations, config):
     """Create new db or update existing one to current format"""
     b = self.session.bind
     if version == 0 or version is None:
@@ -149,8 +150,9 @@ def upgrade_database(self, version, locations):
                 return False
         
         log.info("... saving posters in database")
+        posters_dir = get_old_posters_location(locations['home'], config, clean_config=True)
         for movie in self.session.query(db.Movie).all():
-            poster_file_name = os.path.join(locations['posters'], "%s.jpg" % movie.image)
+            poster_file_name = os.path.join(posters_dir, "%s.jpg" % movie.image)
             if os.path.isfile(poster_file_name):
                 poster_md5  = gutils.md5sum(file(poster_file_name, 'rb'))
                 poster = self.session.query(db.Poster).filter_by(md5sum=poster_md5).first()
@@ -513,4 +515,20 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
     clear_mappers()
     return True
 #}}}
-# vim: fdm=marker
+
+def get_old_posters_location(home_dir, config, clean_config=False):
+    if config.get('posters', None) is not None:
+        dirname = config.get('posters')
+    elif config.get('type', 'sqlite', section='database') == 'sqlite':
+        dbname = config.get('name', 'griffith', section='database')
+        if dbname != 'griffith':
+            dirname = "posters_sqlite_%s" % dbname
+        else:
+            dirname = 'posters'
+    else:
+        dirname = "posters_%(type)s_%(host)s_%(port)s_%(name)s_%(user)s" % config.to_dict('database')
+    if clean_config:
+        config.remove_option('posters')
+        config.save()
+    return os.path.join(home_dir, dirname)
+

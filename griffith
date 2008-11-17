@@ -1463,6 +1463,7 @@ if __name__ == "__main__":
     home_dir, config_name = gconsole.check_args()
     if not (config_name.find('/') >= 0 or config_name.find('\\') >= 0):
         config_name = os.path.join(home_dir, config_name)
+    log.debug("config file used: %s", config_name)
     config = config.Config(file=config_name)
 
     if ('~' in version.pversion or '-' in version.pversion) and \

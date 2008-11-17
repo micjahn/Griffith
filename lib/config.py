@@ -25,8 +25,10 @@ import os
 import os.path
 import ConfigParser
 #import cPickle as pickle
+import logging
+log = logging.getLogger("Griffith")
 
-class Config:
+class Config(object):
     subst = {'True': True, 'False': False, 'None': None}
     def __init__ (self, file):
         self._file = file
@@ -42,14 +44,13 @@ class Config:
             return default
         else:
             value = self._cfg.get(section, option, False)
-            if value in self.subst.keys():
-                value = self.subst[value]
+            value = Config.subst.get(value, value) # replace 'True' etc.
             return value
 
     def set(self, option, value, section='main'):
-        if not isinstance(option, str):
+        if not isinstance(option, basestring):
             option = str(option)
-        if not isinstance(value, str):
+        if not isinstance(value, basestring):
             value = str(value)
         if not self._cfg.has_section(section):
             self._cfg.add_section(section)
@@ -64,13 +65,16 @@ class Config:
     def __getitem__(self, key):
         return self.get('main', key)
 
+    def remove_option(self, option, section='main'):
+        return self._cfg.remove_option(section, option)
+
     def keys(self, section='main'):
         return [ i[0] for i in self._cfg.items(section) ]
     def values(self, section='main'):
         return [ i[1] for i in self._cfg.items(section) ]
     def items(self, section='main'):
         return self._cfg.items(section)
-    def toDict(self, section='main'):
+    def to_dict(self, section='main'):
         d = {}
         for i,j in self._cfg.items(section):
             d[i] = j
@@ -86,8 +90,9 @@ class Config:
             self._cfg = ConfigParser.SafeConfigParser()
             try:
                 self._cfg.read(self._file)
-            except:
-                print 'Cannot parse config file'
+            except Exception, e:
+                log.debug(str(e))
+                log.error('Cannot parse config file')
                 return False
             # check values for number datatypes
             # if current value could not be converted to number datatype

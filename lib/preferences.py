@@ -401,7 +401,7 @@ def save_preferences(self):
     self.pdf_reader = save_reader
 
     # database
-    old = c.toDict(section='database')
+    old = c.to_dict(section='database')
     
     c.set('host', w['db_host'].get_text(), section='database')
     c.set('port', int(w['db_port'].get_value()), section='database')
@@ -432,7 +432,8 @@ def save_preferences(self):
         # new database connection
         self.initialized = False
         try:
-            self.db = sql.GriffithSQL(c, self.locations['home'], self.locations)
+            c['posters'] = None # force update
+            self.db = sql.GriffithSQL(c, self.locations['home'], self.locations, fallback=True)
         except InvalidRequestError, e:
             log.error(str(e))
             c.set('type', 'sqlite', section='database')
