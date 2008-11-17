@@ -1,0 +1,33 @@
+# griffith(1) completion
+# Copyright 2008 Piotr Ożarowski <piotr@griffith.cc>
+
+# This script can be distributed under the same license as the
+# griffith or bash packages.
+
+have griffith &&
+_griffith()
+{
+    local cur prev options
+    
+    COMPREPLY=()
+    cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+    options='-h --help -v --version -D --debug -C --clean --check-dep --show-dep --sqlecho --home -c --cast -d --director -o --original_title -t --title -y --year -s --sort'
+
+
+    case $prev in
+	-h|--help|-v|--version)
+	    COMPREPLY=()
+	    ;;
+	--home)
+	    COMPREPLY=( $( compgen -d -o dirnames "$cur") )
+	    ;;
+	*)
+	    COMPREPLY=( $( compgen -W "$options" | grep "^$cur" ) )
+	    ;;
+    esac
+
+    return 0
+
+}
+[ "$have" ] && complete -F _griffith griffith
