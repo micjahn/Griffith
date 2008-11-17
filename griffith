@@ -1469,8 +1469,8 @@ if __name__ == "__main__":
     if ('~' in version.pversion or '-' in version.pversion) and \
        config.get('warned_version', section='devel') != version.pversion:
 
-        response = gutils.question(_("""You're trying to run development version of Griffith.
-Upgrade path from dev. versions will not be provided.
+        response = gutils.question(_("""This is development version of Griffith.
+Upgrade path from dev. versions may not be provided.
 Please make sure you have a backup!
 
 Do you want to proceed?"""))
