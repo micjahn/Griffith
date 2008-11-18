@@ -122,18 +122,19 @@ def check_args_with_db(self):
 def con_search_movie(self, where, sort=None):
     # for search function
     from sqlalchemy import select
-    col = lambda x: self.db.Movie.c[x]
-    columns = (col('number'), col('title'), col('o_title'), col('director'), col('year'))
+    import db
+    mt = db.tables['movies'].columns
+    columns = (mt.number, mt.title, mt.o_title, mt.director, mt.year)
     
     sort_columns = []
     if sort:
         for i in sort.split(','):
-            if self.db.Movie.c.has_key(i):
-                sort_columns.append(col(i))
+            if db.tables['movies'].columns.has_key(i):
+                sort_columns.append(mt[i])
     else:
-        sort_columns = [col('number')]
+        sort_columns = [mt.number]
 
-    statement = select(columns=columns, order_by=sort_columns)
+    statement = select(columns=columns, order_by=sort_columns, bind=self.db.session.bind)
 
     for i in where:
         if i in ('seen', 'loaned'):    # force boolean
@@ -142,9 +143,9 @@ def con_search_movie(self, where, sort=None):
             else:
                 where[i] = True
         if i in ('year', 'number', 'runtime', 'seen', 'loaned', 'rating'):
-            statement.append_whereclause(col(i)==where[i])
+            statement.append_whereclause(mt[i]==where[i])
         else:
-            statement.append_whereclause(col(i).like('%' + where[i] + '%' ))
+            statement.append_whereclause(mt[i].like('%' + where[i] + '%' ))
 
     movies = statement.execute().fetchall()
     if not movies:

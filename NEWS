@@ -1,3 +1,8 @@
+Griffith 0.10-beta2
+===================
+*
+
+
 Griffith 0.10-beta1
 ===================
 * Filter movies using complex search criteria functionality
@@ -10,7 +15,7 @@ Griffith 0.10-beta1
 * Lots of bugs fixed, some speedups
 
 Note to package maintainers:
-Please note that Griffith requires Python >=2.5 and SQLAlchemy >= 0.5 now
+Please note that Griffith requires Python >=2.5 and SQLAlchemy >=0.5 now
 (see `./griffith --check-dep` or `./griffith --show-dep`)
 
 
