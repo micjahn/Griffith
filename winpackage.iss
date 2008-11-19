@@ -23,7 +23,7 @@ InternalCompressLevel=ultra
 AppCopyright=Vasco Nunes/Piotr Ozarowski
 DisableStartupPrompt=false
 AppVersion=0.10-beta1
-VersionInfoVersion=0.10-beta1
+VersionInfoVersion=0.10.0
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl
@@ -57,9 +57,20 @@ Source: dist\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsub
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: {group}\Griffith; Filename: {app}\griffith.exe
-Name: {group}\{cm:ProgramOnTheWeb,Griffith}; Filename: http://griffith.cc
+Name: {group}\{cm:LaunchProgram,Griffith};    Filename: {app}\griffith.exe
 Name: {group}\{cm:UninstallProgram,Griffith}; Filename: {uninstallexe}
+Name: {group}\{cm:ProgramOnTheWeb,Griffith};  Filename: http://griffith.cc
+Name: {group}\Doc\Griffith Forum;             Filename: http://griffith.cc/forum/
+Name: {group}\Doc\Griffith Wiki;              Filename: http://wiki.griffith.cc/
+; some information files opened by iexplore which should work on most installations
+Name: {group}\Doc\INSTALL;     Filename: "{pf}\Internet Explorer\iexplore.exe"; Parameters: {app}\INSTALL;     IconFilename: %SystemRoot%\system32\SHELL32.dll; IconIndex: -152
+Name: {group}\Doc\NEWS;        Filename: "{pf}\Internet Explorer\iexplore.exe"; Parameters: {app}\NEWS;        IconFilename: %SystemRoot%\system32\SHELL32.dll; IconIndex: -152
+Name: {group}\Doc\AUTHORS;     Filename: "{pf}\Internet Explorer\iexplore.exe"; Parameters: {app}\AUTHORS;     IconFilename: %SystemRoot%\system32\SHELL32.dll; IconIndex: -152
+Name: {group}\Doc\THANKS;      Filename: "{pf}\Internet Explorer\iexplore.exe"; Parameters: {app}\THANKS;      IconFilename: %SystemRoot%\system32\SHELL32.dll; IconIndex: -152
+Name: {group}\Doc\License;     Filename: "{pf}\Internet Explorer\iexplore.exe"; Parameters: {app}\COPYING;     IconFilename: %SystemRoot%\system32\SHELL32.dll; IconIndex: -152
+Name: {group}\Doc\README;      Filename: "{pf}\Internet Explorer\iexplore.exe"; Parameters: {app}\README;      IconFilename: %SystemRoot%\system32\SHELL32.dll; IconIndex: -152
+Name: {group}\Doc\TRANSLATORS; Filename: "{pf}\Internet Explorer\iexplore.exe"; Parameters: {app}\TRANSLATORS; IconFilename: %SystemRoot%\system32\SHELL32.dll; IconIndex: -152
+; desktop and quick launch icons
 Name: {userdesktop}\Griffith; Filename: {app}\griffith.exe; Tasks: desktopicon
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\Griffith; Filename: {app}\griffith.exe; Tasks: quicklaunchicon
 

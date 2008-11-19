@@ -54,6 +54,12 @@ copy "%GRIFFITHDIR%\README"      "%GRIFFITHDIR%\dist\"
 copy "%GRIFFITHDIR%\THANKS"      "%GRIFFITHDIR%\dist\"
 copy "%GRIFFITHDIR%\TRANSLATORS" "%GRIFFITHDIR%\dist\"
 
+rem *** remove unnecessary files
+del /S /F /Q *.pyo
+del /S /F /Q *.a
+del /S /F /Q *.lib
+del /S /F /Q xml2Conf.sh
+
 :END
 
 rem **** pause so we can see the exit codes
