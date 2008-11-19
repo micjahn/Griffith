@@ -41,7 +41,7 @@ def check_args():
     
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         from win32com.shell import shellcon, shell
-        home = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(defaultEnc)
+        home = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(default_enc)
     else:
         home = os.path.join(os.path.expanduser('~'), '.griffith').decode(default_enc)
     config = 'griffith.cfg'
