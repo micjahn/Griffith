@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 
 2008-11-22  Michael Jahn
+	* use unicode for fetched html pages in general
 	* fixed rating, runtime and year are not shown with MySQL backend
 
 2008-11-10  Michael Jahn

@@ -253,7 +253,10 @@ def show_websearch_results(self):
         self.treemodel_results.clear()
         for row in self.search_movie.ids:
             if (str(row)!=''):
-                title = str(self.search_movie.titles[key]).decode(self.search_movie.encode)
+                if isinstance(self.search_movie.titles[key], unicode):
+                    title = self.search_movie.titles[key]
+                else:
+                    title = str(self.search_movie.titles[key]).decode(self.search_movie.encode)
                 myiter = self.treemodel_results.insert_before(None, None)
                 self.treemodel_results.set_value(myiter, 0, str(row))
                 self.treemodel_results.set_value(myiter, 1, title)
