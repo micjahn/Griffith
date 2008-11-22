@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-11-22  Michael Jahn
+	* fixed rating, runtime and year are not shown with MySQL backend
+
 2008-11-10  Michael Jahn
 	* optimized windows setup related code, added links to documentation files, forum and wiki to the installer
 

@@ -470,11 +470,11 @@ def populate(self, movies=None, where=None, qf=True):#{{{
         self.treemodel.set_value(myiter,4,movie.director)
         self.treemodel.set_value(myiter,5,movie.genre)
         self.treemodel.set_value(myiter,6,movie.seen)
-        if movie.year is not None and isinstance(movie.year, int):
+        if movie.year is not None and (isinstance(movie.year, int) or isinstance(movie.year, long)):
             self.treemodel.set_value(myiter,7,movie.year)
-        if movie.runtime is not None and isinstance(movie.runtime, int):
+        if movie.runtime is not None and (isinstance(movie.runtime, int) or isinstance(movie.runtime, long)):
             self.treemodel.set_value(myiter,8, '%003d' % movie.runtime + _(' min'))
-        if movie.rating is not None and isinstance(movie.rating, int):
+        if movie.rating is not None and (isinstance(movie.rating, int) or isinstance(movie.rating, long)):
             self.treemodel.set_value(myiter,9,movie.rating)
 
     # restore user sort column
