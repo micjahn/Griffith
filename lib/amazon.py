@@ -204,7 +204,7 @@ def unmarshal(element):
                 if type(getattr(rc, key)) <> type([]):
                     setattr(rc, key, [getattr(rc, key)])
                 setattr(rc, key, getattr(rc, key) + [unmarshal(child)])
-            elif isinstance(child, minidom.Element) and (child.tagName == 'Details'):
+            elif isinstance(child, minidom.Element) and (child.tagName == 'Details' or child.tagName == 'Item'):
                 # make the first Details element a key
                 setattr(rc,key,[unmarshal(child)])
                 #dbg: because otherwise 'hasattr' only tests
@@ -224,6 +224,8 @@ def unmarshal(element):
 
 def buildURL(search_type, searchfield, searchvalue, product_line, type, page, license_key, locale, associate):
     _checkLocaleSupported(locale)
+    if isinstance(searchvalue, unicode):
+        searchvalue = searchvalue.encode('iso8859-1')
     url = "http://" + _supportedLocales[locale][1]
     if search_type == 'ItemLookup':
         url += "&AssociateTag=%s" % associate
