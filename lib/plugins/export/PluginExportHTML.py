@@ -101,7 +101,7 @@ class ExportPlugin(Base):
         'movies_country'        : 'country',
         'movies_genre'          : 'genre',
         'movies_director'       : 'director',
-        'movies_image'          : 'image',
+        'movies_image'          : 'poster_md5',
         'movies_o_site'         : 'o_site',
         'movies_site'           : 'site',
         'movies_trailer'        : 'trailer',
@@ -169,8 +169,11 @@ class ExportPlugin(Base):
     def initialize(self): #{{{
         self.fields_to_export = []
         for field in ExportPlugin.fields:
-            pos = field.find('_')
-            self.fields_to_export.append("%s.%s" % (field[:pos], field[pos+1:]))
+            if field == 'movies_image':
+                self.fields_to_export.append('movies.poster_md5')
+            else:
+                pos = field.find('_')
+                self.fields_to_export.append("%s.%s" % (field[:pos], field[pos+1:]))
 
         self.widgets = {}
         self.style_list = {}
@@ -698,9 +701,9 @@ class ExportPlugin(Base):
             for j in self.names:
                 if self.fields[self.names[j]] == True:
                     if self.names[j] == 'movies_image':
-                        if row['movies_image']:
-                            #image = row['movies_image'] + '.' + config['poster_format'].lower()
-                            image = '%d' % row['movies_number'] + '.' + config['poster_format'].lower()
+                        if row['movies_poster_md5']:
+                            #image = row['movies_poster_md5'] + '.' + config['poster_format'].lower()
+                            image = "%d.%s" % (row['movies_number'], config['poster_format'].lower())
                             tmp = self.fill_template(tmp, self.names[j], image, j)
                         else:
                             tmp = self.fill_template(tmp, self.names[j], 'nopic.' + config['poster_format'].lower(), j)
@@ -735,21 +738,22 @@ class ExportPlugin(Base):
             
             # copy poster
             if fields['movies_image']:
-                if row['movies_image'] is not None:
-                    image_file_src = os.path.join(self.locations['posters'], str(row['movies_image']) + '.jpg')
-                    image_file_dst = os.path.join(posters_dir, '%d' % row['movies_number']) + '.' + config['poster_format'].lower()
+
+                if row['movies_poster_md5']:
+                    image_file_src = gutils.get_image_fname(row['movies_poster_md5'], self.db)
+                    image_file_dst = os.path.join(posters_dir, "%d.%s" % (row['movies_number'], config['poster_format'].lower()))
                     if not config['poster_convert']:    # copy file
                         try:
-                            shutil.copy(image_file_src,    image_file_dst)
+                            shutil.copy(image_file_src, image_file_dst)
                         except:
-                            log.info("Can't copy %s" % image_file_src)
+                            log.info("Can't copy %s", image_file_src)
                     else:    # convert posters
                         try:
                             im = Image.open(image_file_src, 'r').convert(config['poster_mode'])
                             im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
                             im.save(image_file_dst, config['poster_format'])
                         except:
-                            log.info("Can't convert %s" % image_file_src)
+                            log.info("Can't convert %s", image_file_src)
 
             # close file if last item
             if ((page-1)*self.entries_per_page)+item == number_of_exported_movies:
