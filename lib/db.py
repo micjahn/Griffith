@@ -51,63 +51,18 @@ class DBTable(object):#{{{
             log.warning("%s: empty name (%s)", self.__class__.__name__, name)
             raise ValueError(_("Name cannot be empty"))
         return name.strip()
-
-    def remove_from_db(self):
-        dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
-        if dbtable_id<1:
-            log.info("%s: none selected => none removed", self.__class__.__name__)
-            return False
-        tmp = None
-        if hasattr(self,'movies'):
-            tmp = getattr(self,'movies')
-        elif hasattr(self,'movielangs'):
-            tmp = getattr(self,'movielangs')
-        if tmp and len(tmp)>0:
-            gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
-            return False
-        log.info("%s: removing '%s' (id=%s) from database...", self.__class__.__name__, self.name, dbtable_id)
-        self.delete()
-        try:
-            self.flush()
-        except exceptions.SQLError, e:
-            log.info("%s: remove_from_db: %s", self.__class__.__name__, e)
-            return False
-        #self.refresh()
-        return True
-    def update_in_db(self):
-        dbtable_id = self.__dict__[self.__class__.__name__.lower() + '_id']
-        if dbtable_id<1:
-            log.info("%s: none selected => none updated", self.__class__.__name__)
-            return False
-        tmp = self.query.filter_by(name=self.name).first()
-        if tmp is not None and tmp is not self:
-            gutils.warning(self, msg=_("This name is already in use!"))
-            return False
-        self.update()
-        try:
-            self.flush()
-        except exceptions.SQLError, e:
-            log.info("%s: update_in_db: %s", self.__class__.__name__, e)
-            return False
-        self.refresh()
-        return True
      #}}}
 
 ### clases #################################################### {{{
-class AChannel(DBTable):
-    pass
+class AChannel(DBTable): pass
 
-class ACodec(DBTable):
-    pass
+class ACodec(DBTable): pass
 
-class Collection(DBTable):
-    pass
+class Collection(DBTable): pass
 
-class Lang(DBTable):
-    pass
+class Lang(DBTable): pass
 
-class Medium(DBTable):
-    pass
+class Medium(DBTable): pass
 
 class Person(DBTable):
     @validates('email')
@@ -125,20 +80,15 @@ class Person(DBTable):
         delchars = allchars.translate(allchars, string.digits)
         return unicode(str(value).translate(allchars, delchars))
 
-class Ratio(DBTable):
-    pass
+class Ratio(DBTable): pass
 
-class SubFormat(DBTable):
-    pass
+class SubFormat(DBTable): pass
 
-class Tag(DBTable):
-    pass
+class Tag(DBTable): pass
 
-class VCodec(DBTable):
-    pass
+class VCodec(DBTable): pass
 
-class Volume(DBTable):
-    pass
+class Volume(DBTable): pass
 
 class Poster(object):
     def __init__(self, md5sum=None, data=None):
@@ -173,10 +123,10 @@ class Movie(object):
 
 class MovieLang(object):
     def __init__(self, lang_id=None, type=None, acodec_id=None, achannel_id=None, subformat_id=None):
-        self.lang_id      = lang_id
-        self.type         = type
-        self.acodec_id    = acodec_id
-        self.achannel_id  = achannel_id
+        self.lang_id = lang_id
+        self.type = type
+        self.acodec_id = acodec_id
+        self.achannel_id = achannel_id
         self.subformat_id = subformat_id
     def __repr__(self):
         return "<MovieLang:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)>" % \
@@ -206,7 +156,7 @@ class Filter(object):
 ### table definitions ######################################### {{{
 movies_table = Table('movies', metadata,
     Column('movie_id', Integer, primary_key = True),
-    Column('number', Integer, nullable=False, unique=True),
+    Column('number', Integer, nullable=False, unique=True, index=True),
     Column('collection_id', Integer, ForeignKey('collections.collection_id')),
     Column('volume_id', Integer, ForeignKey('volumes.volume_id')),
     Column('medium_id', Integer, ForeignKey('media.medium_id')),
@@ -216,14 +166,14 @@ movies_table = Table('movies', metadata,
     Column('seen', Boolean, nullable=False, default=False),
     Column('rating', SmallInteger(2)),
     Column('color', SmallInteger),
-    Column('cond', SmallInteger),    # MySQL will not accept name "condition"
+    Column('cond', SmallInteger), # MySQL will not accept name "condition"
     Column('layers', SmallInteger),
     Column('region', SmallInteger),
     Column('media_num', SmallInteger),
     Column('runtime', Integer),
     Column('year', Integer),
-    Column('o_title', Unicode(256)),
-    Column('title', Unicode(256)),
+    Column('o_title', Unicode(256), index=True),
+    Column('title', Unicode(256), index=True),
     Column('director', Unicode(256)),
     Column('screenplay', Unicode(256)),
     Column('cameraman', Unicode(256)),
@@ -236,9 +186,9 @@ movies_table = Table('movies', metadata,
     Column('poster_md5', Unicode(32), ForeignKey('posters.md5sum')),
     Column('studio', Unicode(128)),
     Column('classification', Unicode(128)),
-    Column('cast', TEXT),
-    Column('plot', TEXT),
-    Column('notes', TEXT))
+    Column('cast', Text),
+    Column('plot', Text),
+    Column('notes', Text))
 
 loans_table = Table('loans', metadata,
     Column('loan_id', Integer, primary_key=True),
