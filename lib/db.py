@@ -54,15 +54,17 @@ class DBTable(object):#{{{
      #}}}
 
 ### clases #################################################### {{{
+
 class AChannel(DBTable): pass
-
 class ACodec(DBTable): pass
-
 class Collection(DBTable): pass
-
 class Lang(DBTable): pass
-
 class Medium(DBTable): pass
+class Ratio(DBTable): pass
+class SubFormat(DBTable): pass
+class Tag(DBTable): pass
+class VCodec(DBTable): pass
+class Volume(DBTable): pass
 
 class Person(DBTable):
     @validates('email')
@@ -79,16 +81,6 @@ class Person(DBTable):
         allchars = string.maketrans('', '')
         delchars = allchars.translate(allchars, string.digits)
         return unicode(str(value).translate(allchars, delchars))
-
-class Ratio(DBTable): pass
-
-class SubFormat(DBTable): pass
-
-class Tag(DBTable): pass
-
-class VCodec(DBTable): pass
-
-class Volume(DBTable): pass
 
 class Poster(object):
     def __init__(self, md5sum=None, data=None):
@@ -113,9 +105,11 @@ class Loan(object):
 class Movie(object):
     def __repr__(self):
         return "<Movie:%s (number=%s)>" % (self.movie_id, self.number)
+
     def __contains__(self, name):
         if name in ('volume','collection','medium','vcodec','loans','tags','languages','lectors','dubbings','subtitles'): return True
         else: return name in movies_table.columns
+
     def __getitem__(self, name):
         if name in self:
             return getattr(self, name)
@@ -128,6 +122,7 @@ class MovieLang(object):
         self.acodec_id = acodec_id
         self.achannel_id = achannel_id
         self.subformat_id = subformat_id
+
     def __repr__(self):
         return "<MovieLang:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)>" % \
             (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id, self.subformat_id)
@@ -135,6 +130,7 @@ class MovieLang(object):
 class MovieTag(object):
     def __init__(self, tag_id=None):
         self.tag_id = tag_id
+
     def __repr__(self):
         return "<MovieTag:%s-%s>" % (self.movie_id, self.tag_id)
 
@@ -144,8 +140,10 @@ class Filter(object):
             self.name = name
             #self.data = marshal.dumps(cond)
             self.conditions = cond
+
     def __repr__(self):
         return "<Filter(%s)>" % self.name
+
     def _set_cond(self, cond):
         self.data = marshal.dumps(cond)
     def _get_cond(self):
@@ -157,11 +155,11 @@ class Filter(object):
 movies_table = Table('movies', metadata,
     Column('movie_id', Integer, primary_key = True),
     Column('number', Integer, nullable=False, unique=True, index=True),
-    Column('collection_id', Integer, ForeignKey('collections.collection_id')),
-    Column('volume_id', Integer, ForeignKey('volumes.volume_id')),
-    Column('medium_id', Integer, ForeignKey('media.medium_id')),
-    Column('ratio_id', Integer, ForeignKey('ratios.ratio_id')),
-    Column('vcodec_id', Integer, ForeignKey('vcodecs.vcodec_id')),
+    Column('collection_id', ForeignKey('collections.collection_id')),
+    Column('volume_id', ForeignKey('volumes.volume_id')),
+    Column('medium_id', ForeignKey('media.medium_id')),
+    Column('ratio_id', ForeignKey('ratios.ratio_id')),
+    Column('vcodec_id', ForeignKey('vcodecs.vcodec_id')),
     Column('loaned', Boolean, nullable=False, default=False),
     Column('seen', Boolean, nullable=False, default=False),
     Column('rating', SmallInteger(2)),
@@ -183,7 +181,7 @@ movies_table = Table('movies', metadata,
     Column('country', Unicode(128)),
     Column('genre', Unicode(128)),
     Column('image', Unicode(128)), # XXX: deprecated
-    Column('poster_md5', Unicode(32), ForeignKey('posters.md5sum')),
+    Column('poster_md5', ForeignKey('posters.md5sum')),
     Column('studio', Unicode(128)),
     Column('classification', Unicode(128)),
     Column('cast', Text),
@@ -192,10 +190,10 @@ movies_table = Table('movies', metadata,
 
 loans_table = Table('loans', metadata,
     Column('loan_id', Integer, primary_key=True),
-    Column('person_id', Integer, ForeignKey('people.person_id'), nullable=False),
-    Column('movie_id', Integer, ForeignKey('movies.movie_id'), nullable=False),
-    Column('volume_id', Integer, ForeignKey('volumes.volume_id')),
-    Column('collection_id', Integer, ForeignKey('collections.collection_id')),
+    Column('person_id',  ForeignKey('people.person_id'), nullable=False),
+    Column('movie_id', ForeignKey('movies.movie_id'), nullable=False),
+    Column('volume_id', ForeignKey('volumes.volume_id')),
+    Column('collection_id', ForeignKey('collections.collection_id')),
     Column('date', Date, nullable=False, default=func.current_date()),
     Column('return_date', Date, nullable=True))
 
@@ -250,16 +248,16 @@ tags_table = Table('tags', metadata,
 movie_lang_table = Table('movie_lang', metadata,
     Column('ml_id', Integer, primary_key=True),
     Column('type', SmallInteger), # 0: Original, 1:lector, 2:dubbing, 3:subtitle
-    Column('movie_id', Integer, ForeignKey('movies.movie_id'), nullable=False),
-    Column('lang_id', Integer, ForeignKey('languages.lang_id'), nullable=False),
-    Column('acodec_id', Integer, ForeignKey('acodecs.acodec_id')),
-    Column('achannel_id', Integer, ForeignKey('achannels.achannel_id')),
-    Column('subformat_id', Integer, ForeignKey('subformats.subformat_id')))
+    Column('movie_id', ForeignKey('movies.movie_id'), nullable=False),
+    Column('lang_id', ForeignKey('languages.lang_id'), nullable=False),
+    Column('acodec_id', ForeignKey('acodecs.acodec_id')),
+    Column('achannel_id', ForeignKey('achannels.achannel_id')),
+    Column('subformat_id', ForeignKey('subformats.subformat_id')))
 
 movie_tag_table = Table('movie_tag', metadata,
     Column('mt_id', Integer, primary_key=True),
-    Column('movie_id', Integer, ForeignKey('movies.movie_id')),
-    Column('tag_id', Integer, ForeignKey('tags.tag_id')))
+    Column('movie_id', ForeignKey('movies.movie_id')),
+    Column('tag_id', ForeignKey('tags.tag_id')))
 
 configuration_table = Table('configuration', metadata,
     Column('param', Unicode(16), primary_key=True),

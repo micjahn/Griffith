@@ -187,6 +187,21 @@ def upgrade_database(self, version, locations, config):
         db_version.value = unicode(version)
         self.session.add(db_version)
         self.session.commit()
+
+    if False and version == 3:    # fix changes between v3 and v4
+        version += 1
+        log.info("Upgrading database to version %d..." % version)
+
+        i = Index('ix_movies_title', db.movies_table.c.title)
+        i.create(bind=b)
+        i = Index('ix_movies_o_title', db.movies_table.c.o_title)
+        i.create(bind=b)
+        
+        db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
+        db_version.value = unicode(version)
+        self.session.add(db_version)
+        self.session.commit()
+
     return True
 
 
