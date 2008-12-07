@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-12-07  Piotr Ożarowski
+	* CSFD movie plugin updated (thanks to Aleš Nejdr)
+
 2008-12-01  Piotr Ożarowski
 	* HTML export plugin exports posters again (closes: 304072)
 
