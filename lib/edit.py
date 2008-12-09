@@ -64,11 +64,13 @@ def update_image(self, number, filename):
 
     movie = session.query(db.Movie).filter_by(number=number).one()
     old_poster_md5 = movie.poster_md5
-    movie.poster_md5 = poster_md5
 
     if not session.query(db.Poster).filter_by(md5sum=poster_md5).first():
         poster = db.Poster(md5sum=poster_md5, data=file(filename, 'rb').read())
         session.add(poster)
+
+    # update the md5 *after* all other queries (so that UPDATE will not be invoked)
+    movie.poster_md5 = poster_md5
     
     if old_poster_md5:
         delete.delete_poster(self, old_poster_md5)
@@ -80,9 +82,10 @@ def update_image(self, number, filename):
         session.rollback()
         log.error("cannot add poster to database: %s" % e)
         return False
-   
+
     filename = gutils.get_image_fname(poster_md5, self.db, 's')
-    update_tree_thumbnail(self, filename)
+    if filename:
+        update_tree_thumbnail(self, filename)
 
     self.widgets['movie']['picture_button'].set_sensitive(True)
     self.widgets['add']['delete_poster'].set_sensitive(True)

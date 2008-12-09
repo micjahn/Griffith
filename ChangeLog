@@ -6,7 +6,13 @@ Griffith ChangeLog
 
 
 2008-12-07  Piotr Ożarowski
+	* update_image(): update the md5 *after* all other queries (so that UPDATE will not be invoked)
+
+2008-12-07  Piotr Ożarowski
 	* CSFD movie plugin updated (thanks to Aleš Nejdr)
+
+2008-12-03  Piotr Ożarowski
+	* Add few indexes to the model
 
 2008-12-01  Piotr Ożarowski
 	* HTML export plugin exports posters again (closes: 304072)

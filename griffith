@@ -354,7 +354,7 @@ class Griffith(object):
             return
         number = tmp_model.get_value(tmp_iter, 0)
         movie = self.db.session.query(db.Movie).filter_by(number=number).first()
-        if movie:
+        if movie and movie.poster_md5:
             filename = gutils.get_image_fname(movie.poster_md5, self.db)
             self.widgets['big_poster'].set_from_file(filename)
             self.widgets['poster_window'].show()
