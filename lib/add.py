@@ -191,7 +191,8 @@ def populate_with_results(self):
         fields_to_fetch = [ i for i in fields_to_fetch if details[i] is None ]
     self.movie.fields_to_fetch = fields_to_fetch
     
-    self.movie.get_movie(w['window'])
+    if not self.movie.get_movie(w['window']):
+        return None
     self.movie.parse_movie()
 
     if 'year' in fields_to_fetch:
