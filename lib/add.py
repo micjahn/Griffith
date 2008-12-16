@@ -300,8 +300,8 @@ def get_from_web(self):
                 self.search_movie.title = gutils.remove_accents(title, 'utf-8')
             else:
                 self.search_movie.title = unicode(title, 'utf-8')
-        self.search_movie.search_movies(self.widgets['add']['window'])
-        self.search_movie.get_searches()
+        if self.search_movie.search_movies(self.widgets['add']['window']):
+            self.search_movie.get_searches()
         if len(self.search_movie.ids) == 1 and o_title and title:
             self.search_movie.url = self.search_movie.translated_url_search
             if self.search_movie.remove_accents:
