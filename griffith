@@ -72,6 +72,7 @@ import version
 class Griffith(object):
     """The main application class"""
 
+    debug_mode = False
     Image = gtk.Image()
     founded_results_id = None
     initialized = False

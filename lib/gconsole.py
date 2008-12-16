@@ -94,6 +94,8 @@ def check_args_with_db(self):
             if o in ('-C', '--clean'):
                 gutils.clean_posters_dir(self)
                 sys.exit()
+            elif o in ('-D', '--debug'):
+                self.debug_mode = True
             elif o in ('-s', '--sort'):
                 sort = a
             elif o in ('-o', '--original_title'):

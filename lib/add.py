@@ -282,6 +282,10 @@ def get_from_web(self):
         self.active_plugin = option
         plugin_name = 'PluginMovie%s' % option
         plugin = __import__(plugin_name)
+        if self.debug_mode:
+            log.debug('reloading %s', plugin_name)
+            import sys
+            reload(sys.modules[plugin_name])
         self.search_movie = plugin.SearchPlugin()
         self.search_movie.config = self.config
         if o_title:
