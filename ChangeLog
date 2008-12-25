@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2008-12-25  Michael Jahn
+	* [#309373] export to pdf
+
 2008-12-19  Michael Jahn
 	* OFDb, IMDB-de movie plugin updated
 
