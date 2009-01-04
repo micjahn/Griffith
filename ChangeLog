@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2008  Vasco Nunes, Piotr Ożarowski
 
 
+2009-01-04  Piotr Ożarowski
+	* MyMoviesIt movie plugin added (thanks to Giovanni Sposito)
+
 2009-01-03  Michael Jahn
 	* [#313012] correctly round ratings
 
