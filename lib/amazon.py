@@ -80,6 +80,8 @@ try:
     timeoutsocket.setDefaultSocketTimeout(10)
 except ImportError:
     pass
+import logging
+log = logging.getLogger("Griffith")
 
 LICENSE_KEY = ""
 ASSOCIATE = "webservices-20"
@@ -249,6 +251,7 @@ def buildURL(search_type, searchfield, searchvalue, product_line, type, page, li
         url += "&Sort=titlerank"
     if not APIVERSION is None:
         url += "&Version=%s" % APIVERSION
+    log.info('URL: ' + url)
     return url
 
 
