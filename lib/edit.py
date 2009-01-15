@@ -160,7 +160,26 @@ def fetch_bigger_poster(self):
         locale = None
 
     try:
-        result = amazon.searchByKeyword(keyword, type="Large", product_line="DVD", locale=locale)
+        result = amazon.searchByTitle(keyword, type="Large", product_line="DVD", locale=locale)
+        if hasattr(result, 'TotalPages'):
+            # get next result pages
+            pages = int(result.TotalPages)
+            page = 2
+            while page <= pages and page < 11:
+                tmp = amazon.searchByTitle(keyword, type='Large', product_line='DVD', locale=locale, page=page)
+                result.Item.extend(tmp.Item)
+                page = page + 1
+        if not hasattr(result, 'Item') or not len(result.Item):
+            # fallback if nothing is found by title
+            result = amazon.searchByKeyword(keyword, type="Large", product_line="DVD", locale=locale)
+            if hasattr(result, 'TotalPages'):
+                # get next result pages
+                pages = int(result.TotalPages)
+                page = 2
+                while page <= pages and page < 11:
+                    tmp = amazon.searchByKeyword(keyword, type='Large', product_line='DVD', locale=locale, page=page)
+                    result.Item.extend(tmp.Item)
+                    page = page + 1
         log.info("... %s posters found" % result.TotalResults)
     except:
         gutils.warning(self, _("No posters found for this movie."))
@@ -207,7 +226,7 @@ def get_poster_select_dc(self, event, mself, result, current_poster):
     if event.type == gtk.gdk._2BUTTON_PRESS:
         get_poster(mself, None, result)
 
-def get_poster_select(self, mself, result):
+def get_poster_select(self, mself, result, current_poster):
     get_poster(mself, None, result)
 
 def get_poster(self, f, result):
@@ -223,6 +242,7 @@ def get_poster(self, f, result):
     file_to_copy = tempfile.mktemp(suffix=self.widgets['movie']['number'].get_text(), \
         dir=self.locations['temp'])
     file_to_copy += ".jpg"
+    canceled = False
     if len(result.Item[f].LargeImage.URL):
         try:
             progress = movie.Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
@@ -231,55 +251,61 @@ def get_poster(self, f, result):
             while retriever.isAlive():
                 progress.pulse()
                 if progress.status:
-                    retriever.suspend()
+                    canceled = True
                 while gtk.events_pending():
                     gtk.main_iteration()
             progress.close()
             urlcleanup()
         except:
+            canceled = True
             gutils.warning(self, _("Sorry. A connection error has occurred."))
-
-    if os.path.isfile(file_to_copy):
-        try:
-            im = Image.open(file_to_copy)
-        except IOError:
-            log.warn("failed to identify %s"%file_to_copy)
-
-        if im.size == (1,1):
-            url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result.Item[f].ASIN).read()
-            if url.find('no-img-sm._V47056216_.gif') > 0:
-                log.warn('No image available')
-                gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
-                return False
-            url = gutils.after(url, 'id="imageViewerDiv"><img src="')
-            url = gutils.before(url, '" id="prodImage"')
-            urlretrieve(url, file_to_copy)
-            try:
-                im = Image.open(file_to_copy)
-            except IOError:
-                log.warn("failed to identify %s"%file_to_copy)
-
-        if im.mode != 'RGB': # convert GIFs
-            im = im.convert('RGB')
-            im.save(file_to_copy, 'JPEG')
-        
-        handler = self.widgets['big_poster'].set_from_file(file_to_copy)
-
-        self.widgets['poster_window'].show()
-        self.widgets['poster_window'].move(0,0)
-        response = gutils.question(_("Do you want to use this poster instead?"), True, self.widgets['window'])
-        if response == -8:
-            log.info("Using fetched poster, updating and removing old one from disk.")
-            update_image(self, self.widgets['movie']['number'].get_text(), file_to_copy)
-        else:
-            log.info("Reverting to previous poster and deleting new one from disk.")
             try:
                 os.remove(file_to_copy)
             except:
                 log.error("no permission for %s"%file_to_copy)
 
-        self.widgets['poster_window'].hide()
-    else:
-        gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
+    if not canceled:
+        if os.path.isfile(file_to_copy):
+            try:
+                im = Image.open(file_to_copy)
+            except IOError:
+                log.warn("failed to identify %s"%file_to_copy)
+
+            if im.size == (1,1):
+                url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result.Item[f].ASIN).read()
+                if url.find('no-img-sm._V47056216_.gif') > 0:
+                    log.warn('No image available')
+                    gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
+                    return False
+                url = gutils.after(url, 'id="imageViewerDiv"><img src="')
+                url = gutils.before(url, '" id="prodImage"')
+                urlretrieve(url, file_to_copy)
+                try:
+                    im = Image.open(file_to_copy)
+                except IOError:
+                    log.warn("failed to identify %s"%file_to_copy)
+
+            if im.mode != 'RGB': # convert GIFs
+                im = im.convert('RGB')
+                im.save(file_to_copy, 'JPEG')
+        
+            handler = self.widgets['big_poster'].set_from_file(file_to_copy)
+
+            self.widgets['poster_window'].show()
+            self.widgets['poster_window'].move(0,0)
+            response = gutils.question(_("Do you want to use this poster instead?"), True, self.widgets['window'])
+            if response == -8:
+                log.info("Using fetched poster, updating and removing old one from disk.")
+                update_image(self, self.widgets['movie']['number'].get_text(), file_to_copy)
+            else:
+                log.info("Reverting to previous poster and deleting new one from disk.")
+                try:
+                    os.remove(file_to_copy)
+                except:
+                    log.error("no permission for %s"%file_to_copy)
+
+            self.widgets['poster_window'].hide()
+        else:
+            gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
     reconnect_add_signals(self)
 
