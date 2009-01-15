@@ -182,7 +182,7 @@ def populate_with_results(self):
     
     fields_to_fetch = ['o_title', 'title', 'director', 'plot', 'cast', 'country', 'genre',
                 'classification', 'studio', 'o_site', 'site', 'trailer', 'year',
-                'notes', 'runtime', 'image', 'rating']
+                'notes', 'runtime', 'image', 'rating', 'screenplay', 'cameraman']
     # remove fields that user doesn't want to fetch: (see preferences window)
     fields_to_fetch = [ i for i in fields_to_fetch if self.config.get("s_%s" % i, True, section='add') ]
 
