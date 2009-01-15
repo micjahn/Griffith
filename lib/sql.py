@@ -70,7 +70,7 @@ class GriffithSQL(object):
         elif config.get('type', section='database') == 'mysql':
             if config.get('port', 0, section='database')==0:
                 config.set('port', 3306, section='database')
-            url = "mysql://%s:%s@%s:%d/%s" % (
+            url = "mysql://%s:%s@%s:%d/%s?charset=utf8&use_unicode=0" % (
                 config.get('user', section='database'),
                 config.get('passwd', section='database'),
                 config.get('host', section='database'),

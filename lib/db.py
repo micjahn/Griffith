@@ -265,11 +265,11 @@ configuration_table = Table('configuration', metadata,
 
 posters_table = Table('posters', metadata,
     Column('md5sum', Unicode(32), primary_key=True),
-    Column('data', BLOB, nullable=False))
+    Column('data', Binary, nullable=False))
 
 filters_table = Table('filters', metadata,
     Column('name', Unicode(64), primary_key=True),
-    Column('data', BLOB, nullable=False))
+    Column('data', Binary, nullable=False))
 
 tables = {
     'movies':         movies_table,
