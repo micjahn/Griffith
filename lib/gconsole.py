@@ -64,6 +64,8 @@ def check_args():
                 sys.exit()
             elif o in ('-D', '--debug'):
                 log.setLevel(logging.DEBUG)
+                log.debug('Dependencies:')
+                show_dependencies()
             elif o == '--sqlecho':
                 sa_log = logging.getLogger("sqlalchemy")
                 sa_log.setLevel(logging.INFO)
