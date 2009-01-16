@@ -365,9 +365,9 @@ def get_details(self): #{{{
         'medium_id'      : w['media'].get_active(),
         'volume_id'      : w['volume'].get_active(),
         'vcodec_id'      : w['vcodec'].get_active(),
-        'cast'           : cast_buffer.get_text(cast_buffer.get_start_iter(),cast_buffer.get_end_iter()),
-        'notes'          : notes_buffer.get_text(notes_buffer.get_start_iter(),notes_buffer.get_end_iter()),
-        'plot'           : plot_buffer.get_text(plot_buffer.get_start_iter(),plot_buffer.get_end_iter()),
+        'cast'           : cast_buffer.get_text(cast_buffer.get_start_iter(),cast_buffer.get_end_iter()).decode('utf-8'),
+        'notes'          : notes_buffer.get_text(notes_buffer.get_start_iter(),notes_buffer.get_end_iter()).decode('utf-8'),
+        'plot'           : plot_buffer.get_text(plot_buffer.get_start_iter(),plot_buffer.get_end_iter()).decode('utf-8'),
     }
     if self._am_movie_id is not None:
         t_movies['movie_id'] = self._am_movie_id
