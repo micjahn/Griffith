@@ -120,11 +120,17 @@ class ExportPlugin(Base):
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
                 # output movies
-                first_letter = '0'
+                first_letter = ''
                 for movie in movies:
                     number = movie.number
-                    original_title = movie.o_title.encode(defaultEnc)
-                    title = movie.title.encode(defaultEnc)
+                    if movie.o_title:
+                        original_title = movie.o_title.encode(defaultEnc)
+                    else:
+                        original_title = ''
+                    if movie.title:
+                        title = movie.title.encode(defaultEnc)
+                    else:
+                        title = ''
                     grouping_title = movie.title
                     if grouping_title is None:
                         grouping_title = u'None'
