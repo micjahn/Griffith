@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-01-16  Piotr Ożarowski
+	* Print move details during startup in debug mode
+
 2009-01-16  Michael Jahn
 	* [#317837] 007 james bond (PDF export grouping error)
 

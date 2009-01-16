@@ -64,10 +64,12 @@ def check_args():
                 sys.exit()
             elif o in ('-D', '--debug'):
                 from platform import platform
+                import version
                 log.setLevel(logging.DEBUG)
+                log.debug("Starting %s %s", version.pname, version.pversion)
+                log.debug("Platform: %s (%s)", platform(), os.name)
                 log.debug('Dependencies:')
                 show_dependencies()
-                log.debug("Platform: %s (%s)", platform(), os.name)
             elif o == '--sqlecho':
                 sa_log = logging.getLogger("sqlalchemy")
                 sa_log.setLevel(logging.INFO)
