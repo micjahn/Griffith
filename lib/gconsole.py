@@ -63,9 +63,11 @@ def check_args():
                 print version.pversion
                 sys.exit()
             elif o in ('-D', '--debug'):
+                from platform import platform
                 log.setLevel(logging.DEBUG)
                 log.debug('Dependencies:')
                 show_dependencies()
+                log.debug("Platform: %s (%s)", platform(), os.name)
             elif o == '--sqlecho':
                 sa_log = logging.getLogger("sqlalchemy")
                 sa_log.setLevel(logging.INFO)

@@ -125,7 +125,6 @@ def locations(self, home_dir):
 
 def gui(self):
     self._ = None
-    log.info("running on %s - %s", os.name, platform.system())
 
     if platform.system() == 'Darwin':
         self.mac = True
@@ -136,7 +135,6 @@ def gui(self):
     
     if self.windows:
         gtk.rc_parse('%s\\gtkrc' % self.locations['exec'])
-
 
     gf = os.path.join(self.locations['glade'], 'griffith.glade')
     from widgets import define_widgets
