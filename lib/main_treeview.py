@@ -44,7 +44,7 @@ def treeview_clicked(self):
         # FIXME
         #movie.refresh() # loan data can be obsolete in cache
         if movie is None:
-            log.info("Treeview: movie doesn't exists (number=%s)"%number)
+            log.info("Treeview: movie doesn't exists (number=%s)", number)
         set_details(self, movie)
     else:
         set_details(self, {})
@@ -250,12 +250,12 @@ def set_details(self, item=None):#{{{
             log.warning("movie has no loan data, changing 'loaned' flag to False (movie_id: %s)", item['movie_id'])
             item.loaned = False
         else:
-            data_person = self.db.session.query(db.Person).filter_by(person_id=data_loan.person.person_id).first()
-            self.person_name = str(data_person.name)
-            self.person_email = str(data_person.email)
+            data_person = self.db.session.query(db.Person.name, db.Person.email).filter_by(person_id=data_loan.person.person_id).first()
+            self.person_name = data_person.name
+            self.person_email = data_person.email
             self.loan_date = str(data_loan.date)
             w['loan_info'].set_use_markup(False)
-            w['loan_info'].set_label(_("This movie has been loaned to ") + self.person_name + _(" on ") + self.loan_date[:10])
+            w['loan_info'].set_label(_("This movie has been loaned to %s on %s") % (self.person_name, self.loan_date[:10]))
     if 'loaned' in item and not item['loaned']: # "loaned" status can be changed above, so don't use "else:" in this line
         self.widgets['popups']['loan'].set_sensitive(True)
         self.widgets['popups']['email'].set_sensitive(False)
@@ -279,7 +279,7 @@ def set_details(self, item=None):#{{{
                 self.loans_treemodel.set_value(myiter, 1, str(loan.return_date)[:10])
             else:
                 self.loans_treemodel.set_value(myiter, 1, "---")
-            person = self.db.session.query(db.Person).filter_by(person_id=loan.person.person_id).first()
+            person = self.db.session.query(db.Person.name).filter_by(person_id=loan.person.person_id).first()
             self.loans_treemodel.set_value(myiter, 2, person.name)
 
     # volumes/collections

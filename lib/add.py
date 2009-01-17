@@ -93,7 +93,7 @@ def update_movie(self):
                 else:
                     poster = db.Poster(md5sum=new_poster_md5, data=data)
                     del details["image"]
-                    details["poster_md5"] = new_poster_md5
+                    details['poster_md5'] = new_poster_md5
                     self.db.session.add(poster)
 
                     # delete old image
@@ -635,15 +635,13 @@ def add_movie_db(self, close):
         return False
 
     if details['o_title']:
-        tmp_movie = self.db.session.query(db.Movie).filter_by(o_title=details['o_title']).first()
-        if tmp_movie is not None:
+        if self.db.session.query(db.Movie).filter_by(o_title=details['o_title']).count() > 0:
             response = gutils.question(_('Movie with that title already exists, are you sure you want to add?'), \
                                        False, self.widgets['add']['window'])
             if response == gtk.RESPONSE_NO:
                 return False
     if details['title']:
-        tmp_movie = self.db.session.query(db.Movie).filter_by(title=details['title']).first()
-        if tmp_movie is not None:
+        if self.db.session.query(db.Movie).filter_by(title=details['title']).count() > 0:
             response = gutils.question(_('Movie with that title already exists, are you sure you want to add?'), \
                                        False, self.widgets['add']['window'])
             if response == gtk.RESPONSE_NO:

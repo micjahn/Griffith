@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2009-01-17  Piotr Ożarowski
 	* Use MediumBLOB on MySQL to store posters. Database has to be recreated if 0.10-beta1 was used to create it.
+	* Few SQL optimizations
 
 2009-01-16  Piotr Ożarowski
 	* Print move details during startup in debug mode

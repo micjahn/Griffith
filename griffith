@@ -1341,6 +1341,7 @@ You can't undo this operation."""), True, self.widgets['window'])
             if response_sec == gtk.RESPONSE_YES:
                 from sqlalchemy import select
                 from sql import GriffithSQL
+                from delete import delete_poster_from_cache
                 # delete images
                 posters_dir = self.locations['posters']
                 # NOTE: only used images are removed (posters are shared between various db)
@@ -1348,16 +1349,7 @@ You can't undo this operation."""), True, self.widgets['window'])
                 
                 posters = self.db.session.query(db.Movie.poster_md5).all()
                 for poster in posters:
-                    name = poster[0]
-                    p_file = os.path.join(posters_dir, name + '.jpg')
-                    m_file = os.path.join(posters_dir, name + '_m.jpg')
-                    s_file = os.path.join(posters_dir, name + '_sjpg')
-                    try:
-                        os.remove(p_file)
-                        os.remove(m_file)
-                        os.remove(s_file)
-                    except Exception, e:
-                        log.debug("Cannot remove %s: %s", name, e)
+                    delete_poster_from_cache(self, poster[0])
 
                 log.debug('dropping old tables...')
                 db.metadata.drop_all(self.db.session.bind.engine)

@@ -271,7 +271,7 @@ def treeview(self):
                 self.widgets['treeview'].move_column_after(self.rating_column, currentcol)
                 currentcol = self.rating_column
     # add data to treeview
-    self.total = int(self.db.session.query(db.Movie).count())
+    self.total = self.db.session.query(db.Movie).count()
     self.widgets['treeview'].show()
 
 def loans_treeview(self):
@@ -302,7 +302,7 @@ def lang_treeview(self):
     treeview.set_headers_visible(True)
 
     model = self.lang['lang'] = gtk.ListStore(int, str)
-    for i in self.db.session.query(db.Lang).all():
+    for i in self.db.session.query(db.Lang.lang_id, db.Lang.name).all():
         model.append([i.lang_id, i.name])
     combo = gtk.CellRendererCombo()
     combo.set_property('model', model)
@@ -339,7 +339,7 @@ def lang_treeview(self):
     treeview.append_column(column)
 
     model = self.lang['acodec'] = gtk.ListStore(int, str)
-    for i in self.db.session.query(db.ACodec).all():
+    for i in self.db.session.query(db.ACodec.acodec_id, db.ACodec.name).all():
         model.append([i.acodec_id, i.name])
     combo = gtk.CellRendererCombo()
     combo.set_property('model', model)
@@ -354,7 +354,7 @@ def lang_treeview(self):
     treeview.append_column(column)
     
     model = self.lang['achannel'] = gtk.ListStore(int, str)
-    for i in self.db.session.query(db.AChannel).all():
+    for i in self.db.session.query(db.AChannel.achannel_id, db.AChannel.name).all():
         model.append([i.achannel_id, i.name])
     combo = gtk.CellRendererCombo()
     combo.set_property('model', model)
@@ -369,7 +369,7 @@ def lang_treeview(self):
     treeview.append_column(column)
     
     model = self.lang['subformat'] = gtk.ListStore(int, str)
-    for i in self.db.session.query(db.SubFormat).all():
+    for i in self.db.session.query(db.SubFormat.subformat_id, db.SubFormat.name).all():
         model.append([i.subformat_id, i.name])
     combo = gtk.CellRendererCombo()
     combo.set_property('model', model)
@@ -505,10 +505,10 @@ def people_treeview(self, create=True):
         self.widgets['preferences']['treeview'].append_column(column)
     # add data to treeview
     self.p_treemodel.clear()
-    for person in self.db.session.query(db.Person).order_by(db.Person.name.asc()):
+    for i in self.db.session.query(db.Person.name, db.Person.email).order_by(db.Person.name.asc()):
         myiter = self.p_treemodel.insert_before(None, None)
-        self.p_treemodel.set_value(myiter, 0, str(person.name))
-        self.p_treemodel.set_value(myiter, 1, str(person.email))
+        self.p_treemodel.set_value(myiter, 0, i.name)
+        self.p_treemodel.set_value(myiter, 1, i.email)
     self.widgets['preferences']['treeview'].show()
 
 def combos(self):
@@ -689,18 +689,14 @@ def preferences(self):
 def update_volume_combo_ids(self):
     self.volume_combo_ids = {}
     self.volume_combo_ids[0] = 0
-    i = 1
-    for volume in self.db.session.query(db.Volume).all():
-        self.volume_combo_ids[i] = volume.volume_id
-        i += 1
+    for i, item in enumerate(self.db.session.query(db.Volume.volume_id).all()):
+        self.volume_combo_ids[i] = item.volume_id
 
 def update_collection_combo_ids(self):
     self.collection_combo_ids = {}
     self.collection_combo_ids[0] = 0
-    i = 1
-    for collection in self.db.session.query(db.Collection).all():
-        self.collection_combo_ids[i] = collection.collection_id
-        i += 1
+    for i, item in enumerate(self.db.session.query(db.Collection.collection_id).all()):
+        self.collection_combo_ids[i+1] = item.collection_id
 
 def fill_volumes_combo(self, default=0):
     _tmp = self.initialized
@@ -708,8 +704,8 @@ def fill_volumes_combo(self, default=0):
     self.widgets['add']['volume'].get_model().clear()
     for i in self.volume_combo_ids:
         vol_id = self.volume_combo_ids[i]
-        if vol_id>0:
-            name = self.db.session.query(db.Volume).filter_by(volume_id=vol_id).first().name
+        if vol_id > 0:
+            name = self.db.session.query(db.Volume.name).filter_by(volume_id=vol_id).first().name
         else:
             name = ''
         self.widgets['add']['volume'].insert_text(int(i), str(name))
@@ -727,8 +723,8 @@ def fill_collections_combo(self, default=0):
     self.widgets['filter']['collection'].get_model().clear()
     for i in self.collection_combo_ids:
         col_id = self.collection_combo_ids[i]
-        if col_id>0:
-            name = self.db.session.query(db.Collection).filter_by(collection_id=col_id).first().name
+        if col_id > 0:
+            name = self.db.session.query(db.Collection.name).filter_by(collection_id=col_id).first().name
         else:
             name = ''
         self.widgets['add']['collection'].insert_text(int(i), str(name))
@@ -748,11 +744,9 @@ def fill_advfilter_combo(self):
     self.initialized = False # don't refresh main treeview
     self.widgets['filter']['advfilter'].get_model().clear()
     self.widgets['filter']['advfilter'].insert_text(0, '') # empty one
-    i = 1
-    for item in self.db.session.query(db.Filter.name).all():
+    for i, item in enumerate(self.db.session.query(db.Filter.name).all()):
         # add some white spaces to prevent scrollbar hides parts of the names    
-        self.widgets['filter']['advfilter'].insert_text(int(i), item.name + '   ')
-        i += 1
+        self.widgets['filter']['advfilter'].insert_text(i+1, item.name + '   ')
     self.widgets['filter']['advfilter'].show_all()
     self.widgets['filter']['advfilter'].set_active(0)
     self.initialized = _tmp
@@ -762,11 +756,9 @@ def fill_preferences_tags_combo(self):
     self.initialized = False # don't refresh main treeview
     self.widgets['preferences']['tag_name'].get_model().clear()
     self.tags_ids = {}
-    i = 0
-    for tag in self.db.session.query(db.Tag).all():
+    for i, tag in enumerate(self.db.session.query(db.Tag.name, db.Tag.tag_id).all()):
         self.tags_ids[i] = tag.tag_id
-        self.widgets['preferences']['tag_name'].insert_text(int(i), str(tag.name))
-        i += 1
+        self.widgets['preferences']['tag_name'].insert_text(i, tag.name)
     self.widgets['preferences']['tag_name'].show_all()
     self.widgets['preferences']['tag_name'].set_active(0)
     self.initialized = _tmp
@@ -775,66 +767,57 @@ def language_combos(self):
     self.widgets['preferences']['lang_name'].get_model().clear()
     self.languages_ids = {}
     self.languages_ids[0] = 0    # empty one
+    self.lang['lang'].clear()
     self.widgets['preferences']['lang_name'].insert_text(0, '')
-    i = 1
-    for lang in self.db.session.query(db.Lang).all():
+    for i, lang in enumerate(self.db.session.query(db.Lang.lang_id, db.Lang.name).all()):
         self.languages_ids[i] = lang.lang_id
-        self.widgets['preferences']['lang_name'].insert_text(int(i), str(lang.name))
-        i += 1
+        self.widgets['preferences']['lang_name'].insert_text(i+1, lang.name)
+        # add movie languages treeview
+        self.lang['lang'].append([lang.lang_id, lang.name])
     self.widgets['preferences']['lang_name'].show_all()
     self.widgets['preferences']['lang_name'].set_active(0)
-    # add movie languages treeview
-    self.lang['lang'].clear()
-    for i in self.db.session.query(db.Lang).all():
-        self.lang['lang'].append([i.lang_id, i.name])
+
 def acodec_combos(self):
     self.widgets['preferences']['acodec_name'].get_model().clear()
     self.acodecs_ids = {}
     self.acodecs_ids[0] = 0    # empty one
+    self.lang['acodec'].clear()
     self.widgets['preferences']['acodec_name'].insert_text(0, '')
-    i = 1
-    for acodec in self.db.session.query(db.ACodec).all():
+    for i, acodec in enumerate(self.db.session.query(db.ACodec.acodec_id, db.ACodec.name).all()):
         self.acodecs_ids[i] = acodec.acodec_id
-        self.widgets['preferences']['acodec_name'].insert_text(int(i), str(acodec.name))
-        i += 1
+        self.widgets['preferences']['acodec_name'].insert_text(i+1, acodec.name)
+        # add movie languages treeview
+        self.lang['acodec'].append([acodec.acodec_id, acodec.name])
     self.widgets['preferences']['acodec_name'].show_all()
     self.widgets['preferences']['acodec_name'].set_active(0)
-    # add movie languages treeview
-    self.lang['acodec'].clear()
-    for i in self.db.session.query(db.ACodec).all():
-        self.lang['acodec'].append([i.acodec_id, i.name])
+
 def achannel_combos(self):
     self.widgets['preferences']['achannel_name'].get_model().clear()
     self.achannels_ids = {}
     self.achannels_ids[0] = 0    # empty one
+    self.lang['achannel'].clear()
     self.widgets['preferences']['achannel_name'].insert_text(0, '')
-    i = 1
-    for achannel in self.db.session.query(db.AChannel).all():
+    for i, achannel in enumerate(self.db.session.query(db.AChannel.achannel_id, db.AChannel.name).all()):
         self.achannels_ids[i] = achannel.achannel_id
-        self.widgets['preferences']['achannel_name'].insert_text(int(i), str(achannel.name))
-        i += 1
+        self.widgets['preferences']['achannel_name'].insert_text(i+1, achannel.name)
+        # add movie languages treeview
+        self.lang['achannel'].append([achannel.achannel_id, achannel.name])
     self.widgets['preferences']['achannel_name'].show_all()
     self.widgets['preferences']['achannel_name'].set_active(0)
-    # add movie languages treeview
-    self.lang['achannel'].clear()
-    for i in self.db.session.query(db.AChannel).all():
-        self.lang['achannel'].append([i.achannel_id, i.name])
+
 def subformat_combos(self):
     self.widgets['preferences']['subformat_name'].get_model().clear()
     self.subformats_ids = {}
     self.subformats_ids[0] = 0    # empty one
+    self.lang['subformat'].clear()
     self.widgets['preferences']['subformat_name'].insert_text(0, '')
-    i = 1
-    for subformat in self.db.session.query(db.SubFormat).all():
+    for i, subformat in enumerate(self.db.session.query(db.SubFormat.subformat_id, db.SubFormat.name).all()):
         self.subformats_ids[i] = subformat.subformat_id
-        self.widgets['preferences']['subformat_name'].insert_text(int(i), str(subformat.name))
-        i += 1
+        self.widgets['preferences']['subformat_name'].insert_text(i+1, subformat.name)
+        # add movie languages treeview
+        self.lang['subformat'].append([subformat.subformat_id, subformat.name])
     self.widgets['preferences']['subformat_name'].show_all()
     self.widgets['preferences']['subformat_name'].set_active(0)
-    # add movie languages treeview
-    self.lang['subformat'].clear()
-    for i in self.db.session.query(db.SubFormat).all():
-        self.lang['subformat'].append([i.subformat_id, i.name])
 
 def media_combos(self):
     # clear data
@@ -848,13 +831,11 @@ def media_combos(self):
     self.widgets['preferences']['medium_name'].insert_text(0, '')
     self.widgets['add']['media'].insert_text(0, _('N/A'))
     self.widgets['preferences']['media'].insert_text(0, _('N/A'))
-    i = 1
-    for medium in self.db.session.query(db.Medium).all():
-        self.media_ids[i] = medium.medium_id
-        self.widgets['preferences']['medium_name'].insert_text(int(i), str(medium.name))
-        self.widgets['add']['media'].insert_text(int(i), str(medium.name))
-        self.widgets['preferences']['media'].insert_text(int(i), str(medium.name))
-        i += 1
+    for i, medium in enumerate(self.db.session.query(db.Medium.medium_id, db.Medium.name).all()):
+        self.media_ids[i+1] = medium.medium_id
+        self.widgets['preferences']['medium_name'].insert_text(i+1, medium.name)
+        self.widgets['add']['media'].insert_text(i+1, medium.name)
+        self.widgets['preferences']['media'].insert_text(i+1, medium.name)
 
     self.widgets['preferences']['medium_name'].show_all()
     self.widgets['add']['media'].show_all()
@@ -881,13 +862,11 @@ def vcodec_combos(self):
     self.widgets['preferences']['vcodec_name'].insert_text(0, '')
     self.widgets['add']['vcodec'].insert_text(0, _('N/A'))
     self.widgets['preferences']['vcodec'].insert_text(0, _('N/A'))
-    i = 1
-    for vcodec in self.db.session.query(db.VCodec).all():
-        self.vcodecs_ids[i] = vcodec.vcodec_id
-        self.widgets['preferences']['vcodec_name'].insert_text(int(i), str(vcodec.name))
-        self.widgets['add']['vcodec'].insert_text(int(i), str(vcodec.name))
-        self.widgets['preferences']['vcodec'].insert_text(int(i), str(vcodec.name))
-        i += 1
+    for i, vcodec in enumerate(self.db.session.query(db.VCodec.vcodec_id, db.VCodec.name).all()):
+        self.vcodecs_ids[i+1] = vcodec.vcodec_id
+        self.widgets['preferences']['vcodec_name'].insert_text(i+1, vcodec.name)
+        self.widgets['add']['vcodec'].insert_text(i+1, vcodec.name)
+        self.widgets['preferences']['vcodec'].insert_text(i+1, vcodec.name)
 
     self.widgets['preferences']['vcodec_name'].show_all()
     self.widgets['add']['vcodec'].show_all()
@@ -905,8 +884,8 @@ def create_tag_vbox(self, widget, tab):
         i.destroy()
     for i in self.tags_ids:
         tag_id = self.tags_ids[i]
-        tag_name = self.db.session.query(db.Tag).filter_by(tag_id=tag_id).first().name
-        tab[i] = gtk.CheckButton(str(tag_name))
+        tag_name = self.db.session.query(db.Tag.name).filter_by(tag_id=tag_id).first().name
+        tab[i] = gtk.CheckButton(tag_name)
         tab[i].set_active(False)
         widget.pack_start(tab[i])
     widget.show_all()

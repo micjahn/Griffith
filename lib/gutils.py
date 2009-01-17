@@ -56,7 +56,7 @@ def remove_accents(txt, encoding='iso-8859-1'):
 def is_number(x):
     return isinstance(x, int)
 
-def find_next_available(griffithSql):
+def find_next_available(gsql):
     """
     finds next available movie number.
     This is the first empty position.
@@ -64,35 +64,35 @@ def find_next_available(griffithSql):
     """
     first = 0
 
-    movies = griffithSql.session.query(db.Movie).order_by(db.Movie.number.asc()).all()
+    movies = gsql.session.query(db.Movie.number).order_by(db.Movie.number.asc()).all()
     for movie in movies:
         second = int(movie.number)
         if second is None:
             second = 0
-        if (second>first+1):
+        if second > first + 1:
             break
         first = second
 
     if first is None:
         return 1
     else:
-        number = first+1
+        number = first + 1
         return number
 
-def trim(text,key1,key2):
-    p1 = string.find(text,key1)
+def trim(text, key1, key2):
+    p1 = string.find(text, key1)
     if p1 == -1:
-        return ""
+        return ''
     else:
         p1 = p1+len(key1)
-    p2 = string.find(text[p1:],key2)
+    p2 = string.find(text[p1:], key2)
     if p2 == -1:
         return ""
     else:
         p2 = p1+p2
     return text[p1:p2]
 
-def regextrim(text,key1,key2):
+def regextrim(text, key1, key2):
     obj = re.search(key1, text)
     if obj is None:
         return ''
@@ -105,11 +105,11 @@ def regextrim(text,key1,key2):
         p2 = p1 + obj.start()
     return text[p1:p2]
 
-def after(text,key):
+def after(text, key):
     p1 = string.find(text,key)
     return text[p1+len(key):]
 
-def before(text,key):
+def before(text, key):
     p1 = string.find(text,key)
     return text[:p1]
 
@@ -118,7 +118,7 @@ def gescape(text):
     text=string.replace(text,"--", "-")
     return text
 
-def progress(blocks,size_block,size):
+def progress(blocks, size_block, size):
     transfered = blocks * size_block
     if size > 0 and transfered > size:
         transfered = size
@@ -128,7 +128,7 @@ def progress(blocks,size_block,size):
 
 # functions to handle comboboxentry stuff
 
-def set_model_from_list (cb, items):
+def set_model_from_list(cb, items):
     """Setup a ComboBox or ComboBoxEntry based on a list of strings."""
     model = gtk.ListStore(str)
     for i in items:
@@ -196,7 +196,7 @@ def strip_tags(text):
     while not finished:
         finished = 1
         # check if there is an open tag left
-        start = text.find("<")
+        start = text.find('<')
         if start >= 0:
             # if there is, check if the tag gets closed
             stop = text[start:].find(">")
@@ -324,8 +324,9 @@ def run_browser(url):
     webbrowser._tryorder.append('open')
     webbrowser.open(url)
 
-def read_plugins(prefix,directory):
+def read_plugins(prefix, directory):
     """returns available plugins"""
+
     import glob
     return glob.glob("%s/%s*.py" % (directory,prefix) )
 
@@ -370,7 +371,8 @@ def decompress(data):
         compressedStream = StringIO.StringIO(data)
         gzipper = gzip.GzipFile(fileobj=compressedStream)
         data = gzipper.read()
-    except:
+    except Exception, e:
+        log.debug("Cannot decompress data: ", e)
         pass
     return data
 
@@ -626,6 +628,7 @@ def create_image_cache(md5sum, gsql):
         pixbuf = image.get_pixbuf()
         pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
         pixbuf.save(fn_small, "jpeg", {"quality":"70"})
+
     return True
         
 

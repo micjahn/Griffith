@@ -25,7 +25,7 @@ __revision__ = '$Id$'
 # XXX: keep stdlib and SQLAlchemy imports only in this file
 
 from sqlalchemy     import *
-from sqlalchemy.orm import mapper, relation, sessionmaker, validates
+from sqlalchemy.orm import mapper, relation, deferred, sessionmaker, validates
 import re
 import string
 import logging
@@ -333,7 +333,9 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
                            secondaryjoin=movie_tag_table.c.tag_id==tags_table.c.tag_id),
     'languages' : relation(MovieLang, cascade='all, delete-orphan')})
 mapper(Poster, posters_table, properties={
-    'movies': relation(Movie)})
+    'movies': relation(Movie),
+    'data'  :  deferred(posters_table.c.data)
+    })
 mapper(Filter, filters_table)
 #}}}
 

@@ -35,7 +35,7 @@ def delete_movie(self):
         gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
         return False
     
-    if int(movie.loaned)==1:
+    if movie.loaned:
         gutils.warning(self, msg=_("You can't delete movie while it is loaned."))
         return False
 
@@ -92,15 +92,15 @@ def delete_poster_from_cache(self, md5sum):
         try:
             os.remove(image_small)
         except:
-            log.info("Can't remove %s file" % image_small)
+            log.warning("Can't remove %s file", image_small)
     if os.path.isfile(image_medium):
         try:
             os.remove(image_medium)
         except:
-            log.info("Can't remove %s file" % image_medium)
+            log.warning("Can't remove %s file", image_medium)
     if os.path.isfile(image_full):
         try:
             os.remove(image_full)
         except:
-            log.info("Can't remove %s file" % image_full)
+            log.warning("Can't remove %s file", image_full)
 
