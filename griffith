@@ -160,7 +160,7 @@ class Griffith(object):
 
     ###########
     # callbacks
-    ###########        
+    ###########
 
     def on_export_activate(self, menu_iter, plugin_name):
         module = __import__('PluginExport%s' % plugin_name)
@@ -202,8 +202,7 @@ class Griffith(object):
                 self.mainwindow_state = {}
             self.mainwindow_state['state'] = int(windowstate.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
 
-
-    # about dialog    -------------------------------------------------------            
+    # about dialog    -------------------------------------------------------
 
     def about_dialog(self, *args):
         from about import AboutDialog
@@ -240,7 +239,7 @@ class Griffith(object):
         add.source_changed(self)
 
     def on_enter(self, *args):
-        # push Get From Web button if return key is pressed in title box 
+        # push Get From Web button if return key is pressed in title box
         if self._am_movie_id is None:
             self.widgets['add']['b_get_from_web'].clicked()
 
@@ -354,9 +353,9 @@ class Griffith(object):
         if tmp_iter is None:
             return
         number = tmp_model.get_value(tmp_iter, 0)
-        movie = self.db.session.query(db.Movie).filter_by(number=number).first()
-        if movie and movie.poster_md5:
-            filename = gutils.get_image_fname(movie.poster_md5, self.db)
+        poster_md5 = self.db.session.query(db.Movie.poster_md5).filter_by(number=number).first()[0]
+        if poster_md5:
+            filename = gutils.get_image_fname(poster_md5, self.db)
             self.widgets['big_poster'].set_from_file(filename)
             self.widgets['poster_window'].show()
 
@@ -376,7 +375,7 @@ class Griffith(object):
     def toggle_seen(self, *args):
         m_number, m_iter = self.get_maintree_selection()
         movie = self.db.session.query(db.Movie).filter_by(number=m_number).first()
-        if movie is not None:
+        if movie:
             if movie.seen:
                 movie.seen = False
             else:
@@ -502,16 +501,15 @@ class Griffith(object):
 
     def show_volume(self, widget):
         import advfilter
-        vol_id = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first().volume_id
+        vol_id = self.db.session.query(db.Movie.volume_id).filter_by(movie_id=self._movie_id).first()[0]
         #quick_filter.clear_filter(self)
         cond = advfilter.get_def_conditions()
         cond["volumes"] = set((vol_id,))
         movies = advfilter.create_select_query(self, None, cond, None).execute().fetchall()
         self.populate_treeview(movies)
 
-
     def show_collection(self, widget):
-        col_id = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first().collection_id
+        col_id = self.db.session.query(db.Movie.collection_id).filter_by(movie_id=self._movie_id).first()[0]
         pos = gutils.findKey(col_id, self.collection_combo_ids)
         quick_filter.clear_filter(self)
         self.widgets['filter']['collection'].set_active(pos)
@@ -1010,7 +1008,7 @@ class Griffith(object):
         else:
             return None, None
 
-    # backup/restore ------------------------------------------------------    
+    # backup/restore ------------------------------------------------------
 
     def backup(self, *args):
         from backup import backup
@@ -1062,7 +1060,7 @@ You can't undo this operation."""), True, self.widgets['window'])
     def print_cover_image_hide(self, *args):
         self.widgets['print_cover']['window_image'].hide()
 
-    # loans management ----------------------------------------------------    
+    # loans management ----------------------------------------------------
 
     def show_people_window(self, *args):
         from people import show_people_window
@@ -1130,7 +1128,7 @@ You can't undo this operation."""), True, self.widgets['window'])
         context_id = self.widgets['statusbar'].get_context_id(text)
         message_id = self.widgets['statusbar'].push(context_id, text)
 
-    # advfilter -----------------------------------------------------------    
+    # advfilter -----------------------------------------------------------
 
     def show_advfilter_window(self, *args):
         #if not self.widgets['advfilter']['window'].visible: # FIXME
@@ -1337,6 +1335,7 @@ You can't undo this operation."""), True, self.widgets['window'])
         response = gutils.question(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
             True, self.widgets['window'])
         if response == gtk.RESPONSE_YES:
+            log.debug('NEW DATABASE')
             response_sec = gutils.question(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
                 True, self.widgets['window'])
             if response_sec == gtk.RESPONSE_YES:
@@ -1345,21 +1344,22 @@ You can't undo this operation."""), True, self.widgets['window'])
                 # delete images
                 posters_dir = self.locations['posters']
                 # NOTE: only used images are removed (posters are shared between various db)
-                log.info('NEW DB: Removing old images...')
+                log.debug('removing old images...')
                 
-                movies = select([db.movies_table.c.image], bind=self.db.session.bind).execute().fetchall()
-                for movie in movies:
-                    if movie.image is not None:
-                        name = movie.image.encode('utf-8')
-                        p_file = os.path.join(posters_dir, name+'.jpg')
-                        m_file = os.path.join(posters_dir, 'm_'+name+'.jpg')
-                        t_file = os.path.join(posters_dir, 't_'+name+'jpg')
-                        try:
-                            os.remove(p_file)
-                            os.remove(m_file)
-                            os.remove(t_file)
-                        except:
-                            pass
+                posters = self.db.session.query(db.Movie.poster_md5).all()
+                for poster in posters:
+                    name = poster[0]
+                    p_file = os.path.join(posters_dir, name + '.jpg')
+                    m_file = os.path.join(posters_dir, name + '_m.jpg')
+                    s_file = os.path.join(posters_dir, name + '_sjpg')
+                    try:
+                        os.remove(p_file)
+                        os.remove(m_file)
+                        os.remove(s_file)
+                    except Exception, e:
+                        log.debug("Cannot remove %s: %s", name, e)
+
+                log.debug('dropping old tables...')
                 db.metadata.drop_all(self.db.session.bind.engine)
                 #from sqlalchemy.orm import clear_mappers
                 #clear_mappers()
@@ -1368,6 +1368,7 @@ You can't undo this operation."""), True, self.widgets['window'])
                     if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
                         self.config.set('file', 'griffith.db', section='database')
                 # create/connect db
+                log.debug('creating new ones...')
                 self.db = GriffithSQL(self.config, self.griffith_dir, self.locations)
                 self.clear_details()
                 self.total = 0
