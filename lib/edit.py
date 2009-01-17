@@ -140,7 +140,10 @@ def fetch_bigger_poster(self):
         gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
         return False
     current_poster_md5 = movie.poster_md5
-    current_poster = gutils.get_image_fname(current_poster_md5, self.db)
+    if current_poster_md5:
+        current_poster = gutils.get_image_fname(current_poster_md5, self.db)
+    else:
+        current_poster = None
     amazon.setLicense("04GDDMMXX8X9CJ1B22G2")
 
     locale = self.config.get('amazon_locale', 0, section='add')

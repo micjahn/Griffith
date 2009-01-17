@@ -33,6 +33,7 @@ def upgrade_database(self, version, locations, config):
     """Create new db or update existing one to current format"""
     b = self.session.bind
     if version == 0 or version is None:
+        log.info('Creating new database...')
         # version is 0 or none only for new databases
         db.metadata.create_all(b)
         db.configuration_table.insert(bind=b).execute(param=u'version', value=unicode(self.version))

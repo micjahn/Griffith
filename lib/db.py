@@ -265,7 +265,7 @@ configuration_table = Table('configuration', metadata,
 
 posters_table = Table('posters', metadata,
     Column('md5sum', Unicode(32), primary_key=True),
-    Column('data', Binary, nullable=False))
+    Column('data', Binary(1048576), nullable=False))
 
 filters_table = Table('filters', metadata,
     Column('name', Unicode(64), primary_key=True),
