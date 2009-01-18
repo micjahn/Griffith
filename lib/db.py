@@ -305,23 +305,17 @@ mapper(Ratio, ratios_table, properties={
 mapper(VCodec, vcodecs_table, properties={
     'movies': relation(Movie, backref='vcodec')})
 mapper(Person, people_table, properties = {
-    'loans'    : relation(Loan, backref='person', cascade='all, delete-orphan'),
-    'loaned_movies_count': column_property(
-            select(
-                [func.count(loans_table.c.loan_id)],
-                and_(
-                    people_table.c.person_id == loans_table.c.person_id,
-                    loans_table.c.return_date == None
-                )
-            ).label('loaned_movies_count')),
-    'returned_movies_count': column_property( # AKA loan history
-            select(
-                [func.count(loans_table.c.loan_id)],
-                and_(
-                    people_table.c.person_id == loans_table.c.person_id,
-                    loans_table.c.return_date != None
-                )
-            ).label('returned_movies_count'))
+    'loans': relation(Loan, backref='person', cascade='all, delete-orphan'),
+    'loaned_movies_count': column_property(select(
+        [func.count(loans_table.c.loan_id)],
+        and_(people_table.c.person_id == loans_table.c.person_id,
+             loans_table.c.return_date == None
+        )).label('loaned_movies_count'), deferred=True),
+    'returned_movies_count': column_property(select( # AKA loan history
+        [func.count(loans_table.c.loan_id)],
+        and_(people_table.c.person_id == loans_table.c.person_id,
+             loans_table.c.return_date != None
+        )).label('returned_movies_count'), deferred=True)
     })
 mapper(MovieLang, movie_lang_table, primary_key=[movie_lang_table.c.ml_id], properties = {
     'movie'    : relation(Movie),

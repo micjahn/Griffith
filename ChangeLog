@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2009-01-18  Piotr Ożarowski
 	* Upgrading from 0.6.2 partially fixed (posters are missing)
+	* Add loaned_movies_count and returned_movies_count properties to Person
 
 2009-01-17  Piotr Ożarowski
 	* Use MediumBLOB on MySQL to store posters. Database has to be recreated if 0.10-beta1 was used to create it.
