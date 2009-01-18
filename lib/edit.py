@@ -65,7 +65,7 @@ def update_image(self, number, filename):
     movie = session.query(db.Movie).filter_by(number=number).one()
     old_poster_md5 = movie.poster_md5
 
-    if not session.query(db.Poster).filter_by(md5sum=poster_md5).first():
+    if session.query(db.Poster).filter_by(md5sum=poster_md5).count() == 0:
         poster = db.Poster(md5sum=poster_md5, data=file(filename, 'rb').read())
         session.add(poster)
 

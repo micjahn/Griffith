@@ -129,7 +129,7 @@ def _fill_container(container, items, options, id_name):
 
 def initialize(widgets, gsql, field_names):
     # tags
-    items = gsql.session.query(db.Tag).all()
+    items = gsql.session.query(db.Tag.tag_id, db.Tag.name).all()
     if len(items):
         options = (_('ignore'), _('with'), _('without'), _('require'))
         _fill_container(widgets["tags_vbox"], items, options, 'tag_id')
@@ -138,7 +138,7 @@ def initialize(widgets, gsql, field_names):
         widgets["tags_frame"].hide()
 
     # volumes
-    items = gsql.session.query(db.Volume).all()
+    items = gsql.session.query(db.Volume.volume_id, db.Volume.name).all()
     options = (_('ignore'), _('in'), _('not in'))
     if len(items):
         _fill_container(widgets["volumes_vbox"], items, options, 'volume_id')
@@ -147,7 +147,7 @@ def initialize(widgets, gsql, field_names):
         widgets["volumes_frame"].hide()
 
     # collections
-    items = gsql.session.query(db.Collection).all()
+    items = gsql.session.query(db.Collection.collection_id, db.Collection.name).all()
     if len(items):
         # use volume's options
         _fill_container(widgets["collections_vbox"], items, options, 'collection_id')
@@ -156,7 +156,7 @@ def initialize(widgets, gsql, field_names):
         widgets["collections_frame"].hide()
 
     # loans
-    items = gsql.session.query(db.Person).all()
+    items = gsql.session.query(db.Person.person_id, db.Person.name).all()
     if len(items):
         options = (_('ignore'), _('loaned to '), _('loan history'))
         _fill_container(widgets["loans_vbox"], items, options, 'person_id')

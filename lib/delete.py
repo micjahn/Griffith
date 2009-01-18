@@ -47,7 +47,7 @@ def delete_movie(self):
         try:
             self.db.session.commit()
         except:
-            log.info("Unexpected problem: %s" % e)
+            log.info("Unexpected problem: %s", e)
             return False
 
         # update main treelist
@@ -70,7 +70,7 @@ def delete_poster(self, md5sum, commit=False):
             try:
                 self.db.session.commit()
             except Exception, e:
-                log.warn("cannot delete poster from db: %s" % e)
+                log.warn("cannot delete poster from db: %s", e)
                 self.db.session.rollback()
                 return False
 

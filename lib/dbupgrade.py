@@ -226,7 +226,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
         try:
             import sqlite
         except ImportError:
-            log.info('Old DB conversion: please install pysqlite legacy (v1.0)')
+            log.error('Old DB conversion: please install pysqlite legacy (v1.0)')
             gutils.warning(self,_("Old DB conversion: please install pysqlite legacy (v1.0)"))
             return False
     else:

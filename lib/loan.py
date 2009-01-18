@@ -30,7 +30,7 @@ import logging
 log = logging.getLogger("Griffith")
 
 def loan_movie(self):
-    people = self.db.session.query(db.Person).order_by(db.Person.name.asc()).all()
+    people = self.db.session.query(db.Person.name).order_by(db.Person.name.asc()).all()
     model = gtk.ListStore(str)
     if len(people)>0:
         for person in people:
@@ -51,12 +51,12 @@ def commit(self):
         return False
     self.widgets['w_loan_to'].hide()
 
-    person = self.db.session.query(db.Person).filter_by(name=person_name).first()
+    person = self.db.session.query(db.Person.person_id).filter_by(name=person_name).first()
     if not person:
         log.info("loan_commit: person doesn't exist")
         return False
     if self._movie_id:
-        movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
+        movie = self.db.session.query(db.Movie.movie_id, db.Movie.collection_id).filter_by(movie_id=self._movie_id).first()
         if not movie:
             log.info("loan_commit: wrong movie_id")
             return False
