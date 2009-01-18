@@ -128,9 +128,9 @@ def restore(self):
                 if file_to_restore[1] == '':
                     continue
                 if file_to_restore[1].endswith('.jpg'):
-                    myfile = os.path.join(mypath,file_to_restore[1])
+                    myfile = os.path.join(mypath, file_to_restore[1])
                 else:
-                    myfile = os.path.join(self.locations['home'],file_to_restore[1])
+                    myfile = os.path.join(self.locations['home'], file_to_restore[1])
                 if file_to_restore[1].endswith('.conf'):
                     old_config_file = myfile
                 outfile = open(myfile, 'wb')
@@ -149,22 +149,23 @@ def restore(self):
             if old_config_raw_data.find('griffith.gri') >= -1:
                 self.config.set('file', 'griffith.gri', section='database')
 
-        filename = os.path.join(self.locations['home'], self.config.get('name', 'griffith', section='database') + '.db')
-
         self.db.session.bind.engine.dispose() # close DB
 
         # check if file needs conversion
         if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
             log.info('Old database format detected. Converting...')
-            from dbupgrade  import convert_from_old_db
-            if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
+            from dbupgrade import convert_from_old_db
+            old_db_filename = os.path.join(self.locations['home'], self.config.get('file', section='database'))
+            self.db = convert_from_old_db(self, old_db_filename, os.path.join(self.locations['home'], 'griffith.db'))
+            if self.db:
                 self.config.save()
             else:
                 log.error('Cant convert old database, exiting.')
                 import sys
                 sys.exit(4)
+        else:
+            self.db = sql.GriffithSQL(self.config, self.locations['home'], self.locations)
 
-        self.db = sql.GriffithSQL(self.config, self.locations['home'], self.locations)
         from initialize import dictionaries, people_treeview
         dictionaries(self)
         people_treeview(self)
