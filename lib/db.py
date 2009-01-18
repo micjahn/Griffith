@@ -25,7 +25,7 @@ __revision__ = '$Id$'
 # XXX: keep stdlib and SQLAlchemy imports only in this file
 
 from sqlalchemy     import *
-from sqlalchemy.orm import mapper, relation, deferred, sessionmaker, validates
+from sqlalchemy.orm import mapper, relation, deferred, sessionmaker, validates, column_property
 import re
 import string
 import logging
@@ -305,7 +305,24 @@ mapper(Ratio, ratios_table, properties={
 mapper(VCodec, vcodecs_table, properties={
     'movies': relation(Movie, backref='vcodec')})
 mapper(Person, people_table, properties = {
-    'loans'    : relation(Loan, backref='person', cascade='all, delete-orphan')})
+    'loans'    : relation(Loan, backref='person', cascade='all, delete-orphan'),
+    'loaned_movies_count': column_property(
+            select(
+                [func.count(loans_table.c.loan_id)],
+                and_(
+                    people_table.c.person_id == loans_table.c.person_id,
+                    loans_table.c.return_date == None
+                )
+            ).label('loaned_movies_count')),
+    'returned_movies_count': column_property( # AKA loan history
+            select(
+                [func.count(loans_table.c.loan_id)],
+                and_(
+                    people_table.c.person_id == loans_table.c.person_id,
+                    loans_table.c.return_date != None
+                )
+            ).label('returned_movies_count'))
+    })
 mapper(MovieLang, movie_lang_table, primary_key=[movie_lang_table.c.ml_id], properties = {
     'movie'    : relation(Movie),
     'language' : relation(Lang),
@@ -350,33 +367,33 @@ if __name__ == '__main__':
     log.info("SQLAlchemy version: %s", sqlalchemy.__version__)
 
     ### ENGINE ###
-    engine_mem = create_engine('sqlite:///:memory:', echo=False)
+    mem_engine = create_engine('sqlite:///:memory:', echo=False)
 
     # create tables
-    metadata.create_all(engine_mem)
+    metadata.create_all(mem_engine)
 
     ### MEMORY SESSION ###
     # create a configured "Session" class
-    Session = sessionmaker(bind=engine_mem)
+    Session = sessionmaker(bind=mem_engine)
     # create a Session
-    sess_mem = Session()
+    mem_sess = Session()
 
 
     griffith_dir = os.path.expanduser("~/.griffith/")
     url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
-    engine_my = create_engine(url, echo=False)
-    Session2 = sessionmaker(bind=engine_my)
-    sess_my = Session2()
+    my_engine = create_engine(url, echo=False)
+    Session2 = sessionmaker(bind=my_engine)
+    my_sess = Session2()
 
     print "\nAvailable variables:"
-    print "sess_my:  %s" % sess_my
-    print "sess_mem: %s" % sess_mem
+    print "my_sess:  %s" % my_sess
+    print "mem_sess: %s" % mem_sess
 
-    movie1_my = sess_my.query(Movie).first()
-    if movie1_my:
-        movie1_mem = sess_mem.merge(movie1_my)
-        movie1_mem.title = u'updated movie title'
-        sess_mem.add(movie1_mem)
-        sess_mem.commit()
-        print "movie1_my:  %s - title: %s" % (movie1_my, movie1_my.title)
-        print "movie1_mem: %s - title: %s" % (movie1_mem, movie1_mem.title)
+    my_movie1 = my_sess.query(Movie).first()
+    if my_movie1:
+        mem_movie1 = mem_sess.merge(my_movie1)
+        mem_movie1.title = u'updated movie title'
+        mem_sess.add(mem_movie1)
+        mem_sess.commit()
+        print "my_movie1:  %s - title: %s" % (my_movie1, my_movie1.title)
+        print "mem_movie1: %s - title: %s" % (mem_movie1, mem_movie1.title)

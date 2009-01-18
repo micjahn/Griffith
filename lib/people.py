@@ -128,10 +128,10 @@ def delete_person(self):
     person = self.db.session.query(db.Person).filter_by(name=person).first()
     if not person:
         return False
-    if self.db.session.query(db.Loan).filter_by(person_id=person.person_id, return_date=None).count() > 0:
+    if person.loaned_movies_count > 0:
         gutils.info(_("This person has loaned films from you. Return them first."), self.widgets['people']['window'])
         return False
-    if self.db.session.query(db.Loan).filter_by(person_id=person.person_id).count() > 0:
+    if person.returned_movies_count > 0:
         has_history = True
         has_history_msg = _("This person has data in the loan history. This data will be erased if you continue.")
     response = gutils.question(_("%s\nAre you sure you want to delete this person?" % has_history_msg), \
