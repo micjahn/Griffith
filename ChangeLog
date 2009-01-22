@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-01-22  Michael Jahn
+	* fixed Greek translation of the word "Danish" (thanks to Johnny)
+
 2009-01-18  Piotr Ożarowski
 	* Upgrading from 0.6.2 partially fixed (posters are missing)
 	* Add loaned_movies_count and returned_movies_count properties to Person

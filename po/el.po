@@ -358,7 +358,7 @@ msgstr "Τσεχικά"
 
 #: ../lib/dbupgrade.py:84
 msgid "Danish"
-msgstr "Ισπανικά"
+msgstr "Δανέζικα"
 
 #: ../lib/dbupgrade.py:85
 msgid "Dutch"
