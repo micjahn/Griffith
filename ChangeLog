@@ -8,6 +8,7 @@ Griffith ChangeLog
 2009-02-01  Piotr Ożarowski
 	* Add interactive shell (--shell commandline option)
 	* Add barcode column to the movie table
+	* Add resolution (width and height columns) to the movie table
 	* Change default type of runtime and year to SmallInteger
 
 2009-01-31  Michael Jahn

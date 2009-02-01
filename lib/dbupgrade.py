@@ -195,7 +195,9 @@ def upgrade_database(self, version, locations, config):
         
         log.info('... adding new columns')
         # common SQL statements
-        queries = {'barcode': 'ALTER TABLE movies ADD barcode INTEGER NULL;',
+        queries = {'barcode': 'ALTER TABLE movies ADD barcode VARCHAR(32) NULL;',
+                   'width': 'ALTER TABLE movies ADD width SMALLINT NULL;',
+                   'height': 'ALTER TABLE movies ADD height SMALLINT NULL;',
                   }
         for key, query in queries.items():
             try:

@@ -103,6 +103,54 @@ class Loan(object):
         return "<Loan:%s (movie:%s person:%s)>" % (self.loan_id, self.movie_id, self.person_id)
 
 class Movie(object):
+    _res_aliases = {'CGA': (320, 200),
+                    'HD 1080': (1920, 1080),
+                    'HD 720': (1280, 720),
+                    'NTSC': (720, 480),
+                    'PAL': (768, 576),
+                    'QSXGA': (2560, 1600),
+                    'QVGA': (320, 240),
+                    'QXGA': (2048, 1536),
+                    'SVGA': (800, 600),
+                    'SXGA': (1280, 1024),
+                    'SXGA+': (1400, 1050),
+                    'VGA': (640, 480),
+                    'WSXGA+': (1680, 1050),
+                    'WUXGA': (1920, 1200),
+                    'WVGA': (854, 480),
+                    'XGA': (1024, 768),
+                    'UXGA': (1600, 1200),
+                    #'': (1152, 768),
+                    #'': (1280, 854),
+                    #'': (1280, 960),
+                    #'': (1440, 960),
+    }
+    _res_alias_repr = {}
+    for i in _res_aliases.iteritems():
+        _res_alias_repr["%dx%d" % i[1]] = i[0]
+    print _res_alias_repr
+
+    def _set_resolution(self, res_string):
+        if res_string in Movie._res_aliases:
+            self.width, self.height = Movie._res_aliases[res_string]
+        elif res_string in Movie._res_alias_repr:
+            self.width, self.height = Movie._res_aliases[Movie._res_alias_repr[res_string]]
+        elif 'x' in res_string[1:]:
+            self.width, self.height = map(int, res_string.split('x'))
+        else:
+            raise ValueError('Use standard resolution name or \d+x\d+')
+
+    def _get_resolution(self):
+        if not self.width or not self.height:
+            return None
+        res_string = "%dx%d" % (self.width, self.height)
+        if res_string in Movie._res_alias_repr:
+            return Movie._res_alias_repr[res_string]
+        else:
+            return res_string
+    resolution = property(_get_resolution, _set_resolution)
+
+
     def __repr__(self):
         return "<Movie:%s (number=%s)>" % (self.movie_id, self.number)
 
@@ -113,7 +161,8 @@ class Movie(object):
     def __getitem__(self, name):
         if name in self:
             return getattr(self, name)
-        else: raise AttributeError, name
+        else:
+            raise AttributeError, name
 
 class MovieLang(object):
     def __init__(self, lang_id=None, type=None, acodec_id=None, achannel_id=None, subformat_id=None):
@@ -170,7 +219,9 @@ movies_table = Table('movies', metadata,
     Column('media_num', SmallInteger),
     Column('runtime', SmallInteger),
     Column('year', SmallInteger),
-    Column('barcode', Integer, unique=True),
+    Column('width', SmallInteger),
+    Column('height', SmallInteger),
+    Column('barcode', Unicode(32), unique=True),
     Column('o_title', Unicode(256), index=True),
     Column('title', Unicode(256), index=True),
     Column('director', Unicode(256)),

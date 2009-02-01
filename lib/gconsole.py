@@ -229,6 +229,7 @@ def con_usage():
     print "-C, --clean\tfind and delete orphan files in posters directory"
     print "--check-dep\tcheck dependencies"
     print "--show-dep\tshow dependencies"
+    print "--shell\topen interactive shell"
     print "--sqlecho\tprint SQL queries"
     print "--home DIR \tset Griffith's home directory (instead of the default ~/.griffith)"
     print "\n printing movie list:"
@@ -292,6 +293,7 @@ Examples:
             'sess': self.db.session,
             #'griffith': self,
            }
+    #exec 'from db import *' in locs
  
     ### prepare the shell ###
     try:
