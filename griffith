@@ -129,16 +129,17 @@ class Griffith(object):
         self.clear_details()
         self.populate_treeview()
 
-        # adding some completion fields
+        # adding some completion fields - TODO: move it to initialize
         self.completion = gtk.EntryCompletion()
         self.widgets['add']['o_title'].set_completion(self.completion)
         self.completion.set_model(self.treemodel)
         self.completion.set_text_column(3)
+        # ... title
         self.completion_t = gtk.EntryCompletion()
         self.widgets['add']['title'].set_completion(self.completion_t)
         self.completion_t.set_model(self.treemodel)
         self.completion_t.set_text_column(4)
-        
+
         initialize.spellcheck(self)
 
         # add default folders to some select widgets

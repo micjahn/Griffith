@@ -126,8 +126,9 @@ class Movie(object):
                     #'': (1440, 960),
     }
     _res_alias_repr = {}
-    for i in _res_aliases.iteritems():
-        _res_alias_repr["%dx%d" % i[1]] = i[0]
+    for alias, res in _res_aliases.iteritems():
+        _res_alias_repr["%dx%d" % res] = alias
+    del alias, res
 
     def _set_resolution(self, res_string):
         if not res_string:
@@ -157,11 +158,13 @@ class Movie(object):
         return "<Movie:%s (number=%s)>" % (self.movie_id, self.number)
 
     def __contains__(self, name):
-        if name in ('volume','collection','medium','vcodec','loans','tags','languages','lectors','dubbings','subtitles'): return True
+        if name in ('volume','collection','medium','vcodec','loans','tags',\
+                    'languages','lectors','dubbings','subtitles','resolution'):
+            return True
         else: return name in movies_table.columns
 
     def __getitem__(self, name):
-        if name in self:
+        if hasattr(self, name):
             return getattr(self, name)
         else:
             raise AttributeError, name

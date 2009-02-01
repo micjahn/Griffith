@@ -83,6 +83,17 @@ def set_details(self, item=None):#{{{
         w['year'].set_text(str(item['year']))
     else:
         w['year'].set_text('')
+    if False: # FIXME: add a field in main window
+    #if 'resolution' in item and item['resolution']:
+        if self.config.get('use_resolution_alias', True):
+            w['resolution'].set_text(item['resolution'])
+        elif 'height' in item and item['height'] and 'width' in item and item['width']:
+            w['resolution'].set_text("%dx%d" % (item['width'], item['height']))
+        else: # failback to 'resolution'
+            w['resolution'].set_text(item['resolution'])
+    else:
+        #w['resolution'].set_text('') # FIXME: add a field in main window
+        pass
     if 'runtime' in item and item['runtime']:
         w['runtime'].set_text(str(int(item['runtime'])))
     else:

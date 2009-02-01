@@ -93,6 +93,7 @@ def define_widgets(self, gladefile):
     self.widgets['add'] = {#{{{
         'window'           : get('add_movie'),
         'notebook'         : get('notebook_add'),
+        'barcode'          : get('am_barcode'),
         'classification'   : get('am_classification'),
         'cameraman'        : get('am_cameraman'),
         'collection'       : get('am_collection_combo'),
@@ -116,6 +117,7 @@ def define_widgets(self, gladefile):
         'plugin_image'     : get('am_plugin_image'),
         #'ratio'            : get('am_ratio'), # TODO
         'region'           : get('am_region'),
+        'resolution'       : get('am_resolution'),
         'runtime'          : get('am_runtime'),
         'seen'             : get('am_seen'),
         'o_site'           : get('am_site'),

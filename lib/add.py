@@ -340,6 +340,7 @@ def get_details(self): #{{{
     t_movies = {
         'cameraman'      : w['cameraman'].get_text().decode('utf-8'),
         'classification' : w['classification'].get_text().decode('utf-8'),
+        'barcode'        : unicode(gutils.digits_only(w['barcode'].get_text().decode('utf-8'))),
         'color'          : w['color'].get_active(),
         'cond'           : w['condition'].get_active(),
         'country'        : w['country'].get_text().decode('utf-8'),
@@ -353,6 +354,7 @@ def get_details(self): #{{{
         'o_title'        : w['o_title'].get_text().decode('utf-8'),
         'rating'         : w['rating_slider'].get_value(),
         'region'         : w['region'].get_active(),
+        'resolution'     : w['resolution'].get_text().strip().replace(' ', '').upper().decode('utf-8'),
         'runtime'        : w['runtime'].get_text().decode('utf-8'),
         'screenplay'     : w['screenplay'].get_text().decode('utf-8'),
         'site'           : w['site'].get_text().decode('utf-8'),
@@ -452,10 +454,23 @@ def set_details(self, item=None):#{{{
         w['year'].set_value( gutils.digits_only(item['year'], 2100))
     else:
         w['year'].set_value(0)
+    if 'resolution' in item and item['resolution']:
+        if self.config.get('use_resolution_alias', True):
+            w['resolution'].set_text(item['resolution'])
+        elif 'height' in item and item['height'] and 'width' in item and item['width']:
+            w['resolution'].set_text("%dx%d" % (item['width'], item['height']))
+        else: # failback to 'resolution'
+            w['resolution'].set_text(item['resolution'])
+    else:
+        w['resolution'].set_text('')
     if 'runtime' in item and item['runtime']:
         w['runtime'].set_value( gutils.digits_only(item['runtime']))
     else:
         w['runtime'].set_value(0)
+    if 'barcode' in item and item['barcode']:
+        w['barcode'].set_text(item['barcode'])
+    else:
+        w['barcode'].set_text('')
     if 'cameraman' in item and item['cameraman']:
         w['cameraman'].set_text(item['cameraman'])
     else:
@@ -745,6 +760,7 @@ def clone_movie(self):
     new_movie.cast           = movie.cast
     new_movie.classification = movie.classification
     new_movie.vcodec_id      = movie.vcodec_id
+    new_movie.barcode        = movie.barcode
     new_movie.cameraman      = movie.cameraman
     new_movie.collection_id  = movie.collection_id
     new_movie.volume_id      = movie.volume_id
@@ -767,6 +783,7 @@ def clone_movie(self):
     new_movie.rating         = movie.rating
     new_movie.region         = movie.region
     new_movie.runtime        = movie.runtime
+    new_movie.resolution     = movie.resolution
     new_movie.screenplay     = movie.screenplay
     new_movie.seen           = seen
     new_movie.o_site         = movie.o_site
@@ -802,8 +819,9 @@ def update_movie_instance(movie, details, session):
             t_tags = details.pop('tags')
         if 'languages' in details:
             t_languages = details.pop('languages')
-        for i in db.movies_table.columns.keys():
-            if i in details:
+        #for i in db.movies_table.columns.keys():
+        for i in details:
+            if hasattr(movie, i):
                 setattr(movie, i, details[i])
 
         # clear previous data (in case of updates)
