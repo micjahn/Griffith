@@ -138,7 +138,7 @@ class Movie(object):
             self.width, self.height = Movie._res_aliases[res_string]
         elif res_string in Movie._res_alias_repr:
             self.width, self.height = Movie._res_aliases[Movie._res_alias_repr[res_string]]
-        elif 'x' in res_string:
+        elif 'x' in res_string.lower():
             self.width, self.height = map(int, res_string.split('x'))
         else:
             raise ValueError('Use standard resolution name or \d+x\d+')
