@@ -128,14 +128,16 @@ class Movie(object):
     _res_alias_repr = {}
     for i in _res_aliases.iteritems():
         _res_alias_repr["%dx%d" % i[1]] = i[0]
-    print _res_alias_repr
 
     def _set_resolution(self, res_string):
-        if res_string in Movie._res_aliases:
+        if not res_string:
+            self.width = None
+            self.height = None
+        elif res_string in Movie._res_aliases:
             self.width, self.height = Movie._res_aliases[res_string]
         elif res_string in Movie._res_alias_repr:
             self.width, self.height = Movie._res_aliases[Movie._res_alias_repr[res_string]]
-        elif 'x' in res_string[1:]:
+        elif 'x' in res_string:
             self.width, self.height = map(int, res_string.split('x'))
         else:
             raise ValueError('Use standard resolution name or \d+x\d+')
@@ -148,8 +150,8 @@ class Movie(object):
             return Movie._res_alias_repr[res_string]
         else:
             return res_string
-    resolution = property(_get_resolution, _set_resolution)
 
+    resolution = property(_get_resolution, _set_resolution)
 
     def __repr__(self):
         return "<Movie:%s (number=%s)>" % (self.movie_id, self.number)
