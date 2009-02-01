@@ -192,7 +192,19 @@ def upgrade_database(self, version, locations, config):
     if False and version == 3:    # fix changes between v3 and v4
         version += 1
         log.info("Upgrading database to version %d...", version)
+        
+        log.info('... adding new columns')
+        # common SQL statements
+        queries = {'barcode': 'ALTER TABLE movies ADD barcode INTEGER NULL;',
+                  }
+        for key, query in queries.items():
+            try:
+                self.session.bind.execute(query)
+            except Exception, e:
+                log.error("Cannot add '%s' column: %s", key, e)
+                return False
 
+        log.info('... creading missing indexes')
         i = Index('ix_movies_title', db.movies_table.c.title)
         i.create(bind=b)
         i = Index('ix_movies_o_title', db.movies_table.c.o_title)

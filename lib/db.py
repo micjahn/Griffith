@@ -168,8 +168,9 @@ movies_table = Table('movies', metadata,
     Column('layers', SmallInteger),
     Column('region', SmallInteger),
     Column('media_num', SmallInteger),
-    Column('runtime', Integer),
-    Column('year', Integer),
+    Column('runtime', SmallInteger),
+    Column('year', SmallInteger),
+    Column('barcode', Integer, unique=True),
     Column('o_title', Unicode(256), index=True),
     Column('title', Unicode(256), index=True),
     Column('director', Unicode(256)),
@@ -350,44 +351,3 @@ mapper(Poster, posters_table, properties={
 mapper(Filter, filters_table)
 #}}}
 
-
-
-# for debugging (run: ipython db.py)
-if __name__ == '__main__':
-    import os.path
-    import sqlalchemy
-    logging.basicConfig()
-    log.setLevel(logging.INFO)
-    log.info("SQLAlchemy version: %s", sqlalchemy.__version__)
-
-    ### ENGINE ###
-    mem_engine = create_engine('sqlite:///:memory:', echo=False)
-
-    # create tables
-    metadata.create_all(mem_engine)
-
-    ### MEMORY SESSION ###
-    # create a configured "Session" class
-    Session = sessionmaker(bind=mem_engine)
-    # create a Session
-    mem_sess = Session()
-
-
-    griffith_dir = os.path.expanduser("~/.griffith/")
-    url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
-    my_engine = create_engine(url, echo=False)
-    Session2 = sessionmaker(bind=my_engine)
-    my_sess = Session2()
-
-    print "\nAvailable variables:"
-    print "my_sess:  %s" % my_sess
-    print "mem_sess: %s" % mem_sess
-
-    my_movie1 = my_sess.query(Movie).first()
-    if my_movie1:
-        mem_movie1 = mem_sess.merge(my_movie1)
-        mem_movie1.title = u'updated movie title'
-        mem_sess.add(mem_movie1)
-        mem_sess.commit()
-        print "my_movie1:  %s - title: %s" % (my_movie1, my_movie1.title)
-        print "mem_movie1: %s - title: %s" % (mem_movie1, mem_movie1.title)

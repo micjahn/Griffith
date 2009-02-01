@@ -32,7 +32,7 @@ from locale import getdefaultlocale
 options = ('hvDCo:t:d:c:y:s:', ('help', 'debug', 'sqlecho', 'clean', 'check-dep',
     'show-dep', 'original_title=', 'title=', 'director=', 'cast=', 'year=',
     'sort=', 'seen=', 'loaned=', 'number=', 'runtime=', 'rating=', 'home=',
-    'config=', 'version' ))
+    'config=', 'shell', 'version' ))
 
 def check_args():
     default_lang, default_enc = getdefaultlocale()
@@ -95,6 +95,7 @@ def check_args_with_db(self):
             sys.exit(3)
 
         sort = None
+        shell = False
         where = {}
         for o, a in opts:
             if o in ('-C', '--clean'):
@@ -124,8 +125,12 @@ def check_args_with_db(self):
                 where['runtime'] = a
             elif o == '--rating':
                 where['rating'] = a
+            elif o == '--shell':
+                shell = True
         if where:
             con_search_movie(self, where, sort)
+        if shell:
+            run_shell(self)
 
 def con_search_movie(self, where, sort=None):
     # for search function
@@ -234,3 +239,76 @@ def con_usage():
     print "-y <number>, --year=<number>"
     print "-s <columns>, --sort=<columns>"
 
+def run_shell(self):
+    import sqlalchemy as sa
+    from sqlalchemy.orm import sessionmaker
+    import db
+
+    # settings
+    banner = """
+Griffith Interactive Shell
+
+
+Available variables:
+* sess - database session (try f.e. `sess.bind.echo = True`)
+* mem_sess - in memory session (playground)
+* sa - SQLAlchemy module
+* orm - SQLAlchemy's orm module
+* db - ORM stuff (f.e. db.Movie class)
+* gsql - GriffithSQL instance
+
+
+Examples:
+>>> movie = sess.query(db.Movie).first()
+>>> print movie.title
+
+>>> mem_movie = mem_sess.merge(movie)
+>>> mem_movie.seen = False
+>>> mem_sess.add(mem_movie)
+>>> mem_sess.commit()
+
+>>> seen_movies = sess.query(db.Movie).filter_by(seen=True)
+>>> for movie in seen_movies:
+        print movie.title, movie.loaned
+
+>>> person = sess.query(db.Person).first()
+>>> print "%s has %d movies loaned" % (person.name, person.loaned_movies_count)
+"""
+    
+    ### prepare local env. ###
+    
+    # create a playground in memory
+    mem_engine = sa.create_engine('sqlite:///:memory:')
+    db.metadata.create_all(bind=mem_engine) # create tables
+    MemSession = sessionmaker(bind=mem_engine)
+    mem_session = MemSession()
+
+    locs = {'mem_sess': mem_session,
+            'meta': db.metadata,
+            'db': db,
+            'sa': sa,
+            'orm': sa.orm,
+            'gsql': self.db,
+            'sess': self.db.session,
+            #'griffith': self,
+           }
+ 
+    ### prepare the shell ###
+    try:
+        ipython_args = [] # TODO: do we want to pass some args here?
+        # try to use IPython if possible
+        from IPython.Shell import IPShellEmbed
+
+        shell = IPShellEmbed(argv=ipython_args)
+        shell.set_banner(shell.IP.BANNER + banner)
+        shell(local_ns=locs, global_ns={})
+    except ImportError:
+        log.debug('IPython is not available')
+        import code
+        shell = code.InteractiveConsole(locals=locs)
+        try:
+            import readline
+        except ImportError:
+            log.debug('readline is not available')
+        shell.interact(banner)
+    sys.exit(0)
