@@ -134,12 +134,12 @@ class Movie(object):
         if not res_string:
             self.width = None
             self.height = None
-        elif res_string in Movie._res_aliases:
-            self.width, self.height = Movie._res_aliases[res_string]
-        elif res_string in Movie._res_alias_repr:
-            self.width, self.height = Movie._res_aliases[Movie._res_alias_repr[res_string]]
-        elif 'X' in res_string.upper():
-            self.width, self.height = map(int, res_string.upper().split('X'))
+        elif res_string.upper() in Movie._res_aliases:
+            self.width, self.height = Movie._res_aliases[res_string.upper()]
+        elif res_string.lower() in Movie._res_alias_repr:
+            self.width, self.height = Movie._res_aliases[Movie._res_alias_repr[res_string.lower()]]
+        elif 'x' in res_string.lower():
+            self.width, self.height = map(int, res_string.lower().split('x'))
         else:
             raise ValueError('Use standard resolution name or \d+x\d+')
 

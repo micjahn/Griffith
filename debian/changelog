@@ -6,6 +6,7 @@ griffith (0.10~beta2-1) UNRELEASED; urgency=low
     + pysqlite2 removed from alternative dependencies as python2.5 is now
       required
     + python-sqlite moved to Suggests
+    + ipython added to Suggests (--shell option)
 
  -- Piotr Ożarowski <piotr@debian.org>  Sun, 18 Jan 2009 14:00:14 +0100
 

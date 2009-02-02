@@ -354,7 +354,7 @@ def get_details(self): #{{{
         'o_title'        : w['o_title'].get_text().decode('utf-8'),
         'rating'         : w['rating_slider'].get_value(),
         'region'         : w['region'].get_active(),
-        'resolution'     : w['resolution'].get_text().strip().replace(' ', '').upper().decode('utf-8'),
+        'resolution'     : w['resolution'].get_text().strip().decode('utf-8'),
         'runtime'        : w['runtime'].get_text().decode('utf-8'),
         'screenplay'     : w['screenplay'].get_text().decode('utf-8'),
         'site'           : w['site'].get_text().decode('utf-8'),
