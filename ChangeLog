@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-02-05  Michael Jahn
+	* AniDB movie plugin updated
+
 2009-02-01  Piotr Ożarowski
 	* Add interactive shell (--shell commandline option)
 	* Add barcode column to the movie table
