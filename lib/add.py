@@ -389,6 +389,8 @@ def get_details(self): #{{{
         t_movies['vcodec_id'] = self.vcodecs_ids[t_movies['vcodec_id']]
     else:
         t_movies['vcodec_id'] = None
+    if t_movies['barcode'] == '0':
+        t_movies['barcode'] = None
     
     if w['seen'].get_active():
         t_movies['seen'] = True

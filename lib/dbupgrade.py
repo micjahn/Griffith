@@ -199,11 +199,18 @@ def upgrade_database(self, version, locations, config):
                    'width': 'ALTER TABLE movies ADD width SMALLINT NULL;',
                    'height': 'ALTER TABLE movies ADD height SMALLINT NULL;',
                   }
+
+        if e_type in ('mysql', 'posters'):
+           queries['movies_barcode_key'] = 'ALTER TABLE movies ADD CONSTRAINT movies_barcode_key UNIQUE (barcode);'
+
         for key, query in queries.items():
             try:
                 self.session.bind.execute(query)
             except Exception, e:
-                log.error("Cannot add '%s' column: %s", key, e)
+                if 'key' in key:
+                    log.error("Cannot add '%s' key: %s", key, e)
+                else:
+                    log.error("Cannot add '%s' column: %s", key, e)
                 return False
 
         log.info('... creading missing indexes')

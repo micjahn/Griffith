@@ -326,6 +326,7 @@ posters_table = Table('posters', metadata,
 
 filters_table = Table('filters', metadata,
     Column('name', Unicode(64), primary_key=True),
+    #Column('data', PickleType, nullable=False))
     Column('data', Binary, nullable=False))
 
 tables = {
