@@ -41,7 +41,16 @@ def check_args():
     
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         from win32com.shell import shellcon, shell
-        home = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(default_enc)
+        import shutil
+        home = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), u'griffith')
+        # griffith dir location should point to 'Application Data'
+        # this is changed on 0.9.5+svn so we need to make it backward compatible
+        # I think the following lines can be savely removed with version 0.11 or 0.12
+        if not os.path.exists(home):
+            mydocs = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_PERSONAL | 0x4000, 0, 0), u'griffith')
+            if os.path.exists(mydocs):
+                shutil.move(mydocs, home)
+        
     else:
         home = os.path.join(os.path.expanduser('~'), '.griffith').decode(default_enc)
     config = 'griffith.cfg'

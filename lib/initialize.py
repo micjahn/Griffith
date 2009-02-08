@@ -55,7 +55,6 @@ def locations(self, home_dir):
         from win32com.shell import shellcon, shell
         import shutil
         
-        mydocs = winshell.my_documents()
         locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
         locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
         locations['images']         = "%s\\images" % locations['exec']
@@ -64,11 +63,6 @@ def locations(self, home_dir):
         locations['desktop']        = ''
         locations['i18n']           = "%s\\i18n" % locations['exec']
         os.environ['PATH'] += ";lib;"
-        
-        # griffith dir location should point to 'Application Data'
-        # this is changed on 0.9.5+svn so we need to make it backward compatible
-        if os.path.exists(os.path.join(mydocs, 'griffith').decode(defaultEnc)):
-            shutil.move(os.path.join(mydocs, 'griffith').decode(defaultEnc),os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0), 'griffith').decode(defaultEnc))
         
         # windows hack for locale setting
         lang = os.getenv('LANG')
