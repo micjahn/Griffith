@@ -5,6 +5,8 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+---- 0.10-beta1 ----
+
 2009-02-07  Michael Jahn
 	* CineMovies movie plugin updated
 
@@ -106,7 +108,7 @@ Griffith ChangeLog
 	* Version changed to 0.10-beta2~svn
 	* command line's search fixed
 
----- 0.10-beta1 ---
+---- 0.10-beta1 ----
 
 2008-11-17  Piotr Ożarowski
 	* Add --version/-v command line options
@@ -210,7 +212,7 @@ Griffith ChangeLog
 	* Switch back to 4 spaces indentation
 	* Rewrite SQLAlchemy related data to use session (to ease accessing simultaneously multiple databases)
 
----- 0.9.7.1 ---
+---- 0.9.7.1 ----
 
 2008-07-26  Piotr Ożarowski
 	* Links to Griffith's homepage and bug tracker updated
@@ -224,7 +226,7 @@ Griffith ChangeLog
 	* updated INSTALL file to new versions (GTK, Glade, PyGTK, py2exe, pywin32, Inno Setup)
 	* fixed URL creation in setup script; added removing of .pyo files if deinstalled
 
----- 0.9.7 ---
+---- 0.9.7 ----
 
 2008-07-21  Piotr Ożarowski
 	* Fixed HTML export plugin (sorting issue)
@@ -299,7 +301,7 @@ Griffith ChangeLog
 	* hit enter key in title/original title box starts retrieving data from web for a new entry
 	* HTML export: replace linebreaks with <br /> in the data if "XHTML 1.0" is found in the template header
 
----- 0.9.6 ---
+---- 0.9.6 ----
 
 2008-01-27  Michael Jahn
 	* Zelluloid plugin updated
@@ -381,7 +383,7 @@ Griffith ChangeLog
 2007-09-03  Vasco Nunes
 	* Some documentations updates
 
----- 0.9.5 ---
+---- 0.9.5 ----
 
 2007-09-02  Piotr Ożarowski
 	* Translation files synchronized with Rosetta
@@ -423,7 +425,7 @@ Griffith ChangeLog
 2007-08-16  Michael Jahn
 	* IMDB-de plugin updated
 
----- 0.9.4 ---
+---- 0.9.4 ----
 
 2007-08-05  Piotr Ożarowski
 	* FDb movie plugin updated
@@ -463,12 +465,12 @@ Griffith ChangeLog
 2007-07-03  Michael Jahn
 	* DVD-Palace and IMDB-de movie plugin updated
 
----- 0.9.3.1 ---
+---- 0.9.3.1 ----
 
 2007-07-01  Piotr Ożarowski
 	* Problem with saving database preferences in config file fixed
 
----- 0.9.3 ---
+---- 0.9.3 ----
 
 2007-06-30  Piotr Ożarowski
 	* Use python2.5's sqlite3 module if available (no need to install pysqlite2)
@@ -566,7 +568,7 @@ Griffith ChangeLog
 	* Version changed to 0.9.2+svn
 	* New configuration file format (human readable) - please delete old one manually
 
----- 0.9.2 ---
+---- 0.9.2 ----
 
 2007-02-20  Piotr Ożarowski
 	* IMDB movie plugin updated
@@ -580,7 +582,7 @@ Griffith ChangeLog
 2007-02-14  Piotr Ożarowski
 	* KinoDe and FilmeVonAZ movie plugins updated (thanks to Michael Jahn)
 
----- 0.9.1 ---
+---- 0.9.1 ----
 
 2007-02-13  Piotr Ożarowski
 	* KinoDe movie plugin updated (thanks to Michael Jahn)
@@ -598,7 +600,7 @@ Griffith ChangeLog
 2007-01-27  Piotr Ożarowski
 	* English translation fixes (thanks Frijolie)
 
----- 0.9 ---
+---- 0.9 ----
 
 2007-01-26  Piotr Ożarowski
 	* WP and Filmweb movie plugins updated
@@ -627,7 +629,7 @@ Griffith ChangeLog
 2007-01-10  Vasco Nunes
 	* PTGate movie plugin updated
 
----- 0.9-rc3 ---
+---- 0.9-rc3 ----
 
 2007-01-09  Piotr Ożarowski
 	* Catch some more bad cases while upgrading database
@@ -642,7 +644,7 @@ Griffith ChangeLog
 2007-01-08  Vasco Nunes
 	* Italian translation updated (Thanks to Diego)
 
----- 0.9-rc2 ---
+---- 0.9-rc2 ----
 
 2007-01-07  Piotr Ożarowski
 	* Copy title if original title is not available in FDb.pl movie plugin
@@ -706,7 +708,7 @@ Griffith ChangeLog
 2006-12-30  Vasco Nunes
 	* Under MacOSX Preview.app is used for pdfs now
 
----- 0.9~rc1 ---
+---- 0.9~rc1 ----
 
 2006-12-24  Vasco Nunes
 	* Added some gtk dialogs when converting old db format
@@ -911,7 +913,7 @@ Griffith ChangeLog
 2006-04-20  Piotr Ożarowski
 	* ADOdb transition started
 
----- 0.6.2 ---
+---- 0.6.2 ----
 
 2006-08-08  Piotr Ożarowski
 	* IMDb movie plugin updated.
@@ -965,7 +967,7 @@ Griffith ChangeLog
 	* Minor fixes in doc files
 	* Added watch file for Debian package
 
----- 0.6.1 ---
+---- 0.6.1 ----
 
 2006-04-14  Piotr Ożarowski
 	* Updated some docs (translation README and INSTALL notes)

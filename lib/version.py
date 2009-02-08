@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2008 Vasco Nunes, Piotr Ożarowski
+# Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 pname        = "Griffith"
-pversion     = "0.10-beta2~svn"
+pversion     = "0.10-beta2"
 pauthor      = "Vasco Nunes, Piotr Ożarowski <griffith-private@lists.berlios.de>"
 pyear        = "2005-2009"
 pwebsite     = "http://www.griffith.cc/"

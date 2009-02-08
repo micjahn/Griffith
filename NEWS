@@ -1,6 +1,13 @@
 Griffith 0.10-beta2
 ===================
-*
+* Most movie plugins updated
+* New fields: barcode, resolution (width and height or PAL, NTSC, VGA, HD 1080, etc.)
+* Better results for Amazon poster search
+* HTML export plugin exports posters again
+* Reload movie plugin each time search is performed (in --debug mode only, this
+  should ease writing movie plugins)
+* Canceling search doesn't throw exception anymore
+* --shell command line option added (for advanced users/developers only!)
 
 
 Griffith 0.10-beta1
@@ -93,15 +100,18 @@ Griffith 0.9.3.1
 
 Griffith 0.9.3
 ==============
-* New configuration file format (human readable) - please note that data from old config file is not used
-* Updated movie plugins: Filmweb, WP, FDb, IMDb, 7arte.net, Cineteka, Kino.de, DVD-Palace, E-Pipoca, Stopklatka
+* New configuration file format (human readable) - please note that data from
+  old config file is not used
+* Updated movie plugins: Filmweb, WP, FDb, IMDb, 7arte.net, Cineteka, Kino.de,
+  DVD-Palace, E-Pipoca, Stopklatka
 * New movie plugins: FilmDb, Zelluloid, IMDb-de
 * New translations:
   + Dutch (thanks to Marcel Dijkstra)
   + Danish (thanks to Joe Dalton)
   + Greek (thanka to Ioannis Koniaris)
   + Simplified Chinese (thanks to kempson)
-* Updated translations: German, Spanish, French, Polish and Portuguese Brazilian (from Rosetta)
+* Updated translations: German, Spanish, French, Polish and Portuguese
+  Brazilian (from Rosetta)
 * Added new alpha export plugin for iPods
 * Added Microsoft SQL support
 * Lots of bugs fixed
