@@ -189,7 +189,7 @@ def upgrade_database(self, version, locations, config):
         self.session.add(db_version)
         self.session.commit()
 
-    if False and version == 3:    # fix changes between v3 and v4
+    if version == 3:    # fix changes between v3 and v4
         version += 1
         log.info("Upgrading database to version %d...", version)
         
@@ -197,27 +197,23 @@ def upgrade_database(self, version, locations, config):
         # common SQL statements
         queries = {'barcode': 'ALTER TABLE movies ADD barcode VARCHAR(32) NULL;',
                    'width': 'ALTER TABLE movies ADD width SMALLINT NULL;',
-                   'height': 'ALTER TABLE movies ADD height SMALLINT NULL;',
-                  }
-
-        if e_type in ('mysql', 'posters'):
-           queries['movies_barcode_key'] = 'ALTER TABLE movies ADD CONSTRAINT movies_barcode_key UNIQUE (barcode);'
+                   'height': 'ALTER TABLE movies ADD height SMALLINT NULL;'}
 
         for key, query in queries.items():
             try:
                 self.session.bind.execute(query)
             except Exception, e:
-                if 'key' in key:
-                    log.error("Cannot add '%s' key: %s", key, e)
-                else:
-                    log.error("Cannot add '%s' column: %s", key, e)
+                log.error("Cannot add '%s' column: %s", key, e)
                 return False
 
         log.info('... creading missing indexes')
-        i = Index('ix_movies_title', db.movies_table.c.title)
-        i.create(bind=b)
-        i = Index('ix_movies_o_title', db.movies_table.c.o_title)
-        i.create(bind=b)
+        try:
+            i = Index('ix_movies_title', db.movies_table.c.title)
+            i.create(bind=b)
+            i = Index('ix_movies_o_title', db.movies_table.c.o_title)
+            i.create(bind=b)
+        except Exception, e:
+            log.error("Cannot create new index, skipping (%s)", e)
         
         db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
         db_version.value = unicode(version)

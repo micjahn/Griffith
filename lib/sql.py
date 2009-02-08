@@ -35,7 +35,7 @@ import gutils # TODO: get rid of this import
 import db # ORM data (SQLAlchemy stuff)
 
 class GriffithSQL(object):
-    version = 3    # database format version, increase after changing data structures
+    version = 4 # database format version, increase after changing data structures
 
     def __init__(self, config, griffith_dir, locations, fallback=True):
         #mapper = Session.mapper
