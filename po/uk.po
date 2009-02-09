@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 00:28+0100\n"
+"POT-Creation-Date: 2009-02-09 23:22+0100\n"
 "PO-Revision-Date: 2008-11-18 12:29+0000\n"
 "Last-Translator: Piotr Ożarowski <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -499,12 +499,12 @@ msgstr "Ви впевнені, що бажаєте видалити цю афі�
 msgid "No posters found for this movie."
 msgstr "Немає афіш для цього фільму.."
 
-#: ../lib/edit.py:251 ../lib/movie.py:180
+#: ../lib/edit.py:251 ../lib/movie.py:186
 msgid "Fetching poster"
 msgstr "Отримання афіші"
 
-#: ../lib/edit.py:251 ../lib/movie.py:129 ../lib/movie.py:149
-#: ../lib/movie.py:180 ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/edit.py:251 ../lib/movie.py:135 ../lib/movie.py:155
+#: ../lib/movie.py:186 ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Wait a moment"
 msgstr "Зачекайте хвилинку"
 
@@ -889,20 +889,20 @@ msgstr "Цей фільм позичено "
 msgid "Movie not loaned"
 msgstr "Фільм не позичено"
 
-#: ../lib/movie.py:129 ../lib/movie.py:149
+#: ../lib/movie.py:135 ../lib/movie.py:155
 msgid "Fetching data"
 msgstr "Отримання даних"
 
-#: ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Searching"
 msgstr "Пошук"
 
-#: ../lib/movie.py:344 ../lib/plugins/movie/PluginMovieAmazon.py:348
+#: ../lib/movie.py:350 ../lib/plugins/movie/PluginMovieAmazon.py:348
 #: ../lib/plugins/movie/PluginMovieAmazon.py:362
 msgid "Connection error"
 msgstr "Помилка з'єднання"
 
-#: ../lib/movie.py:386
+#: ../lib/movie.py:392
 msgid "Cancel"
 msgstr "Скасувати"
 

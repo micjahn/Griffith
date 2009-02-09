@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 00:28+0100\n"
+"POT-Creation-Date: 2009-02-09 23:22+0100\n"
 "PO-Revision-Date: 2008-11-18 12:33+0000\n"
 "Last-Translator: Kempson Chen <kempson.chen@gmail.com>\n"
 "Language-Team: Simplified Chinese <zh_CN@li.org>\n"
@@ -495,12 +495,12 @@ msgstr "你确定要删除这张海报吗？"
 msgid "No posters found for this movie."
 msgstr "没有找到这部电影的海报。"
 
-#: ../lib/edit.py:251 ../lib/movie.py:180
+#: ../lib/edit.py:251 ../lib/movie.py:186
 msgid "Fetching poster"
 msgstr "正在抓取海报"
 
-#: ../lib/edit.py:251 ../lib/movie.py:129 ../lib/movie.py:149
-#: ../lib/movie.py:180 ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/edit.py:251 ../lib/movie.py:135 ../lib/movie.py:155
+#: ../lib/movie.py:186 ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Wait a moment"
 msgstr "等待一会"
 
@@ -880,20 +880,20 @@ msgstr ""
 msgid "Movie not loaned"
 msgstr ""
 
-#: ../lib/movie.py:129 ../lib/movie.py:149
+#: ../lib/movie.py:135 ../lib/movie.py:155
 msgid "Fetching data"
 msgstr ""
 
-#: ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Searching"
 msgstr "搜索"
 
-#: ../lib/movie.py:344 ../lib/plugins/movie/PluginMovieAmazon.py:348
+#: ../lib/movie.py:350 ../lib/plugins/movie/PluginMovieAmazon.py:348
 #: ../lib/plugins/movie/PluginMovieAmazon.py:362
 msgid "Connection error"
 msgstr "连接错误"
 
-#: ../lib/movie.py:386
+#: ../lib/movie.py:392
 msgid "Cancel"
 msgstr "取消"
 

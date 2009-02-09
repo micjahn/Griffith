@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 00:28+0100\n"
+"POT-Creation-Date: 2009-02-09 23:22+0100\n"
 "PO-Revision-Date: 2008-07-23 17:55+0000\n"
 "Last-Translator: Piotr Ożarowski <Unknown>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -503,12 +503,12 @@ msgstr "Er du sikker på, at du ønsker at slette denne plakat?"
 msgid "No posters found for this movie."
 msgstr "Ingen plakater fundet vedrørende denne film."
 
-#: ../lib/edit.py:251 ../lib/movie.py:180
+#: ../lib/edit.py:251 ../lib/movie.py:186
 msgid "Fetching poster"
 msgstr "Henter plakater"
 
-#: ../lib/edit.py:251 ../lib/movie.py:129 ../lib/movie.py:149
-#: ../lib/movie.py:180 ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/edit.py:251 ../lib/movie.py:135 ../lib/movie.py:155
+#: ../lib/movie.py:186 ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Wait a moment"
 msgstr "Vent et øjeblik"
 
@@ -895,20 +895,20 @@ msgstr "Denne film er udlånt til "
 msgid "Movie not loaned"
 msgstr "Film er ikke udlånt"
 
-#: ../lib/movie.py:129 ../lib/movie.py:149
+#: ../lib/movie.py:135 ../lib/movie.py:155
 msgid "Fetching data"
 msgstr "Henter data"
 
-#: ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Searching"
 msgstr "Søger"
 
-#: ../lib/movie.py:344 ../lib/plugins/movie/PluginMovieAmazon.py:348
+#: ../lib/movie.py:350 ../lib/plugins/movie/PluginMovieAmazon.py:348
 #: ../lib/plugins/movie/PluginMovieAmazon.py:362
 msgid "Connection error"
 msgstr "Forbindelsesfejl"
 
-#: ../lib/movie.py:386
+#: ../lib/movie.py:392
 msgid "Cancel"
 msgstr "Annuller"
 

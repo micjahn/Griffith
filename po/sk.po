@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 00:28+0100\n"
+"POT-Creation-Date: 2009-02-09 23:22+0100\n"
 "PO-Revision-Date: 2008-11-18 11:57+0000\n"
 "Last-Translator: Maroš Brojo <majobrojo@gmail.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"
@@ -484,12 +484,12 @@ msgstr ""
 msgid "No posters found for this movie."
 msgstr ""
 
-#: ../lib/edit.py:251 ../lib/movie.py:180
+#: ../lib/edit.py:251 ../lib/movie.py:186
 msgid "Fetching poster"
 msgstr ""
 
-#: ../lib/edit.py:251 ../lib/movie.py:129 ../lib/movie.py:149
-#: ../lib/movie.py:180 ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/edit.py:251 ../lib/movie.py:135 ../lib/movie.py:155
+#: ../lib/movie.py:186 ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Wait a moment"
 msgstr ""
 
@@ -870,20 +870,20 @@ msgstr "Tento film bol požičaný "
 msgid "Movie not loaned"
 msgstr ""
 
-#: ../lib/movie.py:129 ../lib/movie.py:149
+#: ../lib/movie.py:135 ../lib/movie.py:155
 msgid "Fetching data"
 msgstr ""
 
-#: ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Searching"
 msgstr "Hľadám...."
 
-#: ../lib/movie.py:344 ../lib/plugins/movie/PluginMovieAmazon.py:348
+#: ../lib/movie.py:350 ../lib/plugins/movie/PluginMovieAmazon.py:348
 #: ../lib/plugins/movie/PluginMovieAmazon.py:362
 msgid "Connection error"
 msgstr "Chyba spojenia"
 
-#: ../lib/movie.py:386
+#: ../lib/movie.py:392
 msgid "Cancel"
 msgstr "Zruš"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 00:28+0100\n"
+"POT-Creation-Date: 2009-02-09 23:22+0100\n"
 "PO-Revision-Date: 2008-12-06 21:07+0000\n"
 "Last-Translator: Baseer Ahmad Baheer <suraj.lmar@gmail.com>\n"
 "Language-Team: Pashto <ps@li.org>\n"
@@ -494,12 +494,12 @@ msgstr "غواړئ داخبرتیا له منځه یوسئ؟"
 msgid "No posters found for this movie."
 msgstr "د دې فلم لپاره کومې څرګندونې ونه موندل شوې"
 
-#: ../lib/edit.py:251 ../lib/movie.py:180
+#: ../lib/edit.py:251 ../lib/movie.py:186
 msgid "Fetching poster"
 msgstr "د راوړلو خبرتیا ،د خرڅولو خبرتیا"
 
-#: ../lib/edit.py:251 ../lib/movie.py:129 ../lib/movie.py:149
-#: ../lib/movie.py:180 ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/edit.py:251 ../lib/movie.py:135 ../lib/movie.py:155
+#: ../lib/movie.py:186 ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Wait a moment"
 msgstr "یوه شیبه تم شئ"
 
@@ -884,20 +884,20 @@ msgstr "دا فلم .... ته پور شو "
 msgid "Movie not loaned"
 msgstr "فلم نه دی پور شوی"
 
-#: ../lib/movie.py:129 ../lib/movie.py:149
+#: ../lib/movie.py:135 ../lib/movie.py:155
 msgid "Fetching data"
 msgstr "سرته رسیدونکې اومتوک"
 
-#: ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Searching"
 msgstr "پلټل کيږي"
 
-#: ../lib/movie.py:344 ../lib/plugins/movie/PluginMovieAmazon.py:348
+#: ../lib/movie.py:350 ../lib/plugins/movie/PluginMovieAmazon.py:348
 #: ../lib/plugins/movie/PluginMovieAmazon.py:362
 msgid "Connection error"
 msgstr "د اریکې تیروتنه"
 
-#: ../lib/movie.py:386
+#: ../lib/movie.py:392
 msgid "Cancel"
 msgstr "بندول"
 

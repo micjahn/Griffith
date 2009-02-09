@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 00:28+0100\n"
+"POT-Creation-Date: 2009-02-09 23:30+0100\n"
 "PO-Revision-Date: 2009-01-01 15:46+0000\n"
 "Last-Translator: apank <Unknown>\n"
 "Language-Team: German, Low <nds@li.org>\n"
@@ -246,17 +246,7 @@ msgstr "Kann Suchbedingungen nicht sichern"
 
 #: ../lib/backup.py:36
 msgid "Save Griffith backup"
-msgstr ""
-"- Griffith-Backup speichern\r\n"
-"  (= save griffith backup)\r\n"
-"\r\n"
-"- Backup erstellen\r\n"
-"  (=create backup)\r\n"
-"\r\n"
-"- Backup der Datenbank erstellen\r\n"
-"  (= create a backup of the database)\r\n"
-"\r\n"
-"--> choose what matches the overall style best"
+msgstr "Backup erstellen"
 
 #: ../lib/backup.py:45 ../lib/plugins/export/PluginExportCSV.py:58
 #: ../lib/plugins/export/PluginExportiPod.py:105
@@ -522,12 +512,12 @@ msgstr "Wollen Sie das Poster wirklich löschen?"
 msgid "No posters found for this movie."
 msgstr "Keine Poster für diesen Film gefunden."
 
-#: ../lib/edit.py:251 ../lib/movie.py:180
+#: ../lib/edit.py:251 ../lib/movie.py:186
 msgid "Fetching poster"
 msgstr "Lade Poster .."
 
-#: ../lib/edit.py:251 ../lib/movie.py:129 ../lib/movie.py:149
-#: ../lib/movie.py:180 ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/edit.py:251 ../lib/movie.py:135 ../lib/movie.py:155
+#: ../lib/movie.py:186 ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Wait a moment"
 msgstr "Bitte warten Sie einen Moment"
 
@@ -690,11 +680,7 @@ msgstr "zuletzt hinzugefügt"
 #: ../lib/initialize.py:573 ../lib/plugins/export/PluginExportHTML.py:134
 #: ../lib/plugins/export/PluginExportPDF.py:171 ../glade/griffith.glade.h:38
 msgid "Cast"
-msgstr ""
-"- Besetzung\r\n"
-"\r\n"
-"- Darsteller und Mitwirkende\r\n"
-"  (= actors and participants)"
+msgstr "Besetzung"
 
 #: ../lib/initialize.py:574 ../glade/griffith.glade.h:37
 msgid "Cameraman"
@@ -716,13 +702,7 @@ msgstr "Sammlung"
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:403
 #: ../lib/plugins/movie/PluginMovieIMDB.py:163 ../glade/griffith.glade.h:44
 msgid "Color"
-msgstr ""
-"- Farbe\r\n"
-"\r\n"
-"- Farbsystem\r\n"
-"  (= in case of color system like PAL, NTSC, etc.)\r\n"
-"\r\n"
-"--> choose depending on context"
+msgstr "Farbe"
 
 #: ../lib/initialize.py:578 ../glade/griffith.glade.h:45
 msgid "Condition"
@@ -739,15 +719,7 @@ msgstr "Ausgeliehen"
 #: ../lib/initialize.py:585 ../lib/plugins/export/PluginExportHTML.py:144
 #: ../glade/griffith.glade.h:55
 msgid "Discs"
-msgstr ""
-"- DVDs\r\n"
-"  (number of discs in case of DVDs)\r\n"
-"\r\n"
-"- CDs\r\n"
-"  (number of discs in case of CDs)\r\n"
-"\r\n"
-"- Disks\r\n"
-"  (number of discs in general case - term is adopted in german)"
+msgstr "Disks"
 
 #: ../lib/initialize.py:586 ../glade/griffith.glade.h:92
 msgid "Medium"
@@ -935,20 +907,20 @@ msgstr "Dieser Film wurde ausgeliehen an "
 msgid "Movie not loaned"
 msgstr "Film nicht ausgeliehen."
 
-#: ../lib/movie.py:129 ../lib/movie.py:149
+#: ../lib/movie.py:135 ../lib/movie.py:155
 msgid "Fetching data"
 msgstr "Lese Daten ..."
 
-#: ../lib/movie.py:280 ../lib/movie.py:301
+#: ../lib/movie.py:286 ../lib/movie.py:307
 msgid "Searching"
 msgstr "Suche läuft ..."
 
-#: ../lib/movie.py:344 ../lib/plugins/movie/PluginMovieAmazon.py:348
+#: ../lib/movie.py:350 ../lib/plugins/movie/PluginMovieAmazon.py:348
 #: ../lib/plugins/movie/PluginMovieAmazon.py:362
 msgid "Connection error"
 msgstr "Verbindungsfehler"
 
-#: ../lib/movie.py:386
+#: ../lib/movie.py:392
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -2481,18 +2453,3 @@ msgstr "Plug-In"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Quelle"
-
-#~ msgid "This name is already in use!"
-#~ msgstr "Dieser Name wird bereits verwendet!"
-
-#~ msgid " movie(s) loaned. "
-#~ msgstr " Film(e) ausgeliehen. "
-
-#~ msgid "Column \"%s\" is not unique"
-#~ msgstr "Spalte \"%s\" ist nicht eindeutig."
-
-#~ msgid "Select A File"
-#~ msgstr "Datei auswählen"
-
-#~ msgid "By Volume"
-#~ msgstr "Nach Volume"
