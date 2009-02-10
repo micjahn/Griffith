@@ -152,37 +152,41 @@ def upgrade_database(self, version, locations, config):
         
         log.info('... saving posters in database')
         posters_dir = get_old_posters_location(locations['home'], config, clean_config=True)
-        for movie in self.session.query(db.Movie).all():
+        updated = {}
+        movies_table = db.tables['movies']
+        for movie in self.session.query(db.Movie.image).all():
             poster_file_name = os.path.join(posters_dir, "%s.jpg" % movie.image)
+            if poster_file_name in updated:
+                continue
             if os.path.isfile(poster_file_name):
                 poster_md5  = gutils.md5sum(file(poster_file_name, 'rb'))
                 poster = self.session.query(db.Poster).filter_by(md5sum=poster_md5).first()
                 if not poster:
                     poster = db.Poster(md5sum=poster_md5, data=file(poster_file_name, 'rb').read())
                     self.session.add(poster)
-                
-                movie.poster_md5 = poster_md5
-                movie.image = None
-                self.session.add(movie)
+
+                update_query = movies_table.update(movies_table.c.image==movie.image, {'poster_md5': poster_md5, 'image': None}, bind=b)
 
                 try:
                     # yeah, we're commiting inside the loop,
                     # it slows down the process a lot, but at least we can skip buggy posters
+                    update_query.execute()
                     self.session.commit()
                 except Exception, e:
                     self.session.rollback()
                     log.error(e)
                 else:
+                    updated[poster_file_name] = True
                     try:
                         os.remove(poster_file_name)
                     except:
                         log.warn("cannot remove %s", poster_file_name)
-
             else:
-                log.warn("file not found: number=%s, image=%s)", movie.number, movie.image)
-                movie.image = None
-                self.session.add(movie)
-                self.session.commit()
+                log.warn("file not found: %s)", movie.image)
+                update_query = movies_table.update(movies_table.c.image==movie.image, {'image': None}, bind=b)
+                update_query.execute()
+                updated[poster_file_name] = True
+        del updated
 
         db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
         db_version.value = unicode(version)

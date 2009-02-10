@@ -7,7 +7,8 @@ Griffith ChangeLog
 
 ---- 0.10-beta2 ----
 
-2009-02-09  Piotr Ożarowski
+2009-02-10  Piotr Ożarowski
+	* Fix upgrading from v2 to v4 (columns that are not available yet, are not used)
 	* Releasing 0.10-beta2
 
 2009-02-07  Michael Jahn
