@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 23:22+0100\n"
+"POT-Creation-Date: 2009-02-10 21:15+0100\n"
 "PO-Revision-Date: 2008-12-06 21:07+0000\n"
 "Last-Translator: Baseer Ahmad Baheer <suraj.lmar@gmail.com>\n"
 "Language-Team: Pashto <ps@li.org>\n"
@@ -450,7 +450,7 @@ msgstr "ترکي"
 msgid "Favourite"
 msgstr "غوره، د خوښې،په زړه پورې"
 
-#: ../lib/dbupgrade.py:233
+#: ../lib/dbupgrade.py:237
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
@@ -458,11 +458,11 @@ msgstr ""
 "Griffith به اوس ستاسو معلوماتي بانک نوې بڼې ته واړوي. دا به څو دقیقې ونیسي "
 "که چیرې تاسو لوی معلوماتي بانک ولرئ"
 
-#: ../lib/dbupgrade.py:247
+#: ../lib/dbupgrade.py:251
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr "د زاړه DB  اړول: مهرباني وکړئ pysqlite legacy (v1.0) ولګوئ"
 
-#: ../lib/dbupgrade.py:274
+#: ../lib/dbupgrade.py:278
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"

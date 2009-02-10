@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-09 23:22+0100\n"
+"POT-Creation-Date: 2009-02-10 21:15+0100\n"
 "PO-Revision-Date: 2008-12-22 23:39+0000\n"
 "Last-Translator: Simone Oberti <Unknown>\n"
 "Language-Team: <tp@lists.linux.it>\n"
@@ -460,7 +460,7 @@ msgstr "Turco"
 msgid "Favourite"
 msgstr "Preferito"
 
-#: ../lib/dbupgrade.py:233
+#: ../lib/dbupgrade.py:237
 msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
@@ -468,11 +468,11 @@ msgstr ""
 "Griffith convertirà adesso il database nel nuovo formato. Questa operazione "
 "potrebbe richiedere diversi minuti per un database di grandi dimensioni."
 
-#: ../lib/dbupgrade.py:247
+#: ../lib/dbupgrade.py:251
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr "Conversione DB vecchi: installare pysqlite legacy (v1.0)"
 
-#: ../lib/dbupgrade.py:274
+#: ../lib/dbupgrade.py:278
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
