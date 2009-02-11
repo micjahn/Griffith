@@ -264,9 +264,9 @@ def update_whereclause(query, cond): # {{{
             column = tmp[1]
 
         if reverse:
-            query.append_order_by(desc(db.tables[table].columns[column]))
+            query.append_order_by(desc(db.metadata.tables[table].columns[column]))
         else:
-            query.append_order_by(asc(db.tables[table].columns[column]))
+            query.append_order_by(asc(db.metadata.tables[table].columns[column]))
 
     log.debug(query.compile())
     return query #}}}

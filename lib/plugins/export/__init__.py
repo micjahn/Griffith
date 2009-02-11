@@ -59,6 +59,7 @@ class Base(object):
         raise NotImplemented
     
     def get_query(self):
+        t = db.metadata.tables
         tables = set()
         columns = []
 
@@ -68,30 +69,30 @@ class Base(object):
             if len(column) > 1:
                 table = column[0]
                 column = column[1]
-                if table not in db.tables:
+                if table not in t:
                     log.warning("Wrong table name: %s", table)
                     continue
                 tables.add(table) # will be used to generate JOIN
             else:
                 column = column[0]
 
-            if column in db.tables[table].columns:
-                columns.append(db.tables[table].columns[column])
+            if column in t[table].columns:
+                columns.append(t[table].columns[column])
             else:
                 log.warning("Wrong field name: %s", i)
 
         joins = []
         if 'media' in tables:
-            joins.append((db.tables['media'], db.tables['movies'].c.medium_id==db.tables['media'].c.medium_id))
+            joins.append((t['media'], t['movies'].c.medium_id==t['media'].c.medium_id))
         if 'collections' in tables:
-            joins.append((db.tables['collections'], db.tables['movies'].c.collection_id==db.tables['collections'].c.collection_id))
+            joins.append((t['collections'], t['movies'].c.collection_id==t['collections'].c.collection_id))
         if 'volumes' in tables:
-            joins.append((db.tables['volumes'], db.tables['movies'].c.volume_id==db.tables['volumes'].c.volume_id))
+            joins.append((t['volumes'], t['movies'].c.volume_id==t['volumes'].c.volume_id))
         if 'vcodecs' in tables:
-            joins.append((db.tables['vcodecs'], db.tables['movies'].c.vcodec_id==db.tables['vcodecs'].c.vcodec_id))
+            joins.append((t['vcodecs'], t['movies'].c.vcodec_id==t['vcodecs'].c.vcodec_id))
 
         if joins:
-            from_obj = [ outerjoin(db.tables['movies'], *(joins[0])) ]
+            from_obj = [ outerjoin(t['movies'], *(joins[0])) ]
             for j in joins[1:]:
                 from_obj.append(outerjoin(from_obj[-1], *j))
             query = select(columns=columns, bind=self.db.session.bind, from_obj=from_obj, use_labels=True)

@@ -328,26 +328,6 @@ filters_table = Table('filters', metadata,
     Column('name', Unicode(64), primary_key=True),
     #Column('data', PickleType, nullable=False))
     Column('data', Binary, nullable=False))
-
-tables = {
-    'movies':         movies_table,
-    'loans':          loans_table,
-    'people':         people_table,
-    'volumes':        volumes_table,
-    'collections':    collections_table,
-    'media':          media_table,
-    'ratios':         ratios_table,
-    'languages':      languages_table,
-    'vcodecs':        vcodecs_table,
-    'acodecs':        acodecs_table,
-    'achannels':      achannels_table,
-    'subformats':     subformats_table,
-    'tags':           tags_table,
-    'movie_lang':     movie_lang_table,
-    'movie_tag':      movie_tag_table,
-    'configuration':  configuration_table,
-    'posters':        posters_table,
-    'filters':        filters_table}
 #}}}
 
 ### mappers ################################################### {{{

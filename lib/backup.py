@@ -95,9 +95,8 @@ def backup(self):
                         table.insert(bind=tmp_engine).execute(data)
                 
                 # posters
-                data = db.tables['posters'].select(bind=self.db.session.bind).execute().fetchall()
-                for i in data:
-                    db.tables['posters'].insert(bind=tmp_engine).execute(md5sum=i[0], data=StringIO(i[1]).read())
+                for poster in db.metadata.tables['posters'].select(bind=self.db.session.bind).execute():
+                    db.metadata.tables['posters'].insert(bind=tmp_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
 
                 mzip.write(tmp_file)
                 rmtree(tmp_dir)

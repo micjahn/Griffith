@@ -145,13 +145,13 @@ def con_search_movie(self, where, sort=None):
     # for search function
     from sqlalchemy import select
     import db
-    mt = db.tables['movies'].columns
+    mt = db.metadata.tables['movies'].columns
     columns = (mt.number, mt.title, mt.o_title, mt.director, mt.year)
     
     sort_columns = []
     if sort:
         for i in sort.split(','):
-            if db.tables['movies'].columns.has_key(i):
+            if db.metadata.tables['movies'].columns.has_key(i):
                 sort_columns.append(mt[i])
     else:
         sort_columns = [mt.number]

@@ -153,7 +153,7 @@ def upgrade_database(self, version, locations, config):
         log.info('... saving posters in database')
         posters_dir = get_old_posters_location(locations['home'], config, clean_config=True)
         updated = {}
-        movies_table = db.tables['movies']
+        movies_table = db.metadata.tables['movies']
         for movie in self.session.query(db.Movie.image).all():
             poster_file_name = os.path.join(posters_dir, "%s.jpg" % movie.image)
             if poster_file_name in updated:
