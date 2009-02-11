@@ -48,12 +48,12 @@ for i in required:
 if len(missing) > 0:
     log.error('Error: missing modules:')
     for i in missing:
-        print "%(module)s" % i,
+        log.error("%(module)s" % i)
         if i.has_key('module_req'):
-            print "\t:: required version: %(module_req)s" % i,
+            log.error("\t:: required version: %(module_req)s" % i)
             if i['version'] is not False and i['version'][0] == '-':
-                print "\t:: detected: %s" % i['version'][1:]
-        print "\n",
+                log.error("\t:: detected: %s" % i['version'][1:])
+        log.error("\n")
     sys.exit(1)
 del missing
 
@@ -385,6 +385,7 @@ class Griffith(object):
             self.db.session.commit()
             self.treemodel.set_value(m_iter,6,movie.seen)
             self.treeview_clicked()
+            self.count_statusbar()
 
     def sugest_movie(self, *args):
         if not self.widgets['menu']['not_seen_movies'].get_active():
@@ -1123,7 +1124,7 @@ You can't undo this operation."""), True, self.widgets['window'])
         if allmovies > 0:
             loaned = self.db.session.query(db.Movie).filter_by(loaned=True).count()
             not_seen = self.db.session.query(db.Movie).filter_by(seen=False).count()
-        self.update_statusbar("%s (%s) movie(s) in collection. %s movie(s) loaned. You haven't seen %s movie(s)" % (allmovies, self.total, loaned, not_seen))
+        self.update_statusbar(_("%s movie(s) in collection. %s movie(s) are shown by the filter. %s movie(s) loaned. You haven't seen %s movie(s)") % (allmovies, self.total, loaned, not_seen))
 
     def update_statusbar(self, text):
         context_id = self.widgets['statusbar'].get_context_id(text)

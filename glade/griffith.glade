@@ -763,7 +763,7 @@
                   <widget class="GtkLabel" id="label291">
                     <property name="visible">True</property>
                     <property name="xpad">6</property>
-                    <property name="label">saved</property>
+                    <property name="label" translatable="yes">Saved filters</property>
                   </widget>
                 </child>
               </widget>
