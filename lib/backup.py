@@ -70,7 +70,7 @@ def backup(self):
                 from tempfile import mkdtemp
                 from shutil import rmtree
                 from StringIO import StringIO
-                from sqlalchemy import MetaData
+                from sqlalchemy import create_engine
                 import copy
                 import db
 
@@ -83,9 +83,8 @@ def backup(self):
                 mzip.write(tmp_config._file)
 
                 tmp_file = os.path.join(tmp_dir, 'griffith.db')
-                tmp_metadata = MetaData("sqlite:///%s" % tmp_file)
-                tmp_metadata.tables = db.metadata.tables
-                tmp_metadata.create_all()
+                tmp_engine = create_engine("sqlite:///%s" % tmp_file)
+                db.metadata.create_all(bind=tmp_engine)
 
                 # SQLite doesn't care about foreign keys much so we can just copy the data
                 for table in db.metadata.sorted_tables:
@@ -93,12 +92,12 @@ def backup(self):
                         continue # see below
                     data = table.select(bind=self.db.session.bind).execute().fetchall()
                     if data:
-                        tmp_metadata.tables[table.name].insert(bind=tmp_metadata.bind).execute(data)
+                        table.insert(bind=tmp_engine).execute(data)
                 
                 # posters
                 data = db.tables['posters'].select(bind=self.db.session.bind).execute().fetchall()
                 for i in data:
-                    db.tables['posters'].insert(bind=tmp_metadata.bind).execute(md5sum=i[0], data=StringIO(i[1]).read())
+                    db.tables['posters'].insert(bind=tmp_engine).execute(md5sum=i[0], data=StringIO(i[1]).read())
 
                 mzip.write(tmp_file)
                 rmtree(tmp_dir)
