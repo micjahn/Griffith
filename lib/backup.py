@@ -25,6 +25,7 @@ import gtk
 import os.path
 import zipfile
 import logging
+import datetime
 log = logging.getLogger("Griffith")
 import config
 import edit
@@ -33,23 +34,26 @@ import sql
 
 def backup(self):
     """perform a compressed griffith database/posters/preferences backup"""
+    #if self.db.session.bind.engine.name != 'sqlite':
+    #    gutils.error(self, _("Backup function is available only for SQLite engine for now"), self.widgets['window'])
+    #    return False
+
+    default_name = "%s_backup_%s.zip" % (self.config.get('name','griffith', section='database'),\
+                    datetime.date.isoformat(datetime.datetime.now()))
     filename = gutils.file_chooser(_("Save Griffith backup"), \
-        action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons= \
-        (gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK), \
-        name=self.config.get('name','griffith', section='database') + '_backup.zip')
+        action=gtk.FILE_CHOOSER_ACTION_SAVE, name=default_name, buttons= \
+        (gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
+
     if filename and filename[0]:
-        overwrite = None
+        proceed = True
+
         zipfilename = filename[0].decode('utf-8')
         if os.path.isfile(zipfilename):
-            response = gutils.question(self, \
-                _("File exists. Do you want to overwrite it?"), \
-                1, self.widgets['window'])
-            if response == -8:
-                overwrite = True
-            else:
-                overwrite = False
+            response = gutils.question(_("File exists. Do you want to overwrite it?"), window=self.widgets['window'])
+            if response != gtk.RESPONSE_YES:
+                proceed = False
 
-        if overwrite == True or overwrite is None:
+        if proceed:
             try:
                 if zipfile.zlib is not None:
                     mzip = zipfile.ZipFile(zipfilename, 'w', zipfile.ZIP_DEFLATED)
@@ -58,62 +62,53 @@ def backup(self):
             except:
                 gutils.error(self, _("Error creating backup"), self.widgets['window'])
                 return False
-            mzip.write(os.path.join(self.locations['home'],'griffith.cfg').encode('utf-8'))
             if self.db.session.bind.engine.name == 'sqlite':
+                mzip.write(os.path.join(self.locations['home'],'griffith.cfg').encode('utf-8'))
                 fileName = os.path.join(self.locations['home'], self.config.get('name','griffith', section='database') + '.db').encode('utf-8')
                 mzip.write(fileName)
             else:
-                gutils.error(self, _("Backup function is available only for SQLite engine for now"), self.widgets['window'])
-                return False
                 from tempfile import mkdtemp
-                from shutil import rmtree, move
-                from sqlalchemy import BoundMetaData
+                from shutil import rmtree
+                from StringIO import StringIO
+                from sqlalchemy import MetaData
                 import copy
-                # if backup_to_sqlite:
+                import db
+
                 tmp_dir = mkdtemp()
                 tmp_config = copy.deepcopy(self.config)
-                tmp_config._file = os.path.join(tmp_dir,'griffith.cfg')
-                tmp_config.get('type', 'sqlite', section='database') == 'sqlite'
-                tmp_config.set('file', section='database') == "griffith.db"
+                tmp_config._file = os.path.join(tmp_dir, 'griffith.cfg')
+                tmp_config.set('type', 'sqlite', section='database')
+                tmp_config.set('file', 'griffith.db', section='database')
                 tmp_config.save()
+                mzip.write(tmp_config._file)
 
-#                tmp_db = sql.GriffithSQL(tmp_config, tmp_dir)
-#                for i in self.db.metadata.tables
-#                tmp_db.
-
-                tmp_file = os.path.join(tmp_dir, tmp_config.get('file', 'griffith.db', section='database')).encode('utf-8')
-                tmp_metadata = BoundMetaData("sqlite:///%s" % tmp_file)
-                tmp_metadata.tables = self.db.metadata.tables
+                tmp_file = os.path.join(tmp_dir, 'griffith.db')
+                tmp_metadata = MetaData("sqlite:///%s" % tmp_file)
+                tmp_metadata.tables = db.metadata.tables
                 tmp_metadata.create_all()
-#                for table in self.db.metadata.tables.keys():
-                for table in [t.name for t in self.db.metadata.table_iterator()]: # table_iterator() will return tables in *correct* order
-                    data = self.db.metadata.tables[table].select().execute().fetchall()
-                    tmp_metadata.tables[table].insert().execute(data)
-#                    for item in data:
-#                        tmp_metadata.tables[table].insert().execute(item)
-                tmp_metadata.engine.commit()
+
+                # SQLite doesn't care about foreign keys much so we can just copy the data
+                for table in db.metadata.sorted_tables:
+                    if table.name == 'posters':
+                        continue # see below
+                    data = table.select(bind=self.db.session.bind).execute().fetchall()
+                    if data:
+                        tmp_metadata.tables[table.name].insert(bind=tmp_metadata.bind).execute(data)
                 
+                # posters
+                data = db.tables['posters'].select(bind=self.db.session.bind).execute().fetchall()
+                for i in data:
+                    db.tables['posters'].insert(bind=tmp_metadata.bind).execute(md5sum=i[0], data=StringIO(i[1]).read())
+
                 mzip.write(tmp_file)
                 rmtree(tmp_dir)
-            posters_dir = os.path.join(self.locations['posters'])
-            for movie in self.db.Movie.query.all():
-                if movie.image is not None:
-                    filename = str(movie.image)+".jpg"
-                    filename = os.path.join(posters_dir, filename).encode('utf-8')
-                    if os.path.isfile(filename):
-                        try:
-                            mzip.write(filename)
-                        except:
-                            log.info("Can't compress %s" % filename)
-            mzip.close()
             gutils.info(_("Backup has been created"), self.widgets['window'])
 
 def restore(self):
     """restores a griffith compressed backup"""
     filename = gutils.file_chooser(_("Restore Griffith backup"), \
-        action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
-        (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, \
-        gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+                    action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
+                    (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
     if filename[0]:
         try:
             zip = zipfile.ZipFile(filename[0], 'r')
