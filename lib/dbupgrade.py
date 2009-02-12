@@ -106,6 +106,7 @@ def upgrade_database(self, version, locations, config):
         db.languages_table.insert(bind=b).execute(name=_('Swedish'))
         db.languages_table.insert(bind=b).execute(name=_('Turkish'))
         db.tags_table.insert(bind=b).execute(name=_('Favourite'))
+        db.tags_table.insert(bind=b).execute(name=_('Buy me'))
         return True # upgrade process finished
     #
     # next steps are only for existing databases with an outdated structure

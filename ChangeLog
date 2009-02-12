@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-02-12  Piotr Ożarowski
+	* Add new default tag: "Buy me"
+
 2009-02-11  Piotr Ożarowski
 	* Version changed to 0.10-beta3~svn
 	* Backup function fixed

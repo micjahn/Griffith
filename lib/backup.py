@@ -88,7 +88,7 @@ def backup(self):
 
                 # SQLite doesn't care about foreign keys much so we can just copy the data
                 for table in db.metadata.sorted_tables:
-                    if table.name == 'posters':
+                    if table.name in ('posters', 'filters'):
                         continue # see below
                     data = table.select(bind=self.db.session.bind).execute().fetchall()
                     if data:

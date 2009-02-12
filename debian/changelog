@@ -1,3 +1,9 @@
+griffith (0.10~beta3~svn-1) UNRELEASED; urgency=low
+
+  * Add docbook2x to Build-Depend-Indep
+
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 12 Feb 2009 12:46:50 +0100
+
 griffith (0.10~beta2-1) experimental; urgency=low
 
   * New upstream snapshot
