@@ -199,7 +199,7 @@ def fetch_bigger_poster(self):
     if len(result.Item) == 1:
         o_title = self.widgets['movie']['o_title'].get_text().decode('utf-8')
         if o_title == result.Item[0].ItemAttributes.Title or keyword == result.Item[0].ItemAttributes.Title:
-            get_poster(self, 0, result, current_poster)
+            get_poster(self, 0, result)
             return
 
     self.treemodel_results.clear()
@@ -269,12 +269,13 @@ def get_poster(self, f, result):
 
     if not canceled:
         if os.path.isfile(file_to_copy):
+            im = None
             try:
                 im = Image.open(file_to_copy)
             except IOError:
                 log.warn("failed to identify %s"%file_to_copy)
 
-            if im.size == (1,1):
+            if im and im.size == (1,1):
                 url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result.Item[f].ASIN).read()
                 if url.find('no-img-sm._V47056216_.gif') > 0:
                     log.warn('No image available')
@@ -288,10 +289,18 @@ def get_poster(self, f, result):
                 except IOError:
                     log.warn("failed to identify %s"%file_to_copy)
 
+            if not im:
+                # something wrong with the image, give some feedback to the user
+                log.warn('No image available')
+                gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
+                return False
+
             if im.mode != 'RGB': # convert GIFs
                 im = im.convert('RGB')
                 im.save(file_to_copy, 'JPEG')
-        
+            # set to None because the file is locked otherwise (os.remove throws an exception)
+            im = None
+
             handler = self.widgets['big_poster'].set_from_file(file_to_copy)
 
             self.widgets['poster_window'].show()
@@ -310,5 +319,13 @@ def get_poster(self, f, result):
             self.widgets['poster_window'].hide()
         else:
             gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
+    else:
+        # cleanup temporary files after canceling the download
+        if os.path.isfile(file_to_copy):
+            try:
+                os.remove(file_to_copy)
+            except:
+                log.error("no permission for %s"%file_to_copy)
+    # reconnect the signals to the shared result list
     reconnect_add_signals(self)
 
