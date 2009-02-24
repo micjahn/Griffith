@@ -375,6 +375,13 @@ def populate(self, movies=None, where=None, qf=True):#{{{
                     cond = advfilter.get_def_conditions()
             else:
                 cond = advfilter.get_def_conditions()
+            # add sorting from config
+            sort_column_name = self.config.get('sortby', 'number', section='mainlist')
+            sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
+            if sort_reverse:
+                cond['sort_by'] = set((sort_column_name + ' DESC', ))
+            else:
+                cond['sort_by'] = set((sort_column_name, ))
 
             # seen / loaned
             if self.widgets['menu']['loaned_movies'].get_active():
@@ -389,17 +396,17 @@ def populate(self, movies=None, where=None, qf=True):#{{{
                     cond["collections"].add(col_id)
 
             movies = advfilter.create_select_query(self, None, cond, movies)
-        
-        # select sort column
-        sort_column_name = self.config.get('sortby', 'number', section='mainlist')
-        sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
-        
-        for i in sort_column_name.split(','):
-            if db.movies_table.columns.has_key(i):
-                if sort_reverse:
-                    movies.append_order_by(desc(db.movies_table.columns[i]))
-                else:
-                    movies.append_order_by(db.movies_table.columns[i])
+        else:
+            # select sort column
+            sort_column_name = self.config.get('sortby', 'number', section='mainlist')
+            sort_reverse = self.config.get('sortby_reverse', False, section='mainlist')
+            # explicit conditions, only empty dictionary needed to add the order by values
+            cond = {}
+            if sort_reverse:
+                cond['sort_by'] = set((sort_column_name + ' DESC', ))
+            else:
+                cond['sort_by'] = set((sort_column_name, ))
+            movies = sql.update_whereclause(movies, cond)
         
         # additional whereclause (volume_id, collection_id, ...)
         if where:
