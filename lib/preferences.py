@@ -148,6 +148,10 @@ def show_preferences(self):
     w['s_trailer'].set_active(bool(self.config.get('s_trailer', True, section='add')))
     w['s_cast'].set_active(bool(self.config.get('s_cast', True, section='add')))
     w['s_year'].set_active(bool(self.config.get('s_year', True, section='add')))
+    w['s_screenplay'].set_active(bool(self.config.get('s_screenplay', True, section='add')))
+    w['s_cameraman'].set_active(bool(self.config.get('s_cameraman', True, section='add')))
+    w['s_resolution'].set_active(bool(self.config.get('s_resolution', True, section='add')))
+    w['s_barcode'].set_active(bool(self.config.get('s_barcode', True, section='add')))
     
     if self.config.get('sortby', section='mainlist'):
         tmp = self.sort_criteria.index(self.config.get('sortby', section='mainlist'))
@@ -353,6 +357,10 @@ def save_preferences(self):
     c.set('s_trailer', w['s_trailer'].get_active(), section='add')
     c.set('s_cast', w['s_cast'].get_active(), section='add')
     c.set('s_year', w['s_year'].get_active(), section='add')
+    c.set('s_screenplay', w['s_screenplay'].get_active(), section='add')
+    c.set('s_cameraman', w['s_cameraman'].get_active(), section='add')
+    c.set('s_resolution', w['s_resolution'].get_active(), section='add')
+    c.set('s_barcode', w['s_barcode'].get_active(), section='add')
     
     mcounter = 0
     for p in self.plugins:
