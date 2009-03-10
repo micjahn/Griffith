@@ -8,6 +8,7 @@ Griffith ChangeLog
 2009-03-10  Michael Jahn
 	* [#337758] 'Titel' and 'Original Titel' get the same content
 	  (IMDb-de plugin updated)
+	* added HD DVD and Blu-ray to the medium table for new databases
 
 2009-03-03  Michael Jahn
 	* Cinematografo movie plugin updated

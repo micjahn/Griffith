@@ -50,6 +50,8 @@ def upgrade_database(self, version, locations, config):
         db.media_table.insert(bind=b).execute(name=u'VHS')
         db.media_table.insert(bind=b).execute(name=u'BETACAM')
         db.media_table.insert(bind=b).execute(name=u'LaserDisc')
+        db.media_table.insert(bind=b).execute(name=u'HD DVD')
+        db.media_table.insert(bind=b).execute(name=u'Blu-ray')
         db.ratios_table.insert(bind=b).execute(name=u'16:9')
         db.ratios_table.insert(bind=b).execute(name=u'4:3')
         db.acodecs_table.insert(bind=b).execute(name=u'AC-3 Dolby audio')
