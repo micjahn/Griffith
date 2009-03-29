@@ -6,7 +6,8 @@ Griffith ChangeLog
 
 
 2009-03-29  Michael Jahn
-	* [#224546] Plot isn't being pulled from IMDB for some movies 
+	* [#224546] Plot isn't being pulled from IMDB for some movies
+	* [#341826] "Country" field from IMDB contains newlines
 
 2009-03-10  Michael Jahn
 	* [#337758] 'Titel' and 'Original Titel' get the same content
