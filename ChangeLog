@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-03-29  Michael Jahn
+	* [#224546] Plot isn't being pulled from IMDB for some movies 
+
 2009-03-10  Michael Jahn
 	* [#337758] 'Titel' and 'Original Titel' get the same content
 	  (IMDb-de plugin updated)
