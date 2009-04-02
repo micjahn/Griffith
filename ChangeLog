@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-04-02  Michael Jahn
+	* IMDB-de plugin updated
+
 2009-03-29  Michael Jahn
 	* [#224546] Plot isn't being pulled from IMDB for some movies
 	* [#341826] "Country" field from IMDB contains newlines
