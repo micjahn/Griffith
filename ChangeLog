@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-04-08  Michael Jahn
+	* added AllMovie plugin
+
 2009-04-06  Michael Jahn
 	* [#348226] DVD Empire lookup problem
 
