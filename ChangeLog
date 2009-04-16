@@ -5,6 +5,10 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-04-16  Michael Jahn
+	* updated Culturalia plugin
+	* updated E-Pipoca plugin
+
 2009-04-15  Michael Jahn
 	* added data for automated tests of the IMDB plugin
 	* added data for automated tests of the CineMovies plugin
