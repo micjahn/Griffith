@@ -103,6 +103,7 @@ Source: dist\lib\plugins\movie\PluginMovieIMDB-es.py;       DestDir: {app}\lib\p
 Source: dist\lib\plugins\movie\PluginMovieKinoDe.py;        DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\German\Kinode
 Source: dist\lib\plugins\movie\PluginMovieMediadis.py;      DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\English\Mediadis
 Source: dist\lib\plugins\movie\PluginMovieMoviefone.py;     DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\English\Moviefone
+Source: dist\lib\plugins\movie\PluginMovieMovieMeter.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Dutch\MovieMeter
 Source: dist\lib\plugins\movie\PluginMovieMyMoviesIt.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Italian\MyMoviesIt
 Source: dist\lib\plugins\movie\PluginMovieOFDb.py;          DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\German\OFDb
 Source: dist\lib\plugins\movie\PluginMovieOnet.py;          DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Onet
@@ -153,6 +154,9 @@ Name: Movie_Import_Plugins\English\AnimeDB;          Description: AnimeDB / www.
 Name: Movie_Import_Plugins\English\DVD_Empire;       Description: DVD Empire / www.dvdempire.com; Types: full
 Name: Movie_Import_Plugins\English\Mediadis;         Description: Mediadis / www.mediadis.com; Types: full
 Name: Movie_Import_Plugins\English\Moviefone;        Description: Moviefone / www.moviefone.com; Types: full
+
+Name: Movie_Import_Plugins\Dutch;                    Description: Dutch Import Plugins; Types: full
+Name: Movie_Import_Plugins\Dutch\MovieMeter;         Description: MovieMeter / www.moviemeter.nl; Types: full
 
 Name: Movie_Import_Plugins\Czech;                    Description: Czech Import Plugins; Types: full
 Name: Movie_Import_Plugins\Czech\CSFD;               Description: CSFD / www.csfd.cz; Types: full
