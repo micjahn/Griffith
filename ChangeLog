@@ -6,7 +6,7 @@ Griffith ChangeLog
 
 
 2009-05-24  Michael Jahn
-	* updated CineMovies, FilmAffinity, FilmDb plugin
+	* updated CineMovies, FilmAffinity, FilmDb, OFDb plugin
 
 2009-05-18  Michael Jahn
 	* [#377417] URL contains non-ASCII characters
