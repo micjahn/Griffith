@@ -25,7 +25,7 @@ __revision__ = '$Id$'
 # XXX: keep stdlib and SQLAlchemy imports only in this file
 
 from sqlalchemy     import *
-from sqlalchemy.orm import mapper, relation, deferred, sessionmaker, validates, column_property
+from sqlalchemy.orm import mapper, relation, deferred, validates, column_property
 import re
 import string
 import logging
@@ -89,7 +89,7 @@ class Poster(object):
                 self.md5sum = md5sum
                 self.data = data
             else:
-                log.error("md5sum has wrong size")
+                log.error('md5sum has wrong size')
 
     def __repr__(self):
         return "<Poster(%s)>" % self.md5sum
@@ -103,53 +103,60 @@ class Loan(object):
         return "<Loan:%s (movie:%s person:%s)>" % (self.loan_id, self.movie_id, self.person_id)
 
 class Movie(object):
-    _res_aliases = {'CGA': (320, 200),
-                    'HD 1080': (1920, 1080),
-                    'HD 720': (1280, 720),
-                    'NTSC': (720, 480),
-                    'PAL': (768, 576),
-                    'QSXGA': (2560, 1600),
-                    'QVGA': (320, 240),
-                    'QXGA': (2048, 1536),
-                    'SVGA': (800, 600),
-                    'SXGA': (1280, 1024),
-                    'SXGA+': (1400, 1050),
-                    'VGA': (640, 480),
-                    'WSXGA+': (1680, 1050),
-                    'WUXGA': (1920, 1200),
-                    'WVGA': (854, 480),
-                    'XGA': (1024, 768),
-                    'UXGA': (1600, 1200),
-                    #'': (1152, 768),
-                    #'': (1280, 854),
-                    #'': (1280, 960),
-                    #'': (1440, 960),
-    }
-    _res_alias_repr = {}
-    for alias, res in _res_aliases.iteritems():
-        _res_alias_repr["%dx%d" % res] = alias
-    del alias, res
+    _res_aliases = {(2560, 1600): ('QSXGA',),
+                    (2048, 1536): ('QXGA',),
+                    (1920, 1200): ('WUXGA',),
+                    (1920, 1080): ('HD 1080', '1080p', '1080'),
+                    (1920, 540): ('1080i',),
+                    (1680, 1050): ('WSXGA+',),
+                    (1600, 1200): ('UXGA',),
+                    (1400, 1050): ('SXGA+',),
+                    #(1440, 960): ('',),
+                    #(1280, 960): ('',),
+                    #(1280, 854): ('',),
+                    (1280, 720): ('HD 720', '720p', '720'),
+                    (1280, 360): ('720i',),
+                    (1280, 1024): ('SXGA',),
+                    #(1152, 768): ('',),
+                    (1024, 768): ('XGA',),
+                    (854, 480): ('WVGA',),
+                    (800, 600): ('SVGA',),
+                    (768, 576): ('PAL',),
+                    (720, 480): ('NTSC',),
+                    (640, 480): ('VGA',),
+                    (320, 240): ('QVGA',),
+                    (320, 200): ('CGA',)}
+    _res_alias_res = {}
+    for res, aliases in _res_aliases.iteritems():
+        for alias in aliases:
+            _res_alias_res[alias.upper()] = res
+    print aliases, alias, res
+    del aliases, alias, res
 
     def _set_resolution(self, res_string):
-        if not res_string:
+        if not res_string: # clear resulution field
             self.width = None
             self.height = None
-        elif res_string.upper() in Movie._res_aliases:
-            self.width, self.height = Movie._res_aliases[res_string.upper()]
-        elif res_string.lower() in Movie._res_alias_repr:
-            self.width, self.height = Movie._res_aliases[Movie._res_alias_repr[res_string.lower()]]
-        elif 'x' in res_string.lower():
-            self.width, self.height = map(int, res_string.lower().split('x'))
+        elif res_string.upper() in Movie._res_alias_res:
+            self.width, self.height = Movie._res_alias_res[res_string.upper()]
         else:
-            raise ValueError('Use standard resolution name or \d+x\d+')
+            try:
+                if 'x' in res_string:
+                    self.width, self.height = map(int, res_string.lower().split('x'))
+                else:
+                    self.width, self.height = map(int, res_string.lower().split())
+            except Exception, e:
+                log.warning('wrong resolution name: %s', e)
+                raise ValueError('Use standard resolution name or \d+x\d+')
 
     def _get_resolution(self):
         if not self.width or not self.height:
             return None
-        res_string = "%dx%d" % (self.width, self.height)
-        if res_string in Movie._res_alias_repr:
-            return Movie._res_alias_repr[res_string]
+        resolution = (self.width, self.height)
+        if resolution in Movie._res_aliases:
+            return Movie._res_aliases[resolution][0]
         else:
+            res_string = "%dx%d" % resolution
             return res_string
 
     resolution = property(_get_resolution, _set_resolution)
