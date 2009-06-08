@@ -54,7 +54,7 @@ def add_person_db(self):
             p.email = self.widgets['person']['email'].get_text().decode('utf-8')
             p.phone = gutils.digits_only(self.widgets['person']['phone'].get_text().decode('utf-8'))
         except ValueError, e:
-            gutils.warning(self, e.message)
+            gutils.warning(e.message)
             return False
         self.widgets['person']['window'].hide()
         self.db.session.add(p)
@@ -99,7 +99,7 @@ def update_person(self):
         p.email = self.widgets['person']['e_email'].get_text().decode('utf-8')
         p.phone = self.widgets['person']['e_phone'].get_text().decode('utf-8')
     except ValueError, e:
-        gutils.warning(self, e.message)
+        gutils.warning(e.message)
         return False
     self.db.session.add(p)
     try:

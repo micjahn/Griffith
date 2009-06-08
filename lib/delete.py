@@ -36,7 +36,7 @@ def delete_movie(self):
         return False
     
     if movie.loaned:
-        gutils.warning(self, msg=_("You can't delete movie while it is loaned."))
+        gutils.warning(msg=_("You can't delete movie while it is loaned."))
         return False
 
     response = gutils.question(_("Are you sure you want to delete this movie?"), True, self.widgets['window'])

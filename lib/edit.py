@@ -185,14 +185,14 @@ def fetch_bigger_poster(self):
                     page = page + 1
         log.info("... %s posters found" % result.TotalResults)
     except:
-        gutils.warning(self, _("No posters found for this movie."))
+        gutils.warning(_("No posters found for this movie."))
         return
 
     from widgets import connect_poster_signals, reconnect_add_signals
     connect_poster_signals(self, get_poster_select_dc, result, current_poster)
 
     if not hasattr(result, 'Item') or not len(result.Item):
-        gutils.warning(self, _("No posters found for this movie."))
+        gutils.warning(_("No posters found for this movie."))
         reconnect_add_signals(self)
         return
 
@@ -261,7 +261,7 @@ def get_poster(self, f, result):
             urlcleanup()
         except:
             canceled = True
-            gutils.warning(self, _("Sorry. A connection error has occurred."))
+            gutils.warning(_("Sorry. A connection error has occurred."))
             try:
                 os.remove(file_to_copy)
             except:
@@ -279,7 +279,7 @@ def get_poster(self, f, result):
                 url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % result.Item[f].ASIN).read()
                 if url.find('no-img-sm._V47056216_.gif') > 0:
                     log.warn('No image available')
-                    gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
+                    gutils.warning(_("Sorry. This movie is listed but has no poster available at Amazon.com."))
                     return False
                 url = gutils.after(url, 'id="imageViewerDiv"><img src="')
                 url = gutils.before(url, '" id="prodImage"')
@@ -292,7 +292,7 @@ def get_poster(self, f, result):
             if not im:
                 # something wrong with the image, give some feedback to the user
                 log.warn('No image available')
-                gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
+                gutils.warning(_("Sorry. This movie is listed but has no poster available at Amazon.com."))
                 return False
 
             if im.mode != 'RGB': # convert GIFs
@@ -318,7 +318,7 @@ def get_poster(self, f, result):
 
             self.widgets['poster_window'].hide()
         else:
-            gutils.warning(self, _("Sorry. This movie is listed but has no poster available at Amazon.com."))
+            gutils.warning(_("Sorry. This movie is listed but has no poster available at Amazon.com."))
     else:
         # cleanup temporary files after canceling the download
         if os.path.isfile(file_to_copy):

@@ -105,15 +105,15 @@ class GriffithSQL(object):
             if not fallback:
                 raise e
             config.set('type', 'sqlite', section='database')
-            gutils.warning(self, "%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
+            gutils.warning("%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
             url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
             engine = create_engine(url)
             conn = engine.connect()
 
         # try to establish a db connection
         try:
-            Session = sessionmaker(bind=engine)
-            session = Session()
+            self.Session = sessionmaker(bind=engine) # create new sessions using this class
+            self.session = self.Session() # global session
             #self.metadata.bind.connect()
         except Exception, e:
             log.info("engine connection error: %s", e)
@@ -123,11 +123,8 @@ class GriffithSQL(object):
             config.set('type', 'sqlite', section='database')
             url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
             engine = create_engine(url)
-            Session = sessionmaker(bind=engine)
-            session = Session()
-
-        self.session = session # global session
-        self.Session = Session # create new sessions using this class
+            self.Session = sessionmaker(bind=engine)
+            self.session = self.Session()
         #}}}
 
         # check if database needs an upgrade

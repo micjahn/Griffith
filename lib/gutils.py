@@ -241,7 +241,7 @@ def urllib_error(msg, parent=None):
     dialog.run()
     dialog.destroy()
 
-def warning(self, msg, parent=None):
+def warning(msg, parent=None):
     dialog = gtk.MessageDialog(parent,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_WARNING, gtk.BUTTONS_OK, msg)
@@ -269,7 +269,7 @@ def question(msg, cancel=True, window=None):
     dialog.destroy()
     return response
 
-def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expanduser('~'), picture=False):
+def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expanduser('~'), picture=False, backup=False):
     dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
     dialog.set_default_response(gtk.RESPONSE_OK)
     if name:
@@ -290,6 +290,12 @@ def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expan
         mfilter.add_pattern("*.[gG][iI][fF]")
         mfilter.add_pattern("*.[tT][iI][fF]{1,2}")
         mfilter.add_pattern("*.[xX][pP][mM]")
+        dialog.add_filter(mfilter)
+    elif backup:
+        mfilter.set_name(_('backups'))
+        mfilter.add_pattern('*.[zZ][iI][pP]')
+        mfilter.add_pattern('*.[gG][rR][iI]')
+        mfilter.add_pattern('*.[dD][bB]')
         dialog.add_filter(mfilter)
     mfilter = gtk.FileFilter()
     mfilter.set_name(_("All files"))

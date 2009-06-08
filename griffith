@@ -95,7 +95,8 @@ class Griffith(object):
         if config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
             log.info('Old database format detected. Converting...')
             from dbupgrade import convert_from_old_db
-            if convert_from_old_db(self, filename, os.path.join(self.locations['home'], 'griffith.db')):
+            db = convert_from_old_db(config, filename, os.path.join(self.locations['home'], 'griffith.db'), self.locations)
+            if db:
                 config.save()
             else:
                 log.error('Cant convert old database, exiting.')
@@ -616,7 +617,7 @@ class Griffith(object):
                 else:
                     initialize.language_combos(self)
             else:
-                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+                gutils.warning(msg=_("This item is in use.\nOperation aborted!"))
         else:
             log.warn("You have to select a language first")
 
@@ -676,7 +677,7 @@ class Griffith(object):
                 initialize.fill_preferences_tags_combo(self)
                 initialize.create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
             else:
-                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+                gutils.warning(msg=_("This item is in use.\nOperation aborted!"))
         else:
             log.warn("You have to select tag first")
 
@@ -735,7 +736,7 @@ class Griffith(object):
                 else:
                     initialize.acodec_combos(self)
             else:
-                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+                gutils.warning(msg=_("This item is in use.\nOperation aborted!"))
         else:
             log.warn("You have to select an audio codec first")
 
@@ -793,7 +794,7 @@ class Griffith(object):
                 else:
                     initialize.achannel_combos(self)
             else:
-                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+                gutils.warning(msg=_("This item is in use.\nOperation aborted!"))
         else:
             log.warn("You have to select an audio channel entry first")
 
@@ -851,7 +852,7 @@ class Griffith(object):
                 else:
                     initialize.subformat_combos(self)
             else:
-                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+                gutils.warning(msg=_("This item is in use.\nOperation aborted!"))
         else:
             log.warn("You have to select a subtitle format first")
 
@@ -909,7 +910,7 @@ class Griffith(object):
                 else:
                     initialize.media_combos(self)
             else:
-                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+                gutils.warning(msg=_("This item is in use.\nOperation aborted!"))
         else:
             log.warn("You have to select a medium entry first")
 
@@ -967,7 +968,7 @@ class Griffith(object):
                 else:
                     initialize.vcodec_combos(self)
             else:
-                gutils.warning(self, msg=_("This item is in use.\nOperation aborted!"))
+                gutils.warning(msg=_("This item is in use.\nOperation aborted!"))
         else:
             log.warn("You have to select a video codec entry first")
 

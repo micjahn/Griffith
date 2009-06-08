@@ -855,7 +855,7 @@ def commit(self, session):
         session.commit()
     except IntegrityError, e:
         session.rollback()
-        gutils.warning(self, str(e.orig))
+        gutils.warning(str(e.orig))
         log.warn("Cannot commit movie: %s", e.message)
         return False
     except Exception, e:

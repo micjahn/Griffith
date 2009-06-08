@@ -213,7 +213,7 @@ def upgrade_database(self, version, locations, config):
                 log.error("Cannot add '%s' column: %s", key, e)
                 return False
 
-        log.info('... creading missing indexes')
+        log.info('... creating missing indexes')
         try:
             i = Index('ix_movies_title', db.movies_table.c.title)
             i.create(bind=b)
@@ -221,7 +221,7 @@ def upgrade_database(self, version, locations, config):
             i.create(bind=b)
         except Exception, e:
             log.error("Cannot create new index, skipping (%s)", e)
-        
+
         db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
         db_version.value = unicode(version)
         self.session.add(db_version)
@@ -234,24 +234,32 @@ def upgrade_database(self, version, locations, config):
 # for Griffith <= 0.6.2 compatibility
 # ---------------------------------------------------
 
-def convert_from_old_db(self, source_file, destination_file):    #{{{
+def convert_from_old_db(config, source_file, destination_file, locations):    #{{{
+    """
+    convert .gri database into .bd one
+    """
+
     log.info('Converting old database - it can take several minutes...')
     log.debug("Source file: %s", source_file)
     gutils.info(_("Griffith will now convert your database to the new format. This can take several minutes if you have a large database."))
-    from sqlalchemy.orm import clear_mappers
     from sql import GriffithSQL
     from gutils import digits_only
     import os
 
     if not os.path.isfile(source_file):
         return False
+
+    if 'home' not in locations:
+        log.error("locations doesn't contain home path, cannot convert old database")
+        return False
+
     if open(source_file).readline()[:47] == '** This file contains an SQLite 2.1 database **':
         log.debug('SQLite 2.1 detected')
         try:
             import sqlite
         except ImportError:
             log.error('Old DB conversion: please install pysqlite legacy (v1.0)')
-            gutils.warning(self,_("Old DB conversion: please install pysqlite legacy (v1.0)"))
+            gutils.warning(_("Old DB conversion: please install pysqlite legacy (v1.0)"))
             return False
     else:
         try:    # Python 2.5
@@ -278,7 +286,7 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
             print '$ mv ~/.griffith/griffith.gri{,2}'
             print '$ mv ~/.griffith/griffith.gri{3,}'
             print 'or install pysqlite in version 1.0'
-            gutils.warning(self,_("Your database is most probably in SQLite2 format, please convert it to SQLite3"))
+            gutils.warning(_("Your database is most probably in SQLite2 format, please convert it to SQLite3"))
         else:
             raise
         return False
@@ -320,17 +328,17 @@ def convert_from_old_db(self, source_file, destination_file):    #{{{
     old_cursor.execute("DELETE FROM collections WHERE name = 'None'")
     old_cursor.execute("DELETE FROM languages WHERE name = ''")
     
-    self.config.set('type','sqlite', section='database')
-    self.config.set('file', 'griffith.db', section='database')
-    self.config['posters'] = 'posters'
-    self.config.set('color', 0, section='defaults')
-    self.config.set('condition', 0, section='defaults')
-    self.config.set('layers', 0, section='defaults')
-    self.config.set('media', 0, section='defaults')
-    self.config.set('region', 0, section='defaults')
-    self.config.set('vcodec', 0, section='defaults')
-    self.locations['posters'] = os.path.join(self.locations['home'], 'posters')
-    new_db = GriffithSQL(self.config, self.locations['home'], self.locations)
+    config.set('type','sqlite', section='database')
+    config.set('file', 'griffith.db', section='database')
+    config['posters'] = 'posters'
+    config.set('color', 0, section='defaults')
+    config.set('condition', 0, section='defaults')
+    config.set('layers', 0, section='defaults')
+    config.set('media', 0, section='defaults')
+    config.set('region', 0, section='defaults')
+    config.set('vcodec', 0, section='defaults')
+    locations['posters'] = os.path.join(locations['home'], 'posters')
+    new_db = GriffithSQL(config, locations['home'], locations)
 
     # collections
     collection_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}

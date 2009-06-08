@@ -75,7 +75,7 @@ def commit(self):
     
     resp = sql.loan_movie(self.db, movie.movie_id, person.person_id, loan_whole_collection)
     if resp == -1:
-        gutils.warning(self, _("Collection contains loaned movie.\nLoan aborted!"))
+        gutils.warning(_("Collection contains loaned movie.\nLoan aborted!"))
         return False
     elif resp:
         self.update_statusbar(_("Movie loaned"))

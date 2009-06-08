@@ -21,16 +21,22 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import gtk
+import copy
+import datetime
+import logging
 import os.path
 import zipfile
-import logging
-import datetime
-log = logging.getLogger("Griffith")
+from StringIO import StringIO
+from shutil import rmtree, move
+from tempfile import mkdtemp
+import gtk
+from sqlalchemy import create_engine
 import config
-import edit
 import gutils
+import db
 import sql
+
+log = logging.getLogger('Griffith')
 
 def backup(self):
     """perform a compressed griffith database/posters/preferences backup"""
@@ -67,39 +73,34 @@ def backup(self):
                 fileName = os.path.join(self.locations['home'], self.config.get('name','griffith', section='database') + '.db').encode('utf-8')
                 mzip.write(fileName)
             else:
-                from tempfile import mkdtemp
-                from shutil import rmtree
-                from StringIO import StringIO
-                from sqlalchemy import create_engine
-                import copy
-                import db
+                try:
+                    tmp_dir = mkdtemp()
+                    tmp_config = copy.deepcopy(self.config)
+                    tmp_config._file = os.path.join(tmp_dir, 'griffith.cfg')
+                    tmp_config.set('type', 'sqlite', section='database')
+                    tmp_config.set('file', 'griffith.db', section='database')
+                    tmp_config.save()
+                    mzip.write(tmp_config._file)
 
-                tmp_dir = mkdtemp()
-                tmp_config = copy.deepcopy(self.config)
-                tmp_config._file = os.path.join(tmp_dir, 'griffith.cfg')
-                tmp_config.set('type', 'sqlite', section='database')
-                tmp_config.set('file', 'griffith.db', section='database')
-                tmp_config.save()
-                mzip.write(tmp_config._file)
+                    tmp_file = os.path.join(tmp_dir, 'griffith.db')
+                    tmp_engine = create_engine("sqlite:///%s" % tmp_file)
+                    db.metadata.create_all(bind=tmp_engine)
 
-                tmp_file = os.path.join(tmp_dir, 'griffith.db')
-                tmp_engine = create_engine("sqlite:///%s" % tmp_file)
-                db.metadata.create_all(bind=tmp_engine)
+                    # SQLite doesn't care about foreign keys much so we can just copy the data
+                    for table in db.metadata.sorted_tables:
+                        if table.name in ('posters', 'filters'):
+                            continue # see below
+                        data = table.select(bind=self.db.session.bind).execute().fetchall()
+                        if data:
+                            table.insert(bind=tmp_engine).execute(data)
+                    
+                    # posters
+                    for poster in db.metadata.tables['posters'].select(bind=self.db.session.bind).execute():
+                        db.metadata.tables['posters'].insert(bind=tmp_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
 
-                # SQLite doesn't care about foreign keys much so we can just copy the data
-                for table in db.metadata.sorted_tables:
-                    if table.name in ('posters', 'filters'):
-                        continue # see below
-                    data = table.select(bind=self.db.session.bind).execute().fetchall()
-                    if data:
-                        table.insert(bind=tmp_engine).execute(data)
-                
-                # posters
-                for poster in db.metadata.tables['posters'].select(bind=self.db.session.bind).execute():
-                    db.metadata.tables['posters'].insert(bind=tmp_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
-
-                mzip.write(tmp_file)
-                rmtree(tmp_dir)
+                    mzip.write(tmp_file)
+                finally:
+                    rmtree(tmp_dir)
             gutils.info(_("Backup has been created"), self.widgets['window'])
 
 def restore(self):
@@ -167,91 +168,135 @@ def restore(self):
         self.populate_treeview()
         gutils.info(_("Backup restored"), self.widgets['window'])
 
-def merge(self):    # FIXME
-    """
-        Merge database from:
-        * compressed backup
-        * SQLite2 *.gri file
-        * SQLite3 *.db file
-    """
-    filename = gutils.file_chooser(_("Restore Griffith backup"), \
-        action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
-        (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, \
-        gtk.STOCK_OPEN, gtk.RESPONSE_OK))[0]
-    if filename:
-        from tempfile import mkdtemp
-        from shutil import rmtree, move
+def copy_db(src_engine, dst_engine):
+    log.debug('replacing old database with new one')
+    db.metadata.drop_all(dst_engine) # remove all previous data
+    db.metadata.create_all(dst_engine) # remove all previous data
+    for table in db.metadata.table_iterator(reverse=False):
+        log.debug('... processing %s table', table)
+        data = [dict((col.key, x[col.name]) for col in table.c)
+                    for x in src_engine.execute(table.select())]
+        if data:
+            log.debug('inserting new data...')
+            dst_engine.execute(table.insert(), data)
 
-        #tmp_config={}
-        #tmp_config.get('type', 'sqlite', section='database')
+def merge_db(src_db, dst_db): # FIXME
+    merged = 0
+    src_session = src_db.Session() # create new session
+    dst_session = dst_db.Session() # create new session
+    movies = src_session.query(db.Movie).count()
+    for movie in src_session.query(db.Movie).all():
+        if dst_session.query(db.Movie).filter_by(o_title=movie.o_title).first() is not None:
+            continue
+        t_movies = {}
+        for column in movie.mapper.c.keys():
+            t_movies[column] = eval("movie.%s"%column)
+
+        # replace number with new one
+        t_movies["number"] = gutils.find_next_available(self.db)
+
+        # don't restore volume/collection/tag/language/loan data (it's dangerous)
+        t_movies.pop('movie_id')
+        t_movies.pop('loaned')
+        t_movies.pop('volume_id')
+        t_movies.pop('collection_id')
+
+        if dst_db.add_movie(t_movies): # FIXME
+            print t_movies
+
+        if movie.image is not None:
+            dest_file = os.path.join(self.locations['posters'], movie.image+'.jpg')
+            if not os.path.isfile(dest_file):
+                src_file = os.path.join(tmp_dir, movie.image+'.jpg')
+                if os.path.isfile(src_file):
+                    move(src_file, dest_file)
+        merged += 1
+    return merged
+
+def merge(self, replace=True):
+    """
+    Merge database from:
+    * compressed backup (*.zip)
+    * SQLite2 *.gri file
+    * SQLite3 *.db file
+    """
+
+    # let user select a backup file
+    filename = gutils.file_chooser(_("Restore Griffith backup"), \
+                    action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
+                    (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK), backup=True)[0]
+    if not filename:
+        log.debug('no file selected')
+        return False
+
+    try:
+        tmp_dir = mkdtemp()
 
         if filename.lower().endswith('.zip'):
-            tmp_dir = mkdtemp()
             try:
-                zip = zipfile.ZipFile(filename, 'r')
+                zip_file = zipfile.ZipFile(filename, 'r')
             except:
                 gutils.error(self, _("Can't read backup file"), self.widgets['window'])
                 return False
-            for each in zip.namelist():
-                file_to_restore = os.path.split(each)
-                if not os.path.isdir(file_to_restore[1]):
-                    myfile = os.path.join(tmp_dir, file_to_restore[1])
-                    outfile = open(myfile, 'wb')
-                    outfile.write(zip.read(each))
-                    outfile.flush()
+
+            old_config_file = False
+            # unpack files to temporary directory
+            for file_path in zip_file.namelist():
+                file_name = os.path.split(file_path)[-1]
+                if not os.path.isdir(file_name):
+                    if not file_name:
+                        log.debug('skipping %s', file_path)
+                        continue
+
+                    new_file = os.path.join(tmp_dir, file_name)
+                    if file_name.endswith('.conf'):
+                        old_config_file = new_file
+                    outfile = open(new_file, 'wb')
+                    outfile.write(zip_file.read(file_path))
                     outfile.close()
-            # load stored database filename
-            tmp_config = config.Config(file=os.path.join(tmp_dir,'griffith.conf'))
-            filename = os.path.join(tmp_dir, tmp_config('name', 'griffith', section='database') + '.db')
-            zip.close()
+            zip_file.close()
+            
+            # restore config file (new one will be created if old config format is detected)
+            tmp_config = config.Config(file=os.path.join(tmp_dir, 'griffith.cfg'))
+            if old_config_file:
+                log.info('Old config file detected. Please note that it will not be used.')
+                f = open(old_config_file, 'r')
+                old_config_raw_data = f.read()
+                f.close()
+                if old_config_raw_data.find('griffith.gri') >= -1:
+                    tmp_config.set('file', 'griffith.gri', section='database')
 
+            # update filename var. to point to the unpacked database
+            filename = os.path.join(tmp_dir, tmp_config.get('name', 'griffith', section='database') + '.db')
+        else: # not a zip file? prepare a fake config file then
+            tmp_config = config.Config(file=os.path.join(tmp_dir, 'griffith.cfg'))
+            tmp_config.set('type', 'sqlite', section='database')
+            tmp_config.set('file', 'griffith.db', section='database')
+
+        # prepare temporary GriffithSQL instance
+        locations = {'home': tmp_dir}
         # check if file needs conversion
-        if filename.lower().endswith(".gri"):
-            if os.path.isfile(filename) and  open(filename).readline()[:47] == "** This file contains an SQLite 2.1 database **":
-                log.info("MERGE: SQLite2 database format detected. Converting...")
-                if not self.db.convert_from_sqlite2(filename, os.path.join(tmp_dir, self.config.get('file', 'griffith.db', section='database'))):
-                    log.info("MERGE: Can't convert database, aborting.")
-                    return False
-        tmp_dir, tmp_file = os.path.split(filename)
-        self.config.get('file', tmp_file, section='database') 
+        if filename.lower().endswith('.gri'):
+            from dbupgrade import convert_from_old_db
+            tmp_db = convert_from_old_db(tmp_config, filename, os.path.join(tmp_dir, 'griffith.db'), locations)
+            if not tmp_db:
+                log.info("MERGE: Can't convert database, aborting.")
+                return False
+        else:
+            tmp_db = sql.GriffithSQL(tmp_config, tmp_dir, locations)
 
-        tmp_db = sql.GriffithSQL(tmp_config, tmp_dir, self.locations)
+        if replace: # FIXME:
+            copy_db(tmp_db.session.bind, self.db.session.bind)
+        else:
+            merge_db(tmp_db, self.db)
 
-        merged=0
-        movies = tmp_db.Movie.count()
-        for movie in tmp_db.Movie.query.all():
-            if self.db.Movie.query.filter_by(o_title=movie.o_title).first() is not None:
-                continue
-            t_movies = {}
-            for column in movie.mapper.c.keys():
-                t_movies[column] = eval("movie.%s"%column)
-
-            # replace number with new one
-            t_movies["number"] = gutils.find_next_available(self.db)
-
-            # don't restore volume/collection/tag/language/loan data (it's dangerous)
-            t_movies.pop('movie_id')
-            t_movies.pop('loaned')
-            t_movies.pop('volume_id')
-            t_movies.pop('collection_id')
-
-            if self.db.add_movie(t_movies):
-                print t_movies
-
-            if movie.image is not None:
-                dest_file = os.path.join(self.locations['posters'], movie.image+'.jpg')
-                if not os.path.isfile(dest_file):
-                    src_file = os.path.join(tmp_dir, movie.image+'.jpg')
-                    if os.path.isfile(src_file):
-                        move(src_file, dest_file)
-            merged+=1
-        rmtree(tmp_dir)
-
-        from initialize    import dictionaries, people_treeview
+        from initialize import dictionaries, people_treeview
         dictionaries(self)
         people_treeview(self)
         # let's refresh the treeview
         self.clear_details()
-        self.populate_treeview(self.db.Movie.query.all())
+        self.populate_treeview(self.db.query(db.Movie).all())
         #gutils.info(_("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
+    finally:
+        rmtree(tmp_dir)
 

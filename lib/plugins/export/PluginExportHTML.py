@@ -558,7 +558,7 @@ class ExportPlugin(Base):
             try:
                 gutils.copytree(data_path, config['exported_dir'])
             except Exception, err:
-                gutils.warning(self, str(err))
+                gutils.warning(str(err))
         
         # persist config
         if self.config is not None:
@@ -599,7 +599,7 @@ class ExportPlugin(Base):
                 try:
                     shutil.copy(config['custom_style_file'],config['exported_dir'])
                 except:
-                    gutils.warning(self,_("Can't copy %s!")%style_file)
+                    gutils.warning(_("Can't copy %s!")%style_file)
                     config['custom_style'] = False
                 style = os.path.split(self.settings['custom_style_file'])[1]
             else:
@@ -612,7 +612,7 @@ class ExportPlugin(Base):
             try:
                 shutil.copy(style_path,config['exported_dir'])
             except:
-                gutils.warning(self,_("Can't copy %s!")%style_path)
+                gutils.warning(_("Can't copy %s!")%style_path)
 
         # select exported movies
         exported_movies = self.select().fetchall()

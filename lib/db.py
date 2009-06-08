@@ -130,7 +130,6 @@ class Movie(object):
     for res, aliases in _res_aliases.iteritems():
         for alias in aliases:
             _res_alias_res[alias.upper()] = res
-    print aliases, alias, res
     del aliases, alias, res
 
     def _set_resolution(self, res_string):
