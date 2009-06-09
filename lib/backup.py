@@ -171,14 +171,19 @@ def restore(self):
 def copy_db(src_engine, dst_engine):
     log.debug('replacing old database with new one')
     db.metadata.drop_all(dst_engine) # remove all previous data
-    db.metadata.create_all(dst_engine) # remove all previous data
-    for table in db.metadata.table_iterator(reverse=False):
+    db.metadata.create_all(dst_engine) # create table stucture
+    for table in db.metadata.sorted_tables:
+        if table.name in ('posters', 'filters'):
+            continue # see below
         log.debug('... processing %s table', table)
         data = [dict((col.key, x[col.name]) for col in table.c)
                     for x in src_engine.execute(table.select())]
         if data:
             log.debug('inserting new data...')
             dst_engine.execute(table.insert(), data)
+    # posters
+    for poster in db.metadata.tables['posters'].select(bind=src_engine).execute():
+        db.metadata.tables['posters'].insert(bind=dst_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
 
 def merge_db(src_db, dst_db): # FIXME
     merged = 0
@@ -298,5 +303,6 @@ def merge(self, replace=True):
         self.populate_treeview(self.db.query(db.Movie).all())
         #gutils.info(_("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
     finally:
+        log.debug('temporary directory no logger needed, removing %s', tmp_dir)
         rmtree(tmp_dir)
 

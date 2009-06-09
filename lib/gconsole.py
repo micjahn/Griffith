@@ -22,12 +22,13 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import getopt
-import os
-import sys
 import gutils
 import logging
-log = logging.getLogger("Griffith")
+import os
+import sys
 from locale import getdefaultlocale
+
+log = logging.getLogger("Griffith")
 
 options = ('hvDCo:t:d:c:y:s:', ('help', 'debug', 'sqlecho', 'clean', 'check-dep',
     'show-dep', 'original_title=', 'title=', 'director=', 'cast=', 'year=',
@@ -52,10 +53,10 @@ def check_args():
                 shutil.move(mydocs, home)
         
     else:
-        home = os.path.join(os.path.expanduser('~'), '.griffith').decode(default_enc)
+        home = os.path.expanduser('~/.griffith').decode(default_enc)
     config = 'griffith.cfg'
 
-    if len(sys.argv)>1:
+    if len(sys.argv) > 1:
         try:
             opts, args = getopt.getopt(sys.argv[1:], options[0], options[1])
         except getopt.GetoptError:
@@ -95,7 +96,7 @@ def check_args():
     return home, config
 
 def check_args_with_db(self):
-    if len(sys.argv)>1:
+    if len(sys.argv) > 1:
         try:
             opts, args = getopt.getopt(sys.argv[1:], options[0], options[1])
         except getopt.GetoptError:
@@ -186,10 +187,9 @@ def check_dependencies():
     (missing, extra) = gutils.get_dependencies()
 
     def __print_missing(modules):
-        import string
         missing = ''
         for i in modules:
-            if i['version']==False or (not isinstance(i['version'], bool) and i['version'].startswith('-')):
+            if i['version'] == False or (not isinstance(i['version'], bool) and i['version'].startswith('-')):
                 tmp = None
                 if ostype is not None:
                     if ostype == 'debian' and i.has_key('debian'):
@@ -206,18 +206,18 @@ def check_dependencies():
                     tmp += "\n\tavailable module version: %s" % i['version'][1:]
                 if tmp is not None:
                     missing += tmp
-        if missing == '':
+        if not missing:
             return None
         else:
             return missing
 
     tmp = __print_missing(missing)
-    if tmp is not None:
+    if tmp:
         print 'Dependencies missing:'
         print '===================='
         print tmp
     tmp = __print_missing(extra)
-    if tmp is not None:
+    if tmp:
         print '\n\nOptional dependencies missing:'
         print '============================='
         print tmp, "\n"
