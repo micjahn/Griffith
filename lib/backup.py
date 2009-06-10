@@ -237,8 +237,7 @@ def restore(self, merge=False):
             merge_db(tmp_db, self.db)
         else:
             copy_db(tmp_db.session.bind, self.db.session.bind)
-            tmp_config # FIXME
-            # update old database section with curren't config values
+            # update old database section with current config values
             # (important while restoring to external databases)
             for key in ('name', 'passwd', 'host', 'user', 'file', 'type', 'port'):
                 tmp_config.set(key, self.config.get(key, section='database'), section='database')
