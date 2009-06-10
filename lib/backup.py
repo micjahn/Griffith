@@ -29,12 +29,15 @@ import zipfile
 from StringIO import StringIO
 from shutil import rmtree, move
 from tempfile import mkdtemp
+
 import gtk
 from sqlalchemy import create_engine
+
 import config
 import gutils
 import db
 import sql
+from initialize import dictionaries, people_treeview
 
 log = logging.getLogger('Griffith')
 
@@ -105,6 +108,7 @@ def backup(self):
 
 def restore(self):
     """restores a griffith compressed backup"""
+
     filename = gutils.file_chooser(_("Restore Griffith backup"), \
                     action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
                     (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
@@ -160,7 +164,6 @@ def restore(self):
         else:
             self.db = sql.GriffithSQL(self.config, self.locations['home'], self.locations)
 
-        from initialize import dictionaries, people_treeview
         dictionaries(self)
         people_treeview(self)
         # let's refresh the treeview
@@ -172,6 +175,7 @@ def copy_db(src_engine, dst_engine):
     log.debug('replacing old database with new one')
     db.metadata.drop_all(dst_engine) # remove all previous data
     db.metadata.create_all(dst_engine) # create table stucture
+
     for table in db.metadata.sorted_tables:
         if table.name in ('posters', 'filters'):
             continue # see below
@@ -236,6 +240,7 @@ def merge(self, replace=True):
 
     try:
         tmp_dir = mkdtemp()
+        os.mkdir(os.path.join(tmp_dir, 'posters'))
 
         if filename.lower().endswith('.zip'):
             try:
@@ -253,7 +258,10 @@ def merge(self, replace=True):
                         log.debug('skipping %s', file_path)
                         continue
 
-                    new_file = os.path.join(tmp_dir, file_name)
+                    if 'posters' in file_path:
+                        new_file = os.path.join(tmp_dir, 'posters', file_name)
+                    else:
+                        new_file = os.path.join(tmp_dir, file_name)
                     if file_name.endswith('.conf'):
                         old_config_file = new_file
                     outfile = open(new_file, 'wb')
@@ -295,13 +303,13 @@ def merge(self, replace=True):
         else:
             merge_db(tmp_db, self.db)
 
-        from initialize import dictionaries, people_treeview
         dictionaries(self)
         people_treeview(self)
         # let's refresh the treeview
         self.clear_details()
-        self.populate_treeview(self.db.query(db.Movie).all())
+        self.populate_treeview()
         #gutils.info(_("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
+        gutils.info(_("Backup restored"), self.widgets['window'])
     finally:
         log.debug('temporary directory no logger needed, removing %s', tmp_dir)
         rmtree(tmp_dir)
