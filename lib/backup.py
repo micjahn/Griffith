@@ -167,8 +167,8 @@ def restore(self, merge=False):
 
     # let user select a backup file
     filename = gutils.file_chooser(_("Restore Griffith backup"), \
-                    action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
-                    (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK), backup=True)[0]
+                    action=gtk.FILE_CHOOSER_ACTION_OPEN, backup=True, buttons= \
+                    (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))[0]
     if not filename:
         log.debug('no file selected')
         return False

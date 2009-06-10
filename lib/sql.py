@@ -25,17 +25,22 @@ __revision__ = '$Id$'
 
 # XXX: keep stdlib, griffith.db and SQLAlchemy imports only in this file
 
-from sqlalchemy            import *
-from sqlalchemy.orm        import sessionmaker
-from sqlalchemy.exceptions import OperationalError
-import os.path
 import logging
-log = logging.getLogger("Griffith")
-import gutils # TODO: get rid of this import
+import os.path
+
+from sqlalchemy            import *
+from sqlalchemy.exceptions import OperationalError
+from sqlalchemy.orm        import sessionmaker
+
 import db # ORM data (SQLAlchemy stuff)
+import gutils # TODO: get rid of this import
+
+log = logging.getLogger("Griffith")
+
 
 class GriffithSQL(object):
     version = 4 # database format version, increase after changing data structures
+    DEFAULT_PORTS = dict(postgres=5432, mysql=3306, mssql=1433)
 
     def __init__(self, config, griffith_dir, locations, fallback=True):
         #mapper = Session.mapper
@@ -54,31 +59,23 @@ class GriffithSQL(object):
                 config.set('passwd', 'gRiFiTh', section='database')
             if config.get('name', None, section='database') is None:
                 config.set('name', 'griffith', section='database')
+            if config.get('port', 0, section='database') == 0:
+                config.set('port', DEFAULT_PORTS[config.get('type', section='database')], section='database')
+
+        conn_params = {'name': config.get('name', section='database'),
+                       'host': config.get('host', section='database'),
+                       'port': int(config.get('port', section='database')),
+                       'user': config.get('user', section='database'),
+                       'password': config.get('passwd', section='database')}
 
         # connect to database --------------------------------------{{{
         if config.get('type', section='database') == 'sqlite':
             url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
         elif config.get('type', section='database') == 'postgres':
-            if config.get('port', 0, section='database')==0:
-                config.set('port', 5432, section='database')
-            url = "postgres://%s:%s@%s:%d/%s" % (
-                config.get('user', section='database'),
-                config.get('passwd', section='database'),
-                config.get('host', section='database'),
-                int(config.get('port', section='database')),
-                config.get('name', section='database'))
+            url = "postgres://%(user)s:%(password)s@%(host)s:%(port)d/%(name)s" % conn_params
         elif config.get('type', section='database') == 'mysql':
-            if config.get('port', 0, section='database')==0:
-                config.set('port', 3306, section='database')
-            url = "mysql://%s:%s@%s:%d/%s?charset=utf8&use_unicode=0" % (
-                config.get('user', section='database'),
-                config.get('passwd', section='database'),
-                config.get('host', section='database'),
-                int(config.get('port', section='database')),
-                config.get('name', section='database'))
+            url = "mysql://%(user)s:%(password)s@%(host)s:%(port)d/%(name)s?charset=utf8&use_unicode=0" % conn_params
         elif config.get('type', section='database') == 'mssql':
-            if config.get('port', 0, section='database')==0:
-                config.set('port', 1433, section='database')
             # use_scope_identity=0 have to be set as workaround for a sqlalchemy bug
             # but it is not guaranteed that the right identity value will be selected
             # because the select @@identity statement selects the very last id which
@@ -87,15 +84,10 @@ class GriffithSQL(object):
             # statement: insert <table> (<columns>) values (<values>) select scope_identity()
             # (one statement !) After preparing and executing there should be a fetch
             # If it is executed as two separate statements the scope is lost after insert.
-            url = "mssql://%s:%s@%s:%d/%s?use_scope_identity=0" % (
-                config.get('user', section='database'),
-                config.get('passwd', section='database'),
-                config.get('host', section='database'),
-                int(config.get('port', section='database')),
-                config.get('name', section='database'))
+            url = "mssql://%(user)s:%(password)s@%(host)s:%(port)d/%(name)s?use_scope_identity=0" % conn_params
         else:
             config.set('type', 'sqlite', section='database')
-            url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
+            url = "sqlite:///%(name)s" % os.path.join(griffith_dir, conn_params['name'] + '.db')
 
         try:
             engine = create_engine(url, echo=False)
@@ -132,10 +124,10 @@ class GriffithSQL(object):
         try:
             v = self.session.query(db.Configuration).filter_by(param=u'version').first()    # returns None if table exists && param ISNULL
         except OperationalError, e:
-            log.info(str(e))
+            log.info(e)
             v = 0
         except Exception, e:
-            log.error(str(e))
+            log.error(e)
             v = 0
 
         if v is not None and v>1:
@@ -315,7 +307,7 @@ def loan_movie(gsql, movie_id, person_id, whole_collection=False):
         session.commit()
     except Exception, e:
         session.rollback()
-        log.error(str(e))
+        log.error(e)
         return False
     return True
 
@@ -365,7 +357,7 @@ def loan_return(gsql, movie_id):
         session.commit()
     except Exception, e:
         session.rollback()
-        log.error(str(e))
+        log.error(e)
         return False
     return True
 
@@ -435,7 +427,7 @@ def save_conditions(gsql, name, cond):
         session.commit()
     except Exception, e:
         session.rollback()
-        log.warn(str(e))
+        log.warn(e)
         return False
     return True
 

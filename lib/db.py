@@ -24,12 +24,14 @@ __revision__ = '$Id$'
 
 # XXX: keep stdlib and SQLAlchemy imports only in this file
 
-from sqlalchemy     import *
-from sqlalchemy.orm import mapper, relation, deferred, validates, column_property
-import re
-import string
 import logging
 import marshal
+import re
+import string
+
+from sqlalchemy import *
+from sqlalchemy.orm import mapper, relation, deferred, validates, column_property
+
 log = logging.getLogger("Griffith")
 
 EMAIL_PATTERN = re.compile('^[a-z0-9]+[.a-z0-9_+-]*@[a-z0-9_-]+(\.[a-z0-9_-]+)+$', re.IGNORECASE)
