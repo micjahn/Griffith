@@ -1030,8 +1030,8 @@ You can't undo this operation."""), True, self.widgets['window'])
 Your current movie collection will be mixed with a backup.
 You can't undo this operation."""), True, self.widgets['window'])
         if response == gtk.RESPONSE_YES:
-            from backup import merge
-            merge(self)
+            from backup import restore
+            restore(self, merge=True)
 
     # cover ---------------------------------------------------------------
 

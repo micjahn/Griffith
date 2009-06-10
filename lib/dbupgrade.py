@@ -213,15 +213,6 @@ def upgrade_database(self, version, locations, config):
                 log.error("Cannot add '%s' column: %s", key, e)
                 return False
 
-        log.info('... creating missing indexes')
-        try:
-            i = Index('ix_movies_title_2', db.movies_table.c.title)
-            i.create(bind=b)
-            i = Index('ix_movies_o_title_2', db.movies_table.c.o_title)
-            i.create(bind=b)
-        except Exception, e:
-            log.error("Cannot create new index, skipping (%s)", e)
-
         db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
         db_version.value = unicode(version)
         self.session.add(db_version)

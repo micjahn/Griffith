@@ -22,9 +22,7 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import os
-import os.path
 import ConfigParser
-#import cPickle as pickle
 import logging
 log = logging.getLogger("Griffith")
 

@@ -106,71 +106,6 @@ def backup(self):
                     rmtree(tmp_dir)
             gutils.info(_("Backup has been created"), self.widgets['window'])
 
-def restore(self):
-    """restores a griffith compressed backup"""
-
-    filename = gutils.file_chooser(_("Restore Griffith backup"), \
-                    action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons= \
-                    (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-    if filename[0]:
-        try:
-            zip = zipfile.ZipFile(filename[0], 'r')
-        except:
-            gutils.error(self, _("Can't read backup file"), self.widgets['window'])
-            return False
-        mypath = os.path.join(self.locations['posters'])
-        old_config_file = False
-        for each in zip.namelist():
-            file_to_restore = os.path.split(each)
-            if not os.path.isdir(file_to_restore[1]):
-                if file_to_restore[1] == '':
-                    continue
-                if file_to_restore[1].endswith('.jpg'):
-                    myfile = os.path.join(mypath, file_to_restore[1])
-                else:
-                    myfile = os.path.join(self.locations['home'], file_to_restore[1])
-                if file_to_restore[1].endswith('.conf'):
-                    old_config_file = myfile
-                outfile = open(myfile, 'wb')
-                outfile.write(zip.read(each))
-                outfile.flush()
-                outfile.close()
-        zip.close()
-
-        # restore config file
-        self.config = config.Config(file=os.path.join(self.locations['home'],'griffith.cfg'))
-        if old_config_file:
-            log.info('Old config file detected. Please note that it will not be used.')
-            f = open(old_config_file, 'r')
-            old_config_raw_data = f.read()
-            f.close()
-            if old_config_raw_data.find('griffith.gri') >= -1:
-                self.config.set('file', 'griffith.gri', section='database')
-
-        self.db.session.bind.engine.dispose() # close DB
-
-        # check if file needs conversion
-        if self.config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
-            log.info('Old database format detected. Converting...')
-            from dbupgrade import convert_from_old_db
-            old_db_filename = os.path.join(self.locations['home'], self.config.get('file', section='database'))
-            self.db = convert_from_old_db(self, old_db_filename, os.path.join(self.locations['home'], 'griffith.db'))
-            if self.db:
-                self.config.save()
-            else:
-                log.error('Cant convert old database, exiting.')
-                import sys
-                sys.exit(4)
-        else:
-            self.db = sql.GriffithSQL(self.config, self.locations['home'], self.locations)
-
-        dictionaries(self)
-        people_treeview(self)
-        # let's refresh the treeview
-        self.clear_details()
-        self.populate_treeview()
-        gutils.info(_("Backup restored"), self.widgets['window'])
-
 def copy_db(src_engine, dst_engine):
     log.debug('replacing old database with new one')
     db.metadata.drop_all(dst_engine) # remove all previous data
@@ -222,7 +157,7 @@ def merge_db(src_db, dst_db): # FIXME
         merged += 1
     return merged
 
-def merge(self, replace=True):
+def restore(self, merge=False):
     """
     Merge database from:
     * compressed backup (*.zip)
@@ -298,10 +233,18 @@ def merge(self, replace=True):
         else:
             tmp_db = sql.GriffithSQL(tmp_config, tmp_dir, locations)
 
-        if replace: # FIXME:
-            copy_db(tmp_db.session.bind, self.db.session.bind)
-        else:
+        if merge:
             merge_db(tmp_db, self.db)
+        else:
+            copy_db(tmp_db.session.bind, self.db.session.bind)
+            tmp_config # FIXME
+            # update old database section with curren't config values
+            # (important while restoring to external databases)
+            for key in ('name', 'passwd', 'host', 'user', 'file', 'type', 'port'):
+                tmp_config.set(key, self.config.get(key, section='database'), section='database')
+            tmp_config._file = self.config._file
+            self.config = tmp_config
+            self.config.save()
 
         dictionaries(self)
         people_treeview(self)
