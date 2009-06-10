@@ -7,6 +7,8 @@ Griffith ChangeLog
 
 2009-06-10  Piotr Ożarowski
 	* Restoring from backup finally works with external databases
+	* Don't save full paths in backups
+	* Backup from MySQL fixed
 
 2009-06-08  Piotr Ożarowski
 	* Restoring from backup to PostgreSQL/MySQL partially works via merging

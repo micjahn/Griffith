@@ -69,11 +69,13 @@ class GriffithSQL(object):
                        'password': config.get('passwd', section='database')}
 
         # connect to database --------------------------------------{{{
+        convert_unicode = False # see MySQL
         if config.get('type', section='database') == 'sqlite':
             url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
         elif config.get('type', section='database') == 'postgres':
             url = "postgres://%(user)s:%(password)s@%(host)s:%(port)d/%(name)s" % conn_params
         elif config.get('type', section='database') == 'mysql':
+            convert_unicode = True
             url = "mysql://%(user)s:%(password)s@%(host)s:%(port)d/%(name)s?charset=utf8&use_unicode=0" % conn_params
         elif config.get('type', section='database') == 'mssql':
             # use_scope_identity=0 have to be set as workaround for a sqlalchemy bug
@@ -90,7 +92,7 @@ class GriffithSQL(object):
             url = "sqlite:///%(name)s" % os.path.join(griffith_dir, conn_params['name'] + '.db')
 
         try:
-            engine = create_engine(url, echo=False)
+            engine = create_engine(url, echo=False, convert_unicode=convert_unicode)
             conn = engine.connect()
         except Exception, e:    # InvalidRequestError, ImportError
             log.info("MetaData: %s", e)

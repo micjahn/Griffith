@@ -72,9 +72,10 @@ def backup(self):
                 gutils.error(self, _("Error creating backup"), self.widgets['window'])
                 return False
             if self.db.session.bind.engine.name == 'sqlite':
-                mzip.write(os.path.join(self.locations['home'],'griffith.cfg').encode('utf-8'))
-                fileName = os.path.join(self.locations['home'], self.config.get('name','griffith', section='database') + '.db').encode('utf-8')
-                mzip.write(fileName)
+                mzip.write(os.path.join(self.locations['home'],'griffith.cfg').encode('utf-8'), arcname='griffith.cfg')
+                db_file_name = "%s.db" % self.config.get('name','griffith', section='database')
+                file_path = os.path.join(self.locations['home'], db_file_name).encode('utf-8')
+                mzip.write(file_path, arcname=db_file_name)
             else:
                 try:
                     tmp_dir = mkdtemp()
@@ -83,7 +84,7 @@ def backup(self):
                     tmp_config.set('type', 'sqlite', section='database')
                     tmp_config.set('file', 'griffith.db', section='database')
                     tmp_config.save()
-                    mzip.write(tmp_config._file)
+                    mzip.write(tmp_config._file, arcname='griffith.cfg')
 
                     tmp_file = os.path.join(tmp_dir, 'griffith.db')
                     tmp_engine = create_engine("sqlite:///%s" % tmp_file)
@@ -101,7 +102,7 @@ def backup(self):
                     for poster in db.metadata.tables['posters'].select(bind=self.db.session.bind).execute():
                         db.metadata.tables['posters'].insert(bind=tmp_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
 
-                    mzip.write(tmp_file)
+                    mzip.write(tmp_file, arcname='griffith.db')
                 finally:
                     rmtree(tmp_dir)
             gutils.info(_("Backup has been created"), self.widgets['window'])
@@ -231,7 +232,7 @@ def restore(self, merge=False):
                 log.info("MERGE: Can't convert database, aborting.")
                 return False
         else:
-            tmp_db = sql.GriffithSQL(tmp_config, tmp_dir, locations)
+            tmp_db = sql.GriffithSQL(tmp_config, tmp_dir, locations, fallback=False)
 
         if merge:
             merge_db(tmp_db, self.db)
