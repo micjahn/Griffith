@@ -104,7 +104,7 @@ class Griffith(object):
         
         # create/connect db
         from sql import GriffithSQL
-        self.db = GriffithSQL(config, self.locations['home'], self.locations)
+        self.db = GriffithSQL(config, self.locations['home'])
 
         # let's check any console arguments to parse
         gconsole.check_args_with_db(self)
@@ -1364,7 +1364,7 @@ You can't undo this operation."""), True, self.widgets['window'])
                         self.config.set('file', 'griffith.db', section='database')
                 # create/connect db
                 log.debug('creating new ones...')
-                self.db = GriffithSQL(self.config, self.griffith_dir, self.locations)
+                self.db = GriffithSQL(self.config, self.griffith_dir)
                 self.clear_details()
                 self.total = 0
                 self.count_statusbar()

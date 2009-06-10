@@ -42,7 +42,7 @@ class GriffithSQL(object):
     version = 4 # database format version, increase after changing data structures
     DEFAULT_PORTS = dict(postgres=5432, mysql=3306, mssql=1433)
 
-    def __init__(self, config, griffith_dir, locations, fallback=True):
+    def __init__(self, config, griffith_dir, fallback=True):
         #mapper = Session.mapper
         self.config = config
         self.data_dir = griffith_dir
@@ -136,7 +136,7 @@ class GriffithSQL(object):
             v = int(v.value)
         if v < self.version:
             from dbupgrade import upgrade_database
-            if not upgrade_database(self, v, locations, config):
+            if not upgrade_database(self, v, config):
                 raise Exception('cannot upgrade database')
         elif v > self.version:
             log.error("database version mismatch (detected:%s; current:%s)", v, self.version)

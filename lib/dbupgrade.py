@@ -154,7 +154,7 @@ def upgrade_database(self, version, locations, config):
                 return False
         
         log.info('... saving posters in database')
-        posters_dir = get_old_posters_location(locations['home'], config, clean_config=True)
+        posters_dir = get_old_posters_location(self.data_dir, config, clean_config=True)
         updated = {}
         movies_table = db.metadata.tables['movies']
         for movie in self.session.query(db.Movie.image).all():
@@ -329,7 +329,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
     config.set('region', 0, section='defaults')
     config.set('vcodec', 0, section='defaults')
     locations['posters'] = os.path.join(locations['home'], 'posters')
-    new_db = GriffithSQL(config, locations['home'], locations)
+    new_db = GriffithSQL(config, locations['home'], fallback=False)
 
     # collections
     collection_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}

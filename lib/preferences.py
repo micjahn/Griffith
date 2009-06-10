@@ -442,12 +442,12 @@ def save_preferences(self):
         if c.has_key('posters'):
             c['posters'] = None # force update
         try:
-            self.db = sql.GriffithSQL(c, self.locations['home'], self.locations, fallback=True)
+            self.db = sql.GriffithSQL(c, self.locations['home'], fallback=True)
         except InvalidRequestError, e:
-            log.error(str(e))
+            log.error(e)
             c.set('type', 'sqlite', section='database')
             w['db_type'].set_active(0)
-            self.db = sql.GriffithSQL(c, self.locations['home'], self.locations)
+            self.db = sql.GriffithSQL(c, self.locations['home'])
 
         log.info("New database Engine: %s" % self.db.session.bind.engine.name)
         

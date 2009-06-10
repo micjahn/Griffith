@@ -232,7 +232,7 @@ def restore(self, merge=False):
                 log.info("MERGE: Can't convert database, aborting.")
                 return False
         else:
-            tmp_db = sql.GriffithSQL(tmp_config, tmp_dir, locations, fallback=False)
+            tmp_db = sql.GriffithSQL(tmp_config, tmp_dir, fallback=False)
 
         if merge:
             merge_db(tmp_db, self.db)
