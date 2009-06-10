@@ -62,21 +62,18 @@ class GriffithSQL(object):
             if config.get('port', 0, section='database') == 0:
                 config.set('port', DEFAULT_PORTS[config.get('type', section='database')], section='database')
 
-        conn_params = {'name': config.get('name', section='database'),
-                       'host': config.get('host', section='database'),
-                       'port': int(config.get('port', section='database')),
-                       'user': config.get('user', section='database'),
-                       'password': config.get('passwd', section='database')}
+        conn_params = config.to_dict(section='database')
+        conn_params['port'] = int(conn_params['port'])
 
         # connect to database --------------------------------------{{{
         convert_unicode = False # see MySQL
         if config.get('type', section='database') == 'sqlite':
-            url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
+            url = "sqlite:///%(name)s.db" % os.path.join(griffith_dir, conn_params['name'])
         elif config.get('type', section='database') == 'postgres':
-            url = "postgres://%(user)s:%(password)s@%(host)s:%(port)d/%(name)s" % conn_params
+            url = "postgres://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s" % conn_params
         elif config.get('type', section='database') == 'mysql':
             convert_unicode = True
-            url = "mysql://%(user)s:%(password)s@%(host)s:%(port)d/%(name)s?charset=utf8&use_unicode=0" % conn_params
+            url = "mysql://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s?charset=utf8&use_unicode=0" % conn_params
         elif config.get('type', section='database') == 'mssql':
             # use_scope_identity=0 have to be set as workaround for a sqlalchemy bug
             # but it is not guaranteed that the right identity value will be selected
@@ -86,11 +83,12 @@ class GriffithSQL(object):
             # statement: insert <table> (<columns>) values (<values>) select scope_identity()
             # (one statement !) After preparing and executing there should be a fetch
             # If it is executed as two separate statements the scope is lost after insert.
-            url = "mssql://%(user)s:%(password)s@%(host)s:%(port)d/%(name)s?use_scope_identity=0" % conn_params
+            url = "mssql://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s?use_scope_identity=0" % conn_params
         else:
             config.set('type', 'sqlite', section='database')
-            url = "sqlite:///%(name)s" % os.path.join(griffith_dir, conn_params['name'] + '.db')
+            url = "sqlite:///%(name)s.db" % os.path.join(griffith_dir, conn_params['name'])
 
+        # try to establish a db connection
         try:
             engine = create_engine(url, echo=False, convert_unicode=convert_unicode)
             conn = engine.connect()
@@ -100,25 +98,12 @@ class GriffithSQL(object):
                 raise e
             config.set('type', 'sqlite', section='database')
             gutils.warning("%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
-            url = "sqlite:///%s" % os.path.join(griffith_dir, config.get('name', 'griffith', section='database') + '.db')
+            url = "sqlite:///%(name)s.db" % os.path.join(griffith_dir, conn_params['name'])
             engine = create_engine(url)
             conn = engine.connect()
 
-        # try to establish a db connection
-        try:
-            self.Session = sessionmaker(bind=engine) # create new sessions using this class
-            self.session = self.Session() # global session
-            #self.metadata.bind.connect()
-        except Exception, e:
-            log.info("engine connection error: %s", e)
-            if not fallback:
-                raise e
-            gutils.error(self, _('Database connection failed.'))
-            config.set('type', 'sqlite', section='database')
-            url = "sqlite:///%s" % os.path.join(griffith_dir, 'griffith.db')
-            engine = create_engine(url)
-            self.Session = sessionmaker(bind=engine)
-            self.session = self.Session()
+        self.Session = sessionmaker(bind=engine) # create new sessions using this class
+        self.session = self.Session() # global session
         #}}}
 
         # check if database needs an upgrade
@@ -132,7 +117,7 @@ class GriffithSQL(object):
             log.error(e)
             v = 0
 
-        if v is not None and v>1:
+        if v is not None and v > 1:
             v = int(v.value)
         if v < self.version:
             from dbupgrade import upgrade_database
