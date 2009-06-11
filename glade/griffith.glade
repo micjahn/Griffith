@@ -66,19 +66,6 @@
                       </widget>
                     </child>
                     <child>
-                      <widget class="GtkImageMenuItem" id="merge">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Merge backup</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_merge_activate"/>
-                        <child internal-child="image">
-                          <widget class="GtkImage" id="menu-item-image11">
-                            <property name="stock">gtk-revert-to-saved</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                    <child>
                       <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
                         <property name="visible">True</property>
                       </widget>
