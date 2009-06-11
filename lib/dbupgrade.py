@@ -29,7 +29,7 @@ import db
 import logging
 log = logging.getLogger("Griffith")
 
-def upgrade_database(self, version, locations, config):
+def upgrade_database(self, version, config):
     """Create new db or update existing one to current format"""
     b = self.session.bind
     if version == 0 or version is None:
