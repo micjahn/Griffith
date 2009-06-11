@@ -552,6 +552,7 @@
                         <property name="tooltip" translatable="yes">Add new movie</property>
                         <property name="stock_id">gtk-add</property>
                         <signal name="clicked" handler="on_toolbar_add_clicked"/>
+                        <accelerator key="A" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
