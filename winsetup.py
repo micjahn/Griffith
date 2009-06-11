@@ -21,7 +21,6 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import time
 import sys
 
 # ModuleFinder can't handle runtime changes to __path__, but win32com uses them
@@ -54,7 +53,7 @@ opts = {
 
 setup(
     name = "Griffith",
-    version = "0.10-beta2",
+    version = "0.10-beta3",
     description = 'Griffith - A film manager',
     author = 'Vasco Nunes/Piotr Ozarowski',
     author_email = 'griffith-private@lists.berlios.de',

@@ -1,12 +1,13 @@
-griffith (0.10~beta3~svn-1) UNRELEASED; urgency=low
+griffith (0.10~beta3-1) experimental; urgency=low
 
+  * New upstream release
   * Add docbook2x to Build-Depend-Indep
 
- -- Piotr Ożarowski <piotr@debian.org>  Thu, 12 Feb 2009 12:46:50 +0100
+ -- Piotr Ożarowski <piotr@debian.org>  Thu, 11 Jun 2009 22:14:40 +0200
 
 griffith (0.10~beta2-1) experimental; urgency=low
 
-  * New upstream snapshot
+  * New upstream release
   * Changes in dependencies:
     + SQLAlchemy minimum required version bumped to 0.5
     + pysqlite2 removed from alternative dependencies as python2.5 is now

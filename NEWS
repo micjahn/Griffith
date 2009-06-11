@@ -3,6 +3,8 @@ Griffith 0.10-beta3
 * Backup function fixed
 * PostgreSQL/MySQL backup support added
 * Restoring from backup works with external databases
+* New movie plugins: All Media Guide and MovieMete
+* Many movie plugins updated
 
 
 Griffith 0.10-beta2

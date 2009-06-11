@@ -1,7 +1,7 @@
-Griffith 0.10-beta2 README
+Griffith 0.10-beta3 README
 ==========================
 
-This document was last updated on Thu Sep 02 2007.
+This document was last updated on Thu Jun 10 2009.
 Please see the file COPYING for licensing and warranty information.
 The latest version of this software is available at the following URL:
 http://www.griffith.cc/
@@ -30,8 +30,8 @@ System Requirements
   Name			Minimum version		URL						NOTE
   ----			---------------		---						----
   * Python		2.5 or higher		http://www.python.org/
-  * GTK+		tested on 2.6.4		http://www.gtk.org/
-  * PyGTK (with glade2)	tested on 2.6.1		http://www.pygtk.org/
+  * GTK+		tested on 2.8.6		http://www.gtk.org/
+  * PyGTK (with glade3)	2.6.8		http://www.pygtk.org/
   * SQLAlchemy		0.5			http://www.sqlalchemy.org/
   * pysqlite2		2			http://initd.org/tracker/pysqlite		Python 2.5's sqlite3 module will be used if available
   * PIL						http://www.pythonware.com/products/pil/
