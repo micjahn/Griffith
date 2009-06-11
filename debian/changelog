@@ -1,9 +1,19 @@
 griffith (0.10~beta3-1) experimental; urgency=low
 
   * New upstream release
-  * Add docbook2x to Build-Depend-Indep
+  * Update preinst script to handle 0.10~beta versions
 
  -- Piotr Ożarowski <piotr@debian.org>  Thu, 11 Jun 2009 22:14:40 +0200
+
+griffith (0.9.10-1) unstable; urgency=low
+
+  * New upstream release
+  * Convert to python-support
+    + add preinst maintainer script to clean after pycentral
+  * Add docbook2x to Build-Depend-Indep
+  * Bump Standards-Version to 3.8.1 (no changes needed)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 10 May 2009 21:43:22 +0200
 
 griffith (0.10~beta2-1) experimental; urgency=low
 
@@ -16,6 +26,12 @@ griffith (0.10~beta2-1) experimental; urgency=low
     + ipython added to Suggests (--shell option)
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 10 Feb 2009 21:08:30 +0100
+
+griffith (0.9.9-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 27 Dec 2008 22:47:18 +0100
 
 griffith (0.10~beta1-1) experimental; urgency=low
 

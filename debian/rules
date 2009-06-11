@@ -25,7 +25,7 @@ binary-indep: build install
 	dh_link usr/share/griffith/lib/griffith /usr/bin/griffith
 	dh_compress -i
 	dh_fixperms -i
-	dh_pycentral -i
+	dh_pysupport -i
 	dh_installdeb -i
 	dh_gencontrol -i
 	dh_md5sums -i
