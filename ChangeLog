@@ -14,6 +14,7 @@ Griffith ChangeLog
 	* Add "Select database" in File menu (shortcut to preferences page)
 	* Close poster viewer window if poster button clicked again
 	* Add suggestions for database names (taken from .db file names)
+	* Translation files synchronized with Rosetta
 	* Releasing 0.10-beta3
 
 2009-06-10  Piotr Ożarowski
