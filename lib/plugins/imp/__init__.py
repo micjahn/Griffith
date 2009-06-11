@@ -84,8 +84,7 @@ class ImportPlugin(object):
     def run(self, name):
         """Import movies, function called in a loop over source files"""
         from add import validate_details, edit_movie
-        from gutils import find_next_available
-        from sqlalchemy import select, func
+        from sqlalchemy import select
         import gtk
         
         if not self.set_source(name):
@@ -115,8 +114,8 @@ class ImportPlugin(object):
         statement = select([db.Movie.number, db.Movie.title, db.Movie.o_title])
         data = session.execute(statement).fetchall()
         numbers = set(i[0] for i in data)
-        titles = set(i[1].lower() for i in data)
-        o_titles = set(i[2].lower() for i in data)
+        titles = set(i[1].lower() for i in data if i[1])
+        o_titles = set(i[2].lower() for i in data if i[2])
 
         gc_was_enabled = gc.isenabled()
         if gc_was_enabled:
@@ -138,15 +137,15 @@ class ImportPlugin(object):
                 main_iteration()
                 main_iteration() # extra iteration for abort button
 
-            o_title_avail = 'o_title' in details
-            title_avail = 'title' in details
+            o_title_lower = details.get('o_title', '').lower()
+            title_lower = details.get('title', '').lower()
 
-            if (o_title_avail and details['o_title']) or (title_avail and details['title']):
-                if o_title_avail and details['o_title'].lower() in o_titles:
-                    if title_avail and details['title'].lower() in titles:
+            if o_title_lower or title_lower:
+                if o_title_lower and o_title_lower in o_titles:
+                    if title_lower and title_lower in titles:
                         log.info("movie already exists (o_title=%s, title=%s)", details['o_title'], details['title'])
                         continue
-                elif title_avail and details['title'].lower() in titles: # o_title is not available so lets check title only
+                elif title_lower and title_lower in titles: # o_title is not available so lets check title only
                     log.info("movie already exists (title=%s)", details['title'])
                     continue
                 validate_details(details, self.fields_to_import)
