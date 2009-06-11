@@ -7,7 +7,8 @@ Griffith ChangeLog
 
 2009-06-11  Piotr Ożarowski
 	* Don't try to open advfilter window if it's already opened
-	* Add 'fullscreen' switch in menu
+	* Add "fullscreen" switch in menu
+	* Add "Open search window" in Tools menu
 
 2009-06-10  Piotr Ożarowski
 	* Restoring from backup finally works with external databases

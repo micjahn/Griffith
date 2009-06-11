@@ -302,6 +302,15 @@
                 <child>
                   <widget class="GtkMenu" id="movies1_menu">
                     <child>
+                      <widget class="GtkMenuItem" id="search">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Open search window</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_open_advfilterwindow_clicked"/>
+                        <accelerator key="S" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkMenuItem" id="sugest">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Suggest an unseen movie</property>
