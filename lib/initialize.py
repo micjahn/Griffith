@@ -21,18 +21,19 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import sys
-import os
-import string
-import gtk
 import gettext
-import gutils
 import gobject
+import gutils
+import logging
+import os
 import platform
 import re
+import sys
+from glob import glob
 from locale import getdefaultlocale
-import logging
-log = logging.getLogger("Griffith")
+
+import gtk
+
 import db
 
 try:
@@ -40,6 +41,8 @@ try:
     spell_support = 1
 except:
     spell_support = 0
+
+log = logging.getLogger("Griffith")
 
 def locations(self, home_dir):
     defaultLang, defaultEnc = getdefaultlocale()
@@ -53,7 +56,6 @@ def locations(self, home_dir):
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         import winshell
         from win32com.shell import shellcon, shell
-        import shutil
         
         locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
         locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
@@ -679,6 +681,17 @@ def preferences(self):
         self.widgets['preferences']['db_type'].set_active(3)
     else:
         self.widgets['preferences']['db_type'].set_active(0)
+        
+    # add completion data
+    treemodel = gtk.TreeStore(str)
+    for name in (os.path.basename(x)[:-3] for x in glob("%s/*.db" % self.locations['home'])):
+        myiter = treemodel.append(None)
+        treemodel.set_value(myiter, 0, name)
+    completion = gtk.EntryCompletion()
+    completion.set_minimum_key_length(0)
+    self.widgets['preferences']['db_name'].set_completion(completion)
+    completion.set_model(treemodel)
+    completion.set_text_column(0)
 
 def update_volume_combo_ids(self):
     self.volume_combo_ids = {}

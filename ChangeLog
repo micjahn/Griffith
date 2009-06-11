@@ -11,6 +11,7 @@ Griffith ChangeLog
 	* Add "Open search window" in Tools menu
 	* Add "Select database" in File menu (shortcut to preferences page)
 	* Close poster viewer window if poster button clicked again
+	* Add suggestions for database names (taken from .db file names)
 
 2009-06-10  Piotr Ożarowski
 	* Restoring from backup finally works with external databases

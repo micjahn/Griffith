@@ -76,6 +76,7 @@
                         <property name="label" translatable="yes">Select database</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="on_select_db_activate"/>
+                        <accelerator key="D" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                         <child internal-child="image">
                           <widget class="GtkImage" id="image636">
                             <property name="visible">True</property>
