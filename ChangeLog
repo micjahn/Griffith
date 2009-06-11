@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-06-11  Piotr Ożarowski
+	* Don't try to open advfilter window if it's already opened
+
 2009-06-10  Piotr Ożarowski
 	* Restoring from backup finally works with external databases
 	* Don't save full paths in backups
