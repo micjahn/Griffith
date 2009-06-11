@@ -322,6 +322,7 @@ def define_widgets(self, gladefile):
     }#}}}
     
     self.widgets['menu'] = {#{{{
+        'fullscreen'      : get('menu_fullscreen'),
         'toolbar'         : get('menu_toolbar'),
         'export'          : get('export_menu'),
         'import'          : get('import_menu'),
@@ -379,6 +380,7 @@ def define_widgets(self, gladefile):
         'on_update_button_clicked'               : self.update_movie,
         'on_import_activate'                     : self.on_import_activate,
         'on_seen_activate'                       : self.toggle_seen,
+        'on_fullscreen_activate'                 : self.toggle_fullscreen,
         # preferences
         'on_preferences1_activate'               : self.show_preferences,
         'on_cancel_preferences_clicked'          : self.hide_preferences,

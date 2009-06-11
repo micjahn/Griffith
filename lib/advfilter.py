@@ -76,8 +76,8 @@ QUERY_COMMAND_NAMES = {
 
 def show_window(self):
     if getattr(self, '_advfilter_window_is_open', False):
-        log.debug('advfilter window already opened')
-        return False
+        self.widgets['advfilter']['window'].present()
+        return True
     initialize(self.widgets['advfilter'], self.db, self.field_names)
 
     if getattr(self, '_search_conditions', None):

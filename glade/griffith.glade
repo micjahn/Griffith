@@ -237,6 +237,15 @@
                 <child>
                   <widget class="GtkMenu" id="view1_menu">
                     <child>
+                      <widget class="GtkCheckMenuItem" id="menu_fullscreen">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Fullscreen</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">False</property>
+                        <signal name="activate" handler="on_fullscreen_activate"/>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkCheckMenuItem" id="menu_toolbar">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Toolbar</property>

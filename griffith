@@ -203,6 +203,12 @@ class Griffith(object):
             if not hasattr(self, 'mainwindow_state') or self.mainwindow_state is None:
                 self.mainwindow_state = {}
             self.mainwindow_state['state'] = int(windowstate.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
+    
+    def toggle_fullscreen(self, widget):
+        if widget is True or widget.get_active():
+            self.widgets['window'].fullscreen()
+        else:
+            self.widgets['window'].unfullscreen()
 
     # about dialog    -------------------------------------------------------
 
