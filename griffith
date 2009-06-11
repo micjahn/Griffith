@@ -253,9 +253,9 @@ class Griffith(object):
 
     # preferences ---------------------------------------------------------
 
-    def show_preferences(self, *args):
+    def show_preferences(self, *args, **kwargs):
         from preferences import show_preferences
-        show_preferences(self)
+        show_preferences(self, page=kwargs.get('page'))
 
     def hide_preferences(self, *args):
         self.widgets['window'].present()

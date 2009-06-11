@@ -21,13 +21,12 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import os
-import socket
 import logging
-log = logging.getLogger("Griffith")
+import os
+
+import db
 import gutils
 import initialize
-import db
 
 try:
     import gtkspell
@@ -35,7 +34,10 @@ try:
 except:
     spell_support = 0
 
-def show_preferences(self):
+log = logging.getLogger("Griffith")
+
+
+def show_preferences(self, page=None):
     w = self.widgets['preferences']
     # number
     if self.config.get('number', True, section='mainlist') == False:
@@ -201,6 +203,8 @@ def show_preferences(self):
 
     w['amazon_locale'].set_active(int(self.config.get('amazon_locale', 0, section='add')))
 
+    if page is not None:
+        w['notebook'].set_current_page(page)
     w['window'].show()
 
 def save_preferences(self):

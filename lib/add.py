@@ -22,16 +22,17 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-from sqlalchemy.exceptions import IntegrityError
-import gutils
-import os
-import gtk
-import string
-import shutil
 import logging
-log = logging.getLogger("Griffith")
+import os
+
+import gtk
+from sqlalchemy.exceptions import IntegrityError
+
 import quick_filter
 import db
+import gutils
+
+log = logging.getLogger("Griffith")
 
 ### widgets ###################################################
 

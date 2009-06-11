@@ -1,13 +1,14 @@
 near future
 ===========
 * Export plugin system rewrite, new templates format (mako? jinja?)
-* Impor/export plugins for Excel files (.xls) (pyExcelerator?)
+* Import/export plugins for Excel files (.xls) (pyExcelerator?)
 * Customising main list view
 * New fields:
   + location of the DVD (room/box/case/etc) - will replace "Number" field
 
 future
 ======
+* Convert from Glade to GtkBuilder
 * More import plugins
 * Nice PDF tabular report
 * Detecting audio/video parameters from file (mmpython?)

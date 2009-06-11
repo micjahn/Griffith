@@ -71,6 +71,26 @@
                       </widget>
                     </child>
                     <child>
+                      <widget class="GtkImageMenuItem" id="select_database">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Select database</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_select_db_activate"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="image636">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-connect</property>
+                            <property name="icon_size">1</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
+                        <property name="visible">True</property>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkImageMenuItem" id="import">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">I_mport</property>
@@ -226,8 +246,8 @@
                     <child>
                       <widget class="GtkCheckMenuItem" id="menu_fullscreen">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Fullscreen</property>
-                        <property name="use_underline">True</property>
+                        <property name="label">gtk-fullscreen</property>
+                        <property name="use_stock">True</property>
                         <property name="active">False</property>
                         <signal name="activate" handler="on_fullscreen_activate"/>
                       </widget>
@@ -2578,7 +2598,7 @@
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkNotebook" id="notebook3">
+          <widget class="GtkNotebook" id="p_notebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="border_width">4</property>

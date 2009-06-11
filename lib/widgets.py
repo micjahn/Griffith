@@ -180,6 +180,7 @@ def define_widgets(self, gladefile):
 
     self.widgets['preferences'] = {#{{{
         'window'            : get('w_preferences'),
+        'notebook'          : get('p_notebook'),
         'treeview'          : get('p_treeview'),
         'color'             : get('p_color'),
         'condition'         : get('p_condition'),
@@ -383,6 +384,7 @@ def define_widgets(self, gladefile):
         'on_fullscreen_activate'                 : self.toggle_fullscreen,
         # preferences
         'on_preferences1_activate'               : self.show_preferences,
+        'on_select_db_activate'                  : lambda w: self.show_preferences(w, page=6),
         'on_cancel_preferences_clicked'          : self.hide_preferences,
         'on_save_preferences_clicked'            : self.save_preferences,
         'on_p_db_type_changed'                   : self.on_p_db_type_changed,
