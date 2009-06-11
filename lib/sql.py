@@ -68,7 +68,7 @@ class GriffithSQL(object):
         # connect to database --------------------------------------{{{
         convert_unicode = False # see MySQL
         if config.get('type', section='database') == 'sqlite':
-            url = "sqlite:///%(name)s.db" % os.path.join(griffith_dir, conn_params['name'])
+            url = "sqlite:///%s.db" % os.path.join(griffith_dir, conn_params['name'])
         elif config.get('type', section='database') == 'postgres':
             url = "postgres://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s" % conn_params
         elif config.get('type', section='database') == 'mysql':
@@ -86,7 +86,7 @@ class GriffithSQL(object):
             url = "mssql://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s?use_scope_identity=0" % conn_params
         else:
             config.set('type', 'sqlite', section='database')
-            url = "sqlite:///%(name)s.db" % os.path.join(griffith_dir, conn_params['name'])
+            url = "sqlite:///%s.db" % os.path.join(griffith_dir, conn_params['name'])
 
         # try to establish a db connection
         try:
@@ -98,7 +98,7 @@ class GriffithSQL(object):
                 raise e
             config.set('type', 'sqlite', section='database')
             gutils.warning("%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
-            url = "sqlite:///%(name)s.db" % os.path.join(griffith_dir, conn_params['name'])
+            url = "sqlite:///%s.db" % os.path.join(griffith_dir, conn_params['name'])
             engine = create_engine(url)
             conn = engine.connect()
 
