@@ -356,6 +356,9 @@ class Griffith(object):
         delete_poster(self)
 
     def z_poster(self, *args):
+        if self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
+            self.widgets['poster_window'].hide()
+            return
         treeselection = self.widgets['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
         if tmp_iter is None:

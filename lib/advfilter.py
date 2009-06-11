@@ -75,7 +75,7 @@ QUERY_COMMAND_NAMES = {
 # widgets -----------------------------------------------------{{{
 
 def show_window(self):
-    if getattr(self, '_advfilter_window_is_open', False):
+    if self.widgets['advfilter']['window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
         self.widgets['advfilter']['window'].present()
         return True
     initialize(self.widgets['advfilter'], self.db, self.field_names)
@@ -84,7 +84,6 @@ def show_window(self):
         set_conditions(self.widgets['advfilter'], self._search_conditions, self.field_names)
 
     self.widgets['advfilter']['window'].show()
-    self._advfilter_window_is_open = True
 
     return True
 
@@ -107,8 +106,6 @@ def hide_window(self):
     from initialize import fill_advfilter_combo
     fill_advfilter_combo(self)
     
-    del self._advfilter_window_is_open
-
     return True
 
 def _fill_container(container, items, options, id_name):
