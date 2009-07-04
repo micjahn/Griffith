@@ -1364,6 +1364,8 @@ You can't undo this operation."""), True, self.widgets['window'])
                     delete_poster_from_cache(self, poster[0])
 
                 log.debug('dropping old tables...')
+                self.db.session.rollback() # cancel all pending operations
+                self.db.session.bind.engine.dispose()
                 db.metadata.drop_all(self.db.session.bind.engine)
                 #from sqlalchemy.orm import clear_mappers
                 #clear_mappers()

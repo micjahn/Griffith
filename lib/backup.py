@@ -127,6 +127,7 @@ def copy_db(src_engine, dst_engine):
 
 def merge_db(src_db, dst_db): # FIXME
     merged = 0
+    dst_db.session.rollback() # cancel all pending operations
     src_session = src_db.Session() # create new session
     dst_session = dst_db.Session() # create new session
     movies = src_session.query(db.Movie).count()
@@ -138,7 +139,7 @@ def merge_db(src_db, dst_db): # FIXME
             t_movies[column] = eval("movie.%s"%column)
 
         # replace number with new one
-        t_movies["number"] = gutils.find_next_available(self.db)
+        t_movies["number"] = gutils.find_next_available(dst_db)
 
         # don't restore volume/collection/tag/language/loan data (it's dangerous)
         t_movies.pop('movie_id')
@@ -237,6 +238,7 @@ def restore(self, merge=False):
         if merge:
             merge_db(tmp_db, self.db)
         else:
+            self.db.session.rollback() # cancel all pending operations
             copy_db(tmp_db.session.bind, self.db.session.bind)
             # update old database section with current config values
             # (important while restoring to external databases)
