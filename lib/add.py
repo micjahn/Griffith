@@ -629,10 +629,10 @@ def validate_details(t_movies, allow_only=None):
     for i in t_movies.keys():
         if t_movies[i] == '':
             t_movies[i] = None
-    for i in ['color','cond','layers','region', 'media', 'vcodec']:
+    for i in ('color', 'cond', 'layers', 'media', 'vcodec'):
         if t_movies.has_key(i) and t_movies[i] < 1:
             t_movies[i] = None
-    for i in ['volume_id','collection_id', 'runtime']:
+    for i in ('volume_id','collection_id', 'runtime'):
         if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
             t_movies[i] = None
     if allow_only is not None:

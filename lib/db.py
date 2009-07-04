@@ -391,7 +391,7 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
     'languages' : relation(MovieLang, cascade='all, delete-orphan')})
 mapper(Poster, posters_table, properties={
     'movies': relation(Movie),
-    'data'  :  deferred(posters_table.c.data)
+    'data'  : deferred(posters_table.c.data)
     })
 mapper(Filter, filters_table)
 #}}}
