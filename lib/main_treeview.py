@@ -41,10 +41,12 @@ def treeview_clicked(self):
             return False
         number = tmp_model.get_value(tmp_iter,0)
         movie = self.db.session.query(db.Movie).filter_by(number=number).first()
-        # FIXME
-        #movie.refresh() # loan data can be obsolete in cache
         if movie is None:
             log.info("Treeview: movie doesn't exists (number=%s)", number)
+        elif movie.poster_md5 and self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
+            # poster window is opened
+            filename = gutils.get_image_fname(movie.poster_md5, self.db)
+            self.widgets['big_poster'].set_from_file(filename)
         set_details(self, movie)
     else:
         set_details(self, {})
