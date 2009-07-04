@@ -73,9 +73,7 @@ def send_email(self):
                 use_auth, self.config.get('username', '', section='mail'), \
                 self.config.get('password', '', section='mail'), \
                 self.config.get('email', 'griffith', section='mail'), self.person_email, \
-                _("Movie loan reminder"), _("Hi, %s!\n\nJust to remind you " + \
-                "that I'm really needing the following movie I have loaned to you " + \
-                "recently:\n\n%s (%s)\n\nLoaned on %s") \
+                _("Movie loan reminder"), _("Hi, %s!\n\nJust to remind you that I'm really needing the following movie I have loaned to you recently:\n\n%s (%s)\n\nLoaned on %s") \
                 %(self.person_name, self.widgets['movie']['o_title'].get_text().decode('utf-8'), \
                 self.widgets['movie']['title'].get_text().decode('utf-8'), self.loan_date[:10]))
         except:

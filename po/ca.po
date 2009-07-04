@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-11 22:43+0200\n"
+"POT-Creation-Date: 2009-07-04 14:26+0200\n"
 "PO-Revision-Date: 2008-11-18 12:38+0000\n"
 "Last-Translator: el_libre XDDDDDDDDDDDDDDDDDDDDDDDDDDD <el.libre@gmail.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
@@ -551,14 +551,19 @@ msgstr ""
 msgid ""
 "Hi, %s!\n"
 "\n"
-"Just to remind you "
+"Just to remind you that I'm really needing the following movie I have loaned "
+"to you recently:\n"
+"\n"
+"%s (%s)\n"
+"\n"
+"Loaned on %s"
 msgstr ""
 
-#: ../lib/gemail.py:82
+#: ../lib/gemail.py:80
 msgid "Mail could not be sent. Please check e-mail preferences."
 msgstr ""
 
-#: ../lib/gemail.py:84
+#: ../lib/gemail.py:82
 msgid "This person has no e-mail address defined."
 msgstr ""
 
@@ -618,8 +623,8 @@ msgstr ""
 #: ../lib/initialize.py:309 ../lib/plugins/movie/PluginMovieIMDB-de.py:207
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:366
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:411
-#: ../lib/plugins/movie/PluginMovieIMDB.py:160
-#: ../lib/plugins/movie/PluginMovieIMDB.py:331
+#: ../lib/plugins/movie/PluginMovieIMDB.py:162
+#: ../lib/plugins/movie/PluginMovieIMDB.py:337
 msgid "Language"
 msgstr "Idioma"
 
@@ -687,8 +692,8 @@ msgstr "Col·lecció"
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:211
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:368
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:413
-#: ../lib/plugins/movie/PluginMovieIMDB.py:164
-#: ../lib/plugins/movie/PluginMovieIMDB.py:333 ../glade/griffith.glade.h:44
+#: ../lib/plugins/movie/PluginMovieIMDB.py:166
+#: ../lib/plugins/movie/PluginMovieIMDB.py:339 ../glade/griffith.glade.h:44
 msgid "Color"
 msgstr "Color"
 
@@ -1260,14 +1265,8 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:401
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:402
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:100
-#: ../lib/plugins/movie/PluginMovieIMDB.py:96
-#: ../lib/plugins/movie/PluginMovieIMDB.py:97
-#: ../lib/plugins/movie/PluginMovieIMDB.py:269
-#: ../lib/plugins/movie/PluginMovieIMDB.py:270
-#: ../lib/plugins/movie/PluginMovieIMDB.py:271
-#: ../lib/plugins/movie/PluginMovieIMDB.py:272
-#: ../lib/plugins/movie/PluginMovieIMDB.py:273
-#: ../lib/plugins/movie/PluginMovieIMDB.py:274
+#: ../lib/plugins/movie/PluginMovieIMDB.py:98
+#: ../lib/plugins/movie/PluginMovieIMDB.py:99
 #: ../lib/plugins/movie/PluginMovieIMDB.py:275
 #: ../lib/plugins/movie/PluginMovieIMDB.py:276
 #: ../lib/plugins/movie/PluginMovieIMDB.py:277
@@ -1316,6 +1315,12 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieIMDB.py:320
 #: ../lib/plugins/movie/PluginMovieIMDB.py:321
 #: ../lib/plugins/movie/PluginMovieIMDB.py:322
+#: ../lib/plugins/movie/PluginMovieIMDB.py:323
+#: ../lib/plugins/movie/PluginMovieIMDB.py:324
+#: ../lib/plugins/movie/PluginMovieIMDB.py:325
+#: ../lib/plugins/movie/PluginMovieIMDB.py:326
+#: ../lib/plugins/movie/PluginMovieIMDB.py:327
+#: ../lib/plugins/movie/PluginMovieIMDB.py:328
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:157
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:312
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:313
@@ -1401,13 +1406,13 @@ msgid "International"
 msgstr ""
 
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:209
-#: ../lib/plugins/movie/PluginMovieIMDB.py:162 ../glade/griffith.glade.h:4
+#: ../lib/plugins/movie/PluginMovieIMDB.py:164 ../glade/griffith.glade.h:4
 msgid "<b>Audio</b>"
 msgstr "<b>Àudio</b>"
 
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:367
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:412
-#: ../lib/plugins/movie/PluginMovieIMDB.py:332
+#: ../lib/plugins/movie/PluginMovieIMDB.py:338
 msgid "Audio"
 msgstr ""
 
@@ -1550,6 +1555,14 @@ msgstr "Pàgina %d"
 
 #: ../lib/plugins/export/PluginExportXML.py:34
 msgid "Full XML list export plugin"
+msgstr ""
+
+#: ../lib/plugins/imp/AMC.py:94
+msgid "Ant Movie Catalog (version 3.5)"
+msgstr ""
+
+#: ../lib/plugins/imp/AMC.py:120
+msgid "The format of the file is not supported."
 msgstr ""
 
 #: ../lib/plugins/imp/CSV.py:42
