@@ -111,6 +111,10 @@ def copy_db(src_engine, dst_engine):
     log.debug('replacing old database with new one')
     db.metadata.drop_all(dst_engine) # remove all previous data
     db.metadata.create_all(dst_engine) # create table stucture
+    
+    # posters
+    for poster in db.metadata.tables['posters'].select(bind=src_engine).execute():
+        db.metadata.tables['posters'].insert(bind=dst_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
 
     for table in db.metadata.sorted_tables:
         if table.name in ('posters', 'filters'):
@@ -121,9 +125,6 @@ def copy_db(src_engine, dst_engine):
         if data:
             log.debug('inserting new data...')
             dst_engine.execute(table.insert(), data)
-    # posters
-    for poster in db.metadata.tables['posters'].select(bind=src_engine).execute():
-        db.metadata.tables['posters'].insert(bind=dst_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
 
 def merge_db(src_db, dst_db): # FIXME
     merged = 0
