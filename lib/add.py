@@ -620,7 +620,6 @@ def set_details(self, item=None):#{{{
     w['picture'].set_from_file(image_path)
     
     w['notebook'].set_current_page(0)
-    w['source'].set_active(self.d_plugin)
     w['o_title'].grab_focus()
     #}}}
 

@@ -389,7 +389,6 @@ def movie_plugins(self):
     self.plugins = gutils.read_plugins('PluginMovie', \
         self.locations['movie_plugins'])
     self.plugins.sort()
-    self.d_plugin = 0
     mcounter = 0
     default_plugin = self.config.get('default_movie_plugin')
     for p in self.plugins:
@@ -399,9 +398,8 @@ def movie_plugins(self):
         self.widgets['preferences']['default_plugin'].append_text(plugin_name)
         if plugin_name == default_plugin:
             self.widgets['preferences']['default_plugin'].set_active(mcounter)
-            self.d_plugin = mcounter
+            self.widgets['add']['source'].set_active(mcounter)
         mcounter = mcounter + 1
-    self.widgets['add']['source'].set_active(self.d_plugin)
 
 def export_plugins(self):
     """
@@ -715,7 +713,7 @@ def fill_volumes_combo(self, default=0):
             name = self.db.session.query(db.Volume.name).filter_by(volume_id=vol_id).first().name
         else:
             name = ''
-        self.widgets['add']['volume'].insert_text(int(i), str(name))
+        self.widgets['add']['volume'].insert_text(int(i), name)
     self.widgets['add']['volume'].show_all()
     i = gutils.findKey(default, self.volume_combo_ids)
     if i is not None:
@@ -734,9 +732,9 @@ def fill_collections_combo(self, default=0):
             name = self.db.session.query(db.Collection.name).filter_by(collection_id=col_id).first().name
         else:
             name = ''
-        self.widgets['add']['collection'].insert_text(int(i), str(name))
+        self.widgets['add']['collection'].insert_text(int(i), name)
         # add some white spaces to prevent scrollbar hides parts of the names    
-        self.widgets['filter']['collection'].insert_text(int(i), str(name) + '   ')
+        self.widgets['filter']['collection'].insert_text(int(i), name + '   ')
     self.widgets['add']['collection'].show_all()
     self.widgets['filter']['collection'].show_all()
     self.widgets['filter']['collection'].set_active(0)

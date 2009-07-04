@@ -7,9 +7,11 @@ Griffith ChangeLog
 
 2009-07-04  Piotr Ożarowski
 	* Version changed to 0.10-beta3+svn
-	* If Region 0 (no region data) is selected, save "0" in database
-	  otherwise default region will be used [#305123]
-	* Mail content can be translated again (gettext issue fixed) 
+	* [#305123] If Region 0 (no region data) is selected, save "0" in
+	  database otherwise default region will be used
+	* Mail content can be translated again (gettext issue fixed)
+	* [#269865] Don't change movie plugin selection after adding a movie
+
 
 2009-07-03  Michael Jahn
 	* updated IMDb plugin

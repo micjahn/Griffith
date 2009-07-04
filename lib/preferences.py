@@ -172,7 +172,6 @@ def show_preferences(self, page=None):
         plugin_name = plugin_module.replace('PluginMovie','')
         if plugin_name == default_movie_plugin:
             w['default_plugin'].set_active(mcounter)
-            self.d_plugin = mcounter
         mcounter = mcounter + 1
 
     # rating image
@@ -371,9 +370,9 @@ def save_preferences(self):
         plugin_module = os.path.basename(p).replace('.py','')
         plugin_name = plugin_module.replace('PluginMovie','')
         if gutils.on_combo_box_entry_changed(w['default_plugin']) == plugin_name:
-            self.d_plugin = mcounter
+            break
         mcounter = mcounter + 1
-    self.widgets['add']['source'].set_active(self.d_plugin)
+    self.widgets['add']['source'].set_active(mcounter)
 
     if self.windows:
         save_reader = ''
