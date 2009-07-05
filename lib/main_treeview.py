@@ -21,14 +21,18 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
+import logging
+import os
+
+import gtk
 from sqlalchemy import select, desc
 from sqlalchemy.sql.expression import Select
-import os
-import gtk
-import logging
-log = logging.getLogger("Griffith")
+
 import db
 import gutils
+import sql
+
+log = logging.getLogger("Griffith")
 
 def treeview_clicked(self):
     if self.initialized is False:
@@ -44,7 +48,7 @@ def treeview_clicked(self):
         if movie is None:
             log.info("Treeview: movie doesn't exists (number=%s)", number)
         elif movie.poster_md5 and self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
-            # poster window is opened
+            # poster window is visible
             filename = gutils.get_image_fname(movie.poster_md5, self.db)
             self.widgets['big_poster'].set_from_file(filename)
         set_details(self, movie)
@@ -52,7 +56,6 @@ def treeview_clicked(self):
         set_details(self, {})
 
 def set_details(self, item=None):#{{{
-    from sql import get_loan_info, get_loan_history
     if item is None:
         item = {}
     if 'movie_id' in item and item['movie_id']:
@@ -258,7 +261,7 @@ def set_details(self, item=None):#{{{
         w['email_reminder_button'].set_sensitive(True)
         w['return_button'].set_sensitive(True)
         
-        data_loan = get_loan_info(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
+        data_loan = sql.get_loan_info(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
         if data_loan is None:
             log.warning("movie has no loan data, changing 'loaned' flag to False (movie_id: %s)", item['movie_id'])
             item.loaned = False
@@ -284,7 +287,7 @@ def set_details(self, item=None):#{{{
     # loan history    
     self.loans_treemodel.clear()
     if 'collection_id' in item or 'volume_id' in item or 'movie_id' in item:
-        loans = get_loan_history(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
+        loans = sql.get_loan_history(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
         for loan in loans:
             myiter = self.loans_treemodel.append(None)
             self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan.date)[:10])
@@ -371,8 +374,7 @@ def populate(self, movies=None, where=None, qf=True):#{{{
             # saved in advfilter
             name = self.widgets['filter']['advfilter'].get_active_text()[:-3].decode('utf-8') # :-3 due to additional '   ' in the name
             if name:
-                from sql import load_conditions
-                cond = load_conditions(self.db, name)
+                cond = self.db.session.query(db.Filter).filter_by(name=name).first().data
                 if not cond:
                     cond = advfilter.get_def_conditions()
             else:

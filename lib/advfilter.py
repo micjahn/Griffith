@@ -363,17 +363,29 @@ def save(gsql, widgets):
         info(_("Name is empty"), widgets['window'])
         return False
 
-    if sql.save_conditions(gsql, name, cond):
-        info(_("Search conditions saved"), widgets['window'])
+    session = gsql.Session(bind=gsql.session.bind)
+    #session.bind = gsql.session.bind
+    filter_ = session.query(db.Filter).filter_by(name=name).first()
+    if filter_:
+        filter_.data = cond
     else:
+        filter_ = db.Filter(name=name, data=cond)
+    session.add(filter_)
+    try:
+        session.commit()
+    except Exception, e:
+        session.rollback()
+        log.warn(e)
         warning(_("Cannot save search conditions"), widgets['window'])
+        return False
+    info(_("Search conditions saved"), widgets['window'])
 
 def load(gsql, widgets, field_names):
     name = widgets['cb_name'].get_active_text().decode('utf-8')
     if not name:
         log.debug("search rule name is empty")
         return False
-    cond = sql.load_conditions(gsql, name)
+    cond = gsql.session.query(db.Filter).filter_by(name=name).first().data
     if cond:
         return set_conditions(widgets, cond, field_names)
     else:

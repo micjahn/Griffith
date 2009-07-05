@@ -5,6 +5,10 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-07-05  Piotr Ożarowski
+	* Use SQLAlchemy's PickleType to store search conditions
+	  (old rules are removed without warning - beta version privilege ;)
+
 2009-07-04  Piotr Ożarowski
 	* Version changed to 0.10-beta3+svn
 	* [#305123] If Region 0 (no region data) is selected, save "0" in

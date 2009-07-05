@@ -39,7 +39,7 @@ log = logging.getLogger("Griffith")
 
 
 class GriffithSQL(object):
-    version = 4 # database format version, increase after changing data structures
+    version = 5 # database format version, increase after changing data structures
     DEFAULT_PORTS = dict(postgres=5432, mysql=3306, mssql=1433)
 
     def __init__(self, config, griffith_dir, fallback=True):
@@ -400,29 +400,4 @@ def get_loan_history(gsql, movie_id, volume_id=None, collection_id=None):
                                                         )).all()
     else:
         return gsql.session.query(db.Loan).filter(db.Loan.movie_id==movie_id).filter(db.Loan.return_date!=None).all()
-
-def save_conditions(gsql, name, cond):
-    session = gsql.Session(bind=gsql.session.bind)
-    #session.bind = gsql.session.bind
-    filter_ = session.query(db.Filter).filter_by(name=name).first()
-    if filter_:
-        filter_.conditions = cond
-    else:
-        filter_ = db.Filter(name, cond)
-    session.add(filter_)
-    try:
-        session.commit()
-    except Exception, e:
-        session.rollback()
-        log.warn(e)
-        return False
-    return True
-
-def load_conditions(gsql, name):
-    filter_ = gsql.session.query(db.Filter).filter_by(name=name).first()
-    if filter_:
-        return filter_.conditions
-    else:
-        log.warn("Cannot find search conditions: %s", name)
-        return None
 #}}}

@@ -25,7 +25,6 @@ __revision__ = '$Id$'
 # XXX: keep stdlib and SQLAlchemy imports only in this file
 
 import logging
-import marshal
 import re
 import string
 
@@ -67,6 +66,7 @@ class SubFormat(DBTable): pass
 class Tag(DBTable): pass
 class VCodec(DBTable): pass
 class Volume(DBTable): pass
+class Filter(DBTable): pass
 
 class Person(DBTable):
     @validates('email')
@@ -94,7 +94,7 @@ class Poster(object):
                 log.error('md5sum has wrong size')
 
     def __repr__(self):
-        return "<Poster(%s)>" % self.md5sum
+        return "<Poster:%s>" % self.md5sum
 
 class Configuration(object):
     def __repr__(self):
@@ -195,22 +195,6 @@ class MovieTag(object):
 
     def __repr__(self):
         return "<MovieTag:%s-%s>" % (self.movie_id, self.tag_id)
-
-class Filter(object):
-    def __init__(self, name=None, cond=None):
-        if name and cond:
-            self.name = name
-            #self.data = marshal.dumps(cond)
-            self.conditions = cond
-
-    def __repr__(self):
-        return "<Filter(%s)>" % self.name
-
-    def _set_cond(self, cond):
-        self.data = marshal.dumps(cond)
-    def _get_cond(self):
-        return marshal.loads(self.data)
-    conditions = property(_get_cond, _set_cond)
 #}}}
 
 ### table definitions ######################################### {{{
@@ -334,8 +318,7 @@ posters_table = Table('posters', metadata,
 
 filters_table = Table('filters', metadata,
     Column('name', Unicode(64), primary_key=True),
-    #Column('data', PickleType, nullable=False))
-    Column('data', Binary, nullable=False))
+    Column('data', PickleType, nullable=False))
 #}}}
 
 ### mappers ################################################### {{{

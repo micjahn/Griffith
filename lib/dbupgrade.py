@@ -217,6 +217,20 @@ def upgrade_database(self, version, config):
         db_version.value = unicode(version)
         self.session.add(db_version)
         self.session.commit()
+    
+    if version == 4:    # fix changes between v4 and v5
+        version += 1
+        log.info("Upgrading database to version %d...", version)
+        
+        log.info('... deleting old filters')
+        # new format, filters were introduced in -beta so we'll free to delete them without warning
+        query = 'DELETE FROM filters;'
+        self.session.bind.execute(query)
+
+        db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
+        db_version.value = unicode(version)
+        self.session.add(db_version)
+        self.session.commit()
 
     return True
 
