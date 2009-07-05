@@ -117,14 +117,27 @@ def copy_db(src_engine, dst_engine):
         db.metadata.tables['posters'].insert(bind=dst_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
 
     for table in db.metadata.sorted_tables:
-        if table.name in ('posters', 'filters'):
-            continue # see below
+        if table.name in ('posters',):
+            continue # see above
         log.debug('... processing %s table', table)
-        data = [dict((col.key, x[col.name]) for col in table.c)
-                    for x in src_engine.execute(table.select())]
+        data = [dict((col.key, row[col.name]) for col in table.c)
+                    for row in src_engine.execute(table.select())]
         if data:
             log.debug('inserting new data...')
             dst_engine.execute(table.insert(), data)
+
+            if dst_engine.name == 'postgres':
+                # update current value of sequences
+                primary_column_name = table.primary_key.keys()[0]
+                if primary_column_name.endswith('_id'):
+                    currval = max(row[primary_column_name] for row in data)
+                    query = "SELECT setval('%s_%s_seq', %s)" % (table.name, primary_column_name, currval)
+                    log.debug('updating sequence: %s', query)
+                    try:
+                        dst_engine.execute(query)
+                    except Exception, e:
+                        e = getattr(e, 'message', e)
+                        log.error('cannot update sequence: %s', e)
 
 def merge_db(src_db, dst_db): # FIXME
     merged = 0

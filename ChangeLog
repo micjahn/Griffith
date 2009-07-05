@@ -9,6 +9,8 @@ Griffith ChangeLog
 	* Use SQLAlchemy's PickleType to store search conditions
 	  (old rules are removed without warning - beta version privilege ;)
 	* Remove ilike from search criteria
+	* Update current value of sequence after restoring data from backup in
+	  PostgreSQL
 
 2009-07-04  Piotr Ożarowski
 	* Version changed to 0.10-beta3+svn

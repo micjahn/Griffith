@@ -199,7 +199,7 @@ class MovieTag(object):
 
 ### table definitions ######################################### {{{
 movies_table = Table('movies', metadata,
-    Column('movie_id', Integer, primary_key = True),
+    Column('movie_id', Integer, primary_key=True),
     Column('number', Integer, nullable=False, unique=True, index=True),
     Column('collection_id', ForeignKey('collections.collection_id')),
     Column('volume_id', ForeignKey('volumes.volume_id')),
