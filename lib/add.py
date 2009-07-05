@@ -67,10 +67,12 @@ def edit_movie(self, details={}):
 
 
 def update_movie(self):
+    session = self.db.Session()
+
     if self._am_movie_id is not None:
-        movie = self.db.session.query(db.Movie).filter_by(movie_id=self._am_movie_id).one()
+        movie = session.query(db.Movie).filter_by(movie_id=self._am_movie_id).one()
     else:
-        movie = self.db.session.query(db.Movie).filter_by(movie_id=self._movie_id).one()
+        movie = session.query(db.Movie).filter_by(movie_id=self._movie_id).one()
     if movie is None: # movie was deleted in the meantime
         return add_movie_db(self, True)
     
@@ -85,7 +87,7 @@ def update_movie(self):
         else:
             new_poster_md5 = gutils.md5sum(file(new_image_path, 'rb'))
             details["poster_md5"] = new_poster_md5
-            if self.db.session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
+            if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
                 try:
                     data = file(tmp_image_path, 'rb').read()
                 except Exception, e:
@@ -94,19 +96,19 @@ def update_movie(self):
                     poster = db.Poster(md5sum=new_poster_md5, data=data)
                     del details["image"]
                     details['poster_md5'] = new_poster_md5
-                    self.db.session.add(poster)
+                    session.add(poster)
 
                     # delete old image
                     import delete
-                    old_poster = self.db.session.query(db.Poster).filter_by(md5sum=old_poster_md5).first()
+                    old_poster = session.query(db.Poster).filter_by(md5sum=old_poster_md5).first()
                     if old_poster and len(old_poster.movies) == 1: # other movies are not using the same poster
-                        self.db.session.delete(old_poster)
+                        session.delete(old_poster)
                         delete.delete_poster_from_cache(self, old_poster_md5)
 
-    update_movie_instance(movie, details, self.db.session)
+    update_movie_instance(movie, details, session)
     
-    self.db.session.add(movie)
-    if commit(self, self.db.session):
+    session.add(movie)
+    if commit(session):
         treeselection = self.widgets['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
         
@@ -644,6 +646,8 @@ def validate_details(t_movies, allow_only=None):
 
 
 def add_movie_db(self, close):
+    session = self.db.Session()
+
     details = get_details(self)
     if not details['o_title'] and not details['title']:
         gutils.error(self.widgets['results']['window'],
@@ -652,13 +656,13 @@ def add_movie_db(self, close):
         return False
 
     if details['o_title']:
-        if self.db.session.query(db.Movie).filter_by(o_title=details['o_title']).count() > 0:
+        if session.query(db.Movie).filter_by(o_title=details['o_title']).count() > 0:
             response = gutils.question(_('Movie with that title already exists, are you sure you want to add?'), \
                                        False, self.widgets['add']['window'])
             if response == gtk.RESPONSE_NO:
                 return False
     if details['title']:
-        if self.db.session.query(db.Movie).filter_by(title=details['title']).count() > 0:
+        if session.query(db.Movie).filter_by(title=details['title']).count() > 0:
             response = gutils.question(_('Movie with that title already exists, are you sure you want to add?'), \
                                        False, self.widgets['add']['window'])
             if response == gtk.RESPONSE_NO:
@@ -669,7 +673,7 @@ def add_movie_db(self, close):
         if os.path.isfile(tmp_image_path):
             new_poster_md5 = gutils.md5sum(file(tmp_image_path, 'rb'))
 
-            if self.db.session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
+            if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
                 try:
                     data = file(tmp_image_path, 'rb').read()
                 except Exception, e:
@@ -678,7 +682,7 @@ def add_movie_db(self, close):
                     poster = db.Poster(md5sum=new_poster_md5, data=data)
                     del details["image"]
                     details["poster_md5"] = new_poster_md5
-                    self.db.session.add(poster)
+                    session.add(poster)
             try:
                 os.remove(tmp_image_path)
             except Exception, e:
@@ -687,9 +691,9 @@ def add_movie_db(self, close):
             log.warn("cannot read temporary file: %s", tmp_image_path)
 
 
-    movie = update_movie_instance(None, details, self.db.session)
-    self.db.session.add(movie)
-    if not commit(self, self.db.session):
+    movie = update_movie_instance(None, details, session)
+    session.add(movie)
+    if not commit(session):
         return False
 
     rows = len(self.treemodel)
@@ -738,13 +742,15 @@ def add_movie_db(self, close):
 
 
 def clone_movie(self):
+    session = self.db.Session()
+
     treeselection = self.widgets['treeview'].get_selection()
     (tmp_model, tmp_iter) = treeselection.get_selected()
     if tmp_iter is None:
         log.warn("cannot clone movie: no item selected")
         return False
     number = tmp_model.get_value(tmp_iter, 0)
-    movie = self.db.session.query(db.Movie).filter_by(number=number).first()
+    movie = session.query(db.Movie).filter_by(number=number).first()
 
     if movie is None:
         log.warn("cannot clone movie: Movie(%s) not found", number)
@@ -800,8 +806,8 @@ def clone_movie(self):
     new_movie.loans          = movie.loans
     
     # save
-    self.db.session.add(new_movie)
-    if not commit(self, self.db.session):
+    session.add(new_movie)
+    if not commit(session):
         return False
 
     image_path = gutils.get_image_fname(movie.poster_md5, self.db)
@@ -850,7 +856,7 @@ def update_movie_instance(movie, details, session):
     return movie
 
 
-def commit(self, session):
+def commit(session):
     try:
         session.commit()
     except IntegrityError, e:
