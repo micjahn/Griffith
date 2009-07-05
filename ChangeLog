@@ -1,4 +1,4 @@
-# $Id$
+# $Id$ vim: ts=4
 
 Griffith ChangeLog
 ------------------
@@ -99,7 +99,8 @@ Griffith ChangeLog
 	* Cinematografo movie plugin updated
 
 2009-02-28  Michael Jahn
-	* screenplay, cameraman, resolution and barcode added to Search-For section in preferences
+	* screenplay, cameraman, resolution and barcode added to Search-For
+	  section in preferences
 
 2009-02-24  Michael Jahn
 	* Amazon posters: removing of temporary files fixed
@@ -115,7 +116,8 @@ Griffith ChangeLog
 ---- 0.10-beta2 ----
 
 2009-02-10  Piotr Ożarowski
-	* Fix upgrading from v2 to v4 (columns that are not available yet, are not used)
+	* Fix upgrading from v2 to v4 (columns that are not available yet, are not
+	  used)
 	* Releasing 0.10-beta2
 
 2009-02-07  Michael Jahn
@@ -148,7 +150,8 @@ Griffith ChangeLog
 	* Add loaned_movies_count and returned_movies_count properties to Person
 
 2009-01-17  Piotr Ożarowski
-	* Use MediumBLOB on MySQL to store posters. Database has to be recreated if 0.10-beta1 was used to create it.
+	* Use MediumBLOB on MySQL to store posters. Database has to be recreated
+	  if 0.10-beta1 was used to create it.
 	* Few SQL optimizations
 
 2009-01-16  Piotr Ożarowski
@@ -187,11 +190,13 @@ Griffith ChangeLog
 	* IMDB movie plugin updated
 
 2008-12-16  Piotr Ożarowski
-	* Reload movie plugin each time search is performed (in --debug mode only, this should ease writing plugins)
+	* Reload movie plugin each time search is performed (in --debug mode only,
+	  this should ease writing plugins)
 	* Canceling search doesn't throw exception anymore (closes: 100038)
 
 2008-12-07  Piotr Ożarowski
-	* update_image(): update the md5 *after* all other queries (so that UPDATE will not be invoked)
+	* update_image(): update the md5 *after* all other queries (so that UPDATE
+	  will not be invoked)
 
 2008-12-07  Piotr Ożarowski
 	* CSFD movie plugin updated (thanks to Aleš Nejdr)
@@ -213,7 +218,8 @@ Griffith ChangeLog
 	* fixed rating, runtime and year are not shown with MySQL backend
 
 2008-11-10  Michael Jahn
-	* optimized windows setup related code, added links to documentation files, forum and wiki to the installer
+	* optimized windows setup related code, added links to documentation
+	  files, forum and wiki to the installer
 
 2008-11-18  Piotr Ożarowski
 	* Version changed to 0.10-beta2~svn
@@ -251,7 +257,8 @@ Griffith ChangeLog
 	* [#179618] During "Get from Web ", griffith window keeps stealing focus
 
 2008-10-23  Michael Jahn
-	* PDF export: disabled movie grouping if movie list is not sorted by title or original title
+	* PDF export: disabled movie grouping if movie list is not sorted by title
+	  or original title
 	* [#258817] The application doesn't save volume
 
 2008-10-25  Piotr Ożarowski
@@ -276,15 +283,18 @@ Griffith ChangeLog
 
 2008-09-14  Piotr Ożarowski
 	* Warn about backups when starting develpement version
-	* seen/loaned settings available in adv. filter window (much more to come soon)
+	* seen/loaned settings available in adv. filter window (much more to come
+	  soon)
 
 2008-09-13  Piotr Ożarowski
 	* Loaning movies is working again
 
 2008-09-12  Piotr Ożarowski
 	* Validate loan contact's email address
-	* Python required version bumped to 2.4 (it was required for a while aready)
-	* Use SQLAlchemy's validate decorator (minimum required SA version bumped to 0.5rc1)
+	* Python required version bumped to 2.4 (it was required for a while
+	  aready)
+	* Use SQLAlchemy's validate decorator (minimum required SA version bumped
+	  to 0.5rc1)
 
 2008-09-09  Piotr Ożarowski
 	* Add aspect ratio, cameraman and screenplay to the database
@@ -321,7 +331,8 @@ Griffith ChangeLog
 
 2008-07-28  Piotr Ożarowski
 	* Switch back to 4 spaces indentation
-	* Rewrite SQLAlchemy related data to use session (to ease accessing simultaneously multiple databases)
+	* Rewrite SQLAlchemy related data to use session (to ease accessing
+	  simultaneously multiple databases)
 
 ---- 0.9.7.1 ----
 
@@ -330,12 +341,16 @@ Griffith ChangeLog
 	* Version changed to 0.9.7
 
 2008-07-24  Michael Jahn
-	* main treeview doesn't accept DB-NULL or empty strings for the int-fields rating, year and runtime
+	* main treeview doesn't accept DB-NULL or empty strings for the int-fields
+	  rating, year and runtime
 
 2008-07-24  Michael Jahn
-	* Windows only: set_wrap_width doesn't work in filter toolbar without side effects if GTK 2.12.9 is used
-	* updated INSTALL file to new versions (GTK, Glade, PyGTK, py2exe, pywin32, Inno Setup)
-	* fixed URL creation in setup script; added removing of .pyo files if deinstalled
+	* Windows only: set_wrap_width doesn't work in filter toolbar without side
+	  effects if GTK 2.12.9 is used
+	* updated INSTALL file to new versions (GTK, Glade, PyGTK, py2exe,
+	  pywin32, Inno Setup)
+	* fixed URL creation in setup script; added removing of .pyo files if
+	  deinstalled
 
 ---- 0.9.7 ----
 
@@ -345,13 +360,16 @@ Griffith ChangeLog
 	* Filmweb movie plugin updated (thanks to mariusz2806)
 	* Added Latvian translation (thanks to Aleksandrs Zdancuks)
 	* Added Ukrainian translation (thanks to vazaz)
-	* Updated translations: bg, ca, da, de, el, es, fr, it, nb, pt, pt_BR, ru, sv, tr
+	* Updated translations: bg, ca, da, de, el, es, fr, it, nb, pt, pt_BR, ru,
+	  sv, tr
 	* Version changed to 0.9.7
 
 2008-07-18  Michael Jahn
-	* added User-Agent support, because some web sites doesn't like the Python urllib default
+	* added User-Agent support, because some web sites doesn't like the Python
+	  urllib default
 	* updated Zelluloid plugin
-	* support for accents in titles for searching if plugin needs it (Zelluloid needs german umlauts)
+	* support for accents in titles for searching if plugin needs it
+	  (Zelluloid needs german umlauts)
 
 2008-07-17  Michael Jahn
 	* updated OFDb plugin
@@ -361,7 +379,8 @@ Griffith ChangeLog
 2008-07-13  Michael Jahn
 	* updated DVDEmpire plugin
 	* [#236598] scroll bar in filter "by volume" appears
-	* fixed loan label in main view if html entities are used in the name of a person
+	* fixed loan label in main view if html entities are used in the name of a
+	  person
 
 2008-07-11  Michael Jahn
 	* added quick filter for tags
@@ -371,7 +390,8 @@ Griffith ChangeLog
 	* updated Filmtipset plugin
 
 2008-05-09  Michael Jahn
-	* added cast, genre and grouping by first letter to pdf export (thanks to Luigi Pantano)
+	* added cast, genre and grouping by first letter to pdf export (thanks to
+	  Luigi Pantano)
 
 2008-05-08  Michael Jahn
 	* updated DVD Empire plugin
@@ -409,8 +429,10 @@ Griffith ChangeLog
 	* sort collection list and volume list by name
 
 2008-02-03  Michael Jahn
-	* hit enter key in title/original title box starts retrieving data from web for a new entry
-	* HTML export: replace linebreaks with <br /> in the data if "XHTML 1.0" is found in the template header
+	* hit enter key in title/original title box starts retrieving data from
+	  web for a new entry
+	* HTML export: replace linebreaks with <br /> in the data if "XHTML 1.0"
+	  is found in the template header
 
 ---- 0.9.6 ----
 
@@ -424,7 +446,8 @@ Griffith ChangeLog
 	* Translators tab (about dialog) filled in automatically
 
 2008-01-13  Piotr Ożarowski
-	* Distribute local copy of SQLAlchemy 0.3.11 (Griffith 0.10 which will work with SQLAlchemy 0.4.x is not ready yet)
+	* Distribute local copy of SQLAlchemy 0.3.11 (Griffith 0.10 which will
+	  work with SQLAlchemy 0.4.x is not ready yet)
 	* Version changed to 0.9.6
 	* Update .desktop file to Desktop Entry Specification's version 1.0
 
@@ -453,7 +476,8 @@ Griffith ChangeLog
 	* Russian language file updated
 
 2007-11-28  Michael Jahn
-	* [#164966] deactivating spellchecker option in preferences dialog disables the depending elements
+	* [#164966] deactivating spellchecker option in preferences dialog
+	  disables the depending elements
 
 2007-11-22  Michael Jahn
 	* added columns genre, seen, runtime and year to the mainlist
@@ -468,7 +492,8 @@ Griffith ChangeLog
 2007-11-08  Michael Jahn
 	* status bar shows count of movies after applying a filter
 	* changed HTML export:
-	  + exported poster file names contain the movie number instead of the random name
+	  + exported poster file names contain the movie number instead of the
+	    random name
 	  + movies without a poster get the griffith picture
 
 2007-10-15  Michael Jahn
@@ -479,15 +504,17 @@ Griffith ChangeLog
 	* Italian language file updated
 
 2007-09-06  Vasco Nunes
-	* Berlios task [#003126] complete. Griffith's dir should point to 'Application Data' on windows systems.
+	* Berlios task [#003126] complete. Griffith's dir should point to
+	  'Application Data' on windows systems.
 
 2007-09-06  Michael Jahn
 	* save window state, position and size on windows systems
 	* save selected quick filter criteria
-	* fixed backup if path or filename contains special characters (like german umlauts)
+	* fixed backup if path or filename contains special characters (like
+	  german umlauts)
 	* use deflate for backup if available
-	* added auto-test feature for movie plugins (only used by developers; execute
-	  test_movieplugins.py directly)
+	* added auto-test feature for movie plugins (only used by developers;
+	  execute test_movieplugins.py directly)
 	* FilmeVonAZ and OFDb plugin updated
 	* fixed saving media and vcodec defaults in preferences dialog
 
@@ -499,7 +526,8 @@ Griffith ChangeLog
 2007-09-02  Piotr Ożarowski
 	* Translation files synchronized with Rosetta
 	  + new: Catalan, Norwegian Bokmal
-	  + uptaded: Brazilian Portuguese, Cech, Dutch, French, German, Italian, Portuguese, Russian
+	  + uptaded: Brazilian Portuguese, Cech, Dutch, French, German, Italian,
+	    Portuguese, Russian
 	* Polish translation updated
 	* Print cover function fixed (reportlab doesn't like unicode)
 
@@ -508,7 +536,8 @@ Griffith ChangeLog
 	* added "auto-fixing" of config file values for defaults section
 
 2007-09-01  Piotr Ożarowski
-	* Respect medium and video codec's default value in add window (closes: #11864)
+	* Respect medium and video codec's default value in add window
+	  (closes: #11864)
 	* griffith.glade file converted to glade3 format
 
 2007-09-01  Michael Jahn
@@ -543,7 +572,8 @@ Griffith ChangeLog
 
 2007-08-04  Piotr Ożarowski
 	* Removing tags function fixed
-	* Copy all files from "data" subdirectory to the exported location in HTML export plugin
+	* Copy all files from "data" subdirectory to the exported location in HTML
+	  export plugin
 	  + add index.htm files to html_table{,s} templates
 	* Fixed volume/colection loaning problem
 
@@ -584,7 +614,8 @@ Griffith ChangeLog
 ---- 0.9.3 ----
 
 2007-06-30  Piotr Ożarowski
-	* Use python2.5's sqlite3 module if available (no need to install pysqlite2)
+	* Use python2.5's sqlite3 module if available (no need to install
+	  pysqlite2)
 	* Check dependencies at startup
 	* Detect old config while restoring data
 	* Stopklatka movie plugin updated
@@ -592,7 +623,8 @@ Griffith ChangeLog
 2007-06-29  Piotr Ożarowski
 	* Added Greek translation (thanks to Ioannis Koniaris)
 	* Added Simplified Chinese translation (thanks to kempson)
-	* Updated German, Spanish, French and Portuguese Brazilian translations (from Rosetta)
+	* Updated German, Spanish, French and Portuguese Brazilian translations
+	  (from Rosetta)
 	* Updated Polish translations
 	* Do not register mime type in .desktop file
 
@@ -632,13 +664,14 @@ Griffith ChangeLog
 	* Add sections to config file
 
 2007-06-09  Vasco Nunes
-	* Added new alpha export plugin for iPods.
-	  Exports directly to iPod on macosx for now, saves files in custom location on other platforms.
-	  Not handling 4Kb iPod notes limit yet.
+	* Added new alpha export plugin for iPods. Exports directly to iPod on
+	  MacOSX for now, saves files in custom location on other platforms.Not
+	  handling 4Kb iPod notes limit yet.
 
 2007-05-31  Piotr Ożarowski
 	* IMDB, IMDB-de and KinoDe movie plugins updated (thanks to Michael Jahn)
-	* Resizable columns in add movie window's languages tab (thanks to Michael Jahn)
+	* Resizable columns in add movie window's languages tab (thanks to Michael
+	  Jahn)
 	* Increase runtime maximum value (thanks to Michael Jahn)
 	* Add Microsoft SQL support (thanks to Michael Jahn)
 
@@ -675,9 +708,11 @@ Griffith ChangeLog
 	* FilmDb and Zelluloid movie plugins added (thanks to Michael Jahn)
 
 2007-03-11  Piotr Ożarowski
-	* Filmweb movie plugin updated (no more hangs if no movie info found - closes #10601)
+	* Filmweb movie plugin updated (no more hangs if no movie info found
+	  (closes #10601)
 	* Version changed to 0.9.2+svn
-	* New configuration file format (human readable) - please delete old one manually
+	* New configuration file format (human readable) - please delete old one
+	  manually
 
 ---- 0.9.2 ----
 
@@ -699,7 +734,8 @@ Griffith ChangeLog
 	* KinoDe movie plugin updated (thanks to Michael Jahn)
 
 2007-02-12  Piotr Ożarowski
-	* Fix broken databases automatically (return date will be set to 2007-01-01) - redo the upgrade process if you don't like it
+	* Fix broken databases automatically (return date will be set to
+	  2007-01-01) - redo the upgrade process if you don't like it
 
 2007-02-11  Piotr Ożarowski
 	* Fix one more bad case in upgrade function
@@ -779,12 +815,14 @@ Griffith ChangeLog
 	* Updated Czech translation and CSFD movie pluging (thanks to Blondak)
 	* Updated Portuguese Brazilian translation (thanks to Fábio Nogueira)
 	* Fixed win32 gtk locale issue
-	* Fixed win32 default system font directory detection (for use in preferences)
+	* Fixed win32 default system font directory detection (for use in
+	  preferences)
 	* Updated French translation (thanks to Pierre-Luc Lévi)
 	* Latex is no more the default entry for html export plugin :)
 
 2007-01-03  Vasco Nunes
-	* Using cPickle over pickle for serialization. Config files are now fully cross-platform.
+	* Using cPickle over pickle for serialization. Config files are now fully
+	  cross-platform.
 
 2007-01-03  Piotr Ożarowski
 	* Install Polish manpage in ISO-8859-2 encoding
@@ -829,7 +867,8 @@ Griffith ChangeLog
 	* Polish manpage updated
 
 2006-12-20  Piotr Ożarowski
-	* Version changed to 0.9~rc1 (0.7 and 0.8 are skipped because of lots of changes in this release)
+	* Version changed to 0.9~rc1 (0.7 and 0.8 are skipped because of lots of
+	  changes in this release)
 	* Merge function and MySQL/PostgreSQL backup disabled for now
 	* English manpage updated
 	* Homepage updated
@@ -855,22 +894,29 @@ Griffith ChangeLog
 	* WP, FDb and Onet movie plugins updated
 	* movie plugins:
 	  + allow "%s" in self.original_url_search and self.translated_url_search
-	  + opening new page inside movie plugin is now as easy as: "self.new_page =  self.open_page(url='http://something')"
+	  + opening new page inside movie plugin is now as easy as:
+	    "self.new_page = self.open_page(url='http://something')"
 	* chardet added to optional dependencies
 	* Import multiple files at once
 
 2006-12-16  Jessica K. Parth
-	* added a warning when there are no movies in the database to ( print cover, fetch poster, change poster, edit movie, delete movie, clone movie )
-	* Import CSV Plugin updated (use chardet "http://chardet.feedparser.org/" to detect file format)
+	* added a warning when there are no movies in the database to ( print
+	  cover, fetch poster, change poster, edit movie, delete movie, clone
+	  movie)
+	* Import CSV Plugin updated (use chardet "http://chardet.feedparser.org/"
+	  to detect file format)
 
 2006-12-15  Piotr Ożarowski
-	* Added "N/A" to some fields in "technical information" tab (NULL in database)
+	* Added "N/A" to some fields in "technical information" tab (NULL in
+	  database)
 	* Added some relations between windows
-	* "Suggest unseen movie" now chooses movie from main list only (f.e. from specified collection)
+	* "Suggest unseen movie" now chooses movie from main list only (f.e. from
+	  specified collection)
 
 2006-12-15  Jessica K. Parth
 	* ODFb Plugin uses the quicksearch and returns much more and better results
-	* KinoDE Plugin return both results for Video/DVD and Kino now and some small fixes
+	* KinoDE Plugin return both results for Video/DVD and Kino now and some
+	  small fixes
 	* German Translation updated
 	* Moviefone Plugin updated
 
@@ -956,7 +1002,8 @@ Griffith ChangeLog
 	* Fixed CSFD movie plugin (thanks to Ondra 'Kepi' Kudlík for patch #1449)
 
 2006-09-02  Piotr Ożarowski
-	* Fixed some UTF encoding problems in FDb, Filmweb, Onet and WP movie plugins
+	* Fixed some UTF encoding problems in FDb, Filmweb, Onet and WP movie
+	  plugins
 
 2006-08-28  Piotr Ożarowski
 	* Some GUI changes mainly suggested by Alan Horkan:
@@ -973,11 +1020,13 @@ Griffith ChangeLog
 	* Movie plugins are now fetching only selected data.
 
 2006-08-24  Piotr Ożarowski
-	* Language treeview now supports codec/channel/subtitle format data (still needs work)
+	* Language treeview now supports codec/channel/subtitle format data (still
+	  needs work)
 
 2006-08-23  Piotr Ożarowski
 	* Fixed problem with converting images on Windows (HTML export plugin)
-	* Fixed bug with "You have to fill language..." after updating language list
+	* Fixed bug with "You have to fill language..." after updating language
+	  list
 
 2006-08-18  Piotr Ożarowski
 	* Added green style to "html tables" template (HTML export plugin)
@@ -1094,7 +1143,8 @@ Griffith ChangeLog
 	* First tag can now be renamed
 
 2006-04-08  Vasco Nunes
-	* win32 distro is using now gtk2.8 with pygtk2.8. This fixes lots of old pygtk related bugs (mainly major pixbuf ones)
+	* win32 distro is using now GTK 2.8 with PyGTK 2.8. This fixes lots of old
+	  PyGTK related bugs (mainly major pixbuf ones)
 
 2006-04-07  Vasco Nunes
 	* some win32 related fixes
@@ -1120,10 +1170,14 @@ Griffith ChangeLog
 
 2006-03-05  Vasco Nunes
 	* Fixed bug when using 'clone movie' function on filtered treeview.
-	* When using quick filter, 'all movies' filter on menu should be checked. Fixed.
-	* Posters are now saved to the system temp dir and only moved to posters dir when the movie is really commited to db.
-	* Added a new feature to find and delete orphaned files in poster's directory. For now, it's a console only tool.
-	  'griffith -c' or 'griffith --clean'. Griffith should not produce orphans anymore but this is useful for cleaning old ones.
+	* When using quick filter, 'all movies' filter on menu should be checked.
+	  Fixed.
+	* Posters are now saved to the system temp dir and only moved to posters
+	  dir when the movie is really commited to db.
+	* Added a new feature to find and delete orphaned files in poster's
+	  directory. For now, it's a console only tool (griffith -c' or
+	  'griffith --clean'). Griffith should not produce orphans anymore but
+	  this is useful for cleaning old ones.
 
 2006-03-05  Piotr Ożarowski
 	* Fixed bug when searching movie titles containing polish characters
@@ -1173,7 +1227,8 @@ Griffith ChangeLog
 	* Movie now can't be deleted while it is loaned
 
 2006-02-25  Vasco Nunes
-	* Fixed problem under macosx and safari not opening websites fired up by griffith
+	* Fixed problem under macosx and safari not opening websites fired up by
+	  Griffith
 	* Removed loan flag from the main treeview.
 
 2006-02-21  Piotr Ożarowski
@@ -1208,12 +1263,16 @@ Griffith ChangeLog
 	* Debug console argument changed to -D, --debug
 
 2006-02-01  Vasco Nunes
-	* Fixed a problem with IMDB movie plugin not fetching casts for some movies
-	* Fixed a bug on IMDB movie plugin. Some movies were giving weird results on director's field.
+	* Fixed a problem with IMDB movie plugin not fetching casts for some
+	  movies
+	* Fixed a bug on IMDB movie plugin. Some movies were giving weird results
+	  on director's field.
 	* '"' char is now stripped from titles in all movie plugins.
-	* Added initial support for console arguments. No multi argument support yet.
+	* Added initial support for console arguments. No multi argument support
+	  yet.
 	* Debug functions moved to own class
-	* Added basic searching by original title on the console (griffith -s movie_title)
+	* Added basic searching by original title on the console (griffith -s
+	  movie_title)
 
 2006-01-28  Piotr Ożarowski
 	* Movie number is now editable
@@ -1224,7 +1283,8 @@ Griffith ChangeLog
 	* Added tags feature (alpha version)
 
 2006-01-24  Vasco Nunes
-	* Fixed bug with spellchecker initialization when an aspell word list is not installed.
+	* Fixed bug with spellchecker initialization when an aspell word list is
+	  not installed.
 
 2006-01-14  Piotr Ożarowski
 	* Filmweb movie plugin updated
@@ -1236,7 +1296,8 @@ Griffith ChangeLog
 	* [Bug #5685] AnimeDB plugin really works again
 
 2006-01-06  Vasco Nunes
-	* German OFDB (Online-Filmdatenbank) movie plugin updated. (Christian Sagmueller)
+	* German OFDB (Online-Filmdatenbank) movie plugin updated. (Christian
+	  Sagmueller)
 	* German translation updated. (Christian Sagmueller)
 	* Portuguese translation updated.
 
@@ -1259,7 +1320,8 @@ Griffith ChangeLog
 	* Fixed crash when volume or collection name wasn't string
 
 2005-12-28  Vasco Nunes
-	* Proprietary unicode font used on PDF reports replaced with a free one (DejaVu)
+	* Proprietary unicode font used on PDF reports replaced with a free one
+	  (DejaVu)
 	* Some changes to simple list PDF export plugin
 
 2005-12-27  Vasco Nunes
@@ -1277,14 +1339,16 @@ Griffith ChangeLog
 	* Updated polish translation
 
 2005-11-22  Vasco Nunes
-	* Added a new czech movie plugin (CSFD - esko-Slovensk Filmov Databze) - Thanks to Blondak <blondak@neser.cz>
+	* Added a new czech movie plugin (CSFD - esko-Slovensk Filmov Databze) -
+	  Thanks to Blondak <blondak@neser.cz>
 
 2005-11-21  Vasco Nunes
 	* Added Czech translation (Thanks to Blondak <blondak@neser.cz>)
 	* [Bug #5684] About window doesn't work on windows
 	* [Bug #5683] Two filters not working at all on windows
 	* Added a win32 installer custom image.
-	* Added portuguese, polish, german and czech translations to win32 installer.
+	* Added portuguese, polish, german and czech translations to win32
+	  installer.
 
 2005-11-21  Piotr Ożarowski
 	* Added simple style to table template (HTML export plugin)
@@ -1311,36 +1375,46 @@ Griffith ChangeLog
 
 2005-11-11  Vasco Nunes
 	* Fixed lots of poster operations bugs
-	* Added cgi module include on windows py2exe script (used by amazon.py module)
+	* Added cgi module include on windows py2exe script (used by amazon.py
+	  module)
 	* Added PIL module include on windows py2exe script
 	* Portuguese language file updated
 
 2005-11-10  Vasco Nunes
-	* Added some cyclic garbage collector calls that really should improve memory management when using large db collections
+	* Added some cyclic garbage collector calls that really should improve
+	  memory management when using large db collections
 
 2005-11-09  Vasco Nunes
-	* Added a list to choose from when fetching big posters from Amazon.com and an exact match is not found.
+	* Added a list to choose from when fetching big posters from Amazon.com
+	  and an exact match is not found.
 
 2005-11-07  Vasco Nunes
-	* Big posters fetched from Amazon are now previewed on built-in poster viewer.
+	* Big posters fetched from Amazon are now previewed on built-in poster
+	  viewer.
 
 2005-11-05  Piotr Ożarowski
 	* Media names are now stored in database
 	* Updated polish translation
 
 2005-11-04  Vasco Nunes
-	* On darwin and win32 platforms the poster viewer should not use enter/leave events anymore. Pygtk seems buggy when handling these.
-	* Added initial support to fetch bigger posters using Amazon Web Services. TODO: select poster to use when more than one found. Using the first one for now.
+	* On darwin and win32 platforms the poster viewer should not use
+	  enter/leave events anymore. Pygtk seems buggy when handling these.
+	* Added initial support to fetch bigger posters using Amazon Web Services.
+	  TODO: select poster to use when more than one found. Using the first one
+	  for now.
 	* Added original Mark Pilgrim's amazon python wrapper to core distribution
 
 2005-10-29  Vasco Nunes
 	* Added some HTML export plugin fixes for win32 compatibility
-	* Added a minor change to sql module for win32 poster paths compatibility. Needs to be tested under *nix to see if nothing is broken.
-	* win32 build should use now the libwimp widget engine for better windows visual integration
+	* Added a minor change to sql module for win32 poster paths compatibility.
+	  Needs to be tested under *nix to see if nothing is broken.
+	* win32 build should use now the libwimp widget engine for better windows
+	  visual integration
 
 2005-10-27  Vasco Nunes
 	* Added some minor changes for win32 compatibility
-	* Now Griffith's dir defaults to localized 'My Documents' dir on win32 environments
+	* Now Griffith's dir defaults to localized 'My Documents' dir on win32
+	  environments
 
 2005-10-27  Piotr Ożarowski
 	* Volume/collection renaming is now possible
@@ -1387,7 +1461,8 @@ Griffith ChangeLog
 	* Polish translation updated
 
 2005-10-05  Vasco Nunes
-	* Poster viewer events changed to only show full poster when entering/leaving zoom button
+	* Poster viewer events changed to only show full poster when
+	  entering/leaving zoom button
 	* Delete/Zoom poster buttons are now sensitive to poster existence
 	* Portuguese translation updated
 
@@ -1395,7 +1470,8 @@ Griffith ChangeLog
 	* Griffith now asks if you want to loan whole collection
 
 2005-10-01  Vasco Nunes
-	* Moved all movie plugins logos to a new optional package (griffith_extra_artwork module on cvs)
+	* Moved all movie plugins logos to a new optional package
+	  (griffith_extra_artwork module on cvs)
 	* Added some tooltips to preferences widgets
 	* Added some new tools to operate with posters (initial support)
 
@@ -1418,10 +1494,12 @@ Griffith ChangeLog
 	* Added a debug method to urlretrieve calls 
 	* Added new XML export plugin
 	* Renamed Export With Templates plugin to HTML export plugin
-	* Fixed bug with tabs not being striped on director data on ClubeMyDVD movie plugin
+	* Fixed bug with tabs not being striped on director data on ClubeMyDVD
+	  movie plugin
 
 2005-09-23  Vasco Nunes
-	* DVDZone2 plugin renamed to Mediadis according to new company service and website. Some enhancement to this plugin implemented.
+	* DVDZone2 plugin renamed to Mediadis according to new company service and
+	  website. Some enhancement to this plugin implemented.
 
 2005-09-21  Piotr Ożarowski
 	* Added Tanuki-Anime movie plugin.
@@ -1429,7 +1507,8 @@ Griffith ChangeLog
 	* Makefile update. Closes: #1324
 
 2005-09-21  Vasco Nunes
-	* Added experimental support for Microsoft Windows 2000, Millenium and Windows 98 systems
+	* Added experimental support for Microsoft Windows 2000, Millenium and
+	  Windows 98 systems
 	* [Bug #1313] Film fields with & or < break the PDF export plugin
 
 2005-09-20  Piotr Ożarowski
@@ -1448,15 +1527,19 @@ Griffith ChangeLog
 	* Small main window changes
 
 2005-09-13  Piotr Ożarowski
-	* Movie plugins update ("with" entry updated to use multiline, minor bugs fixed)
+	* Movie plugins update ("with" entry updated to use multiline, minor bugs
+	  fixed)
 	* Gery movie plugin removed - webpage is not working
 	* movie.py: capwords() should be used only if needed
 
 2005-09-12  Vasco Nunes
-	* [Bug #1302] Searching movies with non-english characters gives null results
-	* Merged two patches contributed by Arjen Schwarz, addressing one problem with email notification
-	  that was using an incorrect date/time format and another fixing some english spell errors found in language file.
-	* Color, condition, layers info and region defaults now to 'n/a' when adding a new movie.
+	* [Bug #1302] Searching movies with non-english characters gives null
+	  results
+	* Merged two patches contributed by Arjen Schwarz, addressing one problem
+	  with email notification that was using an incorrect date/time format and
+	  another fixing some english spell errors found in language file.
+	* Color, condition, layers info and region defaults now to 'n/a' when
+	  adding a new movie.
 
 2005-09-12  Piotr Ożarowski
 	* UseTemplates export plugin update
@@ -1491,7 +1574,8 @@ Griffith ChangeLog
 2005-09-02  Vasco Nunes
 	* Added double click events to lists where needed
 	* Added a new button to add movie window: 'add movie and close'
-	* Added a popup menu to main treeview when left button is clicked over an entry to perform common tasks
+	* Added a popup menu to main treeview when left button is clicked over an
+	  entry to perform common tasks
 
 2005-08-31  Vasco Nunes
 	* Added portuguese manpages
@@ -1522,8 +1606,11 @@ Griffith ChangeLog
 	* HTML export plugin now uses templates! (version 3.0-rc1)
 
 2005-08-20  Vasco Nunes
-	* Merged a couple of patches contributed by Arjen Schwarz, addressing the following issues:
-	  [Bug #1260] data for the color, region, condition and layers not being stored in database; Some spelling mistakes fixed on english language file.
+	* Merged a couple of patches contributed by Arjen Schwarz, addressing the
+	  following issues:
+	  [Bug #1260] data for the color, region, condition and layers not being
+	  stored in database; Some spelling mistakes fixed on english language
+	  file.
 
 ---- 0.4.1 ----
 
@@ -1531,10 +1618,12 @@ Griffith ChangeLog
 	* After adding a new movie, the original title widget has now the focus
 
 2005-08-18  Vasco Nunes
-	* Fixed some minor encoding problems with 7arte.net and ClubeMyDVD movie Plugins
+	* Fixed some minor encoding problems with 7arte.net and ClubeMyDVD movie
+	  Plugins
 	* [Bug #1258] wrong movie fetching.
 	* Some UI changes on main window and add dialog
-	* When quick filter is changed movie details should be blank because no movie is selected. Fixed.
+	* When quick filter is changed movie details should be blank because no
+	  movie is selected. Fixed.
 	* Password characters in email reminder preferences are now hidden
 
 2005-08-18  Piotr Ożarowski
@@ -1550,9 +1639,12 @@ Griffith ChangeLog
 	* Fixed bug when updating a person data. Treeview was not refreshing.
 	* Fixed bug when deleting a person. Should not delete entries in use.
 	* Fixed bugs with some movie plugins.
-	* Added email reminder preferences (smtp server, auth, username, password, email address sender)
-	* Minor UI adjustment. Moved some fields from movie details tab to technical information.
-	* Fixed bug with sugest not seen movie not working when a filter is activated.
+	* Added email reminder preferences (smtp server, auth, username, password,
+	  email address sender)
+	* Minor UI adjustment. Moved some fields from movie details tab to
+	  technical information.
+	* Fixed bug with sugest not seen movie not working when a filter is
+	  activated.
 	* Fix bug with random crashes when saving preferences caused by gtkspell
 
 2005-08-15  Vasco Nunes
@@ -1575,32 +1667,40 @@ Griffith ChangeLog
 
 2005-08-12  Piotr Ożarowski
 	* Some fixes in HTML export plugin and polish movie plugins
-	* Fixed problems with AniDB movie plugin (changed gdecode method in gutils)
+	* Fixed problems with AniDB movie plugin (changed gdecode method in
+	  gutils)
 
 2005-08-11  Vasco Nunes
 	* [Bug #1244] Missing poster images. Fixed.
-	* Added four new fields: color, media condition, dvd region and dvd layers information
+	* Added four new fields: color, media condition, dvd region and dvd layers
+	  information
 	* Merged some duplicated language strings.
-	* Added favorite movie plugin to preferences to be used by default when fetching web data 
+	* Added favorite movie plugin to preferences to be used by default when
+	  fetching web data 
 
 2005-08-11  Piotr Ożarowski
 	* HTML export plugin updated to 2.3beta1
 	* Some new arguments added to get_all_data() function in sql.py
 
 2005-08-10  Vasco Nunes
-	* Added an email reminder option to loaned movies. Still todo: preferences (smtp server,port,auth...)
+	* Added an email reminder option to loaned movies. Still todo: preferences
+	  (smtp server,port,auth...)
 	* Fixed a bug with progressbar when fetching movie posters
 	* Fixed bug with wrong filter behaviour when no data is entered on it
 	* Implemented some generic toolbar buttons
 
 2005-08-09  Vasco Nunes
-	* Fixed a couple of bugs when adding/cloning movies in empty movie positions. Now the main treeview is always sorted.
+	* Fixed a couple of bugs when adding/cloning movies in empty movie
+	  positions. Now the main treeview is always sorted.
 	* Updated polish translation
 	* Updated all polish movie plugins
 	* Added AniDB (english) movie plugin (contributed by Piotr Ożarowski)
 	* Added ClubeMyDVD (portuguese) movie plugin
-	* New method for movie plugins available - movie notes (optional). This field could be used to fetch and store misc information/details about the entry.
-	* Fixed bug in movie entry clone feature. Some fields were not being escaped as expected.
+	* New method for movie plugins available - movie notes (optional). This
+	  field could be used to fetch and store misc information/details about the
+	  entry.
+	* Fixed bug in movie entry clone feature. Some fields were not being
+	  escaped as expected.
 
 2005-08-08  Vasco Nunes
 	* Added picture preview and filter to file choose dialog
@@ -1619,9 +1719,12 @@ Griffith ChangeLog
 	* Portuguese translation updated
 
 2005-08-04  Vasco Nunes
-	* Images are now scaled down to a new file on disk when needed and are not scaled on the fly anymore. This should result in some better performance results with larger collections. 
+	* Images are now scaled down to a new file on disk when needed and are not
+	  scaled on the fly anymore. This should result in some better performance
+	  results with larger collections. 
 	* Some minor cosmethic changes on default images
-	* Added spellchecker options to preferences dialog to choose fields and default language to be used within (unix only)
+	* Added spellchecker options to preferences dialog to choose fields and
+	  default language to be used within (unix only)
 
 2005-08-01  Vasco Nunes
 	* Added a very basic debug module
@@ -1656,7 +1759,8 @@ Griffith ChangeLog
 	* HTML export plugin updated to v2.0beta2
 	* Updated polish and portuguese language translations
 	* Added Cinematografo (Italian) plugin
-	* Fixed bug. Problem with some characters not escaped as should be when inserting in db.
+	* Fixed bug. Problem with some characters not escaped as should be when
+	  inserting in db.
 
 2005-07-15  Vasco Nunes
 	* Old export filters changed to plugins
@@ -1671,7 +1775,8 @@ Griffith ChangeLog
 	* [Bug #1193] Add new. Cancel not working. Fixed.
 
 2005-07-07  Vasco Nunes
-	* Config module rewritten. Now config uses pickle for better cross platform handling.
+	* Config module rewritten. Now config uses pickle for better cross
+	  platform handling.
 	* Griffith now stores window size and position on exit.
 
 2005-07-06  Vasco Nunes
@@ -1702,19 +1807,22 @@ Griffith ChangeLog
 	* Added some menu shortcuts
 	* Added view menu
 	* Another portuguese/polish translation update
-	* All polish plugins now include rating capability (thanks to Piotr Ożarowski)
+	* All polish plugins now include rating capability (thanks to Piotr
+	  Ożarowski)
 
 2005-06-30  Vasco Nunes
 	* Changed plugin detection function to use glob module instead
 	* all file operations changed to use shutil module instead
 	* General code cleaning
-	* [Bug] Before function in gutils returning incorrect string. Fixed. (thanks to Piotr Ożarowski)
+	* [Bug] Before function in gutils returning incorrect string. Fixed.
+	  (thanks to Piotr Ożarowski)
 	* added Onnet Film (polish) plugin (thanks to Piotr Ożarowski).
 	* polish translation updated
 	* portuguese translation updated
 	* Added film ratings
 	* Added ratings to quick filter
-	* [Bug] Clearing filter with some criterias were not refreshing main treeview. Fixed.
+	* [Bug] Clearing filter with some criterias were not refreshing main
+	  treeview. Fixed.
 
 2005-06-29  Vasco Nunes
 	* Moved all glade widgets/event handlers definitions for a new module
@@ -1726,7 +1834,8 @@ Griffith ChangeLog
 
 2005-06-26  Vasco Nunes
 	* [Bug] Problem with null searches fixed 
-	* [Bug] Fixed bug on imdb plugin. exact matches were not returning any results.
+	* [Bug] Fixed bug on imdb plugin. exact matches were not returning any
+	  results.
 	* When an exact match is founded griffith tries to use it automatically
 
 2005-06-23  Vasco Nunes
@@ -1734,9 +1843,10 @@ Griffith ChangeLog
 	* added FilmWeb (polish) plugin (thanks to Piotr Ożarowski).
 	* added WP (polish) plugin (thanks to Piotr Ożarowski).
 	* added csv export filter
-	* added initial support for gtkspell under *nix systems. new dependency: python-gnome-extras (optional).
-	  will not be used if not available
-	* main poster changed to a button widget allowing now to select a custom poster image.
+	* added initial support for gtkspell under *nix systems. new dependency:
+	  python-gnome-extras (optional - will not be used if not available)
+	* main poster changed to a button widget allowing now to select a custom
+	  poster image.
 
 2005-06-22  Vasco Nunes
 	* added Gery Film (polish) plugin (thanks to Piotr Ożarowski).
@@ -1749,12 +1859,14 @@ Griffith ChangeLog
 	* added PTGate.pt (portuguese) plugin.
 	* hardcoded library locations fixed.
 	* added main treeview flag on loaned films.
-	* [Bug #] After droping old database and creating a new one, new movie don't get ID=1 but incremented old highest value. Fixed.    
+	* [Bug #] After droping old database and creating a new one, new movie
+	  don't get ID=1 but incremented old highest value. Fixed.    
 
 2005-06-20  Vasco Nunes
 	* true plugin system implemented.
 	* included stopklatka.pl (polish) plugin (thanks to Piotr Ożarowski).
-	* [Bug #] bug with year and running time not filled when image is not available. Fixed.
+	* [Bug #] bug with year and running time not filled when image is not
+	  available. Fixed.
 	* updated polish translation.
 
 2005-06-19  Vasco Nunes

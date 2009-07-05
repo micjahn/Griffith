@@ -41,7 +41,7 @@ from initialize import dictionaries, people_treeview
 
 log = logging.getLogger('Griffith')
 
-def backup(self):
+def create(self):
     """perform a compressed griffith database/posters/preferences backup"""
     #if self.db.session.bind.engine.name != 'sqlite':
     #    gutils.error(self, _("Backup function is available only for SQLite engine for now"), self.widgets['window'])
@@ -137,7 +137,7 @@ def copy_db(src_engine, dst_engine):
                         dst_engine.execute(query)
                     except Exception, e:
                         e = getattr(e, 'message', e)
-                        log.error('cannot update sequence: %s', e)
+                        log.error('... cannot update sequence: %s', e)
 
 def merge_db(src_db, dst_db): # FIXME
     merged = 0

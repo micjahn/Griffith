@@ -1023,8 +1023,8 @@ class Griffith(object):
     # backup/restore ------------------------------------------------------
 
     def backup(self, *args):
-        from backup import backup
-        backup(self)
+        from backup import create
+        create(self)
 
     def restore(self, *args):
         response = gutils.question(_("""Are you sure you want to restore?
