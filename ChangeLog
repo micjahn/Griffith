@@ -11,6 +11,7 @@ Griffith ChangeLog
 	* Remove ilike from search criteria
 	* Update current value of sequence after restoring data from backup in
 	  PostgreSQL
+	* Loan details and history added to the movie db model
 
 2009-07-04  Piotr Ożarowski
 	* Version changed to 0.10-beta3+svn

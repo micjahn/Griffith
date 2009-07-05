@@ -28,7 +28,7 @@ import logging
 import re
 import string
 
-from sqlalchemy import MetaData, Table, Column, ForeignKey, func, select, and_
+from sqlalchemy import MetaData, Table, Column, ForeignKey, func, select, and_, or_
 from sqlalchemy.orm import mapper, relation, deferred, validates, column_property
 from sqlalchemy.types import Boolean, Unicode, Text, Integer, SmallInteger, Date, Binary, PickleType
 
@@ -86,13 +86,15 @@ class Person(DBTable):
         return unicode(str(value).translate(allchars, delchars))
 
 class Poster(object):
+    @validates('md5sum')
+    def _check_md5sum_length(self, key, value):
+        if len(value) != 32:
+            raise ValueError('md5sum has wrong size')
+
     def __init__(self, md5sum=None, data=None):
         if md5sum and data:
-            if len(md5sum) == 32:
-                self.md5sum = md5sum
-                self.data = data
-            else:
-                log.error('md5sum has wrong size')
+            self.md5sum = md5sum
+            self.data = data
 
     def __repr__(self):
         return "<Poster:%s>" % self.md5sum
@@ -372,7 +374,15 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
     'tags'      : relation(Tag, secondary=movie_tag_table,
                            primaryjoin=movies_table.c.movie_id==movie_tag_table.c.movie_id,
                            secondaryjoin=movie_tag_table.c.tag_id==tags_table.c.tag_id),
-    'languages' : relation(MovieLang, cascade='all, delete-orphan')})
+    'languages' : relation(MovieLang, cascade='all, delete-orphan'),
+    'loan_details' : relation(Loan, uselist=False, primaryjoin=and_(loans_table.c.return_date==None,
+                                                              or_(loans_table.c.collection_id==movies_table.c.collection_id,
+                                                                  loans_table.c.volume_id==movies_table.c.volume_id,
+                                                                  loans_table.c.movie_id==movies_table.c.movie_id))),
+    'loan_history' : relation(Loan, primaryjoin=or_(loans_table.c.collection_id==movies_table.c.collection_id,
+                                                    loans_table.c.volume_id==movies_table.c.volume_id,
+                                                    loans_table.c.movie_id==movies_table.c.movie_id))
+    })
 mapper(Poster, posters_table, properties={
     'movies': relation(Movie),
     'data'  : deferred(posters_table.c.data)

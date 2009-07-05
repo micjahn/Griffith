@@ -261,15 +261,13 @@ def set_details(self, item=None):#{{{
         w['email_reminder_button'].set_sensitive(True)
         w['return_button'].set_sensitive(True)
         
-        data_loan = sql.get_loan_info(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
-        if data_loan is None:
+        if getattr(item, 'loan_details', None) is None:
             log.warning("movie has no loan data, changing 'loaned' flag to False (movie_id: %s)", item['movie_id'])
             item.loaned = False
         else:
-            data_person = self.db.session.query(db.Person.name, db.Person.email).filter_by(person_id=data_loan.person.person_id).first()
-            self.person_name = data_person.name
-            self.person_email = data_person.email
-            self.loan_date = str(data_loan.date)
+            self.person_name = item.loan_details.person.name
+            self.person_email = item.loan_details.person.email
+            self.loan_date = str(item.loan_details.date)
             w['loan_info'].set_use_markup(False)
             w['loan_info'].set_label(_("This movie has been loaned to %s on %s") % (self.person_name, self.loan_date[:10]))
     if 'loaned' in item and not item['loaned']: # "loaned" status can be changed above, so don't use "else:" in this line
@@ -286,9 +284,8 @@ def set_details(self, item=None):#{{{
 
     # loan history    
     self.loans_treemodel.clear()
-    if 'collection_id' in item or 'volume_id' in item or 'movie_id' in item:
-        loans = sql.get_loan_history(self.db, collection_id=item['collection_id'], volume_id=item['volume_id'], movie_id=item['movie_id'])
-        for loan in loans:
+    if getattr(item, 'loan_history', None) is not None:
+        for loan in item.loan_history:
             myiter = self.loans_treemodel.append(None)
             self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan.date)[:10])
             if loan.return_date and  loan.return_date != '':
