@@ -22,16 +22,19 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-from sqlalchemy import *
-import os.path
-import gutils
-import db
 import logging
+import os.path
+
+from sqlalchemy import *
+
+import db
+import gutils
+
 log = logging.getLogger("Griffith")
 
 def upgrade_database(self, version, config):
     """Create new db or update existing one to current format"""
-    b = self.session.bind
+    b = self.engine
     if version == 0 or version is None:
         log.info('Creating new database...')
         # version is 0 or none only for new databases

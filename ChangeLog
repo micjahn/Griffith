@@ -8,6 +8,7 @@ Griffith ChangeLog
 2009-07-05  Piotr Ożarowski
 	* Use SQLAlchemy's PickleType to store search conditions
 	  (old rules are removed without warning - beta version privilege ;)
+	* Remove ilike from search criteria
 
 2009-07-04  Piotr Ożarowski
 	* Version changed to 0.10-beta3+svn

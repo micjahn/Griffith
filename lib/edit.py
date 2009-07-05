@@ -21,19 +21,20 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import os
-import gtk
-import tempfile
-import shutil
-from PIL     import Image
-from urllib  import urlcleanup, FancyURLopener, urlretrieve
 import logging
-log = logging.getLogger("Griffith")
+import os
+import tempfile
+from urllib import urlcleanup, FancyURLopener, urlretrieve
+
+import gtk
+from PIL import Image
+
 import amazon
 import db
 import delete
 import gutils
-import movie
+
+log = logging.getLogger("Griffith")
 
 def change_poster(self):
     """
@@ -78,7 +79,7 @@ def update_image(self, number, filename):
     session.add(movie)
     try:
         session.commit()
-    except Exceptionm, e:
+    except Exception, e:
         session.rollback()
         log.error("cannot add poster to database: %s" % e)
         return False
@@ -234,6 +235,7 @@ def get_poster_select(self, mself, result, current_poster):
 
 def get_poster(self, f, result):
     from widgets import reconnect_add_signals
+    from movie import Progress, Retriever
     if f is None:
         treeselection = self.widgets['results']['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
@@ -248,8 +250,8 @@ def get_poster(self, f, result):
     canceled = False
     if len(result.Item[f].LargeImage.URL):
         try:
-            progress = movie.Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
-            retriever = movie.Retriever(result.Item[f].LargeImage.URL, self.widgets['window'], progress, file_to_copy)
+            progress = Progress(self.widgets['window'],_("Fetching poster"),_("Wait a moment"))
+            retriever = Retriever(result.Item[f].LargeImage.URL, self.widgets['window'], progress, file_to_copy)
             retriever.start()
             while retriever.isAlive():
                 progress.pulse()

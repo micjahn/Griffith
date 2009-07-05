@@ -21,14 +21,17 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import gtk
-from copy       import deepcopy
-from sqlalchemy import select
 import logging
-log = logging.getLogger("Griffith")
+from copy import deepcopy
+
+import gtk
+from sqlalchemy import select
+
 import db
 import sql
 from gutils import info
+
+log = logging.getLogger("Griffith")
 
 __conditions = { # default
     'loaned'          : None,  # None, True, False
@@ -51,15 +54,13 @@ __conditions = { # default
     'contains_n'      : {}, # see above
     'like'            : {}, # see above
     'like_n'          : {}, # see above
-    'ilike'           : {}, # see above
-    'ilike_n'         : {}, # see above
     }
 
 QUERY_FIELDS = ('title', 'o_title', 'director', 'plot', 'cast', 'notes', 'number',
                 'runtime', 'year', 'screenplay', 'cameraman', 'country', 'genre',
                 'studio', 'classification', 'o_site', 'site', 'trailer')
 QUERY_COMMANDS = ('equals', 'equals_n', 'startswith', 'startswith_n', 'contains',
-                  'contains_n', 'like', 'like_n', 'ilike', 'ilike_n')
+                  'contains_n', 'like', 'like_n')
 QUERY_COMMAND_NAMES = {
     'equals'      : _('is equal to'),
     'equals_n'    : _('is not equal to'),
@@ -68,9 +69,7 @@ QUERY_COMMAND_NAMES = {
     'contains'    : _('contains'),
     'contains_n'  : _("doesn't contain"),
     'like'        : _('like'),
-    'like_n'      : _('not like'),
-    'ilike'       : _('ilike'),
-    'ilike_n'     : _('not ilike')}
+    'like_n'      : _('not like')}
 
 # widgets -----------------------------------------------------{{{
 
@@ -269,13 +268,13 @@ def set_conditions(widgets, cond, field_names): #{{{
         else:
             hbox_items[1].set_active(True)
 
-    if not cond["equals"] and not cond["startswith"] and not cond["contains"] and not cond["like"] and not cond["ilike"]:
+    if not cond["equals"] and not cond["startswith"] and not cond["contains"] and not cond["like"]:
         for i in widgets['dynamic_vbox'].get_children():
             i.destroy()
         add_query_widget(widgets['dynamic_vbox'], field_names)
     else:
         vbox = widgets['dynamic_vbox']
-        for rule in ('equals', 'startswith', 'contains', 'like', 'ilike'):
+        for rule in ('equals', 'startswith', 'contains', 'like'):
             for field in cond[rule]:
                 for text in cond[rule][field]:
                     add_query_widget(vbox, field_names, field, rule, text)

@@ -21,9 +21,11 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import gutils
-import db
 import logging
+
+import db
+import gutils
+
 log = logging.getLogger("Griffith")
 
 def show_people_window(self):
@@ -61,6 +63,7 @@ def add_person_db(self):
         try:
             self.db.session.commit()
         except Exception, e:
+            self.db.session.rollback()
             log.info(str(e))
         else:
             myiter = self.p_treemodel.insert_after(None, None)
@@ -105,6 +108,7 @@ def update_person(self):
     try:
         self.db.session.commit()
     except Exception, e:
+        self.db.session.rollback()
         log.info(str(e))
     else:
         self.update_statusbar(_("Record updated"))

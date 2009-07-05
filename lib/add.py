@@ -374,7 +374,7 @@ def get_details(self): #{{{
     }
     if self._am_movie_id is not None:
         t_movies['movie_id'] = self._am_movie_id
-    
+
     if t_movies['collection_id'] > 0:
         t_movies['collection_id'] = self.collection_combo_ids[t_movies['collection_id']]
     else:
@@ -693,7 +693,7 @@ def add_movie_db(self, close):
         return False
 
     rows = len(self.treemodel)
-    if rows>0:
+    if rows > 0:
         insert_after = self.treemodel.get_iter(rows-1)    # last
     else:
         insert_after = None
@@ -855,8 +855,8 @@ def commit(self, session):
         session.commit()
     except IntegrityError, e:
         session.rollback()
-        gutils.warning(str(e.orig))
         log.warn("Cannot commit movie: %s", e.message)
+        gutils.warning(unicode(e.orig))
         return False
     except Exception, e:
         log.error("Unexpected problem: %s", e)

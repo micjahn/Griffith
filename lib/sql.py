@@ -103,7 +103,8 @@ class GriffithSQL(object):
             conn = engine.connect()
 
         self.Session = sessionmaker(bind=engine) # create new sessions using this class
-        self.session = self.Session() # global session
+        self.engine = engine
+        self.session = self.Session() # TODO: get rid of it, force developers to create new session using gsql.Session()
         #}}}
 
         # check if database needs an upgrade
@@ -196,10 +197,6 @@ def update_whereclause(query, cond): # {{{
         values = [ not_(db.movies_table.columns[field].like(value)) for value in cond["like_n"][field] ]
         query.append_whereclause(and_(*values))
 
-    for field in cond["ilike_n"]:
-        values = [ not_(db.movies_table.columns[field].ilike(value)) for value in cond["ilike_n"][field] ]
-        query.append_whereclause(and_(*values))
-
     for field in cond["contains_n"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
         values = [ not_(db.movies_table.columns[field].like('%'+value+'%')) for value in cond["contains_n"][field] ]
         query.append_whereclause(and_(*values))
@@ -214,10 +211,6 @@ def update_whereclause(query, cond): # {{{
 
     for field in cond["like"]:
         values = [ db.movies_table.columns[field].like(value) for value in cond["like"][field] ]
-        query.append_whereclause(or_(*values))
-
-    for field in cond["ilike"]:
-        values = [ db.movies_table.columns[field].ilike(value) for value in cond["ilike"][field] ]
         query.append_whereclause(or_(*values))
 
     for field in cond["contains"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
