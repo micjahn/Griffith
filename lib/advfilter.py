@@ -362,8 +362,7 @@ def save(gsql, widgets):
         info(_("Name is empty"), widgets['window'])
         return False
 
-    session = gsql.Session(bind=gsql.session.bind)
-    #session.bind = gsql.session.bind
+    session = gsql.Session()
     filter_ = session.query(db.Filter).filter_by(name=name).first()
     if filter_:
         filter_.data = cond

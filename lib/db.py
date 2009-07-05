@@ -28,8 +28,9 @@ import logging
 import re
 import string
 
-from sqlalchemy import *
+from sqlalchemy import MetaData, Table, Column, ForeignKey, func, select, and_
 from sqlalchemy.orm import mapper, relation, deferred, validates, column_property
+from sqlalchemy.types import Boolean, Unicode, Text, Integer, SmallInteger, Date, Binary, PickleType
 
 log = logging.getLogger("Griffith")
 
