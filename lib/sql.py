@@ -39,7 +39,7 @@ log = logging.getLogger("Griffith")
 
 
 class GriffithSQL(object):
-    version = 5 # database format version, increase after changing data structures
+    version = db.__version__
     DEFAULT_PORTS = dict(postgres=5432, mysql=3306, mssql=1433)
 
     def __init__(self, config, griffith_dir, fallback=True):

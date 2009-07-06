@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
-__revision__ = '$Id: __init__.py 1251 2009-07-06 18:29:12Z piotrek $'
+__revision__ = '$Id$'
+__version__ = 5 # XXX: database format version, remember to increase after changing data structures
 
 # Copyright © 2009 Piotr Ożarowski
 #
@@ -34,7 +35,7 @@ metadata = MetaData()
 import tables # *after* metadata initialization
 from _objects import *
 
-log = logging.getLogger("Griffith")
+log = logging.getLogger('Griffith')
 
 EMAIL_PATTERN = re.compile('^[a-z0-9]+[.a-z0-9_+-]*@[a-z0-9_-]+(\.[a-z0-9_-]+)+$', re.IGNORECASE)
 

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
-__revision__ = '$Id: _objects.py 1251 2009-07-06 18:29:12Z piotrek $'
+__revision__ = '$Id$'
 
 # Copyright © 2009 Piotr Ożarowski
 #
@@ -26,7 +26,7 @@ import string
 
 from sqlalchemy.orm import validates
 
-log = logging.getLogger("Griffith")
+log = logging.getLogger('Griffith')
 
 class DBTable(object):
     def __init__(self, **kwargs):

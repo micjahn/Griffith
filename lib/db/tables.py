@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
-__revision__ = '$Id: tables.py 1251 2009-07-06 18:29:12Z piotrek $'
+__revision__ = '$Id$'
 
 # Copyright © 2009 Piotr Ożarowski
 #
@@ -28,7 +28,7 @@ from sqlalchemy.types import Boolean, Unicode, Text, Integer, SmallInteger, Date
 
 from db import metadata
 
-log = logging.getLogger("Griffith")
+log = logging.getLogger('Griffith')
 
 movies = Table('movies', metadata,
     Column('movie_id', Integer, primary_key=True),
