@@ -379,11 +379,13 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
     'loan_details' : relation(Loan, uselist=False, primaryjoin=and_(loans_table.c.return_date==None,
                                                               or_(loans_table.c.collection_id==movies_table.c.collection_id,
                                                                   loans_table.c.volume_id==movies_table.c.volume_id,
-                                                                  loans_table.c.movie_id==movies_table.c.movie_id))),
-    'loan_history' : relation(Loan, primaryjoin=and_(loans_table.c.return_date!=None,
+                                                                  loans_table.c.movie_id==movies_table.c.movie_id)),
+                              foreign_keys=[movies_table.c.movie_id, movies_table.c.collection_id, movies_table.c.volume_id]),
+    'loan_history' : relation(Loan, uselist=True, primaryjoin=and_(loans_table.c.return_date!=None,
                                                     or_(loans_table.c.collection_id==movies_table.c.collection_id,
                                                         loans_table.c.volume_id==movies_table.c.volume_id,
-                                                        loans_table.c.movie_id==movies_table.c.movie_id)))
+                                                        loans_table.c.movie_id==movies_table.c.movie_id)),
+                              foreign_keys=[movies_table.c.movie_id, movies_table.c.collection_id, movies_table.c.volume_id])
     })
 mapper(Poster, posters_table, properties={
     'movies': relation(Movie),
