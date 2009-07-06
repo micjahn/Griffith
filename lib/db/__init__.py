@@ -22,11 +22,7 @@ __version__ = 5 # XXX: database format version, remember to increase after chang
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-
-# XXX: keep stdlib and SQLAlchemy imports only in this module
-
 import logging
-import re
 
 from sqlalchemy import MetaData, func, select, and_
 from sqlalchemy.orm import mapper, relation, deferred, column_property
@@ -37,13 +33,7 @@ from _objects import *
 
 log = logging.getLogger('Griffith')
 
-EMAIL_PATTERN = re.compile('^[a-z0-9]+[.a-z0-9_+-]*@[a-z0-9_-]+(\.[a-z0-9_-]+)+$', re.IGNORECASE)
 
-### clases #################################################### {{{
-
-#}}}
-
-### mappers ################################################### {{{
 mapper(Configuration, tables.configuration)
 mapper(Volume, tables.volumes, order_by=tables.volumes.c.name, properties={
     'movies': relation(Movie, backref='volume')})
@@ -99,5 +89,4 @@ mapper(Poster, tables.posters, properties={
     'data'  : deferred(tables.posters.c.data)
     })
 mapper(Filter, tables.filters)
-#}}}
 

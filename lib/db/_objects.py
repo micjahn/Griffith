@@ -23,10 +23,13 @@ __revision__ = '$Id$'
 
 import logging
 import string
+import re
 
 from sqlalchemy.orm import validates
 
 log = logging.getLogger('Griffith')
+
+EMAIL_PATTERN = re.compile('^[a-z0-9]+[.a-z0-9_+-]*@[a-z0-9_-]+(\.[a-z0-9_-]+)+$', re.IGNORECASE)
 
 class DBTable(object):
     def __init__(self, **kwargs):
