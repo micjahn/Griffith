@@ -371,9 +371,11 @@ def populate(self, movies=None, where=None, qf=True):#{{{
             # saved in advfilter
             name = self.widgets['filter']['advfilter'].get_active_text()[:-3].decode('utf-8') # :-3 due to additional '   ' in the name
             if name:
-                cond = self.db.session.query(db.Filter).filter_by(name=name).first().data
+                cond = self.db.session.query(db.Filter).filter_by(name=name).first()
                 if not cond:
                     cond = advfilter.get_def_conditions()
+                else:
+                    cond = cond.data
             else:
                 cond = advfilter.get_def_conditions()
             # add sorting from config

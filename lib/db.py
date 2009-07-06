@@ -90,6 +90,7 @@ class Poster(object):
     def _check_md5sum_length(self, key, value):
         if len(value) != 32:
             raise ValueError('md5sum has wrong size')
+        return value
 
     def __init__(self, md5sum=None, data=None):
         if md5sum and data:
