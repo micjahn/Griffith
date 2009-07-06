@@ -30,14 +30,14 @@ def change_filter(self):
     
     from sqlalchemy import select
     from sqlalchemy.orm.util import class_mapper, object_mapper
-    statement = select(db.movies_table.columns, bind=self.db.session.bind)
+    statement = select(db.tables.movies.columns, bind=self.db.session.bind)
     
     if text:
         criteria = self.search_criteria[self.widgets['filter']['criteria'].get_active()]
         if criteria in ('year', 'runtime', 'media_num', 'rating'):
-            statement.append_whereclause(db.movies_table.c[criteria]==text)
+            statement.append_whereclause(db.tables.movies.c[criteria]==text)
         else:
-            statement.append_whereclause(db.movies_table.c[criteria].like('%'+text+'%'))
+            statement.append_whereclause(db.tables.movies.c[criteria].like('%'+text+'%'))
     if self.widgets['filter']['text'].is_focus():
         if len(text)<4: # filter mode
             limit = int(self.config.get('limit', 0, section='mainlist'))

@@ -161,7 +161,7 @@ class ImportPlugin(object):
                     #movie = db.Movie()
                     #movie.add_to_db(details)
                     try:
-                        db.movies_table.insert(bind=self.db.session.bind).execute(details)
+                        db.tables.movies.insert(bind=self.db.session.bind).execute(details)
                         self.imported += 1
                     except Exception, e:
                         log.info("movie details are not unique, skipping: %s", e)

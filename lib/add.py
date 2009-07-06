@@ -828,7 +828,7 @@ def update_movie_instance(movie, details, session):
             t_tags = details.pop('tags')
         if 'languages' in details:
             t_languages = details.pop('languages')
-        #for i in db.movies_table.columns.keys():
+        #for i in db.tables.movies.columns.keys():
         for i in details:
             if hasattr(movie, i):
                 setattr(movie, i, details[i])

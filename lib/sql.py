@@ -152,15 +152,15 @@ def update_whereclause(query, cond): # {{{
 
     loaned_to = []
     for per_id in cond["loaned_to"]:
-        loaned_to.append(exists([db.loans_table.c.movie_id],\
-                and_(db.Movie.movie_id==db.loans_table.c.movie_id, db.loans_table.c.person_id==per_id, db.loans_table.c.return_date==None)))
+        loaned_to.append(exists([db.tables.loans.c.movie_id],\
+                and_(db.Movie.movie_id==db.tables.loans.c.movie_id, db.tables.loans.c.person_id==per_id, db.tables.loans.c.return_date==None)))
     if loaned_to:
         query.append_whereclause(or_(*loaned_to))
 
     loan_history = []
     for per_id in cond["loan_history"]:
-        loan_history.append(exists([db.loans_table.c.movie_id],\
-                and_(db.Movie.movie_id==db.loans_table.c.movie_id, db.loans_table.c.person_id==per_id)))
+        loan_history.append(exists([db.tables.loans.c.movie_id],\
+                and_(db.Movie.movie_id==db.tables.loans.c.movie_id, db.tables.loans.c.person_id==per_id)))
     if loan_history:
         query.append_whereclause(or_(*loan_history))
 
@@ -186,35 +186,35 @@ def update_whereclause(query, cond): # {{{
         query.append_whereclause(and_(*no_tags))
 
     for field in cond["equals_n"]:
-        values = [ db.movies_table.columns[field]!=value for value in cond["equals_n"][field] ]
+        values = [ db.tables.movies.columns[field]!=value for value in cond["equals_n"][field] ]
         query.append_whereclause(and_(*values))
 
     for field in cond["startswith_n"]:
-        values = [ not_(db.movies_table.columns[field].startswith(value)) for value in cond["startswith_n"][field] ]
+        values = [ not_(db.tables.movies.columns[field].startswith(value)) for value in cond["startswith_n"][field] ]
         query.append_whereclause(and_(*values))
 
     for field in cond["like_n"]:
-        values = [ not_(db.movies_table.columns[field].like(value)) for value in cond["like_n"][field] ]
+        values = [ not_(db.tables.movies.columns[field].like(value)) for value in cond["like_n"][field] ]
         query.append_whereclause(and_(*values))
 
     for field in cond["contains_n"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
-        values = [ not_(db.movies_table.columns[field].like('%'+value+'%')) for value in cond["contains_n"][field] ]
+        values = [ not_(db.tables.movies.columns[field].like('%'+value+'%')) for value in cond["contains_n"][field] ]
         query.append_whereclause(and_(*values))
 
     for field in cond["equals"]:
-        values = [ db.movies_table.columns[field]==value for value in cond["equals"][field] ]
+        values = [ db.tables.movies.columns[field]==value for value in cond["equals"][field] ]
         query.append_whereclause(or_(*values))
 
     for field in cond["startswith"]:
-        values = [ db.movies_table.columns[field].startswith(value) for value in cond["startswith"][field] ]
+        values = [ db.tables.movies.columns[field].startswith(value) for value in cond["startswith"][field] ]
         query.append_whereclause(or_(*values))
 
     for field in cond["like"]:
-        values = [ db.movies_table.columns[field].like(value) for value in cond["like"][field] ]
+        values = [ db.tables.movies.columns[field].like(value) for value in cond["like"][field] ]
         query.append_whereclause(or_(*values))
 
     for field in cond["contains"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
-        values = [ db.movies_table.columns[field].like('%'+value+'%') for value in cond["contains"][field] ]
+        values = [ db.tables.movies.columns[field].like('%'+value+'%') for value in cond["contains"][field] ]
         query.append_whereclause(or_(*values))
 
     # sorting
