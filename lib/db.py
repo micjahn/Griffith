@@ -29,7 +29,7 @@ import re
 import string
 
 from sqlalchemy import MetaData, Table, Column, ForeignKey, func, select, and_, or_
-from sqlalchemy.orm import mapper, relation, deferred, validates, column_property
+from sqlalchemy.orm import mapper, relation, deferred, validates, column_property, object_session
 from sqlalchemy.types import Boolean, Unicode, Text, Integer, SmallInteger, Date, Binary, PickleType
 
 log = logging.getLogger("Griffith")
@@ -106,7 +106,8 @@ class Configuration(object):
 
 class Loan(object):
     def __repr__(self):
-        return "<Loan:%s (movie:%s person:%s)>" % (self.loan_id, self.movie_id, self.person_id)
+        return "<Loan:%s (person:%s, movie_id:%s, volume_id:%s, collection_id:%s )>" % \
+                (self.loan_id, self.person_id, self.movie_id, self.volume_id, self.collection_id)
 
 class Movie(object):
     _res_aliases = {(2560, 1600): ('QSXGA',),
@@ -180,6 +181,24 @@ class Movie(object):
             return getattr(self, name)
         else:
             raise AttributeError, name
+
+    def _get_loan_history(self):
+        where = [loans_table.c.movie_id==self.movie_id]
+        if self.collection_id is not None:
+            where.append(loans_table.c.collection_id==self.collection_id)
+        if self.volume_id is not None:
+            where.append(loans_table.c.volume_id==self.volume_id)
+        return object_session(self).query(Loan).filter(and_(loans_table.c.return_date!=None, or_(*where))).all()
+    loan_history = property(_get_loan_history)
+
+    def _get_loan_details(self):
+        where = [loans_table.c.movie_id==self.movie_id]
+        if self.collection_id is not None:
+            where.append(loans_table.c.collection_id==self.collection_id)
+        if self.volume_id is not None:
+            where.append(loans_table.c.volume_id==self.volume_id)
+        return object_session(self).query(Loan).filter(and_(loans_table.c.return_date==None, or_(*where))).first()
+    loan_details = property(_get_loan_details)
 
 class MovieLang(object):
     def __init__(self, lang_id=None, type=None, acodec_id=None, achannel_id=None, subformat_id=None):
@@ -375,18 +394,7 @@ mapper(Movie, movies_table, order_by=movies_table.c.number , properties = {
     'tags'      : relation(Tag, secondary=movie_tag_table,
                            primaryjoin=movies_table.c.movie_id==movie_tag_table.c.movie_id,
                            secondaryjoin=movie_tag_table.c.tag_id==tags_table.c.tag_id),
-    'languages' : relation(MovieLang, cascade='all, delete-orphan'),
-    'loan_details' : relation(Loan, uselist=False, primaryjoin=and_(loans_table.c.return_date==None,
-                                                              or_(loans_table.c.collection_id==movies_table.c.collection_id,
-                                                                  loans_table.c.volume_id==movies_table.c.volume_id,
-                                                                  loans_table.c.movie_id==movies_table.c.movie_id)),
-                              foreign_keys=[movies_table.c.movie_id, movies_table.c.collection_id, movies_table.c.volume_id]),
-    'loan_history' : relation(Loan, uselist=True, primaryjoin=and_(loans_table.c.return_date!=None,
-                                                    or_(loans_table.c.collection_id==movies_table.c.collection_id,
-                                                        loans_table.c.volume_id==movies_table.c.volume_id,
-                                                        loans_table.c.movie_id==movies_table.c.movie_id)),
-                              foreign_keys=[movies_table.c.movie_id, movies_table.c.collection_id, movies_table.c.volume_id])
-    })
+    'languages' : relation(MovieLang, cascade='all, delete-orphan')})
 mapper(Poster, posters_table, properties={
     'movies': relation(Movie),
     'data'  : deferred(posters_table.c.data)
