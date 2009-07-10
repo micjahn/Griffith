@@ -114,9 +114,8 @@ class Base(object):
 class XmlExportBase(Base):
 
     def __init__(self, database, locations, parent_window, search_conditions, config):
+        Base.__init__(self, database, locations, parent_window, search_conditions, config)
         self.db              = database
-        self.locations       = locations
-        self.parent          = parent_window
         self.config_section  = None
         self.export_name     = ''
         self.filepath        = ''
@@ -126,7 +125,6 @@ class XmlExportBase(Base):
         self.exported_movies = 0
         self.true_value      = 'True'
         self.false_value     = 'False'
-        self.config          = config
 
     def run(self):
         if self.show_dialog() == True:
@@ -136,7 +134,7 @@ class XmlExportBase(Base):
             self.export_to_document(doc, doc.documentElement)
             # write xml document to file
             self.export_document_to_file(doc, self.filepath)
-            gutils.info(_('%s file has been created.') % self.export_name, self.parent)
+            gutils.info(_('%s file has been created.') % self.export_name, self.parent_window)
 
     def show_dialog(self):
         # shows a file dialog and sets self.filepath
@@ -162,7 +160,7 @@ class XmlExportBase(Base):
                 self.config.save()
             overwrite = None
             if os.path.isfile(self.filepath):
-                response = gutils.question(_('File exists. Do you want to overwrite it?'), 1, self.parent)
+                response = gutils.question(_('File exists. Do you want to overwrite it?'), 1, self.parent_window)
                 if response==-8:
                     overwrite = True
                 else:
@@ -220,6 +218,7 @@ class XmlExportBase(Base):
             db.metadata.tables['movies'].c.poster_md5==db.metadata.tables['posters'].c.md5sum)
         # fetch movie data
         moviesquery = select(columns=columns, from_obj=[media_join, collection_join, volume_join, vcodec_join, posters_join], bind=self.db.session.bind, use_labels = True)
+        moviesquery = update_whereclause(moviesquery, self.search_conditions)
         self.process_movies(document, mainelement, moviesquery)
 
     def process_movies(self, document, mainelement, moviesquery):
