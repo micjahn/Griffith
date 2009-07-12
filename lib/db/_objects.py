@@ -135,9 +135,9 @@ class Loan(object):
        
         if self.collection_id:
             self.collection.loaned = False # will update the loaned flag in all associated movies as well
-        elif self.volume_id:
+        if self.volume_id:
             self.volume.loaned = False # will update the loaned flag in all associated movies as well
-        else:
+        if self.movie_id:
             self.movie.loaned = False
         self.return_date = date
 
