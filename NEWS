@@ -1,3 +1,12 @@
+Griffith 0.10-rc1
+=================
+* New export plugins: Ant Movie Catalog, GCstar, DVD Profiler XML Export V2 and V3
+* New import plugin: Ant Movie Catalog
+* Updated movie plugins: IMDb, Allocine, CineMovies, IMDb-de, MovieMeter,
+  Zelluloid, AniDB
+* Few bugs fixed
+
+
 Griffith 0.10-beta3
 ===================
 * Backup function fixed
@@ -65,10 +74,13 @@ Griffith 0.9.7 ("Michael Jahn's release" :-)
 
 Griffith 0.9.6
 ==============
-* Distribute local copy of SQLAlchemy 0.3.11 (Griffith 0.10 which will work with SQLAlchemy 0.4.x is not ready yet)
-* Updated movie plugins: AniDb, FilmeVonAZ, Kino.de, OFDb, Stopklatka, Zelluloid
+* Distribute local copy of SQLAlchemy 0.3.11 (Griffith 0.10 which will work
+  with SQLAlchemy 0.4.x is not ready yet)
+* Updated movie plugins: AniDb, FilmeVonAZ, Kino.de, OFDb, Stopklatka,
+  Zelluloid
 * Translation changes:
-  + new: Estonian, Hungarian, Indonesian, Korean, Occitan (post 1500), Pashto, Slovak
+  + new: Estonian, Hungarian, Indonesian, Korean, Occitan (post 1500), Pashto,
+	 Slovak
   + updated: almost all :-)
 * Quick filter for volumes
 * Added columns genre, seen, runtime and year to the mainlist
@@ -86,7 +98,8 @@ Griffith 0.9.5
   + Added gmail smtp server support
 * Translation changes:
   + new: Catalan, Norwegian Bokmal
-  + updated: Brazilian Portuguese, Cech, Dutch, French, German, Italian, Polish, Portuguese, Russian
+  + updated: Brazilian Portuguese, Cech, Dutch, French, German, Italian,
+             Polish, Portuguese, Russian
 * [Bug #11864] Fixed medium and video codec's default value in add window
 
 
