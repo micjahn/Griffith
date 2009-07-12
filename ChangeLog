@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-07-12  Piotr Ożarowski
+	* Loaning collections with lots of movies inside will work faster now
+
 2009-07-10  Michael Jahn
 	* new export plugins: Ant Movie Catalog, GCstar, DVD Profiler XML Export V2 and V3
 

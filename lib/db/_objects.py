@@ -22,10 +22,14 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import logging
-import string
 import re
+import string
 
-from sqlalchemy.orm import validates
+from sqlalchemy import and_, func
+from sqlalchemy.orm import validates, object_session
+from sqlalchemy.sql import select, update
+
+import tables
 
 log = logging.getLogger('Griffith')
 
@@ -50,15 +54,92 @@ class DBTable(object):
 
 class AChannel(DBTable): pass
 class ACodec(DBTable): pass
-class Collection(DBTable): pass
 class Lang(DBTable): pass
 class Medium(DBTable): pass
 class Ratio(DBTable): pass
 class SubFormat(DBTable): pass
 class Tag(DBTable): pass
 class VCodec(DBTable): pass
-class Volume(DBTable): pass
 class Filter(DBTable): pass
+
+class Collection(DBTable):
+    def _set_loaned_flag(self, flag):
+        """Sets loaned flag in current collection and all associated movies.
+       
+        :param flag: if True and there are loaned movies in the collection
+            already, exception will be raised (whole collection cannot be
+            loaned if one of the movies is not available).
+            Please also remember to create new entry in loans table later (no
+            need to do that if flag is False).
+        """
+
+        session = object_session(self)
+
+        if flag: # loaning whole collection
+            loaned_movies = session.execute(select([tables.movies.columns.movie_id])\
+                    .where(and_(tables.movies.columns.collection_id==self.collection_id,\
+                        tables.movies.columns.loaned==True))).fetchall()
+            if loaned_movies:
+                log.error('cannot loan it, collection contains loaned movie(s): %s', loaned_movies)
+                raise Exception('loaned movies in the collection already')
+
+        self._loaned = flag
+        update_query = update(tables.movies, tables.movies.columns.collection_id==self.collection_id)
+        session.execute(update_query, params={'loaned': flag})
+
+    def _is_loaned(self):
+        return self._loaned
+
+    loaned = property(_is_loaned, _set_loaned_flag)
+
+class Volume(DBTable):
+    def _set_loaned_flag(self, flag):
+        """Sets loaned flag in current volume and all associated movies.
+
+        :param flag: if True, remember to create new entry in loans table
+            later!
+        """
+
+        session = object_session(self)
+
+        self._loaned = flag
+        update_query = update(tables.movies, tables.movies.columns.volume_id==self.volume_id)
+        session.execute(update_query, params={'loaned': flag})
+
+    def _is_loaned(self):
+        return self._loaned
+
+    loaned = property(_is_loaned, _set_loaned_flag)
+
+class Loan(object):
+    def __repr__(self):
+        return "<Loan:%s (person:%s, movie_id:%s, volume_id:%s, collection_id:%s )>" % \
+                (self.loan_id, self.person_id, self.movie_id, self.volume_id, self.collection_id)
+    
+    def returned_on(self, date=None):
+        """
+        Marks the loan as returned and clears loaned flag in related movies.
+        
+        :param date=None: return date; accepted types: datetime, YYYYMMDD string or None
+        """
+
+        if date is None:
+            date = func.current_date()
+        # note that SQLAlchemy will convert YYYYMMDD strings to datetime, no need to touch it
+
+        if self.return_date: # already returned, just update the date
+            self.return_date = date
+            return True
+
+        session = object_session(self)
+       
+        if self.collection_id:
+            self.collection.loaned = False # will update the loaned flag in all associated movies as well
+        elif self.volume_id:
+            self.volume.loaned = False # will update the loaned flag in all associated movies as well
+        else:
+            self.movie.loaned = False
+        self.return_date = date
 
 class Person(DBTable):
     @validates('email')
@@ -94,11 +175,6 @@ class Poster(object):
 class Configuration(object):
     def __repr__(self):
         return "<Config:%s=%s>" % (self.param, self.value)
-
-class Loan(object):
-    def __repr__(self):
-        return "<Loan:%s (person:%s, movie_id:%s, volume_id:%s, collection_id:%s )>" % \
-                (self.loan_id, self.person_id, self.movie_id, self.volume_id, self.collection_id)
 
 class MovieLang(object):
     def __init__(self, lang_id=None, type=None, acodec_id=None, achannel_id=None, subformat_id=None):

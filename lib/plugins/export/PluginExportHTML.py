@@ -23,10 +23,11 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import os
-import sys
-import gtk, gtk.glade
+import gtk
+import gtk.glade
 import gutils
-import glob, shutil
+import glob
+import shutil
 import version
 import math
 from xml.dom import minidom

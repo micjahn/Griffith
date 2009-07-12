@@ -21,12 +21,13 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import gutils
-import gtk
-import datetime
-import db
-import sql
 import logging
+
+import gtk
+
+import db
+import gutils
+
 log = logging.getLogger("Griffith")
 
 def loan_movie(self):
@@ -51,17 +52,19 @@ def commit(self):
         return False
     self.widgets['w_loan_to'].hide()
 
-    person = self.db.session.query(db.Person.person_id).filter_by(name=person_name).first()
+    session = self.db.Session()
+
+    person = session.query(db.Person.person_id).filter_by(name=person_name).first()
     if not person:
-        log.info("loan_commit: person doesn't exist")
+        log.warn("loan_commit: person doesn't exist")
         return False
     if self._movie_id:
-        movie = self.db.session.query(db.Movie.movie_id, db.Movie.collection_id).filter_by(movie_id=self._movie_id).first()
+        movie = session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
         if not movie:
-            log.info("loan_commit: wrong movie_id")
+            log.warn("loan_commit: movie doesn't exist")
             return False
     else:
-        log.info("loan_commit: movie not selected")
+        log.warn("loan_commit: movie not selected")
         return False
 
     # ask if user wants to loan whole collection
@@ -73,15 +76,32 @@ def commit(self):
         elif response == gtk.RESPONSE_CANCEL:
             return False
     
-    resp = sql.loan_movie(self.db, movie.movie_id, person.person_id, loan_whole_collection)
-    if resp == -1:
-        gutils.warning(_("Collection contains loaned movie.\nLoan aborted!"))
-        return False
-    elif resp:
-        self.update_statusbar(_("Movie loaned"))
-        self.treeview_clicked()
+    try:
+        if movie.loan_to(person, whole_collection=loan_whole_collection):
+            session.commit()
+    except Exception, e:
+        session.rollback()
+        if e.message == 'loaned movies in the collection already':
+            gutils.warning(_("Collection contains loaned movie.\nLoan aborted!"))
+            return False
+        else:
+            raise e
+
+    self.update_statusbar(_("Movie loaned"))
+    self.treeview_clicked()
 
 def return_loan(self):
-    if self._movie_id and sql.loan_return(self.db, self._movie_id):
-        self.treeview_clicked()
+    if not self._movie_id:
+        log.warn('return_loan: movie not selected')
+        return False
+
+    session = self.db.Session()
+
+    movie = session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
+    if not movie or not movie.loan_details:
+        log.warn("return_loan: movie or loan doesn't exist (id=%s)", self._movie_id)
+        return False
+    movie.loan_details.returned_on() # current date will be used be default
+    session.commit()
+    self.treeview_clicked()
 

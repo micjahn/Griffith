@@ -21,14 +21,10 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import logging
-
 from sqlalchemy import Table, Column, ForeignKey, func
 from sqlalchemy.types import Boolean, Unicode, Text, Integer, SmallInteger, Date, Binary, PickleType
 
 from db import metadata
-
-log = logging.getLogger('Griffith')
 
 posters = Table('posters', metadata,
     Column('md5sum', Unicode(32), primary_key=True),
@@ -37,12 +33,12 @@ posters = Table('posters', metadata,
 volumes = Table('volumes', metadata,
     Column('volume_id', Integer, primary_key=True),
     Column('name', Unicode(64), nullable=False, unique=True),
-    Column('loaned', Boolean, nullable=False, default=False))
+    Column('loaned', Boolean, nullable=False, default=False, key='_loaned'))
 
 collections = Table('collections', metadata,
     Column('collection_id', Integer, primary_key=True),
     Column('name', Unicode(64), nullable=False, unique=True),
-    Column('loaned', Boolean, nullable=False, default=False))
+    Column('loaned', Boolean, nullable=False, default=False, key='_loaned'))
 
 media = Table('media', metadata,
     Column('medium_id', Integer, primary_key=True),
@@ -64,6 +60,7 @@ movies = Table('movies', metadata,
     Column('medium_id', ForeignKey(media.c.medium_id)),
     Column('ratio_id', ForeignKey(ratios.c.ratio_id)),
     Column('vcodec_id', ForeignKey(vcodecs.c.vcodec_id)),
+    Column('poster_md5', ForeignKey(posters.c.md5sum)),
     Column('loaned', Boolean, nullable=False, default=False),
     Column('seen', Boolean, nullable=False, default=False),
     Column('rating', SmallInteger(2)),
@@ -87,13 +84,13 @@ movies = Table('movies', metadata,
     Column('trailer', Unicode(256)),
     Column('country', Unicode(128)),
     Column('genre', Unicode(128)),
-    Column('image', Unicode(128)), # XXX: deprecated
-    Column('poster_md5', ForeignKey(posters.c.md5sum)),
     Column('studio', Unicode(128)),
     Column('classification', Unicode(128)),
     Column('cast', Text),
     Column('plot', Text),
-    Column('notes', Text))
+    Column('notes', Text),
+    Column('image', Unicode(128)), # XXX: deprecated
+    )
 
 people = Table('people', metadata,
     Column('person_id', Integer, primary_key=True),

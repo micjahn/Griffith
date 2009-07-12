@@ -22,16 +22,12 @@ __version__ = 5 # XXX: database format version, remember to increase after chang
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import logging
-
 from sqlalchemy import MetaData, func, select, and_
 from sqlalchemy.orm import mapper, relation, deferred, column_property
 
 metadata = MetaData()
 import tables # *after* metadata initialization
 from _objects import *
-
-log = logging.getLogger('Griffith')
 
 
 mapper(Configuration, tables.configuration)
