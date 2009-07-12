@@ -1150,6 +1150,7 @@ You can't undo this operation."""), True, self.widgets['window'])
     def hide_advfilter_window(self, *args):
         from advfilter import hide_window
         hide_window(self)
+        return True
 
     def on_af_find_clicked(self, *args):
         from advfilter import create_select_query, hide_window
