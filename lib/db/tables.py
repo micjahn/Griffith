@@ -33,12 +33,12 @@ posters = Table('posters', metadata,
 volumes = Table('volumes', metadata,
     Column('volume_id', Integer, primary_key=True),
     Column('name', Unicode(64), nullable=False, unique=True),
-    Column('loaned', Boolean, nullable=False, default=False, key='_loaned'))
+    Column('loaned', Boolean, nullable=False, default=False))
 
 collections = Table('collections', metadata,
     Column('collection_id', Integer, primary_key=True),
     Column('name', Unicode(64), nullable=False, unique=True),
-    Column('loaned', Boolean, nullable=False, default=False, key='_loaned'))
+    Column('loaned', Boolean, nullable=False, default=False))
 
 media = Table('media', metadata,
     Column('medium_id', Integer, primary_key=True),

@@ -23,7 +23,7 @@ __version__ = 5 # XXX: database format version, remember to increase after chang
 # GNU General Public License, version 2 or later
 
 from sqlalchemy import MetaData, func, select, and_
-from sqlalchemy.orm import mapper, relation, deferred, column_property
+from sqlalchemy.orm import mapper, relation, deferred, column_property, synonym
 
 metadata = MetaData()
 import tables # *after* metadata initialization
@@ -32,8 +32,10 @@ from _objects import *
 
 mapper(Configuration, tables.configuration)
 mapper(Volume, tables.volumes, order_by=tables.volumes.c.name, properties={
+    'loaned': synonym('_loaned', map_column=True),
     'movies': relation(Movie, backref='volume')})
 mapper(Collection, tables.collections, order_by=tables.collections.c.name, properties={
+    'loaned': synonym('_loaned', map_column=True),
     'movies': relation(Movie, backref='collection')})
 mapper(Medium, tables.media, properties={
     'movies': relation(Movie, backref='medium')})
