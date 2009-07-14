@@ -64,6 +64,7 @@ Source: dist\share\*;  DestDir: {app}\share;  Flags: ignoreversion recursesubdir
 ; don't use recursion because of components selection (movie plugins, ...)
 Source: dist\lib\*;    DestDir: {app}\lib;    Flags: ignoreversion
 ; use recursion, no components
+Source: dist\lib\db\*;           DestDir: {app}\lib\db;           Flags: ignoreversion recursesubdirs createallsubdirs
 Source: dist\lib\gettext\*;      DestDir: {app}\lib\gettext;      Flags: ignoreversion recursesubdirs createallsubdirs
 Source: dist\lib\glade3\*;       DestDir: {app}\lib\glade3;       Flags: ignoreversion recursesubdirs createallsubdirs
 Source: dist\lib\glib-2.0\*;     DestDir: {app}\lib\glib-2.0;     Flags: ignoreversion recursesubdirs createallsubdirs
@@ -138,6 +139,7 @@ Filename: {app}\griffith.exe; Description: {cm:LaunchProgram,Griffith}; Flags: n
 
 [UninstallDelete]
 Type: files; Name: {app}\lib\*.pyo
+Type: files; Name: {app}\lib\db\*.pyo
 Type: files; Name: {app}\lib\plugins\export\*.pyo
 Type: files; Name: {app}\lib\plugins\movie\*.pyo
 Type: files; Name: {app}\lib\plugins\imp\*.pyo
