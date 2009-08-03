@@ -5,6 +5,11 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+---- 0.10 ----
+
+2009-08-03  Piotr Ożarowski
+	* Releasing 0.10
+
 2009-07-13  Piotr Ożarowski
 	* Version changed to 0.10-rc1+svn
 	* Filtering Volumes/Collections by loaned flag fixed
