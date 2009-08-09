@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+# vim: fdm=marker
 
 __revision__ = '$Id$'
 
@@ -34,9 +35,9 @@ def define_widgets(self, gladefile):
     self.widgets['treeview'] = get('main_treeview')
     self.widgets['treeview'].connect('button_press_event', self.on_maintree_button_press_event)
     self.widgets['statusbar'] = get('statusbar')
-    self.widgets['progressbar']    = get('w_progress')    # get from web
+    self.widgets['progressbar'] = get('w_progress')    # get from web
     #buttons
-    self.widgets['new_db']      = get('new_bt')
+    self.widgets['new_db'] = get('new_bt')
     self.widgets['toolbar'] = get('toolbar1')
     
 
@@ -137,7 +138,7 @@ def define_widgets(self, gladefile):
         'lang_treeview'    : get('lang_treeview'),
         'b_get_from_web'   : get('get_from_web'),
         'c_web_source'     : get('combo_source'), # c_web_source
-        'delete_poster'    : get('delete_poster'),
+        'delete_poster'    : get('t_delete_poster'),
         'add_button'       : get('am_add_button'),
         'add_close_button' : get('am_add_close_button'),
         'clear_button'     : get('am_clear_button'),
@@ -266,11 +267,14 @@ def define_widgets(self, gladefile):
         'select':   get('results_select'),
         'cancel':   get('results_cancel'),
     }
-    self.widgets['results']['window'].connect('delete_event', self.on_delete_event_r)
+    self.widgets['results']['window'].connect('delete_event', self.on_results_window_close)
     self.widgets['results']['window'].set_transient_for(self.widgets['add']['window'])
     # default results window signals:
-    self.results_signal = self.widgets['results']['select'].connect('clicked', self.populate_dialog_with_results)
-    self.results_double_click = self.widgets['results']['treeview'].connect('button_press_event', self.on_results_button_press_event)
+    self._resultswin_window_closed_signal = None
+    self._resultswin_process = self.populate_dialog_with_results
+    self._resultswin_button_pressed_signal = self.on_add_movie_results_button_press_event
+    self.widgets['results']['select'].connect('clicked', self.on_results_select_press_event)
+    self.widgets['results']['treeview'].connect('button_press_event', self.on_results_button_press_event)
     #}}}
 
     self.widgets['print_cover'] = {#{{{
@@ -330,7 +334,6 @@ def define_widgets(self, gladefile):
         'not_seen_movies' : get('seen_movies'),
         'loaned_movies'   : get('loaned_movies'),
         'all_movies'      : get('all_movies'),
-        'delete_poster'   : get('t_delete_poster'),
         'loan'            : get('loan1'),
         'email'           : get('return1'),
         'return'          : get('e-mail_reminder1'),
@@ -342,6 +345,9 @@ def define_widgets(self, gladefile):
         'return' : get('popup_return'),
         'email'  : get('popup_email'),
     }#}}}
+    self.widgets['extensions'] = {
+        'toolbar': get('ext_toolbar'),
+    }
     
     self.widgets['w_loan_to']     = get('w_loan_to')
     self.widgets['w_loan_to'].connect('delete_event', self.on_delete_event_lt)
@@ -434,7 +440,6 @@ def define_widgets(self, gladefile):
         'on_open_poster_clicked'                 : self.change_poster,
         'on_zoom_poster_clicked'                 : self.z_poster,
         'on_delete_poster_clicked'               : self.del_poster,
-        'on_fetch_poster_clicked'                : self.get_poster,
         # URLs
         'on_goto_homepage_activate'              : self.on_goto_homepage_activate,
         'on_goto_forum_activate'                 : self.on_goto_forum_activate,
@@ -464,7 +469,7 @@ def define_widgets(self, gladefile):
         'on_am_remove_collection_button_clicked' : self.remove_collection,
         'on_f_col_changed'                       : self.filter_collection,
         'on_f_advfilter_changed'                 : self.filter_using_advfilter_rule,
-        'on_results_cancel_clicked'              : self.results_cancel_ck,
+        'on_results_cancel_clicked'              : self.on_results_window_close,
         # languages
         'on_lang_add_clicked'                    : self.on_lang_add_clicked,
         'on_lang_remove_clicked'                 : self.on_lang_remove_clicked,
@@ -512,44 +517,15 @@ def define_widgets(self, gladefile):
         'on_advfilter_open'                      : lambda w: advfilter.load(self.db, self.widgets['advfilter'], self.field_names),
     })#}}}
 
-def reconnect_add_signals(self):#{{{
-    self.widgets['add']['b_get_from_web'].set_sensitive(True)
-    try:
-        self.widgets['results']['select'].disconnect(self.poster_results_signal)
-    except:
-        pass
+def populate_results_window(treemodel, items):
+    treemodel.clear()
 
-    try:
-        self.widgets['results']['treeview'].disconnect(self.results_poster_double_click)
-    except:
-        pass
+    if isinstance(items, dict):
+        iterable = items.iteritems()
+    else:
+        iterable = items
 
-    # connect signals
-    self.results_signal = self.widgets['results']['select'].connect('clicked', \
-            self.populate_dialog_with_results)
-    self.results_double_click = self.widgets['results']['treeview'].connect('button_press_event', \
-        self.on_results_button_press_event)#}}}
-
-def connect_poster_signals(self, event, result, current_poster):#{{{
-    import edit
-
-    try:
-        self.widgets['results']['select'].disconnect(self.results_signal)
-    except:
-        pass
-
-    try:
-        self.widgets['results']['treeview'].disconnect(self.results_double_click)
-    except:
-        pass
-
-    # connect signals
-
-    self.results_poster_double_click = self.widgets['results']['treeview'].connect('button_press_event', \
-        edit.get_poster_select_dc, self, result, current_poster)
-
-    self.poster_results_signal = \
-        self.widgets['results']['select'].connect('clicked', edit.get_poster_select, \
-        self, result, current_poster)
-    #}}}
-# vim: fdm=marker
+    for key, value in iterable:
+        myiter = treemodel.insert_before(None, None)
+        treemodel.set_value(myiter, 0, str(key))
+        treemodel.set_value(myiter, 1, value)

@@ -191,48 +191,6 @@
                         </child>
                       </widget>
                     </child>
-                    <child>
-                      <widget class="GtkSeparatorMenuItem" id="separator7">
-                        <property name="visible">True</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkMenuItem" id="poster1">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Poster image</property>
-                        <property name="use_underline">True</property>
-                        <child>
-                          <widget class="GtkMenu" id="poster1_menu">
-                            <child>
-                              <widget class="GtkImageMenuItem" id="open_poster">
-                                <property name="visible">True</property>
-                                <property name="label">gtk-open</property>
-                                <property name="use_underline">True</property>
-                                <property name="use_stock">True</property>
-                                <signal name="activate" handler="on_open_poster_clicked"/>
-                              </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkMenuItem" id="fetch_poster">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Fetch from Amazon</property>
-                                <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_fetch_poster_clicked"/>
-                              </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkImageMenuItem" id="delete_poster">
-                                <property name="visible">True</property>
-                                <property name="label">gtk-delete</property>
-                                <property name="use_underline">True</property>
-                                <property name="use_stock">True</property>
-                                <signal name="activate" handler="on_delete_poster_clicked"/>
-                              </widget>
-                            </child>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
                   </widget>
                 </child>
               </widget>
@@ -657,17 +615,6 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkToolButton" id="toolbutton9">
-                        <property name="visible">True</property>
-                        <property name="tooltip" translatable="yes">Attempt to fetch a big poster from Amazon services Web site</property>
-                        <property name="stock_id">gtk-network</property>
-                        <signal name="clicked" handler="on_fetch_poster_clicked"/>
-                      </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                      </packing>
-                    </child>
-                    <child>
                       <widget class="GtkSeparatorToolItem" id="separatortoolitem5">
                         <property name="visible">True</property>
                       </widget>
@@ -833,6 +780,32 @@
             <property name="expand">False</property>
             <property name="fill">False</property>
             <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkHBox" id="ext_hbox">
+            <property name="visible">True</property>
+            <child>
+              <widget class="GtkHandleBox" id="ext_toolbar_hb">
+                <property name="visible">True</property>
+                <property name="shadow_type">GTK_SHADOW_OUT</property>
+                <child>
+                  <widget class="GtkToolbar" id="ext_toolbar">
+                    <property name="visible">True</property>
+                    <property name="toolbar_style">GTK_TOOLBAR_BOTH_HORIZ</property>
+                    <property name="show_arrow">False</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -2415,7 +2388,7 @@
             </child>
           </widget>
           <packing>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
         <child>
@@ -2425,7 +2398,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="position">4</property>
+            <property name="position">5</property>
           </packing>
         </child>
       </widget>

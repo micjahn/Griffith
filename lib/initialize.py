@@ -478,6 +478,32 @@ def import_plugins(self):
     w['box_import_2'].show_all()
     w['box_import_3'].show_all()
 
+def extensions(self):
+    import plugins.extensions
+    user_extensions_path = os.path.join(self.locations['home'], 'lib', 'extensions')
+    if os.path.isdir(user_extensions_path):
+        plugins.extensions.scan_for_extensions(user_extensions_path)
+
+    if hasattr(self, 'extensions'):
+        for ext in self.extensions:
+            ext.clear()
+    self.extensions = [] # deletes previous instances
+
+    for ext_name in plugins.extensions.by_name:
+        ext_module = plugins.extensions.by_name[ext_name]
+        if ext_module.enabled:
+            try:
+                ext = ext_module(self)
+                self.extensions.append(ext)
+            except (NotImplementedError, DeprecationWarning), e:
+                log.warning('extension skipped: %s', e.message)
+                log.debug('extension skipped: %s', ext_module.__file__)
+                continue
+            if ext_module.toolbar_icon:
+                toolbar = self.widgets['extensions']['toolbar']
+                i = ext_module.toolbar_icon
+                ext.toolbar_icon_widget = toolbar.insert_stock(ext_module.toolbar_icon, ext_module.description, None, ext._on_toolbar_icon_clicked, None, -1)
+
 def people_treeview(self, create=True):
     row = None
     self.p_treemodel = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
@@ -623,16 +649,16 @@ def web_results(self):
     self.widgets['results']['treeview'].set_model(self.treemodel_results)
     self.widgets['results']['treeview'].set_headers_visible(False)
     # column ids
-    renderer=gtk.CellRendererText()
-    self.column1=gtk.TreeViewColumn(None, renderer, text=0)
-    self.column1.set_visible(False)
-    self.widgets['results']['treeview'].append_column(self.column1)
+    renderer = gtk.CellRendererText()
+    column1 = gtk.TreeViewColumn(None, renderer, text=0)
+    column1.set_visible(False)
+    self.widgets['results']['treeview'].append_column(column1)
     # column titles
-    renderer=gtk.CellRendererText()
-    self.column2=gtk.TreeViewColumn(None, renderer, text=1)
-    self.column2.set_resizable(True)
-    self.column2.set_sort_column_id(1)
-    self.widgets['results']['treeview'].append_column(self.column2)
+    renderer = gtk.CellRendererText()
+    column2 = gtk.TreeViewColumn(None, renderer, text=1)
+    column2.set_resizable(True)
+    column2.set_sort_column_id(1)
+    self.widgets['results']['treeview'].append_column(column2)
 
 def spellcheck(self):
     global spell_support

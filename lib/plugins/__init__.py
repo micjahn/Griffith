@@ -1,1 +1,1 @@
-__all__ = ['export', 'imp', 'movie']
+__all__ = ['export', 'imp', 'movie', 'extensions']

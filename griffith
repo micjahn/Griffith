@@ -122,6 +122,7 @@ class Griffith(object):
         initialize.preferences(self)
         initialize.movie_plugins(self)
         initialize.export_plugins(self)
+        initialize.extensions(self)
         initialize.people_treeview(self)
         initialize.web_results(self)
         self.initialized = True
@@ -372,11 +373,6 @@ class Griffith(object):
 
     def z_poster_hide(self, *args):
         self.widgets['poster_window'].hide()
-
-    def get_poster(self, *args):
-        """tries to fetch a new big poster from amazon"""
-        from edit import fetch_bigger_poster
-        fetch_bigger_poster(self)
 
     # rating --------------------------------------------------------------
 
@@ -1200,11 +1196,6 @@ You can't undo this operation."""), True, self.widgets['window'])
 
     # windows/dialogs -----------------------------------------------------
 
-    def results_cancel_ck(self, *args):
-        from widgets import reconnect_add_signals
-        reconnect_add_signals(self)
-        self.widgets['results']['window'].hide()
-
     def save_state(self):
         """Saves main window state"""
         # size should only be saved on microsoft windows systems
@@ -1278,10 +1269,6 @@ You can't undo this operation."""), True, self.widgets['window'])
                     int(self.config.get('height', section='window')))
         self.widgets['window'].show()
 
-    def on_delete_event_r(self, *args):
-        self.widgets['results']['window'].hide()
-        return True
-
     def on_delete_event_poster(self, *args):
         self.widgets['poster_window'].hide()
         return True
@@ -1327,11 +1314,11 @@ You can't undo this operation."""), True, self.widgets['window'])
             gutils.run_browser(self._trailer_url)
 
     def on_goto_homepage_activate(site, *args):
-        gutils.run_browser("http://www.griffith.cc/")
+        gutils.run_browser('http://www.griffith.cc/')
     def on_goto_forum_activate(site, *args):
-        gutils.run_browser("http://forum.griffith.cc/")
+        gutils.run_browser('http://forum.griffith.cc/')
     def on_goto_report_bug_activate(site, *args):
-        gutils.run_browser("https://bugs.launchpad.net/griffith/")
+        gutils.run_browser('http://bugs.griffith.cc/')
 
     # toolbar -------------------------------------------------------------
     def toggle_toolbar(self, *args):
@@ -1414,16 +1401,42 @@ You can't undo this operation."""), True, self.widgets['window'])
         elif event.type == gtk.gdk._2BUTTON_PRESS:
             self.edit_movie()
 
+    # -=[ results window ]=------------------------------------------------
+    def on_results_window_close(self, *args):
+        self.widgets['results']['window'].hide()
+        # restore default signals (reassgin results window to "add movie" dialog)
+        self.widgets['add']['b_get_from_web'].set_sensitive(True)
+        if self._resultswin_window_closed_signal:
+            self._resultswin_window_closed_signal(*args)
+        self._resultswin_window_closed_signal = None
+        self._resultswin_button_pressed_signal = self.on_add_movie_results_button_press_event
+        self._resultswin_process = self.populate_dialog_with_results
+        return True
+
     def on_results_button_press_event(self, widget, event):
+        if event.type == gtk.gdk._2BUTTON_PRESS:
+            return self.on_results_select_press_event(widget)
+        return self._resultswin_button_pressed_signal(widget, event)
+    
+    def on_results_select_press_event(self, button):
+        treeselection = self.widgets['results']['treeview'].get_selection()
+        if not treeselection:
+            log.debug('no treeselection')
+            return False
+        tmp_model, tmp_iter = treeselection.get_selected()
+        if tmp_iter is None:
+            log.debug('no selected iter found')
+            return False
+        selected_key = int(tmp_model.get_value(tmp_iter, 0))
+        self.widgets['results']['window'].hide()
+        return self._resultswin_process(selected_key)
+
+    def on_add_movie_results_button_press_event(self, widget, event):
         """add a double click event to add movie results"""
+        # TODO: use on_results_select_press_event and its selected_key
         if event.type == gtk.gdk._2BUTTON_PRESS:
             add.populate_with_results(self)
 
-    def on_poster_results_button_press_event(self, widget, event):
-        """add a double click event to poster results"""
-        if event.type == gtk.gdk._2BUTTON_PRESS:
-            add.populate_with_results(self)
-    
     # -=[ treeview ]=------------------------------------------------------
     def go_first(self, *args):
         self.click_on(self.widgets['treeview'], 'first')

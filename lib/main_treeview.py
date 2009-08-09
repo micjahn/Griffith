@@ -51,6 +51,8 @@ def treeview_clicked(self):
             # poster window is visible
             filename = gutils.get_image_fname(movie.poster_md5, self.db)
             self.widgets['big_poster'].set_from_file(filename)
+        for ext in self.extensions:
+            ext.maintree_clicked(treeselection, movie)
         set_details(self, movie)
     else:
         set_details(self, {})
@@ -225,12 +227,10 @@ def set_details(self, item=None):#{{{
         if filename and os.path.isfile(filename):
             image_path = filename
             self.widgets['add']['delete_poster'].set_sensitive(True)
-            self.widgets['menu']['delete_poster'].set_sensitive(True)
             w['picture_button'].set_sensitive(True)
         else:
             image_path = os.path.join(self.locations['images'], 'default.png')
             self.widgets['add']['delete_poster'].set_sensitive(False)
-            self.widgets['menu']['delete_poster'].set_sensitive(False)
             w['picture_button'].set_sensitive(False)
     else:
         image_path = os.path.join(self.locations['images'], 'default.png')
