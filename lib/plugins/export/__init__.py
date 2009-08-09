@@ -26,7 +26,6 @@ import os.path
 import gutils
 import gtk
 import xml.dom.minidom
-import xml.dom.ext
 import os
 
 import logging
@@ -172,9 +171,12 @@ class XmlExportBase(Base):
 
     def export_document_to_file(self, document, filename):
         # write XML to file
-        fp = open(filename, 'w')
-        xml.dom.ext.PrettyPrint(document, fp, encoding=self.encoding)
-        fp.close()
+        xml = document.toprettyxml(encoding=self.encoding)
+        fp = open(filename, 'wb')
+        try:
+            fp.write(xml)
+        finally:
+            fp.close()
 
     def export_to_document(self, document, mainelement):
         table_movies = db.metadata.tables['movies']
