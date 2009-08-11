@@ -30,7 +30,7 @@ import db
 
 log = logging.getLogger('Griffith')
 
-# minimum and maximum supported extension APIs
+# minimum and maximum supported extension API
 COMPAT = (1, 1)
 
 class GriffithExtensionBase(object):
@@ -55,7 +55,7 @@ class GriffithExtensionBase(object):
     version = None
     api = 1 # required Griffith Extension API
 
-    enabled = True # default state (can be later changed in preferences)
+    enabled = True # default state (can be changed in preferences later)
     toolbar_icon = None # None or stock icon name
     preferences = {}
 
@@ -93,7 +93,7 @@ class GriffithExtensionBase(object):
     def __init__(self, griffith):
         """Initializes extension"""
    
-    def clear(self): # __del__ cannot be used here (signal references issue)
+    def clear(self): # __del__ cannot be used here (signal reference issue)
         """Invoked when extension is about to be disabled"""
         if self.toolbar_icon_widget:
             print self.toolbar_icon_widget.destroy()
