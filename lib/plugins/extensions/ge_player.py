@@ -36,7 +36,6 @@ class GriffithExtension(Base):
     version = 1
     api = 1
     enabled = False # disabled by default
-    enabled = True
 
     preferences = {'command': {'name': _('Command'),
                                'hint': _('%s (if given) will be replaced with file path'),
@@ -46,10 +45,9 @@ class GriffithExtension(Base):
 
     def toolbar_icon_clicked(self, widget, movie):
         if not movie or not movie.trailer:
-            
             return False
 
-        command = self.get_config_value('command', self.preferences['command']['default']).lower()
+        command = self.get_config_value('command', self.preferences['command']['default'])
         if '%s' in command:
             command %= movie.trailer
         else:
