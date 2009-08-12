@@ -43,7 +43,7 @@ class GriffithExtensionBase(object):
     :attr preferences: dictionary used to generate new widgets in preferences window
         every key points to another dictionary that contains:
         * name: will be shown to user
-        * type: int or unicode (type) or list (instance)
+        * type: int, unicode (type) or list, tuple, dict (instance)
         * min: minimum value (int) or length (unicode)
         * max: maximum value (int) or length (unicode)
     :attr app: application reference (use only if really needed)

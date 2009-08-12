@@ -200,8 +200,6 @@ def show_preferences(self, page=None):
 
     w['spell_lang'].set_text(str(self.config.get('lang', 'en', section='spell')))
 
-    w['amazon_locale'].set_active(int(self.config.get('amazon_locale', 0, section='add')))
-
     if page is not None:
         w['notebook'].set_current_page(page)
     w['window'].show()

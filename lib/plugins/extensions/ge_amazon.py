@@ -48,7 +48,7 @@ class GriffithExtension(Base):
     api = 1
 
     preferences = {'locale': {'name': _('Select source'),
-                              'type': ('US', 'UK', 'DE', 'CA', 'FR', 'JP')}}
+                              'type': (u'US', u'UK', u'DE', u'CA', u'FR', u'JP')}}
     toolbar_icon = 'gtk-network'
 
     def toolbar_icon_clicked(self, widget, movie):

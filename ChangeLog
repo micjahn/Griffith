@@ -5,6 +5,12 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-08-12  Piotr Ożarowski
+	* Remove Amazon stuff from preferences window
+	* Region 2 and 4 names shorten (to fit in preferences window)
+	* Show tabs on the left side of preferences window
+	* Show extension settings in preferences
+
 2009-08-11  Piotr Ożarowski
 	* Add Player extension
 

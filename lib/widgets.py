@@ -347,6 +347,7 @@ def define_widgets(self, gladefile):
     }#}}}
     self.widgets['extensions'] = {
         'toolbar': get('ext_toolbar'),
+        'preferences_vbox': get('p_extensions_vbox'),
     }
     
     self.widgets['w_loan_to']     = get('w_loan_to')

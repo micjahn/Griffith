@@ -478,6 +478,83 @@ def import_plugins(self):
     w['box_import_2'].show_all()
     w['box_import_3'].show_all()
 
+def extension(self, module, enabled):
+    if enabled:
+        try:
+            ext = module(self)
+        except (NotImplementedError, DeprecationWarning), e:
+            log.warning('extension skipped: %s', e.message)
+            log.debug('extension skipped: %s', module.__file__)
+            return False
+        if module.toolbar_icon:
+            toolbar = self.widgets['extensions']['toolbar']
+            ext.toolbar_icon_widget = toolbar.insert_stock(module.toolbar_icon, module.description, None, ext._on_toolbar_icon_clicked, None, -1)
+    else:
+        ext = None
+
+    # preferences window
+
+    p_vbox = self.widgets['extensions']['preferences_vbox']
+
+    label = "%s v%s <i>(%s &lt;%s&gt;)</i>" % (module.name, module.version, module.author, module.email)
+    expander = gtk.Expander(label=label)
+    expander.set_use_markup(True)
+    vbox = gtk.VBox()
+
+    # extension details
+    hbox = gtk.HBox()
+    vbox.pack_start(hbox, expand=False)
+    enabled_cb = gtk.CheckButton(label=_('use this extension'))
+    enabled_cb.set_active(enabled)
+    vbox.pack_start(enabled_cb, expand=False)
+
+    for pref_name in module.preferences:
+        #preferences = {'command': {'name': _('Command'),
+        #                       'hint': _('%s (if given) will be replaced with file path'),
+        #                       'default': 'mplayer %s',
+        #                       'type': unicode}}
+        name = module.preferences[pref_name].get('name', pref_name)
+        hint = module.preferences[pref_name].get('hint')
+        value = module.preferences[pref_name].get('default')
+        #TODO: get value from config
+        type_ = module.preferences[pref_name].get('type', unicode)
+
+        hbox = gtk.HBox()
+        hbox.pack_start(gtk.Label(name), expand=False, padding=4)
+
+        if type_ is unicode:
+            w = gtk.Entry()
+            w.insert_text(value)
+            # TODO: min, max
+        # elif type is int: # TODO
+        elif isinstance(type_, (list, tuple, dict)):
+            model = gtk.TreeStore(str, str)
+            myiter = model.append(None, None)
+            if isinstance(type_, dict):
+                iterable = type_.iteritems()
+            else:
+                iterable = enumerate(type_)
+            for code, value in iterable:
+                model.set_value(myiter, 0, unicode(code))
+                model.set_value(myiter, 1, unicode(value))
+            w = gtk.ComboBox(model=model)
+            # TODO: select default value
+        else:
+            log.error('type not recognized %s', type(type_))
+            continue
+
+        if hint:
+            w.set_tooltip_markup(hint)
+        hbox.pack_start(w)
+
+        vbox.pack_start(hbox, expand=False)
+
+    expander.add(vbox)
+    p_vbox.pack_start(expander, expand=False)
+    p_vbox.show_all()
+
+    return ext
+
 def extensions(self):
     import plugins.extensions
     user_extensions_path = os.path.join(self.locations['home'], 'lib', 'extensions')
@@ -491,18 +568,11 @@ def extensions(self):
 
     for ext_name in plugins.extensions.by_name:
         ext_module = plugins.extensions.by_name[ext_name]
-        if ext_module.enabled:
-            try:
-                ext = ext_module(self)
-                self.extensions.append(ext)
-            except (NotImplementedError, DeprecationWarning), e:
-                log.warning('extension skipped: %s', e.message)
-                log.debug('extension skipped: %s', ext_module.__file__)
-                continue
-            if ext_module.toolbar_icon:
-                toolbar = self.widgets['extensions']['toolbar']
-                i = ext_module.toolbar_icon
-                ext.toolbar_icon_widget = toolbar.insert_stock(ext_module.toolbar_icon, ext_module.description, None, ext._on_toolbar_icon_clicked, None, -1)
+        enabled = ext_module.enabled
+        # TODO: get list of disabled extensions from config
+        ext = extension(self, ext_module, enabled)
+        if ext:
+            self.extensions.append(ext)
 
 def people_treeview(self, create=True):
     row = None
@@ -635,9 +705,9 @@ def dictionaries(self):
     self._regions = (
         _('Region 0 (No Region Coding)'),
         _('Region 1 (United States of America, Canada)'),
-        _('Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan and South Africa)'),
+        _('Region 2 (Europe, Egypt, Arabia, Japan and South Africa)'),
         _('Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)'),
-        _('Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South America)'),
+        _('Region 4 (Australia and New Zealand, Mexico and South America)'),
         _('Region 5 (India, Africa, Russia and former USSR countries)'),
         _('Region 6 (Popular Republic of China)'),
         _('Region 7 (Reserved for Unspecified Special Use)'),
