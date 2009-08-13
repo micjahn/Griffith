@@ -42,7 +42,7 @@ class GriffithExtension(Base):
                                'hint': _('%s (if given) will be replaced with file path'),
                                'default': 'mplayer %s',
                                'type': unicode}}
-    if is_windows_system:
+    if is_windows_system():
         preferences['command']['default'] = ''
 
     toolbar_icon = 'gtk-open'
