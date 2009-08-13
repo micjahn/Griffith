@@ -23,7 +23,7 @@ __revision__ = '$Id$'
 
 import logging
 
-from sqlalchemy.sql import select, update
+from sqlalchemy.sql import update
 
 from db.tables import movies as movies_table
 from plugins.extensions import GriffithExtensionBase as Base
@@ -48,7 +48,7 @@ class GriffithExtension(Base):
         session = self.db.Session()
         update_query = update(movies_table, values={'seen': True})
 
-        update_whereclause(update_query, self.app._search_conditions)
+        update_query = update_whereclause(update_query, self.app._search_conditions)
 
         session.execute(update_query)
         session.commit()

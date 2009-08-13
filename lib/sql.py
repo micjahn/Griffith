@@ -132,123 +132,113 @@ class GriffithSQL(object):
 
 
 def update_whereclause(query, cond): # {{{
-    # Update class doesn't have .append_whereclause
-    update_query = None
-    if isinstance(query, Update):
-        update_query = query
-        query = select(db.tables.movies.columns)
-
     if cond['loaned'] is True:
-        query.append_whereclause(db.Movie.loaned==True)
+        query = query.where(db.Movie.loaned==True)
     if cond['loaned'] is False:
-        query.append_whereclause(db.Movie.loaned==False)
+        query = query.where(db.Movie.loaned==False)
     if cond['seen'] is True:
-        query.append_whereclause(db.Movie.seen==True)
+        query = query.where(db.Movie.seen==True)
     if cond['seen'] is False:
-        query.append_whereclause(db.Movie.seen==False)
+        query = query.where(db.Movie.seen==False)
 
     if cond["collections"]:
-        query.append_whereclause(db.Movie.collection_id.in_(cond["collections"]))
+        query = query.where(db.Movie.collection_id.in_(cond["collections"]))
     if cond["no_collections"]:
-        query.append_whereclause(~db.Movie.collection_id.in_(cond["no_collections"]))
+        query = query.where(~db.Movie.collection_id.in_(cond["no_collections"]))
 
     if cond["volumes"]:
-        query.append_whereclause(db.Movie.volume_id.in_(cond["volumes"]))
+        query = query.where(db.Movie.volume_id.in_(cond["volumes"]))
     if cond["no_volumes"]:
-        query.append_whereclause(~db.Movie.volume_id.in_(cond["no_volumes"]))
+        query = query.where(~db.Movie.volume_id.in_(cond["no_volumes"]))
 
     loaned_to = []
     for per_id in cond["loaned_to"]:
         loaned_to.append(exists([db.tables.loans.c.movie_id],\
                 and_(db.Movie.movie_id==db.tables.loans.c.movie_id, db.tables.loans.c.person_id==per_id, db.tables.loans.c.return_date==None)))
     if loaned_to:
-        query.append_whereclause(or_(*loaned_to))
+        query = query.where(or_(*loaned_to))
 
     loan_history = []
     for per_id in cond["loan_history"]:
         loan_history.append(exists([db.tables.loans.c.movie_id],\
                 and_(db.Movie.movie_id==db.tables.loans.c.movie_id, db.tables.loans.c.person_id==per_id)))
     if loan_history:
-        query.append_whereclause(or_(*loan_history))
+        query = query.where(or_(*loan_history))
 
     required_tags = []
     for tag_id in cond["required_tags"]:
         required_tags.append(exists([db.MovieTag.movie_id], \
             and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
     if required_tags:
-        query.append_whereclause(and_(*required_tags))
+        query = query.where(and_(*required_tags))
 
     tags = []
     for tag_id in cond["tags"]:
         tags.append(exists([db.MovieTag.movie_id], \
             and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
     if tags:
-        query.append_whereclause(or_(*tags))
+        query = query.where(or_(*tags))
 
     no_tags = []
     for tag_id in cond["no_tags"]:
         no_tags.append(~exists([db.MovieTag.movie_id], \
             and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
     if no_tags:
-        query.append_whereclause(and_(*no_tags))
+        query = query.where(and_(*no_tags))
 
     for field in cond["equals_n"]:
         values = [ db.tables.movies.columns[field]!=value for value in cond["equals_n"][field] ]
-        query.append_whereclause(and_(*values))
+        query = query.where(and_(*values))
 
     for field in cond["startswith_n"]:
         values = [ not_(db.tables.movies.columns[field].startswith(value)) for value in cond["startswith_n"][field] ]
-        query.append_whereclause(and_(*values))
+        query = query.where(and_(*values))
 
     for field in cond["like_n"]:
         values = [ not_(db.tables.movies.columns[field].like(value)) for value in cond["like_n"][field] ]
-        query.append_whereclause(and_(*values))
+        query = query.where(and_(*values))
 
     for field in cond["contains_n"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
         values = [ not_(db.tables.movies.columns[field].like('%'+value+'%')) for value in cond["contains_n"][field] ]
-        query.append_whereclause(and_(*values))
+        query = query.where(and_(*values))
 
     for field in cond["equals"]:
         values = [ db.tables.movies.columns[field]==value for value in cond["equals"][field] ]
-        query.append_whereclause(or_(*values))
+        query = query.where(or_(*values))
 
     for field in cond["startswith"]:
         values = [ db.tables.movies.columns[field].startswith(value) for value in cond["startswith"][field] ]
-        query.append_whereclause(or_(*values))
+        query = query.where(or_(*values))
 
     for field in cond["like"]:
         values = [ db.tables.movies.columns[field].like(value) for value in cond["like"][field] ]
-        query.append_whereclause(or_(*values))
+        query = query.where(or_(*values))
 
     for field in cond["contains"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
         values = [ db.tables.movies.columns[field].like('%'+value+'%') for value in cond["contains"][field] ]
-        query.append_whereclause(or_(*values))
+        query = query.where(or_(*values))
 
     # sorting
-    for rule in cond.get('sort_by', []):
-        if rule.endswith(" DESC"):
-            reverse = True
-            column = rule.replace(" DESC", '')
-        else:
-            column = rule.replace(" ASC", '') # note that " ASC" is optional
-            reverse = False
+    if not isinstance(query, Update):
+        for rule in cond.get('sort_by', []):
+            if rule.endswith(" DESC"):
+                reverse = True
+                column = rule.replace(" DESC", '')
+            else:
+                column = rule.replace(" ASC", '') # note that " ASC" is optional
+                reverse = False
 
-        table = 'movies'
-        tmp = column.split('.')
-        if len(tmp) > 1:
-            table = tmp[0]
-            column = tmp[1]
+            table = 'movies'
+            tmp = column.split('.')
+            if len(tmp) > 1:
+                table = tmp[0]
+                column = tmp[1]
 
-        if reverse:
-            query.append_order_by(desc(db.metadata.tables[table].columns[column]))
-        else:
-            query.append_order_by(asc(db.metadata.tables[table].columns[column]))
+            if reverse:
+                query = query.order_by(desc(db.metadata.tables[table].columns[column]))
+            else:
+                query = query.order_by(asc(db.metadata.tables[table].columns[column]))
 
-    if update_query:
-        update_query.where(query._whereclause)
-        query = update_query
-    else:
-        log.debug(query.compile())
-
+    log.debug(query)
     return query #}}}
 
