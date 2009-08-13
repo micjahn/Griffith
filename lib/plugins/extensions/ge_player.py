@@ -23,6 +23,7 @@ __revision__ = '$Id$'
 
 import logging
 from subprocess import Popen
+from gutils import is_windows_system
 
 from plugins.extensions import GriffithExtensionBase as Base
 
@@ -47,7 +48,14 @@ class GriffithExtension(Base):
         if not movie or not movie.trailer:
             return False
 
-        command = self.get_config_value('command', self.preferences['command']['default'])
+        if is_windows_system():
+            command = self.get_config_value('command')
+            if not command:
+                import win32api
+                win32api.ShellExecute(0, None, movie.trailer, None, None, 0)
+                return
+        else:
+            command = self.get_config_value('command', self.preferences['command']['default'])
         if '%s' in command:
             command %= movie.trailer
         else:
