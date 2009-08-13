@@ -267,7 +267,7 @@ def question(msg, window=None):
     dialog.set_skip_taskbar_hint(False)
     response = dialog.run()
     dialog.destroy()
-    return response == gtk.RESPONSE_OK
+    return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
 
 def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expanduser('~'), picture=False, backup=False):
     dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
