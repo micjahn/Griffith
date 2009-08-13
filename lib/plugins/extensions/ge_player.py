@@ -51,14 +51,12 @@ class GriffithExtension(Base):
         if not movie or not movie.trailer:
             return False
 
-        if is_windows_system():
-            command = self.get_config_value('command')
-            if not command:
-                import win32api
-                win32api.ShellExecute(0, None, movie.trailer, None, None, 0)
-                return
-        else:
-            command = self.get_config_value('command', self.preferences['command']['default'])
+        command = self.get_config_value('command', self.preferences['command']['default'])
+        if is_windows_system() and not command:
+            import win32api
+            win32api.ShellExecute(0, None, movie.trailer, None, None, 0)
+            return
+
         if '%s' in command:
             command %= movie.trailer
         else:
