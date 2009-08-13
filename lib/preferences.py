@@ -380,8 +380,6 @@ def save_preferences(self):
     c.set('lang', w['spell_lang'].get_text(), section='spell')
     c['pdf_reader'] = save_reader
 
-    c.set('amazon_locale', w['amazon_locale'].get_active(), section='add')
-    
     if spell_support:
         if c.get('gtkspell', False, section='spell') == False and not was_false:
             self.notes_spell.detach()

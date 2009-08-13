@@ -28,9 +28,10 @@ __revision__ = '$Id$'
 import logging
 import os.path
 
-from sqlalchemy            import *
+from sqlalchemy import *
 from sqlalchemy.exceptions import OperationalError
-from sqlalchemy.orm        import sessionmaker
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql.expression import Update
 
 import db # ORM data (SQLAlchemy stuff)
 import gutils # TODO: get rid of this import
@@ -131,6 +132,12 @@ class GriffithSQL(object):
 
 
 def update_whereclause(query, cond): # {{{
+    # Update class doesn't have .append_whereclause
+    update_query = None
+    if isinstance(query, Update):
+        update_query = query
+        query = select(db.tables.movies.columns)
+
     if cond['loaned'] is True:
         query.append_whereclause(db.Movie.loaned==True)
     if cond['loaned'] is False:
@@ -218,7 +225,7 @@ def update_whereclause(query, cond): # {{{
         query.append_whereclause(or_(*values))
 
     # sorting
-    for rule in cond["sort_by"]:
+    for rule in cond.get('sort_by', []):
         if rule.endswith(" DESC"):
             reverse = True
             column = rule.replace(" DESC", '')
@@ -237,6 +244,11 @@ def update_whereclause(query, cond): # {{{
         else:
             query.append_order_by(asc(db.metadata.tables[table].columns[column]))
 
-    log.debug(query.compile())
+    if update_query:
+        update_query.where(query._whereclause)
+        query = update_query
+    else:
+        log.debug(query.compile())
+
     return query #}}}
 

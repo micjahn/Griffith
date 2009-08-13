@@ -5,6 +5,10 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-08-13  Piotr Ożarowski
+	* Add 'Mark as seen' extension
+	* Allow PNG images to be used as toolbar icons by extensions
+
 2009-08-12  Piotr Ożarowski
 	* Remove Amazon stuff from preferences window
 	* Region 2 and 4 names shorten (to fit in preferences window)

@@ -488,7 +488,18 @@ def extension(self, module, enabled):
             return False
         if module.toolbar_icon:
             toolbar = self.widgets['extensions']['toolbar']
-            ext.toolbar_icon_widget = toolbar.insert_stock(module.toolbar_icon, module.description, None, ext._on_toolbar_icon_clicked, None, -1)
+            if module.toolbar_icon.endswith('.png'):
+                icon_path = os.path.join(os.path.dirname(module.__file__), 'data', module.toolbar_icon)
+                if not os.path.isfile(icon_path):
+                    icon_path = os.path.join(self.locations['images'], module.toolbar_icon)
+                if not os.path.isfile(icon_path):
+                    log.error('icon not found: %s', module.toolbar_icon)
+                else:
+                    icon = gtk.Image()
+                    icon.set_from_file(icon_path)
+                    ext.toolbar_icon_widget = toolbar.insert_item(None, module.description, None, icon, ext._on_toolbar_icon_clicked, None, -1)
+            else:
+                ext.toolbar_icon_widget = toolbar.insert_stock(module.toolbar_icon, module.description, None, ext._on_toolbar_icon_clicked, None, -1)
     else:
         ext = None
 
@@ -498,6 +509,7 @@ def extension(self, module, enabled):
 
     label = "%s v%s <i>(%s &lt;%s&gt;)</i>" % (module.name, module.version, module.author, module.email)
     expander = gtk.Expander(label=label)
+    expander.get_label_widget().set_tooltip_markup(module.description)
     expander.set_use_markup(True)
     vbox = gtk.VBox()
 
@@ -509,10 +521,6 @@ def extension(self, module, enabled):
     vbox.pack_start(enabled_cb, expand=False)
 
     for pref_name in module.preferences:
-        #preferences = {'command': {'name': _('Command'),
-        #                       'hint': _('%s (if given) will be replaced with file path'),
-        #                       'default': 'mplayer %s',
-        #                       'type': unicode}}
         name = module.preferences[pref_name].get('name', pref_name)
         hint = module.preferences[pref_name].get('hint')
         value = module.preferences[pref_name].get('default')
