@@ -657,15 +657,11 @@ def add_movie_db(self, close):
 
     if details['o_title']:
         if session.query(db.Movie).filter_by(o_title=details['o_title']).count() > 0:
-            response = gutils.question(_('Movie with that title already exists, are you sure you want to add?'), \
-                                       False, self.widgets['add']['window'])
-            if response == gtk.RESPONSE_NO:
+            if not gutils.question(_('Movie with that title already exists, are you sure you want to add?'), self.widgets['add']['window']):
                 return False
     if details['title']:
         if session.query(db.Movie).filter_by(title=details['title']).count() > 0:
-            response = gutils.question(_('Movie with that title already exists, are you sure you want to add?'), \
-                                       False, self.widgets['add']['window'])
-            if response == gtk.RESPONSE_NO:
+            if not gutils.question(_('Movie with that title already exists, are you sure you want to add?'), self.widgets['add']['window']):
                 return False
     
     if details['image']:

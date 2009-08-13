@@ -96,8 +96,7 @@ def delete_poster(self):
     if not movie:
         log.error("Cannot delete unknown movie's poster!")
         return False
-    response = gutils.question(_("Are you sure you want to delete this poster?"), True, self.widgets['window'])
-    if response==-8:
+    if gutils.question(_("Are you sure you want to delete this poster?"), self.widgets['window']):
         image_path = os.path.join(self.locations['images'], 'default.png')
         handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
         gutils.garbage(handler)

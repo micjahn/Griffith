@@ -79,8 +79,7 @@ class ExportPlugin(Base):
             overwrite = None
             pdffilename = filename[0].decode('utf-8')
             if os.path.isfile(pdffilename):
-                response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent_window)
-                if response==-8:
+                if gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent_window):
                     overwrite = True
                 else:
                     overwrite = False

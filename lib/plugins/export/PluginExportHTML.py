@@ -581,7 +581,7 @@ class ExportPlugin(Base):
             
             posters_dir = os.path.join(config['exported_dir'], 'posters')
             if os.path.isdir(posters_dir):
-                if gutils.question(_("Directory %s already exists.\nDo you want to overwrite it?") % posters_dir, True, self.widgets['window']) == gtk.RESPONSE_YES:
+                if gutils.question(_("Directory %s already exists.\nDo you want to overwrite it?") % posters_dir, self.widgets['window']):
                     try:
                         shutil.rmtree(posters_dir)
                     except:

@@ -120,7 +120,6 @@ def update_person(self):
             self.p_treemodel.set_value(myiter, 1, p.email)
 
 def delete_person(self):
-    response = None
     has_history = False
     has_history_msg = ''
     try:
@@ -138,10 +137,8 @@ def delete_person(self):
     if person.returned_movies_count > 0:
         has_history = True
         has_history_msg = _("This person has data in the loan history. This data will be erased if you continue.")
-    response = gutils.question(_("%s\nAre you sure you want to delete this person?" % has_history_msg), \
-                               True, self.widgets['people']['window'])
-
-    if response == -8:
+    
+    if gutils.question(_("%s\nAre you sure you want to delete this person?" % has_history_msg), self.widgets['people']['window']):
         treeselection = self.widgets['people']['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
         self.db.session.delete(person)

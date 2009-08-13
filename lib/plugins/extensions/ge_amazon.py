@@ -205,8 +205,7 @@ class GriffithExtension(Base):
 
                 self.widgets['poster_window'].show()
                 self.widgets['poster_window'].move(0,0)
-                response = gutils.question(_("Do you want to use this poster instead?"), True, self.widgets['window'])
-                if response == -8:
+                if gutils.question(_("Do you want to use this poster instead?"), self.widgets['window']):
                     return file_to_copy
                 else:
                     log.info("Reverting to previous poster and deleting new one from disk.")

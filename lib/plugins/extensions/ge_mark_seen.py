@@ -26,6 +26,7 @@ import logging
 from sqlalchemy.sql import update
 
 from db.tables import movies as movies_table
+from gutils import question
 from plugins.extensions import GriffithExtensionBase as Base
 from sql import update_whereclause
 
@@ -43,14 +44,13 @@ class GriffithExtension(Base):
     toolbar_icon = 'seen.png'
 
     def toolbar_icon_clicked(self, widget, movie):
-        log.info('marking %d movies as seen', self.app.total)
-        #TODO: 'are you sure?'
-        session = self.db.Session()
-        update_query = update(movies_table, values={'seen': True})
+        if question(_('Are you sure you want to update %d movies?') % self.app.total):
+            session = self.db.Session()
 
-        update_query = update_whereclause(update_query, self.app._search_conditions)
+            update_query = update(movies_table, values={'seen': True})
+            update_query = update_whereclause(update_query, self.app._search_conditions)
 
-        session.execute(update_query)
-        session.commit()
+            session.execute(update_query)
+            session.commit()
 
-        self.app.populate_treeview() # update seen widget in the list
+            self.app.populate_treeview() # update seen widget in the list

@@ -58,8 +58,7 @@ def create(self):
 
         zipfilename = filename[0].decode('utf-8')
         if os.path.isfile(zipfilename):
-            response = gutils.question(_("File exists. Do you want to overwrite it?"), window=self.widgets['window'])
-            if response != gtk.RESPONSE_YES:
+            if not gutils.question(_("File exists. Do you want to overwrite it?"), window=self.widgets['window']):
                 proceed = False
 
         if proceed:

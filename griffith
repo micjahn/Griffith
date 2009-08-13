@@ -1023,18 +1023,16 @@ class Griffith(object):
         create(self)
 
     def restore(self, *args):
-        response = gutils.question(_("""Are you sure you want to restore?
+        if gutils.question(_("""Are you sure you want to restore?
 Your current movie collection will be replaced.
-You can't undo this operation."""), True, self.widgets['window'])
-        if response == gtk.RESPONSE_YES:
+You can't undo this operation."""), self.widgets['window']):
             from backup import restore
             restore(self)
 
     def merge(self, *args):
-        response = gutils.question(_("""Are you sure you want to mix?
+        if gutils.question(_("""Are you sure you want to mix?
 Your current movie collection will be mixed with a backup.
-You can't undo this operation."""), True, self.widgets['window'])
-        if response == gtk.RESPONSE_YES:
+You can't undo this operation."""), self.widgets['window']):
             from backup import restore
             restore(self, merge=True)
 
@@ -1332,13 +1330,9 @@ You can't undo this operation."""), True, self.widgets['window'])
 
     def new_dbb(self, *args):
         """initializes a new Griffith Database file"""
-        response = gutils.question(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), \
-            True, self.widgets['window'])
-        if response == gtk.RESPONSE_YES:
+        if gutils.question(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), self.widgets['window']):
             log.debug('NEW DATABASE')
-            response_sec = gutils.question(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), \
-                True, self.widgets['window'])
-            if response_sec == gtk.RESPONSE_YES:
+            if gutils.question(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), self.widgets['window']):
                 from sqlalchemy import select
                 from sql import GriffithSQL
                 from delete import delete_poster_from_cache
@@ -1490,12 +1484,11 @@ if __name__ == "__main__":
     if ('~' in version.pversion or '-' in version.pversion) and \
        config.get('warned_version', section='devel') != version.pversion:
 
-        response = gutils.question(_("""This is development version of Griffith.
+        if not gutils.question(_("""This is development version of Griffith.
 Upgrade path from dev. versions may not be provided.
 Please make sure you have a backup!
 
-Do you want to proceed?"""))
-        if response != gtk.RESPONSE_YES:
+Do you want to proceed?""")):
             sys.exit(2)
         else:
             config.set('warned_version', version.pversion, section='devel')

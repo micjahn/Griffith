@@ -70,10 +70,9 @@ def commit(self):
     # ask if user wants to loan whole collection
     loan_whole_collection = False
     if movie.collection_id > 0:
-        response = gutils.question(_("Do you want to loan whole collection?"), window=self.widgets['window'])
-        if response == gtk.RESPONSE_YES:
+        if gutils.question(_('Do you want to loan whole collection?'), window=self.widgets['window']):
             loan_whole_collection = True
-        elif response == gtk.RESPONSE_CANCEL:
+        else:
             return False
     
     try:

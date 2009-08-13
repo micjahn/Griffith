@@ -102,8 +102,7 @@ class ExportPlugin(Base):
             if filename and filename[0]:
                 overwrite = None
                 if os.path.isfile(filename[0]):
-                    response = gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent_window)
-                    if response==-8:
+                    if gutils.question(_("File exists. Do you want to overwrite it?"), True, self.parent_window):
                         overwrite = True
                     else:
                         overwrite = False

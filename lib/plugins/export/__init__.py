@@ -159,8 +159,7 @@ class XmlExportBase(Base):
                 self.config.save()
             overwrite = None
             if os.path.isfile(self.filepath):
-                response = gutils.question(_('File exists. Do you want to overwrite it?'), 1, self.parent_window)
-                if response==-8:
+                if gutils.question(_('File exists. Do you want to overwrite it?'), self.parent_window):
                     overwrite = True
                 else:
                     overwrite = False

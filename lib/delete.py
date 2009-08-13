@@ -39,8 +39,7 @@ def delete_movie(self):
         gutils.warning(msg=_("You can't delete movie while it is loaned."))
         return False
 
-    response = gutils.question(_("Are you sure you want to delete this movie?"), True, self.widgets['window'])
-    if response == -8:    # gtk.RESPONSE_YES == -8
+    if gutils.question(_('Are you sure you want to delete this movie?'), self.widgets['window']):
         delete_poster(self, movie.poster_md5)
 
         self.db.session.delete(movie)

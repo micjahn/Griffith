@@ -8,6 +8,7 @@ Griffith ChangeLog
 2009-08-13  Piotr Ożarowski
 	* Add 'Mark as seen' extension
 	* Allow PNG images to be used as toolbar icons by extensions
+	* gutils.question now returns True or False
 
 2009-08-12  Piotr Ożarowski
 	* Remove Amazon stuff from preferences window

@@ -257,7 +257,7 @@ def info(msg, parent=None):
     dialog.run()
     dialog.destroy()
 
-def question(msg, cancel=True, window=None):
+def question(msg, window=None):
     dialog = gtk.MessageDialog(window,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE, msg)
@@ -267,7 +267,7 @@ def question(msg, cancel=True, window=None):
     dialog.set_skip_taskbar_hint(False)
     response = dialog.run()
     dialog.destroy()
-    return response
+    return response == gtk.RESPONSE_OK
 
 def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expanduser('~'), picture=False, backup=False):
     dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
