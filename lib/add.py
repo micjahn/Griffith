@@ -830,10 +830,10 @@ def update_movie_instance(movie, details, session):
                 setattr(movie, i, details[i])
 
         # clear previous data (in case of updates)
-        for i in movie.languages:
-            movie.languages.remove(i)
-        for i in movie.languages:
-            movie.languages.remove(i)
+        while len(movie.languages):
+            movie.languages.remove(movie.languages[0])
+        while len(movie.tags):
+            movie.tags.remove(movie.tags[0])
         # languages
         if t_languages is not None:
             for lang in t_languages:
