@@ -86,7 +86,6 @@ def update_image(self, number, filename):
 
     self.widgets['movie']['picture_button'].set_sensitive(True)
     self.widgets['add']['delete_poster'].set_sensitive(True)
-    self.widgets['menu']['delete_poster'].set_sensitive(True)
 
     self.update_statusbar(_("Image has been updated"))
 
@@ -116,7 +115,6 @@ def delete_poster(self):
         self.update_statusbar(_("Image has been updated"))
 
         self.widgets['add']['delete_poster'].set_sensitive(False)
-        self.widgets['menu']['delete_poster'].set_sensitive(False)
         self.widgets['movie']['picture_button'].set_sensitive(False)
     else:
         pass
