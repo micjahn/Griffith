@@ -89,7 +89,7 @@ def update_movie(self):
             details["poster_md5"] = new_poster_md5
             if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
                 try:
-                    data = file(tmp_image_path, 'rb').read()
+                    data = file(new_image_path, 'rb').read()
                 except Exception, e:
                     log.warning("cannot read poster data")
                 else:

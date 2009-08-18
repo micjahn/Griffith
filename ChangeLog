@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-08-18  Piotr Ożarowski
+	* Fix update_movie() to actually load the image
+
 2009-08-13  Piotr Ożarowski
 	* Add 'Mark as seen' extension
 	* Allow PNG images to be used as toolbar icons by extensions
