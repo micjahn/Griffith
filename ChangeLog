@@ -5,6 +5,11 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-08-20  Piotr Ożarowski
+	* Add pool_recycle parameter in config file and set the default to 1 hour
+	  (SQLAlchemy will recycle MySQL connections after given number of seconds
+	  of inactivity - fixes "MySQL server has gone away" issue)
+
 2009-08-18  Piotr Ożarowski
 	* Fix update_movie() to actually load the image
 

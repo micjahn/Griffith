@@ -64,16 +64,17 @@ class GriffithSQL(object):
                 config.set('port', DEFAULT_PORTS[config.get('type', section='database')], section='database')
 
         conn_params = config.to_dict(section='database')
-        conn_params['port'] = int(conn_params['port'])
+        conn_params.update({'port': int(conn_params['port']),
+                            'engine_kwargs': {'echo': False, 'convert_unicode': False}})
 
         # connect to database --------------------------------------{{{
-        convert_unicode = False # see MySQL
         if config.get('type', section='database') == 'sqlite':
             url = "sqlite:///%s.db" % os.path.join(griffith_dir, conn_params['name'])
         elif config.get('type', section='database') == 'postgres':
             url = "postgres://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s" % conn_params
         elif config.get('type', section='database') == 'mysql':
-            convert_unicode = True
+            conn_params['engine_kwargs']['convert_unicode'] = True
+            conn_params['engine_kwargs']['pool_recycle'] = int(config.get('pool_recycle', 3600, section='database'))
             url = "mysql://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s?charset=utf8&use_unicode=0" % conn_params
         elif config.get('type', section='database') == 'mssql':
             # use_scope_identity=0 have to be set as workaround for a sqlalchemy bug
@@ -91,7 +92,7 @@ class GriffithSQL(object):
 
         # try to establish a db connection
         try:
-            engine = create_engine(url, echo=False, convert_unicode=convert_unicode)
+            engine = create_engine(url, **conn_params['engine_kwargs'])
             conn = engine.connect()
         except Exception, e:    # InvalidRequestError, ImportError
             log.info("MetaData: %s", e)
