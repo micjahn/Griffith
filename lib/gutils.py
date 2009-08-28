@@ -26,7 +26,6 @@ import os
 import sys
 try:
     import gtk
-    import gobject
     import db
 except:
     pass
@@ -346,25 +345,21 @@ def garbage(handler):
 
 def clean_posters_dir(self):
     posters_dir = self.locations['posters']
-
     counter = 0
 
-    for files in os.walk(posters_dir):
-        for names in files:
-            for name in names:
-                if not name.endswith('_m.jpg') and not name.endswith('_s.jpg'):
-                    poster_md5 = gutils.md5sum(file(name, 'rb'))
-                    # lets check if this poster is orphan
-                    used = self.db.session.query(db.Poster).count_by(md5sum=poster_md5)
-                    if not used:
-                        counter += 1
-                        os.unlink(os.path.join(posters_dir, name))
-                        m_file = os.path.join(posters_dir, "m_"+name)
-                        if os.path.isfile(m_file):
-                            os.unlink(m_file)
-                        t_file = os.path.join(posters_dir, "t_"+name)
-                        if os.path.isfile(t_file):
-                            os.unlink(t_file)
+    for dirpath, dirnames, filenames in os.walk(posters_dir):
+        for name in filenames:
+            filepath = os.path.join(dirpath, name)
+            if name.endswith('_m.jpg') or name.endswith('_s.jpg'):
+                # it's safe to remove all thumbs, they'll be regenerated later
+                os.unlink(filepath)
+            else:
+                poster_md5 = md5sum(file(filepath, 'rb'))
+                # lets check if this poster is orphan
+                used = self.db.session.query(db.Poster).filter(db.Poster.md5sum==poster_md5).count()
+                if not used:
+                    counter += 1
+                    os.unlink(filepath)
 
     if counter:
         print "%d orphan files cleaned." %counter

@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-08-28  Piotr Ożarowski
+	* [Bug 420462] --clean fixed
+
 2009-08-26  Michael Jahn
 	* [#418911] It doesn't import cover art from FilmAffinity
 
