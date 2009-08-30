@@ -80,7 +80,7 @@ PostgreSQL
 MySQL
 -----
 
-	CREATE DATABASE `griffith` DEFAULT CHARACTER SET utf8;
+	CREATE DATABASE `griffith` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 	CREATE USER 'griffith'@'localhost' IDENTIFIED BY 'gRiFiTh';
 	CREATE USER 'griffith'@'%' IDENTIFIED BY 'gRiFiTh';
 	GRANT ALL ON `griffith` . * TO 'griffith'@'localhost';
