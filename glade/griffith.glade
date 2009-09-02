@@ -792,7 +792,7 @@
                 <child>
                   <widget class="GtkToolbar" id="ext_toolbar">
                     <property name="visible">True</property>
-                    <property name="toolbar_style">GTK_TOOLBAR_BOTH_HORIZ</property>
+                    <property name="toolbar_style">GTK_TOOLBAR_ICONS</property>
                     <property name="show_arrow">False</property>
                   </widget>
                 </child>

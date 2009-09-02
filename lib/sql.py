@@ -28,13 +28,13 @@ __revision__ = '$Id$'
 import logging
 import os.path
 
-from sqlalchemy import *
+from sqlalchemy import create_engine, or_, and_, not_, exists, asc, desc
 from sqlalchemy.exceptions import OperationalError
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql.expression import Update
 
 import db # ORM data (SQLAlchemy stuff)
-import gutils # TODO: get rid of this import
+from gutils import warning # TODO: get rid of this import
 
 log = logging.getLogger("Griffith")
 
@@ -61,10 +61,10 @@ class GriffithSQL(object):
             if config.get('name', None, section='database') is None:
                 config.set('name', 'griffith', section='database')
             if config.get('port', 0, section='database') == 0:
-                config.set('port', DEFAULT_PORTS[config.get('type', section='database')], section='database')
+                config.set('port', GriffithSQL.DEFAULT_PORTS[config.get('type', section='database')], section='database')
 
         conn_params = config.to_dict(section='database')
-        conn_params.update({'port': int(conn_params['port']),
+        conn_params.update({'port': int(conn_params.get('port', 0)),
                             'engine_kwargs': {'echo': False, 'convert_unicode': False}})
 
         # connect to database --------------------------------------{{{
@@ -99,7 +99,7 @@ class GriffithSQL(object):
             if not fallback:
                 raise e
             config.set('type', 'sqlite', section='database')
-            gutils.warning("%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
+            warning("%s\n\n%s" % (_('Cannot connect to database.\nFalling back to SQLite.'), _('Please check debug output for more informations.')))
             url = "sqlite:///%s.db" % os.path.join(griffith_dir, conn_params['name'])
             engine = create_engine(url)
             conn = engine.connect()
@@ -128,7 +128,7 @@ class GriffithSQL(object):
                 raise Exception('cannot upgrade database')
         elif v > self.version:
             log.error("database version mismatch (detected:%s; current:%s)", v, self.version)
-            gutils.warning(_('This database requires newer version of Griffith.'))
+            warning(_('This database requires newer version of Griffith.'))
             raise Exception("database version mismatch")
 
 
