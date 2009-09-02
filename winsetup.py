@@ -111,6 +111,7 @@ setup(
         ("lib/plugins/export", glob.glob("lib\\plugins\\export\\*.*")),
         ("lib/plugins/movie", glob.glob("lib\\plugins\\movie\\*.*")),
         ("lib/plugins/imp", glob.glob("lib\\plugins\\imp\\*.*")),
+        ("lib/plugins/extensions", glob.glob("lib\\plugins\\extensions\\*.*")),
         ("images", glob.glob("images\\*.png")),
         ("lib/db", glob.glob("lib\\db\\*.py")),
         ("lib", glob.glob("lib\\*.*"))],
