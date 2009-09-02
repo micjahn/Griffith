@@ -650,6 +650,12 @@ def get_image_fname(md5sum, gsql, size=None):
     file_name = os.path.join(gsql.data_dir, 'posters', md5sum+size+'.jpg')
 
     if not os.path.isfile(file_name) and not create_image_cache(md5sum, gsql):
+        log.warn("Can't create image file %s for md5sum %s" % (file_name, md5sum))
         return False
     return file_name
 
+def get_defaultimage_fname(self):
+    return os.path.join(self.locations['images'], 'default.png')
+
+def get_defaultthumbnail_fname(self):
+    return os.path.join(self.locations['images'], 'default_thumbnail.png')

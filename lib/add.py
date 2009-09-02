@@ -114,10 +114,12 @@ def update_movie(self):
         
         if new_poster_md5 and new_poster_md5 != old_poster_md5:
             # update thumbnail in main list
-            new_image_path = gutils.get_image_fname(new_poster_md5, self.db)
+            new_image_path = gutils.get_image_fname(new_poster_md5, self.db, 's')
+            if not new_image_path:
+                new_image_path = gutils.get_defaultthumbnail_fname(self)
             handler = self.Image.set_from_file(new_image_path)
             pixbuf = self.Image.get_pixbuf()
-            tmp_model.set_value(tmp_iter,1, pixbuf.scale_simple(30,40,3))
+            tmp_model.set_value(tmp_iter,1, pixbuf)
         # update main treelist
         tmp_model.set_value(tmp_iter,0,'%004d' % int(movie.number))
         tmp_model.set_value(tmp_iter,2, movie.o_title)
@@ -230,11 +232,11 @@ def populate_with_results(self):
                 w['picture'].set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
                 w['image'].set_text(self.movie.image)
             except:
-                image = os.path.join(self.locations['images'], 'default.png')
+                image = gutils.get_defaultimage_fname(self)
                 handler = self.Image.set_from_file(image)
                 w['picture'].set_from_pixbuf(self.Image.get_pixbuf())
         else:
-            image = os.path.join(self.locations['images'], 'default.png')
+            image = gutils.get_defaultimage_fname(self)
             handler = self.Image.set_from_file(image)
             Pixbuf = self.Image.get_pixbuf()
             w['picture'].set_from_pixbuf(Pixbuf)
@@ -616,9 +618,9 @@ def set_details(self, item=None):#{{{
             log.warn("TODO: image=%s", item['image'])
     else:
         w['image'].set_text('')
-        image_path = os.path.join(self.locations['images'], 'default.png')
+        image_path = gutils.get_defaultimage_fname(self)
     if not os.path.isfile(image_path):
-        image_path = os.path.join(self.locations['images'], 'default.png')
+        image_path = gutils.get_defaultimage_fname(self)
     w['picture'].set_from_file(image_path)
     
     w['notebook'].set_current_page(0)
@@ -701,13 +703,13 @@ def add_movie_db(self, close):
 
     image_path = ''
     if movie.poster_md5:
-        image_path = gutils.get_image_fname(movie.poster_md5, self.db)
+        image_path = gutils.get_image_fname(movie.poster_md5, self.db, 's')
     if not image_path or not os.path.isfile(image_path):
-        image_path = os.path.join(self.locations['images'], 'default.png')
+        image_path = gutils.get_defaultthumbnail_fname(self)
     handler = self.Image.set_from_file(image_path)
     pixbuf = self.Image.get_pixbuf()
     self.treemodel.set_value(myiter, 0, '%004d' % details['number'])
-    self.treemodel.set_value(myiter, 1, pixbuf.scale_simple(30,40,3))
+    self.treemodel.set_value(myiter, 1, pixbuf)
     self.treemodel.set_value(myiter, 2, details['o_title'])
     self.treemodel.set_value(myiter, 3, details['title'])
     self.treemodel.set_value(myiter, 4, details['director'])
@@ -808,7 +810,7 @@ def clone_movie(self):
 
     image_path = gutils.get_image_fname(movie.poster_md5, self.db)
     if not image_path or not os.path.isfile(image_path):
-        image_path = os.path.join(self.locations['images'], 'default.png')
+        image_path = gutils.get_defaultimage_fname(self)
     handler = self.Image.set_from_file(image_path)
 
     # change_filter calls populate_treeview which updates the status bar

@@ -47,9 +47,13 @@ def treeview_clicked(self):
         movie = self.db.session.query(db.Movie).filter_by(number=number).first()
         if movie is None:
             log.info("Treeview: movie doesn't exists (number=%s)", number)
-        elif movie.poster_md5 and self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
+        elif self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
             # poster window is visible
-            filename = gutils.get_image_fname(movie.poster_md5, self.db)
+            filename = None
+            if movie.poster_md5:
+                filename = gutils.get_image_fname(movie.poster_md5, self.db)
+            if not filename:
+                filename = gutils.get_defaultimage_fname(self)
             self.widgets['big_poster'].set_from_file(filename)
         for ext in self.extensions:
             ext.maintree_clicked(treeselection, movie)
@@ -229,11 +233,11 @@ def set_details(self, item=None):#{{{
             self.widgets['add']['delete_poster'].set_sensitive(True)
             w['picture_button'].set_sensitive(True)
         else:
-            image_path = os.path.join(self.locations['images'], 'default.png')
+            image_path = gutils.get_defaultimage_fname(self)
             self.widgets['add']['delete_poster'].set_sensitive(False)
             w['picture_button'].set_sensitive(False)
     else:
-        image_path = os.path.join(self.locations['images'], 'default.png')
+        image_path = gutils.get_defaultimage_fname(self)
         w['picture_button'].set_sensitive(False)
     w['picture'].set_from_file(image_path)
     # ratig

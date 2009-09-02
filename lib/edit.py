@@ -96,10 +96,10 @@ def delete_poster(self):
         log.error("Cannot delete unknown movie's poster!")
         return False
     if gutils.question(_("Are you sure you want to delete this poster?"), self.widgets['window']):
-        image_path = os.path.join(self.locations['images'], 'default.png')
+        image_path = gutils.get_defaultimage_fname(self)
         handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
         gutils.garbage(handler)
-        update_tree_thumbnail(self, os.path.join(self.locations['images'], 'default_thumbnail.png'))
+        update_tree_thumbnail(self, gutils.get_defaultthumbnail_fname(self))
         
         # update in database
         delete.delete_poster(self, movie.poster_md5)
