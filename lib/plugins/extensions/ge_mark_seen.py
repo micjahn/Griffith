@@ -48,6 +48,7 @@ class GriffithExtension(Base):
             session = self.db.Session()
 
             update_query = update(movies_table, values={'seen': True})
+            # FIXME: self.app._search_conditions contains advfilter conditions only (no other filters)
             update_query = update_whereclause(update_query, self.app._search_conditions)
 
             session.execute(update_query)

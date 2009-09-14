@@ -31,7 +31,7 @@ import os.path
 from sqlalchemy import create_engine, or_, and_, not_, exists, asc, desc
 from sqlalchemy.exceptions import OperationalError
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql.expression import Update
+from sqlalchemy.sql.expression import Update, Delete
 
 import db # ORM data (SQLAlchemy stuff)
 from gutils import warning # TODO: get rid of this import
@@ -220,7 +220,7 @@ def update_whereclause(query, cond): # {{{
         query = query.where(or_(*values))
 
     # sorting
-    if not isinstance(query, Update):
+    if not isinstance(query, (Update, Delete)):
         for rule in cond.get('sort_by', []):
             if rule.endswith(" DESC"):
                 reverse = True

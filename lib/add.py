@@ -839,7 +839,7 @@ def update_movie_instance(movie, details, session):
         # languages
         if t_languages is not None:
             for lang in t_languages:
-                if lang[0]>0:
+                if lang[0] > 0:
                     ml = db.MovieLang(lang_id=lang[0], type=lang[1],
                         acodec_id=lang[2], achannel_id=lang[3], subformat_id=lang[4])
                     movie.languages.append(ml)

@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-09-14  Piotr Ożarowski
+	* Add "Remover" extension (removes selected movies)
+
 2009-09-02  Michael Jahn
 	* [#336855] Error being reported saving posters
       cleanup of generating thumbnail versions of the images
