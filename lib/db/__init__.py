@@ -77,7 +77,7 @@ mapper(Loan, tables.loans, properties = {
     'collection': relation(Collection)})
 mapper(Movie, tables.movies, order_by=tables.movies.c.number , properties = {
     'loans'     : relation(Loan, backref='movie', cascade='all, delete-orphan'),
-    #'tags'       : relation(Tag, cascade='all, delete-orphan', secondary=movie_tag,
+    #'tags'      : relation(Tag, cascade='all, delete-orphan', secondary=movie_tag,
     'tags'      : relation(Tag, secondary=tables.movie_tag,
                            primaryjoin=tables.movies.c.movie_id==tables.movie_tag.c.movie_id,
                            secondaryjoin=tables.movie_tag.c.tag_id==tables.tags.c.tag_id),

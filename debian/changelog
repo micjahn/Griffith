@@ -1,3 +1,11 @@
+griffith (0.10.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Recommend python-gtkspell instead on python-gnome2-extras (closes: #541600)
+  * Bump Standards-Version to 3.8.3 (no changes needed)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sat, 26 Sep 2009 18:11:51 +0200
+
 griffith (0.10-1) unstable; urgency=low
 
   * New upstream release

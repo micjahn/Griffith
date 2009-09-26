@@ -28,6 +28,7 @@ try:
     import gtk
     import db
 except:
+    gtk = None
     pass
 import htmlentitydefs
 import re
@@ -35,21 +36,19 @@ import webbrowser
 import logging
 log = logging.getLogger("Griffith")
 
-url_re = re.compile('^\w+://')
-entity = re.compile(r'\&.\w*?\;')
-html_tags = re.compile(r'\<.*?\>')
+ENTITY = re.compile(r'\&.\w*?\;')
 
 def remove_accents(txt, encoding='iso-8859-1'):
     d = {192: u'A', 193: u'A', 194: u'A', 195: u'A', 196: u'A', 197: u'A',
-            199: u'C', 200: u'E', 201: u'E', 202: u'E', 203: u'E', 204: u'I',
-            205: u'I', 206: u'I', 207: u'I', 209: u'N', 210: u'O', 211: u'O',
-            212: u'O', 213: u'O', 214: u'O', 216: u'O', 217: u'U', 218: u'U',
-            219: u'U', 220: u'U', 221: u'Y', 224: u'a', 225: u'a', 226: u'a',
-            227: u'a', 228: u'a', 229: u'a', 231: u'c', 232: u'e', 233: u'e',
-            234: u'e', 235: u'e', 236: u'i', 237: u'i', 238: u'i', 239: u'i',
-            241: u'n', 242: u'o', 243: u'o', 244: u'o', 245: u'o', 246: u'o',
-            248: u'o', 249: u'u', 250: u'u', 251: u'u', 252: u'u', 253: u'y',
-            255: u'y'}
+         199: u'C', 200: u'E', 201: u'E', 202: u'E', 203: u'E', 204: u'I',
+         205: u'I', 206: u'I', 207: u'I', 209: u'N', 210: u'O', 211: u'O',
+         212: u'O', 213: u'O', 214: u'O', 216: u'O', 217: u'U', 218: u'U',
+         219: u'U', 220: u'U', 221: u'Y', 224: u'a', 225: u'a', 226: u'a',
+         227: u'a', 228: u'a', 229: u'a', 231: u'c', 232: u'e', 233: u'e',
+         234: u'e', 235: u'e', 236: u'i', 237: u'i', 238: u'i', 239: u'i',
+         241: u'n', 242: u'o', 243: u'o', 244: u'o', 245: u'o', 246: u'o',
+         248: u'o', 249: u'u', 250: u'u', 251: u'u', 252: u'u', 253: u'y',
+         255: u'y'}
     return unicode(txt, encoding).translate(d)
 
 def is_number(x):
@@ -168,7 +167,7 @@ def convert_entities(text):
                 print("error occurred while converting entity %s: %s" % (ents, ex))
 
             # check if it still needs conversion
-            if not entity.search(ents):
+            if not ENTITY.search(ents):
                 return ents
 
         if ents[1] == '#':
@@ -181,7 +180,7 @@ def convert_entities(text):
         else:
             return
 
-    in_entity = entity.search(text)
+    in_entity = ENTITY.search(text)
     if not in_entity:
         return text
     else:
@@ -267,6 +266,32 @@ def question(msg, window=None):
     response = dialog.run()
     dialog.destroy()
     return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
+
+def window_message(message):
+    """shows window with a given message while executing decorated function"""
+
+    def wrap(f):
+        def wrapped_f(*args):
+            if gtk:
+                window = gtk.Window(gtk.WINDOW_POPUP)
+                label = gtk.Label()
+                text = """<b>Griffith:</b>
+%s""" % message
+                label.set_markup(text)
+                window.add(label)
+                window.show_all()
+                while gtk.events_pending():    # give GTK some time for updates
+                    gtk.main_iteration()
+            else:
+                print message,
+            res = f(*args)
+            if gtk:
+                window.destroy()
+            else:
+                print ' [done]'
+            return res
+        return wrapped_f
+    return wrap
 
 def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expanduser('~'), picture=False, backup=False):
     dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
