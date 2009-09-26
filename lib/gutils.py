@@ -267,8 +267,8 @@ def question(msg, window=None):
     dialog.destroy()
     return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
 
-def window_message(message):
-    """shows window with a given message while executing decorated function"""
+def popup_message(message):
+    """shows popup message while executing decorated function"""
 
     def wrap(f):
         def wrapped_f(*args):

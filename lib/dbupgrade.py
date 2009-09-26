@@ -32,7 +32,7 @@ import gutils
 
 log = logging.getLogger("Griffith")
 
-@gutils.window_message(_('Upgrading database...'))
+@gutils.popup_message(_('Upgrading database...'))
 def upgrade_database(self, version, config):
     """Create new db or update existing one to current format"""
     b = self.engine
