@@ -271,7 +271,7 @@ def popup_message(message):
     """shows popup message while executing decorated function"""
 
     def wrap(f):
-        def wrapped_f(*args):
+        def wrapped_f(*args, **kwargs):
             if gtk:
                 window = gtk.Window(gtk.WINDOW_POPUP)
                 label = gtk.Label()
@@ -284,7 +284,7 @@ def popup_message(message):
                     gtk.main_iteration()
             else:
                 print message,
-            res = f(*args)
+            res = f(*args, **kwargs)
             if gtk:
                 window.destroy()
             else:
