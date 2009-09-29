@@ -37,7 +37,7 @@ class ExportPlugin(XmlExportBase):
         XmlExportBase.__init__(self, database, locations, parent_window, search_conditions, config)
         self.config_section = 'export-gcstar'
         self.export_name    = 'GCstar database export'
-        self.filename       = 'gcstar.xml'
+        self.filename       = 'gcstar.gcs'
         self.encoding       = 'utf-8'
         self.true_value     = '1'
         self.false_value    = '0'

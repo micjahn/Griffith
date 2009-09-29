@@ -5,11 +5,13 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-09-29  Michael Jahn
+	* GCstar import plugin added
+
 2009-09-26  Piotr Ożarowski
 	* Display a message during database upgrades
 
 2009-09-25  Michael Jahn
-	* FilmScoop movie plugin added (thanks to Squeri Andrea)
 	* Amazon movie plugin updated
 
 2009-09-14  Piotr Ożarowski
