@@ -124,50 +124,53 @@ class ImportPlugin(object):
 
         begin = time.time()
         processed = 0
-        while self._continue:
-            details = self.get_movie_details()
-            if details is None:
-                break
-            
-            processed += 1
-            if processed in update_on:
-                set_fraction(float(processed)/count)
-                main_iteration()
-                set_text("%s (%s/%s)" % (self.imported, processed, count))
-                main_iteration()
-                main_iteration() # extra iteration for abort button
+        try:
+            while self._continue:
+                details = self.get_movie_details()
+                if details is None:
+                    break
+                
+                processed += 1
+                if processed in update_on:
+                    set_fraction(float(processed)/count)
+                    main_iteration()
+                    set_text("%s (%s/%s)" % (self.imported, processed, count))
+                    main_iteration()
+                    main_iteration() # extra iteration for abort button
 
-            o_title_lower = details.get('o_title', '').lower()
-            title_lower = details.get('title', '').lower()
+                o_title_lower = details.get('o_title', '').lower()
+                title_lower = details.get('title', '').lower()
 
-            if o_title_lower or title_lower:
-                if o_title_lower and o_title_lower in o_titles:
-                    if title_lower and title_lower in titles:
-                        log.info("movie already exists (o_title=%s, title=%s)", details['o_title'], details['title'])
+                if o_title_lower or title_lower:
+                    if o_title_lower and o_title_lower in o_titles:
+                        if title_lower and title_lower in titles:
+                            log.info("movie already exists (o_title=%s, title=%s)", details['o_title'], details['title'])
+                            continue
+                    elif title_lower and title_lower in titles: # o_title is not available so lets check title only
+                        log.info("movie already exists (title=%s)", details['title'])
                         continue
-                elif title_lower and title_lower in titles: # o_title is not available so lets check title only
-                    log.info("movie already exists (title=%s)", details['title'])
-                    continue
-                validate_details(details, self.fields_to_import)
-                if self.edit: # XXX: not used for now
-                    response = edit_movie(self.parent, details)    # FIXME: wait until save or cancel button pressed
-                    if response == 1:
-                        self.imported += 1
+                    validate_details(details, self.fields_to_import)
+                    if self.edit: # XXX: not used for now
+                        response = edit_movie(self.parent, details)    # FIXME: wait until save or cancel button pressed
+                        if response == 1:
+                            self.imported += 1
+                    else:
+                        number = details.get('number', 1)
+                        while number in numbers:
+                            number += 1
+                        details['number'] = number
+                        #movie = db.Movie()
+                        #movie.add_to_db(details)
+                        try:
+                            db.tables.movies.insert(bind=self.db.session.bind).execute(details)
+                            self.imported += 1
+                        except Exception, e:
+                            log.info("movie details are not unique, skipping: %s", e)
+                        numbers.add(number)
                 else:
-                    number = details.get('number', 1)
-                    while number in numbers:
-                        number += 1
-                    details['number'] = number
-                    #movie = db.Movie()
-                    #movie.add_to_db(details)
-                    try:
-                        db.tables.movies.insert(bind=self.db.session.bind).execute(details)
-                        self.imported += 1
-                    except Exception, e:
-                        log.info("movie details are not unique, skipping: %s", e)
-                    numbers.add(number)
-            else:
-                log.info('skipping movie without title and original title')
+                    log.info('skipping movie without title and original title')
+        except Exception, e:
+            log.error(str(e))
         log.info("Import process took %s s; %s/%s movies imported", (time.time() - begin), processed, count)
         if gc_was_enabled:
             gc.enable()
@@ -231,6 +234,10 @@ def on_import_button_clicked(button, self, *args):
             fields.append(i)
 
     __import__("plugins.imp.%s" % plugin_name)
+    if self.debug_mode:
+        log.debug('reloading %s', plugin_name)
+        import sys
+        reload(sys.modules["plugins.imp.%s" % plugin_name])
     ip = eval("plugins.imp.%s.ImportPlugin(self, fields)" % plugin_name)
     if ip.initialize():
         self.widgets['window'].set_sensitive(False)
