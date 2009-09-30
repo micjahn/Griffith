@@ -1426,7 +1426,7 @@ You can't undo this operation."""), self.widgets['window']):
         if tmp_iter is None:
             log.debug('no selected iter found')
             return False
-        selected_key = int(tmp_model.get_value(tmp_iter, 0))
+        selected_key = tmp_model.get_value(tmp_iter, 0)
         self.widgets['results']['window'].hide()
         return self._resultswin_process(selected_key)
 
