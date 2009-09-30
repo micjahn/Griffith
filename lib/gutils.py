@@ -273,12 +273,15 @@ def popup_message(message):
     def wrap(f):
         def wrapped_f(*args, **kwargs):
             if gtk:
-                window = gtk.Window(gtk.WINDOW_POPUP)
+                window = gtk.Window()
+                window.set_title('Griffith info')
+                window.set_position(gtk.WIN_POS_CENTER)
                 label = gtk.Label()
-                text = """<b>Griffith:</b>
-%s""" % message
-                label.set_markup(text)
+                label.set_markup("""<big><b>Griffith:</b>
+%s</big>""" % message)
                 window.add(label)
+                window.set_modal(True)
+                window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
                 window.show_all()
                 while gtk.events_pending():    # give GTK some time for updates
                     gtk.main_iteration()

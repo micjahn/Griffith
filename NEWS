@@ -4,6 +4,15 @@ Griffith 0.11
   ~/.griffith/lib/extensions
 
 
+Griffith 0.10.1
+===============
+* Few posters related fixes (updating, cleaning, etc.)
+* FilmAffinity and Amazon movie plugins updated
+* Reconnect with MySQL servers once an hour (can be configured via pool_recycle
+  config option)
+* Display a popup message during database upgrades
+
+
 Griffith 0.10
 =============
 * Almost unchanged release candidate 1

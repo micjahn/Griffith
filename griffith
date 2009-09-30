@@ -35,7 +35,7 @@ del lib
 
 # logging
 import logging
-logging.basicConfig()
+logging.basicConfig(format='%(asctime)s: %(levelname)s: %(name)s(%(module)s:%(lineno)d): %(message)s', datefmt='%Y-%m-%dT%H:%M:%S')
 log = logging.getLogger("Griffith")
 
 # check dependencies

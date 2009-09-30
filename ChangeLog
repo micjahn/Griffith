@@ -5,11 +5,14 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-09-30  Piotr Ożarowski
+	* Change log format
+
 2009-09-29  Michael Jahn
 	* GCstar import plugin added
 
 2009-09-26  Piotr Ożarowski
-	* Display a message during database upgrades
+	* Display popup message during database upgrades
 
 2009-09-25  Michael Jahn
 	* Amazon movie plugin updated
@@ -19,8 +22,8 @@ Griffith ChangeLog
 
 2009-09-02  Michael Jahn
 	* [#336855] Error being reported saving posters
-      cleanup of generating thumbnail versions of the images
-      and filenames for default image/thumbnail
+	  cleanup of generating thumbnail versions of the images
+	  and filenames for default image/thumbnail
 
 2009-08-28  Piotr Ożarowski
 	* [Bug 420462] --clean fixed
