@@ -639,7 +639,9 @@ def validate_details(t_movies, allow_only=None):
         if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
             t_movies[i] = None
     if allow_only is not None:
-        for i in t_movies:
+        # iterate over a copy of the list because removing elements of a list
+        # within a for enumeration of the same list instance isn't supported
+        for i in list(t_movies):
             if not i in allow_only:
                 t_movies.pop(i)
 
