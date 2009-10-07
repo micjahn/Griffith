@@ -48,6 +48,10 @@ class ImportPlugin(object):
     imported = 0
     data = None
 
+    # mapping dicts name to id
+    mediummap    = None
+    tagmap       = None
+
     def __init__(self, parent, fields_to_import):
         self.db = parent.db
         self.locations = parent.locations
@@ -60,6 +64,26 @@ class ImportPlugin(object):
         self.widgets = parent.widgets['import']
         self.fields_to_import = fields_to_import
         self._continue = True
+
+    def loadmappings(self):
+        self.mediummap = {}
+        self.tagmap = {}
+        # medium
+        for medium in self.db.session.query(db.Medium.medium_id, db.Medium.name).all():
+            # original name
+            mediumname = medium.name.lower()
+            if not self.mediummap.has_key(mediumname):
+                self.mediummap[mediumname] = medium.medium_id
+            # normalized name
+            mediumname = mediumname.replace('-', '')
+            mediumname = mediumname.replace(' ', '')
+            if not self.mediummap.has_key(mediumname):
+                self.mediummap[mediumname] = medium.medium_id
+        # tags
+        for tag in self.db.session.query(db.Tag.tag_id, db.Tag.name).all():
+            tagname = tag.name.lower()
+            if not self.tagmap.has_key(tagname):
+                self.tagmap[tagname] = tag.tag_id
 
     def initialize(self):
         """Initializes plugin (get all parameters from user, etc.)"""
@@ -161,20 +185,52 @@ class ImportPlugin(object):
                         details['number'] = number
                         #movie = db.Movie()
                         #movie.add_to_db(details)
+                        if details.has_key('tags'):
+                            tags = details.pop('tags')
+                        else:
+                            tags = None
                         try:
-                            db.tables.movies.insert(bind=self.db.session.bind).execute(details)
+                            # optional: do mapping of lookup data
+                            # (TODO: perhaps adding new lookup values?)
+                            try:
+                                if details.has_key('medium_id'):
+                                    medium_id = int(details['medium_id'])
+                            except:
+                                try:
+                                    if self.mediummap is None:
+                                        self.loadmappings()
+                                    medium_id = details['medium_id'].lower()
+                                    if self.mediummap.has_key(medium_id):
+                                        details['medium_id'] = self.mediummap[medium_id]
+                                except:
+                                    pass
+                            # insert the movie in the database
+                            movie = db.tables.movies.insert(bind=self.db.session.bind).execute(details)
                             self.imported += 1
+                            # optional: adding tags
+                            if tags:
+                                if self.tagmap is None:
+                                    self.loadmappings()
+                                for tag in tags:
+                                    try:
+                                        if isinstance(tag, (str, unicode)):
+                                            # TODO: adding new tag names?
+                                            tag_id = self.tagmap[tag.lower()]
+                                        else:
+                                            tag_id = int(tag)
+                                        db.tables.movie_tag.insert(bind=self.db.session.bind).execute({ 'movie_id':movie.lastrowid, 'tag_id':tag_id })
+                                    except:
+                                        pass
                         except Exception, e:
                             log.info("movie details are not unique, skipping: %s", e)
                         numbers.add(number)
                 else:
                     log.info('skipping movie without title and original title')
-        except Exception, e:
-            log.error(str(e))
-        log.info("Import process took %s s; %s/%s movies imported", (time.time() - begin), processed, count)
-        if gc_was_enabled:
-            gc.enable()
-        self.widgets['pwindow'].hide()
+        finally:
+            log.info("Import process took %s s; %s/%s movies imported", (time.time() - begin), processed, count)
+            if gc_was_enabled:
+                gc.enable()
+            self.widgets['pwindow'].hide()
         return True
 
     def clear(self):
@@ -241,19 +297,24 @@ def on_import_button_clicked(button, self, *args):
     ip = eval("plugins.imp.%s.ImportPlugin(self, fields)" % plugin_name)
     if ip.initialize():
         self.widgets['window'].set_sensitive(False)
-        self.widgets['import']['window'].hide()
-        self.widgets['import']['pabort'].connect('clicked', ip.abort, ip)
-        for filename in filenames:
-            self.widgets['import']['progressbar'].set_fraction(0)
-            self.widgets['import']['progressbar'].set_text('')
-            if ip.run(filename):
-                gutils.info(_("%s file has been imported. %s movies added.") \
-                    % (plugin_name, ip.imported), self.widgets['window'])
-                self.populate_treeview()
-            ip.clear()
-        ip.destroy()
-        self.widgets['import']['pwindow'].hide()
-        self.widgets['window'].set_sensitive(True)
+        try:
+            self.widgets['import']['window'].hide()
+            self.widgets['import']['pabort'].connect('clicked', ip.abort, ip)
+            for filename in filenames:
+                self.widgets['import']['progressbar'].set_fraction(0)
+                self.widgets['import']['progressbar'].set_text('')
+                if ip.run(filename):
+                    gutils.info(_("%s file has been imported. %s movies added.") \
+                        % (plugin_name, ip.imported), self.widgets['window'])
+                    self.populate_treeview()
+                ip.clear()
+        except Exception, e:
+            log.exception('')
+            gutils.error(self, str(e), self.widgets['window'])
+        finally:
+            ip.destroy()
+            self.widgets['import']['pwindow'].hide()
+            self.widgets['window'].set_sensitive(True)
 
 def on_abort_button_clicked(button, self, *args):
     self.widgets['import']['window'].hide()

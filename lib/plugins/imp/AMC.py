@@ -164,7 +164,8 @@ class ImportPlugin(IP):
             details['seen'] = self.readboolfield(self.openfile)         # Checked           1
             self.seekfield(self.openfile)                               # Media             LFFNR
             if self.fileversion >= 3.3:
-                self.seekfield(self.openfile)                           # MediaType         LFFNR   # since V 3.3
+                # setting medium_id to string mediumname; mapping is done in base class
+                details['medium_id'] = self.readstringfield(self.openfile) # MediaType         LFFNR   # since V 3.3
                 self.seekfield(self.openfile)                           # MediaSource       LFFNR   # since V 3.3
             self.seekfield(self.openfile)                               # Borrower          LFFNR
             details['o_title'] = self.readstringfield(self.openfile)    # OriginalTitle     LFFNR
