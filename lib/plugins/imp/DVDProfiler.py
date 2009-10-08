@@ -303,7 +303,6 @@ class ImportPlugin(IP):
             log.exception('')
             details = None
         self.itemindex = self.itemindex +  1
-        print details
         return details
 
     def clear(self):

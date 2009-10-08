@@ -72,17 +72,17 @@ class ImportPlugin(object):
         for medium in self.db.session.query(db.Medium.medium_id, db.Medium.name).all():
             # original name
             mediumname = medium.name.lower()
-            if not self.mediummap.has_key(mediumname):
+            if not mediumname in self.mediummap:
                 self.mediummap[mediumname] = medium.medium_id
             # normalized name
             mediumname = mediumname.replace('-', '')
             mediumname = mediumname.replace(' ', '')
-            if not self.mediummap.has_key(mediumname):
+            if not mediumname in self.mediummap:
                 self.mediummap[mediumname] = medium.medium_id
         # tags
         for tag in self.db.session.query(db.Tag.tag_id, db.Tag.name).all():
             tagname = tag.name.lower()
-            if not self.tagmap.has_key(tagname):
+            if not tagname in self.tagmap:
                 self.tagmap[tagname] = tag.tag_id
 
     def initialize(self):
@@ -185,7 +185,7 @@ class ImportPlugin(object):
                         details['number'] = number
                         #movie = db.Movie()
                         #movie.add_to_db(details)
-                        if details.has_key('tags'):
+                        if 'tags' in details:
                             tags = details.pop('tags')
                         else:
                             tags = None
@@ -193,14 +193,14 @@ class ImportPlugin(object):
                             # optional: do mapping of lookup data
                             # (TODO: perhaps adding new lookup values?)
                             try:
-                                if details.has_key('medium_id'):
+                                if 'medium_id' in details:
                                     medium_id = int(details['medium_id'])
                             except:
                                 try:
                                     if self.mediummap is None:
                                         self.loadmappings()
                                     medium_id = details['medium_id'].lower()
-                                    if self.mediummap.has_key(medium_id):
+                                    if medium_id in self.mediummap:
                                         details['medium_id'] = self.mediummap[medium_id]
                                 except:
                                     pass
