@@ -802,7 +802,7 @@ def update_volume_combo_ids(self):
     self.volume_combo_ids = {}
     self.volume_combo_ids[0] = 0
     for i, item in enumerate(self.db.session.query(db.Volume.volume_id).all()):
-        self.volume_combo_ids[i] = item.volume_id
+        self.volume_combo_ids[i+1] = item.volume_id
 
 def update_collection_combo_ids(self):
     self.collection_combo_ids = {}
