@@ -5,6 +5,10 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-10-13  Michael Jahn
+	* support for posters for import plugins GCstar and AMC
+	* [#410362] AMC importer doesn't import cover pictures
+
 2009-10-07  Michael Jahn
 	* DVD Profiler import plugin added
 	* very small update for AMC import plugin (medium typ)

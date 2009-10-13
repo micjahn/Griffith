@@ -94,6 +94,8 @@ class ImportPlugin(IP):
             item = self.items[self.itemindex]
         if len(self.items) <= self.itemindex:
             return None
+        if not len(item.childNodes):
+            return None
 
         details = {}
         try:

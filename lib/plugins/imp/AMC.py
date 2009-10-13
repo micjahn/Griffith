@@ -94,7 +94,7 @@ class ImportPlugin(IP):
     description  = _('Ant Movie Catalog (version 3.5)')
     author       = 'Michael Jahn'
     email        = 'griffith-private@lists.berlios.de'
-    version      = '1.0'
+    version      = '1.1'
     file_filters = '*.[aA][mM][cC]'
     mime_types   = None
 
@@ -185,8 +185,12 @@ class ImportPlugin(IP):
             self.seekfield(self.openfile)                               # Languages         LFFNR
             self.seekfield(self.openfile)                               # Subtitles         LFFNR
             self.seekfield(self.openfile)                               # Size              LFFNR
-            self.seekfield(self.openfile)                               # Picture           LFFNR
-            self.seekfield(self.openfile)                               # PictureData       LFFNR
+            posterfilename = self.readstringfield(self.openfile)        # Picture           LFFNR
+            posterdata = self.readbinaryfield(self.openfile)            # PictureData       LFFNR
+            if posterdata:
+                details['poster'] = posterdata
+            elif posterfilename and len(posterfilename) > 4:
+                details['poster'] = posterfilename
             
             if details['title'] == None:
                 details['title'] = details['o_title']
@@ -266,3 +270,13 @@ class ImportPlugin(IP):
         if intValue == -1:
             return None
         return intValue != 0
+
+    def readbinaryfield(self, ifile):
+        field = None
+        lenStr = ifile.read(4)
+        if len(lenStr) < 4:
+            raise EOFError
+        lenTuple = struct.unpack('i', lenStr)
+        if lenTuple[0]:
+            field = ifile.read(lenTuple[0])
+        return field

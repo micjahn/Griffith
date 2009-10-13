@@ -124,5 +124,7 @@ def update_tree_thumbnail(self, t_image_path):
     (tmp_model, tmp_iter) = treeselection.get_selected()
     self.Image.set_from_file(t_image_path)
     pixbuf = self.Image.get_pixbuf()
-    self.treemodel.set_value(tmp_iter, 1, pixbuf)
+    # tmp_iter can be None while importing data
+    if tmp_iter:
+        self.treemodel.set_value(tmp_iter, 1, pixbuf)
 

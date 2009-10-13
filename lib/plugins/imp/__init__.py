@@ -22,13 +22,16 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import glob
+import os
 import os.path
 import time
 import gc
+from tempfile import mkstemp
 import logging
 log = logging.getLogger("Griffith")
 
 import db
+import edit
 
 # detect all plugins:
 __all__ = [os.path.basename(x)[:-3] for x in glob.glob("%s/*.py" % os.path.dirname(__file__))]
@@ -53,6 +56,7 @@ class ImportPlugin(object):
     tagmap       = None
 
     def __init__(self, parent, fields_to_import):
+        self.parent = parent
         self.db = parent.db
         self.locations = parent.locations
         self.fields = parent.field_names
@@ -96,6 +100,8 @@ class ImportPlugin(object):
 
     def set_source(self, name):
         """Prepare source (open file, etc.)"""
+        # change current dir because there are posters with relative paths (perhaps)
+        os.chdir(os.path.dirname(name))
 
     def count_movies(self):
         """Returns number of movies in file which is about to be imported"""
@@ -153,7 +159,7 @@ class ImportPlugin(object):
                 details = self.get_movie_details()
                 if details is None:
                     break
-                
+
                 processed += 1
                 if processed in update_on:
                     set_fraction(float(processed)/count)
@@ -189,6 +195,10 @@ class ImportPlugin(object):
                             tags = details.pop('tags')
                         else:
                             tags = None
+                        if 'poster' in details:
+                            poster = details.pop('poster')
+                        else:
+                            poster = None
                         try:
                             # optional: do mapping of lookup data
                             # (TODO: perhaps adding new lookup values?)
@@ -221,8 +231,27 @@ class ImportPlugin(object):
                                         db.tables.movie_tag.insert(bind=self.db.session.bind).execute({ 'movie_id':movie.lastrowid, 'tag_id':tag_id })
                                     except:
                                         pass
+                            # adding poster
+                            if poster:
+                                # check for JPEG/PNG header otherwise it should be a filename 
+                                if len(poster) > 4 and \
+                                    ((ord(poster[0]) == 0xFF and ord(poster[1]) == 0xD8 and ord(poster[2]) == 0xFF and ord(poster[3]) == 0xE0) or
+                                     (ord(poster[0]) == 0x89 and ord(poster[1]) == 0x50 and ord(poster[2]) == 0x4E and ord(poster[3]) == 0x47)):
+                                    # make a temporary file
+                                    try:
+                                        posterfilefd, posterfilename = mkstemp('.img')
+                                        try:
+                                            os.write(posterfilefd, poster)
+                                        finally:
+                                            os.close(posterfilefd)
+                                        edit.update_image(self.parent, number, posterfilename)
+                                    finally:
+                                        if os.path.isfile(posterfilename):
+                                            os.remove(posterfilename)
+                                else:
+                                    edit.update_image(self.parent, number, poster)
                         except Exception, e:
-                            log.info("movie details are not unique, skipping: %s", e)
+                            log.exception("movie details are not unique, skipping")
                         numbers.add(number)
                 else:
                     log.info('skipping movie without title and original title')

@@ -96,6 +96,18 @@ class ImportPlugin(IP):
             details['site']           = item.getAttribute('webPage')
             details['seen']           = item.getAttribute('seen') == '1'
             details['director']       = item.getAttribute('director')
+            # image filenames are mostly a absolute path at the original system
+            # which should be now a relative path to the xml database file
+            imagefilename             = item.getAttribute('image')
+            previoustail = ''
+            previoushead = imagefilename
+            while not os.path.exists(imagefilename) and previoushead:
+                (head, tail) = os.path.split(previoushead)
+                imagefilename = os.path.join(os.path.join(os.path.dirname(self.filename), tail), previoustail)
+                previoustail = tail
+                previoushead = head
+            if os.path.exists(imagefilename):
+                details['poster'] = imagefilename
             try:
                 details['number']     = int(item.getAttribute('id'))
             except:
