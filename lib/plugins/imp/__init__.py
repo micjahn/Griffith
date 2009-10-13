@@ -212,8 +212,10 @@ class ImportPlugin(object):
                                     medium_id = details['medium_id'].lower()
                                     if medium_id in self.mediummap:
                                         details['medium_id'] = self.mediummap[medium_id]
+                                    else:
+                                        details['medium_id'] = None
                                 except:
-                                    pass
+                                    details['medium_id'] = None
                             # insert the movie in the database
                             movie = db.tables.movies.insert(bind=self.db.session.bind).execute(details)
                             self.imported += 1
