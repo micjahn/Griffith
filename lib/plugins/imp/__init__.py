@@ -54,6 +54,7 @@ class ImportPlugin(object):
     # mapping dicts name to id
     mediummap    = None
     tagmap       = None
+    vcodecsmap   = None
 
     def __init__(self, parent, fields_to_import):
         self.parent = parent
@@ -72,6 +73,7 @@ class ImportPlugin(object):
     def loadmappings(self):
         self.mediummap = {}
         self.tagmap = {}
+        self.vcodecsmap = {}
         # medium
         for medium in self.db.session.query(db.Medium.medium_id, db.Medium.name).all():
             # original name
@@ -88,6 +90,11 @@ class ImportPlugin(object):
             tagname = tag.name.lower()
             if not tagname in self.tagmap:
                 self.tagmap[tagname] = tag.tag_id
+        # vcodecs
+        for vcodec in self.db.session.query(db.VCodec.vcodec_id, db.VCodec.name).all():
+            vcodecname = vcodec.name.lower()
+            if not vcodecname in self.vcodecsmap:
+                self.vcodecsmap[vcodecname] = vcodec.vcodec_id
 
     def initialize(self):
         """Initializes plugin (get all parameters from user, etc.)"""
@@ -216,6 +223,20 @@ class ImportPlugin(object):
                                         details['medium_id'] = None
                                 except:
                                     details['medium_id'] = None
+                            try:
+                                if 'vcodec_id' in details:
+                                    vcodec_id = int(details['vcodec_id'])
+                            except:
+                                try:
+                                    if self.vcodecsmap is None:
+                                        self.loadmappings()
+                                    vcodec_id = details['vcodec_id'].lower()
+                                    if vcodec_id in self.vcodecsmap:
+                                        details['vcodec_id'] = self.vcodecsmap[vcodec_id]
+                                    else:
+                                        details['vcodec_id'] = None
+                                except:
+                                    details['vcodec_id'] = None
                             # insert the movie in the database
                             movie = db.tables.movies.insert(bind=self.db.session.bind).execute(details)
                             self.imported += 1
