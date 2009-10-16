@@ -8,6 +8,8 @@ Griffith ChangeLog
 2009-10-16  Michael Jahn
 	* eXtreme Movie Manager import plugin added
 	* import support for movie detail video codec
+	* "Remover" extensions removes associated tags and languages
+	  before removing the movie entry
 
 2009-10-13  Michael Jahn
 	* support for posters for import plugins GCstar and AMC
