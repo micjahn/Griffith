@@ -2,7 +2,7 @@ Griffith 0.11
 =============
 * Griffith extensions feature added. You can add your own extensions in
   ~/.griffith/lib/extensions
-* New import plugins: GCstar, DVD Profiler
+* New import plugins: GCstar, DVD Profiler, eXtreme Movie Manager, Personal Video Database
 
 
 Griffith 0.10.1
