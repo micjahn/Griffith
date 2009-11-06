@@ -37,7 +37,6 @@ from edit import update_image
 import amazon
 
 log = logging.getLogger('Griffith')
-amazon.setLicense('04GDDMMXX8X9CJ1B22G2')
 
 class GriffithExtension(Base):
     name = 'Amazon'
@@ -48,24 +47,40 @@ class GriffithExtension(Base):
     api = 1
 
     preferences = {'locale': {'name': _('Select source'),
-                              'type': (u'US', u'UK', u'DE', u'CA', u'FR', u'JP')}}
+                              'default': u'US',
+                              'type': (u'US', u'UK', u'DE', u'CA', u'FR', u'JP')},
+                   'accesskey': {'name': _('Access Key ID'),
+                                 'hint': u'https://affiliate-program.amazon.com/gp/flex/advertising/api/sign-in.html',
+                                 'default': u'',
+                                 'type': unicode},
+                   'secretkey': {'name': _('Secret Key'),
+                                 'hint': u'https://affiliate-program.amazon.com/gp/flex/advertising/api/sign-in.html',
+                                 'default': u'',
+                                 'type': unicode}}
     toolbar_icon = 'gtk-network'
 
     def toolbar_icon_clicked(self, widget, movie):
         log.info('fetching poster from Amazon...')
         self.movie = movie
 
+        locale = self.get_config_value('locale', 'US').lower()
+        accesskey = self.get_config_value('accesskey')
+        secretkey = self.get_config_value('secretkey')
+
+        if not accesskey or not secretkey:
+            gutils.error(self.app, _('Please configure you Amazon Access Key ID and Secret Key correctly in the preferences dialog.'))
+            return False
+
         if movie is None:
             gutils.error(self.app, _('You have no movies in your database'), self.widgets['window'])
             return False
-
-        locale = self.get_config_value('locale', 'US').lower()
 
         keyword = movie.o_title
         if locale == 'de':
             keyword = movie.title
 
         try:
+            amazon.setLicense(accesskey, secretkey)
             result = amazon.searchByTitle(keyword, type='Large', product_line='DVD', locale=locale)
             if hasattr(result, 'TotalPages'):
                 # get next result pages
@@ -89,6 +104,7 @@ class GriffithExtension(Base):
             self._result = result
             log.info("... %s posters found" % result.TotalResults)
         except:
+            log.exception('')
             gutils.warning(_('No posters found for this movie.'))
             return
 

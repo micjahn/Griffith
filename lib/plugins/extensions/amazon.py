@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 __all__ = []
 """Python wrapper
 
@@ -74,7 +75,10 @@ __license__ = "Python"
 # Support for BlendedSearch contributed by Alex Choo
 
 from xml.dom import minidom
-import os, sys, getopt, cgi, urllib, string
+import os, sys, getopt, cgi, urllib, string, time
+import base64
+import hmac
+from hashlib import sha256
 try:
     import timeoutsocket # http://www.timo-tasi.org/python/timeoutsocket.py
     timeoutsocket.setDefaultSocketTimeout(10)
@@ -84,11 +88,12 @@ import logging
 log = logging.getLogger("Griffith")
 
 LICENSE_KEY = ""
+SECRET_KEY = ""
 ASSOCIATE = "webservices-20"
 HTTP_PROXY = None
 LOCALE = "us"
 # default API version is from 2005-10-05
-APIVERSION='2008-06-26'
+APIVERSION='2009-03-31'
 
 # don't touch the rest of these constants
 class AmazonError(Exception): pass
@@ -107,12 +112,12 @@ _licenseLocations = (
     (lambda key: _contentsOf(_getScriptDir(), _amazonfile2), '%s in the amazon.py directory' % _amazonfile2)
     )
 _supportedLocales = {
-        "us" : (None, "ecs.amazonaws.com/onca/xml?Service=AWSECommerceService"),   
-        "uk" : ("uk", "ecs.amazonaws.co.uk/onca/xml?Service=AWSECommerceService"),
-        "de" : ("de", "ecs.amazonaws.de/onca/xml?Service=AWSECommerceService"),
-        "ca" : ("ca", "ecs.amazonaws.ca/onca/xml?Service=AWSECommerceService"),
-        "fr" : ("fr", "ecs.amazonaws.fr/onca/xml?Service=AWSECommerceService"),
-        "jp" : ("jp", "ecs.amazonaws.jp/onca/xml?Service=AWSECommerceService")
+        "us" : (None, "ecs.amazonaws.com/onca/xml"),   
+        "uk" : ("uk", "ecs.amazonaws.co.uk/onca/xml"),
+        "de" : ("de", "ecs.amazonaws.de/onca/xml"),
+        "ca" : ("ca", "ecs.amazonaws.ca/onca/xml"),
+        "fr" : ("fr", "ecs.amazonaws.fr/onca/xml"),
+        "jp" : ("jp", "ecs.amazonaws.jp/onca/xml")
     }
 
 ## administrative functions
@@ -146,10 +151,12 @@ def getLocale(locale=None):
     """get locale"""
     return locale or LOCALE
 
-def setLicense(license_key):
+def setLicense(license_key, secret_key):
     """set license key"""
-    global LICENSE_KEY
+    global LICENSE_KEY, SECRET_KEY, HMAC
     LICENSE_KEY = license_key
+    SECRET_KEY = secret_key
+    HMAC = hmac.new(SECRET_KEY, digestmod=sha256)
 
 def getLicense(license_key = None):
     """get license key
@@ -224,35 +231,87 @@ def unmarshal(element):
             rc = int(rc)
     return rc
 
-def buildURL(search_type, searchfield, searchvalue, product_line, type, page, license_key, locale, associate):
+def buildURL(search_type, searchfield, searchvalue, product_line, type, page, license_key, locale, associate, timestamp = None):
     _checkLocaleSupported(locale)
     if isinstance(searchvalue, unicode):
         searchvalue = searchvalue.encode('utf-8') # needed for urllib.quote
     url = "http://" + _supportedLocales[locale][1]
     if search_type == 'ItemLookup':
-        url += "&AssociateTag=%s" % associate
-        url += "&AWSAccessKeyId=%s" % license_key.strip()
-        url += "&ResponseGroup=%s" % type
+        params = dict(
+            Service='AWSECommerceService',
+            AWSAccessKeyId=license_key,
+            Operation=search_type,
+            ResponseGroup=type,
+            IdType=searchfield,
+            ItemId=urllib.quote(searchvalue))
         if product_line:
-            url += "&SearchIndex=%s" % product_line
-        url += "&Operation=%s" % search_type
-        url += "&IdType=%s" % searchfield
-        url += "&ItemId=%s" % searchvalue
+            params['SearchIndex'] = product_line
     else:
-        url += "&AssociateTag=%s" % associate
-        url += "&AWSAccessKeyId=%s" % license_key.strip()
-        url += "&ResponseGroup=%s" % type
+        params = dict(
+            Service='AWSECommerceService',
+            AWSAccessKeyId=license_key,
+            Operation=search_type,
+            ResponseGroup=type,
+            Sort='titlerank')
+        params[searchfield] = urllib.quote(searchvalue)
         if page:
-            url += "&ItemPage=%s" % page
+            params['ItemPage'] = str(page)
         if product_line:
-            url += "&SearchIndex=%s" % product_line
-        url += "&Operation=%s" % search_type
-        url += "&%s=%s" % (searchfield, urllib.quote(searchvalue))
-        url += "&Sort=titlerank"
-    if not APIVERSION is None:
-        url += "&Version=%s" % APIVERSION
+            params['SearchIndex'] = product_line
+    if APIVERSION:
+        params['Version'] = APIVERSION
+    log.info(params)
+    url = getSignedUrl(url, params, timestamp)
     log.info('URL: ' + url)
     return url
+
+def getSignedUrl(base_url, params, timestamp = None):
+    global HMAC
+    hmac = HMAC.copy()
+    
+    # Add a ISO 8601 compliant timestamp (in GMT)
+    if timestamp:
+        params['Timestamp'] = timestamp
+    else:
+        params['Timestamp'] = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())
+    #params['SignatureVersion']='1'
+    
+    # Sort the URL parameters by key
+    keys = params.keys()
+    #keys.sort(cmp = lambda x, y: cmp(x.lower(), y.lower()))
+    keys.sort()
+    
+    # Reconstruct the URL parameters and encode them
+    pairs = []
+    for key in keys:
+        #val = urllib.quote(params[key])
+        val = params[key]
+        pairs.append(key + '=' + val)
+    url_string = '&'.join(pairs)
+    url_string = url_string.replace('+', "%20")
+    url_string = url_string.replace(':', "%3A")
+    
+    #Construct the string to sign
+    urlparts = base_url.split('/')
+    string_to_sign = """GET
+%s
+/%s/%s
+%s""" % (urlparts[2], urlparts[3], urlparts[4], url_string)
+    url_string = url_string.replace(';', urllib.quote(';'))
+    
+    # Sign the request
+    hmac.update(string_to_sign)
+    signature = hmac.digest()
+    
+    # Base64 encode the signature
+    signature = base64.encodestring(signature).strip()
+    signature = signature.replace('+','%2B');
+    signature = signature.replace('=','%3D');
+    signature = signature.replace('/','%2F');
+
+    # Make the signature URL safe
+    url_string += "&Signature=%s" % signature
+    return "%s?%s" % (base_url, url_string)
 
 
 ## main functions
@@ -395,3 +454,17 @@ def searchByPower(keyword, product_line="Books", type="Large", page=1, license_k
 
 def searchByBlended(keyword, type="Large", page=1, license_key=None, http_proxy=None, locale=None, associate=None):
     return search("BlendedSearch", 'Keywords', keyword, None, type, page, license_key, http_proxy, locale, associate)
+
+if __name__ == "__main__":
+    # check the generation of a sample url
+    expectedUrl = 'http://ecs.amazonaws.de/onca/xml?AWSAccessKeyId=ABCDEFGHIJKLMNOPQRST&AssociateTag=webservices-20&IdType=Title&ItemId=Prison%C2%A0Break&ItemPage=1&Operation=ItemSearch&ResponseGroup=Large&SearchIndex=DVD&Service=AWSECommerceService&Sort=titlerank&Timestamp=2009-11-04T13%3A12%3A51&Title=Prison%C2%A0Break&Version=2008-06-26&Signature=zCHdyoI5busTseJrYcVO%2Bz6u9pmULHBp3E%2F%2FGAdAM2g%3D'
+    setLicense('ABCDEFGHIJKLMNOPQRST', 'ancnhH/kdfsk739/dfsjkjikJHFJKJHRih7hHZgd')
+    url = buildURL('ItemSearch', 'Title', 'Prison Break', 'DVD', 'Large', 1, 'ABCDEFGHIJKLMNOPQRST', 'de', 'webservices-20', '2009-11-04T13%3A12%3A51')
+    # compare with a generated one from http://associates-amazon.s3.amazonaws.com/signed-requests/helper/index.html
+    result = cmp(url, expectedUrl)
+    if result == 0:
+        print 'Signed URL generation seems to be ok.'
+    else:
+        print url
+        print expectedUrl
+        print 'Something seems to be wrong with the signed URL generation.'

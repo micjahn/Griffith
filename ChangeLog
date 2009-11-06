@@ -7,6 +7,8 @@ Griffith ChangeLog
 
 2009-11-06  Michael Jahn
 	* Personal Video Database import plugin added
+	* fixed amazon binding (generation of signed urls added but
+	  every user needs an amazon account for the access key and secret key)
 
 2009-10-16  Michael Jahn
 	* eXtreme Movie Manager import plugin added
