@@ -80,6 +80,10 @@ class GriffithExtensionBase(object):
     def get_config_value(self, key, default=None):
         return self.config.get("%s_%s" % (self.id, key), default, section='extensions')
 
+    def set_config_value(self, key, value=None):
+        self.config.set("%s_%s" % (self.id, key), value, section='extensions')
+        self.config.save()
+
     def _on_toolbar_icon_clicked(self, button_widget):
         session = self.db.Session()
         movie = session.query(db.Movie).filter(db.Movie.movie_id==self.app._movie_id).first()

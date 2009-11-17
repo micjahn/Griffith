@@ -23,6 +23,7 @@ __revision__ = '$Id$'
 
 import logging
 import os
+import gtk
 
 import db
 import gutils
@@ -406,6 +407,24 @@ def save_preferences(self):
             else:
                 pass
     self.pdf_reader = save_reader
+
+    # extensions settings
+    for extname in self.extensionsconfigwidgets:
+        configwidgets = self.extensionsconfigwidgets[extname]
+        for prefname in configwidgets:
+            widget = configwidgets[prefname]
+            if isinstance(widget, gtk.CheckButton):
+                value = widget.get_active()
+            elif isinstance(widget, gtk.Entry):
+                value = widget.get_text()
+            elif isinstance(widget, gtk.ComboBox):
+                iter = widget.get_active_iter()
+                if iter:
+                    value = widget.get_model().get_value(iter, 1)
+            else:
+                log.error('widget type not supported %s', type(widget))
+                continue
+            c.set("%s_%s" % (extname, prefname), value, section='extensions')
 
     # database
     old = c.to_dict(section='database')

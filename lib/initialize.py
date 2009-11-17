@@ -486,7 +486,7 @@ def extension(self, module, enabled):
         except (NotImplementedError, DeprecationWarning), e:
             log.warning('extension skipped: %s', e.message)
             log.debug('extension skipped: %s', module.__file__)
-            return False
+            return [None, None]
         if module.toolbar_icon:
             toolbar = self.widgets['extensions']['toolbar']
             if module.toolbar_icon.endswith('.png'):
@@ -508,6 +508,8 @@ def extension(self, module, enabled):
 
     p_vbox = self.widgets['extensions']['preferences_vbox']
 
+    configwidgets = {}
+
     label = "%s v%s <i>(%s &lt;%s&gt;)</i>" % (module.name, module.version, module.author, module.email)
     expander = gtk.Expander(label=label)
     expander.get_label_widget().set_tooltip_markup(module.description)
@@ -519,13 +521,14 @@ def extension(self, module, enabled):
     vbox.pack_start(hbox, expand=False)
     enabled_cb = gtk.CheckButton(label=_('use this extension'))
     enabled_cb.set_active(enabled)
+    configwidgets['enabled'] = enabled_cb
     vbox.pack_start(enabled_cb, expand=False)
 
     for pref_name in module.preferences:
         name = module.preferences[pref_name].get('name', pref_name)
         hint = module.preferences[pref_name].get('hint')
         value = module.preferences[pref_name].get('default')
-        #TODO: get value from config
+        value = self.config.get("%s_%s" % (module.name, pref_name), value, section='extensions')
         type_ = module.preferences[pref_name].get('type', unicode)
 
         hbox = gtk.HBox()
@@ -538,16 +541,26 @@ def extension(self, module, enabled):
         # elif type is int: # TODO
         elif isinstance(type_, (list, tuple, dict)):
             model = gtk.TreeStore(str, str)
-            myiter = model.append(None, None)
             if isinstance(type_, dict):
                 iterable = type_.iteritems()
             else:
                 iterable = enumerate(type_)
-            for code, value in iterable:
+            pos = None
+            count = 0
+            for code, codevalue in iterable:
+                myiter = model.append(None, None)
                 model.set_value(myiter, 0, unicode(code))
-                model.set_value(myiter, 1, unicode(value))
+                model.set_value(myiter, 1, unicode(codevalue))
+                if value and value == codevalue:
+                    pos = count
+                count = count + 1
+            # combobox with complex binding to a model needs cell renderer
             w = gtk.ComboBox(model=model)
-            # TODO: select default value
+            renderer=gtk.CellRendererText()
+            w.pack_start(renderer)
+            w.add_attribute(renderer, 'text', 1);
+            if pos is not None:
+                w.set_active(int(pos))
         else:
             log.error('type not recognized %s', type(type_))
             continue
@@ -558,11 +571,13 @@ def extension(self, module, enabled):
 
         vbox.pack_start(hbox, expand=False)
 
+        configwidgets[pref_name] = w
+
     expander.add(vbox)
     p_vbox.pack_start(expander, expand=False)
     p_vbox.show_all()
 
-    return ext
+    return [ext, configwidgets]
 
 def extensions(self):
     import plugins.extensions
@@ -574,14 +589,16 @@ def extensions(self):
         for ext in self.extensions:
             ext.clear()
     self.extensions = [] # deletes previous instances
+    self.extensionsconfigwidgets = {}
 
     for ext_name in plugins.extensions.by_name:
         ext_module = plugins.extensions.by_name[ext_name]
-        enabled = ext_module.enabled
-        # TODO: get list of disabled extensions from config
-        ext = extension(self, ext_module, enabled)
+        enabled = self.config.get("%s_enabled" % ext_name, ext_module.enabled, section='extensions')
+        ext, configwidgets = extension(self, ext_module, enabled)
         if ext:
             self.extensions.append(ext)
+        if configwidgets:
+            self.extensionsconfigwidgets[ext_name] = configwidgets
 
 def people_treeview(self, create=True):
     row = None
