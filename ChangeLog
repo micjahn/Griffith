@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2009-11-17  Michael Jahn
 	* load and save of extensions preferences
+	* [#484385] Export to XML: no image filename exported to XML-File
 
 2009-11-10  Michael Jahn
 	* updated movie plugins Allocine and FilmAffinity

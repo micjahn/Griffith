@@ -663,7 +663,28 @@ def create_image_cache(md5sum, gsql):
         pixbuf.save(fn_small, "jpeg", {"quality":"70"})
 
     return True
-        
+
+def create_imagefile(destdir, md5sum, gsql, destfilename = None):
+    poster = gsql.session.query(db.Poster).filter_by(md5sum=md5sum).first()
+    if not poster:
+        log.warn("poster not available: %s", md5sum)
+        return False
+    if not poster.data:
+        log.warn("poster data not available: %s", md5sum)
+        return False
+    
+    if destfilename:
+        fulldestpath = os.path.join(destdir, destfilename + '.jpg')
+    else:
+        fulldestpath = os.path.join(destdir, md5sum + '.jpg')
+
+    f = file(fulldestpath, 'wb')
+    try:
+        f.write(poster.data)
+    finally:
+        f.close()
+
+    return True
 
 def get_image_fname(md5sum, gsql, size=None):
     """size: s - small; m - medium, b or None - big"""

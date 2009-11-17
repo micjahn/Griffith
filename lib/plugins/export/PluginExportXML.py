@@ -22,7 +22,6 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import xml.dom.minidom
-import xml.dom.ext
 import gtk
 import os
 import db
@@ -38,7 +37,7 @@ class ExportPlugin(Base):
 
     fields_to_export = ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
                         'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',
-                        'plot', 'cast', 'notes', 'image', 'volumes.name', 'collections.name', 'media.name')
+                        'plot', 'cast', 'notes', 'poster_md5', 'volumes.name', 'collections.name', 'media.name')
 
     def run(self):
         basedir = None
@@ -60,7 +59,11 @@ class ExportPlugin(Base):
                     overwrite = True
                 else:
                     overwrite = False
-                    
+            
+            posterdir = os.path.join(os.path.dirname(filename[0]), 'posters')
+            if not os.path.exists(posterdir):
+                os.mkdir(posterdir)
+            
             if overwrite or overwrite is None:
                 # create document
                 impl = xml.dom.minidom.getDOMImplementation()
@@ -86,10 +89,28 @@ class ExportPlugin(Base):
                         t = doc.createTextNode(value)
                         e2.appendChild(t)
                         e.appendChild(e2)
+                    # create image file in ./posters/...
+                    md5sum = None
+                    posterfilepath = ''
+                    if 'poster_md5' in self.exported_columns and movie['poster_md5']:
+                        md5sum = movie['poster_md5']
+                    if 'movies_poster_md5' in self.exported_columns and movie['movies_poster_md5']:
+                        md5sum = movie['movies_poster_md5']
+                    if md5sum:
+                        if gutils.create_imagefile(posterdir, md5sum, self.db):
+                            posterfilepath = os.path.join('.', 'posters', md5sum + '.jpg')
+                    e2 = doc.createElement('image')
+                    # relative path to image related to xml file
+                    t = doc.createTextNode(posterfilepath)
+                    e2.appendChild(t)
+                    e.appendChild(e2)
                     
                 # write XML to file
+                xmldata = doc.toprettyxml(encoding='utf-8')
                 fp = open(filename[0], "w")
-                xml.dom.ext.PrettyPrint(doc, fp)
-                fp.close()
+                try:
+                    fp.write(xmldata)
+                finally:
+                    fp.close()
                 gutils.info( _("%s file has been created.")%"XML", self.parent_window)
 

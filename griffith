@@ -177,7 +177,7 @@ class Griffith(object):
             try:
                 plugin.run()
             except Exception, e:
-                log.error(str(e))
+                log.exception('')
             plugin.cleanup()
 
     def on_import_activate(self, *args):
