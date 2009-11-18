@@ -268,6 +268,11 @@ def restore(self, merge=False):
         self.populate_treeview()
         #gutils.info(_("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
         gutils.info(_("Backup restored"), self.widgets['window'])
+        # disposing the temporary db connection
+        tmp_db.dispose()
+    except:
+        log.exception('')
+        raise
     finally:
         log.debug('temporary directory no logger needed, removing %s', tmp_dir)
         rmtree(tmp_dir)

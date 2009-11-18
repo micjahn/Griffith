@@ -131,6 +131,18 @@ class GriffithSQL(object):
             warning(_('This database requires newer version of Griffith.'))
             raise Exception("database version mismatch")
 
+    def dispose(self):
+        # close every session and connection so that a sqlite database file can be removed
+        # otherwise it will remain opened by the current process and can't be deleted
+        try:
+            self.session.close()
+            self.Session.close_all()
+            self.engine.dispose()
+            del self.session
+            del self.Session
+            del self.engine
+        except:
+            log.exception('')
 
 def update_whereclause(query, cond): # {{{
     if cond['loaned'] is True:

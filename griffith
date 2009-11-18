@@ -1355,10 +1355,14 @@ You can't undo this operation."""), self.widgets['window']):
                 db.metadata.drop_all(self.db.session.bind.engine)
                 #from sqlalchemy.orm import clear_mappers
                 #clear_mappers()
-                if self.config.get('type', 'sqlite', section='database') == 'sqlite':
-                    os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
-                    if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
-                        self.config.set('file', 'griffith.db', section='database')
+                # disposing current db connection
+                self.db.dispose()
+                # dispose isn't enough here, I don't know why, but unlink fails
+                # but I think unlink should not be necessary because all tables are dropped
+                #if self.config.get('type', 'sqlite', section='database') == 'sqlite':
+                #    os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
+                #    if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
+                #        self.config.set('file', 'griffith.db', section='database')
                 # create/connect db
                 log.debug('creating new ones...')
                 self.db = GriffithSQL(self.config, self.griffith_dir)
