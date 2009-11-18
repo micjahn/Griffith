@@ -1,6 +1,6 @@
 # Griffith makefile
 #
-# (c) 2005-2008 Vasco Nunes, Piotr Ozarowski
+# (c) 2005-2009 Vasco Nunes, Piotr Ozarowski
 #
 # $Id$
 
@@ -31,6 +31,7 @@ PLUGINSDIR = $(LIBDIR)/plugins
 MOVIEPLUGINSDIR = $(PLUGINSDIR)/movie
 EXPORTPLUGINSDIR = $(PLUGINSDIR)/export
 IMPORTPLUGINSDIR = $(PLUGINSDIR)/imp
+EXTENSIONSPLUGINSDIR = $(PLUGINSDIR)/extensions
 TPLDIR = $(DATADIR)/export_templates
 APPLICATIONSDIR = $(PREFIX)/share/applications
 ICONDIR = $(PREFIX)/share/pixmaps
@@ -53,7 +54,7 @@ install:
 	@echo "installing Griffith"
 	@echo "^^^^^^^^^^^^^^^^^^^"
 	$(INSTALL) -m 755 -d $(BINDIR) $(DATADIR) $(LIBDIR) $(LIBDIR)/db \
-		$(PLUGINSDIR) $(MOVIEPLUGINSDIR) $(EXPORTPLUGINSDIR) $(IMPORTPLUGINSDIR) \
+		$(PLUGINSDIR) $(MOVIEPLUGINSDIR) $(EXPORTPLUGINSDIR) $(IMPORTPLUGINSDIR) $(EXTENSIONSPLUGINSDIR) \
 		$(FONTSDIR) $(APPLICATIONSDIR) $(ICONDIR) $(TPLDIR) \
 		$(IMAGESDIR) $(GLADEDIR) $(ETCDIR) $(BASHCOMPDIR)
 	$(INSTALL) -m 755 griffith $(LIBDIR)
@@ -63,6 +64,7 @@ install:
 	$(INSTALL) -m 644 lib/plugins/movie/*.py $(MOVIEPLUGINSDIR)
 	$(INSTALL) -m 644 lib/plugins/export/*.py $(EXPORTPLUGINSDIR)
 	$(INSTALL) -m 644 lib/plugins/imp/*.py $(IMPORTPLUGINSDIR)
+	$(INSTALL) -m 644 lib/plugins/extensions/*.py $(EXTENSIONSPLUGINSDIR)
 	$(INSTALL) -m 644 glade/*.glade $(GLADEDIR)
 	$(INSTALL) -m 644 glade/*.png $(GLADEDIR)
 	$(INSTALL) -m 644 images/*.png $(IMAGESDIR)
@@ -97,6 +99,8 @@ uninstall:
 	${RM} -r $(TPLDIR)
 	${RM} -r $(MOVIEPLUGINSDIR)
 	${RM} -r $(EXPORTPLUGINSDIR)
+	${RM} -r $(IMPORTPLUGINSDIR)
+	${RM} -r $(EXTENSIONSPLUGINSDIR)
 	${RM} -r $(PLUGINSDIR)
 	${RM} -r $(LIBDIR)
 	${RM} -r $(IMAGESDIR)

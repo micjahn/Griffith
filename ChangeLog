@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2009-11-18  Michael Jahn
 	* fixed some issues with the functions "new db" and "restore db"
+	* [#480366] ImportError: No module named extensions
 
 2009-11-17  Michael Jahn
 	* load and save of extensions preferences
