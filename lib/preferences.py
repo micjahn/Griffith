@@ -28,6 +28,7 @@ import gtk
 import db
 import gutils
 import initialize
+import plugins.extensions
 
 try:
     import gtkspell
@@ -409,10 +410,10 @@ def save_preferences(self):
     self.pdf_reader = save_reader
 
     # extensions settings
-    for extname in self.extensionsconfigwidgets:
-        configwidgets = self.extensionsconfigwidgets[extname]
-        for prefname in configwidgets:
-            widget = configwidgets[prefname]
+    for ext_name in plugins.extensions.by_name:
+        preferenceswidgets = plugins.extensions.by_name[ext_name].preferenceswidgets
+        for prefname in preferenceswidgets:
+            widget = preferenceswidgets[prefname]
             if isinstance(widget, gtk.CheckButton):
                 value = widget.get_active()
             elif isinstance(widget, gtk.Entry):
@@ -424,7 +425,7 @@ def save_preferences(self):
             else:
                 log.error('widget type not supported %s', type(widget))
                 continue
-            c.set("%s_%s" % (extname, prefname), value, section='extensions')
+            c.set("%s_%s" % (ext_name, prefname), value, section='extensions')
 
     # database
     old = c.to_dict(section='database')
@@ -479,3 +480,6 @@ def save_preferences(self):
     self.clear_details()
     self.filter_txt(None)
     c.save()
+    
+    # reload extensions
+    initialize.extensions(self)

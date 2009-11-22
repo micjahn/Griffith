@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2009-11-22  Michael Jahn
 	* wintoolz Filmdatenbank import plugin added
+	* [#480380] Extensions: Amazon and Remover
 
 2009-11-18  Michael Jahn
 	* fixed some issues with the functions "new db" and "restore db"

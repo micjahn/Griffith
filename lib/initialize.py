@@ -504,8 +504,10 @@ def extension(self, module, enabled):
     else:
         ext = None
 
-    # preferences window
+    return ext
 
+def extension_preferences(self, module, enabled):
+    # preferences window
     p_vbox = self.widgets['extensions']['preferences_vbox']
 
     configwidgets = {}
@@ -577,7 +579,7 @@ def extension(self, module, enabled):
     p_vbox.pack_start(expander, expand=False)
     p_vbox.show_all()
 
-    return [ext, configwidgets]
+    return configwidgets
 
 def extensions(self):
     import plugins.extensions
@@ -589,16 +591,15 @@ def extensions(self):
         for ext in self.extensions:
             ext.clear()
     self.extensions = [] # deletes previous instances
-    self.extensionsconfigwidgets = {}
 
     for ext_name in plugins.extensions.by_name:
         ext_module = plugins.extensions.by_name[ext_name]
         enabled = self.config.get("%s_enabled" % ext_name, ext_module.enabled, section='extensions')
-        ext, configwidgets = extension(self, ext_module, enabled)
+        if not hasattr(ext_module, 'preferenceswidgets'):
+            ext_module.preferenceswidgets = extension_preferences(self, ext_module, enabled)
+        ext = extension(self, ext_module, enabled)
         if ext:
             self.extensions.append(ext)
-        if configwidgets:
-            self.extensionsconfigwidgets[ext_name] = configwidgets
 
 def people_treeview(self, create=True):
     row = None
