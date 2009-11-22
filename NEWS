@@ -2,14 +2,18 @@ Griffith 0.11
 =============
 * Griffith extensions feature added. You can add your own extensions in
   ~/.griffith/lib/extensions
-* New import plugins: GCstar, DVD Profiler, eXtreme Movie Manager, Personal Video Database
+* New import plugins: GCstar, DVD Profiler, eXtreme Movie Manager, Personal Video Database,
+  wintoolz Filmdatenbank
 
 
 Griffith 0.10.1
 ===============
 * Few posters related fixes (updating, cleaning, etc.)
 * FilmAffinity and Amazon movie plugins updated
-  (Amazon access doesn't work anymore since 15th August 2009 because Amazon changed access rules significantly)
+  (Amazon access works only with a separate Amazon Account since 15th August 2009
+   because Amazon changed access rules significantly. Everyone who wants to use it has
+   to be registered here: https://affiliate-program.amazon.com/gp/flex/advertising/api/sign-in.html
+   The Access Key and the Secret Key have to be entered in the configuration of griffith.)
 * Reconnect with MySQL servers once an hour (can be configured via pool_recycle
   config option)
 * Display a popup message during database upgrades

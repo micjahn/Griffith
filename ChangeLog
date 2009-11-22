@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-11-22  Michael Jahn
+	* wintoolz Filmdatenbank import plugin added
+
 2009-11-18  Michael Jahn
 	* fixed some issues with the functions "new db" and "restore db"
 	* [#480366] ImportError: No module named extensions
