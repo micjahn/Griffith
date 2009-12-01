@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-12-01  Michael Jahn
+	* re-introducing a debug window on windows platforms (activated via --debug)
+
 2009-11-22  Michael Jahn
 	* wintoolz Filmdatenbank import plugin added
 	* [#480380] Extensions: Amazon and Remover

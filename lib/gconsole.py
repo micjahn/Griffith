@@ -28,6 +28,9 @@ import os
 import sys
 from locale import getdefaultlocale
 
+# import should be here so that the default is set
+from gdebug import GriffithDebug
+
 log = logging.getLogger("Griffith")
 
 options = ('hvDCo:t:d:c:y:s:', ('help', 'debug', 'sqlecho', 'clean', 'check-dep',
@@ -56,6 +59,9 @@ def check_args():
         home = os.path.expanduser('~/.griffith').decode(default_enc)
     config = 'griffith.cfg'
 
+    # set log file directory for current mode
+    GriffithDebug.set_logdir(home)
+
     if len(sys.argv) > 1:
         try:
             opts, args = getopt.getopt(sys.argv[1:], options[0], options[1])
@@ -75,6 +81,7 @@ def check_args():
             elif o in ('-D', '--debug'):
                 from platform import platform
                 import version
+                GriffithDebug.set_debug(logdir = home)
                 log.setLevel(logging.DEBUG)
                 log.debug("Starting %s %s", version.pname, version.pversion)
                 log.debug("Platform: %s (%s)", platform(), os.name)
