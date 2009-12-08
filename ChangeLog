@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 
 2009-12-08  Michael Jahn
+	* [#486258] no refresh when a filter is active
 	* [#418911] It doesn't import cover art from FilmAffinity
 	* movie plugin test data updated
 

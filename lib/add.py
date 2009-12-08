@@ -810,10 +810,11 @@ def clone_movie(self):
     if not commit(session):
         return False
 
-    image_path = gutils.get_image_fname(movie.poster_md5, self.db)
-    if not image_path or not os.path.isfile(image_path):
-        image_path = gutils.get_defaultimage_fname(self)
-    handler = self.Image.set_from_file(image_path)
+    if movie.poster_md5:
+        image_path = gutils.get_image_fname(movie.poster_md5, self.db)
+        if not image_path or not os.path.isfile(image_path):
+            image_path = gutils.get_defaultimage_fname(self)
+        handler = self.Image.set_from_file(image_path)
 
     # change_filter calls populate_treeview which updates the status bar
     quick_filter.change_filter(self)
