@@ -5,6 +5,10 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-12-08  Michael Jahn
+	* [#418911] It doesn't import cover art from FilmAffinity
+	* movie plugin test data updated
+
 2009-12-01  Michael Jahn
 	* re-introducing a debug window on windows platforms (activated via --debug)
 
