@@ -6,7 +6,7 @@ Griffith ChangeLog
 
 
 2009-12-12  Michael Jahn
-	* new import plugins: BES The Movie Library, Fox Movie Manager, MyDVDs, The Movie Library
+	* new import plugins: All My Movies, BES The Movie Library, Fox Movie Manager, MyDVDs, The Movie Library
 	  (all MS Access / Jet DB based)
 	* cleanup import sections of other import plugins
 

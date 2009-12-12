@@ -3,6 +3,7 @@ Griffith 0.11
 * Griffith extensions feature added. You can add your own extensions in
   ~/.griffith/lib/extensions
 * New import plugins:
+   - All My Movies
    - Barret Enterprise Software The Movie Library
    - DVD Profiler
    - eXtreme Movie Manager
