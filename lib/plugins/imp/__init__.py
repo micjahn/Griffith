@@ -26,6 +26,7 @@ import os
 import os.path
 import time
 import gc
+import struct
 from tempfile import mkstemp
 import logging
 log = logging.getLogger("Griffith")
@@ -256,23 +257,24 @@ class ImportPlugin(object):
                                         pass
                             # adding poster
                             if poster:
-                                # check for JPEG/PNG header otherwise it should be a filename 
-                                if len(poster) > 4 and \
-                                    ((ord(poster[0]) == 0xFF and ord(poster[1]) == 0xD8 and ord(poster[2]) == 0xFF and ord(poster[3]) == 0xE0) or
-                                     (ord(poster[0]) == 0x89 and ord(poster[1]) == 0x50 and ord(poster[2]) == 0x4E and ord(poster[3]) == 0x47)):
-                                    # make a temporary file
-                                    try:
-                                        posterfilefd, posterfilename = mkstemp('.img')
+                                if len(poster) > 4:
+                                    # check for JPEG/PNG header otherwise it should be a filename 
+                                    header = struct.unpack_from('4s', poster)[0]
+                                    if header == '\xff\xd8\xff\xe0' or \
+                                       header == '\x89\x50\x4e\x47':
+                                        # make a temporary file
                                         try:
-                                            os.write(posterfilefd, poster)
+                                            posterfilefd, posterfilename = mkstemp('.img')
+                                            try:
+                                                os.write(posterfilefd, poster)
+                                            finally:
+                                                os.close(posterfilefd)
+                                            edit.update_image(self.parent, number, posterfilename)
                                         finally:
-                                            os.close(posterfilefd)
-                                        edit.update_image(self.parent, number, posterfilename)
-                                    finally:
-                                        if os.path.isfile(posterfilename):
-                                            os.remove(posterfilename)
-                                else:
-                                    edit.update_image(self.parent, number, poster)
+                                            if os.path.isfile(posterfilename):
+                                                os.remove(posterfilename)
+                                    else:
+                                        edit.update_image(self.parent, number, poster)
                         except Exception, e:
                             log.exception("movie details are not unique, skipping")
                         numbers.add(number)

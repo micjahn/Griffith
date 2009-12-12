@@ -23,10 +23,10 @@ __revision__ = '$Id$'
 
 from plugins.imp import ImportPlugin as IP
 import os
-import sys
 import gutils
 import string
 import struct
+
 import logging
 log = logging.getLogger("Griffith")
 

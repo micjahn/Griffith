@@ -2,8 +2,16 @@ Griffith 0.11
 =============
 * Griffith extensions feature added. You can add your own extensions in
   ~/.griffith/lib/extensions
-* New import plugins: GCstar, DVD Profiler, eXtreme Movie Manager, Personal Video Database,
-  wintoolz Filmdatenbank
+* New import plugins:
+   - Barret Enterprise Software The Movie Library
+   - DVD Profiler
+   - eXtreme Movie Manager
+   - Fox Movie Manager
+   - GCstar
+   - MyDVDs
+   - Personal Video Database
+   - The Movie Library
+   - wintoolz Filmdatenbank
 
 
 Griffith 0.10.1

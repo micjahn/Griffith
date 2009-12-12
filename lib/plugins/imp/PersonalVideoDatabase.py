@@ -22,13 +22,10 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from plugins.imp import ImportPlugin as IP
-import os
-import sys
 import gutils
 import string
-import struct
-import db
 from xml.dom import minidom, Node
+
 import logging
 log = logging.getLogger("Griffith")
 

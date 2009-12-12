@@ -5,6 +5,11 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-12-12  Michael Jahn
+	* new import plugins: BES The Movie Library, Fox Movie Manager, MyDVDs, The Movie Library
+	  (all MS Access / Jet DB based)
+	* cleanup import sections of other import plugins
+
 2009-12-08  Michael Jahn
 	* [#486258] no refresh when a filter is active
 	* [#418911] It doesn't import cover art from FilmAffinity

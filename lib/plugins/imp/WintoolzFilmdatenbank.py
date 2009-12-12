@@ -22,11 +22,7 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 from plugins.imp import ImportPlugin as IP
-import os
-import sys
 import gutils
-import string
-import db
 
 try:
     import sqlite3
