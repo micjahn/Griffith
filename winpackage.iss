@@ -67,17 +67,18 @@ Source: dist\lib\*;    DestDir: {app}\lib;    Flags: ignoreversion
 Source: dist\lib\db\*;           DestDir: {app}\lib\db;           Flags: ignoreversion recursesubdirs createallsubdirs
 Source: dist\lib\gettext\*;      DestDir: {app}\lib\gettext;      Flags: ignoreversion recursesubdirs createallsubdirs
 Source: dist\lib\glade3\*;       DestDir: {app}\lib\glade3;       Flags: ignoreversion recursesubdirs createallsubdirs
-Source: dist\lib\glib-2.0\*;     DestDir: {app}\lib\glib-2.0;     Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: dist\lib\glib-2.0\*;     DestDir: {app}\lib\glib-2.0;     Flags: ignoreversion recursesubdirs createallsubdirs
 Source: dist\lib\gtk-2.0\*;      DestDir: {app}\lib\gtk-2.0;      Flags: ignoreversion recursesubdirs createallsubdirs
-Source: dist\lib\gtkglext-1.0\*; DestDir: {app}\lib\gtkglext-1.0; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: dist\lib\libglade\*;     DestDir: {app}\lib\libglade;     Flags: ignoreversion recursesubdirs createallsubdirs
-Source: dist\lib\pango\*;        DestDir: {app}\lib\pango;        Flags: ignoreversion recursesubdirs createallsubdirs
-Source: dist\lib\pkgconfig\*;    DestDir: {app}\lib\pkgconfig;    Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: dist\lib\gtkglext-1.0\*; DestDir: {app}\lib\gtkglext-1.0; Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: dist\lib\libglade\*;     DestDir: {app}\lib\libglade;     Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: dist\lib\pango\*;        DestDir: {app}\lib\pango;        Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: dist\lib\pkgconfig\*;    DestDir: {app}\lib\pkgconfig;    Flags: ignoreversion recursesubdirs createallsubdirs
 ; don't use recursion because of components selection (movie plugins, ...)
-Source: dist\lib\plugins\*;        DestDir: {app}\lib\plugins;    Flags: ignoreversion
+Source: dist\lib\plugins\*;      DestDir: {app}\lib\plugins;      Flags: ignoreversion
 ; use recursion, no components
-Source: dist\lib\plugins\export\*; DestDir: {app}\lib\plugins\export; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: dist\lib\plugins\imp\*;    DestDir: {app}\lib\plugins\imp;    Flags: ignoreversion recursesubdirs createallsubdirs
+Source: dist\lib\plugins\export\*;     DestDir: {app}\lib\plugins\export;     Flags: ignoreversion recursesubdirs createallsubdirs
+Source: dist\lib\plugins\extensions\*; DestDir: {app}\lib\plugins\extensions; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: dist\lib\plugins\imp\*;        DestDir: {app}\lib\plugins\imp;        Flags: ignoreversion recursesubdirs createallsubdirs
 ; component based installation
 Source: dist\lib\plugins\movie\PluginMovie7arte.py;         DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Portuguese\7arte
 Source: dist\lib\plugins\movie\PluginMovieAllMovie.py;      DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\English\AllMovie
@@ -120,6 +121,8 @@ Source: dist\lib\plugins\movie\PluginMovieZelluloid.py;     DestDir: {app}\lib\p
 Name: {group}\{cm:LaunchProgram,Griffith};    Filename: {app}\griffith.exe
 Name: {group}\{cm:UninstallProgram,Griffith}; Filename: {uninstallexe}
 Name: {group}\{cm:ProgramOnTheWeb,Griffith};  Filename: http://griffith.cc
+Name: {group}\Debug\Griffith Debug Start;     Filename: {app}\griffith.exe;         Parameters: --debug
+Name: {group}\Debug\Griffith Log File;        Filename: %APPDATA%\Griffith\griffith.log
 Name: {group}\Doc\Griffith Forum;             Filename: http://griffith.cc/forum/
 Name: {group}\Doc\Griffith Wiki;              Filename: http://wiki.griffith.cc/
 ; some information files opened by iexplore which should work on most installations
@@ -140,9 +143,11 @@ Filename: {app}\griffith.exe; Description: {cm:LaunchProgram,Griffith}; Flags: n
 [UninstallDelete]
 Type: files; Name: {app}\lib\*.pyo
 Type: files; Name: {app}\lib\db\*.pyo
+Type: files; Name: {app}\lib\plugins\*.pyo
 Type: files; Name: {app}\lib\plugins\export\*.pyo
-Type: files; Name: {app}\lib\plugins\movie\*.pyo
+Type: files; Name: {app}\lib\plugins\extensions\*.pyo
 Type: files; Name: {app}\lib\plugins\imp\*.pyo
+Type: files; Name: {app}\lib\plugins\movie\*.pyo
 
 [Components]
 Name: Griffith;                                      Description: Griffith; Types: custom compact full; Flags: fixed

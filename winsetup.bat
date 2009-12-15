@@ -55,10 +55,17 @@ copy "%GRIFFITHDIR%\THANKS"      "%GRIFFITHDIR%\dist\"
 copy "%GRIFFITHDIR%\TRANSLATORS" "%GRIFFITHDIR%\dist\"
 
 rem *** remove unnecessary files
-del /S /F /Q *.pyo
-del /S /F /Q *.a
-del /S /F /Q *.lib
-del /S /F /Q xml2Conf.sh
+del /S /F /Q "%GRIFFITHDIR%\dist\*.pyo"
+del /S /F /Q "%GRIFFITHDIR%\dist\*.a"
+del /S /F /Q "%GRIFFITHDIR%\dist\*.lib"
+del /S /F /Q "%GRIFFITHDIR%\dist\xml2Conf.sh"
+del /S /F /Q "%GRIFFITHDIR%\dist\*.pyc"
+del /S /F /Q "%GRIFFITHDIR%\dist\*.la"
+del /S /F /Q "%GRIFFITHDIR%\dist\*.def"
+rd /S /Q "%GRIFFITHDIR%\dist\lib\pkgconfig"
+rd /S /Q "%GRIFFITHDIR%\dist\lib\gtkglext-1.0"
+rd /S /Q "%GRIFFITHDIR%\dist\lib\gtk-2.0\include"
+rd /S /Q "%GRIFFITHDIR%\dist\lib\glib-2.0"
 
 :END
 
