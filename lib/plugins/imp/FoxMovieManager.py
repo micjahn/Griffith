@@ -184,7 +184,7 @@ class ImportPlugin(IP):
             curs = self.connection.cursor()
             tablerow = curs.tables(table='tblMovie').fetchone()
             if tablerow:
-                version = 1.0
+                version = 1.4
             curs.close()
         except Exception, e:
             log.error(str(e))

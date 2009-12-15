@@ -138,7 +138,7 @@ class ImportPlugin(IP):
             curs = self.connection.cursor()
             tablerow = curs.tables(table='Main').fetchone()
             if tablerow:
-                version = 1.0
+                version = 1.9
             curs.close()
         except Exception, e:
             log.error(str(e))

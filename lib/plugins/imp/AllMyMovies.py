@@ -116,7 +116,7 @@ class ImportPlugin(IP):
             if currentrow[12]:
                 details['studio'] = currentrow[12]
             if currentrow[13]:
-                details['url'] = currentrow[13]
+                details['site'] = currentrow[13]
             if currentrow[14]:
                 details['year'] = currentrow[14]
             if currentrow[15]:
@@ -214,7 +214,7 @@ class ImportPlugin(IP):
             curs = self.connection.cursor()
             tablerow = curs.tables(table='movies').fetchone()
             if tablerow:
-                version = 1.0
+                version = 5.7
             curs.close()
         except Exception, e:
             log.error(str(e))

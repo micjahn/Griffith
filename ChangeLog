@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-12-15  Michael Jahn
+	* new import plugin: MovieTrack
+
 2009-12-12  Michael Jahn
 	* new import plugins: All My Movies, BES The Movie Library, Fox Movie Manager, MyDVDs, The Movie Library
 	  (all MS Access / Jet DB based)
