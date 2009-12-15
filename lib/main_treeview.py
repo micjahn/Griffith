@@ -509,7 +509,8 @@ def populate(self, movies=None, where=None, qf=True):#{{{
     # add new treemodel and allow refreshs again
     self.widgets['treeview'].set_model(self.treemodel)
     self.widgets['treeview'].thaw_child_notify()
-    self.widgets['treeview'].set_cursor_on_cell(0)
+    if self.total:
+        self.widgets['treeview'].set_cursor_on_cell(0)
     self.count_statusbar()
 #}}}
 
