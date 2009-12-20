@@ -52,11 +52,11 @@ def locations(self, home_dir):
     locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
     locations['lib']  = os.path.dirname(__file__)
     locations['home'] = home_dir
-    
+
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         import winshell
         from win32com.shell import shellcon, shell
-        
+
         locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
         locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
         locations['images']         = "%s\\images" % locations['exec']
@@ -65,7 +65,7 @@ def locations(self, home_dir):
         locations['desktop']        = ''
         locations['i18n']           = "%s\\i18n" % locations['exec']
         os.environ['PATH'] += ";lib;"
-        
+
         # windows hack for locale setting
         lang = os.getenv('LANG')
         if lang is None:
@@ -88,10 +88,10 @@ def locations(self, home_dir):
     else:
         print 'Operating system not supported'
         sys.exit()
-    
+
     from tempfile import gettempdir
     locations['temp'] = gettempdir()
-    
+
     try:
         if not os.path.exists(locations['home']):
             log.info('Creating %s', locations['home'])
@@ -106,7 +106,7 @@ def locations(self, home_dir):
     if not os.access(locations['home'], os.W_OK):
         log.info('Cannot write to griffith directory, %s', locations['home'])
         sys.exit()
-    
+
     locations['posters'] = os.path.join(locations['home'], 'posters')
     if not os.path.isdir(locations['posters']):
         os.makedirs(locations['posters'])
@@ -115,7 +115,7 @@ def locations(self, home_dir):
     sys.path.append(locations['lib'])
     sys.path.append(locations['movie_plugins'])
     sys.path.append(locations['export_plugins'])
-    
+
     self.locations = locations
     return locations
 
@@ -126,9 +126,9 @@ def gui(self):
         self.mac = True
     else:
         self.mac = False
-    
+
     self.griffith_dir = self.locations['home']    # deprecated
-    
+
     if self.windows:
         gtk.rc_parse('%s\\gtkrc' % self.locations['exec'])
 
@@ -147,9 +147,18 @@ def i18n(self, location):
 
 def toolbar(self):
     """if toolbar is hide in config lets hide the widget"""
-    if not self.config.get('view_toolbar', 'True', section='window'):
+    if not self.config.get('view_toolbar', True, section='window'):
         self.widgets['toolbar'].hide()
         self.widgets['menu']['toolbar'].set_active(False)
+    else:
+        self.widgets['toolbar'].show()
+        self.widgets['menu']['toolbar'].set_active(True)
+    if not self.config.get('view_ext_toolbar', True, section='window'):
+        self.widgets['extensions']['toolbar_hb'].hide()
+        self.widgets['menu']['ext_toolbar'].set_active(False)
+    else:
+        self.widgets['extensions']['toolbar_hb'].show()
+        self.widgets['menu']['ext_toolbar'].set_active(True)
 
 def treeview(self):
     self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str)
@@ -311,7 +320,7 @@ def lang_treeview(self):
     column.set_property('resizable', True)
     column.set_sort_column_id(0)
     treeview.append_column(column)
-    
+
     model = self.lang['type'] = gtk.ListStore(int, str)
     #i = 0
     #for lang_type in self._lang_types:
@@ -348,7 +357,7 @@ def lang_treeview(self):
     column.set_property('resizable', True)
     column.set_sort_column_id(2)
     treeview.append_column(column)
-    
+
     model = self.lang['achannel'] = gtk.ListStore(int, str)
     for i in self.db.session.query(db.AChannel.achannel_id, db.AChannel.name).all():
         model.append([i.achannel_id, i.name])
@@ -363,7 +372,7 @@ def lang_treeview(self):
     column.set_property('resizable', True)
     column.set_sort_column_id(3)
     treeview.append_column(column)
-    
+
     model = self.lang['subformat'] = gtk.ListStore(int, str)
     for i in self.db.session.query(db.SubFormat.subformat_id, db.SubFormat.name).all():
         model.append([i.subformat_id, i.name])
@@ -378,7 +387,7 @@ def lang_treeview(self):
     column.set_property('resizable', True)
     column.set_sort_column_id(4)
     treeview.append_column(column)
-    
+
     treeview.show_all()
 
 def movie_plugins(self):
@@ -416,13 +425,13 @@ def export_plugins(self):
         self.widgets['menu']['export'].append(menu_items)
         menu_items.connect('activate', self.on_export_activate, plugin_name)
         menu_items.show()
-        
+
 def import_plugins(self):
     """
     dinamically finds the available import plugins
     and fills the import menu entry
     """
-    
+
     import plugins.imp, math
 
     fields_to_import = ( 'number','title', 'o_title', 'director', 'year', 'runtime', 'country',
@@ -434,7 +443,7 @@ def import_plugins(self):
     # glade
     glade_file = gtk.glade.XML(os.path.join(self.locations['glade'], 'import.glade'))
     get = lambda x: glade_file.get_widget(x)
-    
+
     w = self.widgets['import'] = {
         'window'    : get('dialog_import'),
         'pwindow'    : get('dialog_progress'),
@@ -457,11 +466,11 @@ def import_plugins(self):
     w['plugin'].connect('changed', plugins.imp.on_import_plugin_changed, w)
     w['window'].set_transient_for(self.widgets['window'])
     w['pwindow'].set_transient_for(self.widgets['window'])
-    
+
     for name in plugins.imp.__all__:
         w['plugin'].append_text(name)
     w['plugin'].set_active(0)
-    
+
     # fields to import
     j = 0
     k = math.ceil( len(self.field_names) / float(3) )
@@ -685,7 +694,7 @@ def dictionaries(self):
     vcodec_combos(self)
     media_combos(self)
     create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-    self.sort_criteria = [ # "[]" because of index() 
+    self.sort_criteria = [ # "[]" because of index()
         'number', 'o_title', 'title', 'director', 'year', 'runtime', 'country',
         'genre', 'studio', 'media_num', 'rating', 'classification', 'collection_id',
         'volume_id', 'cond', 'layers', 'region', 'movie_id']
@@ -805,7 +814,7 @@ def preferences(self):
         self.widgets['preferences']['db_type'].set_active(3)
     else:
         self.widgets['preferences']['db_type'].set_active(0)
-        
+
     # add completion data
     treemodel = gtk.TreeStore(str)
     for name in (os.path.basename(x)[:-3] for x in glob("%s/*.db" % self.locations['home'])):
@@ -859,7 +868,7 @@ def fill_collections_combo(self, default=0):
         else:
             name = ''
         self.widgets['add']['collection'].insert_text(int(i), name)
-        # add some white spaces to prevent scrollbar hides parts of the names    
+        # add some white spaces to prevent scrollbar hides parts of the names
         self.widgets['filter']['collection'].insert_text(int(i), name + '   ')
     self.widgets['add']['collection'].show_all()
     self.widgets['filter']['collection'].show_all()
@@ -876,7 +885,7 @@ def fill_advfilter_combo(self):
     self.widgets['filter']['advfilter'].get_model().clear()
     self.widgets['filter']['advfilter'].insert_text(0, '') # empty one
     for i, item in enumerate(self.db.session.query(db.Filter.name).all()):
-        # add some white spaces to prevent scrollbar hides parts of the names    
+        # add some white spaces to prevent scrollbar hides parts of the names
         self.widgets['filter']['advfilter'].insert_text(i+1, item.name + '   ')
     self.widgets['filter']['advfilter'].show_all()
     self.widgets['filter']['advfilter'].set_active(0)
@@ -955,7 +964,7 @@ def media_combos(self):
     self.widgets['preferences']['medium_name'].get_model().clear()
     self.widgets['preferences']['media'].get_model().clear()
     self.widgets['add']['media'].get_model().clear()
-    
+
     self.media_ids = {}
 
     self.media_ids[0] = None
@@ -986,9 +995,9 @@ def vcodec_combos(self):
     self.widgets['preferences']['vcodec_name'].get_model().clear()
     self.widgets['preferences']['vcodec'].get_model().clear()
     self.widgets['add']['vcodec'].get_model().clear()
-    
+
     self.vcodecs_ids = {}
-    
+
     self.vcodecs_ids[0] = None
     self.widgets['preferences']['vcodec_name'].insert_text(0, '')
     self.widgets['add']['vcodec'].insert_text(0, _('N/A'))
@@ -1002,7 +1011,7 @@ def vcodec_combos(self):
     self.widgets['preferences']['vcodec_name'].show_all()
     self.widgets['add']['vcodec'].show_all()
     self.widgets['preferences']['vcodec'].show_all()
-    
+
     pos = gutils.findKey(self.config.get('vcodec', 0, section='defaults'), self.vcodecs_ids)
     if pos is not None:
         self.widgets['preferences']['vcodec'].set_active(int(pos))

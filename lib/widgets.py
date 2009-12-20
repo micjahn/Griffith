@@ -23,13 +23,12 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import gtk
-import sys
 import advfilter
 
 def define_widgets(self, gladefile):
     get = lambda x: gladefile.get_widget(x)
     self.widgets = {}
-    
+
     self.widgets['window'] = get('main_window')
     self.widgets['window'].connect('key_press_event', self.on_key_press_event)
     self.widgets['treeview'] = get('main_treeview')
@@ -39,7 +38,7 @@ def define_widgets(self, gladefile):
     #buttons
     self.widgets['new_db'] = get('new_bt')
     self.widgets['toolbar'] = get('toolbar1')
-    
+
 
     self.widgets['movie'] = {#{{{
         'cast'                   : get('m_cast'),
@@ -150,9 +149,9 @@ def define_widgets(self, gladefile):
     self.widgets['add']['o_title'].connect('activate', self.on_enter)
     self.widgets['add']['title'].connect('activate', self.on_enter)
     self.widgets['add']['window'].set_transient_for(self.widgets['window'])
-    
+
     #}}}
-    
+
     self.widgets['advfilter'] = {#{{{
         'window'           : get('w_advfilter'),
         'advfilter_vbox'   : get('advfilter_rules_vbox'),
@@ -292,7 +291,7 @@ def define_widgets(self, gladefile):
     self.widgets['print_cover']['window_simple'].set_transient_for(self.widgets['window'])
     self.widgets['print_cover']['window_image'].set_transient_for(self.widgets['window'])
     #}}}
-    
+
     self.widgets['people'] = {#{{{
         'window':    get('w_people'),
         'treeview':    get('p_treeview'),
@@ -300,7 +299,7 @@ def define_widgets(self, gladefile):
     self.widgets['people']['window'].connect('delete_event', self.on_delete_event_wp)
     self.widgets['people']['window'].set_transient_for(self.widgets['window'])
     #}}}
-    
+
     self.widgets['person'] = {#{{{
         # TODO: merge these two windows
         'window'   : get('w_add_person'),
@@ -325,10 +324,11 @@ def define_widgets(self, gladefile):
         'collection' : get('f_col'),
         'advfilter'  : get('f_advfilter'),
     }#}}}
-    
+
     self.widgets['menu'] = {#{{{
         'fullscreen'      : get('menu_fullscreen'),
         'toolbar'         : get('menu_toolbar'),
+        'ext_toolbar'     : get('menu_ext_toolbar'),
         'export'          : get('export_menu'),
         'import'          : get('import_menu'),
         'not_seen_movies' : get('seen_movies'),
@@ -338,7 +338,7 @@ def define_widgets(self, gladefile):
         'email'           : get('return1'),
         'return'          : get('e-mail_reminder1'),
     }#}}}
-    
+
     self.widgets['popups'] = {#{{{
         'main'   : get('popup'),
         'loan'   : get('popup_loan'),
@@ -347,9 +347,10 @@ def define_widgets(self, gladefile):
     }#}}}
     self.widgets['extensions'] = {
         'toolbar': get('ext_toolbar'),
+        'toolbar_hb': get('ext_toolbar_hb'),
         'preferences_vbox': get('p_extensions_vbox'),
     }
-    
+
     self.widgets['w_loan_to']     = get('w_loan_to')
     self.widgets['w_loan_to'].connect('delete_event', self.on_delete_event_lt)
 
@@ -429,6 +430,7 @@ def define_widgets(self, gladefile):
         'on_combo_source_changed'                : self.source_changed,
         # toolbar
         'on_view_toolbar_activate'               : self.toggle_toolbar,
+        'on_view_ext_toolbar_activate'           : self.toggle_ext_toolbar,
         'on_go_first_clicked'                    : self.go_first,
         'on_go_last_clicked'                     : self.go_last,
         'on_go_back_clicked'                     : self.go_prev,

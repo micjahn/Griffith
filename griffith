@@ -101,7 +101,7 @@ class Griffith(object):
             else:
                 log.error('Cant convert old database, exiting.')
                 sys.exit(4)
-        
+
         # create/connect db
         from sql import GriffithSQL
         self.db = GriffithSQL(config, self.locations['home'])
@@ -209,7 +209,7 @@ class Griffith(object):
             if not hasattr(self, 'mainwindow_state') or self.mainwindow_state is None:
                 self.mainwindow_state = {}
             self.mainwindow_state['state'] = int(windowstate.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-    
+
     def toggle_fullscreen(self, widget):
         if widget is True or widget.get_active():
             self.widgets['window'].fullscreen()
@@ -541,7 +541,7 @@ class Griffith(object):
                 self.widgets['add']['lang_treeview'].grab_focus()
                 self.widgets['add']['lang_treeview'].set_cursor( path, col, 0)
             self.widgets['add']['lang_menu'].popup(None, None, None, event.button, time)
-    
+
     def create_language_row(self, lang=None):
         if len(self.languages_ids) == 1:
             return False
@@ -564,7 +564,7 @@ class Griffith(object):
             model.set_value(myiter, 4, get_text(self.lang['subformat'], lang.subformat_id))
         else:
             model.set_value(myiter, 0, get_text(self.lang['lang'], -1))
-    
+
     def on_tv_lang_combo_edited(self, widget, path, new_text, column):
         model = self.widgets['add']['lang_treeview'].get_model()
         model[path][column] = new_text
@@ -1333,6 +1333,15 @@ You can't undo this operation."""), self.widgets['window']):
         self.config.set('view_toolbar', state, section='window')
         self.config.save()
 
+    def toggle_ext_toolbar(self, *args):
+        state = self.widgets['menu']['ext_toolbar'].get_active()
+        if state == False:
+            self.widgets['extensions']['toolbar_hb'].hide()
+        else:
+            self.widgets['extensions']['toolbar_hb'].show()
+        self.config.set('view_ext_toolbar', state, section='window')
+        self.config.save()
+
     def new_dbb(self, *args):
         """initializes a new Griffith Database file"""
         if gutils.question(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), self.widgets['window']):
@@ -1345,7 +1354,7 @@ You can't undo this operation."""), self.widgets['window']):
                 posters_dir = self.locations['posters']
                 # NOTE: only used images are removed (posters are shared between various db)
                 log.debug('removing old images...')
-                
+
                 posters = self.db.session.query(db.Movie.poster_md5).all()
                 for poster in posters:
                     delete_poster_from_cache(self, poster[0])
@@ -1420,7 +1429,7 @@ You can't undo this operation."""), self.widgets['window']):
         if event.type == gtk.gdk._2BUTTON_PRESS:
             return self.on_results_select_press_event(widget)
         return self._resultswin_button_pressed_signal(widget, event)
-    
+
     def on_results_select_press_event(self, button):
         treeselection = self.widgets['results']['treeview'].get_selection()
         if not treeselection:
@@ -1450,7 +1459,7 @@ You can't undo this operation."""), self.widgets['window']):
     def go_next(self, *args):
         self.click_on(self.widgets['treeview'], 'next')
     # TODO: remove total_filter var.
-    
+
     def click_on(self, treeview, direction):
         treeselection = treeview.get_selection()
         if not treeselection:

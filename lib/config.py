@@ -205,5 +205,6 @@ class Config(object):
         self._cfg.set('window', 'left', 'None')
         self._cfg.set('window', 'top', 'None')
         self._cfg.set('window', 'view_toolbar', 'True')
+        self._cfg.set('window', 'view_ext_toolbar', 'False')
         self._cfg.set('window', 'width', '500')
         self.save()

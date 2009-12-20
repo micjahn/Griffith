@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2009-12-20  Piotr Ożarowski
+	* Add "Extensions toolbar" menu item
+
 2009-12-15  Michael Jahn
 	* new import plugin: MovieTrack
 

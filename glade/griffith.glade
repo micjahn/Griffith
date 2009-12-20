@@ -222,6 +222,16 @@
                       </widget>
                     </child>
                     <child>
+                      <widget class="GtkCheckMenuItem" id="menu_ext_toolbar">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Extensions toolbar</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">False</property>
+                        <signal name="activate" handler="on_view_ext_toolbar_activate"/>
+                        <accelerator key="T" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" signal="activate"/>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkSeparatorMenuItem" id="separator3">
                         <property name="visible">True</property>
                       </widget>
