@@ -35,13 +35,16 @@ log = logging.getLogger('Griffith')
 
 EMAIL_PATTERN = re.compile('^[a-z0-9]+[.a-z0-9_+-]*@[a-z0-9_-]+(\.[a-z0-9_-]+)+$', re.IGNORECASE)
 
+
 class DBTable(object):
+
     def __init__(self, **kwargs):
         for i in kwargs:
             if hasattr(self, i):
                 setattr(self, i, kwargs[i])
             else:
                 log.warn("%s.%s not set", self.__class__.__name__, i)
+
     def __repr__(self):
         return "<%s:%s>" % (self.__class__.__name__, self.name.encode('utf-8'))
 
@@ -52,20 +55,48 @@ class DBTable(object):
             raise ValueError(_("Name cannot be empty"))
         return name.strip()
 
-class AChannel(DBTable): pass
-class ACodec(DBTable): pass
-class Lang(DBTable): pass
-class Medium(DBTable): pass
-class Ratio(DBTable): pass
-class SubFormat(DBTable): pass
-class Tag(DBTable): pass
-class VCodec(DBTable): pass
-class Filter(DBTable): pass
+
+class AChannel(DBTable):
+    pass
+
+
+class ACodec(DBTable):
+    pass
+
+
+class Lang(DBTable):
+    pass
+
+
+class Medium(DBTable):
+    pass
+
+
+class Ratio(DBTable):
+    pass
+
+
+class SubFormat(DBTable):
+    pass
+
+
+class Tag(DBTable):
+    pass
+
+
+class VCodec(DBTable):
+    pass
+
+
+class Filter(DBTable):
+    pass
+
 
 class Collection(DBTable):
+
     def _set_loaned_flag(self, flag):
         """Sets loaned flag in current collection and all associated movies.
-       
+
         :param flag: if True and there are loaned movies in the collection
             already, exception will be raised (whole collection cannot be
             loaned if one of the movies is not available).
@@ -77,14 +108,14 @@ class Collection(DBTable):
 
         if flag: # loaning whole collection
             loaned_movies = session.execute(select([tables.movies.columns.movie_id])\
-                    .where(and_(tables.movies.columns.collection_id==self.collection_id,\
-                        tables.movies.columns.loaned==True))).fetchall()
+                    .where(and_(tables.movies.columns.collection_id == self.collection_id,\
+                        tables.movies.columns.loaned == True))).fetchall()
             if loaned_movies:
                 log.error('cannot loan it, collection contains loaned movie(s): %s', loaned_movies)
                 raise Exception('loaned movies in the collection already')
 
         self._loaned = flag
-        update_query = update(tables.movies, tables.movies.columns.collection_id==self.collection_id)
+        update_query = update(tables.movies, tables.movies.columns.collection_id == self.collection_id)
         session.execute(update_query, params={'loaned': flag})
 
     def _is_loaned(self):
@@ -92,7 +123,9 @@ class Collection(DBTable):
 
     loaned = property(_is_loaned, _set_loaned_flag)
 
+
 class Volume(DBTable):
+
     def _set_loaned_flag(self, flag):
         """Sets loaned flag in current volume and all associated movies.
 
@@ -103,7 +136,7 @@ class Volume(DBTable):
         session = object_session(self)
 
         self._loaned = flag
-        update_query = update(tables.movies, tables.movies.columns.volume_id==self.volume_id)
+        update_query = update(tables.movies, tables.movies.columns.volume_id == self.volume_id)
         session.execute(update_query, params={'loaned': flag})
 
     def _is_loaned(self):
@@ -111,16 +144,16 @@ class Volume(DBTable):
 
     loaned = property(_is_loaned, _set_loaned_flag)
 
+
 class Loan(object):
+
     def __repr__(self):
         return "<Loan:%s (person:%s, movie_id:%s, volume_id:%s, collection_id:%s )>" % \
                 (self.loan_id, self.person_id, self.movie_id, self.volume_id, self.collection_id)
-    
+
     def returned_on(self, date=None):
         """
         Marks the loan as returned and clears loaned flag in related movies.
-        
-        :param date=None: return date; accepted types: datetime, YYYYMMDD string or None
         """
 
         if date is None:
@@ -132,7 +165,7 @@ class Loan(object):
             return True
 
         session = object_session(self)
-       
+
         if self.collection_id:
             self.collection.loaned = False # will update the loaned flag in all associated movies as well
         if self.volume_id:
@@ -141,7 +174,9 @@ class Loan(object):
             self.movie.loaned = False
         self.return_date = date
 
+
 class Person(DBTable):
+
     @validates('email')
     def _validate_email(self, key, address):
         address = address.strip()
@@ -157,7 +192,9 @@ class Person(DBTable):
         delchars = allchars.translate(allchars, string.digits)
         return unicode(str(value).translate(allchars, delchars))
 
+
 class Poster(object):
+
     @validates('md5sum')
     def _check_md5sum_length(self, key, value):
         if len(value) != 32:
@@ -172,11 +209,15 @@ class Poster(object):
     def __repr__(self):
         return "<Poster:%s>" % self.md5sum
 
+
 class Configuration(object):
+
     def __repr__(self):
         return "<Config:%s=%s>" % (self.param, self.value)
 
+
 class MovieLang(object):
+
     def __init__(self, lang_id=None, type=None, acodec_id=None, achannel_id=None, subformat_id=None):
         self.lang_id = lang_id
         self.type = type
@@ -188,7 +229,9 @@ class MovieLang(object):
         return "<MovieLang:%s-%s (Type:%s ACodec:%s AChannel:%s SubFormat:%s)>" % \
             (self.movie_id, self.lang_id, self.type, self.acodec_id, self.achannel_id, self.subformat_id)
 
+
 class MovieTag(object):
+
     def __init__(self, tag_id=None):
         self.tag_id = tag_id
 

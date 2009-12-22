@@ -100,7 +100,7 @@ people = Table('people', metadata,
 
 loans = Table('loans', metadata,
     Column('loan_id', Integer, primary_key=True),
-    Column('person_id',  ForeignKey(people.c.person_id), nullable=False),
+    Column('person_id', ForeignKey(people.c.person_id), nullable=False),
     Column('movie_id', ForeignKey(movies.c.movie_id), nullable=False),
     Column('volume_id', ForeignKey(volumes.c.volume_id)),
     Column('collection_id', ForeignKey(collections.c.collection_id)),

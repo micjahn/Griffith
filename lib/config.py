@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright © 2005-2009 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,9 +26,11 @@ import ConfigParser
 import logging
 log = logging.getLogger("Griffith")
 
+
 class Config(object):
     subst = {'True': True, 'False': False, 'None': None}
-    def __init__ (self, file):
+
+    def __init__(self, file):
         self._file = file
         if not self.load():
             self.make_defaults()
@@ -55,10 +57,10 @@ class Config(object):
         self._cfg.set(section, option, value)
 
     def has_key(self, key, section='main'):
-        return self._cfg.has_option(section,key)
+        return self._cfg.has_option(section, key)
 
     def __setitem__(self, k, v):
-        self.set(k,v, section='main')
+        self.set(k, v, section='main')
 
     def __getitem__(self, key):
         return self.get('main', key)
@@ -67,14 +69,17 @@ class Config(object):
         return self._cfg.remove_option(section, option)
 
     def keys(self, section='main'):
-        return [ i[0] for i in self._cfg.items(section) ]
+        return [i[0] for i in self._cfg.items(section)]
+
     def values(self, section='main'):
-        return [ i[1] for i in self._cfg.items(section) ]
+        return [i[1] for i in self._cfg.items(section)]
+
     def items(self, section='main'):
         return self._cfg.items(section)
+
     def to_dict(self, section='main'):
         d = {}
-        for i,j in self._cfg.items(section):
+        for i, j in self._cfg.items(section):
             d[i] = j
         return d
 
@@ -131,7 +136,7 @@ class Config(object):
             return True
         else:
             return False
-            
+
     def make_defaults(self):
         self._cfg = ConfigParser.SafeConfigParser()
         self._cfg.read(self._file)

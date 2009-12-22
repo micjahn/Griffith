@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright © 2005-2009 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,9 +22,8 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import gettext
-import gobject
-import gutils
 import logging
+import math
 import os
 import platform
 import re
@@ -32,9 +31,11 @@ import sys
 from glob import glob
 from locale import getdefaultlocale
 
+import gobject
 import gtk
 
 import db
+import gutils
 
 try:
     import gtkspell
@@ -44,26 +45,27 @@ except:
 
 log = logging.getLogger("Griffith")
 
+
 def locations(self, home_dir):
     defaultLang, defaultEnc = getdefaultlocale()
     if defaultEnc is None:
         defaultEnc = 'UTF-8'
     locations = {}
     locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
-    locations['lib']  = os.path.dirname(__file__)
+    locations['lib'] = os.path.dirname(__file__)
     locations['home'] = home_dir
 
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         import winshell
         from win32com.shell import shellcon, shell
 
-        locations['movie_plugins']  = "%s\\lib\\plugins\\movie" % locations['exec']
+        locations['movie_plugins'] = "%s\\lib\\plugins\\movie" % locations['exec']
         locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
-        locations['images']         = "%s\\images" % locations['exec']
-        locations['share']          = locations['images']
-        locations['glade']          = "%s\\glade\\" % locations['exec']
-        locations['desktop']        = ''
-        locations['i18n']           = "%s\\i18n" % locations['exec']
+        locations['images'] = "%s\\images" % locations['exec']
+        locations['share'] = locations['images']
+        locations['glade'] = "%s\\glade\\" % locations['exec']
+        locations['desktop'] = ''
+        locations['i18n'] = "%s\\i18n" % locations['exec']
         os.environ['PATH'] += ";lib;"
 
         # windows hack for locale setting
@@ -77,13 +79,13 @@ def locations(self, home_dir):
     elif os.name == 'posix':
         locations['share'] = os.path.abspath(os.path.join(locations['lib'], '..'))
         locations['glade'] = os.path.join(locations['share'], 'glade')
-        locations['i18n']  = os.path.abspath(os.path.join(locations['share'], '..', 'locale'))
+        locations['i18n'] = os.path.abspath(os.path.join(locations['share'], '..', 'locale'))
         if not os.path.isdir(locations['i18n']):
             locations['i18n'] = os.path.join(locations['share'], 'i18n')
         #some locations
-        locations['movie_plugins']  = os.path.join(locations['lib'], 'plugins', 'movie')
+        locations['movie_plugins'] = os.path.join(locations['lib'], 'plugins', 'movie')
         locations['export_plugins'] = os.path.join(locations['lib'], 'plugins', 'export')
-        locations['images']  = os.path.join(locations['share'], 'images')
+        locations['images'] = os.path.join(locations['share'], 'images')
         locations['desktop'] = os.path.join(os.path.expanduser('~'), 'Desktop').decode(defaultEnc)
     else:
         print 'Operating system not supported'
@@ -119,6 +121,7 @@ def locations(self, home_dir):
     self.locations = locations
     return locations
 
+
 def gui(self):
     self._ = None
 
@@ -138,12 +141,14 @@ def gui(self):
 
     self.pdf_reader = self.config.get('pdf_reader')
 
+
 def i18n(self, location):
     gettext.bindtextdomain('griffith', location)
     gettext.textdomain('griffith')
     gtk.glade.bindtextdomain('griffith', location)
     gtk.glade.textdomain('griffith')
     gettext.install('griffith', location, unicode=1)
+
 
 def toolbar(self):
     """if toolbar is hide in config lets hide the widget"""
@@ -160,80 +165,81 @@ def toolbar(self):
         self.widgets['extensions']['toolbar_hb'].show()
         self.widgets['menu']['ext_toolbar'].set_active(True)
 
+
 def treeview(self):
     self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str)
     self.widgets['treeview'].set_model(self.treemodel)
     self.widgets['treeview'].set_headers_visible(True)
     # number column
-    renderer=gtk.CellRendererText()
-    self.number_column=gtk.TreeViewColumn(_('N.'), renderer, text=0)
+    renderer = gtk.CellRendererText()
+    self.number_column = gtk.TreeViewColumn(_('N.'), renderer, text=0)
     self.number_column.set_resizable(True)
     self.number_column.set_sort_column_id(0)
     self.number_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.number_column)
     # pic column
-    renderer=gtk.CellRendererPixbuf()
-    self.image_column=gtk.TreeViewColumn(_('Image'), renderer, pixbuf=1)
+    renderer = gtk.CellRendererPixbuf()
+    self.image_column = gtk.TreeViewColumn(_('Image'), renderer, pixbuf=1)
     self.image_column.set_resizable(False)
     self.image_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.image_column)
     # original title column
-    renderer=gtk.CellRendererText()
-    self.otitle_column=gtk.TreeViewColumn(_('Original Title'), renderer, text=2)
+    renderer = gtk.CellRendererText()
+    self.otitle_column = gtk.TreeViewColumn(_('Original Title'), renderer, text=2)
     self.otitle_column.set_resizable(True)
     self.otitle_column.set_sort_column_id(2)
     self.otitle_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.otitle_column)
     # title column
-    renderer=gtk.CellRendererText()
-    self.title_column=gtk.TreeViewColumn(_('Title'), renderer, text=3)
+    renderer = gtk.CellRendererText()
+    self.title_column = gtk.TreeViewColumn(_('Title'), renderer, text=3)
     self.title_column.set_resizable(True)
     self.title_column.set_sort_column_id(3)
     self.title_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.title_column)
     # director column
-    renderer=gtk.CellRendererText()
-    self.director_column=gtk.TreeViewColumn(_('Director'), renderer, text=4)
+    renderer = gtk.CellRendererText()
+    self.director_column = gtk.TreeViewColumn(_('Director'), renderer, text=4)
     self.director_column.set_sort_column_id(4)
     self.director_column.set_resizable(True)
     self.director_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.director_column)
     # genre column
-    renderer=gtk.CellRendererText()
-    self.genre_column=gtk.TreeViewColumn(_('Genre'), renderer, text=5)
+    renderer = gtk.CellRendererText()
+    self.genre_column = gtk.TreeViewColumn(_('Genre'), renderer, text=5)
     self.genre_column.set_sort_column_id(5)
     self.genre_column.set_resizable(True)
     self.genre_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.genre_column)
     # seen column
-    renderer=gtk.CellRendererToggle()
-    self.seen_column=gtk.TreeViewColumn(_('Seen it'), renderer, active=6)
+    renderer = gtk.CellRendererToggle()
+    self.seen_column = gtk.TreeViewColumn(_('Seen it'), renderer, active=6)
     self.seen_column.set_sort_column_id(6)
     self.seen_column.set_resizable(True)
     self.seen_column.set_reorderable(True)
     self.widgets['treeview'].insert_column(self.seen_column, 1)
     # year column
-    renderer=gtk.CellRendererText()
+    renderer = gtk.CellRendererText()
     renderer.set_property('xalign', 0.5)
-    self.year_column=gtk.TreeViewColumn(_('Year'), renderer, text=7)
+    self.year_column = gtk.TreeViewColumn(_('Year'), renderer, text=7)
     self.year_column.set_sort_column_id(7)
     self.year_column.set_resizable(True)
     self.year_column.set_alignment(0.5)
     self.year_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.year_column)
     # runtime column
-    renderer=gtk.CellRendererText()
+    renderer = gtk.CellRendererText()
     renderer.set_property('xalign', 1)
-    self.runtime_column=gtk.TreeViewColumn(_('Runtime'), renderer, text=8)
+    self.runtime_column = gtk.TreeViewColumn(_('Runtime'), renderer, text=8)
     self.runtime_column.set_sort_column_id(8)
     self.runtime_column.set_resizable(True)
     self.runtime_column.set_alignment(1)
     self.runtime_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.runtime_column)
     # rating column
-    renderer=gtk.CellRendererText()
+    renderer = gtk.CellRendererText()
     renderer.set_property('xalign', 0.5)
-    self.rating_column=gtk.TreeViewColumn(_('Rating'), renderer, text=9)
+    self.rating_column = gtk.TreeViewColumn(_('Rating'), renderer, text=9)
     self.rating_column.set_sort_column_id(9)
     self.rating_column.set_resizable(True)
     self.rating_column.set_alignment(0.5)
@@ -279,26 +285,28 @@ def treeview(self):
     self.total = self.db.session.query(db.Movie).count()
     self.widgets['treeview'].show()
 
+
 def loans_treeview(self):
     self.loans_treemodel = gtk.TreeStore(str, str, str) # move to self.widgets
     self.widgets['movie']['loan_history'].set_model(self.loans_treemodel)
     self.widgets['movie']['loan_history'].set_headers_visible(True)
     # loan date
-    renderer=gtk.CellRendererText()
-    self.date_column=gtk.TreeViewColumn(_('Loan Date'), renderer, text=0)
+    renderer = gtk.CellRendererText()
+    self.date_column = gtk.TreeViewColumn(_('Loan Date'), renderer, text=0)
     self.date_column.set_resizable(True)
     self.widgets['movie']['loan_history'].append_column(self.date_column)
     self.date_column.set_sort_column_id(0)
     # return date
-    renderer=gtk.CellRendererText()
-    self.return_column=gtk.TreeViewColumn(_('Return Date'), renderer, text=1)
+    renderer = gtk.CellRendererText()
+    self.return_column = gtk.TreeViewColumn(_('Return Date'), renderer, text=1)
     self.return_column.set_resizable(True)
     self.widgets['movie']['loan_history'].append_column(self.return_column)
     # loan to
-    renderer=gtk.CellRendererText()
-    self.loaner_column=gtk.TreeViewColumn(_('Loaned To'), renderer, text=2)
+    renderer = gtk.CellRendererText()
+    self.loaner_column = gtk.TreeViewColumn(_('Loaned To'), renderer, text=2)
     self.loaner_column.set_resizable(True)
     self.widgets['movie']['loan_history'].append_column(self.loaner_column)
+
 
 def lang_treeview(self):
     treeview = self.widgets['add']['lang_treeview']
@@ -315,7 +323,7 @@ def lang_treeview(self):
     combo.set_property('editable', True)
     combo.set_property('has-entry', False)
     combo.connect('edited', self.on_tv_lang_combo_edited, 0)
-    column=gtk.TreeViewColumn(_('Language'), combo, text=0)
+    column = gtk.TreeViewColumn(_('Language'), combo, text=0)
     column.set_property('min-width', 80)
     column.set_property('resizable', True)
     column.set_sort_column_id(0)
@@ -337,7 +345,7 @@ def lang_treeview(self):
     combo.set_property('editable', True)
     combo.set_property('has-entry', False)
     combo.connect('edited', self.on_tv_lang_combo_edited, 1)
-    column=gtk.TreeViewColumn(_('Type'), combo, text=1)
+    column = gtk.TreeViewColumn(_('Type'), combo, text=1)
     column.set_property('min-width', 80)
     column.set_property('resizable', True)
     column.set_sort_column_id(1)
@@ -352,7 +360,7 @@ def lang_treeview(self):
     combo.set_property('editable', True)
     combo.set_property('has-entry', False)
     combo.connect('edited', self.on_tv_lang_combo_edited, 2)
-    column=gtk.TreeViewColumn(_('Codec'), combo, text=2)
+    column = gtk.TreeViewColumn(_('Codec'), combo, text=2)
     column.set_property('min-width', 80)
     column.set_property('resizable', True)
     column.set_sort_column_id(2)
@@ -367,7 +375,7 @@ def lang_treeview(self):
     combo.set_property('editable', True)
     combo.set_property('has-entry', False)
     combo.connect('edited', self.on_tv_lang_combo_edited, 3)
-    column=gtk.TreeViewColumn(_('Channels'), combo, text=3)
+    column = gtk.TreeViewColumn(_('Channels'), combo, text=3)
     column.set_property('min-width', 80)
     column.set_property('resizable', True)
     column.set_sort_column_id(3)
@@ -382,13 +390,14 @@ def lang_treeview(self):
     combo.set_property('editable', True)
     combo.set_property('has-entry', False)
     combo.connect('edited', self.on_tv_lang_combo_edited, 4)
-    column=gtk.TreeViewColumn(_('Subtitle format'), combo, text=4)
+    column = gtk.TreeViewColumn(_('Subtitle format'), combo, text=4)
     column.set_property('min-width', 80)
     column.set_property('resizable', True)
     column.set_sort_column_id(4)
     treeview.append_column(column)
 
     treeview.show_all()
+
 
 def movie_plugins(self):
     """
@@ -401,14 +410,15 @@ def movie_plugins(self):
     mcounter = 0
     default_plugin = self.config.get('default_movie_plugin')
     for p in self.plugins:
-        plugin_module = os.path.basename(p).replace('.py','')
-        plugin_name = plugin_module.replace('PluginMovie','')
+        plugin_module = os.path.basename(p).replace('.py', '')
+        plugin_name = plugin_module.replace('PluginMovie', '')
         self.widgets['add']['source'].append_text(plugin_name)
         self.widgets['preferences']['default_plugin'].append_text(plugin_name)
         if plugin_name == default_plugin:
             self.widgets['preferences']['default_plugin'].set_active(mcounter)
             self.widgets['add']['source'].set_active(mcounter)
         mcounter = mcounter + 1
+
 
 def export_plugins(self):
     """
@@ -426,15 +436,16 @@ def export_plugins(self):
         menu_items.connect('activate', self.on_export_activate, plugin_name)
         menu_items.show()
 
+
 def import_plugins(self):
     """
     dinamically finds the available import plugins
     and fills the import menu entry
     """
 
-    import plugins.imp, math
+    import plugins.imp
 
-    fields_to_import = ( 'number','title', 'o_title', 'director', 'year', 'runtime', 'country',
+    fields_to_import = ('number', 'title', 'o_title', 'director', 'year', 'runtime', 'country',
         'seen', 'rating', 'genre', 'studio', 'plot', 'cast', 'notes', 'classification',
         'site', 'o_site', 'trailer', 'medium_id', 'media_num', 'vcodec_id', 'color', 'cond',
         'layers', 'region', 'collection_id', 'volume_id', 'image', 'ratio_id', 'screenplay',
@@ -445,21 +456,21 @@ def import_plugins(self):
     get = lambda x: glade_file.get_widget(x)
 
     w = self.widgets['import'] = {
-        'window'    : get('dialog_import'),
-        'pwindow'    : get('dialog_progress'),
-        'pabort'    : get('p_abortbutton'),
-        'fcw'        : get('fcw'),
-        'plugin'    : get('combo_plugin'),
-        'author'    : get('l_author'),
-        'email'        : get('l_email'),
-        'version'    : get('l_version'),
-        'description'    : get('l_description'),
-        'box_import_1'    : get('box_import_1'),
-        'box_import_2'    : get('box_import_2'),
-        'box_import_3'    : get('box_import_3'),
-        'progress'    : get('l_progress'),
-        'progressbar'    : get('progressbar'),
-        'fields'    : {},
+        'window': get('dialog_import'),
+        'pwindow': get('dialog_progress'),
+        'pabort': get('p_abortbutton'),
+        'fcw': get('fcw'),
+        'plugin': get('combo_plugin'),
+        'author': get('l_author'),
+        'email': get('l_email'),
+        'version': get('l_version'),
+        'description': get('l_description'),
+        'box_import_1': get('box_import_1'),
+        'box_import_2': get('box_import_2'),
+        'box_import_3': get('box_import_3'),
+        'progress': get('l_progress'),
+        'progressbar': get('progressbar'),
+        'fields': {},
     }
     get('cancel_button').connect('clicked', plugins.imp.on_abort_button_clicked, self)
     get('import_button').connect('clicked', plugins.imp.on_import_button_clicked, self)
@@ -473,20 +484,21 @@ def import_plugins(self):
 
     # fields to import
     j = 0
-    k = math.ceil( len(self.field_names) / float(3) )
+    k = math.ceil(len(self.field_names) / float(3))
     for i in fields_to_import:
         j = j + 1
         w['fields'][i] = gtk.CheckButton(self.field_names[i])
         w['fields'][i].set_active(True) # TODO: get from config
         if j <= k:
             w['box_import_1'].add(w['fields'][i])
-        elif j<= 2*k:
+        elif j <= 2 * k:
             w['box_import_2'].add(w['fields'][i])
         else:
             w['box_import_3'].add(w['fields'][i])
     w['box_import_1'].show_all()
     w['box_import_2'].show_all()
     w['box_import_3'].show_all()
+
 
 def extension(self, module, enabled):
     if enabled:
@@ -514,6 +526,7 @@ def extension(self, module, enabled):
         ext = None
 
     return ext
+
 
 def extension_preferences(self, module, enabled):
     # preferences window
@@ -567,9 +580,9 @@ def extension_preferences(self, module, enabled):
                 count = count + 1
             # combobox with complex binding to a model needs cell renderer
             w = gtk.ComboBox(model=model)
-            renderer=gtk.CellRendererText()
+            renderer = gtk.CellRendererText()
             w.pack_start(renderer)
-            w.add_attribute(renderer, 'text', 1);
+            w.add_attribute(renderer, 'text', 1)
             if pos is not None:
                 w.set_active(int(pos))
         else:
@@ -589,6 +602,7 @@ def extension_preferences(self, module, enabled):
     p_vbox.show_all()
 
     return configwidgets
+
 
 def extensions(self):
     import plugins.extensions
@@ -610,22 +624,23 @@ def extensions(self):
         if ext:
             self.extensions.append(ext)
 
+
 def people_treeview(self, create=True):
     row = None
     self.p_treemodel = gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
     self.widgets['preferences']['treeview'].set_model(self.p_treemodel)
     self.widgets['preferences']['treeview'].set_headers_visible(True)
 
-    if create==True:
+    if create is True:
         # name column
-        renderer=gtk.CellRendererText()
-        column=gtk.TreeViewColumn(_('Name'), renderer, text=0)
+        renderer = gtk.CellRendererText()
+        column = gtk.TreeViewColumn(_('Name'), renderer, text=0)
         column.set_resizable(True)
         column.set_sort_column_id(0)
         self.widgets['preferences']['treeview'].append_column(column)
         # email column
-        renderer=gtk.CellRendererText()
-        column=gtk.TreeViewColumn(_('E-mail'),renderer, text=1)
+        renderer = gtk.CellRendererText()
+        column = gtk.TreeViewColumn(_('E-mail'), renderer, text=1)
         column.set_resizable(True)
         column.set_sort_column_id(1)
         self.widgets['preferences']['treeview'].append_column(column)
@@ -636,6 +651,7 @@ def people_treeview(self, create=True):
         self.p_treemodel.set_value(myiter, 0, i.name)
         self.p_treemodel.set_value(myiter, 1, i.email)
     self.widgets['preferences']['treeview'].show()
+
 
 def combos(self):
     i = 0
@@ -678,6 +694,7 @@ def combos(self):
     self.widgets['preferences']['sortby'].set_wrap_width(3)
     self.widgets['preferences']['sortby'].set_active(0) # Number
 
+
 def dictionaries(self):
     """initializes data filled dynamically by users"""
     self.am_tags = {} # dictionary for tag CheckBoxes
@@ -702,42 +719,42 @@ def dictionaries(self):
         'o_title', 'title', 'number', 'director', 'plot', 'cast', 'notes', 'year',
         'runtime', 'country', 'genre', 'studio', 'media_num', 'rating')
     self.field_names = {
-        'barcode'        : _('Barcode'),
-        'cast'           : _('Cast'),
-        'cameraman'      : _('Cameraman'),
-        'classification' : _('Classification'),
-        'collection_id'  : _('Collection'),
-        'color'          : _('Color'),
-        'cond'           : _('Condition'),
-        'country'        : _('Country'),
-        'director'       : _('Director'),
-        'genre'          : _('Genre'),
-        'image'          : _('Image'),
-        'layers'         : _('Layers'),
-        'loaned'         : _('Loaned'),
-        'media_num'      : _('Discs'),
-        'medium_id'      : _('Medium'),
-        'notes'          : _('Notes'),
-        'number'         : _('Number'),
-        'o_site'         : _('Official site'),
-        'o_title'        : _('Original Title'),
-        'plot'           : _('Plot'),
-        'poster'         : _('Poster'),
-        'ratio_id'       : _('Aspect ratio'),
-        'rating'         : _('Rating'),
-        'region'         : _('Region'),
-        'runtime'        : _('Runtime'),
-        'screenplay'     : _('Screenplay'),
-        'seen'           : _('Seen it'),
-        'site'           : _('Site'),
-        'studio'         : _('Studio'),
-        'tags'           : _('Tags'),
-        'title'          : _('Title'),
-        'trailer'        : _('Trailer'),
-        'vcodec_id'      : _('Video codec'),
-        'volume_id'      : _('Volume'),
-        'year'           : _('Year')}
-    self._conditions = (_('N/A'), _('Damaged'), _('Poor'),  _('Fair'), _('Good'), _('Excellent'))
+        'barcode': _('Barcode'),
+        'cast': _('Cast'),
+        'cameraman': _('Cameraman'),
+        'classification': _('Classification'),
+        'collection_id': _('Collection'),
+        'color': _('Color'),
+        'cond': _('Condition'),
+        'country': _('Country'),
+        'director': _('Director'),
+        'genre': _('Genre'),
+        'image': _('Image'),
+        'layers': _('Layers'),
+        'loaned': _('Loaned'),
+        'media_num': _('Discs'),
+        'medium_id': _('Medium'),
+        'notes': _('Notes'),
+        'number': _('Number'),
+        'o_site': _('Official site'),
+        'o_title': _('Original Title'),
+        'plot': _('Plot'),
+        'poster': _('Poster'),
+        'ratio_id': _('Aspect ratio'),
+        'rating': _('Rating'),
+        'region': _('Region'),
+        'runtime': _('Runtime'),
+        'screenplay': _('Screenplay'),
+        'seen': _('Seen it'),
+        'site': _('Site'),
+        'studio': _('Studio'),
+        'tags': _('Tags'),
+        'title': _('Title'),
+        'trailer': _('Trailer'),
+        'vcodec_id': _('Video codec'),
+        'volume_id': _('Volume'),
+        'year': _('Year')}
+    self._conditions = (_('N/A'), _('Damaged'), _('Poor'), _('Fair'), _('Good'), _('Excellent'))
     self._colors = (_('N/A'), _('Color'), _('Black and White'), _('Mixed'))
     self._lang_types = ('', _('lector'), _('dubbing'), _('subtitles'), _('commentary'))
     self._layers = (_('N/A'), _('Single Side, Single Layer'), _('Single Side, Dual Layer'), _('Dual Side, Single Layer'), _('Dual Side, Dual Layer'))
@@ -752,6 +769,7 @@ def dictionaries(self):
         _('Region 7 (Reserved for Unspecified Special Use)'),
         _('Region 8 (Airlines/Cruise Ships)'),
     )
+
 
 def web_results(self):
     self.treemodel_results = gtk.TreeStore(str, str)
@@ -769,6 +787,7 @@ def web_results(self):
     column2.set_sort_column_id(1)
     self.widgets['results']['treeview'].append_column(column2)
 
+
 def spellcheck(self):
     global spell_support
     spell_error = False
@@ -779,7 +798,7 @@ def spellcheck(self):
                     self.notes_spell = gtkspell.Spell(self.widgets['add']['cast'], self.config.get('lang', section='spell'))
                 except:
                     spell_error = True
-            if self.config.get('plot', True, section='spell')==True and self.config.get('lang', section='spell') != '':
+            if self.config.get('plot', True, section='spell') is True and self.config.get('lang', section='spell') != '':
                 try:
                     self.plot_spell = gtkspell.Spell(self.widgets['add']['plot'], self.config.get('lang', section='spell'))
                 except:
@@ -788,18 +807,19 @@ def spellcheck(self):
                 log.info('Dictionary not available. Spellcheck will be disabled.')
                 if not self.config.get('notified', False, section='spell'):
                     gutils.info(_("Dictionary not available. Spellcheck will be disabled. \n" + \
-                        "Please install the aspell-%s package or adjust the spellchekcer preferences.")%self.config.get('lang', section='spell'), \
+                        "Please install the aspell-%s package or adjust the spellchekcer preferences.") % self.config.get('lang', section='spell'), \
                         self.widgets['preferences']['window'])
                     self.config.set('notified', True, section='spell')
                     self.config.save()
     else:
         log.info('Spellchecker is not available')
 
+
 def preferences(self):
-    self.widgets['preferences']['db_type'].insert_text(0,'SQLite3 (internal)')
-    self.widgets['preferences']['db_type'].insert_text(1,'PostgreSQL')
-    self.widgets['preferences']['db_type'].insert_text(2,'MySQL')
-    self.widgets['preferences']['db_type'].insert_text(3,'Microsoft SQL')
+    self.widgets['preferences']['db_type'].insert_text(0, 'SQLite3 (internal)')
+    self.widgets['preferences']['db_type'].insert_text(1, 'PostgreSQL')
+    self.widgets['preferences']['db_type'].insert_text(2, 'MySQL')
+    self.widgets['preferences']['db_type'].insert_text(3, 'Microsoft SQL')
     self.widgets['preferences']['db_host'].set_text(self.config.get('host', '', section='database'))
     self.widgets['preferences']['db_port'].set_value(int(self.config.get('port', 0, section='database')))
     self.widgets['preferences']['db_user'].set_text(self.config.get('user', '', section='database'))
@@ -826,17 +846,20 @@ def preferences(self):
     completion.set_model(treemodel)
     completion.set_text_column(0)
 
+
 def update_volume_combo_ids(self):
     self.volume_combo_ids = {}
     self.volume_combo_ids[0] = 0
     for i, item in enumerate(self.db.session.query(db.Volume.volume_id).all()):
-        self.volume_combo_ids[i+1] = item.volume_id
+        self.volume_combo_ids[i + 1] = item.volume_id
+
 
 def update_collection_combo_ids(self):
     self.collection_combo_ids = {}
     self.collection_combo_ids[0] = 0
     for i, item in enumerate(self.db.session.query(db.Collection.collection_id).all()):
-        self.collection_combo_ids[i+1] = item.collection_id
+        self.collection_combo_ids[i + 1] = item.collection_id
+
 
 def fill_volumes_combo(self, default=0):
     _tmp = self.initialized
@@ -855,6 +878,7 @@ def fill_volumes_combo(self, default=0):
         self.widgets['add']['volume'].set_active(int(i))
     self.widgets['add']['volume'].set_wrap_width(3)
     self.initialized = _tmp
+
 
 def fill_collections_combo(self, default=0):
     _tmp = self.initialized
@@ -879,6 +903,7 @@ def fill_collections_combo(self, default=0):
     self.widgets['add']['collection'].set_wrap_width(2)
     self.initialized = _tmp
 
+
 def fill_advfilter_combo(self):
     _tmp = self.initialized
     self.initialized = False # don't refresh main treeview
@@ -886,10 +911,11 @@ def fill_advfilter_combo(self):
     self.widgets['filter']['advfilter'].insert_text(0, '') # empty one
     for i, item in enumerate(self.db.session.query(db.Filter.name).all()):
         # add some white spaces to prevent scrollbar hides parts of the names
-        self.widgets['filter']['advfilter'].insert_text(i+1, item.name + '   ')
+        self.widgets['filter']['advfilter'].insert_text(i + 1, item.name + '   ')
     self.widgets['filter']['advfilter'].show_all()
     self.widgets['filter']['advfilter'].set_active(0)
     self.initialized = _tmp
+
 
 def fill_preferences_tags_combo(self):
     _tmp = self.initialized
@@ -903,6 +929,7 @@ def fill_preferences_tags_combo(self):
     self.widgets['preferences']['tag_name'].set_active(0)
     self.initialized = _tmp
 
+
 def language_combos(self):
     self.widgets['preferences']['lang_name'].get_model().clear()
     self.languages_ids = {}
@@ -911,11 +938,12 @@ def language_combos(self):
     self.widgets['preferences']['lang_name'].insert_text(0, '')
     for i, lang in enumerate(self.db.session.query(db.Lang.lang_id, db.Lang.name).all()):
         self.languages_ids[i] = lang.lang_id
-        self.widgets['preferences']['lang_name'].insert_text(i+1, lang.name)
+        self.widgets['preferences']['lang_name'].insert_text(i + 1, lang.name)
         # add movie languages treeview
         self.lang['lang'].append([lang.lang_id, lang.name])
     self.widgets['preferences']['lang_name'].show_all()
     self.widgets['preferences']['lang_name'].set_active(0)
+
 
 def acodec_combos(self):
     self.widgets['preferences']['acodec_name'].get_model().clear()
@@ -925,11 +953,12 @@ def acodec_combos(self):
     self.widgets['preferences']['acodec_name'].insert_text(0, '')
     for i, acodec in enumerate(self.db.session.query(db.ACodec.acodec_id, db.ACodec.name).all()):
         self.acodecs_ids[i] = acodec.acodec_id
-        self.widgets['preferences']['acodec_name'].insert_text(i+1, acodec.name)
+        self.widgets['preferences']['acodec_name'].insert_text(i + 1, acodec.name)
         # add movie languages treeview
         self.lang['acodec'].append([acodec.acodec_id, acodec.name])
     self.widgets['preferences']['acodec_name'].show_all()
     self.widgets['preferences']['acodec_name'].set_active(0)
+
 
 def achannel_combos(self):
     self.widgets['preferences']['achannel_name'].get_model().clear()
@@ -939,11 +968,12 @@ def achannel_combos(self):
     self.widgets['preferences']['achannel_name'].insert_text(0, '')
     for i, achannel in enumerate(self.db.session.query(db.AChannel.achannel_id, db.AChannel.name).all()):
         self.achannels_ids[i] = achannel.achannel_id
-        self.widgets['preferences']['achannel_name'].insert_text(i+1, achannel.name)
+        self.widgets['preferences']['achannel_name'].insert_text(i + 1, achannel.name)
         # add movie languages treeview
         self.lang['achannel'].append([achannel.achannel_id, achannel.name])
     self.widgets['preferences']['achannel_name'].show_all()
     self.widgets['preferences']['achannel_name'].set_active(0)
+
 
 def subformat_combos(self):
     self.widgets['preferences']['subformat_name'].get_model().clear()
@@ -953,11 +983,12 @@ def subformat_combos(self):
     self.widgets['preferences']['subformat_name'].insert_text(0, '')
     for i, subformat in enumerate(self.db.session.query(db.SubFormat.subformat_id, db.SubFormat.name).all()):
         self.subformats_ids[i] = subformat.subformat_id
-        self.widgets['preferences']['subformat_name'].insert_text(i+1, subformat.name)
+        self.widgets['preferences']['subformat_name'].insert_text(i + 1, subformat.name)
         # add movie languages treeview
         self.lang['subformat'].append([subformat.subformat_id, subformat.name])
     self.widgets['preferences']['subformat_name'].show_all()
     self.widgets['preferences']['subformat_name'].set_active(0)
+
 
 def media_combos(self):
     # clear data
@@ -972,10 +1003,10 @@ def media_combos(self):
     self.widgets['add']['media'].insert_text(0, _('N/A'))
     self.widgets['preferences']['media'].insert_text(0, _('N/A'))
     for i, medium in enumerate(self.db.session.query(db.Medium.medium_id, db.Medium.name).all()):
-        self.media_ids[i+1] = medium.medium_id
-        self.widgets['preferences']['medium_name'].insert_text(i+1, medium.name)
-        self.widgets['add']['media'].insert_text(i+1, medium.name)
-        self.widgets['preferences']['media'].insert_text(i+1, medium.name)
+        self.media_ids[i + 1] = medium.medium_id
+        self.widgets['preferences']['medium_name'].insert_text(i + 1, medium.name)
+        self.widgets['add']['media'].insert_text(i + 1, medium.name)
+        self.widgets['preferences']['media'].insert_text(i + 1, medium.name)
 
     self.widgets['preferences']['medium_name'].show_all()
     self.widgets['add']['media'].show_all()
@@ -990,6 +1021,7 @@ def media_combos(self):
         self.widgets['preferences']['media'].set_active(0)
     self.widgets['preferences']['medium_name'].set_active(0)
 
+
 def vcodec_combos(self):
     # clear data
     self.widgets['preferences']['vcodec_name'].get_model().clear()
@@ -1003,10 +1035,10 @@ def vcodec_combos(self):
     self.widgets['add']['vcodec'].insert_text(0, _('N/A'))
     self.widgets['preferences']['vcodec'].insert_text(0, _('N/A'))
     for i, vcodec in enumerate(self.db.session.query(db.VCodec.vcodec_id, db.VCodec.name).all()):
-        self.vcodecs_ids[i+1] = vcodec.vcodec_id
-        self.widgets['preferences']['vcodec_name'].insert_text(i+1, vcodec.name)
-        self.widgets['add']['vcodec'].insert_text(i+1, vcodec.name)
-        self.widgets['preferences']['vcodec'].insert_text(i+1, vcodec.name)
+        self.vcodecs_ids[i + 1] = vcodec.vcodec_id
+        self.widgets['preferences']['vcodec_name'].insert_text(i + 1, vcodec.name)
+        self.widgets['add']['vcodec'].insert_text(i + 1, vcodec.name)
+        self.widgets['preferences']['vcodec'].insert_text(i + 1, vcodec.name)
 
     self.widgets['preferences']['vcodec_name'].show_all()
     self.widgets['add']['vcodec'].show_all()
@@ -1019,6 +1051,7 @@ def vcodec_combos(self):
         self.widgets['preferences']['vcodec'].set_active(0)
     self.widgets['preferences']['vcodec_name'].set_active(0)
 
+
 def create_tag_vbox(self, widget, tab):
     for i in widget.get_children():
         i.destroy()
@@ -1030,6 +1063,7 @@ def create_tag_vbox(self, widget, tab):
         widget.pack_start(tab[i])
     widget.show_all()
 
+
 def remove_hbox(self, widget, tab):
     number = len(widget.get_children())-1    # last box number
     try:
@@ -1038,4 +1072,3 @@ def remove_hbox(self, widget, tab):
     except:
         log.info('List is empty')
     widget.show_all()
-

@@ -43,24 +43,23 @@ mapper(Ratio, tables.ratios, properties={
     'movies': relation(Movie, backref='ratio')})
 mapper(VCodec, tables.vcodecs, properties={
     'movies': relation(Movie, backref='vcodec')})
-mapper(Person, tables.people, properties = {
+mapper(Person, tables.people, properties={
     'loans': relation(Loan, backref='person', cascade='all, delete-orphan'),
     'loaned_movies_count': column_property(select(
         [func.count(tables.loans.c.loan_id)],
         and_(tables.people.c.person_id == tables.loans.c.person_id,
-             tables.loans.c.return_date == None
-        )).label('loaned_movies_count'), deferred=True),
+             tables.loans.c.return_date == None))\
+        .label('loaned_movies_count'), deferred=True),
     'returned_movies_count': column_property(select( # AKA loan history
         [func.count(tables.loans.c.loan_id)],
         and_(tables.people.c.person_id == tables.loans.c.person_id,
-             tables.loans.c.return_date != None
-        )).label('returned_movies_count'), deferred=True)
-    })
-mapper(MovieLang, tables.movie_lang, primary_key=[tables.movie_lang.c.ml_id], properties = {
-    'movie'    : relation(Movie),
-    'language' : relation(Lang),
-    'achannel' : relation(AChannel),
-    'acodec'   : relation(ACodec),
+             tables.loans.c.return_date != None))\
+        .label('returned_movies_count'), deferred=True)})
+mapper(MovieLang, tables.movie_lang, primary_key=[tables.movie_lang.c.ml_id], properties={
+    'movie': relation(Movie),
+    'language': relation(Lang),
+    'achannel': relation(AChannel),
+    'acodec': relation(ACodec),
     'subformat': relation(SubFormat)})
 mapper(ACodec, tables.acodecs, properties={
     'movielangs': relation(MovieLang)})
@@ -72,19 +71,17 @@ mapper(Lang, tables.languages, properties={
     'movielangs': relation(MovieLang)})
 mapper(MovieTag, tables.movie_tag)
 mapper(Tag, tables.tags, properties={'movietags': relation(MovieTag, backref='tag')})
-mapper(Loan, tables.loans, properties = {
-    'volume'    : relation(Volume),
+mapper(Loan, tables.loans, properties={
+    'volume': relation(Volume),
     'collection': relation(Collection)})
-mapper(Movie, tables.movies, order_by=tables.movies.c.number , properties = {
-    'loans'     : relation(Loan, backref='movie', cascade='all, delete-orphan'),
-    #'tags'      : relation(Tag, cascade='all, delete-orphan', secondary=movie_tag,
-    'tags'      : relation(Tag, secondary=tables.movie_tag,
-                           primaryjoin=tables.movies.c.movie_id==tables.movie_tag.c.movie_id,
-                           secondaryjoin=tables.movie_tag.c.tag_id==tables.tags.c.tag_id),
-    'languages' : relation(MovieLang, cascade='all, delete-orphan')})
+mapper(Movie, tables.movies, order_by=tables.movies.c.number, properties={
+    'loans': relation(Loan, backref='movie', cascade='all, delete-orphan'),
+    #'tags': relation(Tag, cascade='all, delete-orphan', secondary=movie_tag,
+    'tags': relation(Tag, secondary=tables.movie_tag,
+                     primaryjoin=tables.movies.c.movie_id == tables.movie_tag.c.movie_id,
+                     secondaryjoin=tables.movie_tag.c.tag_id == tables.tags.c.tag_id),
+    'languages': relation(MovieLang, cascade='all, delete-orphan')})
 mapper(Poster, tables.posters, properties={
     'movies': relation(Movie),
-    'data'  : deferred(tables.posters.c.data)
-    })
+    'data': deferred(tables.posters.c.data)})
 mapper(Filter, tables.filters)
-

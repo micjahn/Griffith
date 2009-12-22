@@ -3,7 +3,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright © 2005-2009 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -144,15 +144,16 @@ class GriffithSQL(object):
         except:
             log.exception('')
 
+
 def update_whereclause(query, cond): # {{{
     if cond['loaned'] is True:
-        query = query.where(db.Movie.loaned==True)
+        query = query.where(db.Movie.loaned == True)
     if cond['loaned'] is False:
-        query = query.where(db.Movie.loaned==False)
+        query = query.where(db.Movie.loaned == False)
     if cond['seen'] is True:
-        query = query.where(db.Movie.seen==True)
+        query = query.where(db.Movie.seen == True)
     if cond['seen'] is False:
-        query = query.where(db.Movie.seen==False)
+        query = query.where(db.Movie.seen == False)
 
     if cond["collections"]:
         query = query.where(db.Movie.collection_id.in_(cond["collections"]))
@@ -167,68 +168,74 @@ def update_whereclause(query, cond): # {{{
     loaned_to = []
     for per_id in cond["loaned_to"]:
         loaned_to.append(exists([db.tables.loans.c.movie_id],\
-                and_(db.Movie.movie_id==db.tables.loans.c.movie_id, db.tables.loans.c.person_id==per_id, db.tables.loans.c.return_date==None)))
+                and_(db.Movie.movie_id == db.tables.loans.c.movie_id,
+                     db.tables.loans.c.person_id == per_id,
+                     db.tables.loans.c.return_date == None)))
     if loaned_to:
         query = query.where(or_(*loaned_to))
 
     loan_history = []
     for per_id in cond["loan_history"]:
         loan_history.append(exists([db.tables.loans.c.movie_id],\
-                and_(db.Movie.movie_id==db.tables.loans.c.movie_id, db.tables.loans.c.person_id==per_id)))
+                and_(db.Movie.movie_id == db.tables.loans.c.movie_id,
+                     db.tables.loans.c.person_id == per_id)))
     if loan_history:
         query = query.where(or_(*loan_history))
 
     required_tags = []
     for tag_id in cond["required_tags"]:
         required_tags.append(exists([db.MovieTag.movie_id], \
-            and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
+            and_(db.Movie.movie_id == db.MovieTag.movie_id,
+                 db.MovieTag.tag_id == tag_id)))
     if required_tags:
         query = query.where(and_(*required_tags))
 
     tags = []
     for tag_id in cond["tags"]:
         tags.append(exists([db.MovieTag.movie_id], \
-            and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
+            and_(db.Movie.movie_id == db.MovieTag.movie_id,
+                 db.MovieTag.tag_id == tag_id)))
     if tags:
         query = query.where(or_(*tags))
 
     no_tags = []
     for tag_id in cond["no_tags"]:
         no_tags.append(~exists([db.MovieTag.movie_id], \
-            and_(db.Movie.movie_id==db.MovieTag.movie_id, db.MovieTag.tag_id==tag_id)))
+            and_(db.Movie.movie_id == db.MovieTag.movie_id,
+                 db.MovieTag.tag_id == tag_id)))
     if no_tags:
         query = query.where(and_(*no_tags))
 
     for field in cond["equals_n"]:
-        values = [ db.tables.movies.columns[field]!=value for value in cond["equals_n"][field] ]
+        values = [db.tables.movies.columns[field] != value for value in cond["equals_n"][field]]
         query = query.where(and_(*values))
 
     for field in cond["startswith_n"]:
-        values = [ not_(db.tables.movies.columns[field].startswith(value)) for value in cond["startswith_n"][field] ]
+        values = [not_(db.tables.movies.columns[field].startswith(value)) for value in cond["startswith_n"][field]]
         query = query.where(and_(*values))
 
     for field in cond["like_n"]:
-        values = [ not_(db.tables.movies.columns[field].like(value)) for value in cond["like_n"][field] ]
+        values = [not_(db.tables.movies.columns[field].like(value)) for value in cond["like_n"][field]]
         query = query.where(and_(*values))
 
     for field in cond["contains_n"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
-        values = [ not_(db.tables.movies.columns[field].like('%'+value+'%')) for value in cond["contains_n"][field] ]
+        values = [not_(db.tables.movies.columns[field].like('%' + value + '%')) for value in cond["contains_n"][field]]
         query = query.where(and_(*values))
 
     for field in cond["equals"]:
-        values = [ db.tables.movies.columns[field]==value for value in cond["equals"][field] ]
+        values = [db.tables.movies.columns[field] == value for value in cond["equals"][field]]
         query = query.where(or_(*values))
 
     for field in cond["startswith"]:
-        values = [ db.tables.movies.columns[field].startswith(value) for value in cond["startswith"][field] ]
+        values = [db.tables.movies.columns[field].startswith(value) for value in cond["startswith"][field]]
         query = query.where(or_(*values))
 
     for field in cond["like"]:
-        values = [ db.tables.movies.columns[field].like(value) for value in cond["like"][field] ]
+        values = [db.tables.movies.columns[field].like(value) for value in cond["like"][field]]
         query = query.where(or_(*values))
 
     for field in cond["contains"]: # XXX: it's not the SQLAlchemy's .contains() i.e. not for one-to-many or many-to-many collections
-        values = [ db.tables.movies.columns[field].like('%'+value+'%') for value in cond["contains"][field] ]
+        values = [db.tables.movies.columns[field].like('%' + value + '%') for value in cond["contains"][field]]
         query = query.where(or_(*values))
 
     # sorting
@@ -254,4 +261,3 @@ def update_whereclause(query, cond): # {{{
 
     log.debug(query)
     return query #}}}
-
