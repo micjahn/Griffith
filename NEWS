@@ -2,6 +2,11 @@ Griffith 0.11
 =============
 * Griffith extensions feature added. You can add your own extensions in
   ~/.griffith/lib/extensions
+* New extensions:
+   - Amazon
+   - Mark as seen
+   - Player
+   - Remover
 * New import plugins:
    - All My Movies
    - Barret Enterprise Software The Movie Library
@@ -14,10 +19,6 @@ Griffith 0.11
    - Personal Video Database
    - The Movie Library
    - wintoolz Filmdatenbank
-
-
-Griffith 0.10.1
-===============
 * Few posters related fixes (updating, cleaning, etc.)
 * FilmAffinity and Amazon movie plugins updated
   (Amazon access works only with a separate Amazon Account since 15th August 2009
