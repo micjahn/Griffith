@@ -38,6 +38,7 @@ import edit
 __all__ = [os.path.basename(x)[:-3] for x in glob.glob("%s/*.py" % os.path.dirname(__file__))]
 __all__.remove('__init__')
 
+
 class ImportPlugin(object):
     description = None
     author = None
@@ -52,10 +53,12 @@ class ImportPlugin(object):
     imported = 0
     data = None
 
+    previous_dir = None
+
     # mapping dicts name to id
-    mediummap    = None
-    tagmap       = None
-    vcodecsmap   = None
+    mediummap = None
+    tagmap = None
+    vcodecsmap = None
 
     def __init__(self, parent, fields_to_import):
         self.parent = parent
@@ -109,6 +112,7 @@ class ImportPlugin(object):
     def set_source(self, name):
         """Prepare source (open file, etc.)"""
         # change current dir because there are posters with relative paths (perhaps)
+        self.previous_dir = os.getcwd()
         os.chdir(os.path.dirname(name))
 
     def count_movies(self):
@@ -124,11 +128,11 @@ class ImportPlugin(object):
         from add import validate_details, edit_movie
         from sqlalchemy import select
         import gtk
-        
+
         if not self.set_source(name):
             log.info("Can't read data from file %s", name)
             return False
-        
+
         self.widgets['pwindow'].show()
         while gtk.events_pending():    # give GTK some time for updates
             gtk.main_iteration()
@@ -137,12 +141,12 @@ class ImportPlugin(object):
         update_on = []
         count = self.count_movies()
         if count > 0:
-            for i in range(0,100):
-                update_on.append(int(float(i)/100*count))
+            for i in range(0, 100):
+                update_on.append(int(float(i) / 100 * count))
 
         session = self.db.Session()
         session.bind = self.db.session.bind
-        
+
         # move some stuff outside the loop to speed it up
         set_fraction = self.widgets['progressbar'].set_fraction
         set_text = self.widgets['progressbar'].set_text
@@ -170,7 +174,7 @@ class ImportPlugin(object):
 
                 processed += 1
                 if processed in update_on:
-                    set_fraction(float(processed)/count)
+                    set_fraction(float(processed) / count)
                     main_iteration()
                     set_text("%s (%s/%s)" % (self.imported, processed, count))
                     main_iteration()
@@ -252,13 +256,13 @@ class ImportPlugin(object):
                                             tag_id = self.tagmap[tag.lower()]
                                         else:
                                             tag_id = int(tag)
-                                        db.tables.movie_tag.insert(bind=self.db.session.bind).execute({ 'movie_id':movie.lastrowid, 'tag_id':tag_id })
+                                        db.tables.movie_tag.insert(bind=self.db.session.bind).execute({'movie_id': movie.lastrowid, 'tag_id': tag_id})
                                     except:
                                         pass
                             # adding poster
                             if poster:
                                 if len(poster) > 4:
-                                    # check for JPEG/PNG header otherwise it should be a filename 
+                                    # check for JPEG/PNG header otherwise it should be a filename
                                     header = struct.unpack_from('4s', poster)[0]
                                     if header == '\xff\xd8\xff\xe0' or \
                                        header == '\x89\x50\x4e\x47':
@@ -293,7 +297,9 @@ class ImportPlugin(object):
         self.imported = 0
         self.__source_name = None
         self._continue = True
-    
+        if self.previous_dir:
+            os.chdir(self.previous_dir)
+
     def destroy(self):
         """close all resources"""
         pass
@@ -307,8 +313,8 @@ def on_import_plugin_changed(combobox, widgets, *args):
     ip = eval("plugins.imp.%s.ImportPlugin" % plugin_name)
     widgets['author'].set_markup("<i>%s</i>" % ip.author)
     widgets['email'].set_markup("<i>%s</i>" % ip.email)
-    widgets['version'].set_markup("<i>%s</i>" %ip.version)
-    widgets['description'].set_markup("<i>%s</i>" %ip.description)
+    widgets['version'].set_markup("<i>%s</i>" % ip.version)
+    widgets['description'].set_markup("<i>%s</i>" % ip.description)
     # file filters
     for i in widgets['fcw'].list_filters():
         widgets['fcw'].remove_filter(i)
@@ -332,11 +338,13 @@ def on_import_plugin_changed(combobox, widgets, *args):
     f.add_pattern("*")
     widgets['fcw'].add_filter(f)
 
+
 def on_import_button_clicked(button, self, *args):
-    import plugins.imp, gutils
+    import plugins.imp
+    import gutils
     plugin_name = self.widgets['import']['plugin'].get_active_text()
     filenames = self.widgets['import']['fcw'].get_filenames()
-    
+
     fields = []
     w = self.widgets['import']['fields']
     for i in w:
@@ -370,8 +378,8 @@ def on_import_button_clicked(button, self, *args):
             self.widgets['import']['pwindow'].hide()
             self.widgets['window'].set_sensitive(True)
 
+
 def on_abort_button_clicked(button, self, *args):
     self.widgets['import']['window'].hide()
     self.widgets['import']['pwindow'].hide()
     self.widgets['window'].set_sensitive(True)
-
