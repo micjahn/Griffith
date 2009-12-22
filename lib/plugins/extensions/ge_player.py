@@ -52,10 +52,10 @@ class GriffithExtension(Base):
         if not movie or not movie.trailer:
             return False
 
-        useShell = True
+        use_shell = True
         command = self.get_config_value('command', self.preferences['command']['default'])
         if is_windows_system():
-            useShell = False # Popen with shell=True doesn't work under windows with spaces in filenames
+            use_shell = False # Popen with shell=True doesn't work under windows with spaces in filenames
             if not command:
                 import win32api
                 log.debug('try ShellExecute with trailer %s' % movie.trailer)
@@ -69,7 +69,7 @@ class GriffithExtension(Base):
             command = [command, movie.trailer]
 
         log.debug(command)
-        Popen(command, shell=useShell)
+        Popen(command, shell=use_shell)
 
     def maintree_clicked(self, selection, movie):
         if movie and movie.trailer:
