@@ -172,7 +172,7 @@ def treeview(self):
     self.widgets['treeview'].set_headers_visible(True)
     # number column
     renderer = gtk.CellRendererText()
-    self.number_column = gtk.TreeViewColumn(_('N.'), renderer, text=0)
+    self.number_column = gtk.TreeViewColumn(_('No.'), renderer, text=0)
     self.number_column.set_resizable(True)
     self.number_column.set_sort_column_id(0)
     self.number_column.set_reorderable(True)
