@@ -543,7 +543,7 @@ def extension_preferences(self, module, enabled):
     # extension details
     hbox = gtk.HBox()
     vbox.pack_start(hbox, expand=False)
-    enabled_cb = gtk.CheckButton(label=_('use this extension'))
+    enabled_cb = gtk.CheckButton(label=_('enable this extension'))
     enabled_cb.set_active(enabled)
     configwidgets['enabled'] = enabled_cb
     vbox.pack_start(enabled_cb, expand=False)
