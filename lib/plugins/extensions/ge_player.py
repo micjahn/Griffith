@@ -29,6 +29,7 @@ from plugins.extensions import GriffithExtensionBase as Base
 
 log = logging.getLogger('Griffith')
 
+
 class GriffithExtension(Base):
     name = 'Player'
     description = _('Plays movie trailer')
@@ -39,8 +40,8 @@ class GriffithExtension(Base):
     enabled = False # disabled by default
 
     preferences = {'command': {'name': _('Command'),
-                               'hint': _('%s (if given) will be replaced with file path'),
-                               'default': 'mplayer %s',
+                               'hint': _('{1} (if given) will be replaced with file path'),
+                               'default': 'mplayer {1}',
                                'type': unicode}}
     if is_windows_system():
         preferences['command']['default'] = ''
@@ -57,8 +58,8 @@ class GriffithExtension(Base):
             win32api.ShellExecute(0, None, movie.trailer, None, None, 0)
             return
 
-        if '%s' in command:
-            command %= movie.trailer
+        if '{1}' in command:
+            command = command.replace('{1}', movie.trailer)
         else:
             command = "%s %s" % (command, movie.trailer)
         Popen(command, shell=True)
