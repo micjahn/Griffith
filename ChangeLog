@@ -7,6 +7,8 @@ Griffith ChangeLog
 
 2009-12-28  Michael Jahn
 	* updated movie plugin Amazon
+	* updated import plugin CSV
+	  (optional auto-detect dialect settings, fixed pre-selection of encoding)
 
 2009-12-23  Michael Jahn
 	* updated movie plugin Cinematografo
