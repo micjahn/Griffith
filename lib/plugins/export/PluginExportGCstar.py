@@ -22,7 +22,6 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import xml.dom.minidom
-import xml.dom.ext
 import gutils
 from plugins.export import XmlExportBase
 

@@ -373,9 +373,6 @@ def search(search_type, searchfield, searchvalue, product_line, type = "Large", 
     usock = u.open(url)
     xmldoc = minidom.parse(usock)
 
-#     from xml.dom.ext import PrettyPrint
-#     PrettyPrint(xmldoc)
-
     usock.close()
     data = unmarshal(xmldoc)
     if search_type == "BlendedSearch":
