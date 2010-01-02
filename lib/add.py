@@ -590,7 +590,7 @@ def set_details(self, item=None):#{{{
     if pos is not None:
         w['collection'].set_active(int(pos))
     else:
-        w['volume'].set_active(0)
+        w['collection'].set_active(0)
     # tags
     for tag in self.am_tags:
         self.am_tags[tag].set_active(False)
