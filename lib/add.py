@@ -31,6 +31,7 @@ from sqlalchemy.exceptions import IntegrityError
 import quick_filter
 import db
 import gutils
+import initialize
 
 log = logging.getLogger("Griffith")
 
@@ -869,3 +870,61 @@ def commit(session):
         log.error("Unexpected problem: %s", e)
         return False
     return True
+
+
+def add_medium(self, name):
+    session = self.db.Session()
+    medium = db.Medium(name = name)
+    session.add(medium)
+    try:
+        session.commit()
+    except Exception, e:
+        session.rollback()
+        log.warn("Cannot add medium entry: %s", e.message)
+    else:
+        initialize.media_combos(self)
+    return medium.medium_id
+
+
+def add_vcodec(self, name):
+    session = self.db.Session()
+    vcodec = db.VCodec(name = name)
+    session.add(vcodec)
+    try:
+        session.commit()
+    except Exception, e:
+        session.rollback()
+        log.warn("Cannot add video codec entry: %s", e.message)
+    else:
+        initialize.vcodec_combos(self)
+    return vcodec.vcodec_id
+
+
+def add_volume(self, name):
+    session = self.db.Session()
+    vol = db.Volume(name = name)
+    session.add(vol)
+    try:
+        session.commit()
+    except Exception, e:
+        session.rollback()
+        log.warn("Cannot add volume: %s", e.message)
+    else:
+        initialize.update_volume_combo_ids(self)
+        initialize.fill_volumes_combo(self, vol.volume_id)
+    return vol.volume_id
+
+
+def add_collection(self, name):
+    session = self.db.Session()
+    col = db.Collection(name = name)
+    session.add(col)
+    try:
+        session.commit()
+    except Exception, e:
+        session.rollback()
+        log.warn("Cannot add collection: %s", e.message)
+    else:
+        initialize.update_collection_combo_ids(self)
+        initialize.fill_collections_combo(self, col.collection_id)
+    return col.collection_id

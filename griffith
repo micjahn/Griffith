@@ -421,32 +421,12 @@ class Griffith(object):
             self._selected_volume = self.volume_combo_ids[widget.get_active()]
 
     def add_volume(self, widget):
-        session = self.db.Session()
         name = self.widgets['add']['volume'].get_active_text().decode('utf-8')
-        vol = db.Volume(name=name)
-        session.add(vol)
-        try:
-            session.commit()
-        except Exception, e:
-            session.rollback()
-            log.warn("Cannot add volume: %s", e.message)
-        else:
-            initialize.update_volume_combo_ids(self)
-            initialize.fill_volumes_combo(self, id)
+        add.add_volume(self, name)
 
     def add_collection(self, widget):
-        session = self.db.Session()
         name = self.widgets['add']['collection'].get_active_text().decode('utf-8')
-        col = db.Collection(name=name)
-        session.add(col)
-        try:
-            session.commit()
-        except Exception, e:
-            session.rollback()
-            log.warn("Cannot add collection: %s", e.message)
-        else:
-            initialize.update_collection_combo_ids(self)
-            initialize.fill_collections_combo(self, id)
+        add.add_collection(self, name)
 
     def remove_volume(self, widget):
         session = self.db.Session()
@@ -892,17 +872,8 @@ class Griffith(object):
 
     # media ------------------------------------------------------------{{{
     def on_medium_add_clicked(self, widget):
-        session = self.db.Session()
-        medium = db.Medium()
-        medium.name = self.widgets['preferences']['medium_name'].get_active_text().decode('utf-8')
-        session.add(medium)
-        try:
-            session.commit()
-        except Exception, e:
-            session.rollback()
-            log.warn("Cannot add medium entry: %s", e.message)
-        else:
-            initialize.media_combos(self)
+        name = self.widgets['preferences']['medium_name'].get_active_text().decode('utf-8')
+        add.add_medium(self, name)
 
     def on_medium_remove_clicked(self, widget):
         session = self.db.Session()
@@ -950,17 +921,8 @@ class Griffith(object):
 
     # vcodecs -------------------------------------------------------------{{{
     def on_vcodec_add_clicked(self, widget):
-        session = self.db.Session()
-        vcodec = db.VCodec()
-        vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text().decode('utf-8')
-        session.add(vcodec)
-        try:
-            session.commit()
-        except Exception, e:
-            session.rollback()
-            log.warn("Cannot add video codec entry: %s", e.message)
-        else:
-            initialize.vcodec_combos(self)
+        name = self.widgets['preferences']['vcodec_name'].get_active_text().decode('utf-8')
+        add.add_vcodec(self, name)
 
     def on_vcodec_remove_clicked(self, widget):
         session = self.db.Session()
