@@ -145,7 +145,8 @@ class ImportPlugin(IP):
                 "cast", "studio", "plot", "runtime", "genre", "classification",
                 "site", "o_site", "trailer", "image", "seen", "loaned", "notes",
                 "rating", "movie_id", "collection_id", "volume_id", "medium_id",
-                "vcodec_id", "color", "cond", "layers", "region", "media_num")
+                "vcodec_id", "color", "cond", "layers", "region", "media_num",
+                "screenplay", "cameraman", "barcode")
         # sort the list and add field and translated field-name
         for sorted in sorted_list:
             for name in self.fields_to_import:
@@ -385,6 +386,9 @@ class ImportPlugin(IP):
     def get_movie_details(self):
         try:
             item = self.data.next()
+            # skip possible empty lines
+            while not len(item):
+                item = self.data.next()
         except:
             return None
         if item is None:
@@ -402,8 +406,16 @@ class ImportPlugin(IP):
         for field in self.import_table:
             try:
                 # some minor fixes to the import so it fits the griffith variable types
-                if field == 'year' or field == 'runtime' or field == 'media_num' or field == 'number'  or field == 'volume_id':
+                if field == 'year':
                     t_movies[field] = int(digits_only(item[int(self.import_table[field])]))
+                    if t_movies[field] == 0:
+                        t_movies[field] = None
+                elif field == 'runtime' or field == 'media_num' or field == 'number':
+                    t_movies[field] = int(digits_only(item[int(self.import_table[field])]))
+                elif field == 'volume_id' or field == 'medium_id' or field == 'collection_id' or field == 'vcodec_id':
+                    # foreign key fields are mapped in the base class; can be an integer value
+                    # for a direct assignment or a string for a lookup in the database table
+                    t_movies[field] = unicode(item[int(self.import_table[field])])
                 elif field == 'seen' or field == 'loaned':
                     t_movies[field] = bool(item[int(self.import_table[field])])
                 elif field == 'country':
@@ -420,7 +432,7 @@ class ImportPlugin(IP):
                     t_movies[field] = unicode(item[int(self.import_table[field])])
             except:
                 # error field can't be imported
-                log.debug("field %s cannot be imported (%s)", field, e)
+                log.exception("field %s cannot be imported", field)
                 t_movies.pop(field)
 
         return t_movies

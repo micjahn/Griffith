@@ -5,6 +5,12 @@ Griffith ChangeLog
 (c) 2005-2009  Vasco Nunes, Piotr Ożarowski
 
 
+2010-01-03  Michael Jahn
+	* added column header row and some more columns to the basic CSV export
+	* added support of adding new collections, volumes, medium and vcodecs while importing data
+	  (regards different import plugins)
+	* added support for fields screenplay, cameraman and barcode to the CSV import plugin
+
 2010-01-01  Michael Jahn
 	* [#501526] Error in export GCStar/DVDProfilerXMLExportV2/3
 	* updated movie plugin Allocine
