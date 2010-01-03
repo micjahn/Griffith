@@ -33,6 +33,7 @@ except ImportError:
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('All My Movies 5.7')
     author       = 'Michael Jahn'
@@ -50,7 +51,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -83,11 +84,11 @@ class ImportPlugin(IP):
                 'SELECT MovieID, barcode, comments, description, length, mediacount, MediaTypeName, \
                         mpaa, Name, originaltitle, rating, seen, studio, url, year, Trailer \
                  FROM movies LEFT OUTER JOIN MediaType ON movies.MediaTypeID=MediaType.MediaTypeID;')
-        
+
         currentrow = self.cursor.fetchone()
         if not currentrow:
             return None
-        
+
         details = {}
         try:
             movieID = currentrow[0]
@@ -140,7 +141,7 @@ class ImportPlugin(IP):
                         cast = cast + '\n' + currentrow[0]
                     currentrow = curs.fetchone()
                 details['cast'] = cast
-            
+
             curs.execute('SELECT Countries.Name \
                           FROM Countries INNER JOIN CountryLink ON Countries.CountryID=CountryLink.CountryID \
                           WHERE CountryLink.MovieID=' + str(movieID))
@@ -152,7 +153,7 @@ class ImportPlugin(IP):
                     country = country + ', ' + currentrow[0]
                     currentrow = curs.fetchone()
                 details['country'] = country
-            
+
             curs.execute('SELECT Actors.Name \
                           FROM Actors INNER JOIN DirectorLink ON Actors.ActorID=DirectorLink.ActorID \
                           WHERE DirectorLink.MovieID=' + str(movieID))
@@ -164,7 +165,7 @@ class ImportPlugin(IP):
                     director = director + ', ' + currentrow[0]
                     currentrow = curs.fetchone()
                 details['director'] = director
-            
+
             curs.execute('SELECT Genres.Name \
                           FROM Genres INNER JOIN GenresLink ON Genres.GenreID=GenresLink.GenreID \
                           WHERE GenresLink.MovieID=' + str(movieID))
@@ -176,14 +177,14 @@ class ImportPlugin(IP):
                     genre = genre + ', ' + currentrow[0]
                     currentrow = curs.fetchone()
                 details['genre'] = genre
-            
+
             curs.execute('SELECT images.image \
                           FROM images \
                           WHERE cover=-1 AND images.MovieID=' + str(movieID))
             currentrow = curs.fetchone()
             if currentrow:
                 details['poster'] = currentrow[0]
-            
+
             curs.close()
         except Exception, e:
             log.exception('')
@@ -219,5 +220,4 @@ class ImportPlugin(IP):
         except Exception, e:
             log.error(str(e))
         log.info('AllMyMovies Import: Found file version %s' % version)
-        return version;
-
+        return version

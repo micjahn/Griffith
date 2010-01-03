@@ -29,6 +29,7 @@ from xml.dom import minidom, Node
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('eXtreme Movie Manager (version 6.x / 7.x)')
     author       = 'Michael Jahn'
@@ -47,7 +48,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -176,7 +177,7 @@ class ImportPlugin(IP):
                         except:
                             pass
                     elif node.nodeName == 'Media' and len(node.childNodes) > 0:
-                        details['vcodec_id'] = node.childNodes[0].data
+                        details['medium_id'] = node.childNodes[0].data
                     elif node.nodeName == 'Color' and len(node.childNodes) > 0:
                         if node.childNodes[0].data == 'False':
                             details['color'] = 2
@@ -187,7 +188,7 @@ class ImportPlugin(IP):
         except Exception, e:
             log.exception('')
             details = None
-        self.itemindex = self.itemindex +  1
+        self.itemindex = self.itemindex + 1
         return details
 
     def clear(self):
@@ -225,5 +226,4 @@ class ImportPlugin(IP):
             self.filedom.unlink()
             self.filedom = None
         log.info('eXtreme Movie Manager Import: Found file version %s' % version)
-        return version;
-
+        return version

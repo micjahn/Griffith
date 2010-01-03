@@ -90,6 +90,7 @@ log = logging.getLogger("Griffith")
 # LFFNR             4
 # PictureData       LFFNR
 
+
 class ImportPlugin(IP):
     description  = _('Ant Movie Catalog (version 3.5)')
     author       = 'Michael Jahn'
@@ -111,7 +112,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -191,7 +192,7 @@ class ImportPlugin(IP):
                 details['poster'] = posterdata
             elif posterfilename and len(posterfilename) > 4:
                 details['poster'] = posterfilename
-            
+
             if details['title'] == None:
                 details['title'] = details['o_title']
             if details['o_title'] == None:
@@ -235,7 +236,7 @@ class ImportPlugin(IP):
             version = 3.3
         elif header == self.fileHeader31:
             version = 3.1
-        return version;
+        return version
 
     def seekfield(self, ifile):
         lenStr = ifile.read(4)

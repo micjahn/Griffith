@@ -30,6 +30,7 @@ from xml.dom import minidom
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('GCstar (version 1.4.x)')
     author       = 'Michael Jahn'
@@ -48,7 +49,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -82,11 +83,11 @@ class ImportPlugin(IP):
             return None
         if len(self.items) <= self.itemindex:
             return None
-        
+
         details = {}
         try:
             item = self.items[self.itemindex]
-            
+
             details['title']          = item.getAttribute('title')
             details['o_title']        = item.getAttribute('original')
             details['year']           = item.getAttribute('date')
@@ -159,7 +160,7 @@ class ImportPlugin(IP):
         except Exception, e:
             log.error(str(e))
             details = None
-        self.itemindex = self.itemindex +  1
+        self.itemindex = self.itemindex + 1
         return details
 
     def clear(self):
@@ -188,5 +189,4 @@ class ImportPlugin(IP):
             log.error(str(e))
             self.filedom.unlink()
             self.filedom = None
-        return version;
-
+        return version

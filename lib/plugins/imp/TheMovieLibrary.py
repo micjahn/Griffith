@@ -33,6 +33,7 @@ except ImportError:
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('WenSoftware The Movie Library 1.4.x')
     author       = 'Michael Jahn'
@@ -50,7 +51,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -86,11 +87,11 @@ class ImportPlugin(IP):
                         Length, Director, Writer, Photographer, Plot, \
                         FrontCover, Seen, Comment, Actor, Trailer, Color, Rating \
                  FROM Movie')
-        
+
         currentrow = self.cursor.fetchone()
         if not currentrow:
             return None
-        
+
         details = {}
         try:
             if currentrow[1]:
@@ -164,7 +165,7 @@ class ImportPlugin(IP):
         except Exception, e:
             log.exception('')
             details = None
-        
+
         return details
 
     def clear(self):
@@ -195,5 +196,4 @@ class ImportPlugin(IP):
         except Exception, e:
             log.error(str(e))
         log.info('The Movie Library Import: Found file version %s' % version)
-        return version;
-
+        return version

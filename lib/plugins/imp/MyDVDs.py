@@ -33,6 +33,7 @@ except ImportError:
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('MyDVDs 1.6x')
     author       = 'Michael Jahn'
@@ -50,7 +51,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -83,11 +84,11 @@ class ImportPlugin(IP):
                 'SELECT id, title, year, rating, stars, director, synop, \
                         cover, runtime, genre, notes, trailer, star5 \
                  FROM dvd;')
-        
+
         currentrow = self.cursor.fetchone()
         if not currentrow:
             return None
-        
+
         details = {}
         try:
             if currentrow[1]:
@@ -122,7 +123,6 @@ class ImportPlugin(IP):
         except Exception, e:
             log.exception('')
             details = None
-        #print details
         return details
 
     def clear(self):
@@ -153,5 +153,4 @@ class ImportPlugin(IP):
         except Exception, e:
             log.error(str(e))
         log.info('MyDVDs Import: Found file version %s' % version)
-        return version;
-
+        return version

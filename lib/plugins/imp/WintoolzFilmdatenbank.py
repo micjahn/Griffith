@@ -32,6 +32,7 @@ except ImportError:
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('wintoolz Filmdatenbank (version 1.0.0.x)')
     author       = 'Michael Jahn'
@@ -49,7 +50,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -83,11 +84,11 @@ class ImportPlugin(IP):
                  Mediendatei, BewertungHandlung, BewertungDarsteller, BewertungMusik,\
                  BewertungEmotionen, BewertungSpecialEffects, GesehenZahl, Farbdarstellung \
                  FROM Main')
-        
+
         currentrow = self.cursor.fetchone()
         if not currentrow:
             return None
-        
+
         details = {}
         try:
             if currentrow[0]:
@@ -157,7 +158,7 @@ class ImportPlugin(IP):
         except Exception, e:
             log.exception('')
             details = None
-        
+
         return details
 
     def clear(self):
@@ -180,5 +181,4 @@ class ImportPlugin(IP):
         except Exception, e:
             log.error(str(e))
         log.info('wintoolz Filmdatenbank Import: Found file version %s' % version)
-        return version;
-
+        return version

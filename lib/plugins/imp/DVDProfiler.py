@@ -29,6 +29,7 @@ from xml.dom import minidom, Node
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('DVD Profiler (version 3.x)')
     author       = 'Michael Jahn'
@@ -47,7 +48,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -115,12 +116,12 @@ class ImportPlugin(IP):
                     elif node.nodeName == 'Overview' and len(node.childNodes) > 0:
                         details['plot'] = node.childNodes[0].data.strip()
                     elif node.nodeName == 'Rating' and len(node.childNodes) > 0:
-                        if details.has_key('classification') and details['classification']:
+                        if 'classification' in details and details['classification']:
                             details['classification'] = node.childNodes[0].data.strip() + '-' + details['classification']
                         else:
                             details['classification'] = node.childNodes[0].data.strip()
                     elif node.nodeName == 'RatingAge' and len(node.childNodes) > 0:
-                        if details.has_key('classification') and details['classification']:
+                        if 'classification' in details and details['classification']:
                             details['classification'] = details['classification'] + '-' + node.childNodes[0].data.strip()
                         else:
                             details['classification'] = node.childNodes[0].data.strip()
@@ -301,7 +302,7 @@ class ImportPlugin(IP):
         except Exception, e:
             log.exception('')
             details = None
-        self.itemindex = self.itemindex +  1
+        self.itemindex = self.itemindex + 1
         return details
 
     def clear(self):
@@ -339,5 +340,4 @@ class ImportPlugin(IP):
             log.error(str(e))
             self.filedom.unlink()
             self.filedom = None
-        return version;
-
+        return version

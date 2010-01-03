@@ -29,6 +29,7 @@ import os
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('MovieTrack (version 3.4x)')
     author       = 'Michael Jahn'
@@ -46,7 +47,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -63,7 +64,7 @@ class ImportPlugin(IP):
     def count_movies(self):
         """Returns number of movies in file which is about to be imported"""
         count = 0
-        fileforcount= open(self.filename)
+        fileforcount = open(self.filename)
         try:
             for line in fileforcount:
                 count = count + 1
@@ -120,7 +121,7 @@ class ImportPlugin(IP):
                 details['notes'] = unicode(fields[10])  # Comments
             movieid = fields[11]                        # AGN
             #details[''] = fields[12]   # UGN
-            
+
             # try to get some more details from imdb-file
             try:
                 if self.imdbfilename:
@@ -167,13 +168,13 @@ class ImportPlugin(IP):
                 log.exception('')
             finally:
                 openedimdb.close()
-            
+
         except EOFError:
             details = None
         except Exception, e:
             log.exception('')
             details = None
-        
+
         return details
 
     def clear(self):
@@ -203,5 +204,4 @@ class ImportPlugin(IP):
         except Exception, e:
             log.error(str(e))
         log.info('MovieTrack Import: Found file version %s' % version)
-        return version;
-
+        return version

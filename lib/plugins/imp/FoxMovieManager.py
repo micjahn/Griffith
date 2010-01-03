@@ -33,6 +33,7 @@ except ImportError:
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('Fox Movie Manager 1.4')
     author       = 'Michael Jahn'
@@ -50,7 +51,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -86,11 +87,11 @@ class ImportPlugin(IP):
                         fldPicPath, fldWatched, fldUserRating, fldRating, fldMedia, \
                         fldMoviePath, fldTrailerPath \
                  FROM tblMovie')
-        
+
         currentrow = self.cursor.fetchone()
         if not currentrow:
             return None
-        
+
         details = {}
         try:
             details['number'] = currentrow[0]
@@ -158,7 +159,7 @@ class ImportPlugin(IP):
         except Exception, e:
             log.exception('')
             details = None
-        
+
         return details
 
     def clear(self):
@@ -189,5 +190,4 @@ class ImportPlugin(IP):
         except Exception, e:
             log.error(str(e))
         log.info('Fox Movie Manager Import: Found file version %s' % version)
-        return version;
-
+        return version

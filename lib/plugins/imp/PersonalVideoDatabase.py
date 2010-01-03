@@ -29,6 +29,7 @@ from xml.dom import minidom, Node
 import logging
 log = logging.getLogger("Griffith")
 
+
 class ImportPlugin(IP):
     description  = _('Personal Video Database (version 0.9.9.x)')
     author       = 'Michael Jahn'
@@ -47,7 +48,7 @@ class ImportPlugin(IP):
             return False
         self.edit = False
         return True
-    
+
     def set_source(self, name):
         IP.set_source(self, name)
         self.filename = name
@@ -159,7 +160,7 @@ class ImportPlugin(IP):
         except Exception, e:
             log.exception('')
             details = None
-        self.itemindex = self.itemindex +  1
+        self.itemindex = self.itemindex + 1
         return details
 
     def clear(self):
@@ -188,5 +189,4 @@ class ImportPlugin(IP):
             self.filedom.unlink()
             self.filedom = None
         log.info('Personal Video Database Import: Found file version %s' % version)
-        return version;
-
+        return version
