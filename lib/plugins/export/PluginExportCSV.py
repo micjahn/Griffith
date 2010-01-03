@@ -28,6 +28,7 @@ import gutils
 import db
 from plugins.export import Base
 
+
 class ExportPlugin(Base):
     name = "CSV"
     description = _("Full CSV list export plugin")
@@ -37,7 +38,9 @@ class ExportPlugin(Base):
 
     fields_to_export = ('number', 'o_title', 'title', 'director', 'year', 'classification', 'country',
                         'genre', 'rating', 'runtime', 'studio', 'seen', 'loaned', 'o_site', 'site', 'trailer',
-                        'plot', 'cast', 'notes', 'image', 'volumes.name', 'collections.name', 'media.name')
+                        'plot', 'cast', 'notes', 'image', 'volumes.name', 'collections.name', 'media.name',
+                        'screenplay', 'cameraman', 'barcode', 'color', 'cond', 'layers', 'region',
+                        'media_num', 'vcodecs.name')
 
     def run(self):
         basedir = None
@@ -64,6 +67,9 @@ class ExportPlugin(Base):
                 movies = self.get_query().execute()
 
                 writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
+                # write column header row
+                writer.writerow(self.fields_to_export)
+                # write data rows
                 for movie in movies:
                     t = []
                     for s in self.exported_columns:
