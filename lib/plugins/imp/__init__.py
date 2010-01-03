@@ -28,6 +28,7 @@ import time
 import gc
 import struct
 from tempfile import mkstemp
+import add
 import logging
 log = logging.getLogger("Griffith")
 
@@ -55,10 +56,10 @@ class ImportPlugin(object):
 
     previous_dir = None
 
-    # mapping dicts name to id
-    mediummap = None
+    # maps foreign key column names to mappings dicts name to id
+    foreignkeymaps = None
+    # mappings tag names to id
     tagmap = None
-    vcodecsmap = None
 
     def __init__(self, parent, fields_to_import):
         self.parent = parent
@@ -73,32 +74,6 @@ class ImportPlugin(object):
         self.widgets = parent.widgets['import']
         self.fields_to_import = fields_to_import
         self._continue = True
-
-    def loadmappings(self):
-        self.mediummap = {}
-        self.tagmap = {}
-        self.vcodecsmap = {}
-        # medium
-        for medium in self.db.session.query(db.Medium.medium_id, db.Medium.name).all():
-            # original name
-            mediumname = medium.name.lower()
-            if not mediumname in self.mediummap:
-                self.mediummap[mediumname] = medium.medium_id
-            # normalized name
-            mediumname = mediumname.replace('-', '')
-            mediumname = mediumname.replace(' ', '')
-            if not mediumname in self.mediummap:
-                self.mediummap[mediumname] = medium.medium_id
-        # tags
-        for tag in self.db.session.query(db.Tag.tag_id, db.Tag.name).all():
-            tagname = tag.name.lower()
-            if not tagname in self.tagmap:
-                self.tagmap[tagname] = tag.tag_id
-        # vcodecs
-        for vcodec in self.db.session.query(db.VCodec.vcodec_id, db.VCodec.name).all():
-            vcodecname = vcodec.name.lower()
-            if not vcodecname in self.vcodecsmap:
-                self.vcodecsmap[vcodecname] = vcodec.vcodec_id
 
     def initialize(self):
         """Initializes plugin (get all parameters from user, etc.)"""
@@ -191,8 +166,8 @@ class ImportPlugin(object):
                     elif title_lower and title_lower in titles: # o_title is not available so lets check title only
                         log.info("movie already exists (title=%s)", details['title'])
                         continue
-                    validate_details(details, self.fields_to_import)
                     if self.edit: # XXX: not used for now
+                        validate_details(details, self.fields_to_import)
                         response = edit_movie(self.parent, details)    # FIXME: wait until save or cancel button pressed
                         if response == 1:
                             self.imported += 1
@@ -201,8 +176,6 @@ class ImportPlugin(object):
                         while number in numbers:
                             number += 1
                         details['number'] = number
-                        #movie = db.Movie()
-                        #movie.add_to_db(details)
                         if 'tags' in details:
                             tags = details.pop('tags')
                         else:
@@ -213,35 +186,25 @@ class ImportPlugin(object):
                             poster = None
                         try:
                             # optional: do mapping of lookup data
-                            # (TODO: perhaps adding new lookup values?)
-                            try:
-                                if 'medium_id' in details:
-                                    medium_id = int(details['medium_id'])
-                            except:
+                            if not self.foreignkeymaps:
+                                self._loadmappings()
+                            for fkcolumnname in self.foreignkeymaps:
                                 try:
-                                    if self.mediummap is None:
-                                        self.loadmappings()
-                                    medium_id = details['medium_id'].lower()
-                                    if medium_id in self.mediummap:
-                                        details['medium_id'] = self.mediummap[medium_id]
-                                    else:
-                                        details['medium_id'] = None
+                                    if fkcolumnname in details and details[fkcolumnname]:
+                                        fkcolumn_id = int(details[fkcolumnname])
                                 except:
-                                    details['medium_id'] = None
-                            try:
-                                if 'vcodec_id' in details:
-                                    vcodec_id = int(details['vcodec_id'])
-                            except:
-                                try:
-                                    if self.vcodecsmap is None:
-                                        self.loadmappings()
-                                    vcodec_id = details['vcodec_id'].lower()
-                                    if vcodec_id in self.vcodecsmap:
-                                        details['vcodec_id'] = self.vcodecsmap[vcodec_id]
-                                    else:
-                                        details['vcodec_id'] = None
-                                except:
-                                    details['vcodec_id'] = None
+                                    try:
+                                        fkcolumn_id = self.normalizename(details[fkcolumnname])
+                                        currentmap = self.foreignkeymaps[fkcolumnname]
+                                        if fkcolumn_id in currentmap:
+                                            details[fkcolumnname] = currentmap[fkcolumn_id]
+                                        else:
+                                            details[fkcolumnname] = self._addmappingvalue(fkcolumnname, details[fkcolumnname])
+                                    except:
+                                        log.exception(fkcolumnname)
+                                        details[fkcolumnname] = None
+                            # validation before insertion
+                            validate_details(details, self.fields_to_import)
                             # insert the movie in the database
                             movie = db.tables.movies.insert(bind=self.db.session.bind).execute(details)
                             self.imported += 1
@@ -279,7 +242,7 @@ class ImportPlugin(object):
                                                 os.remove(posterfilename)
                                     else:
                                         edit.update_image(self.parent, number, poster)
-                        except Exception, e:
+                        except Exception:
                             log.exception("movie details are not unique, skipping")
                         numbers.add(number)
                 else:
@@ -303,6 +266,76 @@ class ImportPlugin(object):
     def destroy(self):
         """close all resources"""
         pass
+
+    def _loadmappings(self):
+        # add all lookup mapping lists to a list which maps by foreign key column name
+        self.foreignkeymaps = {}
+        self.foreignkeymaps['medium_id'] = self._loadmappingmedium()
+        self.foreignkeymaps['vcodec_id'] = self._loadmappingvcodecs()
+        self.foreignkeymaps['collection_id'] = self._loadmappingcollections()
+        self.foreignkeymaps['volume_id'] = self._loadmappingvolumes()
+        # tags are no foreign key lookup data; it's an intersection
+        self.tagmap = {}
+        for tag in self.db.session.query(db.Tag.tag_id, db.Tag.name).all():
+            tagname = self.normalizename(tag.name)
+            if not tagname in self.tagmap:
+                self.tagmap[tagname] = tag.tag_id
+
+    def _loadmappingmedium(self):
+        mediummap = {}
+        for medium in self.db.session.query(db.Medium.medium_id, db.Medium.name).all():
+            mediumname = self.normalizename(medium.name)
+            if not mediumname in mediummap:
+                mediummap[mediumname] = medium.medium_id
+        return mediummap
+
+    def _loadmappingvcodecs(self):
+        vcodecsmap = {}
+        for vcodec in self.db.session.query(db.VCodec.vcodec_id, db.VCodec.name).all():
+            vcodecname = self.normalizename(vcodec.name)
+            if not vcodecname in vcodecsmap:
+                vcodecsmap[vcodecname] = vcodec.vcodec_id
+        return vcodecsmap
+
+    def _loadmappingcollections(self):
+        collectionsmap = {}
+        for collection in self.db.session.query(db.Collection.collection_id, db.Collection.name).all():
+            collectionname = self.normalizename(collection.name)
+            if not collectionname in collectionsmap:
+                collectionsmap[collectionname] = collection.collection_id
+        return collectionsmap
+
+    def _loadmappingvolumes(self):
+        volumesmap = {}
+        for volume in self.db.session.query(db.Volume.volume_id, db.Volume.name).all():
+            volumename = self.normalizename(volume.name)
+            if not volumename in volumesmap:
+                volumesmap[volumename] = volume.volume_id
+        return volumesmap
+
+    def _addmappingvalue(self, fkcolumnname, newname):
+        id = None
+        log.debug("Adding <%s> for <%s>", newname, fkcolumnname)
+        if fkcolumnname == 'medium_id':
+            id = add.add_medium(self.parent, newname)
+            self.foreignkeymaps['medium_id'] = self._loadmappingmedium()
+        elif fkcolumnname == 'vcodec_id':
+            id = add.add_vcodec(self.parent, newname)
+            self.foreignkeymaps['vcodec_id'] = self._loadmappingvcodecs()
+        elif fkcolumnname == 'collection_id':
+            id = add.add_collection(self.parent, newname)
+            self.foreignkeymaps['collection_id'] = self._loadmappingcollections()
+        elif fkcolumnname == 'volume_id':
+            id = add.add_volume(self.parent, newname)
+            self.foreignkeymaps['volume_id'] = self._loadmappingvolumes()
+        return id
+
+    def normalizename(self, name):
+        name = name.replace('-', '')
+        name = name.replace('_', '')
+        name = name.replace(' ', '')
+        name = name.replace(u'\xa0', '') # unicode whitespace from XML data (&x160;)
+        return name.lower().strip()
 
 
 def on_import_plugin_changed(combobox, widgets, *args):
