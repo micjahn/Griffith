@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: griffith\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-04 21:40+0100\n"
+"POT-Creation-Date: 2010-01-04 22:11+0100\n"
 "PO-Revision-Date: 2009-12-08 07:29+0000\n"
 "Last-Translator: nafterburner <nafterburner@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -1584,10 +1584,6 @@ msgstr ""
 msgid "Full XML list export plugin"
 msgstr ""
 
-#: ../lib/plugins/imp/AllMyMovies.py:38
-msgid "All My Movies 5.7"
-msgstr ""
-
 #: ../lib/plugins/imp/AllMyMovies.py:60 ../lib/plugins/imp/AMC.py:121
 #: ../lib/plugins/imp/BESTheMovieLibrary.py:60
 #: ../lib/plugins/imp/DVDProfiler.py:57
@@ -1598,14 +1594,6 @@ msgstr ""
 #: ../lib/plugins/imp/TheMovieLibrary.py:60
 #: ../lib/plugins/imp/WintoolzFilmdatenbank.py:59
 msgid "The format of the file is not supported."
-msgstr ""
-
-#: ../lib/plugins/imp/AMC.py:95
-msgid "Ant Movie Catalog (version 3.5)"
-msgstr ""
-
-#: ../lib/plugins/imp/BESTheMovieLibrary.py:38
-msgid "Barrett Enterprise Software The Movie Library 1.9.x"
 msgstr ""
 
 #: ../lib/plugins/imp/CSV.py:45
@@ -1621,45 +1609,9 @@ msgstr ""
 msgid "Can't open the file %s"
 msgstr ""
 
-#: ../lib/plugins/imp/DVDProfiler.py:34
-msgid "DVD Profiler (version 3.x)"
-msgstr ""
-
-#: ../lib/plugins/imp/eXtremeMovieManager.py:34
-msgid "eXtreme Movie Manager (version 6.x / 7.x)"
-msgstr ""
-
-#: ../lib/plugins/imp/FoxMovieManager.py:38
-msgid "Fox Movie Manager 1.4"
-msgstr ""
-
-#: ../lib/plugins/imp/GCstar.py:35
-msgid "GCstar (version 1.4.x)"
-msgstr ""
-
 #: ../lib/plugins/imp/__init__.py:402
 #, python-format
 msgid "%s file has been imported. %s movies added."
-msgstr ""
-
-#: ../lib/plugins/imp/MovieTrack.py:34
-msgid "MovieTrack (version 3.4x)"
-msgstr ""
-
-#: ../lib/plugins/imp/MyDVDs.py:38
-msgid "MyDVDs 1.6x"
-msgstr ""
-
-#: ../lib/plugins/imp/PersonalVideoDatabase.py:34
-msgid "Personal Video Database (version 0.9.9.x)"
-msgstr ""
-
-#: ../lib/plugins/imp/TheMovieLibrary.py:38
-msgid "WenSoftware The Movie Library 1.4.x"
-msgstr ""
-
-#: ../lib/plugins/imp/WintoolzFilmdatenbank.py:37
-msgid "wintoolz Filmdatenbank (version 1.0.0.x)"
 msgstr ""
 
 #: ../glade/exporthtml.glade.h:1

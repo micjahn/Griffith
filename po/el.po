@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-22 22:39+0100\n"
+"POT-Creation-Date: 2010-01-04 22:11+0100\n"
 "PO-Revision-Date: 2009-06-11 23:13+0000\n"
 "Last-Translator: Piotr Ożarowski <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2009-12-22 20:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: ../griffith:235 ../griffith:1059 ../lib/delete.py:35 ../lib/edit.py:43
+#: ../griffith:235 ../griffith:1021 ../lib/delete.py:35 ../lib/edit.py:43
 msgid "You have no movies in your database"
 msgstr "Η βάση δεδομένων είναι άδεια"
 
@@ -25,13 +25,13 @@ msgstr "Η βάση δεδομένων είναι άδεια"
 msgid "You have seen all films in your collection!"
 msgstr "Είδατε όλες τις ταινίες της συλλογή σας!"
 
-#: ../griffith:583 ../griffith:588 ../lib/initialize.py:340
+#: ../griffith:563 ../griffith:568 ../lib/initialize.py:340
 #: ../lib/initialize.py:759
 msgid "subtitles"
 msgstr "υπότιτλοι"
 
-#: ../griffith:630 ../griffith:690 ../griffith:749 ../griffith:807
-#: ../griffith:865 ../griffith:923 ../griffith:981
+#: ../griffith:610 ../griffith:670 ../griffith:729 ../griffith:787
+#: ../griffith:845 ../griffith:894 ../griffith:943
 msgid ""
 "This item is in use.\n"
 "Operation aborted!"
@@ -39,7 +39,7 @@ msgstr ""
 "Το αντικέιμενο αυτό χρησιμοποιείται.\n"
 "Ματαίωση λειτουργίας!"
 
-#: ../griffith:1031
+#: ../griffith:993
 msgid ""
 "Are you sure you want to restore?\n"
 "Your current movie collection will be replaced.\n"
@@ -49,7 +49,7 @@ msgstr ""
 "Η τρέχουσα συλλογή ταινιών θα αντικατασταθεί.\n"
 "Δεν μπορείτε να αναιρέσετε αυτή την αλλαγή!"
 
-#: ../griffith:1038
+#: ../griffith:1000
 msgid ""
 "Are you sure you want to mix?\n"
 "Your current movie collection will be mixed with a backup.\n"
@@ -59,14 +59,14 @@ msgstr ""
 "Η τρέχουσα συλλογή ταινιών θα ανακατευτεί με ένα αντίγραφο.\n"
 "Δεν μπορείτε να αναιρέσετε αυτή την αλλαγή!"
 
-#: ../griffith:1136
+#: ../griffith:1098
 #, python-format
 msgid ""
 "%s movie(s) in collection. %s movie(s) are shown by the filter. %s movie(s) "
 "loaned. You haven't seen %s movie(s)"
 msgstr ""
 
-#: ../griffith:1347
+#: ../griffith:1309
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -74,7 +74,7 @@ msgstr ""
 "Είστε σίγουροι οτι θέλετε να δημιουργήσετε μια νέα βάση δεδομένων;\n"
 "Θα χάσετε ΟΛΑ τα υπάρχοντα δεδομένα!"
 
-#: ../griffith:1349
+#: ../griffith:1311
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -84,7 +84,7 @@ msgstr ""
 "Είστε σίγουροi οτι θέλετε\n"
 "να χάσετε τα υπάρχοντα δεδομένα;"
 
-#: ../griffith:1505
+#: ../griffith:1467
 msgid ""
 "This is development version of Griffith.\n"
 "Upgrade path from dev. versions may not be provided.\n"
@@ -117,28 +117,28 @@ msgstr ""
 msgid "This program is released under the GNU"
 msgstr "Το πρόγραμμα υπόκειται στην άδεια χρήσης GNU"
 
-#: ../lib/add.py:53 ../glade/griffith.glade.h:27
+#: ../lib/add.py:54 ../glade/griffith.glade.h:27
 msgid "Add a new movie"
 msgstr "Προσθήκη νέας ταινίας"
 
-#: ../lib/add.py:65
+#: ../lib/add.py:66
 msgid "Edit movie"
 msgstr "Επεξεργασία ταινίας"
 
-#: ../lib/add.py:137 ../lib/add.py:727 ../lib/cover.py:182
+#: ../lib/add.py:138 ../lib/add.py:728 ../lib/cover.py:182
 #: ../lib/main_treeview.py:501
 msgid " min"
 msgstr " λεπτά"
 
-#: ../lib/add.py:146
+#: ../lib/add.py:147
 msgid "Movie information has been updated"
 msgstr "Οι πληροφορίες της ταινίας ενημερώθηκαν"
 
-#: ../lib/add.py:278
+#: ../lib/add.py:279
 msgid "No results"
 msgstr "Κανένα αποτέλεσμα"
 
-#: ../lib/add.py:322 ../lib/add.py:658
+#: ../lib/add.py:323 ../lib/add.py:659
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
@@ -146,15 +146,15 @@ msgstr ""
 "Πρέπει να εισάγετε τον πρωτότυπο τίτλο\n"
 "ή τον τίτλο της ταινίας."
 
-#: ../lib/add.py:331
+#: ../lib/add.py:332
 msgid "Url: "
 msgstr "Url: "
 
-#: ../lib/add.py:332
+#: ../lib/add.py:333
 msgid "Language: "
 msgstr "Γλώσσα: "
 
-#: ../lib/add.py:664 ../lib/add.py:668
+#: ../lib/add.py:665 ../lib/add.py:669
 msgid "Movie with that title already exists, are you sure you want to add?"
 msgstr ""
 "Ταινία με αυτόν τον τίτλο υπάρχει ήδη, είστε σίγουροι ότι θέλετε να την "
@@ -241,7 +241,7 @@ msgid "Save Griffith backup"
 msgstr "Αποθήκευση αντιγράφου Griffith"
 
 #: ../lib/backup.py:61 ../lib/plugins/export/__init__.py:162
-#: ../lib/plugins/export/PluginExportCSV.py:58
+#: ../lib/plugins/export/PluginExportCSV.py:61
 #: ../lib/plugins/export/PluginExportiPod.py:105
 #: ../lib/plugins/export/PluginExportPDF.py:82
 #: ../lib/plugins/export/PluginExportXML.py:58
@@ -354,7 +354,7 @@ msgstr "Αγγλικά"
 msgid "Estonian"
 msgstr "Εσθονικά"
 
-#: ../lib/dbupgrade.py:95 ../lib/plugins/movie/PluginMovieAllocine.py:31
+#: ../lib/dbupgrade.py:95 ../lib/plugins/movie/PluginMovieAllocine.py:34
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:30
 msgid "French"
 msgstr "Γαλλικά"
@@ -381,7 +381,7 @@ msgstr "Ουγγρικά"
 msgid "Indonesian"
 msgstr "Ινδονησιακά"
 
-#: ../lib/dbupgrade.py:100 ../lib/plugins/movie/PluginMovieCinematografo.py:29
+#: ../lib/dbupgrade.py:100 ../lib/plugins/movie/PluginMovieCinematografo.py:32
 #: ../lib/plugins/movie/PluginMovieMyMoviesIt.py:33
 msgid "Italian"
 msgstr "Ιταλικά"
@@ -484,15 +484,15 @@ msgstr "Δεν μπορείτε να διαγράψετε την ταινία ε
 msgid "Are you sure you want to delete this movie?"
 msgstr "Είστε σίγουρος/η οτι θέλετε να διαγράψετε την ταινία;"
 
-#: ../lib/edit.py:57
+#: ../lib/edit.py:64
 msgid "Image is not valid."
 msgstr ""
 
-#: ../lib/edit.py:90 ../lib/edit.py:115
+#: ../lib/edit.py:97 ../lib/edit.py:122
 msgid "Image has been updated"
 msgstr "Η εικόνα έχει ενημερωθεί"
 
-#: ../lib/edit.py:98
+#: ../lib/edit.py:105
 msgid "Are you sure you want to delete this poster?"
 msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την αφίσα;"
 
@@ -542,15 +542,15 @@ msgstr "Το e-mail δεν εστάλει. Παρακαλώ ελέγξτε τι�
 msgid "This person has no e-mail address defined."
 msgstr "Δε βρέθηκε ηλεκτρονική διεύθυνση καταχωρημένη για αυτό το άτομο."
 
-#: ../lib/gutils.py:311
+#: ../lib/gutils.py:314
 msgid "Images"
 msgstr "Εικόνες"
 
-#: ../lib/gutils.py:322
+#: ../lib/gutils.py:325
 msgid "backups"
 msgstr ""
 
-#: ../lib/gutils.py:328 ../lib/plugins/imp/__init__.py:331
+#: ../lib/gutils.py:331 ../lib/plugins/imp/__init__.py:370
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
@@ -994,7 +994,7 @@ msgid "Filter activated. Showing only movies from collection: %s"
 msgstr ""
 "Το φίλτρο ενεργοποιήθηκε. Παρουσιάζονται μόνο οι ταινίες από τη συλλογή: %s"
 
-#: ../lib/widgets.py:364
+#: ../lib/widgets.py:363
 msgid ""
 "Define here the PDF reader you want to use within Griffith. Popular choices "
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
@@ -1005,7 +1005,7 @@ msgstr ""
 "evince ή kpdf. Σιγουρευτείτε οτι το πρόγραμμα είναι εγκατεστημένο και "
 "δουλεύει σωστά."
 
-#: ../lib/widgets.py:365
+#: ../lib/widgets.py:364
 msgid ""
 "Here you can define the desired language to use while spell checking some "
 "fields. Use you locale setting. For example, to use european portuguese "
@@ -1016,7 +1016,7 @@ msgstr ""
 "παράδειγμα, για να χρησιμοποιήσετε τον έλεγχο ορθογραφίας στα πορτογαλλικά "
 "ευρώπης, εισάγετε 'pt'"
 
-#: ../lib/widgets.py:366
+#: ../lib/widgets.py:365
 msgid ""
 "Use this entry to define the SMTP server you want to use to send e-mails. On "
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
@@ -1028,7 +1028,7 @@ msgstr ""
 "Εναλλακτικά, μπορείτε να χρησιμοποιήσετε την διεύθυνση SMTP του Παρόχου "
 "Υπηρεσιών Διαδικτύου σας."
 
-#: ../lib/widgets.py:367
+#: ../lib/widgets.py:366
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
@@ -1037,7 +1037,7 @@ msgstr ""
 "εξερχόμενα ηλεκτρονικά μηνύματα. Πιθανώς να θέλετε να συμπεριλάβετε και την "
 "δική σας ηλεκτρονική διεύθυνση."
 
-#: ../lib/widgets.py:368
+#: ../lib/widgets.py:367
 msgid ""
 "Here you can define the smtp server port to use. If you want to use your "
 "gmail account service to send e-mails, try to enter '587' here. Default (and "
@@ -1047,7 +1047,7 @@ msgstr ""
 "χρησιμοποιήσεις την υπηρεσία του gmal για αποστολή e-mails, προσπάθησε να "
 "βάλεις '587' εδώ. Η προεπιλογή (και πιο συνηθισμένη) είναι '25'"
 
-#: ../lib/widgets.py:369
+#: ../lib/widgets.py:368
 msgid ""
 "If you need TLS support, please check this checkbox. This is needed, for "
 "example, when using gmail service to send your reminder e-mails."
@@ -1065,38 +1065,52 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieAllMovie.py:266
 #: ../lib/plugins/movie/PluginMovieAllMovie.py:267
 #: ../lib/plugins/movie/PluginMovieAllMovie.py:269
-#: ../lib/plugins/movie/PluginMovieAllocine.py:89
-#: ../lib/plugins/movie/PluginMovieAllocine.py:180
-#: ../lib/plugins/movie/PluginMovieAllocine.py:181
-#: ../lib/plugins/movie/PluginMovieAllocine.py:182
-#: ../lib/plugins/movie/PluginMovieAllocine.py:183
-#: ../lib/plugins/movie/PluginMovieAllocine.py:184
-#: ../lib/plugins/movie/PluginMovieAllocine.py:185
-#: ../lib/plugins/movie/PluginMovieAllocine.py:186
-#: ../lib/plugins/movie/PluginMovieAllocine.py:187
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:92
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:189
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:190
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:191
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:192
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:193
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:194
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:195
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:196
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:197
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:198
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:199
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:200
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:201
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:202
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:203
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:204
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:205
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:206
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:207
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:208
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:209
-#: ../lib/plugins/movie/PluginMovieCinematografo.py:210
+#: ../lib/plugins/movie/PluginMovieAllocine.py:97
+#: ../lib/plugins/movie/PluginMovieAllocine.py:218
+#: ../lib/plugins/movie/PluginMovieAllocine.py:219
+#: ../lib/plugins/movie/PluginMovieAllocine.py:220
+#: ../lib/plugins/movie/PluginMovieAllocine.py:221
+#: ../lib/plugins/movie/PluginMovieAllocine.py:222
+#: ../lib/plugins/movie/PluginMovieAllocine.py:223
+#: ../lib/plugins/movie/PluginMovieAllocine.py:224
+#: ../lib/plugins/movie/PluginMovieAllocine.py:225
+#: ../lib/plugins/movie/PluginMovieAllocine.py:247
+#: ../lib/plugins/movie/PluginMovieAllocine.py:248
+#: ../lib/plugins/movie/PluginMovieAllocine.py:249
+#: ../lib/plugins/movie/PluginMovieAllocine.py:250
+#: ../lib/plugins/movie/PluginMovieAllocine.py:251
+#: ../lib/plugins/movie/PluginMovieAllocine.py:252
+#: ../lib/plugins/movie/PluginMovieAllocine.py:253
+#: ../lib/plugins/movie/PluginMovieAllocine.py:254
+#: ../lib/plugins/movie/PluginMovieAllocine.py:255
+#: ../lib/plugins/movie/PluginMovieAllocine.py:256
+#: ../lib/plugins/movie/PluginMovieAllocine.py:257
+#: ../lib/plugins/movie/PluginMovieAllocine.py:258
+#: ../lib/plugins/movie/PluginMovieAllocine.py:259
+#: ../lib/plugins/movie/PluginMovieAllocine.py:260
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:99
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:247
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:248
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:249
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:250
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:251
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:252
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:253
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:254
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:255
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:256
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:257
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:258
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:259
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:260
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:261
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:262
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:263
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:264
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:265
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:266
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:267
+#: ../lib/plugins/movie/PluginMovieCinematografo.py:268
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:79
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:80
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:161
@@ -1435,17 +1449,17 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:259
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:260
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:261
-#: ../lib/plugins/export/PluginExportAMC.py:116
-#: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV2.py:201
-#: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV3.py:183
-#: ../lib/plugins/export/PluginExportGCstar.py:149
-#: ../lib/plugins/imp/AllMyMovies.py:132 ../lib/plugins/imp/AllMyMovies.py:138
-#: ../lib/plugins/imp/DVDProfiler.py:228 ../lib/plugins/imp/DVDProfiler.py:230
-#: ../lib/plugins/imp/DVDProfiler.py:249 ../lib/plugins/imp/DVDProfiler.py:251
-#: ../lib/plugins/imp/eXtremeMovieManager.py:170
-#: ../lib/plugins/imp/FoxMovieManager.py:108 ../lib/plugins/imp/GCstar.py:149
-#: ../lib/plugins/imp/TheMovieLibrary.py:147
-#: ../lib/plugins/imp/WintoolzFilmdatenbank.py:135
+#: ../lib/plugins/export/PluginExportAMC.py:115
+#: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV2.py:200
+#: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV3.py:182
+#: ../lib/plugins/export/PluginExportGCstar.py:148
+#: ../lib/plugins/imp/AllMyMovies.py:133 ../lib/plugins/imp/AllMyMovies.py:139
+#: ../lib/plugins/imp/DVDProfiler.py:229 ../lib/plugins/imp/DVDProfiler.py:231
+#: ../lib/plugins/imp/DVDProfiler.py:250 ../lib/plugins/imp/DVDProfiler.py:252
+#: ../lib/plugins/imp/eXtremeMovieManager.py:171
+#: ../lib/plugins/imp/FoxMovieManager.py:109 ../lib/plugins/imp/GCstar.py:150
+#: ../lib/plugins/imp/TheMovieLibrary.py:148
+#: ../lib/plugins/imp/WintoolzFilmdatenbank.py:136
 msgid " as "
 msgstr " ως "
 
@@ -1453,10 +1467,10 @@ msgstr " ως "
 msgid "International"
 msgstr ""
 
-#: ../lib/plugins/movie/PluginMovieAmazon.py:59
-#: ../lib/plugins/movie/PluginMovieAmazon.py:253
+#: ../lib/plugins/movie/PluginMovieAmazon.py:60
+#: ../lib/plugins/movie/PluginMovieAmazon.py:255
 msgid ""
-"Please configure you Amazon Access Key ID and Secret Key correctly in the "
+"Please configure your Amazon Access Key ID and Secret Key correctly in the "
 "preferences dialog."
 msgstr ""
 
@@ -1472,15 +1486,15 @@ msgid "Audio"
 msgstr ""
 
 #: ../lib/plugins/export/__init__.py:136
-#: ../lib/plugins/export/PluginExportCSV.py:72
+#: ../lib/plugins/export/PluginExportCSV.py:78
 #: ../lib/plugins/export/PluginExportXML.py:115
 #, python-format
 msgid "%s file has been created."
 msgstr "Δημιουργήθηκε το %s αρχείο."
 
 #: ../lib/plugins/export/__init__.py:145 ../lib/plugins/export/__init__.py:148
-#: ../lib/plugins/export/PluginExportCSV.py:47
 #: ../lib/plugins/export/PluginExportCSV.py:50
+#: ../lib/plugins/export/PluginExportCSV.py:53
 #: ../lib/plugins/export/PluginExportiPod.py:100
 #: ../lib/plugins/export/PluginExportXML.py:47
 #: ../lib/plugins/export/PluginExportXML.py:50
@@ -1488,23 +1502,23 @@ msgstr "Δημιουργήθηκε το %s αρχείο."
 msgid "Export a %s document"
 msgstr "Εξαγωγή του %s εγγράφου"
 
-#: ../lib/plugins/export/PluginExportAMC.py:31
+#: ../lib/plugins/export/PluginExportAMC.py:30
 msgid "Full Ant Movie Catalog database xml export plugin"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportCSV.py:33
+#: ../lib/plugins/export/PluginExportCSV.py:34
 msgid "Full CSV list export plugin"
 msgstr "Πρόσθετο πλήρους εξωγής λίστας ως αρχείο CSV"
 
-#: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV2.py:30
+#: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV2.py:29
 msgid "Full DVD Profiler XML Export V2 plugin"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV3.py:30
+#: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV3.py:29
 msgid "Full DVD Profiler XML Export V3 plugin"
 msgstr ""
 
-#: ../lib/plugins/export/PluginExportGCstar.py:31
+#: ../lib/plugins/export/PluginExportGCstar.py:30
 msgid "Full GCstar database export plugin"
 msgstr ""
 
@@ -1634,84 +1648,35 @@ msgstr "Σελίδα %d"
 msgid "Full XML list export plugin"
 msgstr "Plugin πλήρης εξαγωγής λίστας XML"
 
-#: ../lib/plugins/imp/AllMyMovies.py:37
-#, fuzzy
-msgid "All My Movies 5.7"
-msgstr "Όλες οι Ταινίες"
-
-#: ../lib/plugins/imp/AllMyMovies.py:59 ../lib/plugins/imp/AMC.py:120
-#: ../lib/plugins/imp/BESTheMovieLibrary.py:59
-#: ../lib/plugins/imp/DVDProfiler.py:56
-#: ../lib/plugins/imp/eXtremeMovieManager.py:56
-#: ../lib/plugins/imp/FoxMovieManager.py:59 ../lib/plugins/imp/GCstar.py:57
-#: ../lib/plugins/imp/MovieTrack.py:55 ../lib/plugins/imp/MyDVDs.py:59
-#: ../lib/plugins/imp/PersonalVideoDatabase.py:56
-#: ../lib/plugins/imp/TheMovieLibrary.py:59
-#: ../lib/plugins/imp/WintoolzFilmdatenbank.py:58
+#: ../lib/plugins/imp/AllMyMovies.py:60 ../lib/plugins/imp/AMC.py:121
+#: ../lib/plugins/imp/BESTheMovieLibrary.py:60
+#: ../lib/plugins/imp/DVDProfiler.py:57
+#: ../lib/plugins/imp/eXtremeMovieManager.py:57
+#: ../lib/plugins/imp/FoxMovieManager.py:60 ../lib/plugins/imp/GCstar.py:58
+#: ../lib/plugins/imp/MovieTrack.py:56 ../lib/plugins/imp/MyDVDs.py:60
+#: ../lib/plugins/imp/PersonalVideoDatabase.py:57
+#: ../lib/plugins/imp/TheMovieLibrary.py:60
+#: ../lib/plugins/imp/WintoolzFilmdatenbank.py:59
 msgid "The format of the file is not supported."
 msgstr ""
 
-#: ../lib/plugins/imp/AMC.py:94
-msgid "Ant Movie Catalog (version 3.5)"
-msgstr ""
-
-#: ../lib/plugins/imp/BESTheMovieLibrary.py:37
-msgid "Barrett Enterprise Software The Movie Library 1.9.x"
-msgstr ""
-
-#: ../lib/plugins/imp/CSV.py:42
+#: ../lib/plugins/imp/CSV.py:45
 msgid "Full CSV list import plugin"
 msgstr "Plugin πλήρης εισαγωγής CSV λίστας"
 
-#: ../lib/plugins/imp/CSV.py:191
+#: ../lib/plugins/imp/CSV.py:195
 msgid "Please assign at least one field first!"
 msgstr "Παρακαλώ, ορίσατε πρώτα τουλάχιστον ενα πεδίο!"
 
-#: ../lib/plugins/imp/CSV.py:309
+#: ../lib/plugins/imp/CSV.py:311
 #, python-format
 msgid "Can't open the file %s"
 msgstr "Δεν είναι δυνάτο το άνοιγμα του αρχείου %s"
 
-#: ../lib/plugins/imp/DVDProfiler.py:33
-msgid "DVD Profiler (version 3.x)"
-msgstr ""
-
-#: ../lib/plugins/imp/eXtremeMovieManager.py:33
-msgid "eXtreme Movie Manager (version 6.x / 7.x)"
-msgstr ""
-
-#: ../lib/plugins/imp/FoxMovieManager.py:37
-msgid "Fox Movie Manager 1.4"
-msgstr ""
-
-#: ../lib/plugins/imp/GCstar.py:34
-msgid "GCstar (version 1.4.x)"
-msgstr ""
-
-#: ../lib/plugins/imp/__init__.py:361
+#: ../lib/plugins/imp/__init__.py:402
 #, python-format
 msgid "%s file has been imported. %s movies added."
 msgstr "Εσαγωγή του αρχείου %s. Προσθήκη %s ταινιών."
-
-#: ../lib/plugins/imp/MovieTrack.py:33
-msgid "MovieTrack (version 3.4x)"
-msgstr ""
-
-#: ../lib/plugins/imp/MyDVDs.py:37
-msgid "MyDVDs 1.6x"
-msgstr ""
-
-#: ../lib/plugins/imp/PersonalVideoDatabase.py:33
-msgid "Personal Video Database (version 0.9.9.x)"
-msgstr ""
-
-#: ../lib/plugins/imp/TheMovieLibrary.py:37
-msgid "WenSoftware The Movie Library 1.4.x"
-msgstr ""
-
-#: ../lib/plugins/imp/WintoolzFilmdatenbank.py:36
-msgid "wintoolz Filmdatenbank (version 1.0.0.x)"
-msgstr ""
 
 #: ../glade/exporthtml.glade.h:1
 msgid "<b>Example</b>"
@@ -2694,6 +2659,10 @@ msgstr "Πρόσθετη λειτουργία"
 #: ../glade/import.glade.h:9
 msgid "Source"
 msgstr "Προέλευση"
+
+#, fuzzy
+#~ msgid "All My Movies 5.7"
+#~ msgstr "Όλες οι Ταινίες"
 
 #~ msgid "No posters found for this movie."
 #~ msgstr "Δεν βρέθηκαν αφίσες γι'αυτή την ταινία."
