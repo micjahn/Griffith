@@ -38,6 +38,7 @@ import amazon
 
 log = logging.getLogger('Griffith')
 
+
 class GriffithExtension(Base):
     name = 'Amazon'
     description = _('Fetch from Amazon')
@@ -68,7 +69,7 @@ class GriffithExtension(Base):
         secretkey = self.get_config_value('secretkey')
 
         if not accesskey or not secretkey:
-            gutils.error(self.app, _('Please configure you Amazon Access Key ID and Secret Key correctly in the preferences dialog.'))
+            gutils.error(self.app, _('Please configure your Amazon Access Key ID and Secret Key correctly in the preferences dialog.'))
             return False
 
         if movie is None:
@@ -181,7 +182,7 @@ class GriffithExtension(Base):
             try:
                 os.remove(file_to_copy)
             except:
-                log.error("no permission for %s"%file_to_copy)
+                log.error("no permission for %s" % file_to_copy)
 
         if not canceled:
             if os.path.isfile(file_to_copy):
@@ -189,9 +190,9 @@ class GriffithExtension(Base):
                 try:
                     im = Image.open(file_to_copy)
                 except IOError:
-                    log.warn("failed to identify %s"%file_to_copy)
+                    log.warn("failed to identify %s" % file_to_copy)
 
-                if im and im.size == (1,1):
+                if im and im.size == (1, 1):
                     url = FancyURLopener().open("http://www.amazon.com/gp/product/images/%s" % item.ASIN).read()
                     if url.find('no-img-sm._V47056216_.gif') > 0:
                         log.warn('No image available')
@@ -220,7 +221,7 @@ class GriffithExtension(Base):
                 handler = self.widgets['big_poster'].set_from_file(file_to_copy)
 
                 self.widgets['poster_window'].show()
-                self.widgets['poster_window'].move(0,0)
+                self.widgets['poster_window'].move(0, 0)
                 if gutils.question(_("Do you want to use this poster instead?"), self.widgets['window']):
                     return file_to_copy
                 else:
