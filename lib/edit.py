@@ -48,22 +48,29 @@ def change_poster(self):
         update_image(self, number, filename)
 
 def update_image(self, number, filename):
+    imagedata = file(filename, 'rb').read()
+    update_image_from_memory(number, imagedata)
+
+def update_image_from_memory(self, number, data):
     session = self.db.Session()
     try:
+        loader = gtk.gdk.PixbufLoader()
+        loader.write(data, len(data))
+        loader.close()
         self.widgets['movie']['picture'].set_from_pixbuf(\
-                gtk.gdk.pixbuf_new_from_file(filename).scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
+                loader.get_pixbuf().scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
     except Exception, e:
         log.error(str(e))
         gutils.error(self, _("Image is not valid."), self.widgets['window'])
         return False
 
-    poster_md5 = gutils.md5sum(file(filename, 'rb'))
+    poster_md5 = gutils.md5sum(data)
 
     movie = session.query(db.Movie).filter_by(number=number).one()
     old_poster_md5 = movie.poster_md5
 
     if session.query(db.Poster).filter_by(md5sum=poster_md5).count() == 0:
-        poster = db.Poster(md5sum=poster_md5, data=file(filename, 'rb').read())
+        poster = db.Poster(md5sum=poster_md5, data=data)
         session.add(poster)
 
     # update the md5 *after* all other queries (so that UPDATE will not be invoked)
