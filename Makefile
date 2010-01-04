@@ -9,7 +9,7 @@ LANGUAGES=$(shell find i18n/ -maxdepth 1 -mindepth 1 -type d -not -name \.svn -p
 VERSION=$(shell grep "^pversion" lib/version.py | cut -d \"  -f 2)
 TEMPLATES= $(shell cd export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^\.svn]*" -print)
 
-.PHONY: help clean freshmeat gnomefiles install
+.PHONY: help clean install
 
 INSTALL ?= install
 MAKE ?= make
@@ -47,7 +47,7 @@ help:
 	@echo "make help	- prints this help"
 	@echo "make dist	- makes a distribution tarball"
 	@echo
-	
+
 
 install:
 	@echo
@@ -91,7 +91,7 @@ install:
 	ln -s $(LIBDIR)/griffith $(BINDIR)/griffith
 	chmod +x $(BINDIR)/griffith
 	$(MAKE) -C docs install
-	
+
 uninstall:
 	@echo
 	@echo "uninstalling Griffith"
@@ -115,16 +115,10 @@ uninstall:
 	${RM} -r $(BINDIR)/griffith
 	${RM} -r $(BASHCOMPDIR)/griffith
 	$(MAKE) -C docs uninstall
-	
+
 clean:
 	${FIND} . \( -iname '*\.py[co]' -or -iname '*~' -or -iname '*\.bak' \) -exec ${RM} '{}' \;
-	
-freshmeat:
-	firefox http://freshmeat.net/add-release/54772/ &
 
-gnomefiles:
-	firefox http://www.gnomefiles.org/devs/newversion.php?soft_id=965 &
-	
 dist: clean
 	@tar --exclude=*.svn* --exclude=*.tar* --exclude=debian -cf griffith.tar ./
 	@mkdir $(PACKAGE)-$(VERSION)
@@ -133,5 +127,3 @@ dist: clean
 	@tar -czf $(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)-$(VERSION) && echo File ./$(PACKAGE)-$(VERSION).tar.gz generated successfully
 	@${RM} -r $(PACKAGE)-$(VERSION)
 
-lint:
-	pylint --enable-basic=n --indent-string='\t' griffith lib/*.py

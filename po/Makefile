@@ -43,5 +43,6 @@ clean:
 	$(RM) $(GLADEHFILES)
 	$(RM) $(POFILES:%.po=../i18n/%/LC_MESSAGES/griffith.mo)
 	$(RM) messages.pot
+	$(RM) *~
 
 .PHONY: update dist
