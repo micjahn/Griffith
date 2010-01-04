@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright © 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright © 2005-2010 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,6 +24,6 @@ __revision__ = '$Id$'
 pname = 'Griffith'
 pversion = '0.11'
 pauthor = 'Vasco Nunes, Piotr Ożarowski <griffith-private@lists.berlios.de>'
-pyear = '2005-2009'
+pyear = '2005-2010'
 pwebsite = 'http://www.griffith.cc/'
 pdescription = _('Griffith is a film collection manager.')

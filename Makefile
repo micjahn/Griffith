@@ -6,7 +6,7 @@
 
 PACKAGE=griffith
 LANGUAGES=$(shell find i18n/ -maxdepth 1 -mindepth 1 -type d -not -name \.svn -printf "%f ")
-VERSION=$(shell grep "^pversion" lib/version.py | cut -d \"  -f 2)
+VERSION=$(shell grep "^pversion" lib/version.py | cut -d \'  -f 2)
 TEMPLATES= $(shell cd export_templates >/dev/null; $(FIND) . -maxdepth 1 -mindepth 1 -type d -name "[^\.svn]*" -print)
 
 .PHONY: help clean install
