@@ -276,6 +276,9 @@ def popup_message(message):
                 window = gtk.Window()
                 window.set_title('Griffith info')
                 window.set_position(gtk.WIN_POS_CENTER)
+                window.set_keep_above(True)
+                window.stick()
+                window.set_default_size(200, 50)
                 label = gtk.Label()
                 label.set_markup("""<big><b>Griffith:</b>
 %s</big>""" % message)
@@ -624,11 +627,14 @@ def md5sum(fobj):
     except ImportError:
         import md5
         m = md5.new()
-    while True:
-        d = fobj.read(8096)
-        if not d:
-            break
-        m.update(d)
+    if hasattr(fobj, 'read'):
+        while True:
+            d = fobj.read(8096)
+            if not d:
+                break
+            m.update(d)
+    else:
+        m.update(fobj)
     return unicode(m.hexdigest())
 
 def create_image_cache(md5sum, gsql):
