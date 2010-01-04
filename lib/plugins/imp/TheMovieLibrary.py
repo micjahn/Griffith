@@ -35,7 +35,7 @@ log = logging.getLogger("Griffith")
 
 
 class ImportPlugin(IP):
-    description  = _('WenSoftware The Movie Library 1.4.x')
+    description  = 'WenSoftware The Movie Library (v1.4.x)'
     author       = 'Michael Jahn'
     email        = 'griffith-private@lists.berlios.de'
     version      = '1.0'

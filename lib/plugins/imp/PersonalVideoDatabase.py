@@ -31,7 +31,7 @@ log = logging.getLogger("Griffith")
 
 
 class ImportPlugin(IP):
-    description  = _('Personal Video Database (version 0.9.9.x)')
+    description  = 'Personal Video Database (v0.9.9.x)'
     author       = 'Michael Jahn'
     email        = 'griffith-private@lists.berlios.de'
     version      = '1.0'

@@ -31,7 +31,7 @@ log = logging.getLogger("Griffith")
 
 
 class ImportPlugin(IP):
-    description  = _('DVD Profiler (version 3.x)')
+    description  = 'DVD Profiler (v3.x)'
     author       = 'Michael Jahn'
     email        = 'griffith-private@lists.berlios.de'
     version      = '1.0'

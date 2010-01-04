@@ -31,7 +31,7 @@ log = logging.getLogger("Griffith")
 
 
 class ImportPlugin(IP):
-    description  = _('MovieTrack (version 3.4x)')
+    description  = 'MovieTrack (v3.4x)'
     author       = 'Michael Jahn'
     email        = 'griffith-private@lists.berlios.de'
     version      = '1.0'

@@ -92,7 +92,7 @@ log = logging.getLogger("Griffith")
 
 
 class ImportPlugin(IP):
-    description  = _('Ant Movie Catalog (version 3.5)')
+    description  = 'Ant Movie Catalog (v3.5)'
     author       = 'Michael Jahn'
     email        = 'griffith-private@lists.berlios.de'
     version      = '1.1'

@@ -31,7 +31,7 @@ log = logging.getLogger("Griffith")
 
 
 class ImportPlugin(IP):
-    description  = _('eXtreme Movie Manager (version 6.x / 7.x)')
+    description  = 'eXtreme Movie Manager (v6.x / 7.x)'
     author       = 'Michael Jahn'
     email        = 'griffith-private@lists.berlios.de'
     version      = '1.0'
