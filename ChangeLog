@@ -2,8 +2,11 @@
 
 Griffith ChangeLog
 ------------------
-(c) 2005-2009  Vasco Nunes, Piotr Ożarowski
+(c) 2005-2010  Vasco Nunes, Piotr Ożarowski
 
+
+2010-01-04  Piotr Ożarowski
+	* Add Croatian translation (thanks to Davor I and nafterburner)
 
 2010-01-04  Michael Jahn
 	* add MoviePosterDB extension (supports fetching posters)
