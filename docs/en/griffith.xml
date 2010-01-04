@@ -81,7 +81,7 @@
 					<option>--sqlecho</option>
 				</term>
 				<listitem>
-					<para>Prints all SQL queries to standart output.</para> 
+					<para>Prints all SQL queries to standard output.</para> 
 				</listitem>
 			</varlistentry>
 			<varlistentry>
