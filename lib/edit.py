@@ -49,7 +49,7 @@ def change_poster(self):
 
 def update_image(self, number, filename):
     imagedata = file(filename, 'rb').read()
-    update_image_from_memory(number, imagedata)
+    update_image_from_memory(self, number, imagedata)
 
 def update_image_from_memory(self, number, data):
     session = self.db.Session()
