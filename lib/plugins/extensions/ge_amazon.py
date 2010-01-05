@@ -46,6 +46,7 @@ class GriffithExtension(Base):
     email = 'piotr@griffith.cc'
     version = 1
     api = 1
+    enabled = False
 
     preferences = {'locale': {'name': _('Select source'),
                               'default': u'US',
