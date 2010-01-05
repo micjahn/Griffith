@@ -1210,7 +1210,13 @@ You can't undo this operation."""), self.widgets['window']):
             elif treeview_column == self.rating_column:
                 columnorder = columnorder + delimiter + 'rating'
                 delimiter = ','
-        self.config.set('columnorder',  columnorder,  section='mainlist')
+        self.config.set('columnorder', columnorder, section='mainlist')
+        columnsorting = self.treemodel.get_sort_column_id()
+        self.config.set('columnsortid', columnsorting[0], section='mainlist')
+        if columnsorting[1] == None:
+            self.config.set('columnsortorder', 0, section='mainlist')
+        else:
+            self.config.set('columnsortorder', int(columnsorting[1]), section='mainlist')
         self.config.save()
 
     def restore_state(self):

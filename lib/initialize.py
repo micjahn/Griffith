@@ -167,7 +167,7 @@ def toolbar(self):
 
 
 def treeview(self):
-    self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str)
+    self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str, int)
     self.widgets['treeview'].set_model(self.treemodel)
     self.widgets['treeview'].set_headers_visible(True)
     # number column
@@ -281,6 +281,19 @@ def treeview(self):
             elif col == 'rating':
                 self.widgets['treeview'].move_column_after(self.rating_column, currentcol)
                 currentcol = self.rating_column
+    # reflect saved column sorting
+    columnsortid = self.config.get('columnsortid', None, section='mainlist')
+    columnsortorder = self.config.get('columnsortorder', None, section='mainlist')
+    try:
+        if columnsortid:
+            columnsortid = int(columnsortid)
+            if columnsortorder:
+                columnsortorder = gtk.SortType(int(columnsortorder))
+            else:
+                columnsortorder = gtk.SORT_ASCENDING
+            self.treemodel.set_sort_column_id(columnsortid, columnsortorder)
+    except:
+        log.exception('')
     # add data to treeview
     self.total = self.db.session.query(db.Movie).count()
     self.widgets['treeview'].show()

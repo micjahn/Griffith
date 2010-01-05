@@ -34,6 +34,7 @@ import sql
 
 log = logging.getLogger("Griffith")
 
+
 def treeview_clicked(self):
     if self.initialized is False:
         return False
@@ -43,7 +44,7 @@ def treeview_clicked(self):
         if tmp_iter is None:
             log.info('Treeview: no selection')
             return False
-        number = tmp_model.get_value(tmp_iter,0)
+        number = tmp_model.get_value(tmp_iter, 0)
         movie = self.db.session.query(db.Movie).filter_by(number=number).first()
         if movie is None:
             log.info("Treeview: movie doesn't exists (number=%s)", number)
@@ -60,6 +61,7 @@ def treeview_clicked(self):
         set_details(self, movie)
     else:
         set_details(self, {})
+
 
 def set_details(self, item=None):#{{{
     if item is None:
@@ -130,7 +132,7 @@ def set_details(self, item=None):#{{{
     else:
         w['genre'].set_text('')
     if 'cond' in item and item['cond']:
-        if str(item['cond']) in [ str(i) for i in range(len(self._conditions)) ]:
+        if str(item['cond']) in [str(i) for i in range(len(self._conditions))]:
             w['condition'].set_markup("<i>%s</i>" % self._conditions[item['cond']])
         else:
             w['condition'].set_text('')
@@ -138,7 +140,7 @@ def set_details(self, item=None):#{{{
     else:
         w['condition'].set_text('')
     if 'region' in item and item['region']:
-        if str(item['region']) in [ str(i) for i in range(len(self._regions)) ]:
+        if str(item['region']) in [str(i) for i in range(len(self._regions))]:
             w['region'].set_markup("<i>%s</i>" % gutils.html_encode(item['region']))
             if int(item['region']) < 9:
                 self.widgets['tooltips'].set_tip(w['region'], self._regions[int(item['region'])])
@@ -150,7 +152,7 @@ def set_details(self, item=None):#{{{
         w['region'].set_text('')
         self.widgets['tooltips'].set_tip(w['region'], self._regions[0]) # N/A
     if 'layers' in item and item['layers']:
-        if str(item['layers']) in [ str(i) for i in range(len(self._layers)) ]:
+        if str(item['layers']) in [str(i) for i in range(len(self._layers))]:
             w['layers'].set_markup("<i>%s</i>" % self._layers[item['layers']])
         else:
             log.info("Wrong value in 'layers' field (movie_id=%s, layers=%s)" % (item['movie_id'], item['layers']))
@@ -158,7 +160,7 @@ def set_details(self, item=None):#{{{
     else:
         w['layers'].set_text('')
     if 'color' in item and item['color']:
-        if str(item['color']) in [ str(i) for i in range(len(self._colors)) ]:
+        if str(item['color']) in [str(i) for i in range(len(self._colors))]:
             w['color'].set_markup("<i>%s</i>" % self._colors[item['color']])
         else:
             log.info("Wrong value in 'color' field (movie_id=%s, color=%s)" % (item['movie_id'], item['color']))
@@ -264,7 +266,7 @@ def set_details(self, item=None):#{{{
         w['loan_button'].set_sensitive(False)
         w['email_reminder_button'].set_sensitive(True)
         w['return_button'].set_sensitive(True)
-        
+
         if getattr(item, 'loan_details', None) is None:
             log.warning("movie has no loan data, changing 'loaned' flag to False (movie_id: %s)", item['movie_id'])
             item.loaned = False
@@ -286,12 +288,12 @@ def set_details(self, item=None):#{{{
         w['loan_button'].set_sensitive(True)
         w['loan_info'].set_markup("<b>%s</b>" % _("Movie not loaned"))
 
-    # loan history    
+    # loan history
     self.loans_treemodel.clear()
     if getattr(item, 'loan_history', None) is not None:
         for loan in item.loan_history:
             myiter = self.loans_treemodel.append(None)
-            self.loans_treemodel.set_value(myiter, 0,'%s' % str(loan.date)[:10])
+            self.loans_treemodel.set_value(myiter, 0, '%s' % str(loan.date)[:10])
             if loan.return_date and  loan.return_date != '':
                 self.loans_treemodel.set_value(myiter, 1, str(loan.return_date)[:10])
             else:
@@ -300,7 +302,7 @@ def set_details(self, item=None):#{{{
             self.loans_treemodel.set_value(myiter, 2, person.name)
 
     # volumes/collections
-    if 'volume_id' in item and item['volume_id']>0:
+    if 'volume_id' in item and item['volume_id'] > 0:
         if 'volume' in item and item['volume']:
             w['volume'].set_markup("<b>%s</b>" % gutils.html_encode(item['volume'].name))
             w['show_volume_button'].set_sensitive(True)
@@ -310,7 +312,7 @@ def set_details(self, item=None):#{{{
     else:
             w['volume'].set_text('')
             w['show_volume_button'].set_sensitive(False)
-    if 'collection_id' in item and item['collection_id']>0:
+    if 'collection_id' in item and item['collection_id'] > 0:
         if 'collection' in item and item['collection']:
             w['collection'].set_markup("<b>%s</b>" % gutils.html_encode(item['collection'].name))
             w['show_collection_button'].set_sensitive(True)
@@ -326,7 +328,7 @@ def set_details(self, item=None):#{{{
         i.destroy()
     for i in w['subtitle_vbox'].get_children():
         i.destroy()
-    if 'languages' in item and len(item['languages'])>0:
+    if 'languages' in item and len(item['languages']) > 0:
         for i in item['languages']:
             if i.type == 3: # subtitles
                 if i.subformat:
@@ -336,17 +338,17 @@ def set_details(self, item=None):#{{{
                 w['subtitle_vbox'].pack_start(gtk.Label(tmp))
             else:
                 language = i.language.name
-                if i.type is not None and len(self._lang_types[i.type])>0:
+                if i.type is not None and len(self._lang_types[i.type]) > 0:
                     language += " <i>%s</i>" % self._lang_types[i.type]
                 tmp = ''
                 if i.achannel:
                     tmp = i.achannel.name
                 if i.acodec:
-                    if len(tmp)>0:
+                    if len(tmp) > 0:
                         tmp += ", %s" % i.acodec.name
                     else:
                         tmp = i.acodec.name
-                if len(tmp)>0:
+                if len(tmp) > 0:
                     tmp = "%s (%s)" % (language, tmp)
                 else:
                     tmp = language
@@ -363,15 +365,16 @@ def set_details(self, item=None):#{{{
         tmp = tmp[:-2] # cut last comma
         w['tags'].set_text(tmp)
     #}}}
-    
+
+
 def populate(self, movies=None, where=None, qf=True):#{{{
     if self.initialized is False: # dont try to fill movie list if Griffith is not initialized yet
         return False
-    
+
     if qf and not movies or isinstance(movies, Select): # if ".execute().fetchall()" not invoked on movies yet
         if not where: # due to possible 'seen', 'loaned', 'collection_id' in where
             import advfilter
-            
+
             # saved in advfilter
             name = self.widgets['filter']['advfilter'].get_active_text()[:-3].decode('utf-8') # :-3 due to additional '   ' in the name
             if name:
@@ -414,12 +417,12 @@ def populate(self, movies=None, where=None, qf=True):#{{{
             else:
                 cond['sort_by'] = set((sort_column_name, ))
             movies = sql.update_whereclause(movies, cond)
-        
+
         # additional whereclause (volume_id, collection_id, ...)
         if where:
             for i in where:
                 if i in db.Movie:
-                    movies.append_whereclause(db.Movie[i]==where[i])
+                    movies.append_whereclause(db.Movie[i] == where[i])
         movies = movies.execute().fetchall()
 
     self.total = len(movies)
@@ -474,11 +477,11 @@ def populate(self, movies=None, where=None, qf=True):#{{{
         self.rating_column.set_visible(True)
     else:
         self.rating_column.set_visible(False)
-        
+
     for movie in movies:
         myiter = self.treemodel.append(None)
-        
-        self.treemodel.set_value(myiter,0,'%004d' % int(movie.number))
+
+        self.treemodel.set_value(myiter, 0, '%004d' % int(movie.number))
 
         if self.config.get('image', True, section='mainlist') == True:
             filename = None
@@ -490,22 +493,22 @@ def populate(self, movies=None, where=None, qf=True):#{{{
             self.Image.set_from_file(filename)
             pixbuf = self.Image.get_pixbuf()
             self.treemodel.set_value(myiter, 1, pixbuf)
-        self.treemodel.set_value(myiter,2,movie.o_title)
-        self.treemodel.set_value(myiter,3,movie.title)
-        self.treemodel.set_value(myiter,4,movie.director)
-        self.treemodel.set_value(myiter,5,movie.genre)
-        self.treemodel.set_value(myiter,6,movie.seen)
+        self.treemodel.set_value(myiter, 2, movie.o_title)
+        self.treemodel.set_value(myiter, 3, movie.title)
+        self.treemodel.set_value(myiter, 4, movie.director)
+        self.treemodel.set_value(myiter, 5, movie.genre)
+        self.treemodel.set_value(myiter, 6, movie.seen)
         if movie.year is not None and (isinstance(movie.year, int) or isinstance(movie.year, long)):
-            self.treemodel.set_value(myiter,7,movie.year)
+            self.treemodel.set_value(myiter, 7, movie.year)
         if movie.runtime is not None and (isinstance(movie.runtime, int) or isinstance(movie.runtime, long)):
-            self.treemodel.set_value(myiter,8, '%003d' % movie.runtime + _(' min'))
+            self.treemodel.set_value(myiter, 8, '%003d' % movie.runtime + _(' min'))
         if movie.rating is not None and (isinstance(movie.rating, int) or isinstance(movie.rating, long)):
-            self.treemodel.set_value(myiter,9,movie.rating)
+            self.treemodel.set_value(myiter, 9, movie.rating)
 
     # restore user sort column
     if sort_column_id is not None:
-        self.treemodel.set_sort_column_id(sort_column_id, gtk.SORT_ASCENDING)
-    
+        self.treemodel.set_sort_column_id(sort_column_id, order)
+
     # add new treemodel and allow refreshs again
     self.widgets['treeview'].set_model(self.treemodel)
     self.widgets['treeview'].thaw_child_notify()
