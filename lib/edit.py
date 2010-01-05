@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright © 2005-2010 Vasco Nunes, Piotr Ożarowski
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import logging
-import os
 
 import gtk
 
@@ -32,6 +31,7 @@ import gutils
 
 log = logging.getLogger("Griffith")
 
+
 def change_poster(self):
     """
     changes movie poster image to a custom one
@@ -40,16 +40,26 @@ def change_poster(self):
     picture = self.widgets['movie']['picture']
     number = self.get_maintree_selection()[0]
     if number is None:
-        gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
+        gutils.error(self, _("You have no movies in your database"), self.widgets['window'])
         return False
-    filename = gutils.file_chooser(_("Select image"), action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK), name="", folder=self.locations['desktop'], picture=True)
+    filename = gutils.file_chooser(_("Select image"),
+                                   action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                                   buttons=(gtk.STOCK_CANCEL,
+                                            gtk.RESPONSE_CANCEL,
+                                            gtk.STOCK_OPEN,
+                                            gtk.RESPONSE_OK),
+                                   name='',
+                                   folder=self.locations['desktop'],
+                                   picture=True)
     if filename and filename[0]:
         filename = filename[0].decode('UTF-8')
         update_image(self, number, filename)
 
+
 def update_image(self, number, filename):
     imagedata = file(filename, 'rb').read()
     update_image_from_memory(self, number, imagedata)
+
 
 def update_image_from_memory(self, number, data):
     session = self.db.Session()
@@ -67,6 +77,10 @@ def update_image_from_memory(self, number, data):
     poster_md5 = gutils.md5sum(data)
 
     movie = session.query(db.Movie).filter_by(number=number).one()
+    if poster_md5 == movie.poster_md5:
+        log.debug('same MD5 sum, no need to update poster')
+        return False
+
     old_poster_md5 = movie.poster_md5
 
     if session.query(db.Poster).filter_by(md5sum=poster_md5).count() == 0:
@@ -75,9 +89,6 @@ def update_image_from_memory(self, number, data):
 
     # update the md5 *after* all other queries (so that UPDATE will not be invoked)
     movie.poster_md5 = poster_md5
-    
-    if old_poster_md5:
-        delete.delete_poster(self, old_poster_md5)
 
     session.add(movie)
     try:
@@ -87,6 +98,9 @@ def update_image_from_memory(self, number, data):
         log.error("cannot add poster to database: %s" % e)
         return False
 
+    if old_poster_md5:
+        delete.delete_poster(self, old_poster_md5)
+
     filename = gutils.get_image_fname(poster_md5, self.db, 's')
     if filename:
         update_tree_thumbnail(self, filename)
@@ -95,6 +109,7 @@ def update_image_from_memory(self, number, data):
     self.widgets['add']['delete_poster'].set_sensitive(True)
 
     self.update_statusbar(_("Image has been updated"))
+
 
 def delete_poster(self):
     session = self.db.Session()
@@ -107,7 +122,7 @@ def delete_poster(self):
         handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
         gutils.garbage(handler)
         update_tree_thumbnail(self, gutils.get_defaultthumbnail_fname(self))
-        
+
         # update in database
         delete.delete_poster(self, movie.poster_md5)
         movie.poster_md5 = None
@@ -126,6 +141,7 @@ def delete_poster(self):
     else:
         pass
 
+
 def update_tree_thumbnail(self, t_image_path):
     treeselection = self.widgets['treeview'].get_selection()
     (tmp_model, tmp_iter) = treeselection.get_selected()
@@ -134,4 +150,3 @@ def update_tree_thumbnail(self, t_image_path):
     # tmp_iter can be None while importing data
     if tmp_iter:
         self.treemodel.set_value(tmp_iter, 1, pixbuf)
-

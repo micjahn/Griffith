@@ -21,22 +21,25 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import string
+import gzip
+import htmlentitydefs
+import logging
 import os
+import re
+import string
 import sys
+import webbrowser
+from StringIO import StringIO
 try:
     import gtk
     import db
 except:
     gtk = None
     pass
-import htmlentitydefs
-import re
-import webbrowser
-import logging
 log = logging.getLogger("Griffith")
 
 ENTITY = re.compile(r'\&.\w*?\;')
+
 
 def remove_accents(txt, encoding='iso-8859-1'):
     d = {192: u'A', 193: u'A', 194: u'A', 195: u'A', 196: u'A', 197: u'A',
@@ -51,8 +54,10 @@ def remove_accents(txt, encoding='iso-8859-1'):
          255: u'y'}
     return unicode(txt, encoding).translate(d)
 
+
 def is_number(x):
     return isinstance(x, int)
+
 
 def find_next_available(gsql):
     """
@@ -77,18 +82,20 @@ def find_next_available(gsql):
         number = first + 1
         return number
 
+
 def trim(text, key1, key2):
     p1 = string.find(text, key1)
     if p1 == -1:
         return ''
     else:
-        p1 = p1+len(key1)
+        p1 = p1 + len(key1)
     p2 = string.find(text[p1:], key2)
     if p2 == -1:
         return ""
     else:
-        p2 = p1+p2
+        p2 = p1 + p2
     return text[p1:p2]
+
 
 def regextrim(text, key1, key2):
     obj = re.search(key1, text)
@@ -103,18 +110,22 @@ def regextrim(text, key1, key2):
         p2 = p1 + obj.start()
     return text[p1:p2]
 
+
 def after(text, key):
-    p1 = string.find(text,key)
-    return text[p1+len(key):]
+    p1 = string.find(text, key)
+    return text[p1 + len(key):]
+
 
 def before(text, key):
-    p1 = string.find(text,key)
+    p1 = string.find(text, key)
     return text[:p1]
 
+
 def gescape(text):
-    text=string.replace(text,"'", "''")
-    text=string.replace(text,"--", "-")
+    text = string.replace(text, "'", "''")
+    text = string.replace(text, "--", "-")
     return text
+
 
 def progress(blocks, size_block, size):
     transfered = blocks * size_block
@@ -125,6 +136,7 @@ def progress(blocks, size_block, size):
     print transfered, '/', size, 'bytes'
 
 # functions to handle comboboxentry stuff
+
 
 def set_model_from_list(cb, items):
     """Setup a ComboBox or ComboBoxEntry based on a list of strings."""
@@ -139,6 +151,7 @@ def set_model_from_list(cb, items):
         cb.pack_start(cell, True)
         cb.add_attribute(cell, 'text', 0)
 
+
 def on_combo_box_entry_changed(widget):
     model = widget.get_model()
     m_iter = widget.get_active_iter()
@@ -150,10 +163,13 @@ def on_combo_box_entry_changed(widget):
     else:
         return 0
 
+
 def on_combo_box_entry_changed_name(widget):
     return widget.get_active_text()
 
+
 def convert_entities(text):
+
     def conv(ents):
         entities = htmlentitydefs.entitydefs
         ents = ents.group(0)
@@ -187,6 +203,7 @@ def convert_entities(text):
         ctext = in_entity.re.sub(conv, text)
         return ctext
 
+
 def strip_tags(text):
     if text is None:
         return ''
@@ -200,13 +217,15 @@ def strip_tags(text):
             stop = text[start:].find(">")
             if stop >= 0:
                 # if it does, strip it, and continue loop
-                text = text[:start] + text[start+stop+1:]
+                text = text[:start] + text[start + stop + 1:]
                 finished = 0
     return text
 
+
 def save_pixmap(self, pixmap, filename):
     """XXX: deprecated"""
-    pixmap.save(filename, "jpeg", {"quality":"70"})
+    pixmap.save(filename, 'jpeg', {'quality': '70'})
+
 
 def clean(text):
     t = strip_tags(text)
@@ -214,6 +233,7 @@ def clean(text):
     t = string.replace(t, '&#34;', '')
     t = string.replace(t, '&#160;', ' ')
     return string.strip(t)
+
 
 def gdecode(txt, encode):
     try:
@@ -223,6 +243,7 @@ def gdecode(txt, encode):
 
 # Messages
 
+
 def error(self, msg, parent=None):
     dialog = gtk.MessageDialog(parent,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -230,6 +251,7 @@ def error(self, msg, parent=None):
     dialog.set_skip_taskbar_hint(False)
     dialog.run()
     dialog.destroy()
+
 
 def urllib_error(msg, parent=None):
     dialog = gtk.MessageDialog(parent,
@@ -239,6 +261,7 @@ def urllib_error(msg, parent=None):
     dialog.run()
     dialog.destroy()
 
+
 def warning(msg, parent=None):
     dialog = gtk.MessageDialog(parent,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -247,6 +270,7 @@ def warning(msg, parent=None):
     dialog.run()
     dialog.destroy()
 
+
 def info(msg, parent=None):
     dialog = gtk.MessageDialog(parent,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -254,6 +278,7 @@ def info(msg, parent=None):
     dialog.set_skip_taskbar_hint(False)
     dialog.run()
     dialog.destroy()
+
 
 def question(msg, window=None):
     dialog = gtk.MessageDialog(window,
@@ -267,10 +292,12 @@ def question(msg, window=None):
     dialog.destroy()
     return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
 
+
 def popup_message(message):
     """shows popup message while executing decorated function"""
 
     def wrap(f):
+
         def wrapped_f(*args, **kwargs):
             if gtk:
                 window = gtk.Window()
@@ -298,6 +325,7 @@ def popup_message(message):
             return res
         return wrapped_f
     return wrap
+
 
 def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expanduser('~'), picture=False, backup=False):
     dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
@@ -344,6 +372,7 @@ def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expan
     dialog.destroy()
     return filename, path
 
+
 def update_preview_cb(file_chooser, preview):
     filename = file_chooser.get_preview_filename()
     try:
@@ -355,24 +384,30 @@ def update_preview_cb(file_chooser, preview):
     file_chooser.set_preview_widget_active(have_preview)
     return
 
+
 def run_browser(url):
     webbrowser.register('open', webbrowser.GenericBrowser("open '%s'"))
     webbrowser._tryorder.append('open')
     webbrowser.open(url)
 
+
 def read_plugins(prefix, directory):
     """returns available plugins"""
 
     import glob
-    return glob.glob("%s/%s*.py" % (directory,prefix) )
+    return glob.glob("%s/%s*.py" % (directory, prefix))
+
 
 def findKey(val, dict):
     for key, value in dict.items():
-        if value == val: return key
+        if value == val:
+            return key
     return None
+
 
 def garbage(handler):
     pass
+
 
 def clean_posters_dir(self):
     posters_dir = self.locations['posters']
@@ -387,20 +422,20 @@ def clean_posters_dir(self):
             else:
                 poster_md5 = md5sum(file(filepath, 'rb'))
                 # lets check if this poster is orphan
-                used = self.db.session.query(db.Poster).filter(db.Poster.md5sum==poster_md5).count()
+                used = self.db.session.query(db.Poster).filter(db.Poster.md5sum == poster_md5).count()
                 if not used:
                     counter += 1
                     os.unlink(filepath)
 
     if counter:
-        print "%d orphan files cleaned." %counter
+        print "%d orphan files cleaned." % counter
     else:
         print "No orphan files found."
 
+
 def decompress(data):
-    import gzip, StringIO
     try:
-        compressedStream = StringIO.StringIO(data)
+        compressedStream = StringIO(data)
         gzipper = gzip.GzipFile(fileobj=compressedStream)
         data = gzipper.read()
     except Exception, e:
@@ -408,19 +443,19 @@ def decompress(data):
         pass
     return data
 
+
 def get_dependencies():
     depend = []
 
     # Python version
     if sys.version_info[:2] < (2, 5):
         depend.append({'module': 'python',
-            'version'    : '-'+'.'.join(map(str,sys.version_info)),
-            'module_req' : '2.5',
-            'url'        : 'http://www.python.org/',
-            'debian'     : 'python',
-            'debian_req' : '2.5'
+            'version': '-' + '.'.join(map(str, sys.version_info)),
+            'module_req': '2.5',
+            'url': 'http://www.python.org/',
+            'debian': 'python',
+            'debian_req': '2.5'})
             # TODO: 'fedora', 'suse', etc.
-        })
 
     try:
         import gtk
@@ -430,13 +465,12 @@ def get_dependencies():
     except:
         version = False
     depend.append({'module': 'gtk',
-        'version'    : version,
-        'module_req' : '2.6',
-        'url'        : 'http://www.pygtk.org/',
-        'debian'     : 'python-gtk2',
-        'debian_req' : '2.8.6-1'
+        'version': version,
+        'module_req': '2.6',
+        'url': 'http://www.pygtk.org/',
+        'debian': 'python-gtk2',
+        'debian_req': '2.8.6-1'})
         # TODO: 'fedora', 'suse', etc.
-    })
 
     try:
         import gtk.glade
@@ -444,12 +478,11 @@ def get_dependencies():
     except:
         version = False
     depend.append({'module': 'gtk.glade',
-        'version'    : version,
-        'module_req' : '2.6',
-        'url'        : 'http://www.pygtk.org/',
-        'debian'     : 'python-glade2',
-        'debian_req' : '2.8.6-1'
-    })
+        'version': version,
+        'module_req': '2.6',
+        'url': 'http://www.pygtk.org/',
+        'debian': 'python-glade2',
+        'debian_req': '2.8.6-1'})
     try:
         import sqlalchemy
         if map(int, sqlalchemy.__version__.split('.')[:2]) < [0, 5]:
@@ -459,12 +492,11 @@ def get_dependencies():
     except:
         version = False
     depend.append({'module': 'sqlalchemy',
-        'version'    : version,
-        'module_req' : '0.5rc3',
-        'url'        : 'http://www.sqlalchemy.org/',
-        'debian'     : 'python-sqlalchemy',
-        'debian_req' : '0.5~rc3'
-    })
+        'version': version,
+        'module_req': '0.5rc3',
+        'url': 'http://www.sqlalchemy.org/',
+        'debian': 'python-sqlalchemy',
+        'debian_req': '0.5~rc3'})
     try:
         import sqlite3
         version = sqlite3.version
@@ -477,40 +509,36 @@ def get_dependencies():
         except:
             version = False
         depend.append({'module': 'pysqlite2',
-            'version'    : version,
-            'url'        : 'http://initd.org/tracker/pysqlite',
-            'debian'     : 'python-pysqlite2',
-            'debian_req' : '2.3.0-1'
-        })
+            'version': version,
+            'url': 'http://initd.org/tracker/pysqlite',
+            'debian': 'python-pysqlite2',
+            'debian_req': '2.3.0-1'})
     else:
         depend.append({'module': 'sqlite3',
-            'version'    : version,
-            'url'        : 'http://www.python.org',
-            'debian'     : 'python',
-            'debian_req' : '2.5'
-        })
+            'version': version,
+            'url': 'http://www.python.org',
+            'debian': 'python',
+            'debian_req': '2.5'})
     try:
         import reportlab
         version = reportlab.Version
     except:
         version = False
     depend.append({'module': 'reportlab',
-        'version'    : version,
-        'url'        : 'http://www.reportlab.org/',
-        'debian'     : 'python-reportlab',
-        'debian_req' : '1.20debian-6'
-    })
+        'version': version,
+        'url': 'http://www.reportlab.org/',
+        'debian': 'python-reportlab',
+        'debian_req': '1.20debian-6'})
     try:
         import PIL
         version = True
     except:
         version = False
     depend.append({'module': 'PIL',
-        'version'    : version,
-        'url'        : 'http://www.pythonware.com/products/pil/',
-        'debian'     : 'python-imaging',
-        'debian_req' : '1.1.5-6'
-    })
+        'version': version,
+        'url': 'http://www.pythonware.com/products/pil/',
+        'debian': 'python-imaging',
+        'debian_req': '1.1.5-6'})
     # extra dependencies:
     optional = []
     try:
@@ -519,43 +547,40 @@ def get_dependencies():
     except:
         version = False
     optional.append({'module': 'psycopg2',
-        'version'    : version,
-        'url'        : 'http://initd.org/tracker/psycopg/wiki/PsycopgTwo',
-        'debian'     : 'python-psycopg2',
-        'debian_req' : '1.1.21-6'
-    })
+        'version': version,
+        'url': 'http://initd.org/tracker/psycopg/wiki/PsycopgTwo',
+        'debian': 'python-psycopg2',
+        'debian_req': '1.1.21-6'})
     try:
         import MySQLdb
-        version    = '.'.join([str(i) for i in MySQLdb.version_info])
+        version = '.'.join([str(i) for i in MySQLdb.version_info])
     except:
         version = False
     optional.append({'module': 'MySQLdb',
-        'version'    : version,
-        'url'        : 'http://sourceforge.net/projects/mysql-python',
-        'debian'     : 'python-mysqldb',
-        'debian_req' : '1.2.1-p2-2'
-    })
+        'version': version,
+        'url': 'http://sourceforge.net/projects/mysql-python',
+        'debian': 'python-mysqldb',
+        'debian_req': '1.2.1-p2-2'})
     try:
         import chardet
-        version    = chardet.__version__
+        version = chardet.__version__
     except:
         version = False
     optional.append({'module': 'chardet',
-        'version' : version,
-        'url'     : 'http://chardet.feedparser.org/',
-        'debian'  : 'python-chardet'
-    })
+        'version': version,
+        'url': 'http://chardet.feedparser.org/',
+        'debian': 'python-chardet'})
     try:
         import sqlite
-        version    = sqlite.version
+        version = sqlite.version
     except:
         version = False
     optional.append({'module': 'sqlite',
-        'version' : version,
-        'url'     : 'http://initd.org/tracker/pysqlite',
-        'debian'  : 'python-sqlite'
-    })
+        'version': version,
+        'url': 'http://initd.org/tracker/pysqlite',
+        'debian': 'python-sqlite'})
     return depend, optional
+
 
 def html_encode(s):
     if not isinstance(s, basestring):
@@ -566,10 +591,10 @@ def html_encode(s):
     s = s.replace('"', '&quot;')
     return s
 
+
 def digits_only(s, maximum=None):
     if s is None:
         return 0
-    import string, re
     match = re.compile(r"\d+")
     a = match.findall(str(s))
     if len(a):
@@ -583,6 +608,7 @@ def digits_only(s, maximum=None):
             return maximum
         else:
             return s
+
 
 def copytree(src, dst, symlinks=False):
     """Recursively copy a directory tree using copy2().
@@ -612,12 +638,14 @@ def copytree(src, dst, symlinks=False):
         except EnvironmentError, err:
             errors.extend(err.args[0])
     if errors:
-        raise EnvironmentError, errors
+        raise EnvironmentError(errors)
+
 
 def is_windows_system():
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         return True
     return False
+
 
 def md5sum(fobj):
     """Returns an md5 hash for an object with read() method."""
@@ -637,40 +665,43 @@ def md5sum(fobj):
         m.update(fobj)
     return unicode(m.hexdigest())
 
+
 def create_image_cache(md5sum, gsql):
-    poster = gsql.session.query(db.Poster).filter_by(md5sum=md5sum).first()
+    session = gsql.Session()
+    poster = session.query(db.Poster).filter_by(md5sum=md5sum).first()
     if not poster:
         log.warn("poster not available: %s", md5sum)
         return False
     if not poster.data:
         log.warn("poster data not available: %s", md5sum)
         return False
-    
-    fn_big    = os.path.join(gsql.data_dir, 'posters', md5sum+'.jpg')
-    fn_medium = os.path.join(gsql.data_dir, 'posters', md5sum+'_m.jpg')
-    fn_small  = os.path.join(gsql.data_dir, 'posters', md5sum+'_s.jpg')
+
+    fn_big = os.path.join(gsql.data_dir, 'posters', md5sum + '.jpg')
+    fn_medium = os.path.join(gsql.data_dir, 'posters', md5sum + '_m.jpg')
+    fn_small = os.path.join(gsql.data_dir, 'posters', md5sum + '_s.jpg')
 
     if not os.path.isfile(fn_big):
         f = file(fn_big, 'wb')
         f.write(poster.data)
         f.close()
-    
+
     image = gtk.Image()
     image.set_from_file(fn_big)
 
     if not os.path.isfile(fn_medium):
         pixbuf = image.get_pixbuf()
         pixbuf = pixbuf.scale_simple(100, 140, 'bilinear')
-        pixbuf.save(fn_medium, "jpeg", {"quality":"70"})
-    
+        pixbuf.save(fn_medium, 'jpeg', {'quality': '70'})
+
     if not os.path.isfile(fn_small):
         pixbuf = image.get_pixbuf()
         pixbuf = pixbuf.scale_simple(30, 40, 'bilinear')
-        pixbuf.save(fn_small, "jpeg", {"quality":"70"})
+        pixbuf.save(fn_small, 'jpeg', {'quality': '70'})
 
     return True
 
-def create_imagefile(destdir, md5sum, gsql, destfilename = None):
+
+def create_imagefile(destdir, md5sum, gsql, destfilename=None):
     poster = gsql.session.query(db.Poster).filter_by(md5sum=md5sum).first()
     if not poster:
         log.warn("poster not available: %s", md5sum)
@@ -678,7 +709,7 @@ def create_imagefile(destdir, md5sum, gsql, destfilename = None):
     if not poster.data:
         log.warn("poster data not available: %s", md5sum)
         return False
-    
+
     if destfilename:
         fulldestpath = os.path.join(destdir, destfilename + '.jpg')
     else:
@@ -692,6 +723,7 @@ def create_imagefile(destdir, md5sum, gsql, destfilename = None):
 
     return True
 
+
 def get_image_fname(md5sum, gsql, size=None):
     """size: s - small; m - medium, b or None - big"""
     if size not in (None, 's', 'm', 'b'):
@@ -699,18 +731,22 @@ def get_image_fname(md5sum, gsql, size=None):
     if not md5sum:
         raise TypeError("md5sum not set")
 
-    if not size or size=='b': size=''
-    else: size = "_%s" % size
+    if not size or size == 'b':
+        size = ''
+    else:
+        size = "_%s" % size
 
-    file_name = os.path.join(gsql.data_dir, 'posters', md5sum+size+'.jpg')
+    file_name = os.path.join(gsql.data_dir, 'posters', md5sum + size + '.jpg')
 
     if not os.path.isfile(file_name) and not create_image_cache(md5sum, gsql):
         log.warn("Can't create image file %s for md5sum %s" % (file_name, md5sum))
         return False
     return file_name
 
+
 def get_defaultimage_fname(self):
     return os.path.join(self.locations['images'], 'default.png')
+
 
 def get_defaultthumbnail_fname(self):
     return os.path.join(self.locations['images'], 'default_thumbnail.png')
