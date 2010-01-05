@@ -33,6 +33,7 @@ log = logging.getLogger('Griffith')
 # minimum and maximum supported extension API
 COMPAT = (1, 1)
 
+
 class GriffithExtensionBase(object):
     """Griffith Extension
 
@@ -86,7 +87,7 @@ class GriffithExtensionBase(object):
 
     def _on_toolbar_icon_clicked(self, button_widget):
         session = self.db.Session()
-        movie = session.query(db.Movie).filter(db.Movie.movie_id==self.app._movie_id).first()
+        movie = session.query(db.Movie).filter(db.Movie.movie_id == self.app._movie_id).first()
         if not movie:
             log.error('No movie selected')
         else:
@@ -96,15 +97,15 @@ class GriffithExtensionBase(object):
 
     def __init__(self, griffith):
         """Initializes extension"""
-   
+
     def clear(self): # __del__ cannot be used here (signal reference issue)
         """Invoked when extension is about to be disabled"""
         if self.toolbar_icon_widget:
-            print self.toolbar_icon_widget.destroy()
+            self.toolbar_icon_widget.destroy()
 
     def maintree_clicked(self, selection, movie):
         """Invoked every time new movie is selected"""
-    
+
     def toolbar_icon_clicked(self, widget, movie):
         """Invoked when toolbar icon is clicked"""
 
@@ -113,7 +114,9 @@ class GriffithExtensionBase(object):
         return conditions
 
 
-by_name = {} # extension modules by name 
+by_name = {} # extension modules by name
+
+
 def scan_for_extensions(path):
     """Adds new extensions from given path"""
 
@@ -140,4 +143,3 @@ def scan_for_extensions(path):
             del sys.path[-1]
 
 scan_for_extensions(os.path.dirname(__file__)) # user's directory will be added later (in app)
-
