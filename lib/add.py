@@ -37,6 +37,7 @@ log = logging.getLogger("Griffith")
 
 ### widgets ###################################################
 
+
 def clear(self):
     """clears all fields in dialog"""
     set_details(self, {})
@@ -45,7 +46,7 @@ def clear(self):
 
 def add_movie(self, details={}):
     set_details(self, details)
-    
+
     self.active_plugin = ''
     self.widgets['add']['add_button'].show()
     self.widgets['add']['add_close_button'].show()
@@ -76,7 +77,7 @@ def update_movie(self):
         movie = session.query(db.Movie).filter_by(movie_id=self._movie_id).one()
     if movie is None: # movie was deleted in the meantime
         return add_movie_db(self, True)
-    
+
     details = get_details(self)
 
     old_poster_md5 = movie.poster_md5
@@ -87,7 +88,7 @@ def update_movie(self):
             log.warn("cannot read temporary file: %s", new_image_path)
         else:
             new_poster_md5 = gutils.md5sum(file(new_image_path, 'rb'))
-            details["poster_md5"] = new_poster_md5
+            details['poster_md5'] = new_poster_md5
             if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
                 try:
                     data = file(new_image_path, 'rb').read()
@@ -104,15 +105,15 @@ def update_movie(self):
                     old_poster = session.query(db.Poster).filter_by(md5sum=old_poster_md5).first()
                     if old_poster and len(old_poster.movies) == 1: # other movies are not using the same poster
                         session.delete(old_poster)
-                        delete.delete_poster_from_cache(self, old_poster_md5)
+                        delete.delete_poster_from_cache(old_poster_md5, self.locations['posters'])
 
     update_movie_instance(movie, details, session)
-    
+
     session.add(movie)
     if commit(session):
         treeselection = self.widgets['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
-        
+
         if new_poster_md5 and new_poster_md5 != old_poster_md5:
             # update thumbnail in main list
             new_image_path = gutils.get_image_fname(new_poster_md5, self.db, 's')
@@ -120,26 +121,26 @@ def update_movie(self):
                 new_image_path = gutils.get_defaultthumbnail_fname(self)
             handler = self.Image.set_from_file(new_image_path)
             pixbuf = self.Image.get_pixbuf()
-            tmp_model.set_value(tmp_iter,1, pixbuf)
+            tmp_model.set_value(tmp_iter, 1, pixbuf)
         # update main treelist
-        tmp_model.set_value(tmp_iter,0,'%004d' % int(movie.number))
-        tmp_model.set_value(tmp_iter,2, movie.o_title)
-        tmp_model.set_value(tmp_iter,3, movie.title)
-        tmp_model.set_value(tmp_iter,4, movie.director)
-        tmp_model.set_value(tmp_iter,5, movie.genre)
-        tmp_model.set_value(tmp_iter,6, movie.seen)
+        tmp_model.set_value(tmp_iter, 0, "%004d" % int(movie.number))
+        tmp_model.set_value(tmp_iter, 2, movie.o_title)
+        tmp_model.set_value(tmp_iter, 3, movie.title)
+        tmp_model.set_value(tmp_iter, 4, movie.director)
+        tmp_model.set_value(tmp_iter, 5, movie.genre)
+        tmp_model.set_value(tmp_iter, 6, movie.seen)
         if movie.year is None:
-            tmp_model.set_value(tmp_iter,7, '')
+            tmp_model.set_value(tmp_iter, 7, '')
         else:
-            tmp_model.set_value(tmp_iter,7, movie.year)
+            tmp_model.set_value(tmp_iter, 7, movie.year)
         if movie.runtime is None:
-            tmp_model.set_value(tmp_iter,8, '')
+            tmp_model.set_value(tmp_iter, 8, '')
         else:
-            tmp_model.set_value(tmp_iter,8, '%003d' % int(movie.runtime) + _(' min'))
+            tmp_model.set_value(tmp_iter, 8, "%003d" % int(movie.runtime) + _(' min'))
         if movie.rating is None:
-            tmp_model.set_value(tmp_iter,9, '')
+            tmp_model.set_value(tmp_iter, 9, '')
         else:
-            tmp_model.set_value(tmp_iter,9, movie.rating)
+            tmp_model.set_value(tmp_iter, 9, movie.rating)
         # close add window
         self.widgets['add']['window'].hide()
         # refresh
@@ -175,7 +176,7 @@ def populate_with_results(self):
         if tmp_iter is None:
             return False
         m_id = tmp_model.get_value(tmp_iter, 0)
-    
+
     self.treemodel_results.clear()
     self.widgets['results']['window'].hide()
 
@@ -184,19 +185,19 @@ def populate_with_results(self):
     self.movie = plugin.Plugin(m_id)
     self.movie.locations = self.locations
     self.movie.config = self.config
-    
+
     fields_to_fetch = ['o_title', 'title', 'director', 'plot', 'cast', 'country', 'genre',
                 'classification', 'studio', 'o_site', 'site', 'trailer', 'year',
                 'notes', 'runtime', 'image', 'rating', 'screenplay', 'cameraman',
                 'resolution', 'barcode']
     # remove fields that user doesn't want to fetch: (see preferences window)
-    fields_to_fetch = [ i for i in fields_to_fetch if self.config.get("s_%s" % i, True, section='add') ]
+    fields_to_fetch = [i for i in fields_to_fetch if self.config.get("s_%s" % i, True, section='add')]
 
     if w['cb_only_empty'].get_active(): # only empty fields
         details = get_details(self)
-        fields_to_fetch = [ i for i in fields_to_fetch if details[i] is None ]
+        fields_to_fetch = [i for i in fields_to_fetch if details[i] is None]
     self.movie.fields_to_fetch = fields_to_fetch
-    
+
     if not self.movie.get_movie(w['window']):
         return None
     self.movie.parse_movie()
@@ -250,16 +251,16 @@ def populate_with_results(self):
 def show_websearch_results(self):
     total = self.founded_results_id = 0
     for g in self.search_movie.ids:
-        if ( str(g) != '' ):
+        if (str(g) != ''):
             total += 1
     if total > 1:
         self.widgets['results']['window'].show()
         self.widgets['results']['window'].set_keep_above(True)
-        row = None    
+        row = None
         key = 0
         self.treemodel_results.clear()
         for row in self.search_movie.ids:
-            if (str(row)!=''):
+            if (str(row) != ''):
                 if isinstance(self.search_movie.titles[key], unicode):
                     title = self.search_movie.titles[key]
                 else:
@@ -267,12 +268,12 @@ def show_websearch_results(self):
                 myiter = self.treemodel_results.insert_before(None, None)
                 self.treemodel_results.set_value(myiter, 0, str(row))
                 self.treemodel_results.set_value(myiter, 1, title)
-            key +=1
+            key += 1
         self.widgets['results']['treeview'].show()
-    elif total==1:
+    elif total == 1:
         self.widgets['results']['treeview'].set_cursor(total-1)
         for row in self.search_movie.ids:
-            if ( str(row) != '' ):
+            if (str(row) != ''):
                 self.founded_results_id = str(row)
                 populate_with_results(self)
     else:
@@ -328,9 +329,9 @@ def source_changed(self):
     self.active_plugin = option
     plugin_name = 'PluginMovie' + option
     plugin = __import__(plugin_name)
-    self.widgets['add']['plugin_desc'].set_text(plugin.plugin_name+"\n" \
-        +plugin.plugin_description+"\n"+_("Url: ") \
-        +plugin.plugin_url+"\n"+_("Language: ")+plugin.plugin_language)
+    self.widgets['add']['plugin_desc'].set_text(plugin.plugin_name + "\n" \
+        + plugin.plugin_description + "\n" + _('Url: ') \
+        + plugin.plugin_url + "\n" + _('Language: ') + plugin.plugin_language)
     image = os.path.join(self.locations['images'], plugin_name + ".png")
     # if movie plugin logo exists lets use it
     if os.path.exists(image):
@@ -339,43 +340,43 @@ def source_changed(self):
 
 def get_details(self): #{{{
     w = self.widgets['add']
-    
-    cast_buffer  = w['cast'].get_buffer()
+
+    cast_buffer = w['cast'].get_buffer()
     notes_buffer = w['notes'].get_buffer()
-    plot_buffer  = w['plot'].get_buffer()
-    
+    plot_buffer = w['plot'].get_buffer()
+
     t_movies = {
-        'cameraman'      : w['cameraman'].get_text().decode('utf-8'),
-        'classification' : w['classification'].get_text().decode('utf-8'),
-        'barcode'        : unicode(gutils.digits_only(w['barcode'].get_text().decode('utf-8'))),
-        'color'          : w['color'].get_active(),
-        'cond'           : w['condition'].get_active(),
-        'country'        : w['country'].get_text().decode('utf-8'),
-        'director'       : w['director'].get_text().decode('utf-8'),
-        'genre'          : w['genre'].get_text().decode('utf-8'),
-        'image'          : w['image'].get_text().decode('utf-8'),
-        'layers'         : w['layers'].get_active(),
-        'media_num'      : w['discs'].get_value(),
-        'number'         : w['number'].get_value(),
-        'o_site'         : w['o_site'].get_text().decode('utf-8'),
-        'o_title'        : w['o_title'].get_text().decode('utf-8'),
-        'rating'         : w['rating_slider'].get_value(),
-        'region'         : w['region'].get_active(),
-        'resolution'     : w['resolution'].get_text().strip().decode('utf-8'),
-        'runtime'        : w['runtime'].get_text().decode('utf-8'),
-        'screenplay'     : w['screenplay'].get_text().decode('utf-8'),
-        'site'           : w['site'].get_text().decode('utf-8'),
-        'studio'         : w['studio'].get_text().decode('utf-8'),
-        'title'          : w['title'].get_text().decode('utf-8'),
-        'trailer'        : w['trailer'].get_text().decode('utf-8'),
-        'year'           : w['year'].get_value(),
-        'collection_id'  : w['collection'].get_active(),
-        'medium_id'      : w['media'].get_active(),
-        'volume_id'      : w['volume'].get_active(),
-        'vcodec_id'      : w['vcodec'].get_active(),
-        'cast'           : cast_buffer.get_text(cast_buffer.get_start_iter(),cast_buffer.get_end_iter()).decode('utf-8'),
-        'notes'          : notes_buffer.get_text(notes_buffer.get_start_iter(),notes_buffer.get_end_iter()).decode('utf-8'),
-        'plot'           : plot_buffer.get_text(plot_buffer.get_start_iter(),plot_buffer.get_end_iter()).decode('utf-8'),
+        'cameraman': w['cameraman'].get_text().decode('utf-8'),
+        'classification': w['classification'].get_text().decode('utf-8'),
+        'barcode': unicode(gutils.digits_only(w['barcode'].get_text().decode('utf-8'))),
+        'color': w['color'].get_active(),
+        'cond': w['condition'].get_active(),
+        'country': w['country'].get_text().decode('utf-8'),
+        'director': w['director'].get_text().decode('utf-8'),
+        'genre': w['genre'].get_text().decode('utf-8'),
+        'image': w['image'].get_text().decode('utf-8'),
+        'layers': w['layers'].get_active(),
+        'media_num': w['discs'].get_value(),
+        'number': w['number'].get_value(),
+        'o_site': w['o_site'].get_text().decode('utf-8'),
+        'o_title': w['o_title'].get_text().decode('utf-8'),
+        'rating': w['rating_slider'].get_value(),
+        'region': w['region'].get_active(),
+        'resolution': w['resolution'].get_text().strip().decode('utf-8'),
+        'runtime': w['runtime'].get_text().decode('utf-8'),
+        'screenplay': w['screenplay'].get_text().decode('utf-8'),
+        'site': w['site'].get_text().decode('utf-8'),
+        'studio': w['studio'].get_text().decode('utf-8'),
+        'title': w['title'].get_text().decode('utf-8'),
+        'trailer': w['trailer'].get_text().decode('utf-8'),
+        'year': w['year'].get_value(),
+        'collection_id': w['collection'].get_active(),
+        'medium_id': w['media'].get_active(),
+        'volume_id': w['volume'].get_active(),
+        'vcodec_id': w['vcodec'].get_active(),
+        'cast': cast_buffer.get_text(cast_buffer.get_start_iter(), cast_buffer.get_end_iter()).decode('utf-8'),
+        'notes': notes_buffer.get_text(notes_buffer.get_start_iter(), notes_buffer.get_end_iter()).decode('utf-8'),
+        'plot': plot_buffer.get_text(plot_buffer.get_start_iter(), plot_buffer.get_end_iter()).decode('utf-8'),
     }
     if self._am_movie_id is not None:
         t_movies['movie_id'] = self._am_movie_id
@@ -398,7 +399,7 @@ def get_details(self): #{{{
         t_movies['vcodec_id'] = None
     if t_movies['barcode'] == '0':
         t_movies['barcode'] = None
-    
+
     if w['seen'].get_active():
         t_movies['seen'] = True
     else:
@@ -414,10 +415,10 @@ def get_details(self): #{{{
     # languages
     t_movies['languages'] = set()
     for row in self.lang['model']:
-        lang_id   = get_id(self.lang['lang'], row[0])
+        lang_id = get_id(self.lang['lang'], row[0])
         lang_type = get_id(self.lang['type'], row[1])
-        acodec    = get_id(self.lang['acodec'], row[2])
-        achannel  = get_id(self.lang['achannel'], row[3])
+        acodec = get_id(self.lang['acodec'], row[2])
+        achannel = get_id(self.lang['achannel'], row[3])
         subformat = get_id(self.lang['subformat'], row[4])
         t_movies['languages'].add((lang_id, lang_type, acodec, achannel, subformat))
 
@@ -426,7 +427,7 @@ def get_details(self): #{{{
     for i in self.tags_ids:
         if self.am_tags[i].get_active() == True:
             t_movies['tags'][self.tags_ids[i]] = 1
-    
+
     validate_details(t_movies)
 
     return t_movies    #}}}
@@ -441,9 +442,9 @@ def set_details(self, item=None):#{{{
         self._am_movie_id = None
     w = self.widgets['add']
 
-    cast_buffer  = w['cast'].get_buffer()
+    cast_buffer = w['cast'].get_buffer()
     notes_buffer = w['notes'].get_buffer()
-    plot_buffer  = w['plot'].get_buffer()
+    plot_buffer = w['plot'].get_buffer()
 
     if 'o_title' in item and item['o_title']:
         w['o_title'].set_text(item['o_title'])
@@ -460,7 +461,7 @@ def set_details(self, item=None):#{{{
     if 'title' in item and item['title']:
         w['title'].set_text(item['title'])
     if 'year' in item and item['year']:
-        w['year'].set_value( gutils.digits_only(item['year'], 2100))
+        w['year'].set_value(gutils.digits_only(item['year'], 2100))
     else:
         w['year'].set_value(0)
     if 'resolution' in item and item['resolution']:
@@ -473,7 +474,7 @@ def set_details(self, item=None):#{{{
     else:
         w['resolution'].set_text('')
     if 'runtime' in item and item['runtime']:
-        w['runtime'].set_value( gutils.digits_only(item['runtime']))
+        w['runtime'].set_value(gutils.digits_only(item['runtime']))
     else:
         w['runtime'].set_value(0)
     if 'barcode' in item and item['barcode']:
@@ -521,27 +522,27 @@ def set_details(self, item=None):#{{{
     else:
         w['genre'].set_text('')
     if 'color' in item and item['color']:
-        w['color'].set_active( gutils.digits_only(item['color'], 3))
+        w['color'].set_active(gutils.digits_only(item['color'], 3))
     else:
-        w['color'].set_active( gutils.digits_only(self.config.get('color', 0, section='defaults'), 3))
+        w['color'].set_active(gutils.digits_only(self.config.get('color', 0, section='defaults'), 3))
     if 'layers' in item and item['layers']:
-        w['layers'].set_active( gutils.digits_only(item['layers'], 4))
+        w['layers'].set_active(gutils.digits_only(item['layers'], 4))
     else:
-        w['layers'].set_active( gutils.digits_only(self.config.get('layers', 0, section='defaults'), 4))
-    if 'region' in item and item['region']>=0:
-            w['region'].set_active( gutils.digits_only(item['region'], 8))
+        w['layers'].set_active(gutils.digits_only(self.config.get('layers', 0, section='defaults'), 4))
+    if 'region' in item and item['region'] >= 0:
+            w['region'].set_active(gutils.digits_only(item['region'], 8))
     else:
-        w['region'].set_active( gutils.digits_only(self.config.get('region', 0, section='defaults'), 8))
-    if 'cond' in item and item['cond']>=0:
-        w['condition'].set_active( gutils.digits_only( item['cond'], 5) )
+        w['region'].set_active(gutils.digits_only(self.config.get('region', 0, section='defaults'), 8))
+    if 'cond' in item and item['cond'] >= 0:
+        w['condition'].set_active(gutils.digits_only(item['cond'], 5))
     else:
-        w['condition'].set_active( gutils.digits_only( self.config.get('condition', 0, section='defaults'), 5))
+        w['condition'].set_active(gutils.digits_only(self.config.get('condition', 0, section='defaults'), 5))
     if 'media_num' in item and item['media_num']:
-        w['discs'].set_value( gutils.digits_only(item['media_num']))
+        w['discs'].set_value(gutils.digits_only(item['media_num']))
     else:
         w['discs'].set_value(1)
     if 'rating' in item and item['rating']:
-        w['rating_slider'].set_value( gutils.digits_only(item['rating'], 10) )
+        w['rating_slider'].set_value(gutils.digits_only(item['rating'], 10))
     else:
         w['rating_slider'].set_value(0)
     if 'seen' in item and item['seen'] is True:
@@ -601,19 +602,22 @@ def set_details(self, item=None):#{{{
             self.am_tags[i].set_active(True)
     # languages
     w['lang_treeview'].get_model().clear()
-    if 'languages' in item and len(item['languages'])>0:
+    if 'languages' in item and len(item['languages']) > 0:
         for i in item['languages']:
             self.create_language_row(i)
     # poster
     if 'poster_md5' in item and item['poster_md5']:
         image_path = gutils.get_image_fname(item["poster_md5"], self.db, 'm')
-        if not image_path: image_path = '' # isfile doesn't like bool
+        if not image_path:
+            image_path = '' # isfile doesn't like bool
         w['image'].set_text(item['poster_md5'])
     elif 'image' in item and item['image']:
-        if len(item["image"])==32: # md5
+        if len(item['image']) == 32: # md5
             image_path = gutils.get_image_fname(item["image"], self.db, 'm')
-            if not image_path: image_path = '' # isfile doesn't like bool
-            else: w['image'].set_text(item['image'])
+            if not image_path:
+                image_path = '' # isfile doesn't like bool
+            else:
+                w['image'].set_text(item['image'])
         else:
             image_path = os.path.join(self.locations['posters'], "m_%s.jpg" % item['image'])
             log.warn("TODO: image=%s", item['image'])
@@ -623,7 +627,7 @@ def set_details(self, item=None):#{{{
     if not os.path.isfile(image_path):
         image_path = gutils.get_defaultimage_fname(self)
     w['picture'].set_from_file(image_path)
-    
+
     w['notebook'].set_current_page(0)
     w['o_title'].grab_focus()
     #}}}
@@ -634,10 +638,10 @@ def validate_details(t_movies, allow_only=None):
         if t_movies[i] == '':
             t_movies[i] = None
     for i in ('color', 'cond', 'layers', 'media', 'vcodec'):
-        if t_movies.has_key(i) and t_movies[i] < 1:
+        if i in t_movies and t_movies[i] < 1:
             t_movies[i] = None
-    for i in ('volume_id','collection_id', 'runtime'):
-        if t_movies.has_key(i) and (t_movies[i] is None or int(t_movies[i]) == 0):
+    for i in ('volume_id', 'collection_id', 'runtime'):
+        if i in t_movies and (t_movies[i] is None or int(t_movies[i]) == 0):
             t_movies[i] = None
     if allow_only is not None:
         # iterate over a copy of keys of the dict because removing elements of a dict
@@ -668,7 +672,7 @@ def add_movie_db(self, close):
         if session.query(db.Movie).filter_by(title=details['title']).count() > 0:
             if not gutils.question(_('Movie with that title already exists, are you sure you want to add?'), self.widgets['add']['window']):
                 return False
-    
+
     if details['image']:
         tmp_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
         if os.path.isfile(tmp_image_path):
@@ -758,54 +762,54 @@ def clone_movie(self):
         return False
 
     next_number = gutils.find_next_available(self.db)
-    
+
     # integer problem workaround
-    if int(movie.seen)==1:
+    if int(movie.seen) == 1:
         seen = True
     else:
         seen = False
     new_movie = db.Movie()
-    
+
     # TODO: WARNING: loan problems (don't copy volume/collection data until resolved)
-    new_movie.cast           = movie.cast
+    new_movie.cast = movie.cast
     new_movie.classification = movie.classification
-    new_movie.vcodec_id      = movie.vcodec_id
-    new_movie.barcode        = movie.barcode
-    new_movie.cameraman      = movie.cameraman
-    new_movie.collection_id  = movie.collection_id
-    new_movie.volume_id      = movie.volume_id
-    new_movie.color          = movie.color
-    new_movie.cond           = movie.cond
-    new_movie.country        = movie.country
-    new_movie.director       = movie.director
-    new_movie.genre          = movie.genre
-    new_movie.site           = movie.site
-    new_movie.loaned         = movie.loaned
-    new_movie.layers         = movie.layers
-    new_movie.medium_id      = movie.medium_id
-    new_movie.number         = next_number
-    new_movie.media_num      = movie.media_num
-    new_movie.notes          = movie.notes
-    new_movie.o_title        = movie.o_title
-    new_movie.plot           = movie.plot
-    new_movie.poster_md5     = movie.poster_md5
-    new_movie.ratio_id       = movie.ratio_id
-    new_movie.rating         = movie.rating
-    new_movie.region         = movie.region
-    new_movie.runtime        = movie.runtime
-    new_movie.resolution     = movie.resolution
-    new_movie.screenplay     = movie.screenplay
-    new_movie.seen           = seen
-    new_movie.o_site         = movie.o_site
-    new_movie.studio         = movie.studio
-    new_movie.title          = movie.title
-    new_movie.trailer        = movie.trailer
-    new_movie.year           = movie.year
-    
-    new_movie.tags           = movie.tags
-    new_movie.languages      = movie.languages
-    new_movie.loans          = movie.loans
-    
+    new_movie.vcodec_id = movie.vcodec_id
+    new_movie.barcode = movie.barcode
+    new_movie.cameraman = movie.cameraman
+    new_movie.collection_id = movie.collection_id
+    new_movie.volume_id = movie.volume_id
+    new_movie.color = movie.color
+    new_movie.cond = movie.cond
+    new_movie.country = movie.country
+    new_movie.director = movie.director
+    new_movie.genre = movie.genre
+    new_movie.site = movie.site
+    new_movie.loaned = movie.loaned
+    new_movie.layers = movie.layers
+    new_movie.medium_id = movie.medium_id
+    new_movie.number = next_number
+    new_movie.media_num = movie.media_num
+    new_movie.notes = movie.notes
+    new_movie.o_title = movie.o_title
+    new_movie.plot = movie.plot
+    new_movie.poster_md5 = movie.poster_md5
+    new_movie.ratio_id = movie.ratio_id
+    new_movie.rating = movie.rating
+    new_movie.region = movie.region
+    new_movie.runtime = movie.runtime
+    new_movie.resolution = movie.resolution
+    new_movie.screenplay = movie.screenplay
+    new_movie.seen = seen
+    new_movie.o_site = movie.o_site
+    new_movie.studio = movie.studio
+    new_movie.title = movie.title
+    new_movie.trailer = movie.trailer
+    new_movie.year = movie.year
+
+    new_movie.tags = movie.tags
+    new_movie.languages = movie.languages
+    new_movie.loans = movie.loans
+
     # save
     session.add(new_movie)
     if not commit(session):
@@ -874,7 +878,7 @@ def commit(session):
 
 def add_medium(self, name):
     session = self.db.Session()
-    medium = db.Medium(name = name)
+    medium = db.Medium(name=name)
     session.add(medium)
     try:
         session.commit()
@@ -888,7 +892,7 @@ def add_medium(self, name):
 
 def add_vcodec(self, name):
     session = self.db.Session()
-    vcodec = db.VCodec(name = name)
+    vcodec = db.VCodec(name=name)
     session.add(vcodec)
     try:
         session.commit()
@@ -902,7 +906,7 @@ def add_vcodec(self, name):
 
 def add_volume(self, name):
     session = self.db.Session()
-    vol = db.Volume(name = name)
+    vol = db.Volume(name=name)
     session.add(vol)
     try:
         session.commit()
@@ -917,7 +921,7 @@ def add_volume(self, name):
 
 def add_collection(self, name):
     session = self.db.Session()
-    col = db.Collection(name = name)
+    col = db.Collection(name=name)
     session.add(col)
     try:
         session.commit()

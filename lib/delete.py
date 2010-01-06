@@ -21,20 +21,22 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
-import os
 import logging
-log = logging.getLogger("Griffith")
-import gutils
+import os
 import db
+import gutils
+
+log = logging.getLogger("Griffith")
+
 
 def delete_movie(self):
     m_id = None
     number, m_iter = self.get_maintree_selection()
     movie = self.db.session.query(db.Movie).filter_by(number=number).first()
     if movie is None:
-        gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
+        gutils.error(self, _("You have no movies in your database"), self.widgets['window'])
         return False
-    
+
     if movie.loaned:
         gutils.warning(msg=_("You can't delete movie while it is loaned."))
         return False
@@ -61,31 +63,36 @@ def delete_movie(self):
     else:
         return False
 
+
 def delete_poster(self, md5sum, commit=False):
-    poster = self.db.session.query(db.Poster).filter_by(md5sum=md5sum).first()
+    log.warning('delete.delete_poster')
+    if commit:
+        session = self.db.Session()
+    else:
+        session = self.db.session
+    poster = session.query(db.Poster).filter_by(md5sum=md5sum).first()
     if poster and len(poster.movies) <= 1: # other movies are not using the same poster
         self.db.session.delete(poster)
         if commit:
             try:
-                self.db.session.commit()
+                session.commit()
             except Exception, e:
                 log.warn("cannot delete poster from db: %s", e)
-                self.db.session.rollback()
+                session.rollback()
                 return False
 
-    delete_poster_from_cache(self, md5sum)
+    delete_poster_from_cache(md5sum, self.locations['posters'])
     return True
 
-def delete_poster_from_cache(self, md5sum):
+
+def delete_poster_from_cache(md5sum, posters_dir):
     if not md5sum:
         log.info('Delete poster: no poster to delete')
         return False
 
-    posters_dir = os.path.join(self.locations['posters'])
-
-    image_full = os.path.join(posters_dir, md5sum+".jpg")
-    image_small = os.path.join(posters_dir, md5sum+"_s.jpg")
-    image_medium = os.path.join(posters_dir, md5sum+"_m.jpg")
+    image_full = os.path.join(posters_dir, md5sum + '.jpg')
+    image_small = os.path.join(posters_dir, md5sum + '_s.jpg')
+    image_medium = os.path.join(posters_dir, md5sum + '_m.jpg')
 
     if os.path.isfile(image_small):
         try:
@@ -102,4 +109,3 @@ def delete_poster_from_cache(self, md5sum):
             os.remove(image_full)
         except:
             log.warning("Can't remove %s file", image_full)
-
