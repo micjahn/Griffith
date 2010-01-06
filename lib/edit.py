@@ -40,7 +40,7 @@ def change_poster(self):
     picture = self.widgets['movie']['picture']
     number = self.get_maintree_selection()[0]
     if number is None:
-        gutils.error(self, _("You have no movies in your database"), self.widgets['window'])
+        gutils.error(_("You have no movies in your database"), self.widgets['window'])
         return False
     filename = gutils.file_chooser(_("Select image"),
                                    action=gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -71,7 +71,7 @@ def update_image_from_memory(self, number, data):
                 loader.get_pixbuf().scale_simple(100, 140, gtk.gdk.INTERP_BILINEAR))
     except Exception, e:
         log.error(str(e))
-        gutils.error(self, _("Image is not valid."), self.widgets['window'])
+        gutils.error(_("Image is not valid."), self.widgets['window'])
         return False
 
     poster_md5 = gutils.md5sum(data)

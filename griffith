@@ -232,7 +232,7 @@ class Griffith(object):
         if movie is not None:
             add.edit_movie(self, movie)
         else:
-            gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
+            gutils.error(_("You have no movies in your database"), self.widgets['window'])
 
     def hide_add_window(self, *args):
         #if self.widgets['add']['b_get_from_web'].is_sensitive() is True: # fetch from amazon is not working
@@ -1018,7 +1018,7 @@ You can't undo this operation."""), self.widgets['window']):
         if movie_number is not None:
             cover_simple(self, movie_number)
         else:
-            gutils.error(self,_("You have no movies in your database"), self.widgets['window'])
+            gutils.error(_("You have no movies in your database"), self.widgets['window'])
 
     def print_cover_image(self, *args):
         self.widgets['print_cover']['ci_size'].set_active(0)

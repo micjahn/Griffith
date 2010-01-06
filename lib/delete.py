@@ -34,7 +34,7 @@ def delete_movie(self):
     number, m_iter = self.get_maintree_selection()
     movie = self.db.session.query(db.Movie).filter_by(number=number).first()
     if movie is None:
-        gutils.error(self, _("You have no movies in your database"), self.widgets['window'])
+        gutils.error(_("You have no movies in your database"), self.widgets['window'])
         return False
 
     if movie.loaned:
@@ -65,7 +65,6 @@ def delete_movie(self):
 
 
 def delete_poster(self, md5sum, commit=False):
-    log.warning('delete.delete_poster')
     if commit:
         session = self.db.Session()
     else:

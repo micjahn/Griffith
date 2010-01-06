@@ -70,11 +70,11 @@ class GriffithExtension(Base):
         secretkey = self.get_config_value('secretkey')
 
         if not accesskey or not secretkey:
-            gutils.error(self.app, _('Please configure your Amazon Access Key ID and Secret Key correctly in the preferences dialog.'))
+            gutils.error(_('Please configure your Amazon Access Key ID and Secret Key correctly in the preferences dialog.'))
             return False
 
         if movie is None:
-            gutils.error(self.app, _('You have no movies in your database'), self.widgets['window'])
+            gutils.error(_('You have no movies in your database'), self.widgets['window'])
             return False
 
         keyword = movie.o_title

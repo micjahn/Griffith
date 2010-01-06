@@ -551,7 +551,7 @@ class ExportPlugin(Base):
             try:
                 os.mkdir(config['exported_dir'])
             except:
-                gutils.error(self,_("Can't create %s!") % config['exported_dir'])
+                gutils.error(_("Can't create %s!") % config['exported_dir'])
                 return 2
             
         data_path = os.path.join(self.locations['share'], 'export_templates', self.templates[tid]['dir'], 'data')
@@ -585,14 +585,14 @@ class ExportPlugin(Base):
                     try:
                         shutil.rmtree(posters_dir)
                     except:
-                        gutils.error(self,_("Can't remove %s!") % config['exported_dir'])
+                        gutils.error(_("Can't remove %s!") % config['exported_dir'])
                         return 3
                 else:
                     return 4
             try:
                 os.mkdir(posters_dir)
             except:
-                gutils.error(self,_("Can't create %s!") % posters_dir)
+                gutils.error(_("Can't create %s!") % posters_dir)
                 return 5
 
         if config['custom_style']:
@@ -635,7 +635,7 @@ class ExportPlugin(Base):
             filename = 'page.tpl'
             tpl_header = file(os.path.join(template_dir,filename), "r").read()
         except:
-            gutils.error(self,_("Can't open %s!")%filename)
+            gutils.error(_("Can't open %s!")%filename)
             return False
 
         tpl_header = self.fill_template(tpl_header, 'header', config['title'])
@@ -689,7 +689,7 @@ class ExportPlugin(Base):
                 try:
                     exported_file = file(filename, 'w')
                 except:
-                    gutils.error(self,_("Can't create %s!")%filename)
+                    gutils.error(_("Can't create %s!")%filename)
                     return False
                 tmp2 = tpl_header + ''
                 exported_file.write(self.fill_template(tmp2, 'page', str(page)))

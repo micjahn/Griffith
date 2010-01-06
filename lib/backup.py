@@ -44,7 +44,7 @@ log = logging.getLogger('Griffith')
 def create(self):
     """perform a compressed griffith database/posters/preferences backup"""
     #if self.db.session.bind.engine.name != 'sqlite':
-    #    gutils.error(self, _("Backup function is available only for SQLite engine for now"), self.widgets['window'])
+    #    gutils.error(_("Backup function is available only for SQLite engine for now"), self.widgets['window'])
     #    return False
 
     default_name = "%s_backup_%s.zip" % (self.config.get('name','griffith', section='database'),\
@@ -68,7 +68,7 @@ def create(self):
                 else:
                     mzip = zipfile.ZipFile(zipfilename, 'w')
             except:
-                gutils.error(self, _("Error creating backup"), self.widgets['window'])
+                gutils.error(_("Error creating backup"), self.widgets['window'])
                 return False
             if self.db.session.bind.engine.name == 'sqlite':
                 mzip.write(os.path.join(self.locations['home'],'griffith.cfg').encode('utf-8'), arcname='griffith.cfg')
@@ -196,7 +196,7 @@ def restore(self, merge=False):
             try:
                 zip_file = zipfile.ZipFile(filename, 'r')
             except:
-                gutils.error(self, _("Can't read backup file"), self.widgets['window'])
+                gutils.error(_("Can't read backup file"), self.widgets['window'])
                 return False
 
             old_config_file = False

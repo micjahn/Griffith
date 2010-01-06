@@ -71,7 +71,7 @@ def add_person_db(self):
             self.p_treemodel.set_value(myiter, 1, p.email)
         self.widgets['people']['window'].present()
     else:
-        gutils.error(self.widgets['results']['window'],_("You should fill the person name"))
+        gutils.error(_("You should fill the person name"))
 
 def edit_person(self):
     try:

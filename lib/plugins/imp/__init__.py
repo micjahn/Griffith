@@ -405,7 +405,7 @@ def on_import_button_clicked(button, self, *args):
                 ip.clear()
         except Exception, e:
             log.exception('')
-            gutils.error(self, str(e), self.widgets['window'])
+            gutils.error(str(e), self.widgets['window'])
         finally:
             ip.destroy()
             self.widgets['import']['pwindow'].hide()

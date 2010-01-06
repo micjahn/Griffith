@@ -35,7 +35,7 @@ def mailto(self, tls, port, server, auth, user, password, sender, to, subject, m
         session = smtplib.SMTP(server, port)
         session.set_debuglevel(1)
     except socket.timeout:
-        gutils.error(self, _("Connection timed out"), \
+        gutils.error(_("Connection timed out"), \
             self.widgets['window'])
         return()
     if tls == True:
@@ -46,7 +46,7 @@ def mailto(self, tls, port, server, auth, user, password, sender, to, subject, m
         try:
             session.login(user, password)
         except:
-            gutils.error(self, _("Error sending e-mail: %s")%_("login failure"), \
+            gutils.error(_("Error sending e-mail: %s")%_("login failure"), \
                 self.widgets['window'])
             return
     headers = "From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" \
@@ -56,7 +56,7 @@ def mailto(self, tls, port, server, auth, user, password, sender, to, subject, m
         gutils.info(_("E-mail sent sucessfuly"), self.widgets['window'])
         return
     except:
-        gutils.error(self, _("Error sending e-mail: %s")%"", self.widgets['window'])
+        gutils.error(_("Error sending e-mail: %s")%"", self.widgets['window'])
         
     session.quit()
 
@@ -77,7 +77,7 @@ def send_email(self):
                 %(self.person_name, self.widgets['movie']['o_title'].get_text().decode('utf-8'), \
                 self.widgets['movie']['title'].get_text().decode('utf-8'), self.loan_date[:10]))
         except:
-            gutils.error(self, _("Mail could not be sent. Please check e-mail preferences."), self.widgets['window'])
+            gutils.error(_("Mail could not be sent. Please check e-mail preferences."), self.widgets['window'])
     else:
         gutils.info(_("This person has no e-mail address defined."), \
             self.widgets['window'])

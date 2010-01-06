@@ -244,7 +244,7 @@ def gdecode(txt, encode):
 # Messages
 
 
-def error(self, msg, parent=None):
+def error(msg, parent=None):
     dialog = gtk.MessageDialog(parent,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, msg)

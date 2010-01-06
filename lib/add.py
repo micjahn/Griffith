@@ -277,7 +277,7 @@ def show_websearch_results(self):
                 self.founded_results_id = str(row)
                 populate_with_results(self)
     else:
-        gutils.error(self.widgets['results']['window'], _("No results"), self.widgets['add']['window'])
+        gutils.error(_("No results"), self.widgets['add']['window'])
 
 
 def get_from_web(self):
@@ -320,8 +320,7 @@ def get_from_web(self):
                 self.search_movie.get_searches()
         self.show_search_results(self.search_movie)
     else:
-        gutils.error(self.widgets['results']['window'], \
-            _("You should fill the original title\nor the movie title."))
+        gutils.error(_("You should fill the original title\nor the movie title."))
 
 
 def source_changed(self):
@@ -659,8 +658,7 @@ def add_movie_db(self, close):
 
     details = get_details(self)
     if not details['o_title'] and not details['title']:
-        gutils.error(self.widgets['results']['window'],
-            _("You should fill the original title\nor the movie title."),
+        gutils.error(_("You should fill the original title\nor the movie title."),
             parent=self.widgets['add']['window'])
         return False
 

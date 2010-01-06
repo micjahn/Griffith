@@ -56,7 +56,7 @@ class ImportPlugin(IP):
         self.filename = name
         self.fileversion = self.read_fileversion()
         if self.fileversion == None:
-            gutils.error(self, _('The format of the file is not supported.'))
+            gutils.error(_('The format of the file is not supported.'))
             return False
         return True
 
