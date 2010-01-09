@@ -101,7 +101,7 @@ def set_details(self, item=None):#{{{
             w['resolution'].set_text(item['resolution'])
         elif 'height' in item and item['height'] and 'width' in item and item['width']:
             w['resolution'].set_text("%dx%d" % (item['width'], item['height']))
-        else: # failback to 'resolution'
+        else: # fallback to 'resolution'
             w['resolution'].set_text(item['resolution'])
     else:
         w['resolution'].set_text('')
