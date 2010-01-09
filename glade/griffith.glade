@@ -934,7 +934,7 @@
                             <property name="column_spacing">5</property>
                             <property name="row_spacing">2</property>
                             <child>
-                              <widget class="GtkLabel" id="m_ratio">
+                              <widget class="GtkLabel" id="m_resolution">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="xalign">0</property>
@@ -972,7 +972,7 @@
                               <widget class="GtkLabel" id="label17">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Aspect ratio</property>
+                                <property name="label" translatable="yes">Resolution</property>
                               </widget>
                               <packing>
                                 <property name="top_attach">9</property>

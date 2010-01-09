@@ -32,6 +32,7 @@ import gutils
 
 log = logging.getLogger("Griffith")
 
+
 @gutils.popup_message(_('Upgrading database...'))
 def upgrade_database(self, version, config):
     """Create new db or update existing one to current format"""
@@ -57,6 +58,7 @@ def upgrade_database(self, version, config):
         db.tables.media.insert(bind=b).execute(name=u'HD DVD')
         db.tables.media.insert(bind=b).execute(name=u'Blu-ray')
         db.tables.ratios.insert(bind=b).execute(name=u'16:9')
+        db.tables.ratios.insert(bind=b).execute(name=u'16:10')
         db.tables.ratios.insert(bind=b).execute(name=u'4:3')
         db.tables.acodecs.insert(bind=b).execute(name=u'AC-3 Dolby audio')
         db.tables.acodecs.insert(bind=b).execute(name=u'OGG')
@@ -142,9 +144,9 @@ def upgrade_database(self, version, config):
         log.info('... adding new columns')
         # common SQL statements
         queries = {'poster_md5': 'ALTER TABLE movies ADD poster_md5 VARCHAR(32) NULL REFERENCES posters(md5sum);',
-                   'ratio_id'  : 'ALTER TABLE movies ADD ratio_id INTEGER NULL REFERENCES ratios(ratio_id);',
+                   'ratio_id': 'ALTER TABLE movies ADD ratio_id INTEGER NULL REFERENCES ratios(ratio_id);',
                    'screenplay': 'ALTER TABLE movies ADD screenplay VARCHAR(256) NULL;',
-                   'cameraman' : 'ALTER TABLE movies ADD cameraman VARCHAR(256) NULL;'}
+                   'cameraman': 'ALTER TABLE movies ADD cameraman VARCHAR(256) NULL;'}
         # if needed some db specific SQL statements
         if e_type == 'mysql':
             pass
@@ -156,7 +158,7 @@ def upgrade_database(self, version, config):
             except Exception, e:
                 log.error("Cannot add '%s' column: %s", key, e)
                 return False
-        
+
         log.info('... saving posters in database')
         posters_dir = get_old_posters_location(self.data_dir, config, clean_config=True)
         updated = {}
@@ -166,13 +168,13 @@ def upgrade_database(self, version, config):
             if poster_file_name in updated:
                 continue
             if os.path.isfile(poster_file_name):
-                poster_md5  = gutils.md5sum(file(poster_file_name, 'rb'))
+                poster_md5 = gutils.md5sum(file(poster_file_name, 'rb'))
                 poster = self.session.query(db.Poster).filter_by(md5sum=poster_md5).first()
                 if not poster:
                     poster = db.Poster(md5sum=poster_md5, data=file(poster_file_name, 'rb').read())
                     self.session.add(poster)
 
-                update_query = movies_table.update(movies_table.c.image==movie.image, {'poster_md5': poster_md5, 'image': None}, bind=b)
+                update_query = movies_table.update(movies_table.c.image == movie.image, {'poster_md5': poster_md5, 'image': None}, bind=b)
 
                 try:
                     # yeah, we're commiting inside the loop,
@@ -190,7 +192,7 @@ def upgrade_database(self, version, config):
                         log.warn("cannot remove %s", poster_file_name)
             else:
                 log.warn("file not found: %s)", movie.image)
-                update_query = movies_table.update(movies_table.c.image==movie.image, {'image': None}, bind=b)
+                update_query = movies_table.update(movies_table.c.image == movie.image, {'image': None}, bind=b)
                 update_query.execute()
                 updated[poster_file_name] = True
         del updated
@@ -203,7 +205,7 @@ def upgrade_database(self, version, config):
     if version == 3:    # fix changes between v3 and v4
         version += 1
         log.info("Upgrading database to version %d...", version)
-        
+
         log.info('... adding new columns')
         # common SQL statements
         queries = {'barcode': 'ALTER TABLE movies ADD barcode VARCHAR(32) NULL;',
@@ -221,11 +223,11 @@ def upgrade_database(self, version, config):
         db_version.value = unicode(version)
         self.session.add(db_version)
         self.session.commit()
-    
+
     if version == 4:    # fix changes between v4 and v5
         version += 1
         log.info("Upgrading database to version %d...", version)
-        
+
         log.info('... deleting old filters')
         # new format, filters were introduced in -beta so we'll free to delete them without warning
         query = 'DELETE FROM filters;'
@@ -242,6 +244,7 @@ def upgrade_database(self, version, config):
 # ---------------------------------------------------
 # for Griffith <= 0.6.2 compatibility
 # ---------------------------------------------------
+
 
 def convert_from_old_db(config, source_file, destination_file, locations):    #{{{
     """
@@ -336,8 +339,8 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
     old_cursor.execute("DELETE FROM collections WHERE name = ''")
     old_cursor.execute("DELETE FROM collections WHERE name = 'None'")
     old_cursor.execute("DELETE FROM languages WHERE name = ''")
-    
-    config.set('type','sqlite', section='database')
+
+    config.set('type', 'sqlite', section='database')
     config.set('file', 'griffith.db', section='database')
     config['posters'] = 'posters'
     config.set('color', 0, section='defaults')
@@ -350,7 +353,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
     new_db = GriffithSQL(config, locations['home'], fallback=False)
 
     # collections
-    collection_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
+    collection_mapper = {'': None, u'': None, 0: None, '0': None, -1: None, '-1': None}
     old_cursor.execute("SELECT id, name FROM collections;") # loaned status will be set later - buggy databases :-(
     for i in old_cursor.fetchall():
         o = db.Collection(name=i[1])
@@ -361,9 +364,9 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
             log.error(e)
             continue
         collection_mapper[i[0]] = o.collection_id
-    
+
     # volumes
-    volume_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
+    volume_mapper = {'': None, u'': None, 0: None, '0': None, -1: None, '-1': None}
     old_cursor.execute("SELECT id, name FROM volumes;") # loaned status will be set later - buggy databases :-(
     for i in old_cursor.fetchall():
         o = db.Volume(name=i[1])
@@ -387,9 +390,9 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
             log.error(e)
             continue
         person_mapper[i[0]] = o.person_id
-    
+
     # languages
-    language_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
+    language_mapper = {'': None, u'': None, 0: None, '0': None, -1: None, '-1': None}
     old_cursor.execute("SELECT id, name FROM languages;")
     for i in old_cursor.fetchall():
         o = new_db.session.query(db.Lang).filter_by(name=i[1]).first()
@@ -406,7 +409,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
             language_mapper[i[0]] = o.lang_id
 
     # media
-    medium_mapper = {'':None, u'':None, 0:None, '0':None, -1:None, '-1':None}
+    medium_mapper = {'': None, u'': None, 0: None, '0': None, -1: None, '-1': None}
     old_cursor.execute("SELECT id, name FROM media;")
     for i in old_cursor.fetchall():
         o = new_db.session.query(db.Medium).filter_by(name=i[1]).first()
@@ -421,7 +424,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
                 log.error(e)
                 continue
             medium_mapper[i[0]] = o.medium_id
-    
+
     # tags
     tag_mapper = {}
     old_cursor.execute("SELECT id, name FROM tags;")
@@ -438,7 +441,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
                 log.error(e)
                 continue
             tag_mapper[i[0]] = o.tag_id
-    
+
     # movies
     movie_mapper = {}
     old_cursor.execute("""
@@ -450,9 +453,9 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
     for i in old_cursor.fetchall():
         o = db.Movie()
         o.number = digits_only(i[6])
-        if volume_mapper.has_key(i[1]):
+        if i[1] in volume_mapper:
             o.volume_id = volume_mapper[i[1]]
-        if collection_mapper.has_key(i[2]):
+        if i[2] in collection_mapper:
             o.collection_id = collection_mapper[i[2]]
         o.o_title = i[3][:255]
         o.title = i[4][:255]
@@ -471,7 +474,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
         o.trailer = i[18][:255]
         o.rating = digits_only(i[19])
         #o.loaned = bool(i[20]) # updated later
-        if medium_mapper.has_key(int(i[21])):
+        if int(i[21]) in medium_mapper:
             o.medium_id = medium_mapper[int(i[21])]
         o.media_num = digits_only(i[22])
         o.notes = i[23]
@@ -480,7 +483,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
         o.cond = digits_only(i[26], 5)
         o.color = digits_only(i[27], 3)
         o.layers = digits_only(i[28], 4)
-        
+
         try:
             new_db.session.add(o)
             new_db.session.commit()
@@ -503,7 +506,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
             except Exception, e:
                 log.error(e)
                 continue
-    
+
     # movie lang
     old_cursor.execute("SELECT movie_id, lang_id, type FROM movie_lang WHERE movie_id IN (SELECT id FROM movies);")
     for i in old_cursor.fetchall():
@@ -538,9 +541,9 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
                 log.error(e)
                 continue
         if int(i[1]) == 0:
-            if vol is not None and len(vol.movies)>0:
+            if vol is not None and len(vol.movies) > 0:
                 m = vol.movies[0]
-            elif col is not None and len(col.movies)>0:
+            elif col is not None and len(col.movies) > 0:
                 m = col.movies[0]
             else:
                 log.warn("Cannot find associated movie for this loan (%s)" % i)
@@ -551,7 +554,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
             except Exception, e:
                 log.error(e)
                 continue
-        
+
         l = db.Loan()
         l.person_id = person_mapper[i[0]]
         l.date = str(i[4])[:10]
@@ -560,7 +563,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
             l.return_date = None
         else:
             l.return_date = str(i[5])[:10]
-        
+
         # update volume / collection status
         if int(i[2]) > 0:
             l.volume_id = volume_mapper[i[2]]
@@ -572,7 +575,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
             if not_returned:
                 col.loaned = True
                 col.save()
-        l.save();
+        l.save()
         m.loans.append(l)
         try:
             new_db.session.add(m)
@@ -583,6 +586,7 @@ def convert_from_old_db(config, source_file, destination_file, locations):    #{
     #clear_mappers()
     return new_db
 #}}}
+
 
 def get_old_posters_location(home_dir, config, clean_config=False):
     if config.get('posters', None) is not None:
@@ -599,4 +603,3 @@ def get_old_posters_location(home_dir, config, clean_config=False):
         config.remove_option('posters')
         config.save()
     return os.path.join(home_dir, dirname)
-

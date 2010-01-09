@@ -6,6 +6,8 @@ Griffith ChangeLog
 
 
 2010-01-09  Piotr Ożarowski
+	* Replace "Aspect ratio" field with "Resolution" (aspect ratio is hidden
+	  for now)
 	* MyMoviesIt movie plugin updated (thanks to FiloSottile)
 
 2010-01-06  Piotr Ożarowski

@@ -222,11 +222,6 @@ def strip_tags(text):
     return text
 
 
-def save_pixmap(self, pixmap, filename):
-    """XXX: deprecated"""
-    pixmap.save(filename, 'jpeg', {'quality': '70'})
-
-
 def clean(text):
     t = strip_tags(text)
     t = string.replace(t, '&nbsp;', ' ')

@@ -96,8 +96,7 @@ def set_details(self, item=None):#{{{
         w['year'].set_text(str(item['year']))
     else:
         w['year'].set_text('')
-    if False: # FIXME: add a field in main window
-    #if 'resolution' in item and item['resolution']:
+    if 'resolution' in item and item['resolution']:
         if self.config.get('use_resolution_alias', True):
             w['resolution'].set_text(item['resolution'])
         elif 'height' in item and item['height'] and 'width' in item and item['width']:
@@ -105,7 +104,7 @@ def set_details(self, item=None):#{{{
         else: # failback to 'resolution'
             w['resolution'].set_text(item['resolution'])
     else:
-        #w['resolution'].set_text('') # FIXME: add a field in main window
+        w['resolution'].set_text('')
         pass
     if 'runtime' in item and item['runtime']:
         w['runtime'].set_text(str(int(item['runtime'])))
@@ -219,13 +218,14 @@ def set_details(self, item=None):#{{{
             w['vcodec'].set_text('')
     else:
         w['vcodec'].set_text('')
-    if 'ratio_id' in item:
-        if item.ratio is not None:
-            w['ratio'].set_markup("<i>%s</i>" % gutils.html_encode(item.ratio.name))
-        else:
-            w['ratio'].set_text('')
-    else:
-        w['ratio'].set_text('')
+    # TODO: add widgets in main and edit windows
+    #if 'ratio_id' in item:
+    #    if item.ratio is not None:
+    #        w['ratio'].set_markup("<i>%s</i>" % gutils.html_encode(item.ratio.name))
+    #    else:
+    #        w['ratio'].set_text('')
+    #else:
+    #    w['ratio'].set_text('')
 
     # poster
     if 'poster_md5' in item and item['poster_md5']:
