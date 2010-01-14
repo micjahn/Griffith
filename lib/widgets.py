@@ -519,6 +519,7 @@ def define_widgets(self, gladefile):
         'on_advfilter_clear': lambda w: advfilter.set_conditions(self.widgets['advfilter'], advfilter.get_def_conditions(), self.field_names),
         'on_advfilter_save': lambda w: advfilter.save(self.db, self.widgets['advfilter']),
         'on_advfilter_open': lambda w: advfilter.load(self.db, self.widgets['advfilter'], self.field_names),
+        'on_advfilter_delete': lambda w: advfilter.delete(self.db, self.widgets['advfilter']),
     })#}}}
 
 

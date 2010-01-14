@@ -29,7 +29,7 @@ from sqlalchemy import select
 
 import db
 import sql
-from gutils import info
+from gutils import info, warning
 
 log = logging.getLogger("Griffith")
 
@@ -73,6 +73,7 @@ QUERY_COMMAND_NAMES = {
 
 # widgets -----------------------------------------------------{{{
 
+
 def show_window(self):
     if self.widgets['advfilter']['window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
         self.widgets['advfilter']['window'].present()
@@ -85,6 +86,7 @@ def show_window(self):
     self.widgets['advfilter']['window'].show()
 
     return True
+
 
 def hide_window(self):
     widgets = self.widgets['advfilter']
@@ -101,11 +103,12 @@ def hide_window(self):
         i.destroy()
     for i in widgets['dynamic_vbox'].get_children():
         i.destroy()
-    
+
     from initialize import fill_advfilter_combo
     fill_advfilter_combo(self)
-    
+
     return True
+
 
 def _fill_container(container, items, options, id_name):
     for item in items:
@@ -128,6 +131,7 @@ def _fill_container(container, items, options, id_name):
         hbox.show_all()
         label_id.hide()
         container.pack_start(hbox)
+
 
 def initialize(widgets, gsql, field_names):
     # tags
@@ -172,7 +176,8 @@ def initialize(widgets, gsql, field_names):
         widgets['cb_name'].append_text(filter_[0])
     return True
 
-def add_query_widget(container, field_names, sel_qf='title', sel_comm='equals', text='' ):
+
+def add_query_widget(container, field_names, sel_qf='title', sel_comm='equals', text=''):
     hbox = gtk.HBox()
 
     cb = gtk.combo_box_new_text()
@@ -204,6 +209,7 @@ def add_query_widget(container, field_names, sel_qf='title', sel_comm='equals', 
     hbox.show_all()
 
     container.pack_start(hbox)
+
 
 def set_conditions(widgets, cond, field_names): #{{{
     widgets['name'].set_text('')
@@ -282,6 +288,7 @@ def set_conditions(widgets, cond, field_names): #{{{
 
     #}}}
 
+
 def get_conditions(widgets): #{{{
     cond = get_def_conditions()
 
@@ -352,6 +359,7 @@ def get_conditions(widgets): #{{{
 
     return cond # }}}
 
+
 def save(gsql, widgets):
     """saves search conditions from current filter window"""
 
@@ -366,8 +374,10 @@ def save(gsql, widgets):
     filter_ = session.query(db.Filter).filter_by(name=name).first()
     if filter_:
         filter_.data = cond
+        isnew = False
     else:
         filter_ = db.Filter(name=name, data=cond)
+        isnew = True
     session.add(filter_)
     try:
         session.commit()
@@ -376,7 +386,11 @@ def save(gsql, widgets):
         log.warn(e)
         warning(_("Cannot save search conditions"), widgets['window'])
         return False
+    else:
+        if isnew:
+            widgets['cb_name'].append_text(name)
     info(_("Search conditions saved"), widgets['window'])
+
 
 def load(gsql, widgets, field_names):
     name = widgets['cb_name'].get_active_text().decode('utf-8')
@@ -389,12 +403,40 @@ def load(gsql, widgets, field_names):
     else:
         return False
 
+
+def delete(gsql, widgets):
+    """deletes the current selected filter"""
+
+    name = widgets['cb_name'].get_active_text().decode('utf-8')
+    if not name:
+        log.debug("search rule name is empty")
+        info(_("Name is empty"), widgets['window'])
+        return False
+
+    session = gsql.Session()
+    filter = session.query(db.Filter).filter_by(name=name).first()
+    if filter:
+        session.delete(filter)
+        try:
+            session.commit()
+        except:
+            session.rollback()
+            log.exception('')
+            warning(_("Cannot delete search conditions"), widgets['window'])
+            return False
+        else:
+            widgets['cb_name'].remove_text(widgets['cb_name'].get_active())
+        info(_("Search conditions deleted"), widgets['window'])
+    widgets['name'].set_text('')
+
 #}}}
 
 # database related --------------------------------------------{{{
 
+
 def get_def_conditions():
     return deepcopy(__conditions)
+
 
 def get_select_columns(config): # {{{
     # TODO: get them from config
@@ -405,6 +447,7 @@ def get_select_columns(config): # {{{
         db.Movie.year, db.Movie.runtime,
         db.Movie.rating]
     return columns_to_select # }}}
+
 
 def create_select_query(self, columns, conditions, query):
     if not conditions:
