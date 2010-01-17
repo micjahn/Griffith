@@ -110,6 +110,7 @@ Source: dist\lib\plugins\movie\PluginMovieMyMoviesIt.py;    DestDir: {app}\lib\p
 Source: dist\lib\plugins\movie\PluginMovieOFDb.py;          DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\German\OFDb
 Source: dist\lib\plugins\movie\PluginMovieOnet.py;          DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Onet
 Source: dist\lib\plugins\movie\PluginMoviePTGate.py;        DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Portuguese\PTGate
+Source: dist\lib\plugins\movie\PluginMovieScope.py;         DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Danish\Scope
 Source: dist\lib\plugins\movie\PluginMovieStopklatka.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Stopklatka
 Source: dist\lib\plugins\movie\PluginMovieTanukiAnime.py;   DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Tanuki_Anime
 Source: dist\lib\plugins\movie\PluginMovieWP.py;            DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Wirtualna_Polska
@@ -161,6 +162,9 @@ Name: Movie_Import_Plugins\English\AnimeDB;          Description: AnimeDB / www.
 Name: Movie_Import_Plugins\English\DVD_Empire;       Description: DVD Empire / www.dvdempire.com; Types: full
 Name: Movie_Import_Plugins\English\Mediadis;         Description: Mediadis / www.mediadis.com; Types: full
 Name: Movie_Import_Plugins\English\Moviefone;        Description: Moviefone / www.moviefone.com; Types: full
+
+Name: Movie_Import_Plugins\Danish;                   Description: Danish Import Plugins; Types: full
+Name: Movie_Import_Plugins\Danish\Scope;             Description: Scope / www.scope.dk; Types: full
 
 Name: Movie_Import_Plugins\Dutch;                    Description: Dutch Import Plugins; Types: full
 Name: Movie_Import_Plugins\Dutch\MovieMeter;         Description: MovieMeter / www.moviemeter.nl; Types: full
