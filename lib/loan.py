@@ -72,9 +72,7 @@ def commit(self):
     if movie.collection_id > 0:
         if gutils.question(_('Do you want to loan whole collection?'), window=self.widgets['window']):
             loan_whole_collection = True
-        else:
-            return False
-    
+
     try:
         if movie.loan_to(person, whole_collection=loan_whole_collection):
             session.commit()
