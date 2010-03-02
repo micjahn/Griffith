@@ -491,8 +491,11 @@ def populate(self, movies=None, where=None, qf=True):#{{{
                 filename = os.path.join(self.locations['images'], 'default_thumbnail.png')
 
             self.Image.set_from_file(filename)
-            pixbuf = self.Image.get_pixbuf()
-            self.treemodel.set_value(myiter, 1, pixbuf)
+            try:
+                pixbuf = self.Image.get_pixbuf()
+                self.treemodel.set_value(myiter, 1, pixbuf)
+            except:
+                log.exception("can't load the image %s" % filename)
         self.treemodel.set_value(myiter, 2, movie.o_title)
         self.treemodel.set_value(myiter, 3, movie.title)
         self.treemodel.set_value(myiter, 4, movie.director)
