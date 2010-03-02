@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2010-03-02  Michael Jahn
 	* [#525039] crashed while adding films wont reboot linux mint 8
+	* [#525869] Plugin FilmAffinity (ES) doesn't import genre
 
 2010-01-17  Michael Jahn
 	* Scope movie plugin added
