@@ -104,6 +104,7 @@ class ImportPlugin(object):
         from sqlalchemy import select
         import gtk
 
+        name = name.decode('utf-8')
         if not self.set_source(name):
             log.info("Can't read data from file %s", name)
             return False
