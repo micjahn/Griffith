@@ -195,7 +195,7 @@ def populate_with_results(self):
 
     if w['cb_only_empty'].get_active(): # only empty fields
         details = get_details(self)
-        fields_to_fetch = [i for i in fields_to_fetch if details[i] is None]
+        fields_to_fetch = [i for i in fields_to_fetch if details[i] is None or details[i] == 0.0]
     self.movie.fields_to_fetch = fields_to_fetch
 
     if not self.movie.get_movie(w['window']):
@@ -671,6 +671,7 @@ def add_movie_db(self, close):
             if not gutils.question(_('Movie with that title already exists, are you sure you want to add?'), self.widgets['add']['window']):
                 return False
 
+    new_poster_md5 = None
     if details['image']:
         tmp_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
         if os.path.isfile(tmp_image_path):
@@ -707,8 +708,8 @@ def add_movie_db(self, close):
     myiter = self.treemodel.insert_after(None, insert_after)
 
     image_path = ''
-    if movie.poster_md5:
-        image_path = gutils.get_image_fname(movie.poster_md5, self.db, 's')
+    if new_poster_md5:
+        image_path = gutils.get_image_fname(new_poster_md5, self.db, 's')
     if not image_path or not os.path.isfile(image_path):
         image_path = gutils.get_defaultthumbnail_fname(self)
     handler = self.Image.set_from_file(image_path)
