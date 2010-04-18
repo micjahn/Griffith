@@ -52,11 +52,11 @@ class GriffithExtension(Base):
                               'default': u'US',
                               'type': (u'US', u'UK', u'DE', u'CA', u'FR', u'JP')},
                    'accesskey': {'name': _('Access Key ID'),
-                                 'hint': u'https://affiliate-program.amazon.com/gp/flex/advertising/api/sign-in.html',
+                                 'hint': _('Get your Access Key ID from ') + u'https://affiliate-program.amazon.com/gp/flex/advertising/api/sign-in.html',
                                  'default': u'',
                                  'type': unicode},
                    'secretkey': {'name': _('Secret Key'),
-                                 'hint': u'https://affiliate-program.amazon.com/gp/flex/advertising/api/sign-in.html',
+                                 'hint': _('Get your Secret Key from ') + u'https://affiliate-program.amazon.com/gp/flex/advertising/api/sign-in.html',
                                  'default': u'',
                                  'type': unicode}}
     toolbar_icon = 'gtk-network'
