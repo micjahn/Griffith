@@ -1325,7 +1325,7 @@ You can't undo this operation."""), self.widgets['window']):
 
                 posters = self.db.session.query(db.Movie.poster_md5).all()
                 for poster in posters:
-                    delete_poster_from_cache(self, poster[0])
+                    delete_poster_from_cache(poster[0], posters_dir)
 
                 log.debug('dropping old tables...')
                 self.db.session.rollback() # cancel all pending operations
