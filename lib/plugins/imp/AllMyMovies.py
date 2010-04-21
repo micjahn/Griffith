@@ -82,8 +82,11 @@ class ImportPlugin(IP):
             self.cursor = self.connection.cursor()
             self.cursor.execute( \
                 'SELECT MovieID, barcode, comments, description, length, mediacount, MediaTypeName, \
-                        mpaa, Name, originaltitle, rating, seen, studio, url, year, Trailer \
-                 FROM movies LEFT OUTER JOIN MediaType ON movies.MediaTypeID=MediaType.MediaTypeID;')
+                        mpaa, movies.Name, originaltitle, rating, seen, studio, url, year, Trailer, \
+                        MediaLocation.Name \
+                 FROM (movies \
+                      LEFT OUTER JOIN MediaType ON movies.MediaTypeID=MediaType.MediaTypeID) \
+                      LEFT OUTER JOIN MediaLocation ON movies.medialocationID=MediaLocation.MediaLocationID;')
 
         currentrow = self.cursor.fetchone()
         if not currentrow:
@@ -122,6 +125,8 @@ class ImportPlugin(IP):
                 details['year'] = currentrow[14]
             if currentrow[15]:
                 details['trailer'] = currentrow[15]
+            if currentrow[16]:
+                details['volume_id'] = currentrow[16]
             # loading other details
             curs = self.connection.cursor()
             curs.execute('SELECT Actors.Name, ActorsLink.Role \
