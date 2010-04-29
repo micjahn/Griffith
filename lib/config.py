@@ -191,7 +191,11 @@ class Config(object):
         self._cfg.set('mail', 'mail_use_tls', 'False')
         self._cfg.set('main', 'default_movie_plugin', 'IMDB')
         self._cfg.set('main', 'font', '')
-        self._cfg.set('main', 'pdf_reader', 'xpdf')
+        self._cfg.set('main', 'font_size', '18')
+        if self.windows:
+            self._cfg.set('main', 'pdf_reader', '')
+        else:
+            self._cfg.set('main', 'pdf_reader', 'xpdf')
         self._cfg.set('main', 'posters', 'posters')
         self._cfg.set('main', 'rating_image', '0')    # 0 = meter; 1 = stars
         self._cfg.set('mainlist', 'director', 'True')

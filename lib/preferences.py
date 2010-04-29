@@ -115,6 +115,11 @@ def show_preferences(self, page=None):
     # pdf font
     if self.config.get('font'):
         w['font'].set_filename(self.config.get('font'))
+    if self.config.get('font_size'):
+        try:
+            w['font_size'].set_value(float(self.config.get('font_size')))
+        except:
+            w['font_size'].set_value(18.0)
 
     # defaults (for static data only)
     w['condition'].set_active( gutils.digits_only(self.config.get('condition', 0, section='defaults'), 5) )
@@ -288,6 +293,7 @@ def save_preferences(self):
     # pdf font
     if w['font'].get_filename():
         c['font'] = w['font'].get_filename()
+    c['font_size'] = int(w['font_size'].get_value())
 
     # spellchecker
     if w['spellchecker'].get_active():
@@ -374,10 +380,7 @@ def save_preferences(self):
         mcounter = mcounter + 1
     self.widgets['add']['source'].set_active(mcounter)
 
-    if self.windows:
-        save_reader = ''
-    else:
-        save_reader = w['epdf_reader'].get_text()
+    save_reader = w['epdf_reader'].get_text()
 
     c.set('lang', w['spell_lang'].get_text(), section='spell')
     c['pdf_reader'] = save_reader

@@ -5520,6 +5520,40 @@ Stars</property>
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
+                                <child>
+                                  <widget class="GtkHBox" id="pdf_font_size_hbox">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">4</property>
+                                    <child>
+                                      <widget class="GtkLabel" id="pdf_font_size_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Base font size</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkSpinButton" id="p_font_size">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="invisible_char">&#x25CF;</property>
+                                        <property name="adjustment">18 6 100 1 10 10</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
                               </widget>
                             </child>
                           </widget>

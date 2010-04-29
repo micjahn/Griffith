@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2007 Vasco Nunes
+# Copyright (c) 2005-2010 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,8 +28,9 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.rl_config import defaultPageSize
 from reportlab.rl_config import defaultEncoding
-from reportlab.platypus import Image, SimpleDocTemplate, Paragraph, Spacer
+from reportlab.platypus import Image, SimpleDocTemplate, Paragraph, ParagraphAndImage, Image, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.fonts import addMapping
 from xml.sax import saxutils
 import config
 import gtk
@@ -47,24 +48,17 @@ class ExportPlugin(Base):
     description = _("PDF export plugin")
     author = "Vasco Nunes"
     email = "<vasco.m.nunes@gmail.com>"
-    version = "0.5"
+    version = "0.6"
     
-    fields_to_export = ('number', 'o_title', 'title', 'director', 'genre', 'cast')
+    fields_to_export = ('number', 'o_title', 'title', 'director', 'genre', 'cast', 'poster_md5')
 
     def initialize(self):
-        self.styles = getSampleStyleSheet()
         self.fontName = ''
         return True
 
     def run(self):
         """exports a simple movie list to a pdf file"""
         
-        if self.config.get('font', '') != '':
-            self.fontName = 'custom_font'
-            pdfmetrics.registerFont(TTFont(self.fontName, self.config.get('font', '')))
-        else:
-            self.fontName = "Helvetica"
-
         basedir = None
         if not self.config is None:
             basedir = self.config.get('export_dir', None, section='export-pdf')
@@ -89,12 +83,17 @@ class ExportPlugin(Base):
                 defaultLang, defaultEnc = getdefaultlocale()
                 if defaultEnc is None:
                     defaultEnc = 'UTF-8'
-                c = SimpleDocTemplate(pdffilename.encode(defaultEnc))
+                c = SimpleDocTemplate(pdffilename.encode(defaultEnc), \
+                    author = 'Griffith', \
+                    title = _('List of films').encode('utf-8'), \
+                    subject = _('List of films').encode('utf-8'))
                 # data encoding
                 #if defaultEncoding == 'WinAnsiEncoding':
                 #    defaultEnc = 'cp1252'
                 #else:
                 defaultEnc = 'utf-8'
+
+                self.create_styles()
                 style = self.styles["Normal"]
                 Story = [Spacer(1,2*inch)]
 
@@ -112,10 +111,10 @@ class ExportPlugin(Base):
 
                 # define some custom stylesheetfont
                 total = len(movies)
-                p = Paragraph("<font name='" + self.fontName +"' size=\"18\">" + saxutils.escape((_("List of films")).encode('utf-8')) + '</font>', self.styles["Heading1"] )
+                p = Paragraph(saxutils.escape((_("List of films")).encode('utf-8')), self.styles["Heading1"] )
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
-                p = Paragraph("<font name='" + self.fontName +"' size=\"10\">" + saxutils.escape((_("Total Movies: %s") % str(total)).encode('utf-8'))  + '</font>', self.styles["Heading3"])
+                p = Paragraph(saxutils.escape((_("Total Movies: %s") % str(total)).encode('utf-8')), self.styles["Heading3"])
                 Story.append(p)
                 Story.append(Paragraph(" ",style))
                 # output movies
@@ -144,36 +143,96 @@ class ExportPlugin(Base):
                             # Group Numbers
                             if first_letter != '0-9':
                                 first_letter = '0-9'
-                                paragraph_text = '<font name=' + self.fontName + ' size="15">' + saxutils.escape(first_letter) + '</fonts>'
+                                paragraph_text = saxutils.escape(first_letter)
                                 p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading2'])
                                 Story.append(p)
                         else:
                             first_letter = grouping_title[0]
-                            paragraph_text = '<font name=' + self.fontName + ' size="15">' + saxutils.escape(first_letter) + '</fonts>'
+                            paragraph_text = saxutils.escape(first_letter)
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading2'])
                             Story.append(p)
                     # add movie title
-                    paragraph_text = '<font name=' + self.fontName + ' size="7">' + \
-                        '<b>'+ saxutils.escape(title) + '</b>' + \
-                        saxutils.escape(' (' + original_title + '), ' + director + ' | ' + str(number)) + \
-                        '</font>'
-                    p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                    image_filename = None
+                    if movie.poster_md5:
+                        image_filename = gutils.get_image_fname(movie.poster_md5, self.db, 's')
+                    paragraph_text = '<b>'+ saxutils.escape(title) + '</b>' + \
+                        saxutils.escape(' (' + original_title + ') | ' + str(number))
+                    p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading3'])
+                    if image_filename:
+                        p = ParagraphAndImage(p, Image(image_filename), side = 'left')
                     Story.append(p)
-                    if movie.genre is not None:
-                        paragraph_text = '<font name=' + self.fontName + ' size="5">' + \
-                        '<b>' + _('Genre') + ': </b>' + saxutils.escape(movie.genre.encode(defaultEnc)) + \
-                        '</font>'
+                    if movie.director:
+                        paragraph_text = '<b>' + _('Director') + ': </b>' + saxutils.escape(movie.director.encode(defaultEnc))
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
-                    if movie.cast is not None:
-                        paragraph_text = '<i><font name=' + self.fontName + ' size="5">' + \
-                        '<b>' + _('Cast') + ': </b>' + saxutils.escape('; '.join(movie.cast.encode(defaultEnc).split("\n")[0:2])) + \
-                            '</font></i>'
+                    if movie.genre:
+                        paragraph_text = '<b>' + _('Genre') + ': </b>' + saxutils.escape(movie.genre.encode(defaultEnc))
+                        p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                        Story.append(p)
+                    if movie.cast:
+                        paragraph_text = '<i><b>' + _('Cast') + ': </b>' + saxutils.escape('; '.join(movie.cast.encode(defaultEnc).split("\n")[0:2])) + '</i>'
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
                 c.build(Story, onFirstPage=self.page_template, onLaterPages=self.page_template)
                 gutils.info(_('PDF has been created.'), self.parent_window)
+
+    def create_styles(self):
+        self.styles = getSampleStyleSheet()
+
+        if self.config.get('font', '') != '':
+            self.fontName = 'custom_font'
+            fontfilename = self.config.get('font', '')
+            (fontfilenamebase, fontfilenameextension) = os.path.splitext(fontfilename)
+
+            pdfmetrics.registerFont(TTFont(self.fontName, fontfilename))
+            addMapping(self.fontName, 0, 0, self.fontName)
+            # build font family if available to support <b> and <i>
+            if os.path.isfile(fontfilenamebase + 'bd' + fontfilenameextension):
+                pdfmetrics.registerFont(TTFont(self.fontName + '-bold', fontfilenamebase + 'bd' + fontfilenameextension))
+                addMapping(self.fontName, 1, 0, self.fontName + '-bold')
+            if os.path.isfile(fontfilenamebase + 'bi' + fontfilenameextension):
+                pdfmetrics.registerFont(TTFont(self.fontName + '-bolditalic', fontfilenamebase + 'bi' + fontfilenameextension))
+                addMapping(self.fontName, 1, 1, self.fontName + '-bolditalic')
+            if os.path.isfile(fontfilenamebase + 'i' + fontfilenameextension):
+                pdfmetrics.registerFont(TTFont(self.fontName + '-italic', fontfilenamebase + 'i' + fontfilenameextension))
+                addMapping(self.fontName, 0, 1, self.fontName + '-italic')
+        else:
+            self.fontName = "Helvetica"
             
+        if self.config.get('font_size', '') != '':
+            self.base_font_size = int(self.config.get('font_size'))
+        else:
+            self.base_font_size = 18
+        title_font_size = self.base_font_size
+        heading1_font_size = self.base_font_size - 8
+        heading2_font_size = self.base_font_size - 3
+        heading3_font_size = self.base_font_size - 11
+        normal_font_size = self.base_font_size - 13
+        if heading1_font_size < 4:
+            heading1_font_size = 4
+        if heading2_font_size < 4:
+            heading2_font_size = 4
+        if heading3_font_size < 4:
+            heading3_font_size = 4
+        if normal_font_size < 4:
+            normal_font_size = 4
+
+        # adjust font
+        for (name, style) in self.styles.byName.items():
+            style.fontName = self.fontName
+
+        #adjust font sizes
+        self.styles['Title'].fontSize = title_font_size
+        self.styles['Title'].leading = title_font_size + 2
+        self.styles['Normal'].fontSize = normal_font_size
+        self.styles['Normal'].leading = normal_font_size + 2
+        self.styles['Heading1'].fontSize = heading1_font_size
+        self.styles['Heading1'].leading = heading1_font_size + 2
+        self.styles['Heading2'].fontSize = heading2_font_size
+        self.styles['Heading2'].leading = heading2_font_size + 2
+        self.styles['Heading3'].fontSize = heading3_font_size
+        self.styles['Heading3'].leading = heading3_font_size + 2
+
     def page_template(self, canvas, doc):
         canvas.saveState()
         canvas.setFont(self.fontName,7)

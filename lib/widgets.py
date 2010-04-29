@@ -195,6 +195,7 @@ def define_widgets(self, gladefile):
         'db_user': get('p_db_user'),
         'epdf_reader': get('pdf_reader_entry'),
         'font': get('p_font'),
+        'font_size': get('p_font_size'),
         'layers': get('p_layers'),
         'media': get('p_media'),
         'region': get('p_region'),
