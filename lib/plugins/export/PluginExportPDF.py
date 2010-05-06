@@ -49,8 +49,8 @@ class ExportPlugin(Base):
     author = "Vasco Nunes"
     email = "<vasco.m.nunes@gmail.com>"
     version = "0.6"
-    
-    fields_to_export = ('number', 'o_title', 'title', 'director', 'genre', 'cast', 'poster_md5')
+
+    fields_to_export = ('number', 'o_title', 'title', 'director', 'genre', 'cast', 'plot', 'runtime', 'year', 'notes', 'poster_md5')
 
     def initialize(self):
         self.fontName = ''
@@ -58,7 +58,7 @@ class ExportPlugin(Base):
 
     def run(self):
         """exports a simple movie list to a pdf file"""
-        
+
         basedir = None
         if not self.config is None:
             basedir = self.config.get('export_dir', None, section='export-pdf')
@@ -77,7 +77,7 @@ class ExportPlugin(Base):
                     overwrite = True
                 else:
                     overwrite = False
-                    
+
             if overwrite == True or overwrite is None:
                 # filename encoding
                 defaultLang, defaultEnc = getdefaultlocale()
@@ -92,6 +92,8 @@ class ExportPlugin(Base):
                 #    defaultEnc = 'cp1252'
                 #else:
                 defaultEnc = 'utf-8'
+
+                pdf_elements = self.config.get('pdf_elements', 'image,director,genre,cast').split(',')
 
                 self.create_styles()
                 style = self.styles["Normal"]
@@ -152,25 +154,42 @@ class ExportPlugin(Base):
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading2'])
                             Story.append(p)
                     # add movie title
-                    image_filename = None
-                    if movie.poster_md5:
-                        image_filename = gutils.get_image_fname(movie.poster_md5, self.db, 's')
                     paragraph_text = '<b>'+ saxutils.escape(title) + '</b>' + \
                         saxutils.escape(' (' + original_title + ') | ' + str(number))
                     p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading3'])
-                    if image_filename:
-                        p = ParagraphAndImage(p, Image(image_filename), side = 'left')
+                    if 'image' in pdf_elements:
+                        image_filename = None
+                        if movie.poster_md5:
+                            image_filename = gutils.get_image_fname(movie.poster_md5, self.db, 'm')
+                        if image_filename:
+                            p = ParagraphAndImage(p, Image(image_filename, width = 30, height = 40), side = 'left')
                     Story.append(p)
-                    if movie.director:
-                        paragraph_text = '<b>' + _('Director') + ': </b>' + saxutils.escape(movie.director.encode(defaultEnc))
+                    if 'year' in pdf_elements and movie.year:
+                        paragraph_text = '<b>' + _('Year') + ': </b>' + saxutils.escape(str(movie.year))
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
-                    if movie.genre:
+                    if 'runtime' in pdf_elements and movie.runtime:
+                        paragraph_text = '<b>' + _('Runtime') + ': </b>' + saxutils.escape(str(movie.runtime))
+                        p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                        Story.append(p)
+                    if 'genre' in pdf_elements and movie.genre:
                         paragraph_text = '<b>' + _('Genre') + ': </b>' + saxutils.escape(movie.genre.encode(defaultEnc))
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
-                    if movie.cast:
+                    if 'director' in pdf_elements and movie.director:
+                        paragraph_text = '<i><b>' + _('Director') + ': </b>' + saxutils.escape(movie.director.encode(defaultEnc)) + '</i>'
+                        p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                        Story.append(p)
+                    if 'cast' in pdf_elements and movie.cast:
                         paragraph_text = '<i><b>' + _('Cast') + ': </b>' + saxutils.escape('; '.join(movie.cast.encode(defaultEnc).split("\n")[0:2])) + '</i>'
+                        p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                        Story.append(p)
+                    if 'plot' in pdf_elements and movie.plot:
+                        paragraph_text = '<i><b>' + _('Plot') + ': </b>' + saxutils.escape(movie.plot.encode(defaultEnc)) + '</i>'
+                        p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                        Story.append(p)
+                    if 'notes' in pdf_elements and movie.notes:
+                        paragraph_text = '<i><b>' + _('Notes') + ': </b>' + saxutils.escape(movie.notes.encode(defaultEnc)) + '</i>'
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
                 c.build(Story, onFirstPage=self.page_template, onLaterPages=self.page_template)
@@ -198,7 +217,7 @@ class ExportPlugin(Base):
                 addMapping(self.fontName, 0, 1, self.fontName + '-italic')
         else:
             self.fontName = "Helvetica"
-            
+
         if self.config.get('font_size', '') != '':
             self.base_font_size = int(self.config.get('font_size'))
         else:

@@ -97,7 +97,7 @@ def show_preferences(self, page=None):
         w['mail_use_auth'].set_active(False)
     else:
         w['mail_use_auth'].set_active(True)
-        
+
     if self.config.get('mail_use_tls', False, section='mail') == False:
         w['mail_use_tls'].set_active(False)
     else:
@@ -121,6 +121,12 @@ def show_preferences(self, page=None):
         except:
             w['font_size'].set_value(18.0)
 
+    # pdf elements
+    pdf_elements = self.config.get('pdf_elements', 'image,director,genre,cast')
+    for pdf_element in pdf_elements.split(','):
+        if 'pdf_' + pdf_element.strip() in w:
+            w['pdf_' + pdf_element.strip()].set_active(True)
+
     # defaults (for static data only)
     w['condition'].set_active( gutils.digits_only(self.config.get('condition', 0, section='defaults'), 5) )
     w['region'].set_active( gutils.digits_only(self.config.get('region', 0, section='defaults'), 8) )
@@ -138,7 +144,7 @@ def show_preferences(self, page=None):
             w['vcodec'].set_active(    int(gutils.findKey(int(self.config.get('vcodec', 0, section='defaults')), self.vcodecs_ids)) )
         else:
             w['vcodec'].set_active(0)
-    
+
     # search for:
     w['s_classification'].set_active(bool(self.config.get('s_classification', True, section='add')))
     w['s_country'].set_active(bool(self.config.get('s_country', True, section='add')))
@@ -161,14 +167,14 @@ def show_preferences(self, page=None):
     w['s_cameraman'].set_active(bool(self.config.get('s_cameraman', True, section='add')))
     w['s_resolution'].set_active(bool(self.config.get('s_resolution', True, section='add')))
     w['s_barcode'].set_active(bool(self.config.get('s_barcode', True, section='add')))
-    
+
     if self.config.get('sortby', section='mainlist'):
         tmp = self.sort_criteria.index(self.config.get('sortby', section='mainlist'))
         w['sortby'].set_active(tmp)
     w['sortby_reverse'].set_active(bool(self.config.get('sortby_reverse', False, section='mainlist')))
-    
+
     w['s_limit'].set_value(gutils.digits_only(self.config.get('limit', 0, section='mainlist')))
-    
+
     plugins = gutils.read_plugins('PluginMovie', \
         self.locations['movie_plugins'])
     plugins.sort()
@@ -216,7 +222,7 @@ def save_preferences(self):
     c = self.config
     global spell_support
 
-    was_false = notes_was_false = plot_was_false = 1    
+    was_false = notes_was_false = plot_was_false = 1
 
     if c.get('gtkspell', False, section='spell') == True:
         was_false = 0
@@ -277,7 +283,7 @@ def save_preferences(self):
         c.set('rating', 'True', section='mainlist')
     else:
         c.set('rating', 'False', section='mainlist')
-    
+
     # sortby
     if w['sortby'].get_active():
         field = self.sort_criteria[w['sortby'].get_active()]
@@ -286,14 +292,24 @@ def save_preferences(self):
     else:
         c.set('sortby', 'number', section='mainlist')
     c.set('sortby_reverse', w['sortby_reverse'].get_active(), section='mainlist')
-    
+
     c.set('limit', str(int(w['s_limit'].get_value())), section='mainlist')
-    
+
 
     # pdf font
     if w['font'].get_filename():
         c['font'] = w['font'].get_filename()
     c['font_size'] = int(w['font_size'].get_value())
+
+    # pdf elements
+    pdf_elements = ''
+    for child in w['pdf_elements_table']:
+        if child.get_active():
+            pdf_elements = pdf_elements + child.get_name()[4:] + ','
+    if pdf_elements:
+        c.set('pdf_elements', pdf_elements[:-1])
+    else:
+        c.set('pdf_elements', pdf_elements)
 
     # spellchecker
     if w['spellchecker'].get_active():
@@ -331,7 +347,7 @@ def save_preferences(self):
         c.set('use_auth', True, section='mail')
     else:
         c.set('use_auth', False, section='mail')
-        
+
     if w['mail_use_tls'].get_active():
         c.set('mail_use_tls', True, section='mail')
     else:
@@ -370,7 +386,7 @@ def save_preferences(self):
     c.set('s_cameraman', w['s_cameraman'].get_active(), section='add')
     c.set('s_resolution', w['s_resolution'].get_active(), section='add')
     c.set('s_barcode', w['s_barcode'].get_active(), section='add')
-    
+
     mcounter = 0
     for p in self.plugins:
         plugin_module = os.path.basename(p).replace('.py','')
@@ -432,7 +448,7 @@ def save_preferences(self):
 
     # database
     old = c.to_dict(section='database')
-    
+
     c.set('host', w['db_host'].get_text(), section='database')
     c.set('port', int(w['db_port'].get_value()), section='database')
     c.set('name', w['db_name'].get_text(), section='database')
@@ -458,7 +474,7 @@ def save_preferences(self):
         import sql
         from sqlalchemy.exceptions import InvalidRequestError
         from initialize import dictionaries, people_treeview
-        
+
         # new database connection
         self.initialized = False
         if c.has_key('posters'):
@@ -473,7 +489,7 @@ def save_preferences(self):
             self.db = sql.GriffithSQL(c, self.locations['home'])
 
         log.info("New database Engine: %s" % self.db.session.bind.engine.name)
-        
+
         # initialize new database
         self.total = int(self.db.session.query(db.Movie).count())
         self.count_statusbar()
@@ -483,6 +499,6 @@ def save_preferences(self):
     self.clear_details()
     self.filter_txt(None)
     c.save()
-    
+
     # reload extensions
     initialize.extensions(self)
