@@ -88,7 +88,6 @@ def update_movie(self):
             log.warn("cannot read temporary file: %s", new_image_path)
         else:
             new_poster_md5 = gutils.md5sum(file(new_image_path, 'rb'))
-            details['poster_md5'] = new_poster_md5
             if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
                 try:
                     data = file(new_image_path, 'rb').read()
@@ -106,6 +105,8 @@ def update_movie(self):
                     if old_poster and len(old_poster.movies) == 1: # other movies are not using the same poster
                         session.delete(old_poster)
                         delete.delete_poster_from_cache(old_poster_md5, self.locations['posters'])
+            else:
+                details['poster_md5'] = new_poster_md5
 
     update_movie_instance(movie, details, session)
 
@@ -687,6 +688,8 @@ def add_movie_db(self, close):
                     del details["image"]
                     details["poster_md5"] = new_poster_md5
                     session.add(poster)
+            else:
+                details["poster_md5"] = new_poster_md5
             try:
                 os.remove(tmp_image_path)
             except Exception, e:
