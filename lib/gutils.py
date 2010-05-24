@@ -480,7 +480,7 @@ def get_dependencies():
         'debian_req': '2.8.6-1'})
     try:
         import sqlalchemy
-        if map(int, sqlalchemy.__version__[:3].split('.')) < (0, 5):
+        if map(int, sqlalchemy.__version__[:3].split('.')) < [0, 5]:
             version = "-%s" % sqlalchemy.__version__
         else:
             version = sqlalchemy.__version__
