@@ -88,6 +88,7 @@ Source: dist\lib\plugins\movie\PluginMovieAniDB.py;         DestDir: {app}\lib\p
 Source: dist\lib\plugins\movie\PluginMovieCinematografo.py; DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Italian\Cinematografo
 Source: dist\lib\plugins\movie\PluginMovieCineMovies.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\French\CineMovies
 Source: dist\lib\plugins\movie\PluginMovieCineteka.py;      DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Portuguese\Cineteka
+Source: dist\lib\plugins\movie\PluginMovieClubedevideo.py;  DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Portuguese\Clubedevideo
 Source: dist\lib\plugins\movie\PluginMovieCSFD.py;          DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Czech\CSFD
 Source: dist\lib\plugins\movie\PluginMovieCulturalia.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Spanish\Culturalia
 Source: dist\lib\plugins\movie\PluginMovieDVDEmpire.py;     DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\English\DVD_Empire
@@ -200,6 +201,7 @@ Name: Movie_Import_Plugins\Polish\Wirtualna_Polska;  Description: Wirtualna Pols
 Name: Movie_Import_Plugins\Portuguese;               Description: Portuguese Import Plugins; Types: full
 Name: Movie_Import_Plugins\Portuguese\7arte;         Description: 7arte / 7arte.net; Types: full
 Name: Movie_Import_Plugins\Portuguese\Cineteka;      Description: Cineteka / cineteka.com; Types: full
+Name: Movie_Import_Plugins\Portuguese\Clubedevideo;  Description: Clubedevideo / www.clubedevideo.com; Types: full
 Name: Movie_Import_Plugins\Portuguese\PTGate;        Description: PTGate / cinema.ptgate.pt; Types: full
 
 Name: Movie_Import_Plugins\Brazilian_Portuguese;          Description: Brazilian Portuguese Import Plugins; Types: full
