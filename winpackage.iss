@@ -5,9 +5,9 @@
 AppName=Griffith
 AppVerName=Griffith 0.11
 AppPublisher=Vasco Nunes, Piotr Ożarowski
-AppPublisherURL=http://griffith.cc/
-AppSupportURL=http://griffith.cc/
-AppUpdatesURL=http://griffith.cc/
+AppPublisherURL=http://www.griffith.cc/
+AppSupportURL=http://www.griffith.cc/
+AppUpdatesURL=http://www.griffith.cc/
 DefaultDirName={pf}\Griffith
 DefaultGroupName=Griffith
 AllowNoIcons=true
@@ -100,6 +100,7 @@ Source: dist\lib\plugins\movie\PluginMovieFilmDb.py;        DestDir: {app}\lib\p
 Source: dist\lib\plugins\movie\PluginMovieFilmeVonAZ.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\German\Filme_von_A_bis_Z
 Source: dist\lib\plugins\movie\PluginMovieFilmtipset.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Swedish\Film_tip_set
 Source: dist\lib\plugins\movie\PluginMovieFilmweb.py;       DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Filmweb
+Source: dist\lib\plugins\movie\PluginMovieHKMDB.py;         DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\English\HKMDB
 Source: dist\lib\plugins\movie\PluginMovieIMDB.py;          DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\IMDB
 Source: dist\lib\plugins\movie\PluginMovieIMDB-de.py;       DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\German\IMDBde
 Source: dist\lib\plugins\movie\PluginMovieIMDB-es.py;       DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Spanish\IMDB_es
@@ -122,10 +123,10 @@ Source: dist\lib\plugins\movie\PluginMovieZelluloid.py;     DestDir: {app}\lib\p
 [Icons]
 Name: {group}\{cm:LaunchProgram,Griffith};    Filename: {app}\griffith.exe
 Name: {group}\{cm:UninstallProgram,Griffith}; Filename: {uninstallexe}
-Name: {group}\{cm:ProgramOnTheWeb,Griffith};  Filename: http://griffith.cc
+Name: {group}\{cm:ProgramOnTheWeb,Griffith};  Filename: http://www.griffith.cc
 Name: {group}\Debug\Griffith Debug Start;     Filename: {app}\griffith.exe;         Parameters: --debug
 Name: {group}\Debug\Griffith Log File;        Filename: %APPDATA%\Griffith\griffith.log
-Name: {group}\Doc\Griffith Forum;             Filename: http://griffith.cc/forum/
+Name: {group}\Doc\Griffith Forum;             Filename: http://www.griffith.cc/forum/
 Name: {group}\Doc\Griffith Wiki;              Filename: http://wiki.griffith.cc/
 ; some information files opened by iexplore which should work on most installations
 Name: {group}\Doc\INSTALL;     Filename: "{pf}\Internet Explorer\iexplore.exe"; Parameters: {app}\INSTALL;     IconFilename: %SystemRoot%\system32\SHELL32.dll; IconIndex: -152
@@ -161,6 +162,7 @@ Name: Movie_Import_Plugins\English;                  Description: English Import
 Name: Movie_Import_Plugins\English\AllMovie;         Description: All Media Guide / www.allmovie.com; Types: full
 Name: Movie_Import_Plugins\English\AnimeDB;          Description: AnimeDB / www.anidb.net; Types: full
 Name: Movie_Import_Plugins\English\DVD_Empire;       Description: DVD Empire / www.dvdempire.com; Types: full
+Name: Movie_Import_Plugins\English\HKMDB;            Description: Hongkong Movie Database / www.hkmdb.com; Types: full
 Name: Movie_Import_Plugins\English\Mediadis;         Description: Mediadis / www.mediadis.com; Types: full
 Name: Movie_Import_Plugins\English\Moviefone;        Description: Moviefone / www.moviefone.com; Types: full
 
