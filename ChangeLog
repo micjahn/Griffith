@@ -8,6 +8,7 @@ Griffith ChangeLog
 2010-06-25  Michael Jahn
 	* updated movie plugin KinoDe
 	* added HKMDB movie plugin
+	* [#596700] IMDB doesn't import original title correctly
 
 2010-06-07  Michael Jahn
 	* added Clubedevideo movie plugin
