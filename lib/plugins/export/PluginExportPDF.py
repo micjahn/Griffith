@@ -163,6 +163,9 @@ class ExportPlugin(Base):
                             image_filename = gutils.get_image_fname(movie.poster_md5, self.db, 'm')
                         if image_filename:
                             p = ParagraphAndImage(p, Image(image_filename, width = 30, height = 40), side = 'left')
+                            # wrap call needed because of a bug in reportlab flowables.py - ParagraphAndImage::split(self,availWidth, availHeight)
+                            # AttributeError: ParagraphAndImage instance has no attribute 'wI'
+                            p.wrap(30, 40)
                     Story.append(p)
                     if 'year' in pdf_elements and movie.year:
                         paragraph_text = '<b>' + _('Year') + ': </b>' + saxutils.escape(str(movie.year))
