@@ -2,6 +2,15 @@ Griffith 0.12
 =============
 * New import plugins:
    - Griffith XML
+* New movie plugins:
+   - Clubdevideo
+   - Hong Kong Movie DataBase (www.hkmdb.com)
+   - IMDb-it
+   - Scope (www.scope.dk)
+* Updated movie plugins: AniDB, DVDPalace, FileVonA-Z, IMDb, IMDb-de, IMDb-es, KinoDe, WP, Zelluloid
+* PDF export plugin updated (shows poster now; font size can be adjusted;
+  new elements covers, year, runtime, notes and plot; elements can be deselected)
+* bug fixes
 
 
 Griffith 0.11
