@@ -453,7 +453,7 @@ def create_select_query(self, columns, conditions, query):
     if not conditions:
         conditions = get_conditions(self.widgets["advfilter"])
 
-    if not query: # initial query not set so create one
+    if query is None: # initial query not set so create one
         if not columns:
             columns = get_select_columns(self.config)
         query = select(columns, bind=self.db.session.bind)

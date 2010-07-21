@@ -371,7 +371,7 @@ def populate(self, movies=None, where=None, qf=True):#{{{
     if self.initialized is False: # dont try to fill movie list if Griffith is not initialized yet
         return False
 
-    if qf and not movies or isinstance(movies, Select): # if ".execute().fetchall()" not invoked on movies yet
+    if qf and movies is None or isinstance(movies, Select): # if ".execute().fetchall()" not invoked on movies yet
         if not where: # due to possible 'seen', 'loaned', 'collection_id' in where
             import advfilter
 
