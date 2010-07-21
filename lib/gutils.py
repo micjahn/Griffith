@@ -745,3 +745,42 @@ def get_defaultimage_fname(self):
 
 def get_defaultthumbnail_fname(self):
     return os.path.join(self.locations['images'], 'default_thumbnail.png')
+
+def get_filesystem_pagesize(path):
+    pagesize = 1024
+    # retrieve filesystem page size for optimizing filesystem based database systems like sqlite
+    try:
+        if is_windows_system():
+            pagesize = 4096 # almost the best for standard windows systems
+
+            # try to find the perfect value from the filesystem
+            import ctypes
+
+            drive = os.path.splitdrive(path)
+            sectorsPerCluster = ctypes.c_ulonglong(0)
+            bytesPerSector = ctypes.c_ulonglong(0)
+            rootPathName = ctypes.c_wchar_p(unicode(drive[0]))
+
+            ctypes.windll.kernel32.GetDiskFreeSpaceW(rootPathName,
+                ctypes.pointer(sectorsPerCluster),
+                ctypes.pointer(bytesPerSector),
+                None,
+                None,
+            )
+            pagesize = sectorsPerCluster.value * bytesPerSector.value
+        else:
+            # I could not try it out on non-windows platforms
+            # if it doesn't work the default page size is returned
+            from os import statvfs
+            stats = statvfs(path)
+            pagesize = stats.f_bsize
+    except:
+        log.error('')
+
+    # adjust page size
+    if pagesize > 32768:
+        pagesize = 32768
+    if pagesize < 1024:
+        pagesize = 1024
+
+    return pagesize

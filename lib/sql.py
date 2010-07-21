@@ -35,6 +35,7 @@ from sqlalchemy.sql.expression import Update, Delete
 
 import db # ORM data (SQLAlchemy stuff)
 from gutils import warning # TODO: get rid of this import
+from gutils import get_filesystem_pagesize
 
 log = logging.getLogger("Griffith")
 
@@ -68,8 +69,14 @@ class GriffithSQL(object):
                             'engine_kwargs': {'echo': False, 'convert_unicode': False}})
 
         # connect to database --------------------------------------{{{
+        dbinitializingsql = None
         if config.get('type', section='database') == 'sqlite':
-            url = "sqlite:///%s.db" % os.path.join(griffith_dir, conn_params['name'])
+            sqlitefile = "%s.db" % os.path.join(griffith_dir, conn_params['name'])
+            if not os.path.isfile(sqlitefile):
+                # for new created database this is an optimization step syncing the database page size
+                # to the filesystem page size
+                dbinitializingsql = 'PRAGMA page_size=' + str(get_filesystem_pagesize(sqlitefile))
+            url = "sqlite:///%s" % sqlitefile
         elif config.get('type', section='database') == 'postgres':
             url = "postgres://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s" % conn_params
         elif config.get('type', section='database') == 'mysql':
@@ -94,6 +101,8 @@ class GriffithSQL(object):
         try:
             engine = create_engine(url, **conn_params['engine_kwargs'])
             conn = engine.connect()
+            if dbinitializingsql is not None:
+                engine.execute(dbinitializingsql)
         except Exception, e:    # InvalidRequestError, ImportError
             log.info("MetaData: %s", e)
             if not fallback:
