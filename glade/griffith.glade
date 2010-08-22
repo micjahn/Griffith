@@ -191,6 +191,40 @@
                         </child>
                       </widget>
                     </child>
+                    <child>
+                      <widget class="GtkSeparatorMenuItem" id="separator7">
+                        <property name="visible">True</property>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkMenuItem" id="poster1">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Poster image</property>
+                        <property name="use_underline">True</property>
+                        <child>
+                          <widget class="GtkMenu" id="poster1_menu">
+                            <child>
+                              <widget class="GtkImageMenuItem" id="open_poster">
+                                <property name="visible">True</property>
+                                <property name="label">gtk-open</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_stock">True</property>
+                                <signal name="activate" handler="on_open_poster_clicked"/>
+                              </widget>
+                            </child>
+                            <child>
+                              <widget class="GtkImageMenuItem" id="delete_poster">
+                                <property name="visible">True</property>
+                                <property name="label">gtk-delete</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_stock">True</property>
+                                <signal name="activate" handler="on_delete_poster_clicked"/>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
                   </widget>
                 </child>
               </widget>
