@@ -41,22 +41,24 @@ from initialize import dictionaries, people_treeview
 
 log = logging.getLogger('Griffith')
 
+
 def create(self):
     """perform a compressed griffith database/posters/preferences backup"""
     #if self.db.session.bind.engine.name != 'sqlite':
     #    gutils.error(_("Backup function is available only for SQLite engine for now"), self.widgets['window'])
     #    return False
 
-    default_name = "%s_backup_%s.zip" % (self.config.get('name','griffith', section='database'),\
+    default_name = "%s_backup_%s.zip" % (self.config.get('name', 'griffith', section='database'),\
                     datetime.date.isoformat(datetime.datetime.now()))
     filename = gutils.file_chooser(_("Save Griffith backup"), \
-        action=gtk.FILE_CHOOSER_ACTION_SAVE, name=default_name, buttons= \
-        (gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK))
+        action=gtk.FILE_CHOOSER_ACTION_SAVE, name=default_name, \
+        buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK))
 
     if filename and filename[0]:
         proceed = True
 
         zipfilename = filename[0].decode('utf-8')
+        log.debug('Backup filename: %s' % zipfilename)
         if os.path.isfile(zipfilename):
             if not gutils.question(_("File exists. Do you want to overwrite it?"), window=self.widgets['window']):
                 proceed = False
@@ -64,15 +66,18 @@ def create(self):
         if proceed:
             try:
                 if zipfile.zlib is not None:
+                    log.debug('Creating zip file with compression')
                     mzip = zipfile.ZipFile(zipfilename, 'w', zipfile.ZIP_DEFLATED)
                 else:
+                    log.debug('Creating zip file without compression')
                     mzip = zipfile.ZipFile(zipfilename, 'w')
             except:
                 gutils.error(_("Error creating backup"), self.widgets['window'])
                 return False
+            log.debug('Preparing data and saving it to the zip archive')
             if self.db.session.bind.engine.name == 'sqlite':
-                mzip.write(os.path.join(self.locations['home'],'griffith.cfg').encode('utf-8'), arcname='griffith.cfg')
-                db_file_name = "%s.db" % self.config.get('name','griffith', section='database')
+                mzip.write(os.path.join(self.locations['home'], 'griffith.cfg').encode('utf-8'), arcname='griffith.cfg')
+                db_file_name = "%s.db" % self.config.get('name', 'griffith', section='database')
                 file_path = os.path.join(self.locations['home'], db_file_name).encode('utf-8')
                 mzip.write(file_path, arcname=db_file_name)
             else:
@@ -92,11 +97,11 @@ def create(self):
                     # SQLite doesn't care about foreign keys much so we can just copy the data
                     for table in db.metadata.sorted_tables:
                         if table.name in ('posters', 'filters'):
-                            continue # see below
+                            continue  # see below
                         data = table.select(bind=self.db.session.bind).execute().fetchall()
                         if data:
                             table.insert(bind=tmp_engine).execute(data)
-                    
+
                     # posters
                     for poster in db.metadata.tables['posters'].select(bind=self.db.session.bind).execute():
                         db.metadata.tables['posters'].insert(bind=tmp_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
@@ -106,24 +111,30 @@ def create(self):
                     rmtree(tmp_dir)
             gutils.info(_("Backup has been created"), self.widgets['window'])
 
+
+@gutils.popup_message(_('Restoring database...'))
 def copy_db(src_engine, dst_engine):
     log.debug('replacing old database with new one')
-    db.metadata.drop_all(dst_engine) # remove all previous data
-    db.metadata.create_all(dst_engine) # create table stucture
-    
+    db.metadata.drop_all(dst_engine)  # remove all previous data
+    db.metadata.create_all(dst_engine)  # create table stucture
+
     # posters
     for poster in db.metadata.tables['posters'].select(bind=src_engine).execute():
         db.metadata.tables['posters'].insert(bind=dst_engine).execute(md5sum=poster.md5sum, data=StringIO(poster.data).read())
 
     for table in db.metadata.sorted_tables:
         if table.name in ('posters',):
-            continue # see above
+            continue  # see above
         log.debug('... processing %s table', table)
         data = [dict((col.key, row[col.name]) for col in table.c)
                     for row in src_engine.execute(table.select())]
         if data:
             log.debug('inserting new data...')
-            dst_engine.execute(table.insert(), data)
+            insertcmd = table.insert()
+            # insert in steps of 100 items because otherwise there is an error with mysql
+            # I tried to insert more than 800 movies at ones: OperationalError
+            for partition in range(0, len(data), 100):
+                dst_engine.execute(insertcmd, data[partition:partition + 100])
 
             if dst_engine.name == 'postgres':
                 # update current value of sequences
@@ -138,18 +149,19 @@ def copy_db(src_engine, dst_engine):
                         e = getattr(e, 'message', e)
                         log.error('... cannot update sequence: %s', e)
 
-def merge_db(src_db, dst_db): # FIXME
+
+def merge_db(src_db, dst_db):  # FIXME
     merged = 0
-    dst_db.session.rollback() # cancel all pending operations
-    src_session = src_db.Session() # create new session
-    dst_session = dst_db.Session() # create new session
+    dst_db.session.rollback()  # cancel all pending operations
+    src_session = src_db.Session()  # create new session
+    dst_session = dst_db.Session()  # create new session
     movies = src_session.query(db.Movie).count()
     for movie in src_session.query(db.Movie).all():
         if dst_session.query(db.Movie).filter_by(o_title=movie.o_title).first() is not None:
             continue
         t_movies = {}
         for column in movie.mapper.c.keys():
-            t_movies[column] = eval("movie.%s"%column)
+            t_movies[column] = eval("movie.%s" % column)
 
         # replace number with new one
         t_movies["number"] = gutils.find_next_available(dst_db)
@@ -160,17 +172,18 @@ def merge_db(src_db, dst_db): # FIXME
         t_movies.pop('volume_id')
         t_movies.pop('collection_id')
 
-        if dst_db.add_movie(t_movies): # FIXME
+        if dst_db.add_movie(t_movies):  # FIXME
             print t_movies
 
         if movie.image is not None:
-            dest_file = os.path.join(self.locations['posters'], movie.image+'.jpg')
+            dest_file = os.path.join(self.locations['posters'], movie.image + '.jpg')
             if not os.path.isfile(dest_file):
-                src_file = os.path.join(tmp_dir, movie.image+'.jpg')
+                src_file = os.path.join(tmp_dir, movie.image + '.jpg')
                 if os.path.isfile(src_file):
                     move(src_file, dest_file)
         merged += 1
     return merged
+
 
 def restore(self, merge=False):
     """
@@ -182,8 +195,8 @@ def restore(self, merge=False):
 
     # let user select a backup file
     filename = gutils.file_chooser(_("Restore Griffith backup"), \
-                    action=gtk.FILE_CHOOSER_ACTION_OPEN, backup=True, buttons= \
-                    (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))[0]
+                    action=gtk.FILE_CHOOSER_ACTION_OPEN, backup=True, \
+                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))[0]
     if not filename:
         log.debug('no file selected')
         return False
@@ -218,7 +231,7 @@ def restore(self, merge=False):
                     outfile.write(zip_file.read(file_path))
                     outfile.close()
             zip_file.close()
-            
+
             # restore config file (new one will be created if old config format is detected)
             tmp_config = config.Config(file=os.path.join(tmp_dir, 'griffith.cfg'))
             if old_config_file:
@@ -231,7 +244,7 @@ def restore(self, merge=False):
 
             # update filename var. to point to the unpacked database
             filename = os.path.join(tmp_dir, tmp_config.get('name', 'griffith', section='database') + '.db')
-        else: # not a zip file? prepare a fake config file then
+        else:  # not a zip file? prepare a fake config file then
             tmp_config = config.Config(file=os.path.join(tmp_dir, 'griffith.cfg'))
             tmp_config.set('type', 'sqlite', section='database')
             tmp_config.set('file', 'griffith.db', section='database')
@@ -251,7 +264,7 @@ def restore(self, merge=False):
         if merge:
             merge_db(tmp_db, self.db)
         else:
-            self.db.session.rollback() # cancel all pending operations
+            self.db.session.rollback()  # cancel all pending operations
             copy_db(tmp_db.session.bind, self.db.session.bind)
             # update old database section with current config values
             # (important while restoring to external databases)
@@ -268,12 +281,11 @@ def restore(self, merge=False):
         self.populate_treeview()
         #gutils.info(_("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
         gutils.info(_("Backup restored"), self.widgets['window'])
-        # disposing the temporary db connection
-        tmp_db.dispose()
     except:
         log.exception('')
         raise
     finally:
+        # disposing the temporary db connection before rmtree and in finally block to avoid locked db file
+        tmp_db.dispose()
         log.debug('temporary directory no logger needed, removing %s', tmp_dir)
         rmtree(tmp_dir)
-
