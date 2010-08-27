@@ -58,7 +58,7 @@ def create(self):
         proceed = True
 
         zipfilename = filename[0].decode('utf-8')
-        log.debug('Backup filename: %s' % zipfilename)
+        log.debug('Backup filename: %s', zipfilename)
         if os.path.isfile(zipfilename):
             if not gutils.question(_("File exists. Do you want to overwrite it?"), window=self.widgets['window']):
                 proceed = False
