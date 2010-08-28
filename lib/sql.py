@@ -167,12 +167,12 @@ def update_whereclause(query, cond): # {{{
     if cond["collections"]:
         query = query.where(db.Movie.collection_id.in_(cond["collections"]))
     if cond["no_collections"]:
-        query = query.where(~db.Movie.collection_id.in_(cond["no_collections"]))
+        query = query.where(or_(~db.Movie.collection_id.in_(cond["no_collections"]), db.Movie.collection_id == None))
 
     if cond["volumes"]:
         query = query.where(db.Movie.volume_id.in_(cond["volumes"]))
     if cond["no_volumes"]:
-        query = query.where(~db.Movie.volume_id.in_(cond["no_volumes"]))
+        query = query.where(or_(~db.Movie.volume_id.in_(cond["no_volumes"]), db.Movie.volume_id == None))
 
     loaned_to = []
     for per_id in cond["loaned_to"]:
