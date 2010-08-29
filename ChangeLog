@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2010  Vasco Nunes, Piotr Ożarowski
 
 
+2010-08-29  Piotr Ożarowski
+    * Show deprecation warnings only in debug mode
+
 2010-07-21  Michael Jahn
 	* compatibility fixes for sqlalchemy 0.6
 	* adjusting sqlite page size to the value of the filesystem page size

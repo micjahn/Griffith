@@ -42,7 +42,7 @@ def check_args():
     default_lang, default_enc = getdefaultlocale()
     if not default_enc:
         default_enc = 'UTF-8'
-    
+
     if os.name == 'nt' or os.name.startswith('win'): # win32, win64
         from win32com.shell import shellcon, shell
         import shutil
@@ -54,7 +54,7 @@ def check_args():
             mydocs = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_PERSONAL | 0x4000, 0, 0), u'griffith')
             if os.path.exists(mydocs):
                 shutil.move(mydocs, home)
-        
+
     else:
         home = os.path.expanduser('~/.griffith').decode(default_enc)
     config = 'griffith.cfg'
@@ -69,7 +69,7 @@ def check_args():
             # print help information and exit:
             con_usage()
             sys.exit(2)
-        
+
         for o, a in opts:
             if o in ('-h', '--help'):
                 con_usage()
@@ -155,7 +155,7 @@ def con_search_movie(self, where, sort=None):
     import db
     mt = db.metadata.tables['movies'].columns
     columns = (mt.number, mt.title, mt.o_title, mt.director, mt.year)
-    
+
     sort_columns = []
     if sort:
         for i in sort.split(','):
@@ -291,9 +291,9 @@ Examples:
 >>> person = sess.query(db.Person).first()
 >>> print "%s has %d movies loaned" % (person.name, person.loaned_movies_count)
 """
-    
+
     ### prepare local env. ###
-    
+
     # create a playground in memory
     mem_engine = sa.create_engine('sqlite:///:memory:')
     db.metadata.create_all(bind=mem_engine) # create tables
@@ -310,7 +310,7 @@ Examples:
             #'griffith': self,
            }
     #exec 'from db import *' in locs
- 
+
     ### prepare the shell ###
     try:
         ipython_args = [] # TODO: do we want to pass some args here?

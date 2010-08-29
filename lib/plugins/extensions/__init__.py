@@ -67,7 +67,7 @@ class GriffithExtensionBase(object):
             raise DeprecationWarning("Extension is using API that is no longer supported: %s (api=%d)" % (class_.name, class_.api))
         if class_.api > COMPAT[1]:
             raise NotImplementedError("Extension is using API that is not yet supported: %s (api=%d)" % (class_.name, class_.api))
-        obj = object.__new__(class_, *args, **kwargs)
+        obj = object.__new__(class_)
         obj.app = app = args[0]
         obj.widgets = app.widgets
         obj.config = app.config
