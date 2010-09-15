@@ -662,8 +662,7 @@ def md5sum(fobj):
 
 
 def create_image_cache(md5sum, gsql):
-    session = gsql.Session()
-    poster = session.query(db.Poster).filter_by(md5sum=md5sum).first()
+    poster = gsql.session.query(db.Poster).filter_by(md5sum=md5sum).first()
     if not poster:
         log.warn("poster not available: %s", md5sum)
         return False

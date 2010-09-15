@@ -30,7 +30,7 @@ import os.path
 
 from sqlalchemy import create_engine, or_, and_, not_, exists, asc, desc
 from sqlalchemy.exceptions import OperationalError
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.sql.expression import Update, Delete
 
 import db # ORM data (SQLAlchemy stuff)
@@ -113,7 +113,9 @@ class GriffithSQL(object):
             engine = create_engine(url)
             conn = engine.connect()
 
-        self.Session = sessionmaker(bind=engine) # create new sessions using this class
+        # scoped_session(...) is a workaround for unclosed sessions in the program
+        # https://bugs.launchpad.net/griffith/+bug/574370
+        self.Session = scoped_session(sessionmaker(bind=engine)) # create new sessions using this class
         self.engine = engine
         self.session = self.Session() # TODO: get rid of it, force developers to create new session using gsql.Session()
         #}}}
