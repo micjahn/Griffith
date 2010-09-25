@@ -47,8 +47,8 @@ class ExportPlugin(Base):
     settings = {
         'sorting'           : 'movies_title',
         'sorting2'          : 'ASC',
-        'exported_dir'      : 'griffith_movies',
-        'template'          : 0,
+        'export_dir'        : '',
+        'template'          : 2,
         'title'             : _("Griffith's movies list"),
         'style'             : 0,
         'custom_style'      : False,
@@ -59,7 +59,7 @@ class ExportPlugin(Base):
         'poster_height'     : 200,
         'poster_width'      : 150,
         'poster_mode'       : 'RGB', # RGB == color, L == black and white
-        'poster_format'     : 'jpg'
+        'poster_format'     : 'jpeg'
     }
     fields = {
         'movies_cast'           : False,
@@ -181,9 +181,35 @@ class ExportPlugin(Base):
         self.templates = self.make_template_list()
         # glade
         gf = os.path.join(self.locations['glade'], 'exporthtml.glade')
+        self.load_configuration()
         self.define_widgets(gtk.glade.XML(gf))
         self.fill_widgets()
         return True
+    #}}}
+    
+    def load_configuration(self): #{{{
+        # persist config
+        if self.config is not None:
+            config = self.settings
+            for name, value in config.items():
+                try:
+                    tmp = self.config.get(name, value, section='export-html')
+                    if isinstance(value, bool):
+                        config[name] = bool(int(tmp))
+                    elif isinstance(value, int):
+                        config[name] = int(tmp)
+                    else:
+                        config[name] = tmp
+                except:
+                    pass
+            selected_fields = self.config.get('selected_fields', '', section='export-html')
+            if selected_fields:
+                for name in self.fields:
+                    self.fields[name] = False
+                selected_fields = selected_fields.split(',')
+                for selected_field in selected_fields:
+                    if selected_field in self.fields:
+                        self.fields[selected_field] = True
     #}}}
 
     def run(self):
@@ -322,7 +348,7 @@ class ExportPlugin(Base):
         pos_o_title = 0
         for i in keys:
             self.widgets['combo_sortby'].append_text(i)
-            if i == _('Original Title'):
+            if self.names[i] == self.settings['sorting']:
                 pos_o_title = j
             j = j + 1
         self.widgets['combo_sortby'].set_wrap_width(3)
@@ -349,8 +375,18 @@ class ExportPlugin(Base):
 
         # set defaults --------------------------------
         self.widgets['entry_header'].set_text(self.settings['title'])
-        self.widgets['combo_theme'].set_active(2)    # html_tables
-        self.widgets['combo_sortby'].set_active(pos_o_title)    # orginal title
+        self.widgets['combo_sortby'].set_active(pos_o_title)
+        if self.settings['sorting2'] == 'DESC':
+            self.widgets['cb_reverse'].set_active(True)
+        else:
+            self.widgets['cb_reverse'].set_active(False)
+        # template and theme
+        style = self.settings['style'] # save it temporary because change of the template set it 0
+        self.widgets['combo_theme'].set_active(self.settings['template'])
+        self.widgets['combo_style'].set_active(style)
+        self.widgets['cb_custom_style'].set_active(self.settings['custom_style'])
+        if self.settings['custom_style_file']:
+            self.widgets['fcb_custom_style_file'].set_filename(self.settings['custom_style_file'])
         # spliting
         self.widgets['sb_split_num'].set_value(self.settings['split_num'])
         if self.settings['split_by'] == 0:
@@ -359,17 +395,23 @@ class ExportPlugin(Base):
             self.widgets['rb_split_movies'].set_active(True)
         # posters
         self.widgets['combo_format'].set_active(0)
+        if self.settings['poster_format'] == 'PNG':
+            self.widgets['combo_format'].set_active(1)
+        elif self.settings['poster_format'] == 'GIF':
+            self.widgets['combo_format'].set_active(2)
         if self.settings['poster_convert'] and self.settings['poster_convert'] == True:
             self.widgets['cb_convert'].set_active(True)
             self.widgets['vb_posters'].set_sensitive(True)
         else:
             self.widgets['cb_convert'].set_active(False)
             self.widgets['vb_posters'].set_sensitive(False)
-        # persistent config
-        if self.config is not None:
-            tmp = self.config.get('export_dir', None, section='export-html')
-            if not tmp is None:
-                self.widgets['fcw'].set_current_folder(tmp)
+        self.widgets['sb_height'].set_value(self.settings['poster_height'])
+        self.widgets['sb_width'].set_value(self.settings['poster_width'])
+        if self.settings['poster_mode'] == 'L':
+            self.widgets['cb_black'].set_active(True)
+        # destination dir
+        if self.settings['export_dir']:
+            self.widgets['fcw'].set_current_folder(self.settings['export_dir'])
     #}}}
 
     #==[ callbacks ]================================{{{
@@ -526,7 +568,7 @@ class ExportPlugin(Base):
         tid = config['template']
         
         # get data from widgets
-        self.settings['exported_dir'] = self.widgets['fcw'].get_filename()
+        self.settings['export_dir']   = self.widgets['fcw'].get_filename()
         self.settings['title']        = self.widgets['entry_header'].get_text().decode('utf-8')
         self.settings['sorting']      = self.names[self.widgets['combo_sortby'].get_active_text().decode('utf-8')]
         if self.widgets['cb_reverse'].get_active():
@@ -542,30 +584,36 @@ class ExportPlugin(Base):
             self.settings['poster_mode'] = 'RGB'
         self.settings['poster_format'] = self.widgets['combo_format'].get_active_text()
 
+        # persist config
+        if self.config is not None:
+            for name, value in config.items():
+                self.config.set(name, value, section='export-html')
+            selected_fields = ''
+            for name, value in self.fields.items():
+                if value:
+                    selected_fields = selected_fields + name + ','
+            self.config.set('selected_fields', selected_fields, section='export-html')
+            self.config.save()
+
         # create directories
-        if not config['exported_dir']:
+        if not config['export_dir']:
             log.info("Error: Folder name not set!")
             return 1
         
-        if not os.path.isdir(config['exported_dir']):
+        if not os.path.isdir(config['export_dir']):
             try:
-                os.mkdir(config['exported_dir'])
+                os.mkdir(config['export_dir'])
             except:
-                gutils.error(_("Can't create %s!") % config['exported_dir'])
+                gutils.error(_("Can't create %s!") % config['export_dir'])
                 return 2
             
         data_path = os.path.join(self.locations['share'], 'export_templates', self.templates[tid]['dir'], 'data')
         if os.path.isdir(data_path):
             try:
-                gutils.copytree(data_path, config['exported_dir'])
+                gutils.copytree(data_path, config['export_dir'])
             except Exception, err:
                 gutils.warning(str(err))
         
-        # persist config
-        if self.config is not None:
-            self.config.set('export_dir', config['exported_dir'], section='export-html')
-            self.config.save()
-
         if fields['movies_image']:
             # import modules needed later
             # modules are needed at least to convert griffith.png to nopic.(gif|jpeg|png)
@@ -579,13 +627,13 @@ class ExportPlugin(Base):
             if not config['poster_convert']:
                 config['poster_format'] = 'jpeg' # replace 'jpeg'
             
-            posters_dir = os.path.join(config['exported_dir'], 'posters')
+            posters_dir = os.path.join(config['export_dir'], 'posters')
             if os.path.isdir(posters_dir):
                 if gutils.question(_("Directory %s already exists.\nDo you want to overwrite it?") % posters_dir, self.widgets['window']):
                     try:
                         shutil.rmtree(posters_dir)
                     except:
-                        gutils.error(_("Can't remove %s!") % config['exported_dir'])
+                        gutils.error(_("Can't remove %s!") % config['export_dir'])
                         return 3
                 else:
                     return 4
@@ -598,7 +646,7 @@ class ExportPlugin(Base):
         if config['custom_style']:
             if config['custom_style_file'] is not None and os.path.isfile(config['custom_style_file']):
                 try:
-                    shutil.copy(config['custom_style_file'],config['exported_dir'])
+                    shutil.copy(config['custom_style_file'],config['export_dir'])
                 except:
                     gutils.warning(_("Can't copy %s!")%style_file)
                     config['custom_style'] = False
@@ -611,7 +659,7 @@ class ExportPlugin(Base):
             style = self.templates[tid]['styles'][config['style']]['file']
             style_path = os.path.join(self.locations['share'], 'export_templates', self.templates[tid]['dir'], style)
             try:
-                shutil.copy(style_path,config['exported_dir'])
+                shutil.copy(style_path,config['export_dir'])
             except:
                 gutils.warning(_("Can't copy %s!")%style_path)
 
@@ -685,7 +733,7 @@ class ExportPlugin(Base):
         for row in exported_movies:    # fill items {{{
             # check if new file has to be created
             if item==1:
-                filename = os.path.join(config['exported_dir'],'page_%s.' % page + self.templates[tid]['ext'])
+                filename = os.path.join(config['export_dir'],'page_%s.' % page + self.templates[tid]['ext'])
                 try:
                     exported_file = file(filename, 'w')
                 except:
@@ -775,18 +823,19 @@ class ExportPlugin(Base):
                 item=item+1
             i=i+1
         #}}}
-        # convert/copy the griffith picture for movies without a poster
-        image_file_src = os.path.join(self.locations['images'], 'griffith.png')
-        image_file_dst = os.path.join(posters_dir, 'nopic.' + config['poster_format'].lower())
-        try:
-            if config['poster_convert']:
-                im = Image.open(image_file_src, 'r').convert(config['poster_mode'])
-                im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
-            else:
-                im = Image.open(image_file_src, 'r')
-            im.save(image_file_dst, config['poster_format'])
-        except:
-            log.info("Can't convert %s" % image_file_src)
+        if fields['movies_image']:
+            # convert/copy the griffith picture for movies without a poster
+            image_file_src = os.path.join(self.locations['images'], 'griffith.png')
+            image_file_dst = os.path.join(posters_dir, 'nopic.' + config['poster_format'].lower())
+            try:
+                if config['poster_convert']:
+                    im = Image.open(image_file_src, 'r').convert(config['poster_mode'])
+                    im.thumbnail((config['poster_width'], config['poster_height']), Image.ANTIALIAS)
+                else:
+                    im = Image.open(image_file_src, 'r')
+                im.save(image_file_dst, config['poster_format'])
+            except:
+                log.info("Can't convert %s" % image_file_src)
         gutils.info(_("Document has been generated."), self.widgets['window'])
         self.on_quit()
     #}}}
