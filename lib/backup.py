@@ -87,6 +87,7 @@ def create(self):
                     tmp_config._file = os.path.join(tmp_dir, 'griffith.cfg')
                     tmp_config.set('type', 'sqlite', section='database')
                     tmp_config.set('file', 'griffith.db', section='database')
+                    tmp_config.set('name', 'griffith', section='database')
                     tmp_config.save()
                     mzip.write(tmp_config._file, arcname='griffith.cfg')
 
@@ -108,6 +109,8 @@ def create(self):
 
                     mzip.write(tmp_file, arcname='griffith.db')
                 finally:
+                    # disposing the temporary db connection before rmtree and in finally block to avoid locked db file
+                    tmp_engine.dispose()
                     rmtree(tmp_dir)
             gutils.info(_("Backup has been created"), self.widgets['window'])
 
