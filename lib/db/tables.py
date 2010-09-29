@@ -21,8 +21,9 @@ __revision__ = '$Id$'
 # You may use and distribute this software under the terms of the
 # GNU General Public License, version 2 or later
 
+import datetime
 from sqlalchemy import Table, Column, ForeignKey, func
-from sqlalchemy.types import Boolean, Unicode, Text, Integer, SmallInteger, Date, Binary, PickleType
+from sqlalchemy.types import Boolean, Unicode, Text, Integer, SmallInteger, Date, Binary, PickleType, DateTime
 
 from db import metadata
 
@@ -90,6 +91,8 @@ movies = Table('movies', metadata,
     Column('plot', Text),
     Column('notes', Text),
     Column('image', Unicode(128)), # XXX: deprecated
+    Column('created', DateTime, default=datetime.datetime.now),
+    Column('updated', DateTime, onupdate=datetime.datetime.now),
     )
 
 people = Table('people', metadata,

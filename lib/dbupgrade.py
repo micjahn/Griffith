@@ -238,6 +238,25 @@ def upgrade_database(self, version, config):
         self.session.add(db_version)
         self.session.commit()
 
+    if version == 5:    # fix changes between v5 and v6
+        version += 1
+        log.info("Upgrading database to version %d...", version)
+        
+        # common SQL statements
+        queries = {'created': 'ALTER TABLE movies ADD created DATETIME;',
+                   'updated': 'ALTER TABLE movies ADD updated DATETIME;'}
+        for key, query in queries.items():
+            try:
+                self.session.bind.execute(query)
+            except Exception, e:
+                log.error("Cannot add '%s' column: %s", key, e)
+                return False
+
+        db_version = self.session.query(db.Configuration).filter_by(param=u'version').one()
+        db_version.value = unicode(version)
+        self.session.add(db_version)
+        self.session.commit()
+
     return True
 
 

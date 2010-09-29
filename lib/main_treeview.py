@@ -434,7 +434,7 @@ def populate(self, movies=None, where=None, qf=True):#{{{
     sort_column_id, order = self.treemodel.get_sort_column_id()
 
     # new treemodel (faster and prevents some problems)
-    self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str, int)
+    self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str, int, str, str)
 
     # check preferences to hide or show columns
     if self.config.get('number', True, 'mainlist') == True:
@@ -477,6 +477,14 @@ def populate(self, movies=None, where=None, qf=True):#{{{
         self.rating_column.set_visible(True)
     else:
         self.rating_column.set_visible(False)
+    if self.config.get('created', True, 'mainlist') == True:
+        self.created_column.set_visible(True)
+    else:
+        self.created_column.set_visible(False)
+    if self.config.get('updated', True, 'mainlist') == True:
+        self.updated_column.set_visible(True)
+    else:
+        self.updated_column.set_visible(False)
 
     for movie in movies:
         myiter = self.treemodel.append(None)
@@ -507,6 +515,10 @@ def populate(self, movies=None, where=None, qf=True):#{{{
             self.treemodel.set_value(myiter, 8, '%003d' % movie.runtime + _(' min'))
         if movie.rating is not None and (isinstance(movie.rating, int) or isinstance(movie.rating, long)):
             self.treemodel.set_value(myiter, 9, movie.rating)
+        if movie.created:
+            self.treemodel.set_value(myiter, 10, movie.created.strftime('%Y-%m-%d %H:%M'))
+        if movie.updated:
+            self.treemodel.set_value(myiter, 11, movie.updated.strftime('%Y-%m-%d %H:%M'))
 
     # restore user sort column
     if sort_column_id is not None:

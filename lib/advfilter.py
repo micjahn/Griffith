@@ -445,7 +445,7 @@ def get_select_columns(config): # {{{
         db.Movie.director, db.Movie.poster_md5,
         db.Movie.genre, db.Movie.seen,
         db.Movie.year, db.Movie.runtime,
-        db.Movie.rating]
+        db.Movie.rating, db.Movie.created, db.Movie.updated]
     return columns_to_select # }}}
 
 

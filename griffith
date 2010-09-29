@@ -1213,6 +1213,12 @@ You can't undo this operation."""), self.widgets['window']):
             elif treeview_column == self.rating_column:
                 columnorder = columnorder + delimiter + 'rating'
                 delimiter = ','
+            elif treeview_column == self.created_column:
+                columnorder = columnorder + delimiter + 'created'
+                delimiter = ','
+            elif treeview_column == self.updated_column:
+                columnorder = columnorder + delimiter + 'updated'
+                delimiter = ','
         self.config.set('columnorder', columnorder, section='mainlist')
         columnsorting = self.treemodel.get_sort_column_id()
         self.config.set('columnsortid', columnsorting[0], section='mainlist')

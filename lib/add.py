@@ -142,6 +142,10 @@ def update_movie(self):
             tmp_model.set_value(tmp_iter, 9, '')
         else:
             tmp_model.set_value(tmp_iter, 9, movie.rating)
+        if movie.created:
+            tmp_model.set_value(tmp_iter, 10, movie.created.strftime('%Y-%m-%d %H:%M'))
+        if movie.updated:
+            tmp_model.set_value(tmp_iter, 11, movie.updated.strftime('%Y-%m-%d %H:%M'))
         # close add window
         self.widgets['add']['window'].hide()
         # refresh
@@ -377,6 +381,8 @@ def get_details(self): #{{{
         'cast': cast_buffer.get_text(cast_buffer.get_start_iter(), cast_buffer.get_end_iter()).decode('utf-8'),
         'notes': notes_buffer.get_text(notes_buffer.get_start_iter(), notes_buffer.get_end_iter()).decode('utf-8'),
         'plot': plot_buffer.get_text(plot_buffer.get_start_iter(), plot_buffer.get_end_iter()).decode('utf-8'),
+        'created': None,
+        'updated': None
     }
     if self._am_movie_id is not None:
         t_movies['movie_id'] = self._am_movie_id
@@ -736,6 +742,10 @@ def add_movie_db(self, close):
         self.treemodel.set_value(myiter, 9, '')
     else:
         self.treemodel.set_value(myiter, 9, int(details['rating']))
+    if details['created']:
+        self.treemodel.set_value(myiter, 10, details['created'].strftime('%Y-%m-%d %H:%M'))
+    if details['updated']:
+        self.treemodel.set_value(myiter, 11, details['updated'].strftime('%Y-%m-%d %H:%M'))
     #update statusbar
     self.total += 1
     self.count_statusbar()

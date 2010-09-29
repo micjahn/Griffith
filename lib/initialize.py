@@ -167,7 +167,7 @@ def toolbar(self):
 
 
 def treeview(self):
-    self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str, int)
+    self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str, int, str, str)
     self.widgets['treeview'].set_model(self.treemodel)
     self.widgets['treeview'].set_headers_visible(True)
     # number column
@@ -245,6 +245,24 @@ def treeview(self):
     self.rating_column.set_alignment(0.5)
     self.rating_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.rating_column)
+    # created column
+    renderer = gtk.CellRendererText()
+    renderer.set_property('xalign', 0.5)
+    self.created_column = gtk.TreeViewColumn(_('Created'), renderer, text=10)
+    self.created_column.set_sort_column_id(10)
+    self.created_column.set_resizable(True)
+    self.created_column.set_alignment(0.5)
+    self.created_column.set_reorderable(True)
+    self.widgets['treeview'].append_column(self.created_column)
+    # updated column
+    renderer = gtk.CellRendererText()
+    renderer.set_property('xalign', 0.5)
+    self.updated_column = gtk.TreeViewColumn(_('Updated'), renderer, text=11)
+    self.updated_column.set_sort_column_id(11)
+    self.updated_column.set_resizable(True)
+    self.updated_column.set_alignment(0.5)
+    self.updated_column.set_reorderable(True)
+    self.widgets['treeview'].append_column(self.updated_column)
     # reflect saved column order
     columnorder = self.config.get('columnorder', None, section='mainlist')
     if not columnorder is None:
@@ -281,6 +299,12 @@ def treeview(self):
             elif col == 'rating':
                 self.widgets['treeview'].move_column_after(self.rating_column, currentcol)
                 currentcol = self.rating_column
+            elif col == 'created':
+                self.widgets['treeview'].move_column_after(self.created_column, currentcol)
+                currentcol = self.created_column
+            elif col == 'updated':
+                self.widgets['treeview'].move_column_after(self.updated_column, currentcol)
+                currentcol = self.updated_column
     # reflect saved column sorting
     columnsortid = self.config.get('columnsortid', None, section='mainlist')
     columnsortorder = self.config.get('columnsortorder', None, section='mainlist')

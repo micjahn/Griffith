@@ -91,6 +91,16 @@ def show_preferences(self, page=None):
         w['view_rating'].set_active(False)
     else:
         w['view_rating'].set_active(True)
+    # created
+    if self.config.get('created', True, 'mainlist') == False:
+        w['view_created'].set_active(False)
+    else:
+        w['view_created'].set_active(True)
+    # updated
+    if self.config.get('updated', True, 'mainlist') == False:
+        w['view_updated'].set_active(False)
+    else:
+        w['view_updated'].set_active(True)
 
     # email reminder
     if self.config.get('use_auth', False, section='mail') == False:
@@ -283,6 +293,16 @@ def save_preferences(self):
         c.set('rating', 'True', section='mainlist')
     else:
         c.set('rating', 'False', section='mainlist')
+    # created
+    if w['view_created'].get_active():
+        c.set('created', 'True', section='mainlist')
+    else:
+        c.set('created', 'False', section='mainlist')
+    # updated
+    if w['view_updated'].get_active():
+        c.set('updated', 'True', section='mainlist')
+    else:
+        c.set('updated', 'False', section='mainlist')
 
     # sortby
     if w['sortby'].get_active():
