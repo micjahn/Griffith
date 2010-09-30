@@ -177,7 +177,7 @@ def initialize(widgets, gsql, field_names):
     return True
 
 
-def add_query_widget(container, field_names, sel_qf='title', sel_comm='equals', text=''):
+def add_query_widget(container, field_names, sel_qf='title', sel_comm='contains', text=''):
     hbox = gtk.HBox()
 
     cb = gtk.combo_box_new_text()
