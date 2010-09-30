@@ -173,6 +173,7 @@ def treeview(self):
     # number column
     renderer = gtk.CellRendererText()
     self.number_column = gtk.TreeViewColumn(_('No.'), renderer, text=0)
+    self.number_column.set_name('number')
     self.number_column.set_resizable(True)
     self.number_column.set_sort_column_id(0)
     self.number_column.set_reorderable(True)
@@ -180,12 +181,14 @@ def treeview(self):
     # pic column
     renderer = gtk.CellRendererPixbuf()
     self.image_column = gtk.TreeViewColumn(_('Image'), renderer, pixbuf=1)
+    self.image_column.set_name('image')
     self.image_column.set_resizable(False)
     self.image_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.image_column)
     # original title column
     renderer = gtk.CellRendererText()
     self.otitle_column = gtk.TreeViewColumn(_('Original Title'), renderer, text=2)
+    self.otitle_column.set_name('otitle')
     self.otitle_column.set_resizable(True)
     self.otitle_column.set_sort_column_id(2)
     self.otitle_column.set_reorderable(True)
@@ -193,6 +196,7 @@ def treeview(self):
     # title column
     renderer = gtk.CellRendererText()
     self.title_column = gtk.TreeViewColumn(_('Title'), renderer, text=3)
+    self.title_column.set_name('title')
     self.title_column.set_resizable(True)
     self.title_column.set_sort_column_id(3)
     self.title_column.set_reorderable(True)
@@ -200,6 +204,7 @@ def treeview(self):
     # director column
     renderer = gtk.CellRendererText()
     self.director_column = gtk.TreeViewColumn(_('Director'), renderer, text=4)
+    self.director_column.set_name('director')
     self.director_column.set_sort_column_id(4)
     self.director_column.set_resizable(True)
     self.director_column.set_reorderable(True)
@@ -207,6 +212,7 @@ def treeview(self):
     # genre column
     renderer = gtk.CellRendererText()
     self.genre_column = gtk.TreeViewColumn(_('Genre'), renderer, text=5)
+    self.genre_column.set_name('genre')
     self.genre_column.set_sort_column_id(5)
     self.genre_column.set_resizable(True)
     self.genre_column.set_reorderable(True)
@@ -214,6 +220,7 @@ def treeview(self):
     # seen column
     renderer = gtk.CellRendererToggle()
     self.seen_column = gtk.TreeViewColumn(_('Seen it'), renderer, active=6)
+    self.seen_column.set_name('seen')
     self.seen_column.set_sort_column_id(6)
     self.seen_column.set_resizable(True)
     self.seen_column.set_reorderable(True)
@@ -222,6 +229,7 @@ def treeview(self):
     renderer = gtk.CellRendererText()
     renderer.set_property('xalign', 0.5)
     self.year_column = gtk.TreeViewColumn(_('Year'), renderer, text=7)
+    self.year_column.set_name('year')
     self.year_column.set_sort_column_id(7)
     self.year_column.set_resizable(True)
     self.year_column.set_alignment(0.5)
@@ -231,6 +239,7 @@ def treeview(self):
     renderer = gtk.CellRendererText()
     renderer.set_property('xalign', 1)
     self.runtime_column = gtk.TreeViewColumn(_('Runtime'), renderer, text=8)
+    self.runtime_column.set_name('runtime')
     self.runtime_column.set_sort_column_id(8)
     self.runtime_column.set_resizable(True)
     self.runtime_column.set_alignment(1)
@@ -240,6 +249,7 @@ def treeview(self):
     renderer = gtk.CellRendererText()
     renderer.set_property('xalign', 0.5)
     self.rating_column = gtk.TreeViewColumn(_('Rating'), renderer, text=9)
+    self.rating_column.set_name('rating')
     self.rating_column.set_sort_column_id(9)
     self.rating_column.set_resizable(True)
     self.rating_column.set_alignment(0.5)
@@ -249,6 +259,7 @@ def treeview(self):
     renderer = gtk.CellRendererText()
     renderer.set_property('xalign', 0.5)
     self.created_column = gtk.TreeViewColumn(_('Created'), renderer, text=10)
+    self.created_column.set_name('created')
     self.created_column.set_sort_column_id(10)
     self.created_column.set_resizable(True)
     self.created_column.set_alignment(0.5)
@@ -258,6 +269,7 @@ def treeview(self):
     renderer = gtk.CellRendererText()
     renderer.set_property('xalign', 0.5)
     self.updated_column = gtk.TreeViewColumn(_('Updated'), renderer, text=11)
+    self.updated_column.set_name('updated')
     self.updated_column.set_sort_column_id(11)
     self.updated_column.set_resizable(True)
     self.updated_column.set_alignment(0.5)
@@ -265,46 +277,14 @@ def treeview(self):
     self.widgets['treeview'].append_column(self.updated_column)
     # reflect saved column order
     columnorder = self.config.get('columnorder', None, section='mainlist')
-    if not columnorder is None:
+    if columnorder:
+        columnmapping = dict([(column.get_name(), column) for column in self.widgets['treeview'].get_columns()])
         currentcol = None
         columnordersplitted = re.split('[ \t]*,[ \t]*', columnorder)
         for col in columnordersplitted:
-            if col == 'number':
-                self.widgets['treeview'].move_column_after(self.number_column, currentcol)
-                currentcol = self.number_column
-            elif col == 'image':
-                self.widgets['treeview'].move_column_after(self.image_column, currentcol)
-                currentcol = self.image_column
-            elif col == 'otitle':
-                self.widgets['treeview'].move_column_after(self.otitle_column, currentcol)
-                currentcol = self.otitle_column
-            elif col == 'title':
-                self.widgets['treeview'].move_column_after(self.title_column, currentcol)
-                currentcol = self.title_column
-            elif col == 'director':
-                self.widgets['treeview'].move_column_after(self.director_column, currentcol)
-                currentcol = self.director_column
-            elif col == 'genre':
-                self.widgets['treeview'].move_column_after(self.genre_column, currentcol)
-                currentcol = self.genre_column
-            elif col == 'seen':
-                self.widgets['treeview'].move_column_after(self.seen_column, currentcol)
-                currentcol = self.seen_column
-            elif col == 'year':
-                self.widgets['treeview'].move_column_after(self.year_column, currentcol)
-                currentcol = self.year_column
-            elif col == 'runtime':
-                self.widgets['treeview'].move_column_after(self.runtime_column, currentcol)
-                currentcol = self.runtime_column
-            elif col == 'rating':
-                self.widgets['treeview'].move_column_after(self.rating_column, currentcol)
-                currentcol = self.rating_column
-            elif col == 'created':
-                self.widgets['treeview'].move_column_after(self.created_column, currentcol)
-                currentcol = self.created_column
-            elif col == 'updated':
-                self.widgets['treeview'].move_column_after(self.updated_column, currentcol)
-                currentcol = self.updated_column
+            if col in columnmapping:
+                self.widgets['treeview'].move_column_after(columnmapping[col], currentcol)
+                currentcol = columnmapping[col]
     # reflect saved column sorting
     columnsortid = self.config.get('columnsortid', None, section='mainlist')
     columnsortorder = self.config.get('columnsortorder', None, section='mainlist')
