@@ -1168,24 +1168,30 @@ You can't undo this operation."""), self.widgets['window']):
         """Saves main window state"""
         # size should only be saved on microsoft windows systems
         # on other systems the window manager should manage the windows
-        if self.windows and hasattr(self, 'mainwindow_state') and not self.mainwindow_state is None:
-            self.config.set('width',  self.mainwindow_state['width'],  section='window')
-            self.config.set('height', self.mainwindow_state['height'], section='window')
-            self.config.set('left',   self.mainwindow_state['left'],   section='window')
-            self.config.set('top',    self.mainwindow_state['top'],    section='window')
-            if self.mainwindow_state.has_key('state'):
-                self.config.set('state',  self.mainwindow_state['state'],  section='window')
-            else:
-                self.config.set('state',  0,  section='window')
-            self.config.save()
-        # save the order of the columns in the mainlist
+        # but it is possible to active it for other platforms via config file
+        if self.config.get('savelayout', self.windows, section='window'):
+            if hasattr(self, 'mainwindow_state') and not self.mainwindow_state is None:
+                self.config.set('width',  self.mainwindow_state['width'],  section='window')
+                self.config.set('height', self.mainwindow_state['height'], section='window')
+                self.config.set('left',   self.mainwindow_state['left'],   section='window')
+                self.config.set('top',    self.mainwindow_state['top'],    section='window')
+                if self.mainwindow_state.has_key('state'):
+                    self.config.set('state',  self.mainwindow_state['state'],  section='window')
+                else:
+                    self.config.set('state',  0,  section='window')
+                self.config.save()
+        # save the order and size of the columns of the mainlist
         treeview_columns = self.widgets['treeview'].get_columns()
         columnorder = ''
+        columnsizes = ''
         delimiter = ''
         for treeview_column in treeview_columns:
             columnorder = columnorder + delimiter + treeview_column.get_name()
+            columnsizes = columnsizes + delimiter + str(treeview_column.get_width())
             delimiter = ','
         self.config.set('columnorder', columnorder, section='mainlist')
+        self.config.set('columnsizes', columnsizes, section='mainlist')
+        # save sorting
         columnsorting = self.treemodel.get_sort_column_id()
         self.config.set('columnsortid', columnsorting[0], section='mainlist')
         if columnsorting[1] == None:

@@ -275,7 +275,7 @@ def treeview(self):
     self.updated_column.set_alignment(0.5)
     self.updated_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.updated_column)
-    # reflect saved column order
+    # reflect saved column order and column sizes
     columnorder = self.config.get('columnorder', None, section='mainlist')
     if columnorder:
         columnmapping = dict([(column.get_name(), column) for column in self.widgets['treeview'].get_columns()])
@@ -285,6 +285,18 @@ def treeview(self):
             if col in columnmapping:
                 self.widgets['treeview'].move_column_after(columnmapping[col], currentcol)
                 currentcol = columnmapping[col]
+    columnsizes = self.config.get('columnsizes', None, section='mainlist')
+    if columnsizes:
+        columnsizessplitted = re.split('[ \t]*,[ \t]*', columnsizes)
+        currentcol = 0
+        for columnsize in columnsizessplitted:
+            try:
+                columnsize = int(columnsize)
+                self.widgets['treeview'].get_column(currentcol).set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+                self.widgets['treeview'].get_column(currentcol).set_fixed_width(columnsize)
+            except:
+                pass
+            currentcol = currentcol + 1
     # reflect saved column sorting
     columnsortid = self.config.get('columnsortid', None, section='mainlist')
     columnsortorder = self.config.get('columnsortorder', None, section='mainlist')
