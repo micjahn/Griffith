@@ -708,6 +708,8 @@ def add_movie_db(self, close):
     session.add(movie)
     if not commit(session):
         return False
+    details['created'] = movie.created
+    details['updated'] = movie.created
 
     rows = len(self.treemodel)
     if rows > 0:
