@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2010  Vasco Nunes, Piotr Ożarowski
 
 
+2010-10-01  Michael Jahn
+	* [#640219] Original title is not well raised by Allocine plugin
+
 2010-09-30  Michael Jahn
 	* saving the width of the columns of the mainlist
 	* default filter operator changed from equals to contains
