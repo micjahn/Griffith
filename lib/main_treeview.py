@@ -487,38 +487,7 @@ def populate(self, movies=None, where=None, qf=True):#{{{
         self.updated_column.set_visible(False)
 
     for movie in movies:
-        myiter = self.treemodel.append(None)
-
-        self.treemodel.set_value(myiter, 0, '%004d' % int(movie.number))
-
-        if self.config.get('image', True, section='mainlist') == True:
-            filename = None
-            if movie.poster_md5:
-                filename = gutils.get_image_fname(movie.poster_md5, self.db, "s")
-            if not filename:
-                filename = os.path.join(self.locations['images'], 'default_thumbnail.png')
-
-            self.Image.set_from_file(filename)
-            try:
-                pixbuf = self.Image.get_pixbuf()
-                self.treemodel.set_value(myiter, 1, pixbuf)
-            except:
-                log.exception("can't load the image %s" % filename)
-        self.treemodel.set_value(myiter, 2, movie.o_title)
-        self.treemodel.set_value(myiter, 3, movie.title)
-        self.treemodel.set_value(myiter, 4, movie.director)
-        self.treemodel.set_value(myiter, 5, movie.genre)
-        self.treemodel.set_value(myiter, 6, movie.seen)
-        if movie.year is not None and (isinstance(movie.year, int) or isinstance(movie.year, long)):
-            self.treemodel.set_value(myiter, 7, movie.year)
-        if movie.runtime is not None and (isinstance(movie.runtime, int) or isinstance(movie.runtime, long)):
-            self.treemodel.set_value(myiter, 8, '%003d' % movie.runtime + _(' min'))
-        if movie.rating is not None and (isinstance(movie.rating, int) or isinstance(movie.rating, long)):
-            self.treemodel.set_value(myiter, 9, movie.rating)
-        if movie.created:
-            self.treemodel.set_value(myiter, 10, movie.created.strftime('%Y-%m-%d %H:%M'))
-        if movie.updated:
-            self.treemodel.set_value(myiter, 11, movie.updated.strftime('%Y-%m-%d %H:%M'))
+        addmovie(self, movie)
 
     # restore user sort column
     if sort_column_id is not None:
@@ -530,6 +499,57 @@ def populate(self, movies=None, where=None, qf=True):#{{{
     if self.total:
         self.widgets['treeview'].set_cursor_on_cell(0)
     self.count_statusbar()
+#}}}
+
+def addmovie(self, movie): #{{{
+    myiter = self.treemodel.append(None)
+    setmovie(self, movie, myiter)
+    return myiter
+#}}}
+
+def setmovie(self, movie, iter, treemodel = None): #{{{
+    if not treemodel:
+        treemodel = self.treemodel
+
+    treemodel.set_value(iter, 0, '%004d' % int(movie.number))
+
+    if self.config.get('image', True, section='mainlist') == True:
+        filename = None
+        if movie.poster_md5:
+            filename = gutils.get_image_fname(movie.poster_md5, self.db, "s")
+        if not filename:
+            filename = os.path.join(self.locations['images'], 'default_thumbnail.png')
+
+        self.Image.set_from_file(filename)
+        try:
+            pixbuf = self.Image.get_pixbuf()
+            treemodel.set_value(iter, 1, pixbuf)
+        except:
+            log.exception("can't load the image %s" % filename)
+
+    treemodel.set_value(iter, 2, movie.o_title)
+    treemodel.set_value(iter, 3, movie.title)
+    treemodel.set_value(iter, 4, movie.director)
+    treemodel.set_value(iter, 5, movie.genre)
+    treemodel.set_value(iter, 6, movie.seen)
+    if movie.year is not None and (isinstance(movie.year, int) or isinstance(movie.year, long)):
+        treemodel.set_value(iter, 7, movie.year)
+    if movie.runtime is not None and (isinstance(movie.runtime, int) or isinstance(movie.runtime, long)):
+        treemodel.set_value(iter, 8, '%003d' % movie.runtime + _(' min'))
+    if movie.rating is not None and (isinstance(movie.rating, int) or isinstance(movie.rating, long)):
+        treemodel.set_value(iter, 9, movie.rating)
+    if movie.created:
+        treemodel.set_value(iter, 10, movie.created.strftime('%Y-%m-%d %H:%M'))
+    if movie.updated:
+        treemodel.set_value(iter, 11, movie.updated.strftime('%Y-%m-%d %H:%M'))
+    return iter
+#}}}
+
+def select(self, iter, ensurevisible = True): #{{{
+    self.widgets['treeview'].get_selection().select_iter(iter)
+    if ensurevisible:
+        self.widgets['treeview'].scroll_to_cell(self.treemodel.get_path(iter))
+    self.treeview_clicked()
 #}}}
 
 # vim: fdm=marker

@@ -32,6 +32,7 @@ import quick_filter
 import db
 import gutils
 import initialize
+import main_treeview
 
 log = logging.getLogger("Griffith")
 
@@ -114,38 +115,8 @@ def update_movie(self):
     if commit(session):
         treeselection = self.widgets['treeview'].get_selection()
         (tmp_model, tmp_iter) = treeselection.get_selected()
+        main_treeview.setmovie(self, movie, tmp_iter, tmp_model)
 
-        if new_poster_md5 and new_poster_md5 != old_poster_md5:
-            # update thumbnail in main list
-            new_image_path = gutils.get_image_fname(new_poster_md5, self.db, 's')
-            if not new_image_path:
-                new_image_path = gutils.get_defaultthumbnail_fname(self)
-            handler = self.Image.set_from_file(new_image_path)
-            pixbuf = self.Image.get_pixbuf()
-            tmp_model.set_value(tmp_iter, 1, pixbuf)
-        # update main treelist
-        tmp_model.set_value(tmp_iter, 0, "%004d" % int(movie.number))
-        tmp_model.set_value(tmp_iter, 2, movie.o_title)
-        tmp_model.set_value(tmp_iter, 3, movie.title)
-        tmp_model.set_value(tmp_iter, 4, movie.director)
-        tmp_model.set_value(tmp_iter, 5, movie.genre)
-        tmp_model.set_value(tmp_iter, 6, movie.seen)
-        if movie.year is None:
-            tmp_model.set_value(tmp_iter, 7, '')
-        else:
-            tmp_model.set_value(tmp_iter, 7, movie.year)
-        if movie.runtime is None:
-            tmp_model.set_value(tmp_iter, 8, '')
-        else:
-            tmp_model.set_value(tmp_iter, 8, "%003d" % int(movie.runtime) + _(' min'))
-        if movie.rating is None:
-            tmp_model.set_value(tmp_iter, 9, '')
-        else:
-            tmp_model.set_value(tmp_iter, 9, movie.rating)
-        if movie.created:
-            tmp_model.set_value(tmp_iter, 10, movie.created.strftime('%Y-%m-%d %H:%M'))
-        if movie.updated:
-            tmp_model.set_value(tmp_iter, 11, movie.updated.strftime('%Y-%m-%d %H:%M'))
         # close add window
         self.widgets['add']['window'].hide()
         # refresh
@@ -710,52 +681,15 @@ def add_movie_db(self, close):
     session.add(movie)
     if not commit(session):
         return False
-    details['created'] = movie.created
-    details['updated'] = movie.created
 
-    rows = len(self.treemodel)
-    if rows > 0:
-        insert_after = self.treemodel.get_iter(rows-1)    # last
-    else:
-        insert_after = None
-    myiter = self.treemodel.insert_after(None, insert_after)
-
-    image_path = ''
-    if new_poster_md5:
-        image_path = gutils.get_image_fname(new_poster_md5, self.db, 's')
-    if not image_path or not os.path.isfile(image_path):
-        image_path = gutils.get_defaultthumbnail_fname(self)
-    handler = self.Image.set_from_file(image_path)
-    pixbuf = self.Image.get_pixbuf()
-    self.treemodel.set_value(myiter, 0, '%004d' % details['number'])
-    self.treemodel.set_value(myiter, 1, pixbuf)
-    self.treemodel.set_value(myiter, 2, details['o_title'])
-    self.treemodel.set_value(myiter, 3, details['title'])
-    self.treemodel.set_value(myiter, 4, details['director'])
-    self.treemodel.set_value(myiter, 5, details['genre'])
-    self.treemodel.set_value(myiter, 6, details['seen'])
-    if details['year'] is None:
-        self.treemodel.set_value(myiter, 7, '')
-    else:
-        self.treemodel.set_value(myiter, 7, int(details['year']))
-    if details['runtime'] is None:
-        self.treemodel.set_value(myiter, 8, '')
-    else:
-        self.treemodel.set_value(myiter, 8, '%003d' % int(details['runtime']) + _(' min'))
-    if details['rating'] is None:
-        self.treemodel.set_value(myiter, 9, '')
-    else:
-        self.treemodel.set_value(myiter, 9, int(details['rating']))
-    if details['created']:
-        self.treemodel.set_value(myiter, 10, details['created'].strftime('%Y-%m-%d %H:%M'))
-    if details['updated']:
-        self.treemodel.set_value(myiter, 11, details['updated'].strftime('%Y-%m-%d %H:%M'))
-    #update statusbar
+    # create and select new entry in main treelist
+    myiter = main_treeview.addmovie(self, movie)
+    main_treeview.select(self, myiter)
+    
+    # update statusbar
     self.total += 1
     self.count_statusbar()
-    #select new entry from main treelist
-    self.widgets['treeview'].get_selection().select_iter(myiter)
-    self.treeview_clicked()
+    
     clear(self)
 
     if close:
