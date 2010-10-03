@@ -22,7 +22,7 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 pname = 'Griffith'
-pversion = '0.11'
+pversion = '0.12'
 pauthor = 'Vasco Nunes, Piotr Ożarowski <griffith-private@lists.berlios.de>'
 pyear = '2005-2010'
 pwebsite = 'http://www.griffith.cc/'
