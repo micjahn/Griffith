@@ -82,7 +82,6 @@ def check_args():
                 from platform import platform
                 import version
                 GriffithDebug.set_debug(logdir = home)
-                log.setLevel(logging.DEBUG)
                 log.debug("Starting %s %s", version.pname, version.pversion)
                 log.debug("Platform: %s (%s)", platform(), os.name)
                 log.debug('Dependencies:')

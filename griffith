@@ -32,6 +32,9 @@ log = logging.getLogger('Griffith')
 if '--debug' not in sys.argv and '-D' not in sys.argv:
     import warnings
     warnings.simplefilter('ignore')
+else:
+    # see also gconsole.check_args()
+    log.setLevel(logging.DEBUG)
 
 # set the PATH
 import os.path

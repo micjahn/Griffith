@@ -192,15 +192,15 @@ class Config(object):
         self._cfg.set('main', 'default_movie_plugin', 'IMDB')
         self._cfg.set('main', 'font', '')
         self._cfg.set('main', 'font_size', '18')
-        if self.windows:
+        if os.name == 'nt' or os.name.startswith('win'):  # win32, win64
             self._cfg.set('main', 'pdf_reader', '')
         else:
             self._cfg.set('main', 'pdf_reader', 'xpdf')
         self._cfg.set('main', 'posters', 'posters')
-        self._cfg.set('main', 'rating_image', '0')    # 0 = meter; 1 = stars
+        self._cfg.set('main', 'rating_image', '0')  # 0 = meter; 1 = stars
         self._cfg.set('mainlist', 'director', 'True')
         self._cfg.set('mainlist', 'image', 'True')
-        self._cfg.set('mainlist', 'limit', '0')        # limit search results to x items (0 -> no limits)
+        self._cfg.set('mainlist', 'limit', '0')  # limit search results to x items (0 -> no limits)
         self._cfg.set('mainlist', 'number', 'True')
         self._cfg.set('mainlist', 'otitle', 'True')
         self._cfg.set('mainlist', 'sortby', 'number')
