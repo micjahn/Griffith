@@ -1,3 +1,11 @@
+griffith (0.12-1) unstable; urgency=medium
+
+  * New upstream release
+    - compatible with SQLAlchemy 0.6 (closes: 590463)
+  * Bump Standards-Version to 3.9.1 (no changes needed)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 03 Oct 2010 20:44:33 +0200
+
 griffith (0.11-1) unstable; urgency=low
 
   * New upstream release
