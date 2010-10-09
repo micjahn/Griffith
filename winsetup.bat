@@ -25,6 +25,7 @@ mkdir dist\etc
 mkdir dist\share
 mkdir dist\lib
 mkdir dist\share\locale
+mkdir dist\share\themes\MS-Windows\gtk-2.0
 
 rem ***** create the exe 
 
@@ -41,11 +42,17 @@ if not exist "dist\images\PluginMovieIMDB.png" (
 )
 
 xcopy "%GTKDIR%\etc" "%GRIFFITHDIR%\dist\etc" /s /e
+if not "%ERRORLEVEL%" == "0" (pause)
 xcopy "%GTKDIR%\lib" "%GRIFFITHDIR%\dist\lib" /s /e
+if not "%ERRORLEVEL%" == "0" (pause)
 xcopy "%GTKDIR%\share\locale" "%GRIFFITHDIR%\dist\share\locale" /s /e
+if not "%ERRORLEVEL%" == "0" (pause)
 
-copy "%GTKDIR%\share\themes\MS-Windows\gtk-2.0\*.*" "%GRIFFITHDIR%\dist\"
-copy "%GTKDIR%\bin\jpeg62.dll"   "%GRIFFITHDIR%\dist\"
+xcopy "%GTKDIR%\share\themes\MS-Windows\gtk-2.0\*.*" "%GRIFFITHDIR%\dist\" /s /e
+if not "%ERRORLEVEL%" == "0" (pause)
+xcopy "%GTKDIR%\bin\jpeg62.dll"   "%GRIFFITHDIR%\dist\" /s /e
+if not "%ERRORLEVEL%" == "0" (pause)
+
 copy "%GRIFFITHDIR%\AUTHORS"     "%GRIFFITHDIR%\dist\"
 copy "%GRIFFITHDIR%\COPYING"     "%GRIFFITHDIR%\dist\"
 copy "%GRIFFITHDIR%\INSTALL"     "%GRIFFITHDIR%\dist\"
