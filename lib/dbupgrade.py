@@ -175,6 +175,9 @@ def upgrade_database(self, version, config):
                     self.session.add(poster)
 
                 update_query = movies_table.update(movies_table.c.image == movie.image, {'poster_md5': poster_md5, 'image': None}, bind=b)
+                # deactivating a 0.12 feature
+                save_update_onupdated = movies_table.c['updated'].onupdate
+                movies_table.c['updated'].onupdate = None
 
                 try:
                     # yeah, we're commiting inside the loop,
@@ -190,10 +193,18 @@ def upgrade_database(self, version, config):
                         os.remove(poster_file_name)
                     except:
                         log.warn("cannot remove %s", poster_file_name)
+                finally:
+                    movies_table.c['updated'].onupdate = save_update_onupdated
             else:
-                log.warn("file not found: %s)", movie.image)
+                log.warn("file not found: %s", movie.image)
                 update_query = movies_table.update(movies_table.c.image == movie.image, {'image': None}, bind=b)
-                update_query.execute()
+                # deactivating a 0.12 feature
+                save_update_onupdated = movies_table.c['updated'].onupdate
+                movies_table.c['updated'].onupdate = None
+                try:
+                    update_query.execute()
+                finally:
+                    movies_table.c['updated'].onupdate = save_update_onupdated
                 updated[poster_file_name] = True
         del updated
 

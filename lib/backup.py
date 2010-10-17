@@ -205,6 +205,7 @@ def restore(self, merge=False):
         return False
 
     try:
+        tmp_db = None
         tmp_dir = mkdtemp()
         os.mkdir(os.path.join(tmp_dir, 'posters'))
 
@@ -289,6 +290,7 @@ def restore(self, merge=False):
         raise
     finally:
         # disposing the temporary db connection before rmtree and in finally block to avoid locked db file
-        tmp_db.dispose()
+        if tmp_db:
+            tmp_db.dispose()
         log.debug('temporary directory no logger needed, removing %s', tmp_dir)
         rmtree(tmp_dir)

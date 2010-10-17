@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2010  Vasco Nunes, Piotr Ożarowski
 
 
+2010-10-17  Michael Jahn
+	* error fixed which prevents updates from pre-0.11 versions
+
 2010-10-14  Michael Jahn
 	* E-Pipoca plugin updated
 
