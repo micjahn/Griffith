@@ -1,3 +1,11 @@
+griffith (0.12.1-1) unstable; urgency=low
+
+  * New upstream release
+    - fixes upgrades from 0.9.x
+  * debian/watch file updated to track launchpad.net
+
+ -- Piotr Ożarowski <piotr@debian.org>  Mon, 18 Oct 2010 21:52:41 +0200
+
 griffith (0.12-1) unstable; urgency=medium
 
   * New upstream release
