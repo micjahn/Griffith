@@ -26,6 +26,7 @@ import logging
 import os.path
 
 from sqlalchemy import *
+from sqlalchemy.exc import *
 
 import db
 import gutils
@@ -138,8 +139,13 @@ def upgrade_database(self, version, config):
         db.tables.posters.create(checkfirst=True, bind=b)
         db.tables.filters.create(checkfirst=True, bind=b)
         db.tables.ratios.create(checkfirst=True, bind=b)
-        db.tables.ratios.insert(bind=b).execute(name=u'16:9')
-        db.tables.ratios.insert(bind=b).execute(name=u'4:3')
+        try:
+            db.tables.ratios.insert(bind=b).execute(name=u'16:9')
+            db.tables.ratios.insert(bind=b).execute(name=u'4:3')
+        except IntegrityError, e:
+            # if the following conversion of the posters takes to long and the user
+            # kills the application the database is in a undefined state which throughs that exception
+            log.warn("Cannot add values because they exist already: %s", e)
 
         log.info('... adding new columns')
         # common SQL statements
@@ -155,6 +161,13 @@ def upgrade_database(self, version, config):
         for key, query in queries.items():
             try:
                 self.session.bind.execute(query)
+            except OperationalError, e:
+                if e.message.find(b'(OperationalError) duplicate column name:') > -1:
+                    log.warn("Cannot add '%s' column because it exists already: %s", key, e)
+                    continue
+                else:
+                    log.error("Cannot add '%s' column: %s", key, e)
+                    return False
             except Exception, e:
                 log.error("Cannot add '%s' column: %s", key, e)
                 return False

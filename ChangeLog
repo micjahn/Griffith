@@ -10,6 +10,9 @@ Griffith ChangeLog
 2010-10-18  Piotr Ożarowski
 	* Version changed to 0.12.1
 
+2010-10-18  Michael Jahn
+	* stabilized upgrade procedure for databases which are corrupt after an interuption of a previous upgrade procedure
+
 2010-10-17  Michael Jahn
 	* Allocine plugin updated
 	* error fixed which prevents updates from pre-0.11 versions
