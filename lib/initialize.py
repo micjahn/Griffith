@@ -312,7 +312,14 @@ def treeview(self):
         log.exception('')
     # add data to treeview
     self.total = self.db.session.query(db.Movie).count()
+    self.widgets['treeview'].set_search_equal_func(search_func_treeview)
     self.widgets['treeview'].show()
+
+
+def search_func_treeview(model, column, key, iter):
+    return not (str(model.get_value(iter, 0)).startswith(key) or 
+        str(model.get_value(iter, 2)).lower().startswith(key.lower()) or 
+        str(model.get_value(iter, 3)).lower().startswith(key.lower()))
 
 
 def loans_treeview(self):

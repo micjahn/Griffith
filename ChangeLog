@@ -12,6 +12,7 @@ Griffith ChangeLog
 
 2010-10-18  Michael Jahn
 	* stabilized upgrade procedure for databases which are corrupt after an interuption of a previous upgrade procedure
+	* enabled interactive search by number, title and original title in mainlist ("typeahead find")
 
 2010-10-17  Michael Jahn
 	* Allocine plugin updated
