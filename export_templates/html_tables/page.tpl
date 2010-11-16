@@ -36,7 +36,15 @@
 	<tr class="director">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@movies_director><@movies_rating>
+	</tr></@movies_director><@movies_screenplay>
+	<tr class="screenplay">
+		<th>@TITLE@</th>
+		<td>@DATA@</td>
+	</tr></@movies_screenplay><@movies_cameraman>
+	<tr class="cameraman">
+		<th>@TITLE@</th>
+		<td>@DATA@</td>
+	</tr></@movies_cameraman><@movies_rating>
 	<tr class="rating">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
@@ -100,7 +108,19 @@
 	<tr class="studio">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>
-	</tr></@movies_studio><@movies_cast>
+	</tr></@movies_studio><@movies_width>
+	<tr class="width">
+		<th>@TITLE@</th>
+		<td>@DATA@</td>
+	</tr></@movies_width><@movies_height>
+	<tr class="height">
+		<th>@TITLE@</th>
+		<td>@DATA@</td>
+	</tr></@movies_height><@movies_barcode>
+	<tr class="barcode">
+		<th>@TITLE@</th>
+		<td>@DATA@</td>
+	</tr></@movies_barcode><@movies_cast>
 	<tr class="cast">
 		<th>@TITLE@</th>
 		<td>@DATA@</td>

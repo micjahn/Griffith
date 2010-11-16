@@ -60,7 +60,17 @@
 		\item {@TITLE@: @DATA@}
 </@movies_plot><@movies_notes>
 		\item {@TITLE@: @DATA@}
-</@movies_notes>
+</@movies_notes><@movies_screenplay>
+		\item {@TITLE@: @DATA@}
+</@movies_screenplay><@movies_cameraman>
+		\item {@TITLE@: @DATA@}
+</@movies_cameraman><@movies_width>
+		\item {@TITLE@: @DATA@}
+</@movies_width><@movies_height>
+		\item {@TITLE@: @DATA@}
+</@movies_height><@movies_barcode>
+		\item {@TITLE@: @DATA@}
+</@movies_barcode>
 \end{itemize}
 
 <!-- /ITEMS -->

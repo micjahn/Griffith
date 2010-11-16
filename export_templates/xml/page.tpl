@@ -27,7 +27,12 @@
 		<studio>@DATA@</studio></@movies_studio><@movies_cast>
 		<cast>@DATA@</cast></@movies_cast><@movies_plot>
 		<plot>@DATA@</plot></@movies_plot><@movies_notes>
-		<notes>@DATA@</notes></@movies_notes>
+		<notes>@DATA@</notes></@movies_notes><@movies_screenplay>
+		<screenplay>@DATA@</screenplay></@movies_screenplay><@movies_cameraman>
+		<cameraman>@DATA@</cameraman></@movies_cameraman><@movies_width>
+		<width>@DATA@</width></@movies_width><@movies_height>
+		<height>@DATA@</height></@movies_height><@movies_barcode>
+		<barcode>@DATA@</barcode></@movies_barcode>
 	</movie>
 <!-- /ITEMS -->
 </movies>

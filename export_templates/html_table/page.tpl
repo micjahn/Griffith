@@ -18,7 +18,9 @@
 			<th>@TITLE@</th></@movies_title><@movies_o_title>
 			<th>@TITLE@</th></@movies_o_title><@movies_year>
 			<th>@TITLE@</th></@movies_year><@movies_director>
-			<th>@TITLE@</th></@movies_director><@movies_rating>
+			<th>@TITLE@</th></@movies_director><@movies_screenplay>
+			<th>@TITLE@</th></@movies_screenplay><@movies_cameraman>
+			<th>@TITLE@</th></@movies_cameraman><@movies_rating>
 			<th>@TITLE@</th></@movies_rating><@movies_runtime>
 			<th>@TITLE@</th></@movies_runtime><@movies_country>
 			<th>@TITLE@</th></@movies_country><@movies_genre>
@@ -34,7 +36,10 @@
 			<th>@TITLE@</th></@movies_seen><@movies_loaned>
 			<th>@TITLE@</th></@movies_loaned><@movies_classification>
 			<th>@TITLE@</th></@movies_classification><@movies_studio>
-			<th>@TITLE@</th></@movies_studio><@movies_cast>
+			<th>@TITLE@</th></@movies_studio><@movies_width>
+			<th>@TITLE@</th></@movies_width><@movies_height>
+			<th>@TITLE@</th></@movies_height><@movies_barcode>
+			<th>@TITLE@</th></@movies_barcode><@movies_cast>
 			<th>@TITLE@</th></@movies_cast><@movies_plot>
 			<th>@TITLE@</th></@movies_plot><@movies_notes>
 			<th>@TITLE@</th></@movies_notes>
@@ -48,7 +53,9 @@
 		<td class="title">@DATA@</td></@movies_title><@movies_o_title>
 		<td class="otitle">@DATA@</td></@movies_o_title><@movies_year>
 		<td class="year">@DATA@</td></@movies_year><@movies_director>
-		<td class="director">@DATA@</td></@movies_director><@movies_rating>
+		<td class="director">@DATA@</td></@movies_director><@movies_screenplay>
+		<td class="screenplay">@DATA@</td></@movies_screenplay><@movies_cameraman>
+		<td class="cameraman">@DATA@</td></@movies_cameraman><@movies_rating>
 		<td class="rating">@DATA@</td></@movies_rating><@movies_runtime>
 		<td class="runtime">@DATA@</td></@movies_runtime><@movies_country>
 		<td class="country">@DATA@</td></@movies_country><@movies_genre>
@@ -64,7 +71,12 @@
 		<td class="seen">@DATA@</td></@movies_seen><@movies_loaned>
 		<td class="loaned">@DATA@</td></@movies_loaned><@movies_classification>
 		<td class="classification">@DATA@</td></@movies_classification><@movies_studio>
-		<td class="studio">@DATA@</td></@movies_studio><@movies_cast>
+		<td class="studio">@DATA@</td></@movies_studio><@movies_screenplay>
+		<td class="screenplay">@DATA@</td></@movies_screenplay><@movies_cameraman>
+		<td class="cameraman">@DATA@</td></@movies_cameraman><@movies_width>
+		<td class="width">@DATA@</td></@movies_width><@movies_height>
+		<td class="height">@DATA@</td></@movies_height><@movies_barcode>
+		<td class="barcode">@DATA@</td></@movies_barcode><@movies_cast>
 		<td class="cast">@DATA@</td></@movies_cast><@movies_plot>
 		<td class="plot">@DATA@</td></@movies_plot><@movies_notes>
 		<td class="notes">@DATA@</td></@movies_notes>
