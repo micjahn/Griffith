@@ -171,7 +171,7 @@ def initialize(widgets, gsql, field_names):
         widgets["loans_frame"].hide()
 
     widgets['cb_name'].get_model().clear()
-    search_filters = gsql.session.query(db.Filter.name).all()
+    search_filters = gsql.session.query(db.Filter.name).order_by(db.Filter.name).all()
     for filter_ in search_filters:
         widgets['cb_name'].append_text(filter_[0])
     return True

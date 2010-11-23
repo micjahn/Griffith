@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2010-11-23  Michael Jahn
 	* added screenplay, cameraman and barcode to the search criteria combobox
+	* sorted entries in the filter comboboxes of the main dialog
 
 2010-11-16  Michael Jahn
 	* added fields screenplay, cameraman, width, height and barcode to the html export plugin

@@ -713,10 +713,11 @@ def combos(self):
     i = 0
     pos_to_activate = 0
     selected_criteria = self.config.get('criteria', None, section='mainlist')
-    for criteria in self.search_criteria:
-        new_criteria = self.field_names[criteria]
-        self.widgets['filter']['criteria'].insert_text(i, new_criteria)
-        if selected_criteria == new_criteria:
+    sorted_criterias = [self.field_names[criteria] for criteria in self.search_criteria]
+    sorted_criterias.sort()
+    for criteria in sorted_criterias:
+        self.widgets['filter']['criteria'].insert_text(i, criteria)
+        if selected_criteria == criteria:
             pos_to_activate = i
         i += 1
     self.widgets['filter']['criteria'].set_active(pos_to_activate)
@@ -894,7 +895,7 @@ def update_volume_combo_ids(self):
 def update_collection_combo_ids(self):
     self.collection_combo_ids = {}
     self.collection_combo_ids[0] = 0
-    for i, item in enumerate(self.db.session.query(db.Collection.collection_id).all()):
+    for i, item in enumerate(self.db.session.query(db.Collection.collection_id).order_by(db.Collection.name).all()):
         self.collection_combo_ids[i + 1] = item.collection_id
 
 
@@ -946,7 +947,7 @@ def fill_advfilter_combo(self):
     self.initialized = False # don't refresh main treeview
     self.widgets['filter']['advfilter'].get_model().clear()
     self.widgets['filter']['advfilter'].insert_text(0, '') # empty one
-    for i, item in enumerate(self.db.session.query(db.Filter.name).all()):
+    for i, item in enumerate(self.db.session.query(db.Filter.name).order_by(db.Filter.name).all()):
         # add some white spaces to prevent scrollbar hides parts of the names
         self.widgets['filter']['advfilter'].insert_text(i + 1, item.name + '   ')
     self.widgets['filter']['advfilter'].show_all()
