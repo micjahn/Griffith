@@ -753,7 +753,8 @@ def dictionaries(self):
         'volume_id', 'cond', 'layers', 'region', 'movie_id']
     self.search_criteria = (
         'o_title', 'title', 'number', 'director', 'plot', 'cast', 'notes', 'year',
-        'runtime', 'country', 'genre', 'studio', 'media_num', 'rating')
+        'runtime', 'country', 'genre', 'studio', 'media_num', 'rating', 'screenplay',
+        'cameraman', 'barcode')
     self.field_names = {
         'barcode': _('Barcode'),
         'cast': _('Cast'),
