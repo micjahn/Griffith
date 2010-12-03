@@ -71,9 +71,7 @@
 		<td class="seen">@DATA@</td></@movies_seen><@movies_loaned>
 		<td class="loaned">@DATA@</td></@movies_loaned><@movies_classification>
 		<td class="classification">@DATA@</td></@movies_classification><@movies_studio>
-		<td class="studio">@DATA@</td></@movies_studio><@movies_screenplay>
-		<td class="screenplay">@DATA@</td></@movies_screenplay><@movies_cameraman>
-		<td class="cameraman">@DATA@</td></@movies_cameraman><@movies_width>
+		<td class="studio">@DATA@</td></@movies_studio><@movies_width>
 		<td class="width">@DATA@</td></@movies_width><@movies_height>
 		<td class="height">@DATA@</td></@movies_height><@movies_barcode>
 		<td class="barcode">@DATA@</td></@movies_barcode><@movies_cast>
