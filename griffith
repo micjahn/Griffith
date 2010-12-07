@@ -1003,8 +1003,8 @@ You can't undo this operation."""), self.widgets['window']):
             restore(self)
 
     def merge(self, *args):
-        if gutils.question(_("""Are you sure you want to mix?
-Your current movie collection will be mixed with a backup.
+        if gutils.question(_("""Are you sure you want to merge?
+Your current movie collection will be merged with a backup.
 You can't undo this operation."""), self.widgets['window']):
             from backup import restore
             restore(self, merge=True)

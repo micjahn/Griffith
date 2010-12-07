@@ -92,7 +92,7 @@ class ExportPlugin(Base):
         
             if thisPath:
                 commands.getoutput('mv '+os.path.join(tmp_dir,"movies")+' "'+thisPath+'/Notes/"') # FIXME: WTF?
-                gutils.info(_("List was successful exported to iPod."), self.parent_window)
+                gutils.info(_("List successfully exported to iPod."), self.parent_window)
             else:
                 gutils.info(_("iPod is not connected."), self.parent_window)
         # this is not a mac, lets save the file
@@ -108,4 +108,4 @@ class ExportPlugin(Base):
                         overwrite = False
                 if overwrite == True or overwrite is None:
                     shutil.copyfile(os.path.join(tmp_dir,"movies"), filename[0])
-                    gutils.info(_("List was successful exported. Now you should move it to the 'Notes' folder on your iPod."), self.parent_window)
+                    gutils.info(_("The list was successfully exported. Now you should move it to the 'Notes' folder on your iPod."), self.parent_window)

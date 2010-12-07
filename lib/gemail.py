@@ -53,7 +53,7 @@ def mailto(self, tls, port, server, auth, user, password, sender, to, subject, m
         % (sender, to, subject)
     try:
         smtpresult = session.sendmail(sender, to, headers+msg)
-        gutils.info(_("E-mail sent sucessfuly"), self.widgets['window'])
+        gutils.info(_("E-mail sent successfully"), self.widgets['window'])
         return
     except:
         gutils.error(_("Error sending e-mail: %s")%"", self.widgets['window'])

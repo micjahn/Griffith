@@ -579,7 +579,7 @@ def extension_preferences(self, module, enabled):
     # extension details
     hbox = gtk.HBox()
     vbox.pack_start(hbox, expand=False)
-    enabled_cb = gtk.CheckButton(label=_('enable this extension'))
+    enabled_cb = gtk.CheckButton(label=_('Enable this extension'))
     enabled_cb.set_active(enabled)
     configwidgets['enabled'] = enabled_cb
     vbox.pack_start(enabled_cb, expand=False)
@@ -842,7 +842,7 @@ def spellcheck(self):
                 except:
                     spell_error = True
             if spell_error:
-                log.info('Dictionary not available. Spellcheck will be disabled.')
+                log.info('Dictionary not available. Spell check will be disabled.')
                 if not self.config.get('notified', False, section='spell'):
                     gutils.info(_("Dictionary not available. Spellcheck will be disabled. \n" + \
                         "Please install the aspell-%s package or adjust the spellchekcer preferences.") % self.config.get('lang', section='spell'), \

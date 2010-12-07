@@ -594,7 +594,7 @@
                     <child>
                       <widget class="GtkToolButton" id="go_o_site">
                         <property name="visible">True</property>
-                        <property name="tooltip" translatable="yes">Visit the oficial web site</property>
+                        <property name="tooltip" translatable="yes">Visit the official web site</property>
                         <property name="use_underline">True</property>
                         <property name="stock_id">gtk-jump-to</property>
                         <signal name="clicked" handler="on_go_o_site_clicked"/>
@@ -6066,7 +6066,7 @@ Stars</property>
                         <child>
                           <widget class="GtkLabel" id="label172">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Type in the original film tile, select source and choose &lt;i&gt;Get from web&lt;/i&gt;. Griffith will try to fetch all the related information from the Web.</property>
+                            <property name="label" translatable="yes">Type in the original film title, select source and choose &lt;i&gt;Get from web&lt;/i&gt;. Griffith will try to fetch all the related information from the Web.</property>
                             <property name="use_markup">True</property>
                             <property name="justify">GTK_JUSTIFY_CENTER</property>
                             <property name="wrap">True</property>
