@@ -33,7 +33,7 @@ def change_filter(self):
     statement = select(db.tables.movies.columns, bind=self.db.session.bind)
     
     if text:
-        criteria = self.search_criteria[self.widgets['filter']['criteria'].get_active()]
+        (criterianame, criteria) = self.search_criteria_sorted[self.widgets['filter']['criteria'].get_active()]
         if criteria in ('year', 'runtime', 'media_num', 'rating'):
             statement.append_whereclause(db.tables.movies.c[criteria]==text)
         else:

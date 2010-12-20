@@ -713,11 +713,10 @@ def combos(self):
     i = 0
     pos_to_activate = 0
     selected_criteria = self.config.get('criteria', None, section='mainlist')
-    sorted_criterias = [self.field_names[criteria] for criteria in self.search_criteria]
-    sorted_criterias.sort()
-    for criteria in sorted_criterias:
-        self.widgets['filter']['criteria'].insert_text(i, criteria)
-        if selected_criteria == criteria:
+    self.search_criteria_sorted = sorted((self.field_names[criteria], criteria) for criteria in self.search_criteria)
+    for (criterianame, criteria) in self.search_criteria_sorted:
+        self.widgets['filter']['criteria'].insert_text(i, criterianame)
+        if selected_criteria == criterianame:
             pos_to_activate = i
         i += 1
     self.widgets['filter']['criteria'].set_active(pos_to_activate)
