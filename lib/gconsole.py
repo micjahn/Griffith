@@ -59,9 +59,6 @@ def check_args():
         home = os.path.expanduser('~/.griffith').decode(default_enc)
     config = 'griffith.cfg'
 
-    # set log file directory for current mode
-    GriffithDebug.set_logdir(home)
-
     if len(sys.argv) > 1:
         try:
             opts, args = getopt.getopt(sys.argv[1:], options[0], options[1])
@@ -99,6 +96,10 @@ def check_args():
             elif o == '--show-dep':
                 show_dependencies()
                 sys.exit()
+
+    # set log file directory for current mode
+    GriffithDebug.set_logdir(home)
+
     return home, config
 
 def check_args_with_db(self):
