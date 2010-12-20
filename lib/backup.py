@@ -136,8 +136,8 @@ def copy_db(src_engine, dst_engine):
             insertcmd = table.insert()
             # insert in steps of 100 items because otherwise there is an error with mysql
             # I tried to insert more than 800 movies at ones: OperationalError
-            for partition in range(0, len(data), 100):
-                dst_engine.execute(insertcmd, data[partition:partition + 100])
+            for partition in range(0, len(data), 10):
+                dst_engine.execute(insertcmd, data[partition:partition + 10])
 
             if dst_engine.name == 'postgres':
                 # update current value of sequences
