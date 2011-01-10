@@ -786,7 +786,7 @@ def update_movie_instance(movie, details, session):
             t_languages = details.pop('languages')
         #for i in db.tables.movies.columns.keys():
         for i in details:
-            if hasattr(movie, i):
+            if not i == 'created' and not i == 'updated' and hasattr(movie, i):
                 setattr(movie, i, details[i])
 
         # clear previous data (in case of updates)

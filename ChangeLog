@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2011-01-10  Michael Jahn
 	* fixed iPod export plugin in case of missing values
+	* fixed deletion of the "created" value while updating a movie
 
 2010-12-07  Piotr Ożarowski
 	* Fix few spelling mistakes (thanks to Olivier BOURSIN)
