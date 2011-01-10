@@ -71,10 +71,18 @@ class ExportPlugin(Base):
         tmp_dir = mkdtemp()
         griffith_list = open(os.path.join(tmp_dir,"movies"),"w")
         t = []
-       
+
+        def checkForNoneAndEncode(val):
+            if val is None:
+                return ''
+            return val.encode('utf-8')
+        
         movies = self.get_query().execute().fetchall()
         for movie in movies:
-            t.append("%s | %s | %s | %s" % (movie['number'], movie['o_title'].encode('utf-8'), movie['title'].encode('utf-8'), movie['director'].encode('utf-8')))
+            t.append("%s | %s | %s | %s" % (movie['number'], \
+                checkForNoneAndEncode(movie['o_title']), 
+                checkForNoneAndEncode(movie['title']), 
+                checkForNoneAndEncode(movie['director'])))
     
         griffith_list.write("<title>%s</title><br><br>" % _("My Movies List"))
         
