@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright © 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright © 2005-2011 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -508,6 +508,7 @@ def import_plugins(self):
         'progressbar': get('progressbar'),
         'fields': {},
     }
+    w['window'].connect('delete_event', plugins.imp.on_delete_event, self)
     get('cancel_button').connect('clicked', plugins.imp.on_abort_button_clicked, self)
     get('import_button').connect('clicked', plugins.imp.on_import_button_clicked, self)
     w['plugin'].connect('changed', plugins.imp.on_import_plugin_changed, w)

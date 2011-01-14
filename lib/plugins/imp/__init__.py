@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2006-2007 Piotr Ożarowski
+# Copyright (c) 2006-2011 Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published byp
@@ -414,6 +414,13 @@ def on_import_button_clicked(button, self, *args):
 
 
 def on_abort_button_clicked(button, self, *args):
+    close_dialog(self)
+
+def on_delete_event(widget, event, self):
+    close_dialog(self)
+    return True
+
+def close_dialog(self):
     self.widgets['import']['window'].hide()
     self.widgets['import']['pwindow'].hide()
     self.widgets['window'].set_sensitive(True)
