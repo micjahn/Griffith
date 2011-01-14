@@ -83,31 +83,34 @@ def update_movie(self):
 
     old_poster_md5 = movie.poster_md5
     new_poster_md5 = None
-    if details['image'] and old_poster_md5 != details['image']: # details["image"] can contain MD5 or file path
-        new_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
-        if not os.path.isfile(new_image_path):
-            log.warn("cannot read temporary file: %s", new_image_path)
-        else:
-            new_poster_md5 = gutils.md5sum(file(new_image_path, 'rb'))
-            if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
-                try:
-                    data = file(new_image_path, 'rb').read()
-                except Exception, e:
-                    log.warning("cannot read poster data")
-                else:
-                    poster = db.Poster(md5sum=new_poster_md5, data=data)
-                    del details["image"]
-                    details['poster_md5'] = new_poster_md5
-                    session.add(poster)
-
-                    # delete old image
-                    import delete
-                    old_poster = session.query(db.Poster).filter_by(md5sum=old_poster_md5).first()
-                    if old_poster and len(old_poster.movies) == 1: # other movies are not using the same poster
-                        session.delete(old_poster)
-                        delete.delete_poster_from_cache(old_poster_md5, self.locations['posters'])
+    if details['image']:
+        if old_poster_md5 != details['image']: # details["image"] can contain MD5 or file path
+            new_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
+            if not os.path.isfile(new_image_path):
+                log.warn("cannot read temporary file: %s", new_image_path)
             else:
-                details['poster_md5'] = new_poster_md5
+                new_poster_md5 = gutils.md5sum(file(new_image_path, 'rb'))
+                if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
+                    try:
+                        data = file(new_image_path, 'rb').read()
+                    except Exception, e:
+                        log.warning("cannot read poster data")
+                    else:
+                        poster = db.Poster(md5sum=new_poster_md5, data=data)
+                        del details["image"]
+                        details['poster_md5'] = new_poster_md5
+                        session.add(poster)
+
+                        # delete old image
+                        import delete
+                        old_poster = session.query(db.Poster).filter_by(md5sum=old_poster_md5).first()
+                        if old_poster and len(old_poster.movies) == 1: # other movies are not using the same poster
+                            session.delete(old_poster)
+                            delete.delete_poster_from_cache(old_poster_md5, self.locations['posters'])
+                else:
+                    details['poster_md5'] = new_poster_md5
+    else:
+        details['poster_md5'] = None
 
     update_movie_instance(movie, details, session)
 
@@ -202,6 +205,7 @@ def populate_with_results(self):
         fields_to_fetch.pop(fields_to_fetch.index('rating'))
     # poster
     if 'image' in fields_to_fetch:
+        w['image'].set_text('')
         if self.movie.image:
             image = os.path.join(self.locations['temp'], "poster_%s.jpg" % self.movie.image)
             try:
