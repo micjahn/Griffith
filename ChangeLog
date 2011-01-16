@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-01-16  Michael Jahn
+	* [#697018] CSV import not working when number field not checked
+
 2011-01-14  Michael Jahn
 	* [#687621] Remains previous cover
 	* [#697029] Import dlg display error when previously x-ed out 

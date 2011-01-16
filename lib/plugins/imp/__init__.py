@@ -173,16 +173,20 @@ class ImportPlugin(object):
                         if response == 1:
                             self.imported += 1
                     else:
+                        # get the number and make it unique. number is needed later
                         number = details.get('number', 1)
                         while number in numbers:
                             number += 1
-                        details['number'] = number
                         if 'tags' in details:
                             tags = details.pop('tags')
                         else:
                             tags = None
                         if 'poster' in details:
                             poster = details.pop('poster')
+                        else:
+                            poster = None
+                        if 'image' in details:
+                            poster = details.pop('image')
                         else:
                             poster = None
                         try:
@@ -206,6 +210,8 @@ class ImportPlugin(object):
                                         details[fkcolumnname] = None
                             # validation before insertion
                             validate_details(details, self.fields_to_import)
+                            # set number here again because if it is not selected validate_details will remove it
+                            details['number'] = number
                             # insert the movie in the database
                             movie = db.tables.movies.insert(bind=self.db.session.bind).execute(details)
                             self.imported += 1
