@@ -495,22 +495,24 @@ def get_dependencies():
     try:
         import sqlite3
         version = sqlite3.version
+        sqliteversion = sqlite3.sqlite_version
     except ImportError:
         version = False
     if version is False:
         try:
-            import pysqlite2
-            version = True
+            import pysqlite2.dbapi2
+            version = pysqlite2.dbapi2.version
+            sqliteversion = pysqlite2.dbapi2.sqlite_version
         except:
             version = False
         depend.append({'module': 'pysqlite2',
-            'version': version,
-            'url': 'http://initd.org/tracker/pysqlite',
+            'version': version + ' (sqlite-lib ' + sqliteversion + ')',
+            'url': 'http://pypi.python.org/pypi/pysqlite/',
             'debian': 'python-pysqlite2',
             'debian_req': '2.3.0-1'})
     else:
         depend.append({'module': 'sqlite3',
-            'version': version,
+            'version': version + ' (sqlite-lib ' + sqliteversion + ')',
             'url': 'http://www.python.org',
             'debian': 'python',
             'debian_req': '2.5'})
@@ -543,7 +545,7 @@ def get_dependencies():
         version = False
     optional.append({'module': 'psycopg2',
         'version': version,
-        'url': 'http://initd.org/tracker/psycopg/wiki/PsycopgTwo',
+        'url': 'http://initd.org/psycopg/',
         'debian': 'python-psycopg2',
         'debian_req': '1.1.21-6'})
     try:
