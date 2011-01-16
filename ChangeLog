@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2011-01-16  Michael Jahn
 	* [#697018] CSV import not working when number field not checked
+	* [#702495] griffith start interrupts with "TypeError: value is of the wrong type for this column"
 
 2011-01-14  Michael Jahn
 	* [#687621] Remains previous cover

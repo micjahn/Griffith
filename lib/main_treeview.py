@@ -533,7 +533,7 @@ def setmovie(self, movie, iter, treemodel = None): #{{{
     treemodel.set_value(iter, 5, movie.genre)
     treemodel.set_value(iter, 6, movie.seen)
     if movie.year is not None and (isinstance(movie.year, int) or isinstance(movie.year, long)):
-        treemodel.set_value(iter, 7, movie.year)
+        treemodel.set_value(iter, 7, str(movie.year))
     if movie.runtime is not None and (isinstance(movie.runtime, int) or isinstance(movie.runtime, long)):
         treemodel.set_value(iter, 8, '%003d' % movie.runtime + _(' min'))
     if movie.rating is not None and (isinstance(movie.rating, int) or isinstance(movie.rating, long)):
