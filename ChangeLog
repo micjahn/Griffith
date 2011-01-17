@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-01-17  Michael Jahn
+	* [#703728] FilmAffinity: incomplete list of results
+
 2011-01-16  Michael Jahn
 	* [#697018] CSV import not working when number field not checked
 	* [#702495] griffith start interrupts with "TypeError: value is of the wrong type for this column"
