@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright © 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright © 2005-2011 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@ class Config(object):
             return default
         else:
             value = self._cfg.get(section, option, False)
+            value = value.replace('%%', '%')
             value = Config.subst.get(value, value) # replace 'True' etc.
             return value
 
@@ -54,6 +55,7 @@ class Config(object):
             value = str(value)
         if not self._cfg.has_section(section):
             self._cfg.add_section(section)
+        value = value.replace('%', '%%')
         self._cfg.set(section, option, value)
 
     def has_key(self, key, section='main'):
