@@ -8,6 +8,7 @@ Griffith ChangeLog
 2011-01-19  Michael Jahn
 	* [#700704] Incorrect dialog size for posters
 	* [#493148] The Save button in the preferences window does not work well
+    * open of the homepage from the about dialog fixed
 
 2011-01-17  Michael Jahn
 	* [#703728] FilmAffinity: incomplete list of results
