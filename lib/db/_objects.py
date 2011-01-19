@@ -2,7 +2,7 @@
 # vim: fdm=marker
 __revision__ = '$Id$'
 
-# Copyright © 2009 Piotr Ożarowski
+# Copyright © 2009-2011 Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -180,7 +180,7 @@ class Person(DBTable):
     @validates('email')
     def _validate_email(self, key, address):
         address = address.strip()
-        if not EMAIL_PATTERN.match(address):
+        if address and not EMAIL_PATTERN.match(address):
             log.warning("%s: email address is not valid (%s)", self.__class__.__name__, address)
             raise ValueError(_("E-mail address is not valid"))
         return address
