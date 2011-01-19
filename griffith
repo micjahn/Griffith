@@ -379,8 +379,9 @@ class Griffith(object):
         poster_md5 = self.db.session.query(db.Movie.poster_md5).filter_by(number=number).first()[0]
         if poster_md5:
             filename = gutils.get_image_fname(poster_md5, self.db)
-            self.widgets['big_poster'].set_from_file(filename)
+            # show before set_from_pixbuf because it doesn't resize otherwise
             self.widgets['poster_window'].show()
+            self.widgets['big_poster'].set_from_file(filename)
 
     def z_poster_hide(self, *args):
         self.widgets['poster_window'].hide()
