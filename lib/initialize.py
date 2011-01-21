@@ -741,6 +741,7 @@ def dictionaries(self):
     fill_collections_combo(self)
     fill_advfilter_combo(self)
     fill_preferences_tags_combo(self)
+    fill_resolutions_combo(self)
     language_combos(self)
     acodec_combos(self)
     achannel_combos(self)
@@ -965,6 +966,21 @@ def fill_preferences_tags_combo(self):
         self.widgets['preferences']['tag_name'].insert_text(i, tag.name)
     self.widgets['preferences']['tag_name'].show_all()
     self.widgets['preferences']['tag_name'].set_active(0)
+    self.initialized = _tmp
+
+
+def fill_resolutions_combo(self, default=0):
+    _tmp = self.initialized
+    self.initialized = False # don't refresh main treeview
+    self.widgets['add']['resolution'].get_model().clear()
+    #resolutions = [names[0] for names in db._movie.res_aliases.values()]
+    resolutions = [names[0] for (res, names) in db._movie.res_aliases.iteritems()]
+    resolutions.sort()
+    i = 0
+    for name in resolutions:
+        self.widgets['add']['resolution'].insert_text(i, name)
+        i = i + 1
+    self.widgets['add']['resolution'].show_all()
     self.initialized = _tmp
 
 

@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-01-21  Michael Jahn
+	* drop-down combobox for resolution field
+
 2011-01-19  Michael Jahn
 	* [#700704] Incorrect dialog size for posters
 	* [#493148] The Save button in the preferences window does not work well

@@ -6834,10 +6834,15 @@ Stars</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="am_resolution">
+                  <widget class="GtkComboBoxEntry" id="am_resolution">
+                    <property name="visible">True</property>
+                    <property name="items" translatable="no"></property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="invisible_char">*</property>
+                    <child internal-child="entry">
+                      <widget class="GtkEntry" id="comboboxentry-entry11">
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="left_attach">1</property>

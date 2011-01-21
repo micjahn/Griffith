@@ -341,7 +341,7 @@ def get_details(self): #{{{
         'o_title': w['o_title'].get_text().decode('utf-8'),
         'rating': w['rating_slider'].get_value(),
         'region': w['region'].get_active(),
-        'resolution': w['resolution'].get_text().strip().decode('utf-8'),
+        'resolution': w['resolution'].get_child().get_text().strip().decode('utf-8'),
         'runtime': w['runtime'].get_text().decode('utf-8'),
         'screenplay': w['screenplay'].get_text().decode('utf-8'),
         'site': w['site'].get_text().decode('utf-8'),
@@ -447,13 +447,13 @@ def set_details(self, item=None):#{{{
         w['year'].set_value(0)
     if 'resolution' in item and item['resolution']:
         if self.config.get('use_resolution_alias', True):
-            w['resolution'].set_text(item['resolution'])
+            w['resolution'].get_child().set_text(item['resolution'])
         elif 'height' in item and item['height'] and 'width' in item and item['width']:
-            w['resolution'].set_text("%dx%d" % (item['width'], item['height']))
+            w['resolution'].get_child().set_text("%dx%d" % (item['width'], item['height']))
         else: # failback to 'resolution'
-            w['resolution'].set_text(item['resolution'])
+            w['resolution'].get_child().set_text(item['resolution'])
     else:
-        w['resolution'].set_text('')
+        w['resolution'].get_child().set_text('')
     if 'runtime' in item and item['runtime']:
         w['runtime'].set_value(gutils.digits_only(item['runtime']))
     else:
