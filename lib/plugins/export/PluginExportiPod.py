@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2007 Vasco Nunes
+# Copyright (c) 2005-2011 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ class ExportPlugin(Base):
                 gutils.info(_("iPod is not connected."), self.parent_window)
         # this is not a mac, lets save the file
         else:
-            filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+            filename = gutils.file_chooser(_("Export a %s document")%"iPod", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
                 buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='ipod_griffith_list')
             if filename and filename[0]:
                 overwrite = None
