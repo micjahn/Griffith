@@ -395,6 +395,8 @@ def get_details(self): #{{{
         return None
     # languages
     t_movies['languages'] = set()
+     # isn't the best but it works. without it the current selection of a language field is lost
+    w['lang_treeview'].child_focus(gtk.DIR_TAB_FORWARD)
     for row in self.lang['model']:
         lang_id = get_id(self.lang['lang'], row[0])
         lang_type = get_id(self.lang['type'], row[1])

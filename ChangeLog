@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-01-25  Michael Jahn
+	* [#300808] forgets some inputs in languages like codex&tracks
+
 2011-01-21  Michael Jahn
 	* drop-down combobox for resolution field
 
