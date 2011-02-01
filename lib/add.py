@@ -203,6 +203,9 @@ def populate_with_results(self):
         if self.movie.rating:
             w['rating_slider'].set_value(float(self.movie.rating))
         fields_to_fetch.pop(fields_to_fetch.index('rating'))
+    if 'resolution' in fields_to_fetch:
+        w['resolution'].get_child().set_text(gutils.convert_entities(self.movie.resolution))
+        fields_to_fetch.pop(fields_to_fetch.index('resolution'))
     # poster
     if 'image' in fields_to_fetch:
         w['image'].set_text('')
