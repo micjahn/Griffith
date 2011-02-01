@@ -680,6 +680,14 @@ class ExportPlugin(Base):
 
         # select exported movies
         exported_movies = self.select().fetchall()
+        if self.settings['sorting'] in ('movies_title', 'movies_o_title'):
+            # re-sorting movies case-insensitive and respect the current locale setting
+            # if sorting by title or original title is selected
+            import locale
+            locale.setlocale(locale.LC_ALL,"")
+            exported_movies.sort(cmp = locale.strcoll, \
+                key = lambda k: k[self.settings['sorting']] and k[self.settings['sorting']].lower() or '', \
+                reverse = self.settings['sorting2']=='DESC')
         number_of_exported_movies = len(exported_movies)
 
         if config['split_by'] == 1:    # split by number of movies per page
