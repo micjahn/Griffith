@@ -267,8 +267,12 @@ def upgrade_database(self, version, config):
         log.info("Upgrading database to version %d...", version)
         
         # common SQL statements
-        queries = {'created': 'ALTER TABLE movies ADD created DATETIME;',
-                   'updated': 'ALTER TABLE movies ADD updated DATETIME;'}
+        if self.session.bind.name == 'postgres':
+            queries = {'created': 'ALTER TABLE movies ADD created TIMESTAMP;',
+                       'updated': 'ALTER TABLE movies ADD updated TIMESTAMP;'}
+        else:
+            queries = {'created': 'ALTER TABLE movies ADD created DATETIME;',
+                       'updated': 'ALTER TABLE movies ADD updated DATETIME;'}
         for key, query in queries.items():
             try:
                 self.session.bind.execute(query)
