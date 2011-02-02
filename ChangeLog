@@ -8,6 +8,7 @@ Griffith ChangeLog
 2011-02-02  Michael Jahn
 	* [#710860] cannot import imdb movie titles starting with a bracket
 	* [#708472] Upgrade 0.11-0.12 fails with PostgreSQL
+	* [#711015] [Enhancement][Plugin FilmAffinity] See the movie year in movie list
 
 2011-02-01  Michael Jahn
 	* HTML export: sorting entries case-insensitive and respect current locale settings
