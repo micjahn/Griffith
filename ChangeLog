@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-02-02  Michael Jahn
+	* [#710860] cannot import imdb movie titles starting with a bracket
+
 2011-02-01  Michael Jahn
 	* HTML export: sorting entries case-insensitive and respect current locale settings
 
