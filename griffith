@@ -44,6 +44,13 @@ if os.path.isdir(lib):
     sys.path.insert(1, lib)
 del lib
 
+# macosx
+import platform
+if platform.system() == 'Darwin':
+    import pygtk
+    pygtk.require('2.0')
+# end macosx
+
 # check dependencies
 import gutils
 (required, extra) = gutils.get_dependencies()
@@ -132,6 +139,18 @@ class Griffith(object):
         initialize.people_treeview(self)
         initialize.web_results(self)
         self.initialized = True
+        
+        # macosx integration
+        #hide gtk menubar and implement a native Cocoa replacement
+        #using gtk_osxapplication 
+        if self.mac:
+                import gtk_osxapplication  
+                self.macapp = gtk_osxapplication.OSXApplication()
+                self.macapp.connect("NSApplicationBlockTermination", self.destroy)
+                gtk.Widget.hide(self.widgets['menu']['menubar']);
+                self.macapp.set_menu_bar(self.widgets['menu']['menubar'])                self.macapp.insert_app_menu_item(self.widgets['menu']['preferences'],1)                self.macapp.insert_app_menu_item(self.widgets['menu']['about'],0)
+                self.macapp.ready()
+        # end macosx integration 
 
         self.restore_state()
         self.clear_details()
@@ -194,6 +213,11 @@ class Griffith(object):
 
     def destroy(self, widget, data=None):
         self.save_state()
+        #macosx - macosx integration fails with gtk.main_quit()
+        #this is just a dirty workaround
+        if self.mac:
+        	sys.exit(0)
+        #end macosx
         gtk.main_quit()
 
     def on_configure(self, widget, data=None):

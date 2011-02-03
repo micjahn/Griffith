@@ -5,7 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 2011-02-03  Vasco Nunes
-	* MoviePTGate plugin updated.
+	* MoviePTGate plugin updated
+	* Added MacOSX UI integration
+	* Some minor macosx specific changes
 
 2011-02-02  Michael Jahn
 	* [#710860] cannot import imdb movie titles starting with a bracket
