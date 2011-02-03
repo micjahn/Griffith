@@ -339,6 +339,9 @@ def define_widgets(self, gladefile):
     }#}}}
 
     self.widgets['menu'] = {#{{{
+        'preferences': get('preferences1'),
+        'about': get('about1'),
+        'menubar': get('menubar1'),
         'fullscreen': get('menu_fullscreen'),
         'toolbar': get('menu_toolbar'),
         'ext_toolbar': get('menu_ext_toolbar'),
