@@ -1,35 +1,34 @@
-# Indonesian translation for griffith
-# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# Romanian translation for griffith
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
 # This file is distributed under the same license as the griffith package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Griffith 0.10-beta1\n"
+"Project-Id-Version: griffith\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-02-03 21:56+0100\n"
-"PO-Revision-Date: 2009-12-23 00:11+0000\n"
-"Last-Translator: Piotr Ożarowski <Unknown>\n"
-"Language-Team: Indonesian <id@li.org>\n"
+"PO-Revision-Date: 2008-01-01 22:28+0000\n"
+"Last-Translator: Stefan Alexandru <Unknown>\n"
+"Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-02-03 20:44+0000\n"
 "X-Generator: Launchpad (build 12309)\n"
-"Language: id\n"
 
 #: ../griffith:241 ../griffith:1028 ../lib/delete.py:37 ../lib/edit.py:43
 msgid "You have no movies in your database"
-msgstr "kamu tidak mempunyai film dalam database"
+msgstr "Nu aveti nici un film in baza de date"
 
 #: ../griffith:419
 msgid "You have seen all films in your collection!"
-msgstr "kamu melihat semua film yang ada dalam koleksi!"
+msgstr ""
 
 #: ../griffith:570 ../griffith:575 ../lib/initialize.py:376
 #: ../lib/initialize.py:798
 msgid "subtitles"
-msgstr "teks yang ada pada bagian bawah film"
+msgstr "subtitrari"
 
 #: ../griffith:617 ../griffith:677 ../griffith:736 ../griffith:794
 #: ../griffith:852 ../griffith:901 ../griffith:950
@@ -37,8 +36,6 @@ msgid ""
 "This item is in use.\n"
 "Operation aborted!"
 msgstr ""
-"Item ini sedang dipakai.\n"
-"Operasi digagalkan!"
 
 #: ../griffith:1000
 msgid ""
@@ -46,20 +43,13 @@ msgid ""
 "Your current movie collection will be replaced.\n"
 "You can't undo this operation."
 msgstr ""
-"yakin ingin disimpan?\n"
-"koleksi film baru-mu akan digantikan.\n"
-"kamu tidak dapat mengulang operasi ini."
 
 #: ../griffith:1007
-#, fuzzy
 msgid ""
 "Are you sure you want to merge?\n"
 "Your current movie collection will be merged with a backup.\n"
 "You can't undo this operation."
 msgstr ""
-"yakin ingin dicampur?\n"
-"koleksi film-mu akan dicampur dengan disertai backup.\n"
-"kamu tidak dapat mengulang operasi ini."
 
 #: ../griffith:1105
 #, python-format
@@ -73,8 +63,8 @@ msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
 msgstr ""
-"yakin ingin membuat database baru?\n"
-"kamu akan kehilangan SELURUH datamu yang sekarang!"
+"Sunteti sigur ca doriti sa creati o noua baza de date ?\n"
+"Veti pierde TOATA baza de date actuala !"
 
 #: ../griffith:1302
 msgid ""
@@ -82,8 +72,6 @@ msgid ""
 "Do you confirm that you want\n"
 "to lose your current data?"
 msgstr ""
-"kesempatan terakhir!\n"
-"konfirmasi bahwa kamu ingin menghilangkan datamu yang sekarang?"
 
 #: ../griffith:1458
 msgid ""
@@ -96,15 +84,15 @@ msgstr ""
 
 #: ../lib/about.py:46
 msgid "Main Authors"
-msgstr "pengarang utama"
+msgstr ""
 
 #: ../lib/about.py:48
 msgid "Programmers"
-msgstr "pembuat program"
+msgstr ""
 
 #: ../lib/about.py:51
 msgid "Contributors:"
-msgstr "Penyumbang:"
+msgstr ""
 
 #: ../lib/about.py:55
 msgid "Logo, icon and general artwork "
@@ -138,39 +126,37 @@ msgstr ""
 
 #: ../lib/add.py:56 ../glade/griffith.glade.h:27
 msgid "Add a new movie"
-msgstr "Tambah film baru"
+msgstr ""
 
 #: ../lib/add.py:68
 msgid "Edit movie"
-msgstr "Edit film"
+msgstr ""
 
 #: ../lib/add.py:127
 msgid "Movie information has been updated"
-msgstr "Informasi film sudah di-update"
+msgstr ""
 
 #: ../lib/add.py:263
 msgid "No results"
-msgstr "Tidak ada hasil"
+msgstr ""
 
 #: ../lib/add.py:306 ../lib/add.py:648
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
 msgstr ""
-"Kamu harus mengisi judul asli \n"
-"atau judul film."
 
 #: ../lib/add.py:315
 msgid "Url: "
-msgstr "URL: "
+msgstr ""
 
 #: ../lib/add.py:316
 msgid "Language: "
-msgstr "Bahasa: "
+msgstr ""
 
 #: ../lib/add.py:656 ../lib/add.py:660
 msgid "Movie with that title already exists, are you sure you want to add?"
-msgstr "Film dengan judul tersebut sudah ada, yakin ingin menambah?"
+msgstr ""
 
 #: ../lib/advfilter.py:65
 msgid "is equal to"
@@ -258,7 +244,7 @@ msgstr ""
 
 #: ../lib/backup.py:53
 msgid "Save Griffith backup"
-msgstr "Simpan backup Griffith"
+msgstr ""
 
 #: ../lib/backup.py:63 ../lib/plugins/export/__init__.py:162
 #: ../lib/plugins/export/PluginExportCSV.py:61
@@ -274,7 +260,7 @@ msgstr ""
 
 #: ../lib/backup.py:115
 msgid "Backup has been created"
-msgstr "backup telah dibuat"
+msgstr ""
 
 #: ../lib/backup.py:118
 msgid "Restoring database..."
@@ -282,64 +268,64 @@ msgstr ""
 
 #: ../lib/backup.py:200
 msgid "Restore Griffith backup"
-msgstr "simpan Griffith backup"
+msgstr ""
 
 #: ../lib/backup.py:216
 msgid "Can't read backup file"
-msgstr "tidak dapat membaca file backup"
+msgstr ""
 
 #: ../lib/backup.py:287
 msgid "Backup restored"
-msgstr "backup tersimpan"
+msgstr ""
 
 #: ../lib/cover.py:43 ../lib/edit.py:45
 msgid "Select image"
-msgstr "pilih image"
+msgstr ""
 
 #: ../lib/cover.py:87 ../lib/cover.py:150
 msgid "Cover generated by Griffith v"
-msgstr "cover oleh Griffth V"
+msgstr ""
 
 #: ../lib/cover.py:89 ../lib/cover.py:152
 #: ../lib/plugins/export/PluginExportHTML.py:719
 #: ../lib/plugins/export/PluginExportPDF.py:265
 msgid "Released Under the GNU/GPL License"
-msgstr "dikeluarkan dengan lisensi GNU/GPL"
+msgstr ""
 
 #: ../lib/cover.py:177 ../lib/initialize.py:190 ../lib/initialize.py:779
 #: ../lib/plugins/export/PluginExportHTML.py:157 ../glade/griffith.glade.h:105
 msgid "Original Title"
-msgstr "Judul asli"
+msgstr ""
 
 #: ../lib/cover.py:178 ../lib/initialize.py:198 ../lib/initialize.py:791
 #: ../lib/plugins/export/PluginExportHTML.py:163 ../glade/griffith.glade.h:160
 msgid "Title"
-msgstr "Judul"
+msgstr ""
 
 #: ../lib/cover.py:180 ../lib/initialize.py:206 ../lib/initialize.py:769
 #: ../lib/plugins/export/PluginExportHTML.py:148
 #: ../lib/plugins/export/PluginExportPDF.py:183 ../glade/griffith.glade.h:54
 msgid "Director"
-msgstr "Sutradara"
+msgstr ""
 
 #: ../lib/cover.py:182
 msgid "Running Time"
-msgstr "Waktu yang berjalan"
+msgstr ""
 
 #: ../lib/cover.py:182 ../lib/main_treeview.py:538
 msgid " min"
-msgstr " min"
+msgstr ""
 
 #: ../lib/cover.py:183 ../lib/initialize.py:768
 #: ../lib/plugins/export/PluginExportHTML.py:147 ../glade/griffith.glade.h:45
 msgid "Country"
-msgstr "Negara"
+msgstr ""
 
 #: ../lib/cover.py:184 ../lib/initialize.py:214 ../lib/initialize.py:770
 #: ../lib/plugins/export/PluginExportHTML.py:149
 #: ../lib/plugins/export/PluginExportPDF.py:179 ../glade/griffith.glade.h:70
 msgid "Genre"
-msgstr "Aliran"
+msgstr ""
 
 #: ../lib/dbupgrade.py:37
 msgid "Upgrading database..."
@@ -347,27 +333,27 @@ msgstr ""
 
 #: ../lib/dbupgrade.py:90 ../lib/plugins/movie/PluginMovieE-Pipoca.py:33
 msgid "Brazilian Portuguese"
-msgstr "Bahasa Brazil Portugis"
+msgstr ""
 
 #: ../lib/dbupgrade.py:91
 msgid "Bulgarian"
-msgstr "Bahasa Bulgaria"
+msgstr ""
 
 #: ../lib/dbupgrade.py:92
 msgid "Catalan"
-msgstr "Catalan"
+msgstr ""
 
 #: ../lib/dbupgrade.py:93 ../lib/plugins/movie/PluginMovieCSFD.py:29
 msgid "Czech"
-msgstr "bahasa Ceko"
+msgstr ""
 
 #: ../lib/dbupgrade.py:94 ../lib/plugins/movie/PluginMovieScope.py:32
 msgid "Danish"
-msgstr "bahasa Denmark"
+msgstr ""
 
 #: ../lib/dbupgrade.py:95 ../lib/plugins/movie/PluginMovieMovieMeter.py:32
 msgid "Dutch"
-msgstr "bahasa Belanda"
+msgstr ""
 
 #: ../lib/dbupgrade.py:96 ../lib/plugins/movie/PluginMovieAllMovie.py:31
 #: ../lib/plugins/movie/PluginMovieAniDB.py:31
@@ -377,7 +363,7 @@ msgstr "bahasa Belanda"
 #: ../lib/plugins/movie/PluginMovieMediadis.py:15
 #: ../lib/plugins/movie/PluginMovieMoviefone.py:15
 msgid "English"
-msgstr "Bahasa Inggris"
+msgstr ""
 
 #: ../lib/dbupgrade.py:97
 msgid "Estonian"
@@ -386,7 +372,7 @@ msgstr ""
 #: ../lib/dbupgrade.py:98 ../lib/plugins/movie/PluginMovieAllocine.py:34
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:30
 msgid "French"
-msgstr "bahasa Perancis"
+msgstr ""
 
 #: ../lib/dbupgrade.py:99 ../lib/plugins/movie/PluginMovieDVDPalace.py:32
 #: ../lib/plugins/movie/PluginMovieFilmDb.py:31
@@ -396,11 +382,11 @@ msgstr "bahasa Perancis"
 #: ../lib/plugins/movie/PluginMovieOFDb.py:16
 #: ../lib/plugins/movie/PluginMovieZelluloid.py:32
 msgid "German"
-msgstr "bahasa Jerman"
+msgstr ""
 
 #: ../lib/dbupgrade.py:100
 msgid "Greek"
-msgstr "Bahasa Yunani"
+msgstr ""
 
 #: ../lib/dbupgrade.py:101
 msgid "Hungarian"
@@ -414,11 +400,11 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieIMDB-it.py:30
 #: ../lib/plugins/movie/PluginMovieMyMoviesIt.py:33
 msgid "Italian"
-msgstr "bahasa Italia"
+msgstr ""
 
 #: ../lib/dbupgrade.py:104
 msgid "Japanese"
-msgstr "Bahasa Jepang"
+msgstr ""
 
 #: ../lib/dbupgrade.py:105
 msgid "Korean"
@@ -426,7 +412,7 @@ msgstr ""
 
 #: ../lib/dbupgrade.py:106
 msgid "Norwegian Bokmal"
-msgstr "Bahasa Norwegia Bokmal"
+msgstr ""
 
 #: ../lib/dbupgrade.py:107
 msgid "Occitan"
@@ -443,44 +429,44 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieTanukiAnime.py:30
 #: ../lib/plugins/movie/PluginMovieWP.py:31
 msgid "Polish"
-msgstr "bahasa Polandia"
+msgstr ""
 
 #: ../lib/dbupgrade.py:110 ../lib/plugins/movie/PluginMovie7arte.py:31
 #: ../lib/plugins/movie/PluginMovieCineteka.py:31
 #: ../lib/plugins/movie/PluginMovieClubedevideo.py:32
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
-msgstr "bahasa Portugis"
+msgstr ""
 
 #: ../lib/dbupgrade.py:111
 msgid "Russian"
-msgstr "bahasa Rusia"
+msgstr ""
 
 #: ../lib/dbupgrade.py:112
 msgid "Simplified Chinese"
-msgstr "bahasa China yang disederhanakan"
+msgstr ""
 
 #: ../lib/dbupgrade.py:113
 msgid "Slovak"
-msgstr "Slovakia"
+msgstr ""
 
 #: ../lib/dbupgrade.py:114 ../lib/plugins/movie/PluginMovieCulturalia.py:31
 #: ../lib/plugins/movie/PluginMovieFilmAffinity.py:31
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:32
 msgid "Spanish"
-msgstr "Bahasa Spanyol"
+msgstr ""
 
 #: ../lib/dbupgrade.py:115 ../lib/plugins/movie/PluginMovieFilmtipset.py:32
 msgid "Swedish"
-msgstr "bahasa Swedia"
+msgstr ""
 
 #: ../lib/dbupgrade.py:116
 msgid "Turkish"
-msgstr "Bahasa Turki"
+msgstr ""
 
 #: ../lib/dbupgrade.py:117
 msgid "Favourite"
-msgstr "Favorit"
+msgstr ""
 
 #: ../lib/dbupgrade.py:118
 msgid "Buy me"
@@ -491,26 +477,24 @@ msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
 msgstr ""
-"Griffith sekarang akan mengkonversi database kamu ke format yang baru. "
-"Membutuhkan waktu beberapa menit jika kamu memiliki database yang besar."
 
 #: ../lib/dbupgrade.py:321
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
-msgstr "Konversi database lama : mohon install pysqlite legacy (v1.0)"
+msgstr ""
 
 #: ../lib/dbupgrade.py:348
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
-msgstr "database kaum dalam format SQLite2, mohon dikonversi menjadi SQLite3"
+msgstr ""
 
 #: ../lib/delete.py:41
 msgid "You can't delete movie while it is loaned."
-msgstr "kamu tidak dapat menghapus film saat film sedang dipinjam."
+msgstr ""
 
 #: ../lib/delete.py:44
 msgid "Are you sure you want to delete this movie?"
-msgstr "yakin ingin menghapus film ini?"
+msgstr ""
 
 #: ../lib/edit.py:74
 msgid "Image is not valid."
@@ -518,37 +502,36 @@ msgstr ""
 
 #: ../lib/edit.py:111 ../lib/edit.py:137
 msgid "Image has been updated"
-msgstr "image telah di-update."
+msgstr ""
 
 #: ../lib/edit.py:120
 msgid "Are you sure you want to delete this poster?"
-msgstr "Yakin ingin menghapus poster ini?"
+msgstr ""
 
 #: ../lib/gconsole.py:182
 msgid "No movie found"
-msgstr "Tidak ditemukan film"
+msgstr ""
 
 #: ../lib/gemail.py:38
 msgid "Connection timed out"
-msgstr "Waktu koneksi telah habis"
+msgstr ""
 
 #: ../lib/gemail.py:49 ../lib/gemail.py:59
 #, python-format
 msgid "Error sending e-mail: %s"
-msgstr "Gagal mengirim e-mail: %s"
+msgstr ""
 
 #: ../lib/gemail.py:49
 msgid "login failure"
-msgstr "Login gagal"
+msgstr ""
 
 #: ../lib/gemail.py:56
-#, fuzzy
 msgid "E-mail sent successfully"
-msgstr "Email sukses terkirim"
+msgstr ""
 
 #: ../lib/gemail.py:76
 msgid "Movie loan reminder"
-msgstr "Pengingat peminjaman film"
+msgstr ""
 
 #: ../lib/gemail.py:76
 #, python-format
@@ -565,15 +548,15 @@ msgstr ""
 
 #: ../lib/gemail.py:80
 msgid "Mail could not be sent. Please check e-mail preferences."
-msgstr "Mail tidak dapat dikirim. Mohon periksa pilihan email."
+msgstr ""
 
 #: ../lib/gemail.py:82
 msgid "This person has no e-mail address defined."
-msgstr "Orang ini memiliki alamat email yang tidak terdefinisi."
+msgstr ""
 
 #: ../lib/gutils.py:337
 msgid "Images"
-msgstr "Image-image"
+msgstr ""
 
 #: ../lib/gutils.py:348
 msgid "backups"
@@ -581,16 +564,16 @@ msgstr ""
 
 #: ../lib/gutils.py:354 ../lib/plugins/imp/__init__.py:377
 msgid "All files"
-msgstr "Semua file"
+msgstr ""
 
 #: ../lib/initialize.py:175
 msgid "No."
-msgstr "No."
+msgstr ""
 
 #: ../lib/initialize.py:183 ../lib/initialize.py:771
 #: ../lib/plugins/export/PluginExportHTML.py:150 ../glade/griffith.glade.h:76
 msgid "Image"
-msgstr "Image"
+msgstr ""
 
 #: ../lib/initialize.py:222 ../lib/initialize.py:787
 #: ../lib/plugins/export/PluginExportHTML.py:162 ../glade/griffith.glade.h:139
@@ -601,7 +584,7 @@ msgstr ""
 #: ../lib/plugins/export/PluginExportHTML.py:164
 #: ../lib/plugins/export/PluginExportPDF.py:171 ../glade/griffith.glade.h:174
 msgid "Year"
-msgstr "Tahun"
+msgstr ""
 
 #: ../lib/initialize.py:241 ../lib/initialize.py:785
 #: ../lib/plugins/export/PluginExportHTML.py:160
@@ -624,15 +607,15 @@ msgstr ""
 
 #: ../lib/initialize.py:331
 msgid "Loan Date"
-msgstr "Tanggal Peminjaman"
+msgstr ""
 
 #: ../lib/initialize.py:337
 msgid "Return Date"
-msgstr "Tanggal Pengembalian"
+msgstr ""
 
 #: ../lib/initialize.py:342
 msgid "Loaned To"
-msgstr "Dipinjamkan kepada"
+msgstr ""
 
 #: ../lib/initialize.py:362 ../lib/plugins/movie/PluginMovieIMDB-de.py:210
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:409
@@ -641,7 +624,7 @@ msgstr "Dipinjamkan kepada"
 #: ../lib/plugins/movie/PluginMovieIMDB.py:176
 #: ../lib/plugins/movie/PluginMovieIMDB.py:361
 msgid "Language"
-msgstr "Bahasa"
+msgstr ""
 
 #: ../lib/initialize.py:374 ../lib/initialize.py:798
 msgid "lector"
@@ -649,7 +632,7 @@ msgstr ""
 
 #: ../lib/initialize.py:375 ../lib/initialize.py:798
 msgid "dubbing"
-msgstr "Sulih suara"
+msgstr ""
 
 #: ../lib/initialize.py:377 ../lib/initialize.py:798
 msgid "commentary"
@@ -686,7 +669,7 @@ msgstr ""
 
 #: ../lib/initialize.py:729
 msgid "Last added"
-msgstr "Yang terakhir ditambahkan"
+msgstr ""
 
 #: ../lib/initialize.py:761 ../lib/plugins/export/PluginExportHTML.py:170
 #: ../glade/griffith.glade.h:33
@@ -706,12 +689,12 @@ msgstr ""
 #: ../lib/initialize.py:764 ../lib/plugins/export/PluginExportHTML.py:146
 #: ../glade/griffith.glade.h:39
 msgid "Classification"
-msgstr "Klasifikasi"
+msgstr ""
 
 #: ../lib/initialize.py:765 ../lib/plugins/export/PluginExportHTML.py:178
 #: ../glade/griffith.glade.h:42
 msgid "Collection"
-msgstr "Koleksi"
+msgstr ""
 
 #: ../lib/initialize.py:766 ../lib/initialize.py:797
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:214
@@ -721,28 +704,28 @@ msgstr "Koleksi"
 #: ../lib/plugins/movie/PluginMovieIMDB.py:180
 #: ../lib/plugins/movie/PluginMovieIMDB.py:363 ../glade/griffith.glade.h:43
 msgid "Color"
-msgstr "Warna"
+msgstr ""
 
 #: ../lib/initialize.py:767 ../glade/griffith.glade.h:44
 msgid "Condition"
-msgstr "Kondisi"
+msgstr ""
 
 #: ../lib/initialize.py:772 ../glade/griffith.glade.h:80
 msgid "Layers"
-msgstr "Lapisan"
+msgstr ""
 
 #: ../lib/initialize.py:773 ../lib/plugins/export/PluginExportHTML.py:154
 msgid "Loaned"
-msgstr "Dipinjam"
+msgstr ""
 
 #: ../lib/initialize.py:774 ../lib/plugins/export/PluginExportHTML.py:155
 #: ../glade/griffith.glade.h:55
 msgid "Discs"
-msgstr "Piringan"
+msgstr ""
 
 #: ../lib/initialize.py:775 ../glade/griffith.glade.h:92
 msgid "Medium"
-msgstr "Medium"
+msgstr ""
 
 #: ../lib/initialize.py:776 ../lib/plugins/export/PluginExportHTML.py:165
 #: ../lib/plugins/export/PluginExportPDF.py:195 ../glade/griffith.glade.h:101
@@ -793,7 +776,7 @@ msgstr ""
 
 #: ../lib/initialize.py:790 ../glade/griffith.glade.h:157
 msgid "Tags"
-msgstr "Tags"
+msgstr ""
 
 #: ../lib/initialize.py:792 ../lib/plugins/export/PluginExportHTML.py:153
 #: ../glade/griffith.glade.h:162
@@ -808,29 +791,29 @@ msgstr ""
 #: ../lib/initialize.py:794 ../lib/plugins/export/PluginExportHTML.py:179
 #: ../glade/griffith.glade.h:172
 msgid "Volume"
-msgstr "Volume"
+msgstr ""
 
 #: ../lib/initialize.py:796 ../lib/initialize.py:797 ../lib/initialize.py:799
 #: ../lib/initialize.py:1057 ../lib/initialize.py:1058
 #: ../lib/initialize.py:1089 ../lib/initialize.py:1090
 msgid "N/A"
-msgstr "Tidak Tersedia"
+msgstr ""
 
 #: ../lib/initialize.py:796
 msgid "Damaged"
-msgstr "Rusak"
+msgstr ""
 
 #: ../lib/initialize.py:796
 msgid "Poor"
-msgstr "Jelek"
+msgstr ""
 
 #: ../lib/initialize.py:796
 msgid "Fair"
-msgstr "Cukup"
+msgstr ""
 
 #: ../lib/initialize.py:796
 msgid "Good"
-msgstr "Baik"
+msgstr ""
 
 #: ../lib/initialize.py:796
 msgid "Excellent"
@@ -862,11 +845,11 @@ msgstr ""
 
 #: ../lib/initialize.py:801
 msgid "Region 0 (No Region Coding)"
-msgstr "Arean 0"
+msgstr ""
 
 #: ../lib/initialize.py:802
 msgid "Region 1 (United States of America, Canada)"
-msgstr "Area 1 (Amerika Sekrikat, Kanada)"
+msgstr ""
 
 #: ../lib/initialize.py:803
 msgid "Region 2 (Europe, Egypt, Arabia, Japan and South Africa)"
@@ -874,7 +857,7 @@ msgstr ""
 
 #: ../lib/initialize.py:804
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
-msgstr "Area 3 (Korea, Thailand, Vietnam, Kalimantan dan Indonesia)"
+msgstr ""
 
 #: ../lib/initialize.py:805
 msgid "Region 4 (Australia and New Zealand, Mexico and South America)"
@@ -886,7 +869,7 @@ msgstr ""
 
 #: ../lib/initialize.py:807
 msgid "Region 6 (Popular Republic of China)"
-msgstr "Area 6 (RRC)"
+msgstr ""
 
 #: ../lib/initialize.py:808
 msgid "Region 7 (Reserved for Unspecified Special Use)"
@@ -894,11 +877,11 @@ msgstr ""
 
 #: ../lib/initialize.py:809
 msgid "Region 8 (Airlines/Cruise Ships)"
-msgstr "Area 8 (Pesawat Udara/Kapal laut)"
+msgstr ""
 
 #: ../lib/initialize.py:848
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
-msgstr "Kamus tidak tersedia. Pemeriksaan kata tidak dapat dilakukan. \n"
+msgstr ""
 
 #: ../lib/initialize.py:849
 #, python-format
@@ -911,9 +894,8 @@ msgid "No person is defined yet."
 msgstr ""
 
 #: ../lib/loan.py:73
-#, fuzzy
 msgid "Do you want to loan the whole collection?"
-msgstr "Akan menggunakan poster ini?"
+msgstr ""
 
 #: ../lib/loan.py:82
 msgid ""
@@ -944,11 +926,11 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieMovieMeter.py:88
 #: ../lib/plugins/movie/PluginMovieMovieMeter.py:188
 msgid "Wait a moment"
-msgstr "Tunggu sebentar"
+msgstr ""
 
 #: ../lib/movie.py:222
 msgid "Fetching poster"
-msgstr "Ambil poster"
+msgstr ""
 
 #: ../lib/movie.py:323 ../lib/movie.py:344
 #: ../lib/plugins/movie/PluginMovieMovieMeter.py:188
@@ -961,27 +943,25 @@ msgstr ""
 
 #: ../lib/movie.py:446
 msgid "Cancel"
-msgstr "Batal"
+msgstr ""
 
 #: ../lib/people.py:74
 msgid "You should fill the person name"
-msgstr "Kamu harus mengisi nama"
+msgstr ""
 
 #: ../lib/people.py:114
 msgid "Record updated"
-msgstr "Rekaman telah di-update"
+msgstr ""
 
 #: ../lib/people.py:135
 msgid "This person has loaned films from you. Return them first."
-msgstr "Orang ini sedang meminjam film dari kamu. Kembalikan terlebih dahulu."
+msgstr ""
 
 #: ../lib/people.py:139
 msgid ""
 "This person has data in the loan history. This data will be erased if you "
 "continue."
 msgstr ""
-"Orang ini memiliki data dalam histori peminjaman. Data ini akan dihapus jika "
-"dilanjutkan."
 
 #: ../lib/people.py:141
 #, python-format
@@ -989,16 +969,12 @@ msgid ""
 "%s\n"
 "Are you sure you want to delete this person?"
 msgstr ""
-"%s\n"
-"Yakin akan menghapus orang ini?"
 
 #: ../lib/sql.py:111
 msgid ""
 "Cannot connect to database.\n"
 "Falling back to SQLite."
 msgstr ""
-"Tidak dapat koneksi ke database.\n"
-"Kembali ke SQLite."
 
 #: ../lib/sql.py:111
 msgid "Please check debug output for more informations."
@@ -1628,7 +1604,7 @@ msgstr ""
 #: ../lib/plugins/imp/TheMovieLibrary.py:148
 #: ../lib/plugins/imp/WintoolzFilmdatenbank.py:136
 msgid " as "
-msgstr " sebagai "
+msgstr ""
 
 #: ../lib/plugins/movie/PluginMovieAmazon.py:38
 msgid "International"
@@ -1645,7 +1621,7 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieIMDB-it.py:166
 #: ../lib/plugins/movie/PluginMovieIMDB.py:178 ../glade/griffith.glade.h:4
 msgid "<b>Audio</b>"
-msgstr "<b>Audio</b>"
+msgstr ""
 
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:410
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:457
@@ -1658,7 +1634,7 @@ msgstr ""
 #: ../lib/plugins/export/PluginExportXML.py:115
 #, python-format
 msgid "%s file has been created."
-msgstr "File %s telah dibuat"
+msgstr ""
 
 #: ../lib/plugins/export/__init__.py:145 ../lib/plugins/export/__init__.py:148
 #: ../lib/plugins/export/PluginExportCSV.py:50
@@ -1696,7 +1672,7 @@ msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:52
 msgid "Griffith's movies list"
-msgstr "Daftar film Griffith"
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:168
 msgid "Width"
@@ -1733,41 +1709,39 @@ msgid ""
 "Directory %s already exists.\n"
 "Do you want to overwrite it?"
 msgstr ""
-"Direktori %s sudah ada.\n"
-"Akan ditimpa?"
 
 #: ../lib/plugins/export/PluginExportHTML.py:651
 #, python-format
 msgid "Can't remove %s!"
-msgstr "Tidak dapat menghilangkan %s!"
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:666
 #: ../lib/plugins/export/PluginExportHTML.py:679
 #, python-format
 msgid "Can't copy %s!"
-msgstr "Tidak dapat menyalin %s!"
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:709
 #, python-format
 msgid "Can't open %s!"
-msgstr "Tidak dapat membuka %s!"
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:717
 #: ../lib/plugins/export/PluginExportPDF.py:263
 msgid "Document generated by Griffith v"
-msgstr "Dokumen dihasilkan oleh Griffith V"
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:785
 msgid "Yes"
-msgstr "Ya"
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:787
 msgid "No"
-msgstr "Tidak"
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:862
 msgid "Document has been generated."
-msgstr "Dokumen telah dihasilkan."
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportiPod.py:63
 msgid "iPod Notes export plugin"
@@ -1775,7 +1749,7 @@ msgstr ""
 
 #: ../lib/plugins/export/PluginExportiPod.py:87
 msgid "My Movies List"
-msgstr "Daftar Film-ku"
+msgstr ""
 
 #: ../lib/plugins/export/PluginExportiPod.py:103
 msgid "List successfully exported to iPod."
@@ -1827,7 +1801,7 @@ msgstr ""
 #: ../lib/plugins/imp/__init__.py:409
 #, python-format
 msgid "%s file has been imported. %s movies added."
-msgstr "File %s telah diimpor. Film %s sudah ditambahkan."
+msgstr ""
 
 #: ../lib/plugins/imp/AllMyMovies.py:60 ../lib/plugins/imp/AMC.py:121
 #: ../lib/plugins/imp/BESTheMovieLibrary.py:60
@@ -1853,7 +1827,7 @@ msgstr ""
 #: ../lib/plugins/imp/CSV.py:311
 #, python-format
 msgid "Can't open the file %s"
-msgstr "Tidak dapat membuka file %s"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:1
 msgid "<b>Example</b>"
@@ -1869,7 +1843,7 @@ msgstr ""
 
 #: ../glade/exporthtml.glade.h:4 ../glade/griffith.glade.h:18
 msgid "<b>Sort by</b>"
-msgstr "<b>Terurut berdasarkan</b>"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:5
 msgid "<b>Split into</b>"
@@ -1905,43 +1879,43 @@ msgstr ""
 
 #: ../glade/exporthtml.glade.h:13 ../glade/import.glade.h:4
 msgid "Description"
-msgstr "Deskripsi"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:14
 msgid "Destination"
-msgstr "Tujuan"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:16
 msgid "Export"
-msgstr "Ekspor"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:17
 msgid "Export data"
-msgstr "Ekspor data"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:18
 msgid "Format"
-msgstr "Format"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:19
 msgid "Maximal height"
-msgstr "Tinggi maksimal"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:20
 msgid "Maximal width"
-msgstr "Lebar maksimal"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:21
 msgid "Posters"
-msgstr "Poster"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:22 ../glade/griffith.glade.h:132
 msgid "Reverse"
-msgstr "Kebalikan"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:23
 msgid "Template"
-msgstr "Template"
+msgstr ""
 
 #: ../glade/exporthtml.glade.h:24
 msgid "Use custom file"
@@ -2061,19 +2035,19 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:29
 msgid "Add movie"
-msgstr "Tambah film"
+msgstr ""
 
 #: ../glade/griffith.glade.h:30
 msgid "Add movie and close"
-msgstr "Tambah film dan tutup"
+msgstr ""
 
 #: ../glade/griffith.glade.h:31
 msgid "Adds new movie"
-msgstr "Tambah film baru"
+msgstr ""
 
 #: ../glade/griffith.glade.h:32
 msgid "All Movies"
-msgstr "Semua film"
+msgstr ""
 
 #: ../glade/griffith.glade.h:34
 msgid "Base font size"
@@ -2081,11 +2055,11 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:35
 msgid "By Collection"
-msgstr "Dengan koleksi"
+msgstr ""
 
 #: ../glade/griffith.glade.h:38
 msgid "Choose Image"
-msgstr "Pilih image"
+msgstr ""
 
 #: ../glade/griffith.glade.h:40
 msgid "Clear filter"
@@ -2101,11 +2075,11 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:48
 msgid "DVD layers"
-msgstr "Pemutar DVD"
+msgstr ""
 
 #: ../glade/griffith.glade.h:49
 msgid "DVD region"
-msgstr "Area DVD"
+msgstr ""
 
 #: ../glade/griffith.glade.h:50
 msgid "Database"
@@ -2153,11 +2127,11 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:64
 msgid "Fill empty fields only"
-msgstr "Isi bagian yang kosong saja"
+msgstr ""
 
 #: ../glade/griffith.glade.h:65
 msgid "Filter "
-msgstr "Saring "
+msgstr ""
 
 #: ../glade/griffith.glade.h:66
 msgid "Filter movies"
@@ -2165,23 +2139,23 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:67
 msgid "Font for reports"
-msgstr "Huruf untuk laporan"
+msgstr ""
 
 #: ../glade/griffith.glade.h:68
 msgid "Forum"
-msgstr "Forum"
+msgstr ""
 
 #: ../glade/griffith.glade.h:69
 msgid "Found Results"
-msgstr "Hasil ditemukan"
+msgstr ""
 
 #: ../glade/griffith.glade.h:71
 msgid "Get from web"
-msgstr "Dapat dari web"
+msgstr ""
 
 #: ../glade/griffith.glade.h:72
 msgid "Get movie data from:"
-msgstr "Dapat data film dari:"
+msgstr ""
 
 #: ../glade/griffith.glade.h:73
 msgid "Homepage"
@@ -2221,31 +2195,31 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:84
 msgid "Loan Management"
-msgstr "Manajemen Peminjaman"
+msgstr ""
 
 #: ../glade/griffith.glade.h:85
 msgid "Loan movie"
-msgstr "Peminjaman Film"
+msgstr ""
 
 #: ../glade/griffith.glade.h:86
 msgid "Loan to"
-msgstr "Dipinjamkan kepada"
+msgstr ""
 
 #: ../glade/griffith.glade.h:87
 msgid "Loaned Movies"
-msgstr "Film yang dipinjam"
+msgstr ""
 
 #: ../glade/griffith.glade.h:88
 msgid "Loans"
-msgstr "Peminjam"
+msgstr ""
 
 #: ../glade/griffith.glade.h:89
 msgid "Main list"
-msgstr "Daftar utama"
+msgstr ""
 
 #: ../glade/griffith.glade.h:90
 msgid "Manage People"
-msgstr "Manajemen Personal"
+msgstr ""
 
 #: ../glade/griffith.glade.h:93
 msgid ""
@@ -2255,11 +2229,11 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:95
 msgid "Movie details"
-msgstr "Detail film"
+msgstr ""
 
 #: ../glade/griffith.glade.h:96
 msgid "Movie information"
-msgstr "Informasi film"
+msgstr ""
 
 #: ../glade/griffith.glade.h:98
 msgid "Needs authentication"
@@ -2311,11 +2285,11 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:115
 msgid "Port"
-msgstr "Port"
+msgstr ""
 
 #: ../glade/griffith.glade.h:116
 msgid "Poster image"
-msgstr "Image poster"
+msgstr ""
 
 #: ../glade/griffith.glade.h:117
 msgid "Poster viewer"
@@ -2323,7 +2297,7 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:118
 msgid "Preferences"
-msgstr "Pilihan"
+msgstr ""
 
 #: ../glade/griffith.glade.h:119
 msgid "Print Cover"
@@ -2335,19 +2309,19 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:122
 msgid "Rating image"
-msgstr "Penilaian image"
+msgstr ""
 
 #: ../glade/griffith.glade.h:124
 msgid "Remove"
-msgstr "Hilangkan"
+msgstr ""
 
 #: ../glade/griffith.glade.h:125
 msgid "Remove poster"
-msgstr "Hilangkan poster"
+msgstr ""
 
 #: ../glade/griffith.glade.h:126
 msgid "Remove selected movie"
-msgstr "Hilangkan film yang dipilih"
+msgstr ""
 
 #: ../glade/griffith.glade.h:127
 msgid "Rename"
@@ -2403,31 +2377,31 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:144
 msgid "Select previous movie"
-msgstr "Pilih film sebelumnya"
+msgstr ""
 
 #: ../glade/griffith.glade.h:145
 msgid "Sender E-mail address"
-msgstr "Alamat e-mail pengirim"
+msgstr ""
 
 #: ../glade/griffith.glade.h:146
 msgid "Show other movies in this collection"
-msgstr "Tampilkan film lain dalam koleksi ini"
+msgstr ""
 
 #: ../glade/griffith.glade.h:147
 msgid "Show other movies in this volume"
-msgstr "Tampilkan film lain dalam volume ini"
+msgstr ""
 
 #: ../glade/griffith.glade.h:148
 msgid "Simple"
-msgstr "Sederhana"
+msgstr ""
 
 #: ../glade/griffith.glade.h:150
 msgid "Size"
-msgstr "Ukuran"
+msgstr ""
 
 #: ../glade/griffith.glade.h:151
 msgid "Spell check the following language"
-msgstr "Peiksa ejaan bahasa ini"
+msgstr ""
 
 #: ../glade/griffith.glade.h:152
 msgid ""
@@ -2438,7 +2412,7 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:156
 msgid "Suggest an unseen movie"
-msgstr "Menyarankan film yang tak terlihat"
+msgstr ""
 
 #: ../glade/griffith.glade.h:158
 msgid "Technical information"
@@ -2475,21 +2449,20 @@ msgid "Visit movie web site"
 msgstr ""
 
 #: ../glade/griffith.glade.h:171
-#, fuzzy
 msgid "Visit the official web site"
-msgstr "Kunjungi web site resmi"
+msgstr ""
 
 #: ../glade/griffith.glade.h:173
 msgid "Watch the trailer"
-msgstr "Tonton cuplikan"
+msgstr ""
 
 #: ../glade/griffith.glade.h:175
 msgid "_Edit"
-msgstr "_Edit"
+msgstr ""
 
 #: ../glade/griffith.glade.h:176
 msgid "_File"
-msgstr "_File"
+msgstr ""
 
 #: ../glade/griffith.glade.h:177
 msgid "_Help"
@@ -2497,23 +2470,23 @@ msgstr ""
 
 #: ../glade/griffith.glade.h:178
 msgid "_Loans"
-msgstr "_Peminjam"
+msgstr ""
 
 #: ../glade/griffith.glade.h:179
 msgid "_Tools"
-msgstr "_Perkakas"
+msgstr ""
 
 #: ../glade/griffith.glade.h:180
 msgid "_View"
-msgstr "_Tampilan"
+msgstr ""
 
 #: ../glade/griffith.glade.h:181
 msgid "add entered name to collections list"
-msgstr "Tambahkan nama pada daftar koleksi"
+msgstr ""
 
 #: ../glade/griffith.glade.h:182
 msgid "add entered name to volumes list"
-msgstr "Tambahkan nama pada daftar volume"
+msgstr ""
 
 #: ../glade/griffith.glade.h:183
 msgid "classification"
@@ -2585,19 +2558,19 @@ msgstr ""
 
 #: ../glade/import.glade.h:6 ../glade/importcsv.glade.h:11
 msgid "Fields"
-msgstr "Field"
+msgstr ""
 
 #: ../glade/import.glade.h:7
 msgid "Import window"
-msgstr "Jendela impor"
+msgstr ""
 
 #: ../glade/import.glade.h:8
 msgid "Plugin"
-msgstr "Plugin"
+msgstr ""
 
 #: ../glade/import.glade.h:9
 msgid "Source"
-msgstr "Sumber"
+msgstr ""
 
 #: ../glade/importcsv.glade.h:1
 msgid ""
@@ -2627,15 +2600,15 @@ msgstr ""
 
 #: ../glade/importcsv.glade.h:10
 msgid "Encoding"
-msgstr "Mengkodekan"
+msgstr ""
 
 #: ../glade/importcsv.glade.h:12
 msgid "File-Options"
-msgstr "Opsi-File"
+msgstr ""
 
 #: ../glade/importcsv.glade.h:13
 msgid "From Row"
-msgstr "Dari baris"
+msgstr ""
 
 #: ../glade/importcsv.glade.h:14
 msgid "Griffith Fields"
@@ -2741,67 +2714,3 @@ msgid ""
 "utf_7 (all languages)\n"
 "utf_8 (all languages)"
 msgstr ""
-
-#~ msgid "No posters found for this movie."
-#~ msgstr "Tidak ditemukan poster untuk film ini."
-
-#~ msgid ""
-#~ "Sorry. This movie is listed but has no poster available at Amazon.com."
-#~ msgstr "Maaf. Film ini terdaftar tapi tidak memiliki poster di Amazon.com"
-
-#~ msgid "Sorry. A connection error has occurred."
-#~ msgstr "Maaf. Koneksi gagal."
-
-#~ msgid "N."
-#~ msgstr "N."
-
-#~ msgid ""
-#~ "Hi, %s!\n"
-#~ "\n"
-#~ "Just to remind you "
-#~ msgstr ""
-#~ "Hi, %s!\n"
-#~ "hanya mengingatkan "
-
-#~ msgid ""
-#~ "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
-#~ "America)"
-#~ msgstr ""
-#~ "Area 4 (Australia dan Selandia Baru, Meksiko, Karibia dan Amerika Selatan)"
-
-#~ msgid ""
-#~ "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan "
-#~ "and South Africa)"
-#~ msgstr ""
-#~ "Area 2 (Eropa, termasuk Perancis, Yunani, Turki, Mesir, Arab, Jepang dan "
-#~ "Afrika Selatan)"
-
-#~ msgid "Add new movie"
-#~ msgstr "Tambah film baru"
-
-#~ msgid "Griffith"
-#~ msgstr "Griffith"
-
-#~ msgid "Fetch from Amazon"
-#~ msgstr "Diambil dari Amazon"
-
-#~ msgid "Removes poster"
-#~ msgstr "Hilangkan poster"
-
-#~ msgid "This name is already in use!"
-#~ msgstr "Nama ini sudah dipakai!"
-
-#~ msgid " movie(s) in collection. "
-#~ msgstr " koleksi film "
-
-#~ msgid " movie(s) loaned. "
-#~ msgstr " film-film yang dipinjamkan. "
-
-#~ msgid "You haven't seen "
-#~ msgstr "kamu belum melihat. "
-
-#~ msgid " movie(s)"
-#~ msgstr " film-film"
-
-#~ msgid "Column \"%s\" is not unique"
-#~ msgstr "Kolom \"%s\" tidak unik"
