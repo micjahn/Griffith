@@ -6,6 +6,7 @@ Griffith ChangeLog
 
 2011-02-05  Vasco Nunes
 	* [#703576] no automatic refresh after get back a dvd
+	* Sync mac menubar when menu checkMenuItems are changed
 	
 2011-02-05  Ivo Nunes
     * Updated IMDb-pt plugin

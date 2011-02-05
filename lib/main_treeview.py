@@ -62,7 +62,6 @@ def treeview_clicked(self):
     else:
         set_details(self, {})
 
-
 def set_details(self, item=None):#{{{
     if item is None:
         item = {}
@@ -499,6 +498,8 @@ def populate(self, movies=None, where=None, qf=True):#{{{
     if self.total:
         self.widgets['treeview'].set_cursor_on_cell(0)
     self.count_statusbar()
+    
+    if self.mac: self.macapp.sync_menubar()
 #}}}
 
 def addmovie(self, movie): #{{{
