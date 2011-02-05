@@ -91,5 +91,5 @@ class AboutDialog:
                 "General Public License.\n" + \
                 "Please visit http://www.gnu.org/copyleft/gpl.html for details."))
         dialog.set_comments(version.pdescription)
-        dialog.run()
-        dialog.destroy()
+        dialog.connect("response", lambda d, r: d.destroy())
+        dialog.show()

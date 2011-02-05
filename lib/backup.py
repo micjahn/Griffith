@@ -44,9 +44,8 @@ try:
     import EasyDialogs
 except:
     pass
-
-if system() == "Darwin":
-    mac = True
+    
+mac = True if system() == "Darwin" else False
 
 log = logging.getLogger('Griffith')
 
@@ -72,7 +71,6 @@ def create(self):
         
         if mac:
             zipfilename = filename + ".zip"
-            print zipfilename
             
         else:
             zipfilename = filename[0].decode('utf-8')
