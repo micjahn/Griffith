@@ -47,8 +47,9 @@ class AboutDialog:
             version.pauthor.replace(', ', '\n') + "\n",
             _("Programmers") + ':',
             'Jessica Katharina Parth <Jessica.K.P@women-at-work.org>',
-            'Michael Jahn <mikej06@hotmail.com>\n',
-            _('Contributors:'), # FIXME: remove ":"
+            'Michael Jahn <mikej06@hotmail.com>',
+            'Ivo Nunes <netherblood@gmail.com>\n',
+            _('Contributors') + ':',
             'Christian Sagmueller <christian@sagmueller.net>\n' \
             'Arjen Schwarz <arjen.schwarz@gmail.com>'
         ])

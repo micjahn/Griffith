@@ -143,15 +143,15 @@ class Griffith(object):
         # macosx integration
         #hide gtk menubar and implement a native Cocoa replacement
         #using gtk_osxapplication 
-        if self.mac:
-            import gtk_osxapplication  
-            self.macapp = gtk_osxapplication.OSXApplication()
-            self.macapp.connect("NSApplicationBlockTermination", self.destroy)      
-            gtk.Widget.hide(self.widgets['menu']['menubar']);
-            self.macapp.set_menu_bar(self.widgets['menu']['menubar'])
-            self.macapp.insert_app_menu_item(self.widgets['menu']['preferences'],1)
-            self.macapp.insert_app_menu_item(self.widgets['menu']['about'],0)
-            self.macapp.ready()
+        #if self.mac:
+        #    import gtk_osxapplication  
+        #    self.macapp = gtk_osxapplication.OSXApplication()
+        #    self.macapp.connect("NSApplicationBlockTermination", self.destroy)      
+        #    gtk.Widget.hide(self.widgets['menu']['menubar']);
+        #    self.macapp.set_menu_bar(self.widgets['menu']['menubar'])
+        #    self.macapp.insert_app_menu_item(self.widgets['menu']['preferences'],1)
+        #    self.macapp.insert_app_menu_item(self.widgets['menu']['about'],0)
+        #    self.macapp.ready()
         # end macosx integration 
 
         self.restore_state()
