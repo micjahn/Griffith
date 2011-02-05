@@ -47,4 +47,3 @@ def filter_by_collection(self, collection_id):
     self.populate_treeview(where={'collection_id':collection_id})
     collection_name = self.db.Collection.query.filter_by(collection_id=collection_id).one().name
     self.update_statusbar(_("Filter activated. Showing only movies from collection: %s")%collection_name)
-

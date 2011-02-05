@@ -429,6 +429,7 @@ class Griffith(object):
             self.db.session.commit()
             self.treemodel.set_value(m_iter,6,movie.seen)
             self.treeview_clicked()
+            self.populate_treeview()
             self.count_statusbar()
 
     def sugest_movie(self, *args):

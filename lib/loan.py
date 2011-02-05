@@ -101,4 +101,5 @@ def return_loan(self):
     movie.loan_details.returned_on() # current date will be used be default
     session.commit()
     self.treeview_clicked()
+    self.populate_treeview()
 
