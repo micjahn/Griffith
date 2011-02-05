@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 2011-02-05  Ivo Nunes
+    * Fixed and re-enabled Mac OS X UI Cocoa menu integration
+
+2011-02-05  Ivo Nunes
     * Mac OS X UI Cocoa menu integration temporarily disabled due to being broken - using native GTK
     * IMDB-pt plugin added
 

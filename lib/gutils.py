@@ -36,6 +36,12 @@ try:
 except:
     gtk = None
     pass
+
+try:
+    import EasyDialogs
+except:
+    pass
+
 log = logging.getLogger("Griffith")
 
 ENTITY = re.compile(r'\&.\w*?\;')
@@ -286,7 +292,22 @@ def question(msg, window=None):
     response = dialog.run()
     dialog.destroy()
     return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
+    
 
+def questionmac(msg, window=None):
+    response = EasyDialogs.AskYesNoCancel(str(msg))
+    if response == -1:
+        response = 0
+    return response
+
+def infomac(msg, parent=None):
+    EasyDialogs.Message(str(msg))
+    
+def warningmac(msg, parent=None):
+    EasyDialogs.Message(str(msg))
+    
+def errormac(msg, parent=None):
+    EasyDialogs.Message(str(msg))
 
 def popup_message(message):
     """shows popup message while executing decorated function"""
