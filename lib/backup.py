@@ -306,11 +306,17 @@ def restore(self, merge=False):
             self.config = tmp_config
             self.config.save()
 
-        dictionaries(self)
-        people_treeview(self)
-        # let's refresh the treeview
-        self.clear_details()
-        self.populate_treeview()
+        if mac:
+	    log.debug("Restoring database")
+            import sys
+	    python = sys.executable
+	    os.execl(python, python, * sys.argv)
+        else:
+            dictionaries(self)
+            people_treeview(self)
+            # let's refresh the treeview
+            self.clear_details()
+            self.populate_treeview()
         #gutils.info(_("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
         if mac:
             gutils.infomac("Backup restored")
