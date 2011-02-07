@@ -1343,7 +1343,7 @@ You can't undo this operation."""), self.widgets['window']):
 	        log.debug('NEW DATABASE')
 	        if gutils.questionmac(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), self.widgets['window']):
 		    from shutil import rmtree
-		    rmtree(os.path.join(os.getenv('HOME'), '.griffith'))
+		    rmtree(os.path.expanduser('~/.griffith'))
 		    log.debug("Deleting database")
 		    python = sys.executable
 		    os.execl(python, python, * sys.argv)
