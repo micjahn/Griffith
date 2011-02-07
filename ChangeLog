@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 2011-02-07  Ivo Nunes
+	* Changed the way Mac OS X creates a new database so that it doesn't open external applications
+
+2011-02-07  Ivo Nunes
 	* Fixed exporting under Mac OS X
 
 2011-02-06  Ivo Nunes

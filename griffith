@@ -1342,8 +1342,8 @@ You can't undo this operation."""), self.widgets['window']):
 	    if gutils.questionmac(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), self.widgets['window']):
 	        log.debug('NEW DATABASE')
 	        if gutils.questionmac(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), self.widgets['window']):
-		    from os import system
-		    system("rm -R ~/.griffith")
+		    from shutil import rmtree
+		    rmtree(os.path.join(os.getenv('HOME'), '.griffith'))
 		    log.debug("Deleting database")
 		    python = sys.executable
 		    os.execl(python, python, * sys.argv)
