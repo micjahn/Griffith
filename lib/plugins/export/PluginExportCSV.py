@@ -27,6 +27,16 @@ import os
 import gutils
 import db
 from plugins.export import Base
+from platform import system
+
+mac = False
+if system() == "Darwin":
+    mac = True
+
+try:
+    import EasyDialogs
+except:
+    pass
 
 
 class ExportPlugin(Base):
@@ -46,27 +56,37 @@ class ExportPlugin(Base):
         basedir = None
         if self.config is not None:
             basedir = self.config.get('export_dir', None, section='export-csv')
-        if not basedir:
-            filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK), name='griffith_list.csv')
+        if mac:
+            filename = EasyDialogs.AskFileForSave()
+            filename = filename + ".csv"
         else:
-            filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE,gtk.RESPONSE_OK), name='griffith_list.csv', folder=basedir)
-        if filename and filename[0]:
-            if self.config is not None and filename[1]:
-                self.config.set('export_dir', filename[1], section='export-csv')
-                self.config.save()
-            overwrite = None
-            if os.path.isfile(filename[0]):
-                if gutils.question(_("File exists. Do you want to overwrite it?"), self.parent_window):
-                    overwrite = True
-                else:
-                    overwrite = False
+            if not basedir:
+                filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK), name='griffith_list.csv')
+            else:
+                filename = gutils.file_chooser(_("Export a %s document")%"CSV", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE,gtk.RESPONSE_OK), name='griffith_list.csv', folder=basedir)
+        if filename and filename[0] or filenamemac:
+            if mac:
+                overwrite = True
+            else:
+                if self.config is not None and filename[1]:
+                    self.config.set('export_dir', filename[1], section='export-csv')
+                    self.config.save()
+                overwrite = None
+                if os.path.isfile(filename[0]):
+                    if gutils.question(_("File exists. Do you want to overwrite it?"), self.parent_window):
+                        overwrite = True
+                    else:
+                        overwrite = False
             
             if overwrite or overwrite is None:
                 movies = self.get_query().execute()
 
-                writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
+                if mac:
+                    writer = csv.writer(file(filename, 'w'), dialect=csv.excel)
+                else:
+                    writer = csv.writer(file(filename[0], 'w'), dialect=csv.excel)
                 # write column header row
                 writer.writerow(self.fields_to_export)
                 # write data rows
@@ -75,5 +95,8 @@ class ExportPlugin(Base):
                     for s in self.exported_columns:
                         t.append(movie[s])
                     writer.writerow(t)
-                gutils.info(_("%s file has been created.") % "CSV", self.parent_window)
+                if mac:
+                    EasyDialogs.Message("%s file has been created." % "CSV")
+                else:
+                    gutils.info(_("%s file has been created.") % "CSV", self.parent_window)
 

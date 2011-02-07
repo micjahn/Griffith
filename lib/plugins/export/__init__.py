@@ -27,6 +27,7 @@ import gutils
 import gtk
 import xml.dom.minidom
 import os
+from platform import system
 
 import logging
 log = logging.getLogger("Griffith.%s" % __name__)
@@ -34,6 +35,15 @@ log = logging.getLogger("Griffith.%s" % __name__)
 from sqlalchemy import select, join, outerjoin, and_, or_
 import db
 from sql import update_whereclause
+
+mac = False
+if system() == "Darwin":
+    mac = True
+
+try:
+    import EasyDialogs
+except:
+    pass
 
 # detect all plugins:
 __all__ = [os.path.basename(x)[:-3] for x in glob.glob("%s/PluginExport*.py" % os.path.dirname(__file__))]
@@ -133,7 +143,10 @@ class XmlExportBase(Base):
             self.export_to_document(doc, doc.documentElement)
             # write xml document to file
             self.export_document_to_file(doc, self.filepath)
-            gutils.info(_('%s file has been created.') % self.export_name, self.parent_window)
+            if mac:
+                EasyDialogs.Message("%s file has been created." % self.export_name)
+            else:    
+                gutils.info(_('%s file has been created.') % self.export_name, self.parent_window)
 
     def show_dialog(self):
         # shows a file dialog and sets self.filepath
@@ -141,32 +154,38 @@ class XmlExportBase(Base):
         basedir = None
         if not self.config is None and not self.config_section is None:
             basedir = self.config.get('export_dir', None, section=self.config_section)
-        if basedir is None:
-            filenames = gutils.file_chooser(_('Export a %s document') % self.export_name, action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK), name=self.filename)
+        if mac:
+            self.filepath = EasyDialogs.AskFileForSave()
         else:
-            filenames = gutils.file_chooser(_('Export a %s document') % self.export_name, action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK), name=self.filename, folder=basedir)
-        if filenames[0]:
-            self.filepath = filenames[0]
-            if len(filenames) > 1:
-                self.dirpath = filenames[1]
+            if basedir is None:
+                filenames = gutils.file_chooser(_('Export a %s document') % self.export_name, action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK), name=self.filename)
             else:
-                self.dirpath = os.path.dirname(self.filepath)
-            self.filename = os.path.basename(self.filepath)
-            if not self.config is None and self.dirpath and not self.config_section is None:
-                self.config.set('export_dir', self.dirpath, section=self.config_section)
-                self.config.save()
-            overwrite = None
-            if os.path.isfile(self.filepath):
-                if gutils.question(_('File exists. Do you want to overwrite it?'), self.parent_window):
-                    overwrite = True
+                filenames = gutils.file_chooser(_('Export a %s document') % self.export_name, action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK), name=self.filename, folder=basedir)
+        if mac:
+            return True
+        else:
+            if filenames[0]:
+                self.filepath = filenames[0]
+                if len(filenames) > 1:
+                    self.dirpath = filenames[1]
                 else:
-                    overwrite = False
+                    self.dirpath = os.path.dirname(self.filepath)
+                self.filename = os.path.basename(self.filepath)
+                if not self.config is None and self.dirpath and not self.config_section is None:
+                    self.config.set('export_dir', self.dirpath, section=self.config_section)
+                    self.config.save()
+                overwrite = None
+                if os.path.isfile(self.filepath):
+                    if gutils.question(_('File exists. Do you want to overwrite it?'), self.parent_window):
+                       overwrite = True
+                    else:
+                       overwrite = False
                     
-            if overwrite == True or overwrite is None:
-                return True
-        return False
+                if overwrite == True or overwrite is None:
+                   return True
+            return False
 
     def export_document_to_file(self, document, filename):
         # write XML to file
