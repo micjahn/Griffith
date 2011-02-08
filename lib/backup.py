@@ -58,7 +58,6 @@ def create(self):
     
     if mac:
         filename = EasyDialogs.AskFileForSave()
-
     else:
         default_name = "%s_backup_%s.zip" % (self.config.get('name', 'griffith', section='database'),\
                         datetime.date.isoformat(datetime.datetime.now()))
@@ -71,7 +70,6 @@ def create(self):
         
         if mac:
             zipfilename = filename + ".zip"
-            
         else:
             zipfilename = filename[0].decode('utf-8')
             log.debug('Backup filename: %s', zipfilename)
@@ -88,10 +86,7 @@ def create(self):
                     log.debug('Creating zip file without compression')
                     mzip = zipfile.ZipFile(zipfilename, 'w')
             except:
-                if mac:
-                    gutils.errormac("Error creating backup")
-                else:
-                    gutils.error(_("Error creating backup"), self.widgets['window'])
+                gutils.error(_("Error creating backup"), self.widgets['window'])
                 return False
             log.debug('Preparing data and saving it to the zip archive')
             if self.db.session.bind.engine.name == 'sqlite':
@@ -131,10 +126,7 @@ def create(self):
                     # disposing the temporary db connection before rmtree and in finally block to avoid locked db file
                     tmp_engine.dispose()
                     rmtree(tmp_dir)
-            if mac:
-                gutils.infomac("Backup has been created")
-            else:
-                gutils.info(_("Backup has been created"), self.widgets['window'])
+            gutils.info(_("Backup has been created"), self.widgets['window'])
 
 
 @gutils.popup_message(_('Restoring database...'))
@@ -217,17 +209,16 @@ def restore(self, merge=False):
     * SQLite2 *.gri file
     * SQLite3 *.db file
     """
-
     # let user select a backup file
     if mac:
         filename = EasyDialogs.AskFileForOpen()
     else:
         filename = gutils.file_chooser(_("Restore Griffith backup"), \
-                        action=gtk.FILE_CHOOSER_ACTION_OPEN, backup=True, \
-                        buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))[0]
-        if not filename:
-            log.debug('no file selected')
-            return False
+                    action=gtk.FILE_CHOOSER_ACTION_OPEN, backup=True, \
+                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+    if not filename:
+        log.debug('no file selected')
+        return False
 
     try:
         tmp_db = None
@@ -238,10 +229,7 @@ def restore(self, merge=False):
             try:
                 zip_file = zipfile.ZipFile(filename, 'r')
             except:
-                if mac:
-                    gutils.errormac("Can't read backup file")
-                else:
-                    gutils.error(_("Can't read backup file"), self.widgets['window'])
+                gutils.error(_("Can't read backup file"), self.widgets['window'])
                 return False
 
             old_config_file = False
@@ -307,10 +295,10 @@ def restore(self, merge=False):
             self.config.save()
 
         if mac:
-	    log.debug("Restoring database")
+            log.debug("Restoring database")
             import sys
-	    python = sys.executable
-	    os.execl(python, python, * sys.argv)
+            python = sys.executable
+            os.execl(python, python, * sys.argv)
         else:
             dictionaries(self)
             people_treeview(self)
@@ -318,10 +306,7 @@ def restore(self, merge=False):
             self.clear_details()
             self.populate_treeview()
         #gutils.info(_("Databases merged!\n\nProcessed movies: %s\nMerged movies: %s"%(movies, merged)), self.widgets['window'])
-        if mac:
-            gutils.infomac("Backup restored")
-        else:
-            gutils.info(_("Backup restored"), self.widgets['window'])
+        gutils.info(_("Backup restored"), self.widgets['window'])
     except:
         log.exception('')
         raise
