@@ -42,16 +42,6 @@ import db
 import gutils
 import version
 from plugins.export import Base
-from platform import system
-
-mac = False
-if system() == "Darwin":
-    mac = True
-
-try:
-    import EasyDialogs
-except:
-    pass
 
 class ExportPlugin(Base):
     name = "PDF"
@@ -72,29 +62,21 @@ class ExportPlugin(Base):
         basedir = None
         if not self.config is None:
             basedir = self.config.get('export_dir', None, section='export-pdf')
-        if mac:
-            filename = EasyDialogs.AskFileForSave()
-            filename = filename + ".pdf"
+        if basedir is None:
+            filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf")
         else:
-            if basedir is None:
-                filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf")
-            else:
-                filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf",folder=basedir)
+            filename = gutils.file_chooser(_("Export a PDF"), action=gtk.FILE_CHOOSER_ACTION_SAVE, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name="griffith_simple_list.pdf",folder=basedir)
         if filename is not False and filename[0]:
-            if mac:
-                overwrite = True
-                pdffilename = filename.decode('utf-8')
-            else:
-                if not self.config is None and filename[1]:
-                    self.config.set('export_dir', filename[1], section='export-pdf')
-                    self.config.save()
-                overwrite = None
-                pdffilename = filename[0].decode('utf-8')
-                if os.path.isfile(pdffilename):
-                    if gutils.question(_("File exists. Do you want to overwrite it?"), self.parent_window):
-                        overwrite = True
-                    else:
-                        overwrite = False
+            if not self.config is None and filename[1]:
+                self.config.set('export_dir', filename[1], section='export-pdf')
+                self.config.save()
+            overwrite = None
+            pdffilename = filename[0].decode('utf-8')
+            if os.path.isfile(pdffilename):
+                if gutils.question(_("File exists. Do you want to overwrite it?"), self.parent_window):
+                    overwrite = True
+                else:
+                    overwrite = False
 
             if overwrite == True or overwrite is None:
                 # filename encoding
@@ -214,10 +196,7 @@ class ExportPlugin(Base):
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                         Story.append(p)
                 c.build(Story, onFirstPage=self.page_template, onLaterPages=self.page_template)
-                if mac:
-                    EasyDialogs.Message("PDF has been created.")
-                else:
-                    gutils.info(_('PDF has been created.'), self.parent_window)
+                gutils.info(_('PDF has been created.'), self.parent_window)
 
     def create_styles(self):
         self.styles = getSampleStyleSheet()

@@ -498,8 +498,6 @@ def populate(self, movies=None, where=None, qf=True):#{{{
     if self.total:
         self.widgets['treeview'].set_cursor_on_cell(0)
     self.count_statusbar()
-    
-    if self.mac: self.macapp.sync_menubar()
 #}}}
 
 def addmovie(self, movie): #{{{

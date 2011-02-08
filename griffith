@@ -140,21 +140,6 @@ class Griffith(object):
         initialize.people_treeview(self)
         initialize.web_results(self)
         self.initialized = True
-        
-        # macosx integration
-        # hide gtk menubar and implement a native Cocoa replacement
-        # using gtk_osxapplication 
-        if self.mac:
-            import gtk_osxapplication  
-            self.macapp = gtk_osxapplication.OSXApplication()
-            self.macapp.connect("NSApplicationBlockTermination", self.destroy)      
-            gtk.Widget.hide(self.widgets['menu']['menubar']);
-            self.macapp.set_menu_bar(self.widgets['menu']['menubar'])
-            self.macapp.insert_app_menu_item(self.widgets['menu']['preferences'],1)
-            self.macapp.insert_app_menu_item(self.widgets['menu']['about'],0)
-            self.macapp.ready()
-        # end macosx integration 
-
         self.restore_state()
         self.clear_details()
         self.populate_treeview()
@@ -216,11 +201,6 @@ class Griffith(object):
 
     def destroy(self, widget, data=None):
         self.save_state()
-        # macosx - macosx integration fails with gtk.main_quit()
-        # this is just a dirty workaround
-        if self.mac:
-            sys.exit(0)
-        # end macosx
         gtk.main_quit()
 
     def on_configure(self, widget, data=None):
@@ -1328,44 +1308,36 @@ class Griffith(object):
                 from sqlalchemy import select
                 from sql import GriffithSQL
                 from delete import delete_poster_from_cache
-                # TODO: change this! seems sqlalchemy are crashing under mac when creating new db...
-                if self.mac:
-                    from shutil import rmtree
-                    rmtree(os.path.expanduser('~/.griffith'))
-                    log.debug("Deleting database")
-                    python = sys.executable
-                    os.execl(python, python, * sys.argv)
-                else:
-                    # delete images
-                    posters_dir = self.locations['posters']
-                    # NOTE: only used images are removed (posters are shared between various db)
-                    log.debug('removing old images...')
-                    posters = self.db.session.query(db.Movie.poster_md5).all()
-                    for poster in posters:
-                        delete_poster_from_cache(poster[0], posters_dir)
-                    log.debug('dropping old tables...')
-                    self.db.session.rollback() # cancel all pending operations
-                    db.metadata.drop_all(self.db.session.bind.engine)
-                    #from sqlalchemy.orm import clear_mappers
-                    #clear_mappers()
-                    # disposing current db connection
-                    self.db.dispose()
-                    # dispose isn't enough here, I don't know why, but unlink fails
-                    # but I think unlink should not be necessary because all tables are dropped
-                    #if self.config.get('type', 'sqlite', section='database') == 'sqlite':
-                    #    os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
-                    #    if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
-                    #        self.config.set('file', 'griffith.db', section='database')
-                    #    create/connect db
-                    log.debug('creating new ones...')
-                    self.db = GriffithSQL(self.config, self.griffith_dir)
-                    self.clear_details()
-                    self.total = 0
-                    self.count_statusbar()
-                    self.treemodel.clear()
-                    from initialize import dictionaries, people_treeview
-                    dictionaries(self)
-                    people_treeview(self)
+                # delete images
+                posters_dir = self.locations['posters']
+                # NOTE: only used images are removed (posters are shared between various db)
+                log.debug('removing old images...')
+                posters = self.db.session.query(db.Movie.poster_md5).all()
+                for poster in posters:
+                    delete_poster_from_cache(poster[0], posters_dir)
+                log.debug('dropping old tables...')
+                self.db.session.rollback() # cancel all pending operations
+                db.metadata.drop_all(self.db.session.bind.engine)
+                #from sqlalchemy.orm import clear_mappers
+                #clear_mappers()
+                # disposing current db connection
+                self.db.dispose()
+                # dispose isn't enough here, I don't know why, but unlink fails
+                # but I think unlink should not be necessary because all tables are dropped
+                #if self.config.get('type', 'sqlite', section='database') == 'sqlite':
+                #    os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
+                #    if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
+                #        self.config.set('file', 'griffith.db', section='database')
+                #    create/connect db
+                log.debug('creating new ones...')
+                self.db = GriffithSQL(self.config, self.griffith_dir)
+                self.clear_details()
+                self.total = 0
+                self.count_statusbar()
+                self.treemodel.clear()
+                from initialize import dictionaries, people_treeview
+                dictionaries(self)
+                people_treeview(self)
 
     # key events ----------------------------------------------------------
 

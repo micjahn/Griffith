@@ -45,10 +45,7 @@ try:
 except:
     pass
     
-mac = True if system() == "Darwin" else False
-
 log = logging.getLogger('Griffith')
-
 
 def create(self):
     """perform a compressed griffith database/posters/preferences backup"""
@@ -56,26 +53,19 @@ def create(self):
     #    gutils.error(_("Backup function is available only for SQLite engine for now"), self.widgets['window'])
     #    return False
     
-    if mac:
-        filename = EasyDialogs.AskFileForSave()
-    else:
-        default_name = "%s_backup_%s.zip" % (self.config.get('name', 'griffith', section='database'),\
-                        datetime.date.isoformat(datetime.datetime.now()))
-        filename = gutils.file_chooser(_("Save Griffith backup"), \
-            action=gtk.FILE_CHOOSER_ACTION_SAVE, name=default_name, \
-            buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK))
+    default_name = "%s_backup_%s.zip" % (self.config.get('name', 'griffith', section='database'),\
+                    datetime.date.isoformat(datetime.datetime.now()))
+    filename = gutils.file_chooser(_("Save Griffith backup"), \
+        action=gtk.FILE_CHOOSER_ACTION_SAVE, name=default_name, \
+        buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_SAVE, gtk.RESPONSE_OK))
 
     if filename and filename[0]:
         proceed = True
-        
-        if mac:
-            zipfilename = filename + ".zip"
-        else:
-            zipfilename = filename[0].decode('utf-8')
-            log.debug('Backup filename: %s', zipfilename)
-            if os.path.isfile(zipfilename):
-                if not gutils.question(_("File exists. Do you want to overwrite it?"), window=self.widgets['window']):
-                    proceed = False
+        zipfilename = filename[0].decode('utf-8')
+        log.debug('Backup filename: %s', zipfilename)
+        if os.path.isfile(zipfilename):
+            if not gutils.question(_("File exists. Do you want to overwrite it?"), window=self.widgets['window']):
+                proceed = False
 
         if proceed:
             try:
@@ -210,12 +200,9 @@ def restore(self, merge=False):
     * SQLite3 *.db file
     """
     # let user select a backup file
-    if mac:
-        filename = EasyDialogs.AskFileForOpen()
-    else:
-        filename = gutils.file_chooser(_("Restore Griffith backup"), \
-                    action=gtk.FILE_CHOOSER_ACTION_OPEN, backup=True, \
-                    buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+    filename = gutils.file_chooser(_("Restore Griffith backup"), \
+                action=gtk.FILE_CHOOSER_ACTION_OPEN, backup=True, \
+                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
     if not filename:
         log.debug('no file selected')
         return False
@@ -293,13 +280,6 @@ def restore(self, merge=False):
             tmp_config._file = self.config._file
             self.config = tmp_config
             self.config.save()
-
-        if mac:
-            log.debug("Restoring database")
-            import sys
-            python = sys.executable
-            os.execl(python, python, * sys.argv)
-        else:
             dictionaries(self)
             people_treeview(self)
             # let's refresh the treeview

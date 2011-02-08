@@ -27,16 +27,6 @@ import os
 import db
 import gutils
 from plugins.export import Base
-from platform import system
-
-mac = False
-if system() == "Darwin":
-    mac = True
-
-try:
-    import EasyDialogs
-except:
-    pass
 
 class ExportPlugin(Base):
     name = "XML"
@@ -53,38 +43,26 @@ class ExportPlugin(Base):
         basedir = None
         if self.config is not None:
             basedir = self.config.get('export_dir', None, section='export-xml')
-        if mac:
-            filename = EasyDialogs.AskFileForSave()
-            filename = filename + ".xml"
+        if basedir is None:
+            filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml')
         else:
-            if basedir is None:
-                filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-                    buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml')
-            else:
-                filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
-                    buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml',folder=basedir)
+            filename = gutils.file_chooser(_("Export a %s document")%"XML", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
+                buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_SAVE,gtk.RESPONSE_OK),name='griffith_list.xml',folder=basedir)
         if filename and filename[0]:
-            if mac:
-                overwrite = True
-            else:
-                if self.config is not None and filename[1]:
-                    self.config.set('export_dir', filename[1], section='export-xml')
-                    self.config.save()
-                overwrite = None
-                if os.path.isfile(filename[0]):
-                    if gutils.question(_("File exists. Do you want to overwrite it?"), self.parent_window):
-                        overwrite = True
-                    else:
-                        overwrite = False
+            if self.config is not None and filename[1]:
+                self.config.set('export_dir', filename[1], section='export-xml')
+                self.config.save()
+            overwrite = None
+            if os.path.isfile(filename[0]):
+                if gutils.question(_("File exists. Do you want to overwrite it?"), self.parent_window):
+                    overwrite = True
+                else:
+                    overwrite = False
             
-            if mac:
-                posterdir = os.path.join(os.path.dirname(filename), 'posters')
-                if not os.path.exists(posterdir):
-                    os.mkdir(posterdir)
-            else:
-                posterdir = os.path.join(os.path.dirname(filename[0]), 'posters')
-                if not os.path.exists(posterdir):
-                    os.mkdir(posterdir)
+            posterdir = os.path.join(os.path.dirname(filename[0]), 'posters')
+            if not os.path.exists(posterdir):
+                os.mkdir(posterdir)
             
             if overwrite or overwrite is None:
                 # create document
@@ -129,16 +107,10 @@ class ExportPlugin(Base):
                     
                 # write XML to file
                 xmldata = doc.toprettyxml(encoding='utf-8')
-                if mac:
-                    fp = open(filename, "w")
-                else:
-                    fp = open(filename[0], "w")
+                fp = open(filename[0], "w")
                 try:
                     fp.write(xmldata)
                 finally:
                     fp.close()
-                if mac:
-                    EasyDialogs.Message("%s file has been created." % "XML")
-                else:
-                    gutils.info( _("%s file has been created.")%"XML", self.parent_window)
+                gutils.info( _("%s file has been created.")%"XML", self.parent_window)
 

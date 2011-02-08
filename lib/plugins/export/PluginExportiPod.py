@@ -33,11 +33,6 @@ from tempfile import mkdtemp
 import db
 from plugins.export import Base
 
-try:
-  import EasyDialogs
-except:
-  pass
-
 # TODO: bypass the 4Kb file limit on the iPod notes folder, splitting the file in multiple ones and linking them.
 
 class Path2iPod(object):
@@ -105,9 +100,9 @@ class ExportPlugin(Base):
         
             if thisPath:
                 commands.getoutput('mv '+os.path.join(tmp_dir,"movies")+' "'+thisPath+'/Notes/"') # FIXME: WTF?
-                EasyDialogs.Message("List successfully exported to iPod.")
+                gutils.info(_("List successfully exported to iPod."), self.parent_window)
             else:
-                EasyDialogs.Message("iPod is not connected.")
+                gutils.info(_("iPod is not connected."), self.parent_window)
         # this is not a mac, lets save the file
         else:
             filename = gutils.file_chooser(_("Export a %s document")%"iPod", action=gtk.FILE_CHOOSER_ACTION_SAVE, \
