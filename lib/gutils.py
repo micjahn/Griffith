@@ -30,6 +30,8 @@ import string
 import sys
 import webbrowser
 from StringIO import StringIO
+import platform
+
 try:
     import gtk
     import db
@@ -273,35 +275,32 @@ def warning(msg, parent=None):
 
 
 def info(msg, parent=None):
-    dialog = gtk.MessageDialog(parent,
-            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_INFO, gtk.BUTTONS_OK, msg)
-    dialog.set_skip_taskbar_hint(False)
-    dialog.run()
-    dialog.destroy()
-
+    if platform.system() == 'Darwin':
+        EasyDialogs.Message(str(msg))
+    else:
+        dialog = gtk.MessageDialog(parent,
+                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                gtk.MESSAGE_INFO, gtk.BUTTONS_OK, msg)
+        dialog.set_skip_taskbar_hint(False)
+        dialog.run()
+        dialog.destroy()
 
 def question(msg, window=None):
-    dialog = gtk.MessageDialog(window,
+    if platform.system() == 'Darwin':
+        response = EasyDialogs.AskYesNoCancel(str(msg))
+        if response == -1: response = 0
+        return response
+    else:
+        dialog = gtk.MessageDialog(window,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE, msg)
-    dialog.add_buttons(gtk.STOCK_YES, gtk.RESPONSE_YES,
+        dialog.add_buttons(gtk.STOCK_YES, gtk.RESPONSE_YES,
             gtk.STOCK_NO, gtk.RESPONSE_NO)
-    dialog.set_default_response(gtk.RESPONSE_NO)
-    dialog.set_skip_taskbar_hint(False)
-    response = dialog.run()
-    dialog.destroy()
-    return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
-    
-
-def questionmac(msg, window=None):
-    response = EasyDialogs.AskYesNoCancel(str(msg))
-    if response == -1:
-        response = 0
-    return response
-
-def infomac(msg, parent=None):
-    EasyDialogs.Message(str(msg))
+        dialog.set_default_response(gtk.RESPONSE_NO)
+        dialog.set_skip_taskbar_hint(False)
+        response = dialog.run()
+        dialog.destroy()
+        return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
     
 def warningmac(msg, parent=None):
     EasyDialogs.Message(str(msg))

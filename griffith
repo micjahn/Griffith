@@ -52,7 +52,9 @@ if platform.system() == 'Darwin':
 # end macosx
 
 # check dependencies
+
 import gutils
+
 (required, extra) = gutils.get_dependencies()
 missing = []
 for i in required:
@@ -72,7 +74,6 @@ del missing
 
 # other imports
 import gtk
-
 import add
 import config
 import db
@@ -141,8 +142,8 @@ class Griffith(object):
         self.initialized = True
         
         # macosx integration
-        #hide gtk menubar and implement a native Cocoa replacement
-        #using gtk_osxapplication 
+        # hide gtk menubar and implement a native Cocoa replacement
+        # using gtk_osxapplication 
         if self.mac:
             import gtk_osxapplication  
             self.macapp = gtk_osxapplication.OSXApplication()
@@ -215,11 +216,11 @@ class Griffith(object):
 
     def destroy(self, widget, data=None):
         self.save_state()
-        #macosx - macosx integration fails with gtk.main_quit()
-        #this is just a dirty workaround
+        # macosx - macosx integration fails with gtk.main_quit()
+        # this is just a dirty workaround
         if self.mac:
-        	sys.exit(0)
-        #end macosx
+            sys.exit(0)
+        # end macosx
         gtk.main_quit()
 
     def on_configure(self, widget, data=None):
@@ -604,6 +605,7 @@ class Griffith(object):
 
     def on_am_lang_add_clicked(self, widget):
         self.create_language_row()
+        
     def on_am_lang_remove_clicked(self, widget):
         treeselection = self.widgets['add']['lang_treeview'].get_selection()
         if treeselection:
@@ -1024,32 +1026,14 @@ class Griffith(object):
         create(self)
 
     def restore(self, *args):
-	if self.mac:
-	    if gutils.questionmac(_("""Are you sure you want to restore?
-Your current movie collection will be replaced.
-You can't undo this operation."""), self.widgets['window']):
-		from backup import restore
-		restore(self)
-	else:
-	    if gutils.question(_("""Are you sure you want to restore?
-Your current movie collection will be replaced.
-You can't undo this operation."""), self.widgets['window']):
-		from backup import restore
-		restore(self)
+        if gutils.question(_("""Are you sure you want to restore? Your current movie collection will be replaced. You can't undo this operation."""), self.widgets['window']):
+            from backup import restore
+            restore(self)
 
     def merge(self, *args):
-        if self.mac:
-	    if gutils.questionmac(_("""Are you sure you want to merge?
-Your current movie collection will be merged with a backup.
-You can't undo this operation."""), self.widgets['window']):
-		from backup import restore
-		restore(self, merge=True)
-	else:
-	    if gutils.question(_("""Are you sure you want to merge?
-Your current movie collection will be merged with a backup.
-You can't undo this operation."""), self.widgets['window']):
-		from backup import restore
-		restore(self, merge=True)
+        if gutils.question(_("""Are you sure you want to merge? Your current movie collection will be merged with a backup. You can't undo this operation."""), self.widgets['window']):
+            from backup import restore
+            restore(self, merge=True)
 
     # cover ---------------------------------------------------------------
 
@@ -1338,55 +1322,50 @@ You can't undo this operation."""), self.widgets['window']):
 
     def new_dbb(self, *args):
         """initializes a new Griffith Database file"""
-	if self.mac:
-	    if gutils.questionmac(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), self.widgets['window']):
-	        log.debug('NEW DATABASE')
-	        if gutils.questionmac(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), self.widgets['window']):
-		    from shutil import rmtree
-		    rmtree(os.path.expanduser('~/.griffith'))
-		    log.debug("Deleting database")
-		    python = sys.executable
-		    os.execl(python, python, * sys.argv)
-	    
-	else:	
-	    if gutils.question(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), self.widgets['window']):
-	        log.debug('NEW DATABASE')
-	        if gutils.question(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), self.widgets['window']):
-	            from sqlalchemy import select
-		    from sql import GriffithSQL
-		    from delete import delete_poster_from_cache
-		    # delete images
-		    posters_dir = self.locations['posters']
-		    # NOTE: only used images are removed (posters are shared between various db)
-		    log.debug('removing old images...')
-
-		    posters = self.db.session.query(db.Movie.poster_md5).all()
-		    for poster in posters:
-			delete_poster_from_cache(poster[0], posters_dir)
-
-		    log.debug('dropping old tables...')
-		    self.db.session.rollback() # cancel all pending operations
-		    db.metadata.drop_all(self.db.session.bind.engine)
-		    #from sqlalchemy.orm import clear_mappers
-		    #clear_mappers()
-		    # disposing current db connection
-		    self.db.dispose()
-		    # dispose isn't enough here, I don't know why, but unlink fails
-		    # but I think unlink should not be necessary because all tables are dropped
-		    #if self.config.get('type', 'sqlite', section='database') == 'sqlite':
-		    #    os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
-		    #    if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
-		    #        self.config.set('file', 'griffith.db', section='database')
-		    #	 create/connect db
-		    log.debug('creating new ones...')
-		    self.db = GriffithSQL(self.config, self.griffith_dir)
-		    self.clear_details()
-		    self.total = 0
-		    self.count_statusbar()
-		    self.treemodel.clear()
-		    from initialize import dictionaries, people_treeview
-		    dictionaries(self)
-		    people_treeview(self)
+        if gutils.question(_('Are you sure you want to create a new database?\nYou will lose ALL your current data!'), self.widgets['window']):
+            log.debug('NEW DATABASE')
+            if gutils.question(_('Last chance!\nDo you confirm that you want\nto lose your current data?'), self.widgets['window']):
+                from sqlalchemy import select
+                from sql import GriffithSQL
+                from delete import delete_poster_from_cache
+                # TODO: change this! seems sqlalchemy are crashing under mac when creating new db...
+                if self.mac:
+                    from shutil import rmtree
+                    rmtree(os.path.expanduser('~/.griffith'))
+                    log.debug("Deleting database")
+                    python = sys.executable
+                    os.execl(python, python, * sys.argv)
+                else:
+                    # delete images
+                    posters_dir = self.locations['posters']
+                    # NOTE: only used images are removed (posters are shared between various db)
+                    log.debug('removing old images...')
+                    posters = self.db.session.query(db.Movie.poster_md5).all()
+                    for poster in posters:
+                        delete_poster_from_cache(poster[0], posters_dir)
+                    log.debug('dropping old tables...')
+                    self.db.session.rollback() # cancel all pending operations
+                    db.metadata.drop_all(self.db.session.bind.engine)
+                    #from sqlalchemy.orm import clear_mappers
+                    #clear_mappers()
+                    # disposing current db connection
+                    self.db.dispose()
+                    # dispose isn't enough here, I don't know why, but unlink fails
+                    # but I think unlink should not be necessary because all tables are dropped
+                    #if self.config.get('type', 'sqlite', section='database') == 'sqlite':
+                    #    os.unlink(os.path.join(self.locations['home'],self.config.get('name', 'griffith', section='database') + '.db'))
+                    #    if self.config.get('file', 'griffith.db', section='database') == 'griffith.gri':
+                    #        self.config.set('file', 'griffith.db', section='database')
+                    #    create/connect db
+                    log.debug('creating new ones...')
+                    self.db = GriffithSQL(self.config, self.griffith_dir)
+                    self.clear_details()
+                    self.total = 0
+                    self.count_statusbar()
+                    self.treemodel.clear()
+                    from initialize import dictionaries, people_treeview
+                    dictionaries(self)
+                    people_treeview(self)
 
     # key events ----------------------------------------------------------
 
