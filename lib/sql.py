@@ -78,7 +78,13 @@ class GriffithSQL(object):
                 dbinitializingsql = 'PRAGMA page_size=' + str(get_filesystem_pagesize(sqlitefile))
             url = "sqlite:///%s" % sqlitefile
         elif config.get('type', section='database') == 'postgres':
-            url = "postgres://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s" % conn_params
+            # sqlalchemy version check because postgres dialect is renamed in sqlalchemy>=0.6 from postgres to postgresql
+            from sqlalchemy import __version__ as sqlalchemyversion
+            if map(int, sqlalchemyversion[:3].split('.')) < [0, 6]:
+                url = "postgres"
+            else:
+                url = "postgresql"
+            url = url + "://%(user)s:%(passwd)s@%(host)s:%(port)d/%(name)s" % conn_params
         elif config.get('type', section='database') == 'mysql':
             conn_params['engine_kwargs']['convert_unicode'] = True
             conn_params['engine_kwargs']['pool_recycle'] = int(config.get('pool_recycle', 3600, section='database'))
