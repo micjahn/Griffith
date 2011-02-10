@@ -267,7 +267,7 @@ def upgrade_database(self, version, config):
         log.info("Upgrading database to version %d...", version)
         
         # common SQL statements
-        if self.session.bind.name == 'postgres':
+        if self.session.bind.name in ['postgres', 'postgresql']:
             queries = {'created': 'ALTER TABLE movies ADD created TIMESTAMP;',
                        'updated': 'ALTER TABLE movies ADD updated TIMESTAMP;'}
         else:
