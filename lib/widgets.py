@@ -353,6 +353,10 @@ def define_widgets(self, gladefile):
         'loan': get('loan1'),
         'email': get('return1'),
         'return': get('e-mail_reminder1'),
+        'select_all': get('select_all'),
+        'clone' : get('clone'),
+        'make_cover': get('make_cover'),
+        'edit': get('edit1'),
     }#}}}
 
     self.widgets['popups'] = {#{{{
@@ -360,6 +364,9 @@ def define_widgets(self, gladefile):
         'loan': get('popup_loan'),
         'return': get('popup_return'),
         'email': get('popup_email'),
+        'clone': get('clone1'),
+        'print_cover': get('print_cover1'),
+        'edit': get('edit2'),
     }#}}}
     self.widgets['extensions'] = {
         'toolbar': get('ext_toolbar'),
@@ -405,6 +412,7 @@ def define_widgets(self, gladefile):
         'on_update_button_clicked': self.update_movie,
         'on_import_activate': self.on_import_activate,
         'on_seen_activate': self.toggle_seen,
+        'on_select_all_activate': self.select_all,
         'on_fullscreen_activate': self.toggle_fullscreen,
         # preferences
         'on_preferences1_activate': self.show_preferences,

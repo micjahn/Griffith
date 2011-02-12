@@ -26,10 +26,14 @@ __revision__ = '$Id$'
 def filter_not_seen(self):
     self.populate_treeview()
     self.update_statusbar(_("Filter activated. Showing only not seen movies."))
+    if self.mac:
+        self.macapp.sync_menubar()
 
 def filter_loaned(self):
     self.populate_treeview()
     self.update_statusbar(_("Filter activated. Showing only loaned movies."))
+    if self.mac:
+        self.macapp.sync_menubar()
 
 def filter_all(self):
     self.populate_treeview()

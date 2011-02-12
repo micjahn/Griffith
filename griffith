@@ -23,11 +23,15 @@ __revision__ = '$Id$'
 # GNU General Public License, version 2 or later
 
 import gettext
+import os.path
 gettext.install('griffith', unicode=1)
 import sys
 import logging
+import platform
+
 logging.basicConfig(format='%(asctime)s: %(levelname).1s: %(name)s(%(module)s:%(lineno)d): %(message)s', datefmt='%Y-%m-%dT%H:%M:%S')
 log = logging.getLogger('Griffith')
+
 # print programming warnings in debug mode only (ugly workaround)
 if '--debug' not in sys.argv and '-D' not in sys.argv:
     import warnings
@@ -37,23 +41,29 @@ else:
     log.setLevel(logging.DEBUG)
 
 # set the PATH
-import os.path
 lib = os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
-#lib = os.path.abspath(os.path.join(os.path.dirname(__file__), 'lib'))
+
 if os.path.isdir(lib):
     sys.path.insert(1, lib)
 del lib
-
+    
 # macosx
-import platform
-if platform.system() == 'Darwin':
+if os.name in ('mac') or \
+        (hasattr(os, 'uname') and os.uname()[0] == 'Darwin'):
     import pygtk
     pygtk.require('2.0')
+    import macutils
+    try:
+        from gtk_osxapplication import *
+    except:
+        print "no gtk_osxapplication support."
+        exit(4)
 # end macosx
 
-# check dependencies
-
 import gutils
+
+
+# check dependencies
 
 (required, extra) = gutils.get_dependencies()
 missing = []
@@ -83,6 +93,8 @@ import main_treeview
 import quick_filter
 import version
 
+# ###################################
+
 class Griffith(object):
     """The main application class"""
 
@@ -103,7 +115,10 @@ class Griffith(object):
 
         initialize.locations(self, home_dir)
         initialize.i18n(self, self.locations['i18n'])
-
+        
+        self.selected = []
+        self.selected_iter = []
+        
         # convert old database
         filename = os.path.join(self.locations['home'], config.get('file', 'griffith.db', section='database'))
         if config.get('file', 'griffith.db', section='database').lower().endswith('.gri'):
@@ -143,20 +158,18 @@ class Griffith(object):
         self.restore_state()
         self.clear_details()
         self.populate_treeview()
-
-        # adding some completion fields - TODO: move it to initialize
-        self.completion = gtk.EntryCompletion()
-        self.widgets['add']['o_title'].set_completion(self.completion)
-        self.completion.set_model(self.treemodel)
-        self.completion.set_text_column(3)
-        # ... title
-        self.completion_t = gtk.EntryCompletion()
-        self.widgets['add']['title'].set_completion(self.completion_t)
-        self.completion_t.set_model(self.treemodel)
-        self.completion_t.set_text_column(4)
-
         initialize.spellcheck(self)
-
+        
+        if self.mac:
+            self.macapp=OSXApplication()
+            self.widgets['window'].connect("destroy", gtk.main_quit)
+            self.macapp.set_menu_bar(self.widgets['menu']['menubar'])
+            # lets hide the gtk menubar. using the macosx integrated one.
+            self.widgets['menu']['menubar'].hide()
+            self.macapp.ready()
+            self.macapp.insert_app_menu_item(self.widgets['menu']['about'],0)
+            self.macapp.insert_app_menu_item(self.widgets['menu']['preferences'],1)
+        
         # add default folders to some select widgets
         if self.windows:
             from win32com.shell import shellcon, shell
@@ -166,13 +179,6 @@ class Griffith(object):
             self.widgets['preferences']['font'].set_current_folder("/System/Library/Fonts/")
         else:
             self.widgets['preferences']['font'].set_current_folder(os.path.join(sys.prefix, 'share', 'fonts'))
-
-    def main(self):
-        gtk.gdk.threads_init()
-        gtk.gdk.threads_enter()
-        gtk.main()
-        gtk.gdk.threads_leave()
-        return 0
 
     ###########
     # callbacks
@@ -228,6 +234,10 @@ class Griffith(object):
             self.widgets['window'].fullscreen()
         else:
             self.widgets['window'].unfullscreen()
+            
+    def select_all(self, widget):
+        self.widgets['treeview'].get_selection().select_all()
+        main_treeview.treeview_clicked(self)
 
     # about dialog    -------------------------------------------------------
 
@@ -378,12 +388,9 @@ class Griffith(object):
         if self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
             self.widgets['poster_window'].hide()
             return
-        treeselection = self.widgets['treeview'].get_selection()
-        (tmp_model, tmp_iter) = treeselection.get_selected()
-        if tmp_iter is None:
+        if len(self.selected) > 1:
             return
-        number = tmp_model.get_value(tmp_iter, 0)
-        poster_md5 = self.db.session.query(db.Movie.poster_md5).filter_by(number=number).first()[0]
+        poster_md5 = self.db.session.query(db.Movie.poster_md5).filter_by(number=int(self.selected[0])).first()[0]
         if poster_md5:
             filename = gutils.get_image_fname(poster_md5, self.db)
             # show before set_from_pixbuf because it doesn't resize otherwise
@@ -399,16 +406,17 @@ class Griffith(object):
         add.change_rating_from_slider(self)
 
     def toggle_seen(self, *args):
-        m_number, m_iter = self.get_maintree_selection()
-        movie = self.db.session.query(db.Movie).filter_by(number=m_number).first()
-        if movie:
-            if movie.seen:
-                movie.seen = False
-            else:
-                movie.seen = True
-            self.db.session.add(movie)
-            self.db.session.commit()
-            self.treemodel.set_value(m_iter,6,movie.seen)
+        for each in self.selected:
+            movie = self.db.session.query(db.Movie).filter_by(number=int(each)).first()
+            if movie:
+                if movie.seen:
+                    movie.seen = False
+                else:
+                    movie.seen = True
+                    self.db.session.add(movie)
+                    self.db.session.commit()
+            for this_iter in self.selected_iter:
+                self.treemodel.set_value(this_iter,6,movie.seen)
             self.treeview_clicked()
             self.populate_treeview()
             self.count_statusbar()
@@ -992,12 +1000,7 @@ class Griffith(object):
         main_treeview.populate(self, statement, where)
 
     def get_maintree_selection(self):
-        treeselection = self.widgets['treeview'].get_selection()
-        (tmp_model, tmp_iter) = treeselection.get_selected()
-        if tmp_model and tmp_iter:
-            return tmp_model.get_value(tmp_iter, 0), tmp_iter
-        else:
-            return None, None
+        return self.selected[0]
 
     # backup/restore ------------------------------------------------------
 
@@ -1026,7 +1029,7 @@ class Griffith(object):
 
     def print_cover_simple_process(self, *args):
         from cover import cover_simple
-        movie_number, movie_iter = self.get_maintree_selection()
+        movie_number = self.get_maintree_selection()
         if movie_number is not None:
             cover_simple(self, movie_number)
         else:
@@ -1039,7 +1042,7 @@ class Griffith(object):
     def print_cover_image_process(self, *args):
         from cover import cover_image
         self.widgets['print_cover']['window_image'].hide()
-        movie_number, movie_iter = self.get_maintree_selection()
+        movie_number = self.get_maintree_selection()
         cover_image(self, movie_number)
 
     def print_cover_image_hide(self, *args):
@@ -1363,7 +1366,6 @@ class Griffith(object):
             if pthinfo is not None:
                 path, col, cellx, celly = pthinfo
                 self.widgets['treeview'].grab_focus()
-                self.widgets['treeview'].set_cursor( path, col, 0)
                 self.widgets['popups']['main'].popup( None, None, None, event.button, time)
             return 1
         elif event.type == gtk.gdk._2BUTTON_PRESS:
@@ -1421,27 +1423,26 @@ class Griffith(object):
         if not treeselection:
             treeview.set_cursor_on_cell(0)
             return 2 # no selection => selecting first movie
-        (treemodel, treeiter) = treeselection.get_selected()
-        if treemodel is None:
-            return False
-        if treeiter is None or direction=='first':
+        if self.selected_iter[0] is None or direction=='first':
             treeview.set_cursor_on_cell(0)
         elif direction == 'next':
-            nextiter = treemodel.iter_next(treeiter)
-            if nextiter is None:
+            nextiter = treeview.get_model().iter_next(self.selected_iter[0])
+            if not nextiter:
+                return
+            if self.selected_iter[0] is None:
                 direction = 'last'
             else:
-                iterpath = treemodel.get_path(nextiter)
+                iterpath = treeview.get_model().get_path(nextiter)
                 treeview.set_cursor_on_cell(iterpath[0])
         elif direction == 'prev':
-            iterpath = treemodel.get_path(treeiter)
+            iterpath = treeview.get_model().get_path(self.selected_iter[0])
             row = iterpath[0]
             if row>0:
                 treeview.set_cursor_on_cell(row-1)
             else:
                 treeview.set_cursor_on_cell(0)
         if direction == 'last':
-            rows = len(treemodel)
+            rows = len(treeview.get_model())
             if rows>0:
                 treeview.set_cursor_on_cell(rows-1)
             else:
@@ -1468,6 +1469,6 @@ Do you want to proceed?""")):
             config.set('warned_version', version.pversion, section='devel')
 
     griffith = Griffith(home_dir, config)
-    griffith.main()
+    gtk.main()
 
 # vim: fdm=marker

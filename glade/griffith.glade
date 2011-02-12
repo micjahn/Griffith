@@ -192,6 +192,21 @@
                       </widget>
                     </child>
                     <child>
+                      <widget class="GtkImageMenuItem" id="select_all">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Select all</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_select_all_activate"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="image638">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-select-all</property>
+                            <property name="icon_size">1</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkSeparatorMenuItem" id="separator7">
                         <property name="visible">True</property>
                       </widget>

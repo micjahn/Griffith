@@ -25,44 +25,38 @@ import logging
 import os
 import db
 import gutils
+from  main_treeview import treeview_selection_on_event
 
 log = logging.getLogger("Griffith")
 
 
 def delete_movie(self):
-    m_id = None
-    number, m_iter = self.get_maintree_selection()
-    movie = self.db.session.query(db.Movie).filter_by(number=number).first()
-    if movie is None:
+    if len(self.selected) == 0:
         gutils.error(_("You have no movies in your database"), self.widgets['window'])
         return False
-
-    if movie.loaned:
-        gutils.warning(msg=_("You can't delete movie while it is loaned."))
-        return False
-
-    if gutils.question(_('Are you sure you want to delete this movie?'), self.widgets['window']):
-        delete_poster(self, movie.poster_md5)
-
-        self.db.session.delete(movie)
-        try:
-            self.db.session.commit()
-        except:
-            log.info("Unexpected problem: %s", e)
-            return False
-
-        # update main treelist
-        self.total -= 1
-        self.clear_details()
-        self.initialized = False
-        self.go_prev()
-        self.treemodel.remove(m_iter)
-        self.initialized = True
-        self.go_next()
-        self.count_statusbar()
     else:
-        return False
+        if gutils.question(_('Are you sure you want to delete?'), self.widgets['window']):
+            for each in self.selected:
+                movie = self.db.session.query(db.Movie).filter_by(number=int(each)).first()
+                if movie.loaned:
+                    gutils.warning(msg=_("You can't delete movie while it is loaned."))
+                    return False
+                delete_poster(self, movie.poster_md5)
+                self.db.session.delete(movie)
+                try:
+                    self.db.session.commit()
+                except:
+                    log.info("Unexpected problem: %s", e)
+                    return False
 
+                # update main treelist
+                self.total -= 1
+                self.clear_details()
+                self.populate_treeview()
+                #self.initialized = False
+                #self.go_prev()
+                #self.go_next()
+                self.count_statusbar()
 
 def delete_poster(self, md5sum, commit=False):
     if commit:

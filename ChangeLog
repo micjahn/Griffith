@@ -4,6 +4,9 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
+2011-02-12  Vasco Nunes
+	* Implemented MultiSelection support in MainTreeView
+	* Re-implemented macosx menubar integration 
 
 2011-02-10  Michael Jahn
 	* [#716176] 0.12.1 No postgres support on Windows

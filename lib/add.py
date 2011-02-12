@@ -117,8 +117,7 @@ def update_movie(self):
     session.add(movie)
     if commit(session):
         treeselection = self.widgets['treeview'].get_selection()
-        (tmp_model, tmp_iter) = treeselection.get_selected()
-        main_treeview.setmovie(self, movie, tmp_iter, tmp_model)
+        main_treeview.setmovie(self, movie, self.selected_iter[0], self.treemodel)
 
         # close add window
         self.widgets['add']['window'].hide()
@@ -642,8 +641,8 @@ def validate_details(t_movies, allow_only=None):
 
 def add_movie_db(self, close):
     session = self.db.Session()
-
     details = get_details(self)
+    
     if not details['o_title'] and not details['title']:
         gutils.error(_("You should fill the original title\nor the movie title."),
             parent=self.widgets['add']['window'])
@@ -707,14 +706,11 @@ def add_movie_db(self, close):
 
 def clone_movie(self):
     session = self.db.Session()
-
-    treeselection = self.widgets['treeview'].get_selection()
-    (tmp_model, tmp_iter) = treeselection.get_selected()
-    if tmp_iter is None:
+    
+    if self.selected_iter[0] is None:
         log.warn("cannot clone movie: no item selected")
         return False
-    number = tmp_model.get_value(tmp_iter, 0)
-    movie = session.query(db.Movie).filter_by(number=number).first()
+    movie = session.query(db.Movie).filter_by(number=self.selected[0]).first()
 
     if movie is None:
         log.warn("cannot clone movie: Movie(%s) not found", number)

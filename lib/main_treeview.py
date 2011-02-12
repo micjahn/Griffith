@@ -23,32 +23,59 @@ __revision__ = '$Id$'
 
 import logging
 import os
-
 import gtk
 from sqlalchemy import select, desc
 from sqlalchemy.sql.expression import Select
-
 import db
 import gutils
 import sql
 
 log = logging.getLogger("Griffith")
 
+def on_tree_selection(tree_selection, self):
+    counts = tree_selection.count_selected_rows()
+    treeview_selection_on_event(self, self.widgets['treeview'])
+    treemodel, selected = tree_selection.get_selected_rows()
+    self.selected_iter = [treemodel.get_iter(path) for path in selected]
+    
+    if counts == 1:
+        # TODO: rewrite me
+        self.widgets['menu']['clone'].set_sensitive(True)
+        self.widgets['menu']['make_cover'].set_sensitive(True)
+        self.widgets['menu']['loan'].set_sensitive(True)
+        self.widgets['menu']['edit'].set_sensitive(True)
+        self.widgets['popups']['edit'].set_sensitive(True)
+        self.widgets['popups']['loan'].set_sensitive(True)
+        self.widgets['popups']['clone'].set_sensitive(True)
+        self.widgets['popups']['print_cover'].set_sensitive(True)
+    else:
+        set_details(self)
+        # lets make some options unavailable when multiselction is active. for now.
+        # TODO: rewrite me
+        self.widgets['menu']['clone'].set_sensitive(False)
+        self.widgets['menu']['make_cover'].set_sensitive(False)
+        self.widgets['menu']['loan'].set_sensitive(False)
+        self.widgets['menu']['edit'].set_sensitive(False)
+        self.widgets['popups']['edit'].set_sensitive(False)
+        self.widgets['popups']['loan'].set_sensitive(False)
+        self.widgets['popups']['clone'].set_sensitive(False)
+        self.widgets['popups']['print_cover'].set_sensitive(False)
+    treeview_clicked(self)
+
+def foreach_treeview_selected(model, path, iter, selected):
+    selected.append(model.get_value(iter, 0))
+
+def treeview_selection_on_event(self, treeview, iter = False):
+    self.selected = []
+    treeview.get_selection().selected_foreach(foreach_treeview_selected, self.selected)
+    #return selected
 
 def treeview_clicked(self):
     if self.initialized is False:
         return False
-    if self.total:
-        treeselection = self.widgets['treeview'].get_selection()
-        (tmp_model, tmp_iter) = treeselection.get_selected()
-        if tmp_iter is None:
-            log.info('Treeview: no selection')
-            return False
-        number = tmp_model.get_value(tmp_iter, 0)
-        movie = self.db.session.query(db.Movie).filter_by(number=number).first()
-        if movie is None:
-            log.info("Treeview: movie doesn't exists (number=%s)", number)
-        elif self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
+    if len(self.selected) == 1:
+        movie = self.db.session.query(db.Movie).filter_by(number=int(self.selected[0])).first()
+        if self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
             # poster window is visible
             filename = None
             if movie.poster_md5:
@@ -56,11 +83,11 @@ def treeview_clicked(self):
             if not filename:
                 filename = gutils.get_defaultimage_fname(self)
             self.widgets['big_poster'].set_from_file(filename)
-        for ext in self.extensions:
-            ext.maintree_clicked(treeselection, movie)
+        #for ext in self.extensions:
+            #ext.maintree_clicked(treeselection, movie)
         set_details(self, movie)
     else:
-        set_details(self, {})
+        return False
 
 def set_details(self, item=None):#{{{
     if item is None:

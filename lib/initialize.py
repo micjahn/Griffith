@@ -25,7 +25,6 @@ import gettext
 import logging
 import math
 import os
-import platform
 import re
 import sys
 from glob import glob
@@ -125,7 +124,8 @@ def locations(self, home_dir):
 def gui(self):
     self._ = None
 
-    if platform.system() == 'Darwin':
+    if os.name in ('mac') or \
+            (hasattr(os, 'uname') and os.uname()[0] == 'Darwin'):
         self.mac = True
     else:
         self.mac = False
@@ -165,11 +165,16 @@ def toolbar(self):
         self.widgets['extensions']['toolbar_hb'].show()
         self.widgets['menu']['ext_toolbar'].set_active(True)
 
-
 def treeview(self):
+    import main_treeview
+    # set up the treeview to do multiple selection
+    tree = self.widgets['treeview']
     self.treemodel = gtk.TreeStore(str, gtk.gdk.Pixbuf, str, str, str, str, bool, str, str, int, str, str)
-    self.widgets['treeview'].set_model(self.treemodel)
-    self.widgets['treeview'].set_headers_visible(True)
+    tree.set_model(self.treemodel)
+    tree.set_headers_visible(True)
+    tree.get_selection().set_mode(gtk.SELECTION_MULTIPLE)
+    self.widgets['treeview'].get_selection().connect("changed", main_treeview.on_tree_selection, self)
+    
     # number column
     renderer = gtk.CellRendererText()
     self.number_column = gtk.TreeViewColumn(_('No.'), renderer, text=0)
@@ -314,7 +319,17 @@ def treeview(self):
     self.total = self.db.session.query(db.Movie).count()
     self.widgets['treeview'].set_search_equal_func(search_func_treeview)
     self.widgets['treeview'].show()
-
+    
+    # adding some completion fields - TODO: move it to initialize
+    self.completion = gtk.EntryCompletion()
+    self.widgets['add']['o_title'].set_completion(self.completion)
+    self.completion.set_model(self.treemodel)
+    self.completion.set_text_column(3)
+    # ... title
+    self.completion_t = gtk.EntryCompletion()
+    self.widgets['add']['title'].set_completion(self.completion_t)
+    self.completion_t.set_model(self.treemodel)
+    self.completion_t.set_text_column(4)
 
 def search_func_treeview(model, column, key, iter):
     return not (str(model.get_value(iter, 0)).startswith(key) or 
