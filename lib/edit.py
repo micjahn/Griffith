@@ -38,7 +38,7 @@ def change_poster(self):
     showing a file chooser dialog to select it
     """
     picture = self.widgets['movie']['picture']
-    number = self.get_maintree_selection()[0]
+    number = int(self.selected[0])
     if number is None:
         gutils.error(_("You have no movies in your database"), self.widgets['window'])
         return False
@@ -143,10 +143,7 @@ def delete_poster(self):
 
 
 def update_tree_thumbnail(self, t_image_path):
-    treeselection = self.widgets['treeview'].get_selection()
-    (tmp_model, tmp_iter) = treeselection.get_selected()
     self.Image.set_from_file(t_image_path)
     pixbuf = self.Image.get_pixbuf()
-    # tmp_iter can be None while importing data
-    if tmp_iter:
-        self.treemodel.set_value(tmp_iter, 1, pixbuf)
+    if self.selected_iter[0]:
+        self.treemodel.set_value(self.selected_iter[0], 1, pixbuf)
