@@ -29,7 +29,7 @@ import logging
 import os.path
 
 from sqlalchemy import create_engine, or_, and_, not_, exists, asc, desc
-from sqlalchemy.exceptions import OperationalError
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.sql.expression import Update, Delete
 

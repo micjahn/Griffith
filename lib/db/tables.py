@@ -64,7 +64,7 @@ movies = Table('movies', metadata,
     Column('poster_md5', ForeignKey(posters.c.md5sum)),
     Column('loaned', Boolean, nullable=False, default=False),
     Column('seen', Boolean, nullable=False, default=False),
-    Column('rating', SmallInteger(2)),
+    Column('rating', SmallInteger),
     Column('color', SmallInteger),
     Column('cond', SmallInteger), # MySQL will not accept name "condition"
     Column('layers', SmallInteger),

@@ -26,7 +26,7 @@ import logging
 import os
 
 import gtk
-from sqlalchemy.exceptions import IntegrityError
+from sqlalchemy.exc import IntegrityError
 
 import quick_filter
 import db
