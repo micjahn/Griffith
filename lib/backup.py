@@ -211,7 +211,7 @@ def restore(self, merge=False):
         tmp_db = None
         tmp_dir = mkdtemp()
         os.mkdir(os.path.join(tmp_dir, 'posters'))
-
+        print filename
         if filename.lower().endswith('.zip'):
             try:
                 zip_file = zipfile.ZipFile(filename, 'r')

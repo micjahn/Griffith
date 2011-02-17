@@ -38,11 +38,13 @@ try:
 except:
     gtk = None
     pass
+    
+mac = False
 
-try:
-    import EasyDialogs
-except:
-    pass
+if os.name in ('mac') or \
+    (hasattr(os, 'uname') and os.uname()[0] == 'Darwin'):
+        import macutils
+        mac = True
 
 log = logging.getLogger("Griffith")
 
@@ -266,33 +268,42 @@ def urllib_error(msg, parent=None):
 
 
 def warning(msg, parent=None):
-    dialog = gtk.MessageDialog(parent,
+    if mac:
+        macutils.createAlert(msg)
+    else:
+        dialog = gtk.MessageDialog(parent,
             gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_WARNING, gtk.BUTTONS_OK, msg)
-    dialog.set_skip_taskbar_hint(False)
-    dialog.run()
-    dialog.destroy()
-
+        dialog.set_skip_taskbar_hint(False)
+        dialog.run()
+        dialog.destroy()
 
 def info(msg, parent=None):
-    dialog = gtk.MessageDialog(parent,
-            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_INFO, gtk.BUTTONS_OK, msg)
-    dialog.set_skip_taskbar_hint(False)
-    dialog.run()
-    dialog.destroy()
+    if mac:
+        macutils.createAlert(msg)
+    else:
+        dialog = gtk.MessageDialog(parent,
+                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                gtk.MESSAGE_INFO, gtk.BUTTONS_OK, msg)
+        dialog.set_skip_taskbar_hint(False)
+        dialog.run()
+        dialog.destroy()
 
 def question(msg, window=None):
-    dialog = gtk.MessageDialog(window,
-        gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-        gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE, msg)
-    dialog.add_buttons(gtk.STOCK_YES, gtk.RESPONSE_YES,
-        gtk.STOCK_NO, gtk.RESPONSE_NO)
-    dialog.set_default_response(gtk.RESPONSE_NO)
-    dialog.set_skip_taskbar_hint(False)
-    response = dialog.run()
-    dialog.destroy()
-    return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
+    if mac:
+        response = macutils.question(msg)
+        return response
+    else:
+        dialog = gtk.MessageDialog(window,
+            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+            gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE, msg)
+        dialog.add_buttons(gtk.STOCK_YES, gtk.RESPONSE_YES,
+            gtk.STOCK_NO, gtk.RESPONSE_NO)
+        dialog.set_default_response(gtk.RESPONSE_NO)
+        dialog.set_skip_taskbar_hint(False)
+        response = dialog.run()
+        dialog.destroy()
+        return response in (gtk.RESPONSE_OK, gtk.RESPONSE_YES)
 
 def popup_message(message):
     """shows popup message while executing decorated function"""
@@ -329,49 +340,66 @@ def popup_message(message):
 
 
 def file_chooser(title, action=None, buttons=None, name='', folder=os.path.expanduser('~'), picture=False, backup=False):
-    dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
-    dialog.set_default_response(gtk.RESPONSE_OK)
-    if name:
-        dialog.set_current_name(name)
-    if folder:
-        dialog.set_current_folder(folder)
-    mfilter = gtk.FileFilter()
-    if picture:
-        preview = gtk.Image()
-        dialog.set_preview_widget(preview)
-        dialog.connect("update-preview", update_preview_cb, preview)
-        mfilter.set_name(_("Images"))
-        mfilter.add_mime_type("image/png")
-        mfilter.add_mime_type("image/jpeg")
-        mfilter.add_mime_type("image/gif")
-        mfilter.add_pattern("*.[pP][nN][gG]")
-        mfilter.add_pattern("*.[jJ][pP][eE]?[gG]")
-        mfilter.add_pattern("*.[gG][iI][fF]")
-        mfilter.add_pattern("*.[tT][iI][fF]{1,2}")
-        mfilter.add_pattern("*.[xX][pP][mM]")
-        dialog.add_filter(mfilter)
-    elif backup:
-        mfilter.set_name(_('backups'))
-        mfilter.add_pattern('*.[zZ][iI][pP]')
-        mfilter.add_pattern('*.[gG][rR][iI]')
-        mfilter.add_pattern('*.[dD][bB]')
-        dialog.add_filter(mfilter)
-    mfilter = gtk.FileFilter()
-    mfilter.set_name(_("All files"))
-    mfilter.add_pattern("*")
-    dialog.add_filter(mfilter)
-
-
-    response = dialog.run()
-    if response == gtk.RESPONSE_OK:
-        filename = dialog.get_filename()
-    elif response == gtk.RESPONSE_CANCEL:
-        filename = None
+    if mac:
+        if "SAVE" in str(action):
+            if backup:
+                status, filename, path = macutils.saveDialog(['zip'])
+            else:
+                status, filename, path = macutils.saveDialog()
+        else:
+            status, filename, path = macutils.openDialog(['zip'])
+        if status:
+            if filename.lower().endswith('.zip'):
+                pass
+            else:
+                filename = filename+".zip"
+            return filename, path
+        else:
+            return False 
     else:
-        return False
-    path = dialog.get_current_folder()
-    dialog.destroy()
-    return filename, path
+        dialog = gtk.FileChooserDialog(title=title, action=action, buttons=buttons)
+        dialog.set_default_response(gtk.RESPONSE_OK)
+        if name:
+            dialog.set_current_name(name)
+        if folder:
+            dialog.set_current_folder(folder)
+        mfilter = gtk.FileFilter()
+        if picture:
+            preview = gtk.Image()
+            dialog.set_preview_widget(preview)
+            dialog.connect("update-preview", update_preview_cb, preview)
+            mfilter.set_name(_("Images"))
+            mfilter.add_mime_type("image/png")
+            mfilter.add_mime_type("image/jpeg")
+            mfilter.add_mime_type("image/gif")
+            mfilter.add_pattern("*.[pP][nN][gG]")
+            mfilter.add_pattern("*.[jJ][pP][eE]?[gG]")
+            mfilter.add_pattern("*.[gG][iI][fF]")
+            mfilter.add_pattern("*.[tT][iI][fF]{1,2}")
+            mfilter.add_pattern("*.[xX][pP][mM]")
+            dialog.add_filter(mfilter)
+        elif backup:
+            mfilter.set_name(_('backups'))
+            mfilter.add_pattern('*.[zZ][iI][pP]')
+            mfilter.add_pattern('*.[gG][rR][iI]')
+            mfilter.add_pattern('*.[dD][bB]')
+            dialog.add_filter(mfilter)
+        mfilter = gtk.FileFilter()
+        mfilter.set_name(_("All files"))
+        mfilter.add_pattern("*")
+        dialog.add_filter(mfilter)
+
+
+        response = dialog.run()
+        if response == gtk.RESPONSE_OK:
+            filename = dialog.get_filename()
+        elif response == gtk.RESPONSE_CANCEL:
+            filename = None
+        else:
+            return False
+        path = dialog.get_current_folder()
+        dialog.destroy()
+        return filename, path
 
 
 def update_preview_cb(file_chooser, preview):

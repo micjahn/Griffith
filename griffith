@@ -52,7 +52,6 @@ if os.name in ('mac') or \
         (hasattr(os, 'uname') and os.uname()[0] == 'Darwin'):
     import pygtk
     pygtk.require('2.0')
-    import macutils
     try:
         from gtk_osxapplication import *
     except:
