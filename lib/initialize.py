@@ -861,7 +861,7 @@ def spellcheck(self):
                 log.info('Dictionary not available. Spell check will be disabled.')
                 if not self.config.get('notified', False, section='spell'):
                     gutils.info(_("Dictionary not available. Spellcheck will be disabled. \n" + \
-                        "Please install the aspell-%s package or adjust the spellchekcer preferences.") % self.config.get('lang', section='spell'), \
+                        "Please install the aspell-%s package or adjust the spellchecker preferences.") % self.config.get('lang', section='spell'), \
                         self.widgets['preferences']['window'])
                     self.config.set('notified', True, section='spell')
                     self.config.save()
