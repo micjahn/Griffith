@@ -2149,7 +2149,7 @@ msgstr "Clona"
 
 #: ../glade/griffith.glade.h:46
 msgid "Create backup"
-msgstr "Creare bacjup"
+msgstr "Creare backup"
 
 #: ../glade/griffith.glade.h:48
 msgid "DVD layers"
