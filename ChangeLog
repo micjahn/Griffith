@@ -4,6 +4,13 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
+2011-04-27  Filippo Valsorda
+    * New Interfilmes plugin by Elencarlos Soares
+
+2011-04-22  Filippo Valsorda
+    * New CSFD plugin by Kamil Hanus
+    * Minor fixes in IMDB-it and MyMoviesIt plugins
+    * Fixed a typo in it.po
 
 2011-03-20  Piotr Ożarowski
 	* "spellchekcer" typo fixed (thanks to Olivier BOURSIN)
