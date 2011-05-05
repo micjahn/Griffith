@@ -82,7 +82,7 @@ Source: dist\lib\plugins\extensions\*; DestDir: {app}\lib\plugins\extensions; Fl
 Source: dist\lib\plugins\imp\*;        DestDir: {app}\lib\plugins\imp;        Flags: ignoreversion recursesubdirs createallsubdirs
 ; component based installation
 Source: dist\lib\plugins\movie\PluginMovie7arte.py;         DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Portuguese\7arte
-Source: dist\lib\plugins\movie\PluginMovieAllMovie.py;      DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\English\AllMovie
+Source: dist\lib\plugins\movie\PluginMovieAllRovi.py;       DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\English\AllRovi
 Source: dist\lib\plugins\movie\PluginMovieAllocine.py;      DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\French\Allocine
 Source: dist\lib\plugins\movie\PluginMovieAmazon.py;        DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Amazon
 Source: dist\lib\plugins\movie\PluginMovieAniDB.py;         DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\English\AnimeDB
@@ -160,7 +160,7 @@ Name: Movie_Import_Plugins\IMDB;                     Description: IMDB Import Pl
 Name: Movie_Import_Plugins\Amazon;                   Description: Amazon Import Plugin; Types: full
 
 Name: Movie_Import_Plugins\English;                  Description: English Import Plugins; Types: full
-Name: Movie_Import_Plugins\English\AllMovie;         Description: All Media Guide / www.allmovie.com; Types: full
+Name: Movie_Import_Plugins\English\AllRovi;          Description: Rovi / www.allrovi.com; Types: full
 Name: Movie_Import_Plugins\English\AnimeDB;          Description: AnimeDB / www.anidb.net; Types: full
 Name: Movie_Import_Plugins\English\DVD_Empire;       Description: DVD Empire / www.dvdempire.com; Types: full
 Name: Movie_Import_Plugins\English\HKMDB;            Description: Hongkong Movie Database / www.hkmdb.com; Types: full
