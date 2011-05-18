@@ -730,6 +730,7 @@ def combos(self):
     pos_to_activate = 0
     selected_criteria = self.config.get('criteria', None, section='mainlist')
     self.search_criteria_sorted = sorted((self.field_names[criteria], criteria) for criteria in self.search_criteria)
+    self.search_criteria_sorted.insert( 0, ( _('Any'), 'any' ) ) 
     for (criterianame, criteria) in self.search_criteria_sorted:
         self.widgets['filter']['criteria'].insert_text(i, criterianame)
         if selected_criteria == criterianame:

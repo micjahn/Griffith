@@ -28,7 +28,7 @@ def change_filter(self):
     x = 0
     text = gutils.gescape(self.widgets['filter']['text'].get_text().decode('utf-8'))
     
-    from sqlalchemy import select
+    from sqlalchemy import select, or_
     from sqlalchemy.orm.util import class_mapper, object_mapper
     statement = select(db.tables.movies.columns, bind=self.db.session.bind)
     
@@ -36,6 +36,11 @@ def change_filter(self):
         (criterianame, criteria) = self.search_criteria_sorted[self.widgets['filter']['criteria'].get_active()]
         if criteria in ('year', 'runtime', 'media_num', 'rating'):
             statement.append_whereclause(db.tables.movies.c[criteria]==text)
+        elif criteria == 'any':
+            crits = [ ]
+            for crit in ( 'director', 'title', 'o_title', 'cameraman', 'cast', 'year' ):
+                crits.append(db.tables.movies.c[crit].like('%'+text+'%'))
+            statement.append_whereclause(or_(*crits))
         else:
             statement.append_whereclause(db.tables.movies.c[criteria].like('%'+text+'%'))
     if self.widgets['filter']['text'].is_focus():
