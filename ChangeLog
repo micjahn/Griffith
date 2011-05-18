@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2011-05-18  Michael Jahn
 	* updated CineMovies plugin (thanks to Olivier BOURSIN)
+	* small fixes for Allocine and AllRovi plugin
 
 2011-05-12  Michael Jahn
 	* added "virtual" resolutions (4:3 Fullscreen, Widescreen, Anamorphic Widescreen)
