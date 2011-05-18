@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+﻿# -*- coding: UTF-8 -*-
 
 __revision__ = '$Id$'
 
@@ -315,6 +315,7 @@ class ImportPlugin(IP):
         # source _dependent_ initialization goes here
         if name is None or not os.path.isfile(name):
             return False
+        IP.set_source(self, name)
         self.__source_name = name
         # auto-detect file-encoding (optional)
         try:
