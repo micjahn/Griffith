@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-03 21:56+0100\n"
+"POT-Creation-Date: 2011-05-20 10:35+0200\n"
 "PO-Revision-Date: 2009-12-23 00:12+0000\n"
 "Last-Translator: ChangeTheWorld <ssalki77@gmail.com>\n"
 "Language-Team: Korean\n"
@@ -18,21 +18,21 @@ msgstr ""
 "Language: \n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,93,-1,-1,-1,-1,-1\n"
 
-#: ../griffith:241 ../griffith:1028 ../lib/delete.py:37 ../lib/edit.py:43
+#: ../griffith:257 ../griffith:1035 ../lib/delete.py:35 ../lib/edit.py:43
 msgid "You have no movies in your database"
 msgstr "데이터베이스에 영화가 없습니다."
 
-#: ../griffith:419
+#: ../griffith:434
 msgid "You have seen all films in your collection!"
 msgstr "소장품 안에 모든 영화를 보았습니다."
 
-#: ../griffith:570 ../griffith:575 ../lib/initialize.py:376
-#: ../lib/initialize.py:798
+#: ../griffith:585 ../griffith:590 ../lib/initialize.py:391
+#: ../lib/initialize.py:814
 msgid "subtitles"
 msgstr "부제목"
 
-#: ../griffith:617 ../griffith:677 ../griffith:736 ../griffith:794
-#: ../griffith:852 ../griffith:901 ../griffith:950
+#: ../griffith:633 ../griffith:693 ../griffith:752 ../griffith:810
+#: ../griffith:868 ../griffith:917 ../griffith:966
 msgid ""
 "This item is in use.\n"
 "Operation aborted!"
@@ -40,32 +40,34 @@ msgstr ""
 "이 항목은 사용중에 있습니다.\n"
 "명령을 중지하겠습니다!"
 
-#: ../griffith:1000
-msgid ""
-"Are you sure you want to restore?\n"
-"Your current movie collection will be replaced.\n"
-"You can't undo this operation."
-msgstr ""
-
-#: ../griffith:1007
+#: ../griffith:1011
 #, fuzzy
 msgid ""
-"Are you sure you want to merge?\n"
-"Your current movie collection will be merged with a backup.\n"
-"You can't undo this operation."
+"Are you sure you want to restore? Your current movie collection will be "
+"replaced. You can't undo this operation."
 msgstr ""
 "혼합 하시겠습니까?\n"
 "현재 소장품이 백업과 함께 혼합됩니다.\n"
 "이 명령은 되돌릴 수 없습니다."
 
-#: ../griffith:1105
+#: ../griffith:1016
+#, fuzzy
+msgid ""
+"Are you sure you want to merge? Your current movie collection will be merged "
+"with a backup. You can't undo this operation."
+msgstr ""
+"혼합 하시겠습니까?\n"
+"현재 소장품이 백업과 함께 혼합됩니다.\n"
+"이 명령은 되돌릴 수 없습니다."
+
+#: ../griffith:1112
 #, python-format
 msgid ""
 "%s movie(s) in collection. %s movie(s) are shown by the filter. %s movie(s) "
 "loaned. You haven't seen %s movie(s)"
 msgstr ""
 
-#: ../griffith:1300
+#: ../griffith:1307
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
@@ -73,7 +75,7 @@ msgstr ""
 "새로운 데이터베이스를 생성할까요?\n"
 "현재 모든 데이터를 잃어버립니다!"
 
-#: ../griffith:1302
+#: ../griffith:1309
 msgid ""
 "Last chance!\n"
 "Do you confirm that you want\n"
@@ -83,7 +85,7 @@ msgstr ""
 "확실히 결정하십시요\n"
 "현재 데이터를 없애버릴까요?"
 
-#: ../griffith:1458
+#: ../griffith:1461
 msgid ""
 "This is development version of Griffith.\n"
 "Upgrade path from dev. versions may not be provided.\n"
@@ -100,37 +102,38 @@ msgstr "주요 작가"
 msgid "Programmers"
 msgstr "프로그램 작성자"
 
-#: ../lib/about.py:51
-msgid "Contributors:"
+#: ../lib/about.py:52
+#, fuzzy
+msgid "Contributors"
 msgstr "도움주신 분들:"
 
-#: ../lib/about.py:55
+#: ../lib/about.py:56
 msgid "Logo, icon and general artwork "
 msgstr "로고, 아이콘 그리고 아트워크 "
 
-#: ../lib/about.py:56
+#: ../lib/about.py:57
 msgid "by Peek <peekpt@gmail.com>."
 msgstr ""
 
-#: ../lib/about.py:57
+#: ../lib/about.py:58
 msgid ""
 "\n"
 "Please visit http://www.peekmambo.com/\n"
 msgstr ""
 
-#: ../lib/about.py:81
+#: ../lib/about.py:82
 msgid "See TRANSLATORS file"
 msgstr ""
 
-#: ../lib/about.py:89
+#: ../lib/about.py:90
 msgid "This program is released under the GNU"
 msgstr "이 프로그램은 GNU에 의해 공개됩니다"
 
-#: ../lib/about.py:90
+#: ../lib/about.py:91
 msgid "General Public License.\n"
 msgstr ""
 
-#: ../lib/about.py:91
+#: ../lib/about.py:92
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
 msgstr ""
 
@@ -142,15 +145,15 @@ msgstr "새로운 영화 추가"
 msgid "Edit movie"
 msgstr "영화 수정"
 
-#: ../lib/add.py:127
+#: ../lib/add.py:126
 msgid "Movie information has been updated"
 msgstr "영화정보를 최신화 하였습니다."
 
-#: ../lib/add.py:263
+#: ../lib/add.py:262
 msgid "No results"
 msgstr "결과물이 없습니다"
 
-#: ../lib/add.py:306 ../lib/add.py:648
+#: ../lib/add.py:305 ../lib/add.py:647
 msgid ""
 "You should fill the original title\n"
 "or the movie title."
@@ -158,15 +161,15 @@ msgstr ""
 "원 제목을 입력하세요\n"
 "또는 영화 제목"
 
-#: ../lib/add.py:315
+#: ../lib/add.py:314
 msgid "Url: "
 msgstr "Url: "
 
-#: ../lib/add.py:316
+#: ../lib/add.py:315
 msgid "Language: "
 msgstr "언어: "
 
-#: ../lib/add.py:656 ../lib/add.py:660
+#: ../lib/add.py:655 ../lib/add.py:659
 msgid "Movie with that title already exists, are you sure you want to add?"
 msgstr "영화가 이미 존재합니다. 정말로 추가하시겠습니까?"
 
@@ -254,11 +257,11 @@ msgstr ""
 msgid "Search conditions deleted"
 msgstr ""
 
-#: ../lib/backup.py:53
+#: ../lib/backup.py:58
 msgid "Save Griffith backup"
 msgstr "Griffith 백업 저장"
 
-#: ../lib/backup.py:63 ../lib/plugins/export/__init__.py:162
+#: ../lib/backup.py:67 ../lib/plugins/export/__init__.py:162
 #: ../lib/plugins/export/PluginExportCSV.py:61
 #: ../lib/plugins/export/PluginExportiPod.py:113
 #: ../lib/plugins/export/PluginExportPDF.py:76
@@ -266,27 +269,27 @@ msgstr "Griffith 백업 저장"
 msgid "File exists. Do you want to overwrite it?"
 msgstr "파일이 존재합니다. 덮어쓰시겠습니까?"
 
-#: ../lib/backup.py:75
+#: ../lib/backup.py:79
 msgid "Error creating backup"
 msgstr "에러 백업 생성"
 
-#: ../lib/backup.py:115
+#: ../lib/backup.py:119
 msgid "Backup has been created"
 msgstr "백업 생성 완료"
 
-#: ../lib/backup.py:118
+#: ../lib/backup.py:122
 msgid "Restoring database..."
 msgstr ""
 
-#: ../lib/backup.py:200
+#: ../lib/backup.py:203
 msgid "Restore Griffith backup"
 msgstr "Griffith 백업 복원"
 
-#: ../lib/backup.py:216
+#: ../lib/backup.py:219
 msgid "Can't read backup file"
 msgstr "백업파일을 읽지 못하였습니다"
 
-#: ../lib/backup.py:287
+#: ../lib/backup.py:289
 msgid "Backup restored"
 msgstr "백업 복원"
 
@@ -304,17 +307,17 @@ msgstr "Griffith v에 의해 커버 생성"
 msgid "Released Under the GNU/GPL License"
 msgstr "GNU/GPL 라이센스에 의해 개방됩니다"
 
-#: ../lib/cover.py:177 ../lib/initialize.py:190 ../lib/initialize.py:779
+#: ../lib/cover.py:177 ../lib/initialize.py:195 ../lib/initialize.py:795
 #: ../lib/plugins/export/PluginExportHTML.py:157 ../glade/griffith.glade.h:105
 msgid "Original Title"
 msgstr "원제목"
 
-#: ../lib/cover.py:178 ../lib/initialize.py:198 ../lib/initialize.py:791
-#: ../lib/plugins/export/PluginExportHTML.py:163 ../glade/griffith.glade.h:160
+#: ../lib/cover.py:178 ../lib/initialize.py:203 ../lib/initialize.py:807
+#: ../lib/plugins/export/PluginExportHTML.py:163 ../glade/griffith.glade.h:161
 msgid "Title"
 msgstr "제목"
 
-#: ../lib/cover.py:180 ../lib/initialize.py:206 ../lib/initialize.py:769
+#: ../lib/cover.py:180 ../lib/initialize.py:211 ../lib/initialize.py:785
 #: ../lib/plugins/export/PluginExportHTML.py:148
 #: ../lib/plugins/export/PluginExportPDF.py:183 ../glade/griffith.glade.h:54
 msgid "Director"
@@ -324,16 +327,16 @@ msgstr "감독"
 msgid "Running Time"
 msgstr "재생 시간"
 
-#: ../lib/cover.py:182 ../lib/main_treeview.py:538
+#: ../lib/cover.py:182 ../lib/main_treeview.py:564
 msgid " min"
 msgstr " 분"
 
-#: ../lib/cover.py:183 ../lib/initialize.py:768
+#: ../lib/cover.py:183 ../lib/initialize.py:784
 #: ../lib/plugins/export/PluginExportHTML.py:147 ../glade/griffith.glade.h:45
 msgid "Country"
 msgstr "국가"
 
-#: ../lib/cover.py:184 ../lib/initialize.py:214 ../lib/initialize.py:770
+#: ../lib/cover.py:184 ../lib/initialize.py:219 ../lib/initialize.py:786
 #: ../lib/plugins/export/PluginExportHTML.py:149
 #: ../lib/plugins/export/PluginExportPDF.py:179 ../glade/griffith.glade.h:70
 msgid "Genre"
@@ -344,6 +347,7 @@ msgid "Upgrading database..."
 msgstr ""
 
 #: ../lib/dbupgrade.py:90 ../lib/plugins/movie/PluginMovieE-Pipoca.py:33
+#: ../lib/plugins/movie/PluginMovieInterfilmes.py:31
 msgid "Brazilian Portuguese"
 msgstr "포루투갈어(브라질식)"
 
@@ -355,7 +359,7 @@ msgstr "불가리아어"
 msgid "Catalan"
 msgstr "카탈로니아어"
 
-#: ../lib/dbupgrade.py:93 ../lib/plugins/movie/PluginMovieCSFD.py:29
+#: ../lib/dbupgrade.py:93 ../lib/plugins/movie/PluginMovieCSFD.py:30
 msgid "Czech"
 msgstr "체코어"
 
@@ -367,7 +371,7 @@ msgstr "덴마크어"
 msgid "Dutch"
 msgstr "네델란드어"
 
-#: ../lib/dbupgrade.py:96 ../lib/plugins/movie/PluginMovieAllMovie.py:31
+#: ../lib/dbupgrade.py:96 ../lib/plugins/movie/PluginMovieAllRovi.py:31
 #: ../lib/plugins/movie/PluginMovieAniDB.py:31
 #: ../lib/plugins/movie/PluginMovieDVDEmpire.py:31
 #: ../lib/plugins/movie/PluginMovieHKMDB.py:32
@@ -446,6 +450,7 @@ msgstr "폴란드어"
 #: ../lib/dbupgrade.py:110 ../lib/plugins/movie/PluginMovie7arte.py:31
 #: ../lib/plugins/movie/PluginMovieCineteka.py:31
 #: ../lib/plugins/movie/PluginMovieClubedevideo.py:32
+#: ../lib/plugins/movie/PluginMovieIMDB-pt.py:33
 #: ../lib/plugins/movie/PluginMoviePTGate.py:32
 msgid "Portuguese"
 msgstr "포루투갈어"
@@ -503,13 +508,14 @@ msgid ""
 msgstr ""
 "당신의 데이터베이스는 대부분 SQLite2 포맷입니다, SQLite3로 변환하십시요."
 
-#: ../lib/delete.py:41
+#: ../lib/delete.py:38
+#, fuzzy
+msgid "Are you sure you want to delete?"
+msgstr "이 영화를 삭제하시겠습니까?"
+
+#: ../lib/delete.py:42
 msgid "You can't delete movie while it is loaned."
 msgstr "대여하는 동안 영화를 지울수 없습니다."
-
-#: ../lib/delete.py:44
-msgid "Are you sure you want to delete this movie?"
-msgstr "이 영화를 삭제하시겠습니까?"
 
 #: ../lib/edit.py:74
 msgid "Image is not valid."
@@ -570,339 +576,343 @@ msgstr "메일 발송하지 못하였습니다. 사용가능한 e-mail인지 확
 msgid "This person has no e-mail address defined."
 msgstr "이 사람은 이메일주소를 작성하지 않았습니다."
 
-#: ../lib/gutils.py:337
+#: ../lib/gutils.py:371
 msgid "Images"
 msgstr "이미지"
 
-#: ../lib/gutils.py:348
+#: ../lib/gutils.py:382
 msgid "backups"
 msgstr ""
 
-#: ../lib/gutils.py:354 ../lib/plugins/imp/__init__.py:377
+#: ../lib/gutils.py:388 ../lib/plugins/imp/__init__.py:377
 msgid "All files"
 msgstr "모든 파일"
 
-#: ../lib/initialize.py:175
+#: ../lib/initialize.py:180
 msgid "No."
 msgstr "No."
 
-#: ../lib/initialize.py:183 ../lib/initialize.py:771
+#: ../lib/initialize.py:188 ../lib/initialize.py:787
 #: ../lib/plugins/export/PluginExportHTML.py:150 ../glade/griffith.glade.h:76
 msgid "Image"
 msgstr "이미지"
 
-#: ../lib/initialize.py:222 ../lib/initialize.py:787
+#: ../lib/initialize.py:227 ../lib/initialize.py:803
 #: ../lib/plugins/export/PluginExportHTML.py:162 ../glade/griffith.glade.h:139
 msgid "Seen it"
 msgstr ""
 
-#: ../lib/initialize.py:231 ../lib/initialize.py:795
+#: ../lib/initialize.py:236 ../lib/initialize.py:811
 #: ../lib/plugins/export/PluginExportHTML.py:164
-#: ../lib/plugins/export/PluginExportPDF.py:171 ../glade/griffith.glade.h:174
+#: ../lib/plugins/export/PluginExportPDF.py:171 ../glade/griffith.glade.h:175
 msgid "Year"
 msgstr "년도"
 
-#: ../lib/initialize.py:241 ../lib/initialize.py:785
+#: ../lib/initialize.py:246 ../lib/initialize.py:801
 #: ../lib/plugins/export/PluginExportHTML.py:160
 #: ../lib/plugins/export/PluginExportPDF.py:175 ../glade/griffith.glade.h:133
 msgid "Runtime"
 msgstr "재생시간"
 
-#: ../lib/initialize.py:251 ../lib/initialize.py:783
+#: ../lib/initialize.py:256 ../lib/initialize.py:799
 #: ../lib/plugins/export/PluginExportHTML.py:159 ../glade/griffith.glade.h:121
 msgid "Rating"
 msgstr "평점"
 
-#: ../lib/initialize.py:261 ../glade/griffith.glade.h:47
+#: ../lib/initialize.py:266 ../glade/griffith.glade.h:47
 msgid "Created"
 msgstr ""
 
-#: ../lib/initialize.py:271 ../glade/griffith.glade.h:165
+#: ../lib/initialize.py:276 ../glade/griffith.glade.h:166
 msgid "Updated"
 msgstr ""
 
-#: ../lib/initialize.py:331
+#: ../lib/initialize.py:346
 msgid "Loan Date"
 msgstr "데이터 대여"
 
-#: ../lib/initialize.py:337
+#: ../lib/initialize.py:352
 msgid "Return Date"
 msgstr "데이터 반납"
 
-#: ../lib/initialize.py:342
+#: ../lib/initialize.py:357
 msgid "Loaned To"
 msgstr ""
 
-#: ../lib/initialize.py:362 ../lib/plugins/movie/PluginMovieIMDB-de.py:210
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:409
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:456
+#: ../lib/initialize.py:377 ../lib/plugins/movie/PluginMovieIMDB-de.py:210
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:410
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:457
 #: ../lib/plugins/movie/PluginMovieIMDB-it.py:164
 #: ../lib/plugins/movie/PluginMovieIMDB.py:176
-#: ../lib/plugins/movie/PluginMovieIMDB.py:361
+#: ../lib/plugins/movie/PluginMovieIMDB.py:362
 msgid "Language"
 msgstr "언어"
 
-#: ../lib/initialize.py:374 ../lib/initialize.py:798
+#: ../lib/initialize.py:389 ../lib/initialize.py:814
 msgid "lector"
 msgstr ""
 
-#: ../lib/initialize.py:375 ../lib/initialize.py:798
+#: ../lib/initialize.py:390 ../lib/initialize.py:814
 msgid "dubbing"
 msgstr "더빙"
 
-#: ../lib/initialize.py:377 ../lib/initialize.py:798
+#: ../lib/initialize.py:392 ../lib/initialize.py:814
 msgid "commentary"
 msgstr "비평"
 
-#: ../lib/initialize.py:384 ../glade/griffith.glade.h:163
+#: ../lib/initialize.py:399 ../glade/griffith.glade.h:164
 msgid "Type"
 msgstr "형식"
 
-#: ../lib/initialize.py:399
+#: ../lib/initialize.py:414
 msgid "Codec"
 msgstr "코덱"
 
-#: ../lib/initialize.py:414
+#: ../lib/initialize.py:429
 msgid "Channels"
 msgstr "채널"
 
-#: ../lib/initialize.py:429
+#: ../lib/initialize.py:444
 msgid "Subtitle format"
 msgstr "부제목 포맷"
 
-#: ../lib/initialize.py:583
+#: ../lib/initialize.py:598
 msgid "Enable this extension"
 msgstr ""
 
-#: ../lib/initialize.py:674 ../glade/griffith.glade.h:97
+#: ../lib/initialize.py:689 ../glade/griffith.glade.h:97
 msgid "Name"
 msgstr "이름"
 
-#: ../lib/initialize.py:680 ../glade/exporthtml.glade.h:15
+#: ../lib/initialize.py:695 ../glade/exporthtml.glade.h:15
 #: ../glade/griffith.glade.h:56 ../glade/import.glade.h:5
 msgid "E-mail"
 msgstr "E-mail"
 
-#: ../lib/initialize.py:729
+#: ../lib/initialize.py:733
+msgid "Any"
+msgstr ""
+
+#: ../lib/initialize.py:745
 msgid "Last added"
 msgstr "최근 추가된 사항"
 
-#: ../lib/initialize.py:761 ../lib/plugins/export/PluginExportHTML.py:170
+#: ../lib/initialize.py:777 ../lib/plugins/export/PluginExportHTML.py:170
 #: ../glade/griffith.glade.h:33
 msgid "Barcode"
 msgstr ""
 
-#: ../lib/initialize.py:762 ../lib/plugins/export/PluginExportHTML.py:145
+#: ../lib/initialize.py:778 ../lib/plugins/export/PluginExportHTML.py:145
 #: ../lib/plugins/export/PluginExportPDF.py:187 ../glade/griffith.glade.h:37
 msgid "Cast"
 msgstr "출연배우"
 
-#: ../lib/initialize.py:763 ../lib/plugins/export/PluginExportHTML.py:167
+#: ../lib/initialize.py:779 ../lib/plugins/export/PluginExportHTML.py:167
 #: ../glade/griffith.glade.h:36
 msgid "Cameraman"
 msgstr ""
 
-#: ../lib/initialize.py:764 ../lib/plugins/export/PluginExportHTML.py:146
+#: ../lib/initialize.py:780 ../lib/plugins/export/PluginExportHTML.py:146
 #: ../glade/griffith.glade.h:39
 msgid "Classification"
 msgstr "분류"
 
-#: ../lib/initialize.py:765 ../lib/plugins/export/PluginExportHTML.py:178
+#: ../lib/initialize.py:781 ../lib/plugins/export/PluginExportHTML.py:178
 #: ../glade/griffith.glade.h:42
 msgid "Collection"
 msgstr "소장품"
 
-#: ../lib/initialize.py:766 ../lib/initialize.py:797
+#: ../lib/initialize.py:782 ../lib/initialize.py:813
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:214
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:411
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:458
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:412
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:459
 #: ../lib/plugins/movie/PluginMovieIMDB-it.py:168
 #: ../lib/plugins/movie/PluginMovieIMDB.py:180
-#: ../lib/plugins/movie/PluginMovieIMDB.py:363 ../glade/griffith.glade.h:43
+#: ../lib/plugins/movie/PluginMovieIMDB.py:364 ../glade/griffith.glade.h:43
 msgid "Color"
 msgstr "색깔"
 
-#: ../lib/initialize.py:767 ../glade/griffith.glade.h:44
+#: ../lib/initialize.py:783 ../glade/griffith.glade.h:44
 msgid "Condition"
 msgstr "상태"
 
-#: ../lib/initialize.py:772 ../glade/griffith.glade.h:80
+#: ../lib/initialize.py:788 ../glade/griffith.glade.h:80
 msgid "Layers"
 msgstr "레이어"
 
-#: ../lib/initialize.py:773 ../lib/plugins/export/PluginExportHTML.py:154
+#: ../lib/initialize.py:789 ../lib/plugins/export/PluginExportHTML.py:154
 msgid "Loaned"
 msgstr "대여"
 
-#: ../lib/initialize.py:774 ../lib/plugins/export/PluginExportHTML.py:155
+#: ../lib/initialize.py:790 ../lib/plugins/export/PluginExportHTML.py:155
 #: ../glade/griffith.glade.h:55
 msgid "Discs"
 msgstr "디스크"
 
-#: ../lib/initialize.py:775 ../glade/griffith.glade.h:92
+#: ../lib/initialize.py:791 ../glade/griffith.glade.h:92
 msgid "Medium"
 msgstr "매체"
 
-#: ../lib/initialize.py:776 ../lib/plugins/export/PluginExportHTML.py:165
+#: ../lib/initialize.py:792 ../lib/plugins/export/PluginExportHTML.py:165
 #: ../lib/plugins/export/PluginExportPDF.py:195 ../glade/griffith.glade.h:101
 msgid "Notes"
 msgstr "메모"
 
-#: ../lib/initialize.py:777 ../lib/plugins/export/PluginExportHTML.py:156
+#: ../lib/initialize.py:793 ../lib/plugins/export/PluginExportHTML.py:156
 #: ../glade/griffith.glade.h:102
 msgid "Number"
 msgstr "번호"
 
-#: ../lib/initialize.py:778 ../lib/plugins/export/PluginExportHTML.py:151
+#: ../lib/initialize.py:794 ../lib/plugins/export/PluginExportHTML.py:151
 #: ../glade/griffith.glade.h:103
 msgid "Official site"
 msgstr "공식 사이트"
 
-#: ../lib/initialize.py:780 ../lib/plugins/export/PluginExportHTML.py:158
+#: ../lib/initialize.py:796 ../lib/plugins/export/PluginExportHTML.py:158
 #: ../lib/plugins/export/PluginExportPDF.py:191 ../glade/griffith.glade.h:113
 msgid "Plot"
 msgstr "줄거리"
 
-#: ../lib/initialize.py:781
+#: ../lib/initialize.py:797
 msgid "Poster"
 msgstr ""
 
-#: ../lib/initialize.py:782
+#: ../lib/initialize.py:798
 msgid "Aspect ratio"
 msgstr ""
 
-#: ../lib/initialize.py:784 ../glade/griffith.glade.h:123
+#: ../lib/initialize.py:800 ../glade/griffith.glade.h:123
 msgid "Region"
 msgstr "지역"
 
-#: ../lib/initialize.py:786 ../lib/plugins/export/PluginExportHTML.py:166
+#: ../lib/initialize.py:802 ../lib/plugins/export/PluginExportHTML.py:166
 #: ../glade/griffith.glade.h:137
 msgid "Screenplay"
 msgstr ""
 
-#: ../lib/initialize.py:788 ../lib/plugins/export/PluginExportHTML.py:152
-#: ../glade/griffith.glade.h:149
+#: ../lib/initialize.py:804 ../lib/plugins/export/PluginExportHTML.py:152
+#: ../glade/griffith.glade.h:150
 msgid "Site"
 msgstr "사이트"
 
-#: ../lib/initialize.py:789 ../lib/plugins/export/PluginExportHTML.py:161
-#: ../glade/griffith.glade.h:155
+#: ../lib/initialize.py:805 ../lib/plugins/export/PluginExportHTML.py:161
+#: ../glade/griffith.glade.h:156
 msgid "Studio"
 msgstr "스튜디오"
 
-#: ../lib/initialize.py:790 ../glade/griffith.glade.h:157
+#: ../lib/initialize.py:806 ../glade/griffith.glade.h:158
 msgid "Tags"
 msgstr "태그"
 
-#: ../lib/initialize.py:792 ../lib/plugins/export/PluginExportHTML.py:153
-#: ../glade/griffith.glade.h:162
+#: ../lib/initialize.py:808 ../lib/plugins/export/PluginExportHTML.py:153
+#: ../glade/griffith.glade.h:163
 msgid "Trailer"
 msgstr "예고편"
 
-#: ../lib/initialize.py:793 ../lib/plugins/export/PluginExportHTML.py:181
-#: ../glade/griffith.glade.h:169
+#: ../lib/initialize.py:809 ../lib/plugins/export/PluginExportHTML.py:181
+#: ../glade/griffith.glade.h:170
 msgid "Video codec"
 msgstr "비디오 코덱"
 
-#: ../lib/initialize.py:794 ../lib/plugins/export/PluginExportHTML.py:179
-#: ../glade/griffith.glade.h:172
+#: ../lib/initialize.py:810 ../lib/plugins/export/PluginExportHTML.py:179
+#: ../glade/griffith.glade.h:173
 msgid "Volume"
 msgstr "볼륨"
 
-#: ../lib/initialize.py:796 ../lib/initialize.py:797 ../lib/initialize.py:799
-#: ../lib/initialize.py:1057 ../lib/initialize.py:1058
-#: ../lib/initialize.py:1089 ../lib/initialize.py:1090
+#: ../lib/initialize.py:812 ../lib/initialize.py:813 ../lib/initialize.py:815
+#: ../lib/initialize.py:1073 ../lib/initialize.py:1074
+#: ../lib/initialize.py:1105 ../lib/initialize.py:1106
 msgid "N/A"
 msgstr "N/A"
 
-#: ../lib/initialize.py:796
+#: ../lib/initialize.py:812
 msgid "Damaged"
 msgstr "손상"
 
-#: ../lib/initialize.py:796
+#: ../lib/initialize.py:812
 msgid "Poor"
 msgstr "나쁨"
 
-#: ../lib/initialize.py:796
+#: ../lib/initialize.py:812
 msgid "Fair"
 msgstr "보통"
 
-#: ../lib/initialize.py:796
+#: ../lib/initialize.py:812
 msgid "Good"
 msgstr "좋음"
 
-#: ../lib/initialize.py:796
+#: ../lib/initialize.py:812
 msgid "Excellent"
 msgstr "우수"
 
-#: ../lib/initialize.py:797
+#: ../lib/initialize.py:813
 msgid "Black and White"
 msgstr "흑백"
 
-#: ../lib/initialize.py:797
+#: ../lib/initialize.py:813
 msgid "Mixed"
 msgstr "혼합"
 
-#: ../lib/initialize.py:799
+#: ../lib/initialize.py:815
 msgid "Single Side, Single Layer"
 msgstr "싱글 사이드,싱글 레이어"
 
-#: ../lib/initialize.py:799
+#: ../lib/initialize.py:815
 msgid "Single Side, Dual Layer"
 msgstr "싱글 사이드, 듀얼 레이어"
 
-#: ../lib/initialize.py:799
+#: ../lib/initialize.py:815
 msgid "Dual Side, Single Layer"
 msgstr "듀얼 사이드, 싱글 레이어"
 
-#: ../lib/initialize.py:799
+#: ../lib/initialize.py:815
 msgid "Dual Side, Dual Layer"
 msgstr "듀얼 사이드, 듀얼 레이어"
 
-#: ../lib/initialize.py:801
+#: ../lib/initialize.py:817
 msgid "Region 0 (No Region Coding)"
 msgstr "지역 0 (지역 코드 없음)"
 
-#: ../lib/initialize.py:802
+#: ../lib/initialize.py:818
 msgid "Region 1 (United States of America, Canada)"
 msgstr "지역 1 (미국, 캐나다)"
 
-#: ../lib/initialize.py:803
+#: ../lib/initialize.py:819
 msgid "Region 2 (Europe, Egypt, Arabia, Japan and South Africa)"
 msgstr ""
 
-#: ../lib/initialize.py:804
+#: ../lib/initialize.py:820
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
 msgstr "지역 3 (한국, 타이완, 베트남, 보르네오, 인도네시아)"
 
-#: ../lib/initialize.py:805
+#: ../lib/initialize.py:821
 msgid "Region 4 (Australia and New Zealand, Mexico and South America)"
 msgstr ""
 
-#: ../lib/initialize.py:806
+#: ../lib/initialize.py:822
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
 msgstr "지역 5 (인도, 아프리카, 러시아)"
 
-#: ../lib/initialize.py:807
+#: ../lib/initialize.py:823
 msgid "Region 6 (Popular Republic of China)"
 msgstr "지역 6 (중국)"
 
-#: ../lib/initialize.py:808
+#: ../lib/initialize.py:824
 msgid "Region 7 (Reserved for Unspecified Special Use)"
 msgstr "지역 7 (예비)"
 
-#: ../lib/initialize.py:809
+#: ../lib/initialize.py:825
 msgid "Region 8 (Airlines/Cruise Ships)"
 msgstr "지역 8 (항공/선박)"
 
-#: ../lib/initialize.py:848
+#: ../lib/initialize.py:864
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
 msgstr "사전을 이용할 수 없습니다. 철자확인을 사용할 수 없습니다. \n"
 
-#: ../lib/initialize.py:849
+#: ../lib/initialize.py:865
 #, python-format
 msgid ""
-"Please install the aspell-%s package or adjust the spellchekcer preferences."
+"Please install the aspell-%s package or adjust the spellchecker preferences."
 msgstr ""
 
 #: ../lib/loan.py:44
@@ -924,12 +934,12 @@ msgstr ""
 msgid "Movie loaned"
 msgstr "영화 대여"
 
-#: ../lib/main_treeview.py:278
+#: ../lib/main_treeview.py:304
 #, python-format
 msgid "This movie has been loaned to %s on %s"
 msgstr ""
 
-#: ../lib/main_treeview.py:289
+#: ../lib/main_treeview.py:315
 msgid "Movie not loaned"
 msgstr "영화 대여 불가"
 
@@ -989,7 +999,7 @@ msgstr ""
 "%s\n"
 "선택하신 사람을 삭제할까요?"
 
-#: ../lib/sql.py:111
+#: ../lib/sql.py:117
 msgid ""
 "Cannot connect to database.\n"
 "Falling back to SQLite."
@@ -997,11 +1007,11 @@ msgstr ""
 "데이터 베이스에 접속하지 못하였습니다.\n"
 "SQLite 돌아가겠습니다."
 
-#: ../lib/sql.py:111
+#: ../lib/sql.py:117
 msgid "Please check debug output for more informations."
 msgstr "정보 출력시 결함을 조사하여 주십시요"
 
-#: ../lib/sql.py:142
+#: ../lib/sql.py:148
 msgid "This database requires newer version of Griffith."
 msgstr ""
 
@@ -1013,55 +1023,55 @@ msgstr "Griffith는 필름 수집 매니저입니다."
 msgid "Filter activated. Showing only not seen movies."
 msgstr "필터가 활성화되었습니다. 보지 않은 영화만 나타냅니다."
 
-#: ../lib/view.py:32
+#: ../lib/view.py:34
 msgid "Filter activated. Showing only loaned movies."
 msgstr "필터가 활성화되었습니다. 대여한 영화만 나타냅니다."
 
-#: ../lib/view.py:42
+#: ../lib/view.py:46
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
 msgstr "필터가 활성화되었습니다. 볼륨에 영화만 나타냅니다: %s"
 
-#: ../lib/view.py:49
+#: ../lib/view.py:53
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
 msgstr "필터가 활성화되었습니다. 소장품에 영화만 나타냅니다: %s"
 
-#: ../lib/widgets.py:379
+#: ../lib/widgets.py:389
 msgid ""
 "Define here the PDF reader you want to use within Griffith. Popular choices "
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
 "and working first."
 msgstr ""
 
-#: ../lib/widgets.py:380
+#: ../lib/widgets.py:390
 msgid ""
 "Here you can define the desired language to use while spell checking some "
 "fields. Use you locale setting. For example, to use european portuguese "
 "spell checking enter 'pt'"
 msgstr ""
 
-#: ../lib/widgets.py:381
+#: ../lib/widgets.py:391
 msgid ""
 "Use this entry to define the SMTP server you want to use to send e-mails. On "
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
 "Internet Service Provider's SMTP server address."
 msgstr ""
 
-#: ../lib/widgets.py:382
+#: ../lib/widgets.py:392
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
 msgstr ""
 
-#: ../lib/widgets.py:383
+#: ../lib/widgets.py:393
 msgid ""
 "Here you can define the smtp server port to use. If you want to use your "
 "gmail account service to send e-mails, try to enter '587' here. Default (and "
 "the most common one) is '25'"
 msgstr ""
 
-#: ../lib/widgets.py:384
+#: ../lib/widgets.py:394
 msgid ""
 "If you need TLS support, please check this checkbox. This is needed, for "
 "example, when using gmail service to send your reminder e-mails."
@@ -1075,16 +1085,6 @@ msgstr ""
 msgid "E-mail address is not valid"
 msgstr ""
 
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:113
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:260
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:261
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:262
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:263
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:264
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:265
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:266
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:267
-#: ../lib/plugins/movie/PluginMovieAllMovie.py:269
 #: ../lib/plugins/movie/PluginMovieAllocine.py:97
 #: ../lib/plugins/movie/PluginMovieAllocine.py:218
 #: ../lib/plugins/movie/PluginMovieAllocine.py:219
@@ -1131,6 +1131,16 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieAllocine.py:281
 #: ../lib/plugins/movie/PluginMovieAllocine.py:282
 #: ../lib/plugins/movie/PluginMovieAllocine.py:283
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:75
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:171
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:172
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:173
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:174
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:175
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:176
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:177
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:178
+#: ../lib/plugins/movie/PluginMovieAllRovi.py:180
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:99
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:254
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:255
@@ -1154,16 +1164,8 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:273
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:274
 #: ../lib/plugins/movie/PluginMovieCinematografo.py:275
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:77
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:79
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:161
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:162
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:163
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:164
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:165
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:166
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:167
-#: ../lib/plugins/movie/PluginMovieCineMovies.py:168
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:82
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:84
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:169
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:170
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:171
@@ -1171,6 +1173,45 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:173
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:174
 #: ../lib/plugins/movie/PluginMovieCineMovies.py:175
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:176
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:177
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:178
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:179
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:180
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:181
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:182
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:183
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:205
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:206
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:207
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:208
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:209
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:210
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:211
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:212
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:213
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:214
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:215
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:216
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:217
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:218
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:219
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:220
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:221
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:222
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:223
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:224
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:225
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:226
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:227
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:228
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:229
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:230
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:231
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:232
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:233
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:234
+#: ../lib/plugins/movie/PluginMovieCineMovies.py:235
 #: ../lib/plugins/movie/PluginMovieE-Pipoca.py:91
 #: ../lib/plugins/movie/PluginMovieE-Pipoca.py:193
 #: ../lib/plugins/movie/PluginMovieE-Pipoca.py:194
@@ -1266,6 +1307,7 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieHKMDB.py:195
 #: ../lib/plugins/movie/PluginMovieHKMDB.py:199
 #: ../lib/plugins/movie/PluginMovieHKMDB.py:203
+#: ../lib/plugins/movie/PluginMovieHKMDB.py:204
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:133
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:134
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:314
@@ -1355,7 +1397,7 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:398
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:399
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:400
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:423
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:401
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:424
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:425
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:426
@@ -1365,12 +1407,13 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:430
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:431
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:432
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:438
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:433
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:439
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:444
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:440
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:445
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:446
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:447
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:448
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:139
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:140
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:268
@@ -1460,6 +1503,7 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:352
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:353
 #: ../lib/plugins/movie/PluginMovieIMDB-es.py:354
+#: ../lib/plugins/movie/PluginMovieIMDB-es.py:355
 #: ../lib/plugins/movie/PluginMovieIMDB-it.py:100
 #: ../lib/plugins/movie/PluginMovieIMDB-it.py:101
 #: ../lib/plugins/movie/PluginMovieIMDB.py:99
@@ -1519,6 +1563,7 @@ msgstr ""
 #: ../lib/plugins/movie/PluginMovieIMDB.py:350
 #: ../lib/plugins/movie/PluginMovieIMDB.py:351
 #: ../lib/plugins/movie/PluginMovieIMDB.py:352
+#: ../lib/plugins/movie/PluginMovieIMDB.py:353
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:163
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:174
 #: ../lib/plugins/movie/PluginMovieKinoDe.py:372
@@ -1644,11 +1689,17 @@ msgstr ""
 msgid "<b>Audio</b>"
 msgstr "<b>오디오</b>"
 
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:410
-#: ../lib/plugins/movie/PluginMovieIMDB-de.py:457
-#: ../lib/plugins/movie/PluginMovieIMDB.py:362
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:411
+#: ../lib/plugins/movie/PluginMovieIMDB-de.py:458
+#: ../lib/plugins/movie/PluginMovieIMDB.py:363
 msgid "Audio"
 msgstr ""
+
+#: ../lib/plugins/movie/PluginMovieIMDB-pt.py:90
+#: ../lib/plugins/movie/PluginMovieIMDB-pt.py:91
+#, fuzzy
+msgid " como "
+msgstr " on "
 
 #: ../lib/plugins/export/__init__.py:136
 #: ../lib/plugins/export/PluginExportCSV.py:78
@@ -2389,50 +2440,55 @@ msgid "Searching on the web"
 msgstr "웹에서 찾기"
 
 #: ../glade/griffith.glade.h:140
+#, fuzzy
+msgid "Select all"
+msgstr "이미지 선택"
+
+#: ../glade/griffith.glade.h:141
 msgid "Select database"
 msgstr ""
 
-#: ../glade/griffith.glade.h:141
+#: ../glade/griffith.glade.h:142
 msgid "Select first movie"
 msgstr "첫영화 선택"
 
-#: ../glade/griffith.glade.h:142
+#: ../glade/griffith.glade.h:143
 msgid "Select last movie"
 msgstr "마지막 영화 선택"
 
-#: ../glade/griffith.glade.h:143
+#: ../glade/griffith.glade.h:144
 msgid "Select next movie"
 msgstr "다음 영화 선택"
 
-#: ../glade/griffith.glade.h:144
+#: ../glade/griffith.glade.h:145
 msgid "Select previous movie"
 msgstr "이전 영화 선택"
 
-#: ../glade/griffith.glade.h:145
+#: ../glade/griffith.glade.h:146
 msgid "Sender E-mail address"
 msgstr "발송인 E-Mail 주소"
 
-#: ../glade/griffith.glade.h:146
+#: ../glade/griffith.glade.h:147
 msgid "Show other movies in this collection"
 msgstr "소장품에 다른 영화들을 보여줍니다."
 
-#: ../glade/griffith.glade.h:147
+#: ../glade/griffith.glade.h:148
 msgid "Show other movies in this volume"
 msgstr "볼륨에 다른 영화들을 보여줍니다"
 
-#: ../glade/griffith.glade.h:148
+#: ../glade/griffith.glade.h:149
 msgid "Simple"
 msgstr ""
 
-#: ../glade/griffith.glade.h:150
+#: ../glade/griffith.glade.h:151
 msgid "Size"
 msgstr "크기"
 
-#: ../glade/griffith.glade.h:151
+#: ../glade/griffith.glade.h:152
 msgid "Spell check the following language"
 msgstr "아래 언어의 철자 확인합니다."
 
-#: ../glade/griffith.glade.h:152
+#: ../glade/griffith.glade.h:153
 msgid ""
 "Standard\n"
 "Slim\n"
@@ -2442,23 +2498,23 @@ msgstr ""
 "슬림\n"
 "더블슬림"
 
-#: ../glade/griffith.glade.h:156
+#: ../glade/griffith.glade.h:157
 msgid "Suggest an unseen movie"
 msgstr "보지않은 영화를 제안합니다."
 
-#: ../glade/griffith.glade.h:158
+#: ../glade/griffith.glade.h:159
 msgid "Technical information"
 msgstr "기술적 정보"
 
-#: ../glade/griffith.glade.h:159
+#: ../glade/griffith.glade.h:160
 msgid "This movie is part of..."
 msgstr ""
 
-#: ../glade/griffith.glade.h:161
+#: ../glade/griffith.glade.h:162
 msgid "Toolbar"
 msgstr "툴바"
 
-#: ../glade/griffith.glade.h:164
+#: ../glade/griffith.glade.h:165
 #, fuzzy
 msgid ""
 "Type in the original film title, select source and choose <i>Get from web</"
@@ -2467,120 +2523,120 @@ msgstr ""
 "원래 필름 타일형의 선택 소스를 선택하고 <i> 웹에서 얻을 </i>. Griffith의 모"
 "든 관련 정보를 해당 웹주소에서 가져오기를 시도합니다."
 
-#: ../glade/griffith.glade.h:166
+#: ../glade/griffith.glade.h:167
 msgid "Use Spellchecker"
 msgstr "철자검사기를 사용합니다"
 
-#: ../glade/griffith.glade.h:167
+#: ../glade/griffith.glade.h:168
 msgid "Use TLS?"
 msgstr "TLS 사용하시겠습니까?"
 
-#: ../glade/griffith.glade.h:168
+#: ../glade/griffith.glade.h:169
 msgid "Username"
 msgstr "사용자 이름"
 
-#: ../glade/griffith.glade.h:170
+#: ../glade/griffith.glade.h:171
 msgid "Visit movie web site"
 msgstr "영화 웹사이트에 방문"
 
-#: ../glade/griffith.glade.h:171
+#: ../glade/griffith.glade.h:172
 #, fuzzy
 msgid "Visit the official web site"
 msgstr "공식 웹사이트에 방문"
 
-#: ../glade/griffith.glade.h:173
+#: ../glade/griffith.glade.h:174
 msgid "Watch the trailer"
 msgstr "예고편 보기"
 
-#: ../glade/griffith.glade.h:175
+#: ../glade/griffith.glade.h:176
 msgid "_Edit"
 msgstr "_편집"
 
-#: ../glade/griffith.glade.h:176
+#: ../glade/griffith.glade.h:177
 msgid "_File"
 msgstr "_파일"
 
-#: ../glade/griffith.glade.h:177
+#: ../glade/griffith.glade.h:178
 msgid "_Help"
 msgstr "_도움"
 
-#: ../glade/griffith.glade.h:178
+#: ../glade/griffith.glade.h:179
 msgid "_Loans"
 msgstr "_대여"
 
-#: ../glade/griffith.glade.h:179
+#: ../glade/griffith.glade.h:180
 msgid "_Tools"
 msgstr "_도구"
 
-#: ../glade/griffith.glade.h:180
+#: ../glade/griffith.glade.h:181
 msgid "_View"
 msgstr "_관람"
 
-#: ../glade/griffith.glade.h:181
+#: ../glade/griffith.glade.h:182
 msgid "add entered name to collections list"
 msgstr "소장품 목록에 입력한 이름 추가"
 
-#: ../glade/griffith.glade.h:182
+#: ../glade/griffith.glade.h:183
 msgid "add entered name to volumes list"
 msgstr "볼륨 목록에 입력한 이름 추가"
 
-#: ../glade/griffith.glade.h:183
+#: ../glade/griffith.glade.h:184
 msgid "classification"
 msgstr "분류"
 
-#: ../glade/griffith.glade.h:184
+#: ../glade/griffith.glade.h:185
 msgid "click here if movie was returned"
 msgstr "영화를 반납했다면 여기를 클릭하세요"
 
-#: ../glade/griffith.glade.h:185
+#: ../glade/griffith.glade.h:186
 msgid "collection details"
 msgstr "소장품 상세정보"
 
-#: ../glade/griffith.glade.h:186
+#: ../glade/griffith.glade.h:187
 msgid "loaned only"
 msgstr "대여만 가능"
 
-#: ../glade/griffith.glade.h:187
+#: ../glade/griffith.glade.h:188
 msgid "loans movie or volume"
 msgstr "영화 또는 볼륨 대여"
 
-#: ../glade/griffith.glade.h:188
+#: ../glade/griffith.glade.h:189
 msgid "minutes"
 msgstr "분"
 
-#: ../glade/griffith.glade.h:189
+#: ../glade/griffith.glade.h:190
 msgid "movies"
 msgstr "영화"
 
-#: ../glade/griffith.glade.h:190
+#: ../glade/griffith.glade.h:191
 msgid "none"
 msgstr "아무것도 없습니다"
 
-#: ../glade/griffith.glade.h:191
+#: ../glade/griffith.glade.h:192
 msgid "not loaned only"
 msgstr "대여 불가"
 
-#: ../glade/griffith.glade.h:192
+#: ../glade/griffith.glade.h:193
 msgid "remove selected collection"
 msgstr "선택한 소장품을 제거합니다."
 
-#: ../glade/griffith.glade.h:193
+#: ../glade/griffith.glade.h:194
 msgid "remove selected volume"
 msgstr "선택한 볼륨을 제거합니다."
 
-#: ../glade/griffith.glade.h:194
+#: ../glade/griffith.glade.h:195
 msgid "seen only"
 msgstr "보기 전용"
 
-#: ../glade/griffith.glade.h:195
+#: ../glade/griffith.glade.h:196
 msgid "tags"
 msgstr "태그"
 
-#: ../glade/griffith.glade.h:196
+#: ../glade/griffith.glade.h:197
 msgid "unseen only"
 msgstr "보기 불가"
 
-#: ../glade/griffith.glade.h:197
+#: ../glade/griffith.glade.h:198
 msgid "volume details"
 msgstr "볼륨 상세정보"
 
@@ -2823,9 +2879,6 @@ msgstr ""
 
 #~ msgid "This name is already in use!"
 #~ msgstr "이 이름은 이미 사용중에 있습니다."
-
-#~ msgid " on "
-#~ msgstr " on "
 
 #~ msgid " movie(s) in collection. "
 #~ msgstr " 소장품 안에 영화 "
