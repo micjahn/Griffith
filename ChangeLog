@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-05-23  Michael Jahn
+	* updated MyMoviesIt plugin (full cast, screenplay, cameraman, director)
+
 2011-05-18  Michael Jahn
 	* updated CineMovies plugin (thanks to Olivier BOURSIN)
 	* small fixes for Allocine and AllRovi plugin
