@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2011-05-23  Michael Jahn
 	* updated MyMoviesIt plugin (full cast, screenplay, cameraman, director)
+	* [#721036] Problem to add a movie
 
 2011-05-18  Michael Jahn
 	* updated CineMovies plugin (thanks to Olivier BOURSIN)

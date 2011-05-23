@@ -3,7 +3,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright (c) 2005-2011 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published byp
@@ -690,8 +690,9 @@ def add_movie_db(self, close):
     if not commit(session):
         return False
 
-    # create and select new entry in main treelist
+    # create new entry, unselect current movie and select new entry in main treelist
     myiter = main_treeview.addmovie(self, movie)
+    main_treeview.select(self, None)
     main_treeview.select(self, myiter)
     
     # update statusbar
