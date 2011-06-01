@@ -24,7 +24,7 @@ __revision__ = '$Id$'
 
 import logging
 import os
-
+import urllib2
 import gtk
 from sqlalchemy.exc import IntegrityError
 
@@ -264,6 +264,7 @@ def show_websearch_results(self):
 
 def get_from_web(self):
     """search the movie in web using the active plugin"""
+        
     title = self.widgets['add']['title'].get_text()
     o_title = self.widgets['add']['o_title'].get_text()
 
@@ -290,17 +291,22 @@ def get_from_web(self):
                 self.search_movie.title = gutils.remove_accents(title, 'utf-8')
             else:
                 self.search_movie.title = unicode(title, 'utf-8')
-        if self.search_movie.search_movies(self.widgets['add']['window']):
-            self.search_movie.get_searches()
-        if len(self.search_movie.ids) == 1 and o_title and title:
-            self.search_movie.url = self.search_movie.translated_url_search
-            if self.search_movie.remove_accents:
-                self.search_movie.title = gutils.remove_accents(title, 'utf-8')
-            else:
-                self.search_movie.title = unicode(title, 'utf-8')
+        # check if internet connection is available
+        try:
+            urllib2.urlopen(self.search_movie.url)
             if self.search_movie.search_movies(self.widgets['add']['window']):
                 self.search_movie.get_searches()
-        self.show_search_results(self.search_movie)
+            if len(self.search_movie.ids) == 1 and o_title and title:
+                self.search_movie.url = self.search_movie.translated_url_search
+                if self.search_movie.remove_accents:
+                    self.search_movie.title = gutils.remove_accents(title, 'utf-8')
+                else:
+                    self.search_movie.title = unicode(title, 'utf-8')
+                if self.search_movie.search_movies(self.widgets['add']['window']):
+                    self.search_movie.get_searches()
+            self.show_search_results(self.search_movie)
+        except:
+            gutils.error(_("Connection failed."))
     else:
         gutils.error(_("You should fill the original title\nor the movie title."))
 
