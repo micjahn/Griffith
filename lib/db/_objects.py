@@ -30,6 +30,7 @@ from sqlalchemy.orm import validates, object_session
 from sqlalchemy.sql import select, update
 
 import tables
+import validators
 
 log = logging.getLogger('Griffith')
 
@@ -37,6 +38,8 @@ EMAIL_PATTERN = re.compile('^[a-z0-9]+[.a-z0-9_+-]*@[a-z0-9_-]+(\.[a-z0-9_-]+)+$
 
 
 class DBTable(object):
+
+    __sa_instrumentation_manager__ = validators.InstallValidatorListeners
 
     def __init__(self, **kwargs):
         for i in kwargs:

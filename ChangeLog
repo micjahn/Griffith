@@ -4,8 +4,13 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
+
+2011-06-13  Michael Jahn
+	* [#789246] movies.studio field length too short in postgres
+	  added a LengthValidator which truncates text fields
+
 2011-06-01  Ivo Nunes
-    * fixed crash when you try fetching a movie's information without internet connection
+	* fixed crash when you try fetching a movie's information without internet connection
 
 2011-05-23  Michael Jahn
 	* updated MyMoviesIt plugin (full cast, screenplay, cameraman, director)
