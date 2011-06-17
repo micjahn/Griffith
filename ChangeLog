@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-06-17  Michael Jahn
+	* [#725810] CSFD plugin is not working
+
 2011-06-16  Michael Jahn
 	* [#721033] Wrong behaviour
 
