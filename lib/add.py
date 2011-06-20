@@ -521,9 +521,9 @@ def set_details(self, item=None):#{{{
     else:
         w['layers'].set_active(gutils.digits_only(self.config.get('layers', 0, section='defaults'), 4))
     if 'region' in item and item['region'] >= 0:
-            w['region'].set_active(gutils.digits_only(item['region'], 8))
+        w['region'].set_active(gutils.digits_only(item['region'], 11))
     else:
-        w['region'].set_active(gutils.digits_only(self.config.get('region', 0, section='defaults'), 8))
+        w['region'].set_active(gutils.digits_only(self.config.get('region', 0, section='defaults'), 11))
     if 'cond' in item and item['cond'] >= 0:
         w['condition'].set_active(gutils.digits_only(item['cond'], 5))
     else:

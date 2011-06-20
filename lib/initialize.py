@@ -823,6 +823,9 @@ def dictionaries(self):
         _('Region 6 (Popular Republic of China)'),
         _('Region 7 (Reserved for Unspecified Special Use)'),
         _('Region 8 (Airlines/Cruise Ships)'),
+        _('Region A/1 (North and South America, Japan, Korea, Taiwan, Hong Kong, Southeast Asia)'),
+        _('Region B/2 (Europe, Middle East, Africa, Australia, Oceania)'),
+        _('Region C/3 (India, Nepal, China, Russia, Central and South Asia)'),
     )
 
 

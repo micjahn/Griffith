@@ -165,9 +165,9 @@ def set_details(self, item=None):#{{{
     else:
         w['condition'].set_text('')
     if 'region' in item and item['region']:
-        if str(item['region']) in [str(i) for i in range(len(self._regions))]:
-            w['region'].set_markup("<i>%s</i>" % gutils.html_encode(item['region']))
-            if int(item['region']) < 9:
+        if item['region'] < len(self._regions):
+            w['region'].set_markup("<i>%s</i>" % gutils.html_encode(self._regions[item['region']]))
+            if int(item['region']) < 12:
                 self.widgets['tooltips'].set_tip(w['region'], self._regions[int(item['region'])])
         else:
             log.info("Wrong value in 'region' field (movie_id=%s, region=%s)" % (item['movie_id'], item['region']))

@@ -2326,7 +2326,7 @@
                           <widget class="GtkLabel" id="label108">
                             <property name="visible">True</property>
                             <property name="xalign">0</property>
-                            <property name="label" translatable="yes">DVD region</property>
+                            <property name="label" translatable="yes">Region</property>
                           </widget>
                           <packing>
                             <property name="top_attach">1</property>
@@ -2358,7 +2358,7 @@
                           <widget class="GtkLabel" id="label109">
                             <property name="visible">True</property>
                             <property name="xalign">0</property>
-                            <property name="label" translatable="yes">DVD layers</property>
+                            <property name="label" translatable="yes">Layers</property>
                           </widget>
                           <packing>
                             <property name="top_attach">2</property>
