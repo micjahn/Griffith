@@ -106,6 +106,16 @@ def trim(text, key1, key2):
         p2 = p1 + p2
     return text[p1:p2]
 
+def rtrim(text, key1, key2):
+    p1 = string.rfind(text, key2)
+    if p1 == -1:
+        return ''
+    p2 = string.rfind(text[:p1], key1)
+    if p2 == -1:
+        return ""
+    else:
+        p2 = p2 + len(key1)
+    return text[p2:p1]
 
 def regextrim(text, key1, key2):
     obj = re.search(key1, text)
