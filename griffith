@@ -1140,7 +1140,14 @@ class Griffith(object):
         quick_filter.change_filter(self)
 
     def filter_txt(self, *args):
-        quick_filter.change_filter(self)
+        if not bool(self.config.get('filter_on_enter', False, section='main')):
+            quick_filter.change_filter(self)
+
+    def filter_txt_key_release(self, widget, event, *args):
+        if bool(self.config.get('filter_on_enter', False, section='main')):
+            keyname = gtk.gdk.keyval_name(event.keyval)
+            if keyname == "Return":
+                quick_filter.change_filter(self)
 
     def clear_filter(self, *args):
         quick_filter.clear_filter(self)

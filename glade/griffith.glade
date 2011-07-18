@@ -734,6 +734,7 @@
                     <property name="can_focus">True</property>
                     <property name="invisible_char">*</property>
                     <signal name="changed" handler="on_filter_txt_changed"/>
+                    <signal name="key_release_event" handler="on_filter_txt_key_release"/>
                   </widget>
                 </child>
               </widget>

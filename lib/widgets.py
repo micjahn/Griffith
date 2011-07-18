@@ -432,6 +432,7 @@ def define_widgets(self, gladefile):
         'on_people_activate': self.show_people_window,
         'on_cancel_people_clicked': self.hide_people_window,
         'on_filter_txt_changed': self.filter_txt,
+        'on_filter_txt_key_release': self.filter_txt_key_release,
         'on_filter_criteria_changed': self.on_filter_criteria_changed,
         'on_clear_filter_clicked': self.clear_filter,
         'on_people_add_clicked': self.add_person,
