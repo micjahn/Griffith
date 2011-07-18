@@ -536,10 +536,13 @@ def set_details(self, item=None):#{{{
         w['rating_slider'].set_value(gutils.digits_only(item['rating'], 10))
     else:
         w['rating_slider'].set_value(0)
-    if 'seen' in item and item['seen'] is True:
-        w['seen'].set_active(True)
+    if 'seen' in item:
+        if item['seen'] is True:
+            w['seen'].set_active(True)
+        else:
+            w['seen'].set_active(False)
     else:
-        w['seen'].set_active(False)
+        w['seen'].set_active(bool(self.config.get('seen', True, section='defaults')))
     if 'cast' in item and item['cast']:
         cast_buffer.set_text(item['cast'])
     else:

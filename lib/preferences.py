@@ -154,6 +154,7 @@ def show_preferences(self, page=None):
             w['vcodec'].set_active(    int(gutils.findKey(int(self.config.get('vcodec', 0, section='defaults')), self.vcodecs_ids)) )
         else:
             w['vcodec'].set_active(0)
+    w['seen'].set_active(bool(self.config.get('seen', True, section='defaults')))
 
     # search for:
     w['s_classification'].set_active(bool(self.config.get('s_classification', True, section='add')))
@@ -361,6 +362,7 @@ def save_preferences(self):
     c.set('region', str(w['region'].get_active()), section='defaults')
     c.set('layers', str(w['layers'].get_active()), section='defaults')
     c.set('color', str(w['color'].get_active()), section='defaults')
+    c.set('seen', str(w['seen'].get_active()), section='defaults')
 
     # email reminder
     if w['mail_use_auth'].get_active():

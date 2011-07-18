@@ -4,12 +4,16 @@ Griffith ChangeLog
 ------------------
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
+
+2011-07-18  Michael Jahn
+	* configurable default value for field "seen it"
+
 2011-06-22  Filippo Valsorda
-    * Fixed and completed PluginMovieMyMoviesIt (hidden bug)
-    * Added gutils.rtrim (think at string.rfind)
+	* Fixed and completed PluginMovieMyMoviesIt (hidden bug)
+	* Added gutils.rtrim (think at string.rfind)
 
 2011-06-20  Filippo Valsorda
-    * Refresh IMDB-it plugin
+	* Refresh IMDB-it plugin
 
 2011-06-20  Michael Jahn
 	* [#570053] Region selection shows DVD regions when media is not DVD.

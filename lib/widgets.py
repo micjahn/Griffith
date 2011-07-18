@@ -208,6 +208,7 @@ def define_widgets(self, gladefile):
         'layers': get('p_layers'),
         'media': get('p_media'),
         'region': get('p_region'),
+        'seen': get('p_seen'),
         's_classification': get('p_s_classification'),
         's_country': get('p_s_country'),
         's_director': get('p_s_director'),
