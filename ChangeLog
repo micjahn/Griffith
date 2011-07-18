@@ -9,6 +9,7 @@ Griffith ChangeLog
 	* configurable default value for field "seen it"
 	* ability to switch the behaviour of the live search that it queries only after
 	  enter is pressed (switchable via griffith.cfg only); good for bigger databases
+	* [#811685] IMDB movie ratings not updating when adding new movie
 
 2011-06-22  Filippo Valsorda
 	* Fixed and completed PluginMovieMyMoviesIt (hidden bug)
