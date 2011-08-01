@@ -519,7 +519,7 @@ def save_preferences(self):
         people_treeview(self, False)
         self.initialized = True
     self.clear_details()
-    self.filter_txt(None)
+    self.filter_txt_forced()
     c.save()
 
     # reload extensions

@@ -1143,6 +1143,9 @@ class Griffith(object):
         if not bool(self.config.get('filter_on_enter', False, section='main')):
             quick_filter.change_filter(self)
 
+    def filter_txt_forced(self, *args):
+        quick_filter.change_filter(self)
+
     def filter_txt_key_release(self, widget, event, *args):
         if bool(self.config.get('filter_on_enter', False, section='main')):
             keyname = gtk.gdk.keyval_name(event.keyval)
