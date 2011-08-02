@@ -4,6 +4,8 @@
 #export DH_VERBOSE=1
 
 build:
+build-arch:
+build-indep:
 
 clean:
 	dh_testdir

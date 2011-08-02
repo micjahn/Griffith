@@ -6,6 +6,7 @@ griffith (0.12.1-2) unstable; urgency=low
   * preinst script removed (no need to clean after pycentral anymore)
   * Switch from dh_pysupport to dh_python2
   * Source format changed to 3.0 (quilt)
+  * Add build-arch and build-indep targets
   * Bump Standards-Version to 3.9.2 (no changes needed)
 
  -- Piotr Ożarowski <piotr@debian.org>  Tue, 02 Aug 2011 20:42:17 +0200
