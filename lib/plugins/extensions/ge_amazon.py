@@ -59,7 +59,7 @@ class GriffithExtension(Base):
                                  'hint': _('Get your Secret Key from ') + u'https://affiliate-program.amazon.com/gp/flex/advertising/api/sign-in.html',
                                  'default': u'',
                                  'type': unicode}}
-    toolbar_icon = 'gtk-network'
+    toolbar_icon = 'ge_amazon.png'
 
     def toolbar_icon_clicked(self, widget, movie):
         log.info('fetching poster from Amazon...')

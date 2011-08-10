@@ -41,7 +41,7 @@ class GriffithExtension(Base):
     api = 1
     enabled = False # disabled by default
 
-    toolbar_icon = 'seen.png'
+    toolbar_icon = 'ge_mark_seen.png'
 
     def toolbar_icon_clicked(self, widget, movie):
         if question(_('Are you sure you want to update %d movies?') % self.app.total):

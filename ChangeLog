@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-08-10  Michael Jahn
+	* added new icons for the extensions (thanks to CinéphOli)
+
 2011-07-18  Michael Jahn
 	* configurable default value for field "seen it"
 	* ability to switch the behaviour of the live search that it queries only after

@@ -46,7 +46,7 @@ class GriffithExtension(Base):
     if is_windows_system():
         preferences['command']['default'] = ''
 
-    toolbar_icon = 'gtk-open'
+    toolbar_icon = 'ge_player.png'
 
     def toolbar_icon_clicked(self, widget, movie):
         if not movie or not movie.trailer:
