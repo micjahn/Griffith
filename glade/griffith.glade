@@ -220,20 +220,32 @@
                           <widget class="GtkMenu" id="poster1_menu">
                             <child>
                               <widget class="GtkImageMenuItem" id="open_poster">
+                                <property name="label" translatable="yes">Load poster from disk</property>
                                 <property name="visible">True</property>
-                                <property name="label">gtk-open</property>
+                                <property name="use_stock">False</property>
                                 <property name="use_underline">True</property>
-                                <property name="use_stock">True</property>
                                 <signal name="activate" handler="on_open_poster_clicked"/>
+                                <child internal-child="image">
+                                  <widget class="GtkImage" id="image2">
+                                    <property name="visible">True</property>
+                                    <property name="pixbuf">add_poster.png</property>
+                                  </widget>
+                                </child>
                               </widget>
                             </child>
                             <child>
                               <widget class="GtkImageMenuItem" id="delete_poster">
+                                <property name="label" translatable="yes">Remove poster</property>
                                 <property name="visible">True</property>
-                                <property name="label">gtk-delete</property>
+                                <property name="use_stock">False</property>
                                 <property name="use_underline">True</property>
-                                <property name="use_stock">True</property>
                                 <signal name="activate" handler="on_delete_poster_clicked"/>
+                                <child internal-child="image">
+                                  <widget class="GtkImage" id="image1">
+                                    <property name="visible">True</property>
+                                    <property name="pixbuf">delete_poster.png</property>
+                                  </widget>
+                                </child>
                               </widget>
                             </child>
                           </widget>
@@ -655,7 +667,7 @@
                       <widget class="GtkToolButton" id="toolbutton7">
                         <property name="visible">True</property>
                         <property name="tooltip" translatable="yes">Load poster from disk</property>
-                        <property name="stock_id">gtk-open</property>
+                        <property name="icon">add_poster.png</property>
                         <signal name="clicked" handler="on_open_poster_clicked"/>
                       </widget>
                       <packing>
@@ -666,7 +678,7 @@
                       <widget class="GtkToolButton" id="t_delete_poster">
                         <property name="visible">True</property>
                         <property name="tooltip" translatable="yes">Remove poster</property>
-                        <property name="stock_id">gtk-clear</property>
+                        <property name="icon">delete_poster.png</property>
                         <signal name="clicked" handler="on_delete_poster_clicked"/>
                       </widget>
                       <packing>
