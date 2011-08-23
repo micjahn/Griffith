@@ -60,6 +60,7 @@ def add_movie(self, details={}):
 def edit_movie(self, details={}):
     if not 'number' in details:
         details['number'] = gutils.find_next_available(self.db)
+    self.selected_iter_edit = self.selected_iter
     set_details(self, details)
     self.widgets['add']['add_button'].hide()
     self.widgets['add']['add_close_button'].hide()
@@ -85,7 +86,9 @@ def update_movie(self):
     new_poster_md5 = None
     if details['image']:
         if old_poster_md5 != details['image']: # details["image"] can contain MD5 or file path
-            new_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
+            new_image_path = details['image']
+            if not os.path.isfile(new_image_path):
+                new_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
             if not os.path.isfile(new_image_path):
                 log.warn("cannot read temporary file: %s", new_image_path)
             else:
@@ -116,8 +119,7 @@ def update_movie(self):
 
     session.add(movie)
     if commit(session):
-        treeselection = self.widgets['treeview'].get_selection()
-        main_treeview.setmovie(self, movie, self.selected_iter[0], self.treemodel)
+        main_treeview.setmovie(self, movie, self.selected_iter_edit[0], self.treemodel)
 
         # close add window
         self.widgets['add']['window'].hide()
@@ -215,15 +217,18 @@ def populate_with_results(self):
                 pixbuf = self.Image.get_pixbuf()
                 w['picture'].set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
                 w['image'].set_text(self.movie.image)
+                w['aremove_poster'].set_sensitive(True)
             except:
                 image = gutils.get_defaultimage_fname(self)
                 handler = self.Image.set_from_file(image)
                 w['picture'].set_from_pixbuf(self.Image.get_pixbuf())
+                w['aremove_poster'].set_sensitive(False)
         else:
             image = gutils.get_defaultimage_fname(self)
             handler = self.Image.set_from_file(image)
             Pixbuf = self.Image.get_pixbuf()
             w['picture'].set_from_pixbuf(Pixbuf)
+            w['aremove_poster'].set_sensitive(False)
         fields_to_fetch.pop(fields_to_fetch.index('image'))
     # other fields
     for i in fields_to_fetch:
@@ -600,16 +605,19 @@ def set_details(self, item=None):#{{{
         for i in item['languages']:
             self.create_language_row(i)
     # poster
+    w['aremove_poster'].set_sensitive(True)
     if 'poster_md5' in item and item['poster_md5']:
         image_path = gutils.get_image_fname(item["poster_md5"], self.db, 'm')
         if not image_path:
             image_path = '' # isfile doesn't like bool
+            w['aremove_poster'].set_sensitive(False)
         w['image'].set_text(item['poster_md5'])
     elif 'image' in item and item['image']:
         if len(item['image']) == 32: # md5
             image_path = gutils.get_image_fname(item["image"], self.db, 'm')
             if not image_path:
                 image_path = '' # isfile doesn't like bool
+                w['aremove_poster'].set_sensitive(False)
             else:
                 w['image'].set_text(item['image'])
         else:
@@ -618,8 +626,10 @@ def set_details(self, item=None):#{{{
     else:
         w['image'].set_text('')
         image_path = gutils.get_defaultimage_fname(self)
+        w['aremove_poster'].set_sensitive(False)
     if not os.path.isfile(image_path):
         image_path = gutils.get_defaultimage_fname(self)
+        w['aremove_poster'].set_sensitive(False)
     w['picture'].set_from_file(image_path)
 
     w['notebook'].set_current_page(0)
@@ -670,7 +680,9 @@ def add_movie_db(self, close):
 
     new_poster_md5 = None
     if details['image']:
-        tmp_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
+        tmp_image_path = details['image']
+        if not os.path.isfile(tmp_image_path):
+            tmp_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
         if os.path.isfile(tmp_image_path):
             new_poster_md5 = gutils.md5sum(file(tmp_image_path, 'rb'))
 
@@ -687,7 +699,8 @@ def add_movie_db(self, close):
             else:
                 details["poster_md5"] = new_poster_md5
             try:
-                os.remove(tmp_image_path)
+                if not tmp_image_path == details['image']:
+                    os.remove(tmp_image_path)
             except Exception, e:
                 log.warn("cannot remove temporary file %s", tmp_image_path)
         else:
@@ -897,3 +910,33 @@ def add_collection(self, name):
         initialize.update_collection_combo_ids(self)
         initialize.fill_collections_combo(self, col.collection_id)
     return col.collection_id
+
+
+def change_poster(self):
+    from edit import change_poster_select_file
+    if change_poster_select_file(self, -1, change_poster_new_movie):
+        self.widgets['add']['aremove_poster'].set_sensitive(True)
+
+
+def change_poster_new_movie(self, number, filename):
+    try:
+        handler = self.Image.set_from_file(filename)
+        pixbuf = self.Image.get_pixbuf()
+        handler = self.widgets['add']['picture'].set_from_pixbuf(pixbuf.scale_simple(100, 140, 3))
+        gutils.garbage(handler)
+        self.widgets['add']['image'].set_text(filename)
+        return True
+    except:
+        image = gutils.get_defaultimage_fname(self)
+        handler = self.Image.set_from_file(image)
+        handler = self.widgets['add']['picture'].set_from_pixbuf(self.Image.get_pixbuf())
+        gutils.garbage(handler)
+        return False
+
+
+def delete_poster(self):
+    w = self.widgets['add']
+    w['image'].set_text('')
+    image_path = gutils.get_defaultimage_fname(self)
+    w['picture'].set_from_file(image_path)
+    w['aremove_poster'].set_sensitive(False)

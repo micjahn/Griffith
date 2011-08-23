@@ -2,7 +2,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright © 2005-2010 Vasco Nunes, Piotr Ożarowski
+# Copyright © 2005-2011 Vasco Nunes, Piotr Ożarowski
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,6 +42,13 @@ def change_poster(self):
     if number is None:
         gutils.error(_("You have no movies in your database"), self.widgets['window'])
         return False
+    return change_poster_select_file(self, number)
+
+def update_image(self, number, filename):
+    imagedata = file(filename, 'rb').read()
+    return update_image_from_memory(self, number, imagedata)
+
+def change_poster_select_file(self, number, handler = update_image):
     filename = gutils.file_chooser(_("Select image"),
                                    action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                    buttons=(gtk.STOCK_CANCEL,
@@ -53,13 +60,9 @@ def change_poster(self):
                                    picture=True)
     if filename and filename[0]:
         filename = filename[0].decode('UTF-8')
-        update_image(self, number, filename)
-
-
-def update_image(self, number, filename):
-    imagedata = file(filename, 'rb').read()
-    update_image_from_memory(self, number, imagedata)
-
+        if handler:
+            return handler(self, number, filename)
+    return False
 
 def update_image_from_memory(self, number, data):
     session = self.db.Session()
@@ -109,20 +112,17 @@ def update_image_from_memory(self, number, data):
     self.widgets['add']['delete_poster'].set_sensitive(True)
 
     self.update_statusbar(_("Image has been updated"))
+    return True
 
-
-def delete_poster(self):
+def delete_poster(self, movie_id = None):
+    if movie_id is None:
+        movie_id = self._movie_id
     session = self.db.Session()
-    movie = session.query(db.Movie).filter_by(movie_id=self._movie_id).first()
+    movie = session.query(db.Movie).filter_by(movie_id=movie_id).first()
     if not movie:
         log.error("Cannot delete unknown movie's poster!")
         return False
     if gutils.question(_("Are you sure you want to delete this poster?"), self.widgets['window']):
-        image_path = gutils.get_defaultimage_fname(self)
-        handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
-        gutils.garbage(handler)
-        update_tree_thumbnail(self, gutils.get_defaultthumbnail_fname(self))
-
         # update in database
         delete.delete_poster(self, movie.poster_md5)
         movie.poster_md5 = None
@@ -134,13 +134,20 @@ def delete_poster(self):
             log.error("cannot delete poster: %s" % e)
             return False
 
+        if self._movie_id == movie_id:
+            # only if the current selected movie is the same like that one for removing poster
+            image_path = gutils.get_defaultimage_fname(self)
+            handler = self.widgets['movie']['picture'].set_from_pixbuf(gtk.gdk.pixbuf_new_from_file(image_path))
+            gutils.garbage(handler)
+            self.widgets['add']['delete_poster'].set_sensitive(False)
+            self.widgets['movie']['picture_button'].set_sensitive(False)
+        # always refresh the treeview entry
+        update_tree_thumbnail(self, gutils.get_defaultthumbnail_fname(self))
+
         self.update_statusbar(_("Image has been updated"))
 
-        self.widgets['add']['delete_poster'].set_sensitive(False)
-        self.widgets['movie']['picture_button'].set_sensitive(False)
-    else:
-        pass
-
+        return True
+    return False
 
 def update_tree_thumbnail(self, t_image_path):
     self.Image.set_from_file(t_image_path)

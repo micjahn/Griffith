@@ -3,7 +3,7 @@
 
 __revision__ = '$Id$'
 
-# Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
+# Copyright (c) 2005-2011 Vasco Nunes, Piotr Ożarowski
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -145,12 +145,16 @@ def define_widgets(self, gladefile):
         'clear_button': get('am_clear_button'),
         'save_button': get('am_save_button'),
         'cb_only_empty': get('am_cb_only_empty'),
+        'aremove_poster': get('aremove_poster'),
+        'aadd_poster': get('aadd_poster'),
     }
     self.widgets['add']['window'].connect('delete_event', self.on_delete_event_am)
     self.widgets['add']['lang_treeview'].connect('button_press_event', self.on_lang_treeview_button_press_event)
     self.widgets['add']['o_title'].connect('activate', self.on_enter)
     self.widgets['add']['title'].connect('activate', self.on_enter)
     self.widgets['add']['window'].set_transient_for(self.widgets['window'])
+    self.widgets['add']['aadd_poster'].connect('button_press_event', self.a_change_poster)
+    self.widgets['add']['aremove_poster'].connect('button_press_event', self.a_del_poster)
 
     #}}}
 

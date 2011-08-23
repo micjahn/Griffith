@@ -266,6 +266,7 @@ def set_details(self, item=None):#{{{
             w['picture_button'].set_sensitive(False)
     else:
         image_path = gutils.get_defaultimage_fname(self)
+        self.widgets['add']['delete_poster'].set_sensitive(False)
         w['picture_button'].set_sensitive(False)
     w['picture'].set_from_file(image_path)
     # ratig
@@ -324,8 +325,9 @@ def set_details(self, item=None):#{{{
                 self.loans_treemodel.set_value(myiter, 1, str(loan.return_date)[:10])
             else:
                 self.loans_treemodel.set_value(myiter, 1, "---")
-            person = self.db.session.query(db.Person.name).filter_by(person_id=loan.person.person_id).first()
-            self.loans_treemodel.set_value(myiter, 2, person.name)
+            if loan.person:
+                person = self.db.session.query(db.Person.name).filter_by(person_id=loan.person.person_id).first()
+                self.loans_treemodel.set_value(myiter, 2, person.name)
 
     # volumes/collections
     if 'volume_id' in item and item['volume_id'] > 0:

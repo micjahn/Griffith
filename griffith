@@ -383,6 +383,14 @@ class Griffith(object):
         from edit import delete_poster
         delete_poster(self)
 
+    def a_change_poster(self, *args):
+        from add import change_poster
+        change_poster(self)
+
+    def a_del_poster(self, *args):
+        from add import delete_poster
+        delete_poster(self)
+
     def z_poster(self, *args):
         if self.widgets['poster_window'].flags() & gtk.VISIBLE == gtk.VISIBLE:
             self.widgets['poster_window'].hide()

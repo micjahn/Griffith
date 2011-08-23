@@ -6271,14 +6271,83 @@ Stars</property>
                         <property name="border_width">4</property>
                         <property name="spacing">4</property>
                         <child>
-                          <widget class="GtkImage" id="am_image">
-                            <property name="width_request">40</property>
-                            <property name="height_request">140</property>
+                          <widget class="GtkHBox" id="hbox46">
                             <property name="visible">True</property>
-                            <property name="stock">gtk-missing-image</property>
+                            <property name="spacing">8</property>
+                            <child>
+                              <widget class="GtkImage" id="am_image">
+                                <property name="width_request">40</property>
+                                <property name="height_request">140</property>
+                                <property name="visible">True</property>
+                                <property name="stock">gtk-missing-image</property>
+                              </widget>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkVBox" id="vbox25">
+                                <property name="visible">True</property>
+                                <property name="border_width">4</property>
+                                <property name="spacing">4</property>
+                                <child>
+                                  <widget class="GtkButton" id="aadd_poster">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="width_request">30</property>
+                                    <property name="height_request">30</property>
+                                    <property name="tooltip" translatable="yes">Load poster from disk</property>
+                                    <property name="use_stock">False</property>
+                                    <signal name="clicked" handler="on_a_open_poster_clicked"/>
+                                    <child>
+                                      <widget class="GtkImage" id="aadd_poster_image">
+                                        <property name="width_request">16</property>
+                                        <property name="height_request">16</property>
+                                        <property name="visible">True</property>
+                                        <property name="pixbuf">add_poster.png</property>
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="position">1</property>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkButton" id="aremove_poster">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="width_request">30</property>
+                                    <property name="height_request">30</property>
+                                    <property name="tooltip" translatable="yes">Remove poster</property>
+                                    <property name="use_stock">False</property>
+                                    <signal name="clicked" handler="on_a_delete_poster_clicked"/>
+                                    <child>
+                                      <widget class="GtkImage" id="aremove_poster_image">
+                                        <property name="width_request">16</property>
+                                        <property name="height_request">16</property>
+                                        <property name="visible">True</property>
+                                        <property name="pixbuf">delete_poster.png</property>
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="position">2</property>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
                           </widget>
                           <packing>
-                            <property name="expand">False</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                         <child>
@@ -6289,7 +6358,7 @@ Stars</property>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
                             <property name="padding">4</property>
-                            <property name="position">1</property>
+                            <property name="position">4</property>
                           </packing>
                         </child>
                         <child>
@@ -6301,7 +6370,7 @@ Stars</property>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">2</property>
+                            <property name="position">5</property>
                           </packing>
                         </child>
                         <child>
@@ -6333,7 +6402,7 @@ Stars</property>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">3</property>
+                            <property name="position">6</property>
                           </packing>
                         </child>
                         <child>
@@ -6345,7 +6414,7 @@ Stars</property>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">4</property>
+                            <property name="position">7</property>
                           </packing>
                         </child>
                         <child>
@@ -6393,7 +6462,7 @@ Stars</property>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">5</property>
+                            <property name="position">8</property>
                           </packing>
                         </child>
                         <child>
@@ -6408,7 +6477,7 @@ Stars</property>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">6</property>
+                            <property name="position">9</property>
                           </packing>
                         </child>
                       </widget>
