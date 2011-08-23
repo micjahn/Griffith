@@ -1137,6 +1137,9 @@ class Griffith(object):
 
     def on_af_find_clicked(self, *args):
         from advfilter import create_select_query, hide_window
+        # remove the simple filter conditions because adv filter takes effect
+        self.clear_filter()
+        # now filtering in advanced
         movies = create_select_query(self, None, None, None).execute().fetchall()
         main_treeview.populate(self, movies, qf=False)
 

@@ -25,13 +25,16 @@ import gutils
 import db
 
 def change_filter(self):
-    x = 0
-    text = gutils.gescape(self.widgets['filter']['text'].get_text().decode('utf-8'))
-    
     from sqlalchemy import select, or_
     from sqlalchemy.orm.util import class_mapper, object_mapper
     statement = select(db.tables.movies.columns, bind=self.db.session.bind)
     
+    change_filter_update_whereclause(self, statement)
+    self.populate_treeview(statement)
+
+
+def change_filter_update_whereclause(self, statement):
+    text = gutils.gescape(self.widgets['filter']['text'].get_text().decode('utf-8'))
     if text:
         (criterianame, criteria) = self.search_criteria_sorted[self.widgets['filter']['criteria'].get_active()]
         if criteria in ('year', 'runtime', 'media_num', 'rating'):
@@ -48,8 +51,8 @@ def change_filter(self):
             limit = int(self.config.get('limit', 0, section='mainlist'))
             if limit > 0:
                 statement.limit = limit
-    self.populate_treeview(statement)
 
+    
 def clear_filter(self, populate=True):
     # prevent multiple treeview updates
     self.initialized = False
@@ -59,4 +62,3 @@ def clear_filter(self, populate=True):
     self.initialized = True
     if populate:
         self.populate_treeview()
-

@@ -9,6 +9,7 @@ Griffith ChangeLog
 	* added buttons to remove and add a poster within the movie edit dialog
 	* fixed bug in extension "remover", it doesn't work if a criteria is required
 	  (f.e. adv filter with "required tag" did only remove the tags not the movie entries)
+	* extension remover now respects the simple filter condition
 
 2011-08-20  Michael Jahn
 	* updated KinoDe plugin
