@@ -562,7 +562,7 @@ def extension(self, module, enabled):
             return [None, None]
         if module.toolbar_icon:
             toolbar = self.widgets['extensions']['toolbar']
-            if module.toolbar_icon.endswith('.png'):
+            if module.toolbar_icon.endswith('.png') or module.toolbar_icon.endswith('.svg'):
                 icon_path = os.path.join(os.path.dirname(module.__file__), 'data', module.toolbar_icon)
                 if not os.path.isfile(icon_path):
                     icon_path = os.path.join(self.locations['images'], module.toolbar_icon)
