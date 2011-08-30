@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-08-30  Michael Jahn
+	* updated plugins: AllRovi, Cinemovies, Cineteka, CSFD, IMDb, Zelluloid
+
 2011-08-23  Michael Jahn
 	* added buttons to remove and add a poster within the movie edit dialog
 	* fixed bug in extension "remover", it doesn't work if a criteria is required

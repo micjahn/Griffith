@@ -311,6 +311,7 @@ def get_from_web(self):
                     self.search_movie.get_searches()
             self.show_search_results(self.search_movie)
         except:
+            log.exception('')
             gutils.error(_("Connection failed."))
     else:
         gutils.error(_("You should fill the original title\nor the movie title."))
