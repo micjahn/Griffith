@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2011-09-01  Michael Jahn
 	* updated Allocine plugin, switch to JSON api
+	* added database maintenance extension
 
 2011-08-30  Michael Jahn
 	* updated plugins: AllRovi, Cinemovies, Cineteka, CSFD, IMDb, Zelluloid
