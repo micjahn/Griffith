@@ -284,6 +284,7 @@ def get_from_web(self):
             reload(sys.modules[plugin_name])
         self.search_movie = plugin.SearchPlugin()
         self.search_movie.config = self.config
+        self.search_movie.locations = self.locations
         if o_title:
             self.search_movie.url = self.search_movie.original_url_search
             if self.search_movie.remove_accents:

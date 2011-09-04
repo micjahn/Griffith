@@ -620,6 +620,15 @@ def get_dependencies():
         'version': version,
         'url': 'http://initd.org/tracker/pysqlite',
         'debian': 'python-sqlite'})
+    try:
+        import lxml
+        version = True
+    except ImportError:
+        version = False
+    optional.append({'module': 'lxml',
+        'version': version,
+        'url': 'http://lxml.de/',
+        'debian': 'python-lxml'})
     return depend, optional
 
 

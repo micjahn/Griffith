@@ -5,7 +5,7 @@ Maintainer: Piotr Ożarowski <piotr@debian.org>
 Build-Depends: debhelper (>= 5)
 Build-Depends-Indep: python (>= 2.6.3-3), docbook2x
 Standards-Version: 3.9.2
-XS-Python-Version: >=2.5
+X-Python-Version: >= 2.5
 Vcs-Svn: svn://svn.berlios.de/griffith/trunk/
 Vcs-Browser: http://svn.berlios.de/wsvn/griffith/trunk/
 Homepage: http://www.griffith.cc/
@@ -21,6 +21,7 @@ Depends: ${python:Depends}, ${misc:Depends},
  python-imaging (>= 1.1.5-6)
 Recommends: python-gtkspell,
  python-chardet,
+ python-lxml,
  python-psycopg2 (>= 1.1.21-6),
  python-mysqldb (>= 1.2.1-p2-2)
 Suggests: griffith-extra-artwork (>= 0.9),
