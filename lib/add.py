@@ -147,7 +147,7 @@ def populate_with_results(self):
     w = self.widgets['add']
     m_id = None
     if self.founded_results_id:
-        log.info("self.founded:results_id: %s", self.founded_results_id)
+        log.info("selected id: %s", self.founded_results_id)
         m_id = self.founded_results_id
     else:
         self.founded_results_id = 0
