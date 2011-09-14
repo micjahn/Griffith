@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-09-14  Michael Jahn
+	* [#815421] add ipython 0.11 compatibilty (thanks to Julian Taylor)
+
 2011-09-12  Michael Jahn
 	* added limited urllib2 support
 

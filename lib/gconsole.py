@@ -315,10 +315,15 @@ Examples:
     try:
         ipython_args = [] # TODO: do we want to pass some args here?
         # try to use IPython if possible
-        from IPython.Shell import IPShellEmbed
-
-        shell = IPShellEmbed(argv=ipython_args)
-        shell.set_banner(shell.IP.BANNER + banner)
+        try:
+            # >= 0.11
+            from IPython.frontend.terminal.embed import InteractiveShellEmbed
+            shell = InteractiveShellEmbed(banner2=banner)
+        except ImportError:
+            # < 0.11
+            from IPython.Shell import IPShellEmbed
+            shell = IPShellEmbed(argv=self.args)
+            shell.set_banner(shell.IP.BANNER + banner)
         shell(local_ns=locs, global_ns={})
     except ImportError:
         log.debug('IPython is not available')
