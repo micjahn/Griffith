@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 10:35+0200\n"
-"PO-Revision-Date: 2010-10-09 10:04+0000\n"
+"PO-Revision-Date: 2011-09-03 16:30+0000\n"
 "Last-Translator: Cédric VALMARY (Tot en òc) <cvalmary@yahoo.fr>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-03 20:44+0000\n"
-"X-Generator: Launchpad (build 12309)\n"
+"X-Launchpad-Export-Date: 2011-09-14 20:16+0000\n"
+"X-Generator: Launchpad (build 13921)\n"
 "Language: \n"
 
 #: ../griffith:257 ../griffith:1035 ../lib/delete.py:35 ../lib/edit.py:43
@@ -88,9 +88,8 @@ msgid "Programmers"
 msgstr "Programaires"
 
 #: ../lib/about.py:52
-#, fuzzy
 msgid "Contributors"
-msgstr "Contributors :"
+msgstr "Contributors "
 
 #: ../lib/about.py:56
 msgid "Logo, icon and general artwork "
@@ -716,7 +715,7 @@ msgstr "Condicion"
 
 #: ../lib/initialize.py:788 ../glade/griffith.glade.h:80
 msgid "Layers"
-msgstr "Jaces"
+msgstr "Calques"
 
 #: ../lib/initialize.py:789 ../lib/plugins/export/PluginExportHTML.py:154
 msgid "Loaned"
@@ -1051,12 +1050,10 @@ msgid ""
 msgstr ""
 
 #: ../lib/db/_objects.py:55
-#, fuzzy
 msgid "Name cannot be empty"
 msgstr "Lo nom es void"
 
 #: ../lib/db/_objects.py:190
-#, fuzzy
 msgid "E-mail address is not valid"
 msgstr "L'imatge es invalid"
 
@@ -1721,7 +1718,6 @@ msgid "Griffith's movies list"
 msgstr ""
 
 #: ../lib/plugins/export/PluginExportHTML.py:168
-#, fuzzy
 msgid "Width"
 msgstr "amb"
 
@@ -2407,7 +2403,6 @@ msgid "Searching on the web"
 msgstr ""
 
 #: ../glade/griffith.glade.h:140
-#, fuzzy
 msgid "Select all"
 msgstr "Seleccionar un imatge"
 
@@ -2480,8 +2475,8 @@ msgstr "Barra d'espleches"
 
 #: ../glade/griffith.glade.h:165
 msgid ""
-"Type in the original film title, select source and choose <i>Get from web</"
-"i>. Griffith will try to fetch all the related information from the Web."
+"Type in the original film title, select source and choose <i>Get from "
+"web</i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
 
 #: ../glade/griffith.glade.h:167
@@ -2501,7 +2496,6 @@ msgid "Visit movie web site"
 msgstr ""
 
 #: ../glade/griffith.glade.h:172
-#, fuzzy
 msgid "Visit the official web site"
 msgstr "Site oficial"
 
@@ -2672,7 +2666,6 @@ msgid "If your file has no column headers then you should import from row 0."
 msgstr ""
 
 #: ../glade/importcsv.glade.h:16
-#, fuzzy
 msgid "Line terminator"
 msgstr "Fin de linha"
 

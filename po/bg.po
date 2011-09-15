@@ -164,11 +164,11 @@ msgstr ""
 
 #: ../lib/advfilter.py:65
 msgid "is equal to"
-msgstr ""
+msgstr "е равно на"
 
 #: ../lib/advfilter.py:66
 msgid "is not equal to"
-msgstr ""
+msgstr "не е равно на"
 
 #: ../lib/advfilter.py:67
 msgid "starts with"
@@ -188,7 +188,7 @@ msgstr "не съдържа"
 
 #: ../lib/advfilter.py:71
 msgid "like"
-msgstr ""
+msgstr "като"
 
 #: ../lib/advfilter.py:72
 msgid "not like"
@@ -208,7 +208,7 @@ msgstr "без"
 
 #: ../lib/advfilter.py:140
 msgid "require"
-msgstr ""
+msgstr "изисква"
 
 #: ../lib/advfilter.py:148
 msgid "in"

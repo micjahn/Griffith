@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 10:35+0200\n"
-"PO-Revision-Date: 2010-10-09 10:06+0000\n"
-"Last-Translator: Daniel Nylander <yeager@ubuntu.com>\n"
+"PO-Revision-Date: 2011-09-10 12:56+0000\n"
+"Last-Translator: Umut <Unknown>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-03 20:44+0000\n"
-"X-Generator: Launchpad (build 12309)\n"
+"X-Launchpad-Export-Date: 2011-09-14 20:16+0000\n"
+"X-Generator: Launchpad (build 13921)\n"
 "Language: sv\n"
 
 #: ../griffith:257 ../griffith:1035 ../lib/delete.py:35 ../lib/edit.py:43
@@ -40,7 +40,6 @@ msgstr ""
 "Åtgärden avbruten!"
 
 #: ../griffith:1011
-#, fuzzy
 msgid ""
 "Are you sure you want to restore? Your current movie collection will be "
 "replaced. You can't undo this operation."
@@ -50,7 +49,6 @@ msgstr ""
 "Du kan inte ångra den här åtgärden."
 
 #: ../griffith:1016
-#, fuzzy
 msgid ""
 "Are you sure you want to merge? Your current movie collection will be merged "
 "with a backup. You can't undo this operation."
@@ -110,9 +108,8 @@ msgid "Programmers"
 msgstr "Programmerare"
 
 #: ../lib/about.py:52
-#, fuzzy
 msgid "Contributors"
-msgstr "Bidragsgivare:"
+msgstr "Medarbetare"
 
 #: ../lib/about.py:56
 msgid "Logo, icon and general artwork "
@@ -142,7 +139,7 @@ msgstr ""
 
 #: ../lib/about.py:92
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-msgstr ""
+msgstr "Vänligen besök http://www.gnu.org/copyleft/gpl.html för detaljer."
 
 #: ../lib/add.py:56 ../glade/griffith.glade.h:27
 msgid "Add a new movie"
@@ -288,7 +285,7 @@ msgstr "Säkerhetskopia har skapats"
 
 #: ../lib/backup.py:122
 msgid "Restoring database..."
-msgstr ""
+msgstr "Återställer databas..."
 
 #: ../lib/backup.py:203
 msgid "Restore Griffith backup"
@@ -518,7 +515,6 @@ msgstr ""
 "Din databas är antagligen i SQLite2-format, konvertera den till SQLite3"
 
 #: ../lib/delete.py:38
-#, fuzzy
 msgid "Are you sure you want to delete?"
 msgstr "Är du säker på att du vill ta bort den här filmen?"
 
@@ -556,7 +552,6 @@ msgid "login failure"
 msgstr "inloggningsfel"
 
 #: ../lib/gemail.py:56
-#, fuzzy
 msgid "E-mail sent successfully"
 msgstr "E-post skickat"
 
@@ -695,7 +690,6 @@ msgid "Subtitle format"
 msgstr "Undertextformat"
 
 #: ../lib/initialize.py:598
-#, fuzzy
 msgid "Enable this extension"
 msgstr "aktivera detta tillägg"
 
@@ -940,7 +934,6 @@ msgid "No person is defined yet."
 msgstr "Ingen person har definierats ännu."
 
 #: ../lib/loan.py:73
-#, fuzzy
 msgid "Do you want to loan the whole collection?"
 msgstr "Vill du låna hela samlingen?"
 
@@ -1737,7 +1730,6 @@ msgstr "Ljud"
 
 #: ../lib/plugins/movie/PluginMovieIMDB-pt.py:90
 #: ../lib/plugins/movie/PluginMovieIMDB-pt.py:91
-#, fuzzy
 msgid " como "
 msgstr " den "
 
@@ -1787,13 +1779,12 @@ msgid "Griffith's movies list"
 msgstr "Griffiths filmlista"
 
 #: ../lib/plugins/export/PluginExportHTML.py:168
-#, fuzzy
 msgid "Width"
-msgstr "med"
+msgstr "Bredd"
 
 #: ../lib/plugins/export/PluginExportHTML.py:169
 msgid "Height"
-msgstr ""
+msgstr "Höjd"
 
 #: ../lib/plugins/export/PluginExportHTML.py:177 ../glade/griffith.glade.h:91
 msgid "Media"
@@ -1867,7 +1858,6 @@ msgid "My Movies List"
 msgstr "Min filmlista"
 
 #: ../lib/plugins/export/PluginExportiPod.py:103
-#, fuzzy
 msgid "List successfully exported to iPod."
 msgstr "Listan exporterades till iPod."
 
@@ -1876,7 +1866,6 @@ msgid "iPod is not connected."
 msgstr "iPod är inte ansluten."
 
 #: ../lib/plugins/export/PluginExportiPod.py:119
-#, fuzzy
 msgid ""
 "The list was successfully exported. Now you should move it to the 'Notes' "
 "folder on your iPod."
@@ -2481,9 +2470,8 @@ msgid "Searching on the web"
 msgstr "Söker på webben"
 
 #: ../glade/griffith.glade.h:140
-#, fuzzy
 msgid "Select all"
-msgstr "Välj bild"
+msgstr "Markera alla"
 
 #: ../glade/griffith.glade.h:141
 msgid "Select database"
@@ -2556,10 +2544,9 @@ msgid "Toolbar"
 msgstr "Verktygsrad"
 
 #: ../glade/griffith.glade.h:165
-#, fuzzy
 msgid ""
-"Type in the original film title, select source and choose <i>Get from web</"
-"i>. Griffith will try to fetch all the related information from the Web."
+"Type in the original film title, select source and choose <i>Get from "
+"web</i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
 "Ange filmens ursprunliga titel, välj källa och välj <i>Hämta från webben</"
 "i>. Griffith kommer att försöka hämta all relaterad information från webben."
@@ -2581,9 +2568,8 @@ msgid "Visit movie web site"
 msgstr "Besök filmens webbsida"
 
 #: ../glade/griffith.glade.h:172
-#, fuzzy
 msgid "Visit the official web site"
-msgstr "Besök den officiella webbsidan"
+msgstr "Besök den officiella hemsidan"
 
 #: ../glade/griffith.glade.h:174
 msgid "Watch the trailer"
@@ -2759,7 +2745,6 @@ msgid "If your file has no column headers then you should import from row 0."
 msgstr "Om din fil inte har kolumnhuvud, bör du importera från rad 0."
 
 #: ../glade/importcsv.glade.h:16
-#, fuzzy
 msgid "Line terminator"
 msgstr "Radavslut"
 

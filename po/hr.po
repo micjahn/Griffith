@@ -1,35 +1,35 @@
 # Croatian translation for griffith
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
 # This file is distributed under the same license as the griffith package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+# Goran Vidovic <trebelnik2@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: griffith\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: gogo <trebelnik2@gmail.com>\n"
 "POT-Creation-Date: 2011-05-20 10:35+0200\n"
-"PO-Revision-Date: 2010-01-15 16:39+0000\n"
-"Last-Translator: nafterburner <nafterburner@gmail.com>\n"
+"PO-Revision-Date: 2011-09-03 21:45+0000\n"
+"Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-03 20:44+0000\n"
-"X-Generator: Launchpad (build 12309)\n"
+"X-Launchpad-Export-Date: 2011-09-14 20:16+0000\n"
+"X-Generator: Launchpad (build 13921)\n"
 "Language: hr\n"
 
 #: ../griffith:257 ../griffith:1035 ../lib/delete.py:35 ../lib/edit.py:43
 msgid "You have no movies in your database"
-msgstr "Nema filmova u bazi podataka"
+msgstr "Nemate filmova u vašoj bazi podataka"
 
 #: ../griffith:434
 msgid "You have seen all films in your collection!"
-msgstr "Vidjeli ste sve filmove u svojoj kolekciji!"
+msgstr "Pogledali ste sve filmove u svojoj kolekciji!"
 
 #: ../griffith:585 ../griffith:590 ../lib/initialize.py:391
 #: ../lib/initialize.py:814
 msgid "subtitles"
-msgstr "titlovi"
+msgstr "podnaslovi"
 
 #: ../griffith:633 ../griffith:693 ../griffith:752 ../griffith:810
 #: ../griffith:868 ../griffith:917 ../griffith:966
@@ -37,18 +37,24 @@ msgid ""
 "This item is in use.\n"
 "Operation aborted!"
 msgstr ""
+"Ova stavka je u uporabi..\n"
+"Postupak je prekinut!"
 
 #: ../griffith:1011
 msgid ""
 "Are you sure you want to restore? Your current movie collection will be "
 "replaced. You can't undo this operation."
 msgstr ""
+"Jeste li sigurni da želite vratiti? Vaša trenutna kolekcija filmova će se "
+"zamijeniti. Ovaj postupak se ne može poništiti."
 
 #: ../griffith:1016
 msgid ""
 "Are you sure you want to merge? Your current movie collection will be merged "
 "with a backup. You can't undo this operation."
 msgstr ""
+"Jeste li sigurni da želite spojiti? Vaša trenutna kolekcija filmova će biti "
+"spojena. Ovaj postupak se ne može poništiti."
 
 #: ../griffith:1112
 #, python-format
@@ -56,12 +62,16 @@ msgid ""
 "%s movie(s) in collection. %s movie(s) are shown by the filter. %s movie(s) "
 "loaned. You haven't seen %s movie(s)"
 msgstr ""
+"%s film(ova) u kolekciji. %s film(ova) je prikazano filterom. %s film(ova) "
+"je posuđeno. Niste pogledali %s film(ova)"
 
 #: ../griffith:1307
 msgid ""
 "Are you sure you want to create a new database?\n"
 "You will lose ALL your current data!"
 msgstr ""
+"Jeste li sigurni da želite izraditi novu bazu podataka?\n"
+"Izgubit ćete SVE vaše trenutne podatke!"
 
 #: ../griffith:1309
 msgid ""
@@ -69,6 +79,9 @@ msgid ""
 "Do you confirm that you want\n"
 "to lose your current data?"
 msgstr ""
+"Zadnja šansa!\n"
+"Potvrđujete li da želite\n"
+"izgubiti vaše trenutne podatke?"
 
 #: ../griffith:1461
 msgid ""
@@ -78,37 +91,43 @@ msgid ""
 "\n"
 "Do you want to proceed?"
 msgstr ""
+"Ovo je razvojna inačica Griffith-a.\n"
+"Nadogradnja iz razvojne inačice možda neće biti podržana.\n"
+"Molim, provjerite imate li sigurnosnu kopiju!\n"
+"\n"
+"Želite li nastaviti?"
 
 #: ../lib/about.py:46
 msgid "Main Authors"
-msgstr "Glavni Autori"
+msgstr "Glavni autori"
 
 #: ../lib/about.py:48
 msgid "Programmers"
 msgstr "Programeri"
 
 #: ../lib/about.py:52
-#, fuzzy
 msgid "Contributors"
-msgstr "Doprinjeli:"
+msgstr "Doprinjeli"
 
 #: ../lib/about.py:56
 msgid "Logo, icon and general artwork "
-msgstr ""
+msgstr "Logo, ikona i opće ilustracije "
 
 #: ../lib/about.py:57
 msgid "by Peek <peekpt@gmail.com>."
-msgstr ""
+msgstr "izradio je Peek <peekpt@gmail.com>."
 
 #: ../lib/about.py:58
 msgid ""
 "\n"
 "Please visit http://www.peekmambo.com/\n"
 msgstr ""
+"\n"
+"Molim, posjetite http://www.peekmambo.com/\n"
 
 #: ../lib/about.py:82
 msgid "See TRANSLATORS file"
-msgstr "Pogledajte TRANSLATORS datoteku"
+msgstr "Pogledajte datoteku PREVODITELJA"
 
 #: ../lib/about.py:90
 msgid "This program is released under the GNU"
@@ -116,23 +135,23 @@ msgstr "Ovaj program je izdan pod GNU"
 
 #: ../lib/about.py:91
 msgid "General Public License.\n"
-msgstr ""
+msgstr "Javna opća licenca (GPL).\n"
 
 #: ../lib/about.py:92
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-msgstr ""
+msgstr "Molim, posjetite http://www.gnu.org/copyleft/gpl.html za detalje."
 
 #: ../lib/add.py:56 ../glade/griffith.glade.h:27
 msgid "Add a new movie"
-msgstr ""
+msgstr "Dodaj novi film"
 
 #: ../lib/add.py:68
 msgid "Edit movie"
-msgstr ""
+msgstr "Uredi film"
 
 #: ../lib/add.py:126
 msgid "Movie information has been updated"
-msgstr ""
+msgstr "Informacije filma su ažurirane"
 
 #: ../lib/add.py:262
 msgid "No results"
@@ -143,6 +162,8 @@ msgid ""
 "You should fill the original title\n"
 "or the movie title."
 msgstr ""
+"Trebali bi ispuniti izvorni naslov\n"
+"ili naslov filma."
 
 #: ../lib/add.py:314
 msgid "Url: "
@@ -154,7 +175,7 @@ msgstr "Jezik: "
 
 #: ../lib/add.py:655 ../lib/add.py:659
 msgid "Movie with that title already exists, are you sure you want to add?"
-msgstr ""
+msgstr "Film tog naslova već postoji, sigurni ste da ga želite dodati?"
 
 #: ../lib/advfilter.py:65
 msgid "is equal to"
@@ -170,7 +191,7 @@ msgstr "počinje sa"
 
 #: ../lib/advfilter.py:68
 msgid "doesn't start with"
-msgstr ""
+msgstr "ne počinje sa"
 
 #: ../lib/advfilter.py:69
 msgid "contains"
@@ -190,11 +211,11 @@ msgstr "ne poput"
 
 #: ../lib/advfilter.py:140 ../lib/advfilter.py:148 ../lib/advfilter.py:167
 msgid "ignore"
-msgstr "# ignorirati"
+msgstr "ignorirati"
 
 #: ../lib/advfilter.py:140
 msgid "with"
-msgstr "sa"
+msgstr "s"
 
 #: ../lib/advfilter.py:140
 msgid "without"
@@ -214,11 +235,11 @@ msgstr "nije u"
 
 #: ../lib/advfilter.py:167
 msgid "loaned to "
-msgstr ""
+msgstr "posuđeno "
 
 #: ../lib/advfilter.py:167
 msgid "loan history"
-msgstr ""
+msgstr "povijest posuđivanja"
 
 #: ../lib/advfilter.py:370 ../lib/advfilter.py:414
 msgid "Name is empty"
@@ -226,23 +247,23 @@ msgstr "Ime je prazno"
 
 #: ../lib/advfilter.py:387
 msgid "Cannot save search conditions"
-msgstr ""
+msgstr "Nemoguće je spremiti uvijete pretraživanja"
 
 #: ../lib/advfilter.py:392
 msgid "Search conditions saved"
-msgstr ""
+msgstr "Uvijeti pretraživanja spremljeni"
 
 #: ../lib/advfilter.py:426
 msgid "Cannot delete search conditions"
-msgstr ""
+msgstr "Uvijete pretraživanja nije moguće obrisati"
 
 #: ../lib/advfilter.py:430
 msgid "Search conditions deleted"
-msgstr ""
+msgstr "Uvijeti pretraživanja obrisani"
 
 #: ../lib/backup.py:58
 msgid "Save Griffith backup"
-msgstr ""
+msgstr "Spremi Griffith sigurnosne kopije"
 
 #: ../lib/backup.py:67 ../lib/plugins/export/__init__.py:162
 #: ../lib/plugins/export/PluginExportCSV.py:61
@@ -258,23 +279,23 @@ msgstr "Pogreška pri izradi sigurnosne kopije"
 
 #: ../lib/backup.py:119
 msgid "Backup has been created"
-msgstr ""
+msgstr "Sigurnosna kopija je izrađena"
 
 #: ../lib/backup.py:122
 msgid "Restoring database..."
-msgstr ""
+msgstr "Obnavljanje baze podataka..."
 
 #: ../lib/backup.py:203
 msgid "Restore Griffith backup"
-msgstr ""
+msgstr "Vrati Griffith sigurnosnu kopiju"
 
 #: ../lib/backup.py:219
 msgid "Can't read backup file"
-msgstr ""
+msgstr "Nemoguće pročitati datoteku sigurnosne kopije"
 
 #: ../lib/backup.py:289
 msgid "Backup restored"
-msgstr ""
+msgstr "Sigurnosna kopija vraćena"
 
 #: ../lib/cover.py:43 ../lib/edit.py:45
 msgid "Select image"
@@ -282,18 +303,18 @@ msgstr "Odaberite sliku"
 
 #: ../lib/cover.py:87 ../lib/cover.py:150
 msgid "Cover generated by Griffith v"
-msgstr ""
+msgstr "Omot je generiran Griffith-om v"
 
 #: ../lib/cover.py:89 ../lib/cover.py:152
 #: ../lib/plugins/export/PluginExportHTML.py:719
 #: ../lib/plugins/export/PluginExportPDF.py:265
 msgid "Released Under the GNU/GPL License"
-msgstr ""
+msgstr "Objavljen pod GNU/GPL licencom"
 
 #: ../lib/cover.py:177 ../lib/initialize.py:195 ../lib/initialize.py:795
 #: ../lib/plugins/export/PluginExportHTML.py:157 ../glade/griffith.glade.h:105
 msgid "Original Title"
-msgstr "Originalni Naslov"
+msgstr "Originalni naslov"
 
 #: ../lib/cover.py:178 ../lib/initialize.py:203 ../lib/initialize.py:807
 #: ../lib/plugins/export/PluginExportHTML.py:163 ../glade/griffith.glade.h:161
@@ -304,11 +325,11 @@ msgstr "Naslov"
 #: ../lib/plugins/export/PluginExportHTML.py:148
 #: ../lib/plugins/export/PluginExportPDF.py:183 ../glade/griffith.glade.h:54
 msgid "Director"
-msgstr "Direktor"
+msgstr "Redatelj"
 
 #: ../lib/cover.py:182
 msgid "Running Time"
-msgstr ""
+msgstr "Vrijeme trajanja"
 
 #: ../lib/cover.py:182 ../lib/main_treeview.py:564
 msgid " min"
@@ -327,7 +348,7 @@ msgstr "Žanr"
 
 #: ../lib/dbupgrade.py:37
 msgid "Upgrading database..."
-msgstr ""
+msgstr "Nadogradnja baze podataka..."
 
 #: ../lib/dbupgrade.py:90 ../lib/plugins/movie/PluginMovieE-Pipoca.py:33
 #: ../lib/plugins/movie/PluginMovieInterfilmes.py:31
@@ -403,7 +424,7 @@ msgstr "Talijanski"
 
 #: ../lib/dbupgrade.py:104
 msgid "Japanese"
-msgstr ""
+msgstr "Japanski"
 
 #: ../lib/dbupgrade.py:105
 msgid "Korean"
@@ -411,7 +432,7 @@ msgstr "Korejski"
 
 #: ../lib/dbupgrade.py:106
 msgid "Norwegian Bokmal"
-msgstr "Norveški Bokmal"
+msgstr "Norveški"
 
 #: ../lib/dbupgrade.py:107
 msgid "Occitan"
@@ -419,7 +440,7 @@ msgstr "Okcitanski"
 
 #: ../lib/dbupgrade.py:108
 msgid "Pashto"
-msgstr ""
+msgstr "Paštunski"
 
 #: ../lib/dbupgrade.py:109 ../lib/plugins/movie/PluginMovieFDb.py:32
 #: ../lib/plugins/movie/PluginMovieFilmweb.py:30
@@ -444,7 +465,7 @@ msgstr "Ruski"
 
 #: ../lib/dbupgrade.py:112
 msgid "Simplified Chinese"
-msgstr "Pojednostavljeni Kineski"
+msgstr "Pojednostavljeni kineski"
 
 #: ../lib/dbupgrade.py:113
 msgid "Slovak"
@@ -466,7 +487,7 @@ msgstr "Turski"
 
 #: ../lib/dbupgrade.py:117
 msgid "Favourite"
-msgstr "Najdraže"
+msgstr "Omiljeno"
 
 #: ../lib/dbupgrade.py:118
 msgid "Buy me"
@@ -477,23 +498,24 @@ msgid ""
 "Griffith will now convert your database to the new format. This can take "
 "several minutes if you have a large database."
 msgstr ""
+"Griffith će konvertirati vašu bazu podataka u novi format. To može potrajati "
+"nekoliko minuta ako imate veliku bazu podataka."
 
 #: ../lib/dbupgrade.py:321
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
-msgstr ""
+msgstr "Stara DB pretvorba: molim vas instalirajte pysqlite legacy (v1.0)"
 
 #: ../lib/dbupgrade.py:348
 msgid ""
 "Your database is most probably in SQLite2 format, please convert it to "
 "SQLite3"
 msgstr ""
+"Vaša baza podataka je najvjerojatnije u SQLite2 formatu, molim konvertirajte "
+"ga u SQLite3"
 
 #: ../lib/delete.py:38
-#, fuzzy
 msgid "Are you sure you want to delete?"
-msgstr ""
-"%s\n"
-"Jeste li sigurni da želite izbrisati ovu osobu?"
+msgstr "Jeste li sigurni da želite izbrisati?"
 
 #: ../lib/delete.py:42
 msgid "You can't delete movie while it is loaned."
@@ -501,19 +523,19 @@ msgstr "Ne možete izbrisati film, dok je posuđen."
 
 #: ../lib/edit.py:74
 msgid "Image is not valid."
-msgstr ""
+msgstr "Slika nije valjana."
 
 #: ../lib/edit.py:111 ../lib/edit.py:137
 msgid "Image has been updated"
-msgstr ""
+msgstr "Slika je ažurirana"
 
 #: ../lib/edit.py:120
 msgid "Are you sure you want to delete this poster?"
-msgstr ""
+msgstr "Jeste li sigurni da želite izbrisati ovaj poster?"
 
 #: ../lib/gconsole.py:182
 msgid "No movie found"
-msgstr "Nikakav film nije pronađen"
+msgstr "Film nije pronađen"
 
 #: ../lib/gemail.py:38
 msgid "Connection timed out"
@@ -522,15 +544,15 @@ msgstr "Veza je istekla"
 #: ../lib/gemail.py:49 ../lib/gemail.py:59
 #, python-format
 msgid "Error sending e-mail: %s"
-msgstr ""
+msgstr "Greška pri slanju e-pošte: %s"
 
 #: ../lib/gemail.py:49
 msgid "login failure"
-msgstr ""
+msgstr "Neuspjela prijava"
 
 #: ../lib/gemail.py:56
 msgid "E-mail sent successfully"
-msgstr ""
+msgstr "E-pošta poslana uspješno"
 
 #: ../lib/gemail.py:76
 msgid "Movie loan reminder"
@@ -548,14 +570,21 @@ msgid ""
 "\n"
 "Loaned on %s"
 msgstr ""
+"Bok, %s!\n"
+"\n"
+"Samo da vas podsjetim da mi stvarno treba sljedeći film koji sam vam nedavno "
+"posudio:\n"
+"\n"
+"%s (%s)\n"
+"Posuđeno %s"
 
 #: ../lib/gemail.py:80
 msgid "Mail could not be sent. Please check e-mail preferences."
-msgstr ""
+msgstr "E-poštu nije moguće poslati. Provjerite postavke e-pošte"
 
 #: ../lib/gemail.py:82
 msgid "This person has no e-mail address defined."
-msgstr "Ta osoba nema definirane e-mail adrese."
+msgstr "Ta osoba nema definiranu adresu e-pošte."
 
 #: ../lib/gutils.py:371
 msgid "Images"
@@ -571,7 +600,7 @@ msgstr "Sve datoteke"
 
 #: ../lib/initialize.py:180
 msgid "No."
-msgstr ""
+msgstr "Br."
 
 #: ../lib/initialize.py:188 ../lib/initialize.py:787
 #: ../lib/plugins/export/PluginExportHTML.py:150 ../glade/griffith.glade.h:76
@@ -581,7 +610,7 @@ msgstr "Slika"
 #: ../lib/initialize.py:227 ../lib/initialize.py:803
 #: ../lib/plugins/export/PluginExportHTML.py:162 ../glade/griffith.glade.h:139
 msgid "Seen it"
-msgstr ""
+msgstr "Pogledano"
 
 #: ../lib/initialize.py:236 ../lib/initialize.py:811
 #: ../lib/plugins/export/PluginExportHTML.py:164
@@ -593,28 +622,28 @@ msgstr "Godina"
 #: ../lib/plugins/export/PluginExportHTML.py:160
 #: ../lib/plugins/export/PluginExportPDF.py:175 ../glade/griffith.glade.h:133
 msgid "Runtime"
-msgstr ""
+msgstr "Trajanje"
 
 #: ../lib/initialize.py:256 ../lib/initialize.py:799
 #: ../lib/plugins/export/PluginExportHTML.py:159 ../glade/griffith.glade.h:121
 msgid "Rating"
-msgstr "Rejting"
+msgstr "Ocjena"
 
 #: ../lib/initialize.py:266 ../glade/griffith.glade.h:47
 msgid "Created"
-msgstr ""
+msgstr "Napravljeno"
 
 #: ../lib/initialize.py:276 ../glade/griffith.glade.h:166
 msgid "Updated"
-msgstr ""
+msgstr "Ažurirano"
 
 #: ../lib/initialize.py:346
 msgid "Loan Date"
-msgstr "Datum kad je Posuđen"
+msgstr "Datum posudbe"
 
 #: ../lib/initialize.py:352
 msgid "Return Date"
-msgstr "Datum kad je potrebno Vratiti"
+msgstr "Datum vraćanja"
 
 #: ../lib/initialize.py:357
 msgid "Loaned To"
@@ -635,7 +664,7 @@ msgstr "lektor"
 
 #: ../lib/initialize.py:390 ../lib/initialize.py:814
 msgid "dubbing"
-msgstr "snimanje"
+msgstr "sinkronizacija"
 
 #: ../lib/initialize.py:392 ../lib/initialize.py:814
 msgid "commentary"
@@ -643,11 +672,11 @@ msgstr "komentar"
 
 #: ../lib/initialize.py:399 ../glade/griffith.glade.h:164
 msgid "Type"
-msgstr "Tip"
+msgstr "Vrsta"
 
 #: ../lib/initialize.py:414
 msgid "Codec"
-msgstr ""
+msgstr "Kodek"
 
 #: ../lib/initialize.py:429
 msgid "Channels"
@@ -659,7 +688,7 @@ msgstr "Format podnaslova"
 
 #: ../lib/initialize.py:598
 msgid "Enable this extension"
-msgstr ""
+msgstr "Omogući proširenje"
 
 #: ../lib/initialize.py:689 ../glade/griffith.glade.h:97
 msgid "Name"
@@ -668,11 +697,11 @@ msgstr "Ime"
 #: ../lib/initialize.py:695 ../glade/exporthtml.glade.h:15
 #: ../glade/griffith.glade.h:56 ../glade/import.glade.h:5
 msgid "E-mail"
-msgstr "E-mail"
+msgstr "E-pošta"
 
 #: ../lib/initialize.py:733
 msgid "Any"
-msgstr ""
+msgstr "Bilo koji"
 
 #: ../lib/initialize.py:745
 msgid "Last added"
@@ -681,7 +710,7 @@ msgstr "Posljednje dodano"
 #: ../lib/initialize.py:777 ../lib/plugins/export/PluginExportHTML.py:170
 #: ../glade/griffith.glade.h:33
 msgid "Barcode"
-msgstr ""
+msgstr "Barkod"
 
 #: ../lib/initialize.py:778 ../lib/plugins/export/PluginExportHTML.py:145
 #: ../lib/plugins/export/PluginExportPDF.py:187 ../glade/griffith.glade.h:37
@@ -691,7 +720,7 @@ msgstr "Glumci"
 #: ../lib/initialize.py:779 ../lib/plugins/export/PluginExportHTML.py:167
 #: ../glade/griffith.glade.h:36
 msgid "Cameraman"
-msgstr "Kameraman"
+msgstr "Kamerman"
 
 #: ../lib/initialize.py:780 ../lib/plugins/export/PluginExportHTML.py:146
 #: ../glade/griffith.glade.h:39
@@ -715,11 +744,11 @@ msgstr "Boja"
 
 #: ../lib/initialize.py:783 ../glade/griffith.glade.h:44
 msgid "Condition"
-msgstr "Uvjet"
+msgstr "Stanje"
 
 #: ../lib/initialize.py:788 ../glade/griffith.glade.h:80
 msgid "Layers"
-msgstr "Slojevi"
+msgstr "Vrsta diska"
 
 #: ../lib/initialize.py:789 ../lib/plugins/export/PluginExportHTML.py:154
 msgid "Loaned"
@@ -728,11 +757,11 @@ msgstr "Poseđeno"
 #: ../lib/initialize.py:790 ../lib/plugins/export/PluginExportHTML.py:155
 #: ../glade/griffith.glade.h:55
 msgid "Discs"
-msgstr "Diskovi"
+msgstr "Diskova"
 
 #: ../lib/initialize.py:791 ../glade/griffith.glade.h:92
 msgid "Medium"
-msgstr "Srednje"
+msgstr "Medij"
 
 #: ../lib/initialize.py:792 ../lib/plugins/export/PluginExportHTML.py:165
 #: ../lib/plugins/export/PluginExportPDF.py:195 ../glade/griffith.glade.h:101
@@ -747,16 +776,16 @@ msgstr "Broj"
 #: ../lib/initialize.py:794 ../lib/plugins/export/PluginExportHTML.py:151
 #: ../glade/griffith.glade.h:103
 msgid "Official site"
-msgstr "Službene stranice"
+msgstr "Službena stranica"
 
 #: ../lib/initialize.py:796 ../lib/plugins/export/PluginExportHTML.py:158
 #: ../lib/plugins/export/PluginExportPDF.py:191 ../glade/griffith.glade.h:113
 msgid "Plot"
-msgstr ""
+msgstr "Sadržaj"
 
 #: ../lib/initialize.py:797
 msgid "Poster"
-msgstr ""
+msgstr "Poster"
 
 #: ../lib/initialize.py:798
 msgid "Aspect ratio"
@@ -774,7 +803,7 @@ msgstr "Scenarij"
 #: ../lib/initialize.py:804 ../lib/plugins/export/PluginExportHTML.py:152
 #: ../glade/griffith.glade.h:150
 msgid "Site"
-msgstr ""
+msgstr "Stranica"
 
 #: ../lib/initialize.py:805 ../lib/plugins/export/PluginExportHTML.py:161
 #: ../glade/griffith.glade.h:156
@@ -783,7 +812,7 @@ msgstr "Studio"
 
 #: ../lib/initialize.py:806 ../glade/griffith.glade.h:158
 msgid "Tags"
-msgstr ""
+msgstr "Oznake"
 
 #: ../lib/initialize.py:808 ../lib/plugins/export/PluginExportHTML.py:153
 #: ../glade/griffith.glade.h:163
@@ -793,18 +822,18 @@ msgstr "Trailer"
 #: ../lib/initialize.py:809 ../lib/plugins/export/PluginExportHTML.py:181
 #: ../glade/griffith.glade.h:170
 msgid "Video codec"
-msgstr ""
+msgstr "Video kodek"
 
 #: ../lib/initialize.py:810 ../lib/plugins/export/PluginExportHTML.py:179
 #: ../glade/griffith.glade.h:173
 msgid "Volume"
-msgstr "Jačina zvuka"
+msgstr "Uređaj"
 
 #: ../lib/initialize.py:812 ../lib/initialize.py:813 ../lib/initialize.py:815
 #: ../lib/initialize.py:1073 ../lib/initialize.py:1074
 #: ../lib/initialize.py:1105 ../lib/initialize.py:1106
 msgid "N/A"
-msgstr "Nije Dostupno"
+msgstr "Nedostupno"
 
 #: ../lib/initialize.py:812
 msgid "Damaged"
@@ -812,11 +841,11 @@ msgstr "Oštećeno"
 
 #: ../lib/initialize.py:812
 msgid "Poor"
-msgstr "Slabo"
+msgstr "Loše"
 
 #: ../lib/initialize.py:812
 msgid "Fair"
-msgstr "Pošteno"
+msgstr "Bolje"
 
 #: ../lib/initialize.py:812
 msgid "Good"
@@ -828,7 +857,7 @@ msgstr "Odlično"
 
 #: ../lib/initialize.py:813
 msgid "Black and White"
-msgstr "Crno i Bijelo"
+msgstr "Crno-bijeli"
 
 #: ../lib/initialize.py:813
 msgid "Mixed"
@@ -836,23 +865,23 @@ msgstr "Mješovito"
 
 #: ../lib/initialize.py:815
 msgid "Single Side, Single Layer"
-msgstr ""
+msgstr "Jednstrani, jednoslojni"
 
 #: ../lib/initialize.py:815
 msgid "Single Side, Dual Layer"
-msgstr ""
+msgstr "Jednstrani, dvooslojni"
 
 #: ../lib/initialize.py:815
 msgid "Dual Side, Single Layer"
-msgstr ""
+msgstr "Dvostrani, jednoslojni"
 
 #: ../lib/initialize.py:815
 msgid "Dual Side, Dual Layer"
-msgstr ""
+msgstr "Dvostrani, dvooslojni"
 
 #: ../lib/initialize.py:817
 msgid "Region 0 (No Region Coding)"
-msgstr "Regija 0 (Nema Regijalnog Kodiranja)"
+msgstr "Regija 0 (nema kodiranja regije)"
 
 #: ../lib/initialize.py:818
 msgid "Region 1 (United States of America, Canada)"
@@ -860,15 +889,15 @@ msgstr "Regija 1 (Sjedinjene Američke Države, Kanada)"
 
 #: ../lib/initialize.py:819
 msgid "Region 2 (Europe, Egypt, Arabia, Japan and South Africa)"
-msgstr ""
+msgstr "Region 2 (Europa, Egipat, Arabija, Japan i Južna Afrika)"
 
 #: ../lib/initialize.py:820
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
-msgstr "Regija 3 (Koreja, Tajland, Vijetnam, Indonezija i Borneo)"
+msgstr "Regija 3 (Koreja, Tajland, Vijetnam, Borneo i Indonezija)"
 
 #: ../lib/initialize.py:821
 msgid "Region 4 (Australia and New Zealand, Mexico and South America)"
-msgstr ""
+msgstr "Regija 4 (Australija i Novi Zeland, Meksiko i Južna Amerika)"
 
 #: ../lib/initialize.py:822
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
@@ -876,32 +905,33 @@ msgstr "Regija 5 (Indija, Afrika, Rusija i zemlje bivšeg SSSR-a)"
 
 #: ../lib/initialize.py:823
 msgid "Region 6 (Popular Republic of China)"
-msgstr "Regija 6 (Popularna Republika Kina)"
+msgstr "Regija 6 (Narodna Republika Kina)"
 
 #: ../lib/initialize.py:824
 msgid "Region 7 (Reserved for Unspecified Special Use)"
-msgstr "Regija 7 (Rezervirano za Neodređene posebne namjene)"
+msgstr "Regija 7 (rezervirano za neodređene posebne namjene)"
 
 #: ../lib/initialize.py:825
 msgid "Region 8 (Airlines/Cruise Ships)"
-msgstr ""
+msgstr "Regija 8 (Zrakoplovi/Brodovi za krstarenje)"
 
 #: ../lib/initialize.py:864
 msgid "Dictionary not available. Spellcheck will be disabled. \n"
-msgstr ""
+msgstr "Rječnik nije dostupan. Provjera pravopisa bit će onemogućena. \n"
 
 #: ../lib/initialize.py:865
 #, python-format
 msgid ""
 "Please install the aspell-%s package or adjust the spellchecker preferences."
 msgstr ""
+"Molim, instalirajte aspell-%s paket ili prilagodite postavke provjere "
+"pravopisa."
 
 #: ../lib/loan.py:44
 msgid "No person is defined yet."
-msgstr "Nijedna osoba nije još definirana."
+msgstr "Još nema definirane osobe."
 
 #: ../lib/loan.py:73
-#, fuzzy
 msgid "Do you want to loan the whole collection?"
 msgstr "Želite li posuditi cijelu kolekciju?"
 
@@ -920,7 +950,7 @@ msgstr "Film posuđen"
 #: ../lib/main_treeview.py:304
 #, python-format
 msgid "This movie has been loaned to %s on %s"
-msgstr ""
+msgstr "Film je posuđen %s  %s"
 
 #: ../lib/main_treeview.py:315
 msgid "Movie not loaned"
@@ -929,7 +959,7 @@ msgstr "Film nije posuđen"
 #: ../lib/movie.py:158 ../lib/movie.py:178
 #: ../lib/plugins/movie/PluginMovieMovieMeter.py:88
 msgid "Fetching data"
-msgstr ""
+msgstr "Preuzimam podatke"
 
 #: ../lib/movie.py:158 ../lib/movie.py:178 ../lib/movie.py:222
 #: ../lib/movie.py:323 ../lib/movie.py:344
@@ -940,7 +970,7 @@ msgstr "Pričekajte trenutak"
 
 #: ../lib/movie.py:222
 msgid "Fetching poster"
-msgstr ""
+msgstr "Preuzimam poster"
 
 #: ../lib/movie.py:323 ../lib/movie.py:344
 #: ../lib/plugins/movie/PluginMovieMovieMeter.py:188
@@ -949,7 +979,7 @@ msgstr "Pretraživanje"
 
 #: ../lib/movie.py:392
 msgid "Connection error"
-msgstr ""
+msgstr "Pogreška veze"
 
 #: ../lib/movie.py:446
 msgid "Cancel"
@@ -961,17 +991,19 @@ msgstr "Trebali bi ispuniti ime osobe"
 
 #: ../lib/people.py:114
 msgid "Record updated"
-msgstr ""
+msgstr "Snimka ažurirana"
 
 #: ../lib/people.py:135
 msgid "This person has loaned films from you. Return them first."
-msgstr ""
+msgstr "Ova osoba je posudila filmove od vas. Prije ih vratite."
 
 #: ../lib/people.py:139
 msgid ""
 "This person has data in the loan history. This data will be erased if you "
 "continue."
 msgstr ""
+"Ova osoba ima podatke u povijesti posuđivanja. Ti podaci bit će izbrisani "
+"ako nastavite."
 
 #: ../lib/people.py:141
 #, python-format
@@ -987,36 +1019,38 @@ msgid ""
 "Cannot connect to database.\n"
 "Falling back to SQLite."
 msgstr ""
+"Nemoguće se je spojiti na bazu podataka.\n"
+"Vraćanje natrag na SQLite."
 
 #: ../lib/sql.py:117
 msgid "Please check debug output for more informations."
-msgstr ""
+msgstr "Molim provjerite debug izlaz za više informacija."
 
 #: ../lib/sql.py:148
 msgid "This database requires newer version of Griffith."
-msgstr ""
+msgstr "Baza podataka zahtijeva novu inačicu Griffith-a."
 
 #: ../lib/version.py:29
 msgid "Griffith is a film collection manager."
-msgstr ""
+msgstr "Griffith je upravitelj filmske kolekcije."
 
 #: ../lib/view.py:28
 msgid "Filter activated. Showing only not seen movies."
-msgstr ""
+msgstr "Filter aktiviran. Prikazujem samo neodgledane filmove."
 
 #: ../lib/view.py:34
 msgid "Filter activated. Showing only loaned movies."
-msgstr ""
+msgstr "Filter aktiviran. Prikazujem samo posuđene filmove."
 
 #: ../lib/view.py:46
 #, python-format
 msgid "Filter activated. Showing only movies from volume: %s"
-msgstr ""
+msgstr "Filter aktiviran. Prikazuju se samo filmovi iz uređaja: %s"
 
 #: ../lib/view.py:53
 #, python-format
 msgid "Filter activated. Showing only movies from collection: %s"
-msgstr ""
+msgstr "Filter aktiviran. Prikazuju se samo filmovi iz kolekcije: %s"
 
 #: ../lib/widgets.py:389
 msgid ""
@@ -1024,6 +1058,9 @@ msgid ""
 "are xpdf, gpdf, evince or kpdf. Make sure you have this program installed "
 "and working first."
 msgstr ""
+"Ovdje odaberite koji PDF preglednik želite koristiti sa Griffith-om. "
+"Popularniji preglednici su xpdf, gpdf, evince ili kpdf. Provjerite imate li "
+"ovaj program instaliran i dali radi."
 
 #: ../lib/widgets.py:390
 msgid ""
@@ -1031,6 +1068,9 @@ msgid ""
 "fields. Use you locale setting. For example, to use european portuguese "
 "spell checking enter 'pt'"
 msgstr ""
+"Ovdje možete odrediti željeni jezik kada provjeravate pravopis nekih polja. "
+"Koristite vaše lokalne postavke. Npr., za korištenje Hrvatske provjere "
+"pravopisa upišite 'hr'"
 
 #: ../lib/widgets.py:391
 msgid ""
@@ -1038,12 +1078,18 @@ msgid ""
 "*nix systems, 'localhost' should work. Alternatively, you can use your "
 "Internet Service Provider's SMTP server address."
 msgstr ""
+"Koristite ovaj unos za određivanje SMPT poslužitelja koji želite koristiti "
+"za slanje e-pošte. Na *nix sustavima, 'localhost' bi trebao raditi. "
+"Alternativno, možete koristiti SMTP adresu poslužitelja vašeg pružatelja "
+"internetskih usluga."
 
 #: ../lib/widgets.py:392
 msgid ""
 "This is the from e-mail address that should be used to all outgoing e-mail. "
 "You want to include your own e-mail address here probably."
 msgstr ""
+"Ovo je iz adrese e-pošte koju bi trebalo koristiti u svim odlaznim e-"
+"poštama. Vjerojatno ćete uključiti svoju ​​adresu e-pošte ovdje."
 
 #: ../lib/widgets.py:393
 msgid ""
@@ -1051,21 +1097,25 @@ msgid ""
 "gmail account service to send e-mails, try to enter '587' here. Default (and "
 "the most common one) is '25'"
 msgstr ""
+"Ovdje možete odrediti ulaz SMPT poslužitelja koji će se koristiti. Ako "
+"želite koristiti uslugu svojeg Gmail računa za slanje e-pošte, probajte "
+"ovdje upisati '587'. Zadano i najčešće korišteno je '25'."
 
 #: ../lib/widgets.py:394
 msgid ""
 "If you need TLS support, please check this checkbox. This is needed, for "
 "example, when using gmail service to send your reminder e-mails."
 msgstr ""
+"Ako trebate TLS podršku, označite ovu opciju. Ovo je potrebno npr., kada "
+"koristite Gmail uslugu za slanje vašeg podsjetnika e-poštom."
 
 #: ../lib/db/_objects.py:55
-#, fuzzy
 msgid "Name cannot be empty"
-msgstr "Ime je prazno"
+msgstr "Ime ne može biti prazno"
 
 #: ../lib/db/_objects.py:190
 msgid "E-mail address is not valid"
-msgstr ""
+msgstr "Adresa e-pošte nije valjana"
 
 #: ../lib/plugins/movie/PluginMovieAllocine.py:97
 #: ../lib/plugins/movie/PluginMovieAllocine.py:218
@@ -1652,11 +1702,11 @@ msgstr ""
 #: ../lib/plugins/imp/TheMovieLibrary.py:148
 #: ../lib/plugins/imp/WintoolzFilmdatenbank.py:136
 msgid " as "
-msgstr ""
+msgstr " kao "
 
 #: ../lib/plugins/movie/PluginMovieAmazon.py:38
 msgid "International"
-msgstr ""
+msgstr "Međunarodni"
 
 #: ../lib/plugins/movie/PluginMovieAmazon.py:59
 #: ../lib/plugins/movie/PluginMovieAmazon.py:254
@@ -1664,18 +1714,20 @@ msgid ""
 "Please configure your Amazon Access Key ID and Secret Key correctly in the "
 "preferences dialog."
 msgstr ""
+"Molim, podesite vaš Amazon pristupni ID ključ i tajni ključ ispravno u "
+"dijalogu postavaka."
 
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:212
 #: ../lib/plugins/movie/PluginMovieIMDB-it.py:166
 #: ../lib/plugins/movie/PluginMovieIMDB.py:178 ../glade/griffith.glade.h:4
 msgid "<b>Audio</b>"
-msgstr ""
+msgstr "<b>Audio</b>"
 
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:411
 #: ../lib/plugins/movie/PluginMovieIMDB-de.py:458
 #: ../lib/plugins/movie/PluginMovieIMDB.py:363
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: ../lib/plugins/movie/PluginMovieIMDB-pt.py:90
 #: ../lib/plugins/movie/PluginMovieIMDB-pt.py:91
@@ -1687,7 +1739,7 @@ msgstr ""
 #: ../lib/plugins/export/PluginExportXML.py:115
 #, python-format
 msgid "%s file has been created."
-msgstr ""
+msgstr "%s datoteka je izrađena."
 
 #: ../lib/plugins/export/__init__.py:145 ../lib/plugins/export/__init__.py:148
 #: ../lib/plugins/export/PluginExportCSV.py:50
@@ -1697,65 +1749,64 @@ msgstr ""
 #: ../lib/plugins/export/PluginExportXML.py:50
 #, python-format
 msgid "Export a %s document"
-msgstr ""
+msgstr "Izvezi %s dokument"
 
 #: ../lib/plugins/export/PluginExportAMC.py:30
 msgid "Full Ant Movie Catalog database xml export plugin"
-msgstr ""
+msgstr "Cijeli Ant Movie Catalog baza podataka xml dodatak izvoza"
 
 #: ../lib/plugins/export/PluginExportCSV.py:34
 msgid "Full CSV list export plugin"
-msgstr ""
+msgstr "Cijeli CSV popis dodatka izvoza"
 
 #: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV2.py:29
 msgid "Full DVD Profiler XML Export V2 plugin"
-msgstr ""
+msgstr "Cijeli  DVD Profiler XML dodatak V2 izvoza"
 
 #: ../lib/plugins/export/PluginExportDVDProfilerXMLExportV3.py:29
 msgid "Full DVD Profiler XML Export V3 plugin"
-msgstr ""
+msgstr "Cijeli  DVD Profiler XML dodatak V3 izvoza"
 
 #: ../lib/plugins/export/PluginExportGCstar.py:30
 msgid "Full GCstar database export plugin"
-msgstr ""
+msgstr "Cijeli GCstar baza podataka dodatak izvoza"
 
 #: ../lib/plugins/export/PluginExportHTML.py:41
 msgid "Plugin exports data using templates"
-msgstr ""
+msgstr "Dodatak izvoza podataka pomoću predloška"
 
 #: ../lib/plugins/export/PluginExportHTML.py:52
 msgid "Griffith's movies list"
-msgstr ""
+msgstr "Griffith-ov popis filmova"
 
 #: ../lib/plugins/export/PluginExportHTML.py:168
-#, fuzzy
 msgid "Width"
-msgstr "sa"
+msgstr "Širina"
 
 #: ../lib/plugins/export/PluginExportHTML.py:169
 msgid "Height"
-msgstr ""
+msgstr "Visina"
 
 #: ../lib/plugins/export/PluginExportHTML.py:177 ../glade/griffith.glade.h:91
 msgid "Media"
-msgstr ""
+msgstr "Medij"
 
 #: ../lib/plugins/export/PluginExportHTML.py:520
 #: ../lib/plugins/export/PluginExportHTML.py:522
 msgid "previous"
-msgstr ""
+msgstr "prethodni"
 
 #: ../lib/plugins/export/PluginExportHTML.py:533
 #: ../lib/plugins/export/PluginExportHTML.py:535
 msgid "next"
-msgstr ""
+msgstr "slijedeći"
 
 #: ../lib/plugins/export/PluginExportHTML.py:622
 #: ../lib/plugins/export/PluginExportHTML.py:658
 #: ../lib/plugins/export/PluginExportHTML.py:763
 #, python-format
 msgid "Can't create %s!"
-msgstr ""
+msgstr "Nije moguće izraditi %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:647
 #, python-format
@@ -1763,99 +1814,103 @@ msgid ""
 "Directory %s already exists.\n"
 "Do you want to overwrite it?"
 msgstr ""
+"Direktorij %s već postoji.\n"
+"Želite li ga prepisati?"
 
 #: ../lib/plugins/export/PluginExportHTML.py:651
 #, python-format
 msgid "Can't remove %s!"
-msgstr ""
+msgstr "Nije moguće ukloniti %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:666
 #: ../lib/plugins/export/PluginExportHTML.py:679
 #, python-format
 msgid "Can't copy %s!"
-msgstr ""
+msgstr "Nije moguće kopirati %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:709
 #, python-format
 msgid "Can't open %s!"
-msgstr ""
+msgstr "Nije moguće otvoriti %s!"
 
 #: ../lib/plugins/export/PluginExportHTML.py:717
 #: ../lib/plugins/export/PluginExportPDF.py:263
 msgid "Document generated by Griffith v"
-msgstr ""
+msgstr "Dokument je generiran Griffith-om v"
 
 #: ../lib/plugins/export/PluginExportHTML.py:785
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: ../lib/plugins/export/PluginExportHTML.py:787
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: ../lib/plugins/export/PluginExportHTML.py:862
 msgid "Document has been generated."
-msgstr ""
+msgstr "Dokument je generiran."
 
 #: ../lib/plugins/export/PluginExportiPod.py:63
 msgid "iPod Notes export plugin"
-msgstr ""
+msgstr "iPod Notes dodatak izvoza"
 
 #: ../lib/plugins/export/PluginExportiPod.py:87
 msgid "My Movies List"
-msgstr ""
+msgstr "Moj popis filmova"
 
 #: ../lib/plugins/export/PluginExportiPod.py:103
 msgid "List successfully exported to iPod."
-msgstr ""
+msgstr "Popis je uspješno izvezen u iPod."
 
 #: ../lib/plugins/export/PluginExportiPod.py:105
 msgid "iPod is not connected."
-msgstr ""
+msgstr "iPod nije spojen."
 
 #: ../lib/plugins/export/PluginExportiPod.py:119
 msgid ""
 "The list was successfully exported. Now you should move it to the 'Notes' "
 "folder on your iPod."
 msgstr ""
+"Popis je uspješno izvezen. Sada biste ga trebali premjestiti u mapu "
+"'Bilješke' na svjem ​​iPod-u."
 
 #: ../lib/plugins/export/PluginExportPDF.py:48
 msgid "PDF export plugin"
-msgstr ""
+msgstr "PDF dodatak izvoza"
 
 #: ../lib/plugins/export/PluginExportPDF.py:66
 #: ../lib/plugins/export/PluginExportPDF.py:68
 msgid "Export a PDF"
-msgstr ""
+msgstr "Izvezi PDF"
 
 #: ../lib/plugins/export/PluginExportPDF.py:88
 #: ../lib/plugins/export/PluginExportPDF.py:89
 #: ../lib/plugins/export/PluginExportPDF.py:116
 msgid "List of films"
-msgstr ""
+msgstr "Popis filmova"
 
 #: ../lib/plugins/export/PluginExportPDF.py:119
 #, python-format
 msgid "Total Movies: %s"
-msgstr ""
+msgstr "Ukupno filmova: %s"
 
 #: ../lib/plugins/export/PluginExportPDF.py:199
 msgid "PDF has been created."
-msgstr ""
+msgstr "PDF je izrađen."
 
 #: ../lib/plugins/export/PluginExportPDF.py:261
 #, python-format
 msgid "Page %d"
-msgstr ""
+msgstr "Stranica %d"
 
 #: ../lib/plugins/export/PluginExportXML.py:33
 msgid "Full XML list export plugin"
-msgstr ""
+msgstr "Cijeli XML popis dodatak izvoza"
 
 #: ../lib/plugins/imp/__init__.py:409
 #, python-format
 msgid "%s file has been imported. %s movies added."
-msgstr ""
+msgstr "%s datoteka je uvezena. %s film je dodan."
 
 #: ../lib/plugins/imp/AllMyMovies.py:60 ../lib/plugins/imp/AMC.py:121
 #: ../lib/plugins/imp/BESTheMovieLibrary.py:60
@@ -1868,599 +1923,600 @@ msgstr ""
 #: ../lib/plugins/imp/TheMovieLibrary.py:60
 #: ../lib/plugins/imp/WintoolzFilmdatenbank.py:59
 msgid "The format of the file is not supported."
-msgstr ""
+msgstr "Format datoteke nije podržan."
 
 #: ../lib/plugins/imp/CSV.py:45
 msgid "Full CSV list import plugin"
-msgstr ""
+msgstr "Cijeli CSV popis dodatka uvoza"
 
 #: ../lib/plugins/imp/CSV.py:195
 msgid "Please assign at least one field first!"
-msgstr ""
+msgstr "Molim, prvo ispunite bar jedno polje!"
 
 #: ../lib/plugins/imp/CSV.py:311
 #, python-format
 msgid "Can't open the file %s"
-msgstr ""
+msgstr "Nije moguće otvoriti datoteku %s"
 
 #: ../glade/exporthtml.glade.h:1
 msgid "<b>Example</b>"
-msgstr ""
+msgstr "<b>Primjer</b>"
 
 #: ../glade/exporthtml.glade.h:2
 msgid "<b>Export</b>"
-msgstr ""
+msgstr "<b>Izvoz</b>"
 
 #: ../glade/exporthtml.glade.h:3
 msgid "<b>Header</b>"
-msgstr ""
+msgstr "<b>Zaglavlje</b>"
 
 #: ../glade/exporthtml.glade.h:4 ../glade/griffith.glade.h:18
 msgid "<b>Sort by</b>"
-msgstr ""
+msgstr "<b>Poredaj po</b>"
 
 #: ../glade/exporthtml.glade.h:5
 msgid "<b>Split into</b>"
-msgstr ""
+msgstr "<b>Podijeli u</b>"
 
 #: ../glade/exporthtml.glade.h:6
 msgid "<b>Style</b>"
-msgstr ""
+msgstr "<b>Stil</b>"
 
 #: ../glade/exporthtml.glade.h:7
 msgid "<b>Template</b>"
-msgstr ""
+msgstr "<b>Predlošci</b>"
 
 #: ../glade/exporthtml.glade.h:8 ../glade/import.glade.h:3
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: ../glade/exporthtml.glade.h:9
 msgid "Black and white"
-msgstr ""
+msgstr "Crno-bijeli"
 
 #: ../glade/exporthtml.glade.h:10
 msgid "Choose style file"
-msgstr ""
+msgstr "Odaberi datoteku stila"
 
 #: ../glade/exporthtml.glade.h:11
 msgid "Convert images"
-msgstr ""
+msgstr "Konvertiraj slike"
 
 #: ../glade/exporthtml.glade.h:12
 msgid "Data"
-msgstr ""
+msgstr "Podaci"
 
 #: ../glade/exporthtml.glade.h:13 ../glade/import.glade.h:4
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #: ../glade/exporthtml.glade.h:14
 msgid "Destination"
-msgstr ""
+msgstr "Odredište"
 
 #: ../glade/exporthtml.glade.h:16
 msgid "Export"
-msgstr ""
+msgstr "Izvoz"
 
 #: ../glade/exporthtml.glade.h:17
 msgid "Export data"
-msgstr ""
+msgstr "Izvezi podatke"
 
 #: ../glade/exporthtml.glade.h:18
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: ../glade/exporthtml.glade.h:19
 msgid "Maximal height"
-msgstr ""
+msgstr "Maksimalna visina"
 
 #: ../glade/exporthtml.glade.h:20
 msgid "Maximal width"
-msgstr ""
+msgstr "Minimalna visina"
 
 #: ../glade/exporthtml.glade.h:21
 msgid "Posters"
-msgstr ""
+msgstr "Posteri"
 
 #: ../glade/exporthtml.glade.h:22 ../glade/griffith.glade.h:132
 msgid "Reverse"
-msgstr ""
+msgstr "Obrni"
 
 #: ../glade/exporthtml.glade.h:23
 msgid "Template"
-msgstr ""
+msgstr "Predložak"
 
 #: ../glade/exporthtml.glade.h:24
 msgid "Use custom file"
-msgstr ""
+msgstr "Koristi prilagođenu datoteku"
 
 #: ../glade/exporthtml.glade.h:25 ../glade/import.glade.h:10
 msgid "Version"
-msgstr ""
+msgstr "Inačica"
 
 #: ../glade/exporthtml.glade.h:26
 msgid "entries per page"
-msgstr ""
+msgstr "unosa po stranici"
 
 #: ../glade/exporthtml.glade.h:27
 msgid "files"
-msgstr ""
+msgstr "datoteke"
 
 #: ../glade/griffith.glade.h:1
 msgid "0 means no limits"
-msgstr ""
+msgstr "0 znači da nema ograničenja"
 
 #: ../glade/griffith.glade.h:2
 msgid "<b>Audio channels</b>"
-msgstr ""
+msgstr "<b>Audio kanali</b>"
 
 #: ../glade/griffith.glade.h:3
 msgid "<b>Audio codecs</b>"
-msgstr ""
+msgstr "<b>Audio kodeki</b>"
 
 #: ../glade/griffith.glade.h:5
 msgid "<b>Collection</b>"
-msgstr ""
+msgstr "<b>Kolekcija</b>"
 
 #: ../glade/griffith.glade.h:6
 msgid "<b>Collections</b>"
-msgstr ""
+msgstr "<b>Kolekcije</b>"
 
 #: ../glade/griffith.glade.h:7
 msgid "<b>Defaults</b>"
-msgstr ""
+msgstr "<b>Zadano</b>"
 
 #: ../glade/griffith.glade.h:8
 msgid "<b>E-mail reminder</b>"
-msgstr ""
+msgstr "<b>Podsjetnik e-pošte</b>"
 
 #: ../glade/griffith.glade.h:9
 msgid "<b>Languages</b>"
-msgstr ""
+msgstr "<b>Jezici</b>"
 
 #: ../glade/griffith.glade.h:10
 msgid "<b>Limits</b>"
-msgstr ""
+msgstr "<b>Ograničenja</b>"
 
 #: ../glade/griffith.glade.h:11
 msgid "<b>Loan History</b>"
-msgstr ""
+msgstr "<b>Povijest posuđivanja</b>"
 
 #: ../glade/griffith.glade.h:12
 msgid "<b>Loans</b>"
-msgstr ""
+msgstr "<b>Posudbe</b>"
 
 #: ../glade/griffith.glade.h:13
 msgid "<b>Media</b>"
-msgstr ""
+msgstr "<b>Medij</b>"
 
 #: ../glade/griffith.glade.h:14
 msgid "<b>Search for:</b>"
-msgstr ""
+msgstr "<b>Traži za:</b>"
 
 #: ../glade/griffith.glade.h:15
 msgid "<b>Search results</b>"
-msgstr ""
+msgstr "<b>Rezultati pretrage</b>"
 
 #: ../glade/griffith.glade.h:16
 msgid "<b>Select database to use</b>"
-msgstr ""
+msgstr "<b>Odaberite bazu podataka za korištenje</b>"
 
 #: ../glade/griffith.glade.h:17
 msgid "<b>Show only the following columns</b>"
-msgstr ""
+msgstr "<b>Prikaži samo sljedeće stupce</b>"
 
 #: ../glade/griffith.glade.h:19
 msgid "<b>Subtitle formats</b>"
-msgstr ""
+msgstr "<b>Format podnaslova </b>"
 
 #: ../glade/griffith.glade.h:20
 msgid "<b>Subtitles</b>"
-msgstr ""
+msgstr "<b>Podnaslovi</b>"
 
 #: ../glade/griffith.glade.h:21
 msgid "<b>Tags</b>"
-msgstr ""
+msgstr "<b>Oznake</b>"
 
 #: ../glade/griffith.glade.h:22
 msgid "<b>Use spell checking on the following fields:</b>"
-msgstr ""
+msgstr "<b>Provjeru pravopisa koristi u sljedećem polju:</b>"
 
 #: ../glade/griffith.glade.h:23
 msgid "<b>Video codecs</b>"
-msgstr ""
+msgstr "<b>Video kodeki</b>"
 
 #: ../glade/griffith.glade.h:24
 msgid "<b>Volume</b>"
-msgstr ""
+msgstr "<b>Uređaj</b>"
 
 #: ../glade/griffith.glade.h:25
 msgid "<b>Volumes</b>"
-msgstr ""
+msgstr "<b>Uređaji</b>"
 
 #: ../glade/griffith.glade.h:26
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: ../glade/griffith.glade.h:28
 msgid "Add a new person"
-msgstr ""
+msgstr "Dodaj novu osobu"
 
 #: ../glade/griffith.glade.h:29
 msgid "Add movie"
-msgstr ""
+msgstr "Dodaj film"
 
 #: ../glade/griffith.glade.h:30
 msgid "Add movie and close"
-msgstr ""
+msgstr "Dodaj film i zatvori"
 
 #: ../glade/griffith.glade.h:31
 msgid "Adds new movie"
-msgstr ""
+msgstr "Dodaj novi film"
 
 #: ../glade/griffith.glade.h:32
 msgid "All Movies"
-msgstr ""
+msgstr "Svi filmovi"
 
 #: ../glade/griffith.glade.h:34
 msgid "Base font size"
-msgstr ""
+msgstr "Osnovna veličina slova"
 
 #: ../glade/griffith.glade.h:35
 msgid "By Collection"
-msgstr ""
+msgstr "Po kolekciji"
 
 #: ../glade/griffith.glade.h:38
 msgid "Choose Image"
-msgstr ""
+msgstr "Odaberi sliku"
 
 #: ../glade/griffith.glade.h:40
 msgid "Clear filter"
-msgstr ""
+msgstr "Isprazni filter"
 
 #: ../glade/griffith.glade.h:41
 msgid "Clone"
-msgstr ""
+msgstr "Kloniraj"
 
 #: ../glade/griffith.glade.h:46
 msgid "Create backup"
-msgstr ""
+msgstr "Izradi sigurnosnu kopiju"
 
 #: ../glade/griffith.glade.h:48
 msgid "DVD layers"
-msgstr ""
+msgstr "DVD slojevi"
 
 #: ../glade/griffith.glade.h:49
 msgid "DVD region"
-msgstr ""
+msgstr "DVD regija"
 
 #: ../glade/griffith.glade.h:50
 msgid "Database"
-msgstr ""
+msgstr "Baza podataka"
 
 #: ../glade/griffith.glade.h:51
 msgid "Delete a person"
-msgstr ""
+msgstr "Izbriši osobu"
 
 #: ../glade/griffith.glade.h:52
 msgid "Details"
-msgstr ""
+msgstr "Detalji"
 
 #: ../glade/griffith.glade.h:53
 msgid "Dictionaries"
-msgstr ""
+msgstr "Rječnici"
 
 #: ../glade/griffith.glade.h:57
 msgid "E-mail reminder"
-msgstr ""
+msgstr "Podsjetnik e-pošte"
 
 #: ../glade/griffith.glade.h:58
 msgid "E_xport"
-msgstr ""
+msgstr "I_zvoz"
 
 #: ../glade/griffith.glade.h:59
 msgid "Edit a person"
-msgstr ""
+msgstr "Uredi osobu"
 
 #: ../glade/griffith.glade.h:60
 msgid "Edit movie details"
-msgstr ""
+msgstr "Uredi detalje filma"
 
 #: ../glade/griffith.glade.h:61
 msgid "Extensions"
-msgstr ""
+msgstr "Dodaci"
 
 #: ../glade/griffith.glade.h:62
 msgid "Extensions toolbar"
-msgstr ""
+msgstr "Proširenje alatne trake"
 
 #: ../glade/griffith.glade.h:63
 msgid "Favorite Movie Plugin"
-msgstr ""
+msgstr "Omiljeni dodatak filmova"
 
 #: ../glade/griffith.glade.h:64
 msgid "Fill empty fields only"
-msgstr ""
+msgstr "Ispuni samo prazna polja"
 
 #: ../glade/griffith.glade.h:65
 msgid "Filter "
-msgstr ""
+msgstr "Filter "
 
 #: ../glade/griffith.glade.h:66
 msgid "Filter movies"
-msgstr ""
+msgstr "Filter filmova"
 
 #: ../glade/griffith.glade.h:67
 msgid "Font for reports"
-msgstr ""
+msgstr "Slova izvješća"
 
 #: ../glade/griffith.glade.h:68
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: ../glade/griffith.glade.h:69
 msgid "Found Results"
-msgstr ""
+msgstr "Pronađeni rezultati"
 
 #: ../glade/griffith.glade.h:71
 msgid "Get from web"
-msgstr ""
+msgstr "Preuzmi sa interneta"
 
 #: ../glade/griffith.glade.h:72
 msgid "Get movie data from:"
-msgstr ""
+msgstr "Preuzmi podatke filma iz:"
 
 #: ../glade/griffith.glade.h:73
 msgid "Homepage"
-msgstr ""
+msgstr "Početna stranica"
 
 #: ../glade/griffith.glade.h:74
 msgid "Host"
-msgstr ""
+msgstr "Računalo"
 
 #: ../glade/griffith.glade.h:75
 msgid "I_mport"
-msgstr ""
+msgstr "U_voz"
 
 #: ../glade/griffith.glade.h:77
 msgid "Include Front Image"
-msgstr ""
+msgstr "Uključi prednju sliku"
 
 #: ../glade/griffith.glade.h:78
 msgid "Include movie number"
-msgstr ""
+msgstr "Uključi broj filma"
 
 #: ../glade/griffith.glade.h:79
 msgid "Languages"
-msgstr ""
+msgstr "Jezici"
 
 #: ../glade/griffith.glade.h:81
 msgid "Limit search results to"
-msgstr ""
+msgstr "Ograniči rezultate pretraživanja na"
 
 #: ../glade/griffith.glade.h:82
 msgid "Load poster from disk"
-msgstr ""
+msgstr "Učitaj poster sa diska"
 
 #: ../glade/griffith.glade.h:83
 msgid "Loan"
-msgstr ""
+msgstr "Posuđen"
 
 #: ../glade/griffith.glade.h:84
 msgid "Loan Management"
-msgstr ""
+msgstr "Upravitelj posuđivanja"
 
 #: ../glade/griffith.glade.h:85
 msgid "Loan movie"
-msgstr ""
+msgstr "Posudi film"
 
 #: ../glade/griffith.glade.h:86
 msgid "Loan to"
-msgstr ""
+msgstr "Posudi"
 
 #: ../glade/griffith.glade.h:87
 msgid "Loaned Movies"
-msgstr ""
+msgstr "Posuđeni filmovi"
 
 #: ../glade/griffith.glade.h:88
 msgid "Loans"
-msgstr ""
+msgstr "Posudbe"
 
 #: ../glade/griffith.glade.h:89
 msgid "Main list"
-msgstr ""
+msgstr "Glavni popis"
 
 #: ../glade/griffith.glade.h:90
 msgid "Manage People"
-msgstr ""
+msgstr "Upravitelj osoba"
 
 #: ../glade/griffith.glade.h:93
 msgid ""
 "Meter\n"
 "Stars"
 msgstr ""
+"Brojač\n"
+"Zvijezdica"
 
 #: ../glade/griffith.glade.h:95
 msgid "Movie details"
-msgstr ""
+msgstr "Detalji filma"
 
 #: ../glade/griffith.glade.h:96
 msgid "Movie information"
-msgstr ""
+msgstr "Informacije filma"
 
 #: ../glade/griffith.glade.h:98
 msgid "Needs authentication"
-msgstr ""
+msgstr "Zahtjeva provjeru autentičnosti"
 
 #: ../glade/griffith.glade.h:99
 msgid "New database"
-msgstr ""
+msgstr "Nova baza podataka"
 
 #: ../glade/griffith.glade.h:100
 msgid "Not Seen Movies"
-msgstr ""
+msgstr "Neodgledani filmovi"
 
 #: ../glade/griffith.glade.h:104
 msgid "Open search window"
-msgstr ""
+msgstr "Otvori prozor pretrage"
 
 #: ../glade/griffith.glade.h:106
 msgid "Original title"
-msgstr ""
+msgstr "Izvorni naslov"
 
 #: ../glade/griffith.glade.h:107
 msgid "Other"
-msgstr ""
+msgstr "Drugo"
 
 #: ../glade/griffith.glade.h:108
 msgid "PDF reader"
-msgstr ""
+msgstr "PDF preglednik"
 
 #: ../glade/griffith.glade.h:109
 msgid "Password"
-msgstr ""
+msgstr "Lozinka"
 
 #: ../glade/griffith.glade.h:110
 msgid "People"
-msgstr ""
+msgstr "Osobe"
 
 #: ../glade/griffith.glade.h:111
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: ../glade/griffith.glade.h:112
 msgid "Please wait a moment..."
-msgstr ""
+msgstr "Molim, pričekajte trenutak..."
 
 #: ../glade/griffith.glade.h:114
 msgid "Plugins"
-msgstr ""
+msgstr "Dodaci"
 
 #: ../glade/griffith.glade.h:115
 msgid "Port"
-msgstr ""
+msgstr "Ulaz"
 
 #: ../glade/griffith.glade.h:116
 msgid "Poster image"
-msgstr ""
+msgstr "Slika postera"
 
 #: ../glade/griffith.glade.h:117
 msgid "Poster viewer"
-msgstr ""
+msgstr "Preglednik postera"
 
 #: ../glade/griffith.glade.h:118
 msgid "Preferences"
-msgstr ""
+msgstr "Postavke"
 
 #: ../glade/griffith.glade.h:119
 msgid "Print Cover"
-msgstr ""
+msgstr "Ispiši omot"
 
 #: ../glade/griffith.glade.h:120
 msgid "Print cover"
-msgstr ""
+msgstr "Ispiši omot"
 
 #: ../glade/griffith.glade.h:122
 msgid "Rating image"
-msgstr ""
+msgstr "Ocijeni sliku"
 
 #: ../glade/griffith.glade.h:124
 msgid "Remove"
-msgstr ""
+msgstr "Ukloni"
 
 #: ../glade/griffith.glade.h:125
 msgid "Remove poster"
-msgstr ""
+msgstr "Ukloni poster"
 
 #: ../glade/griffith.glade.h:126
 msgid "Remove selected movie"
-msgstr ""
+msgstr "Ukloni odabrani film"
 
 #: ../glade/griffith.glade.h:127
 msgid "Rename"
-msgstr ""
+msgstr "Preimenuj"
 
 #: ../glade/griffith.glade.h:128
 msgid "Report bug"
-msgstr ""
+msgstr "Prijavite grešku"
 
 #: ../glade/griffith.glade.h:129
 msgid "Resolution"
-msgstr ""
+msgstr "Rezolucija"
 
 #: ../glade/griffith.glade.h:130
 msgid "Restore from backup"
-msgstr ""
+msgstr "Vrati iz sigurnosne kopije"
 
 #: ../glade/griffith.glade.h:131
 msgid "Return"
-msgstr ""
+msgstr "Vrati"
 
 #: ../glade/griffith.glade.h:134
 msgid "SMTP port"
-msgstr ""
+msgstr "SMTP ulaz"
 
 #: ../glade/griffith.glade.h:135
 msgid "SMTP server"
-msgstr ""
+msgstr "SMTP poslužitelj"
 
 #: ../glade/griffith.glade.h:136
 msgid "Saved filters"
-msgstr ""
+msgstr "Spremljeni filteri"
 
 #: ../glade/griffith.glade.h:138
 msgid "Searching on the web"
-msgstr ""
+msgstr "Pretraživanje na internetu"
 
 #: ../glade/griffith.glade.h:140
-#, fuzzy
 msgid "Select all"
-msgstr "Odaberite sliku"
+msgstr "Odaberi sve"
 
 #: ../glade/griffith.glade.h:141
 msgid "Select database"
-msgstr ""
+msgstr "Odaberi bazu podataka"
 
 #: ../glade/griffith.glade.h:142
 msgid "Select first movie"
-msgstr ""
+msgstr "Odaberi prvi film"
 
 #: ../glade/griffith.glade.h:143
 msgid "Select last movie"
-msgstr ""
+msgstr "Odaberi posljednji film"
 
 #: ../glade/griffith.glade.h:144
 msgid "Select next movie"
-msgstr ""
+msgstr "Odaberi sljedeći film"
 
 #: ../glade/griffith.glade.h:145
 msgid "Select previous movie"
-msgstr ""
+msgstr "Odaberi prethodni film"
 
 #: ../glade/griffith.glade.h:146
 msgid "Sender E-mail address"
-msgstr ""
+msgstr "Adrese pošiljatelja e-pošte"
 
 #: ../glade/griffith.glade.h:147
 msgid "Show other movies in this collection"
-msgstr ""
+msgstr "Prikaži ostale filmove iz ove kolekcije"
 
 #: ../glade/griffith.glade.h:148
 msgid "Show other movies in this volume"
-msgstr ""
+msgstr "Prikaži ostale filmove iz ovog uređaja"
 
 #: ../glade/griffith.glade.h:149
 msgid "Simple"
-msgstr ""
+msgstr "Jednostavno"
 
 #: ../glade/griffith.glade.h:151
 msgid "Size"
-msgstr ""
+msgstr "Veličina"
 
 #: ../glade/griffith.glade.h:152
 msgid "Spell check the following language"
-msgstr ""
+msgstr "Provjera pravopisa sljedećeg jezika"
 
 #: ../glade/griffith.glade.h:153
 msgid ""
@@ -2468,169 +2524,174 @@ msgid ""
 "Slim\n"
 "Double Slim"
 msgstr ""
+"Standardni\n"
+"Slim\n"
+"Dvostruki slim"
 
 #: ../glade/griffith.glade.h:157
 msgid "Suggest an unseen movie"
-msgstr ""
+msgstr "Predloži neodgledani film"
 
 #: ../glade/griffith.glade.h:159
 msgid "Technical information"
-msgstr ""
+msgstr "Tehničke informacije"
 
 #: ../glade/griffith.glade.h:160
 msgid "This movie is part of..."
-msgstr ""
+msgstr "Ovaj film je dio..."
 
 #: ../glade/griffith.glade.h:162
 msgid "Toolbar"
-msgstr ""
+msgstr "Alatna traka"
 
 #: ../glade/griffith.glade.h:165
 msgid ""
-"Type in the original film title, select source and choose <i>Get from web</"
-"i>. Griffith will try to fetch all the related information from the Web."
+"Type in the original film title, select source and choose <i>Get from "
+"web</i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
+"Upišite izvorni naslov filma, izaberite izvor i odaberite <i>Preuzmi sa "
+"interneta</i>. Griffith će pokušati dohvatiti sve podatke iz odabranog "
+"izvora sa interneta."
 
 #: ../glade/griffith.glade.h:167
 msgid "Use Spellchecker"
-msgstr ""
+msgstr "Koristi provjeru pravopisa"
 
 #: ../glade/griffith.glade.h:168
 msgid "Use TLS?"
-msgstr ""
+msgstr "Koristi TLS?"
 
 #: ../glade/griffith.glade.h:169
 msgid "Username"
-msgstr ""
+msgstr "Korisničko ime"
 
 #: ../glade/griffith.glade.h:171
 msgid "Visit movie web site"
-msgstr ""
+msgstr "Posjetite internet stranicu filma"
 
 #: ../glade/griffith.glade.h:172
-#, fuzzy
 msgid "Visit the official web site"
-msgstr "Službene stranice"
+msgstr "Posjetite službenu internet stranicu"
 
 #: ../glade/griffith.glade.h:174
 msgid "Watch the trailer"
-msgstr ""
+msgstr "Pogledajte trailer"
 
 #: ../glade/griffith.glade.h:176
 msgid "_Edit"
-msgstr ""
+msgstr "_Uredi"
 
 #: ../glade/griffith.glade.h:177
 msgid "_File"
-msgstr ""
+msgstr "_Datoteka"
 
 #: ../glade/griffith.glade.h:178
 msgid "_Help"
-msgstr ""
+msgstr "_Pomoć"
 
 #: ../glade/griffith.glade.h:179
 msgid "_Loans"
-msgstr ""
+msgstr "_Posudbe"
 
 #: ../glade/griffith.glade.h:180
 msgid "_Tools"
-msgstr ""
+msgstr "_Alati"
 
 #: ../glade/griffith.glade.h:181
 msgid "_View"
-msgstr ""
+msgstr "_Pogled"
 
 #: ../glade/griffith.glade.h:182
 msgid "add entered name to collections list"
-msgstr ""
+msgstr "dodaj upisano ime popisu kolekcije"
 
 #: ../glade/griffith.glade.h:183
 msgid "add entered name to volumes list"
-msgstr ""
+msgstr "dodaj upisano ime popisu uređaja"
 
 #: ../glade/griffith.glade.h:184
 msgid "classification"
-msgstr ""
+msgstr "klasifikacija"
 
 #: ../glade/griffith.glade.h:185
 msgid "click here if movie was returned"
-msgstr ""
+msgstr "Kliknite ako je film vraćen"
 
 #: ../glade/griffith.glade.h:186
 msgid "collection details"
-msgstr ""
+msgstr "Detalji kolekcije"
 
 #: ../glade/griffith.glade.h:187
 msgid "loaned only"
-msgstr ""
+msgstr "samo posuđeno"
 
 #: ../glade/griffith.glade.h:188
 msgid "loans movie or volume"
-msgstr ""
+msgstr "Posudi film ili uređaj"
 
 #: ../glade/griffith.glade.h:189
 msgid "minutes"
-msgstr ""
+msgstr "minuta"
 
 #: ../glade/griffith.glade.h:190
 msgid "movies"
-msgstr ""
+msgstr "filmova"
 
 #: ../glade/griffith.glade.h:191
 msgid "none"
-msgstr ""
+msgstr "bez ograničenja"
 
 #: ../glade/griffith.glade.h:192
 msgid "not loaned only"
-msgstr ""
+msgstr "nije samo posuđeno"
 
 #: ../glade/griffith.glade.h:193
 msgid "remove selected collection"
-msgstr ""
+msgstr "Ukloni odabranu kolekciju"
 
 #: ../glade/griffith.glade.h:194
 msgid "remove selected volume"
-msgstr ""
+msgstr "Ukloni odabrani uređaj"
 
 #: ../glade/griffith.glade.h:195
 msgid "seen only"
-msgstr ""
+msgstr "samo pogledano"
 
 #: ../glade/griffith.glade.h:196
 msgid "tags"
-msgstr ""
+msgstr "oznake"
 
 #: ../glade/griffith.glade.h:197
 msgid "unseen only"
-msgstr ""
+msgstr "samo neodgledano"
 
 #: ../glade/griffith.glade.h:198
 msgid "volume details"
-msgstr ""
+msgstr "detalji uređaja"
 
 #: ../glade/import.glade.h:1
 msgid "<b>Import only fields selected below</b>"
-msgstr ""
+msgstr "<b>Uvezi samo polja odabrana ispod</b>"
 
 #: ../glade/import.glade.h:2
 msgid "<b>Importing...</b>"
-msgstr ""
+msgstr "<b>Uvoženje...</b>"
 
 #: ../glade/import.glade.h:6 ../glade/importcsv.glade.h:11
 msgid "Fields"
-msgstr ""
+msgstr "Polja"
 
 #: ../glade/import.glade.h:7
 msgid "Import window"
-msgstr ""
+msgstr "Prozor uvoza"
 
 #: ../glade/import.glade.h:8
 msgid "Plugin"
-msgstr ""
+msgstr "Dodatak"
 
 #: ../glade/import.glade.h:9
 msgid "Source"
-msgstr ""
+msgstr "Izvor"
 
 #: ../glade/importcsv.glade.h:1
 msgid ""
@@ -2641,46 +2702,55 @@ msgid ""
 "only one title.\n"
 "Your cast-list should be comma-seperated to break it apart in multiple lines."
 msgstr ""
+"<b>Savjeti</b>:\n"
+"\n"
+"U sljedećem koraku možete odjednom dodijeliti vaša CSV polja u Griffith-u.\n"
+"Jedno CSV polje može biti dodjeljeno u više polja Griffith-a, npr. ako imate "
+"samo jedan naslov.\n"
+"Vaš popis glumaca trebao bi biti odijeljen zarezom da bi bio odvojen u više "
+"redaka."
 
 #: ../glade/importcsv.glade.h:6
 msgid "Assigned Fields (CSV > Griffith)"
-msgstr ""
+msgstr "Dodijeljena polja (CSV > Griffith)"
 
 #: ../glade/importcsv.glade.h:7
 msgid "CSV Fields"
-msgstr ""
+msgstr "CSV polja"
 
 #: ../glade/importcsv.glade.h:8
 msgid "CSV Import"
-msgstr ""
+msgstr "CSV uvoz"
 
 #: ../glade/importcsv.glade.h:9
 msgid "Delimiter"
-msgstr ""
+msgstr "Razdjelnik"
 
 #: ../glade/importcsv.glade.h:10
 msgid "Encoding"
-msgstr ""
+msgstr "Enkodiranje"
 
 #: ../glade/importcsv.glade.h:12
 msgid "File-Options"
-msgstr ""
+msgstr "Opcije datoteke"
 
 #: ../glade/importcsv.glade.h:13
 msgid "From Row"
-msgstr ""
+msgstr "Iz retka"
 
 #: ../glade/importcsv.glade.h:14
 msgid "Griffith Fields"
-msgstr ""
+msgstr "Griffith polja"
 
 #: ../glade/importcsv.glade.h:15
 msgid "If your file has no column headers then you should import from row 0."
 msgstr ""
+"Ako vaša datoteka nema zaglavlje stupaca onda biste trebali uvesti od redka "
+"0."
 
 #: ../glade/importcsv.glade.h:16
 msgid "Line terminator"
-msgstr ""
+msgstr "Graničnik linije"
 
 #: ../glade/importcsv.glade.h:17
 msgid "Quotechar"
@@ -2774,19 +2844,89 @@ msgid ""
 "utf_7 (all languages)\n"
 "utf_8 (all languages)"
 msgstr ""
-
-#~ msgid "N."
-#~ msgstr "N."
-
-#~ msgid ""
-#~ "Region 2 (Europe,including France, Greece, Turkey, Egypt, Arabia, Japan "
-#~ "and South Africa)"
-#~ msgstr ""
-#~ "Regija 2 (Europe, uključujući i Francusku, Grčku, Tursku, Egipat, "
-#~ "Arabiju, Japan i Južnu Afriku)"
-
-#~ msgid ""
-#~ "Region 4 (Australia and New Zealand, Mexico, the Caribbean, and South "
-#~ "America)"
-#~ msgstr ""
-#~ "Regija 4 (Australija i Novi Zeland, Meksiko, Karibi i Južna Amerika)"
+"ascii (Engleski)\n"
+"big5 (Tradicionalni Kineski)\n"
+"big5hkscs ((Tradicionalni Kineski)\n"
+"cp037 (Engleski)\n"
+"cp424 (Hebrejski)\n"
+"cp437 (Engleski)\n"
+"cp500 (Zapadna Europa)\n"
+"cp737 (Grčki)\n"
+"cp775 (Baltički jezici)\n"
+"cp850 (Zapadna Europa)\n"
+"cp852 (Srednja i istočna Europa)\n"
+"cp855 (Bugarski, Bjeloruski, Makedonski, Ruski, Serpski)\n"
+"cp856 (Hebrejski)\n"
+"cp857 (Turski)\n"
+"cp860 (Portugalski)\n"
+"cp861 (Islandski)\n"
+"cp862 (Hebrejski\n"
+"cp863 Kanadski)\n"
+"cp864 (Arapski)\n"
+"cp865 (Dandki, Norveški)\n"
+"cp866 (Ruski)\n"
+"cp869 (Grčki)\n"
+"cp874 (Tai)\n"
+"cp875 (Grčki)\n"
+"cp932 (Japanski)\n"
+"cp949 (Korejski)\n"
+"cp950 (Tradicionalni Kineski)\n"
+"cp1006 (Urdu)\n"
+"cp1026 (Turski)\n"
+"cp1140 (Zapadna Europa)\n"
+"cp1250 (Srednja i istočna Europa)\n"
+"cp1251 (Bugarski, Bjeloruski, Makedonski, Ruski, Serpski)\n"
+"cp1252 (Zapadna Europa)\n"
+"cp1253 (Grčki)\n"
+"cp1254 (Turski)\n"
+"cp1255 (Hebrejski)\n"
+"cp1256 (Arapski)\n"
+"cp1257 (Baltički jezici)\n"
+"cp1258 (Vijetnamski)\n"
+"euc_jp (Japanski)\n"
+"euc_jis_2004 (Japanski)\n"
+"euc_jisx0213 (Japanski)\n"
+"euc_kr (Korejski)\n"
+"gb2312 (Pojednostavljeni Kineski)\n"
+"gbk (Unified Chinese)\n"
+"gb18030 (Opći kineski)\n"
+"hz (Pojednostavljeni Kineski)\n"
+"iso2022_jp (Japanski)\n"
+"iso2022_jp_1 (Japanski)\n"
+"iso2022_jp_2 (Japanski, Korejski, Pojednostavljeni Kineski, Zapadna Europa, "
+"Grčka)\n"
+"iso2022_jp_2004(Japanski)\n"
+"iso2022_jp_3 (Japanski)\n"
+"iso2022_jp_ext (Japanski)\n"
+"iso2022_kr (Korejski)\n"
+"latin_1 (Zapadna Europa)\n"
+"iso8859_2 (Srednja i istočna Europa)\n"
+"iso8859_3 (Esperanto, Malteški)\n"
+"iso8859_4 (Baltički jezici)\n"
+"iso8859_5 (Bugarski, Bjeloruski, Makedonski, Ruski, Serpski)\n"
+"iso8859_6 (Arapski)\n"
+"iso8859_7 (Grčki)\n"
+"iso8859_8 (Hebrejski)\n"
+"iso8859_9 (Turski)\n"
+"iso8859_10 (Nordijski jezici)\n"
+"iso8859_13 (Baltički jezici)\n"
+"iso8859_14 (Keltski jezici)\n"
+"iso8859_15 (Zapadna Europa)\n"
+"johab (Korejski)\n"
+"koi8_r (Ruski)\n"
+"koi8_u (Ukrajinski)\n"
+"mac_cyrillic (Bugarski, Bjeloruski, Makedonski, Ruski, Serpski)\n"
+"mac_greek (Grčki)\n"
+"mac_iceland (Islandski)\n"
+"mac_latin2 (Srednja i istočna Europa)\n"
+"mac_roman (Zapadna Europa)\n"
+"mac_turkish (Turski)\n"
+"ptcp154 (Kazakh)\n"
+"shift_jis (Japanski)\n"
+"shift_jis_2004 (Japanski)\n"
+"shift_jisx0213 (Japanski)\n"
+"utf_16 (svi jezici)\n"
+"utf_16_be (svi jezici (BMP samo))\n"
+"utf_16_le (svi jezici (BMP samo))\n"
+"utf_7 (svi jezici)\n"
+"utf_8 (svi jezici)"

@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 10:35+0200\n"
-"PO-Revision-Date: 2010-12-24 11:29+0000\n"
-"Last-Translator: Almufadado <Unknown>\n"
+"PO-Revision-Date: 2011-02-04 20:56+0000\n"
+"Last-Translator: Ivo Nunes <Unknown>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-03 20:44+0000\n"
-"X-Generator: Launchpad (build 12309)\n"
+"X-Launchpad-Export-Date: 2011-09-14 20:16+0000\n"
+"X-Generator: Launchpad (build 13921)\n"
 "Language: pt\n"
 
 #: ../griffith:257 ../griffith:1035 ../lib/delete.py:35 ../lib/edit.py:43
@@ -42,7 +42,6 @@ msgstr ""
 "Operação abortada!"
 
 #: ../griffith:1011
-#, fuzzy
 msgid ""
 "Are you sure you want to restore? Your current movie collection will be "
 "replaced. You can't undo this operation."
@@ -52,7 +51,6 @@ msgstr ""
 "Esta operação é irreversível."
 
 #: ../griffith:1016
-#, fuzzy
 msgid ""
 "Are you sure you want to merge? Your current movie collection will be merged "
 "with a backup. You can't undo this operation."
@@ -110,9 +108,8 @@ msgid "Programmers"
 msgstr "Programadores"
 
 #: ../lib/about.py:52
-#, fuzzy
 msgid "Contributors"
-msgstr "Contribuições:"
+msgstr "Contribuições"
 
 #: ../lib/about.py:56
 msgid "Logo, icon and general artwork "
@@ -120,13 +117,15 @@ msgstr "Logotipo, icone e gráficos por "
 
 #: ../lib/about.py:57
 msgid "by Peek <peekpt@gmail.com>."
-msgstr ""
+msgstr "por Peek <peekpt@gmail.com>."
 
 #: ../lib/about.py:58
 msgid ""
 "\n"
 "Please visit http://www.peekmambo.com/\n"
 msgstr ""
+"\n"
+"Por favor visite http://www.peekmambo.com/\n"
 
 #: ../lib/about.py:82
 msgid "See TRANSLATORS file"
@@ -138,11 +137,12 @@ msgstr "Este programa é licenciado sob a licença GNU"
 
 #: ../lib/about.py:91
 msgid "General Public License.\n"
-msgstr ""
+msgstr "General Public License.\n"
 
 #: ../lib/about.py:92
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
 msgstr ""
+"Por favor visite http://www.gnu.org/copyleft/gpl.html para mais detalhes."
 
 #: ../lib/add.py:56 ../glade/griffith.glade.h:27
 msgid "Add a new movie"
@@ -519,7 +519,6 @@ msgstr ""
 "SQLite3."
 
 #: ../lib/delete.py:38
-#, fuzzy
 msgid "Are you sure you want to delete?"
 msgstr "Tem a certeza que deseja eliminar este filme?"
 
@@ -557,9 +556,8 @@ msgid "login failure"
 msgstr "Falha no login"
 
 #: ../lib/gemail.py:56
-#, fuzzy
 msgid "E-mail sent successfully"
-msgstr "E-mail enviado com sucesso"
+msgstr "E-mail enviado com sucesso."
 
 #: ../lib/gemail.py:76
 msgid "Movie loan reminder"
@@ -697,9 +695,8 @@ msgid "Subtitle format"
 msgstr "Formato das legendas"
 
 #: ../lib/initialize.py:598
-#, fuzzy
 msgid "Enable this extension"
-msgstr "activar esta extensão"
+msgstr "Activar esta extensão"
 
 #: ../lib/initialize.py:689 ../glade/griffith.glade.h:97
 msgid "Name"
@@ -942,9 +939,8 @@ msgid "No person is defined yet."
 msgstr "Não existem ainda pessoas definidas."
 
 #: ../lib/loan.py:73
-#, fuzzy
 msgid "Do you want to loan the whole collection?"
-msgstr "Deseja emprestar toda a colecção?"
+msgstr "Quer emprestar a colecção inteira?"
 
 #: ../lib/loan.py:82
 msgid ""
@@ -1743,7 +1739,6 @@ msgstr "Áudio"
 
 #: ../lib/plugins/movie/PluginMovieIMDB-pt.py:90
 #: ../lib/plugins/movie/PluginMovieIMDB-pt.py:91
-#, fuzzy
 msgid " como "
 msgstr " em "
 
@@ -1793,13 +1788,12 @@ msgid "Griffith's movies list"
 msgstr "Lista de filmes do Griffith"
 
 #: ../lib/plugins/export/PluginExportHTML.py:168
-#, fuzzy
 msgid "Width"
-msgstr "com"
+msgstr "Largura"
 
 #: ../lib/plugins/export/PluginExportHTML.py:169
 msgid "Height"
-msgstr ""
+msgstr "Altura"
 
 #: ../lib/plugins/export/PluginExportHTML.py:177 ../glade/griffith.glade.h:91
 msgid "Media"
@@ -1873,22 +1867,20 @@ msgid "My Movies List"
 msgstr "A Minha Lista de Filmes"
 
 #: ../lib/plugins/export/PluginExportiPod.py:103
-#, fuzzy
 msgid "List successfully exported to iPod."
-msgstr "Lista exportada para o iPod com sucesso."
+msgstr "Lista exportada com sucesso para o iPod."
 
 #: ../lib/plugins/export/PluginExportiPod.py:105
 msgid "iPod is not connected."
 msgstr "iPod não está ligado."
 
 #: ../lib/plugins/export/PluginExportiPod.py:119
-#, fuzzy
 msgid ""
 "The list was successfully exported. Now you should move it to the 'Notes' "
 "folder on your iPod."
 msgstr ""
-"A lista foi exportada correctamente. Agora deve mover o ficheiro para a "
-"pasta 'Notes' do iPod."
+"A lista foi exportada com sucesso. Deve agora movê-la para a pasta 'Notas' "
+"no seu iPod."
 
 #: ../lib/plugins/export/PluginExportPDF.py:48
 msgid "PDF export plugin"
@@ -2487,9 +2479,8 @@ msgid "Searching on the web"
 msgstr "A procurar na web"
 
 #: ../glade/griffith.glade.h:140
-#, fuzzy
 msgid "Select all"
-msgstr "Seleccionar imagem"
+msgstr ""
 
 #: ../glade/griffith.glade.h:141
 msgid "Select database"
@@ -2562,14 +2553,13 @@ msgid "Toolbar"
 msgstr "Barra de ferramentas"
 
 #: ../glade/griffith.glade.h:165
-#, fuzzy
 msgid ""
-"Type in the original film title, select source and choose <i>Get from web</"
-"i>. Griffith will try to fetch all the related information from the Web."
+"Type in the original film title, select source and choose <i>Get from "
+"web</i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
-"Escreva o título original do filme, seleccione a fonte e clique em <i>Obter "
-"da web</i>. O Griffith irá tentar obter automaticamente informação referente "
-"ao filme."
+"Escreva o título original do filme, seleccione a fonte e escolha <i>Obter da "
+"web</i>. O Griffith vai tentar obter toda a informação relacionada a partir "
+"da Web."
 
 #: ../glade/griffith.glade.h:167
 msgid "Use Spellchecker"
@@ -2588,9 +2578,8 @@ msgid "Visit movie web site"
 msgstr "Visitar a página oficial do filme"
 
 #: ../glade/griffith.glade.h:172
-#, fuzzy
 msgid "Visit the official web site"
-msgstr "Visitar a página oficial do filme"
+msgstr "Visite a página web oficial"
 
 #: ../glade/griffith.glade.h:174
 msgid "Watch the trailer"
@@ -2768,9 +2757,8 @@ msgstr ""
 "linha 0."
 
 #: ../glade/importcsv.glade.h:16
-#, fuzzy
 msgid "Line terminator"
-msgstr "Finalizaão de linha"
+msgstr "Terminador de linha"
 
 #: ../glade/importcsv.glade.h:17
 msgid "Quotechar"

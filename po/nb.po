@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Griffith 0.10-beta1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 10:35+0200\n"
-"PO-Revision-Date: 2009-12-23 00:13+0000\n"
-"Last-Translator: Piotr Ożarowski <Unknown>\n"
+"PO-Revision-Date: 2011-06-08 06:44+0000\n"
+"Last-Translator: Anders Oftedal <anders.oftedal@gmail.com>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-02-03 20:44+0000\n"
-"X-Generator: Launchpad (build 12309)\n"
+"X-Launchpad-Export-Date: 2011-09-14 20:16+0000\n"
+"X-Generator: Launchpad (build 13921)\n"
 "Language: nb\n"
 
 #: ../griffith:257 ../griffith:1035 ../lib/delete.py:35 ../lib/edit.py:43
@@ -39,24 +39,18 @@ msgid ""
 msgstr "Denne oppføringen er i bruk. Operasjonen er avbrutt."
 
 #: ../griffith:1011
-#, fuzzy
 msgid ""
 "Are you sure you want to restore? Your current movie collection will be "
 "replaced. You can't undo this operation."
 msgstr ""
-"Er du sikker på at du vil gjenopprette?\n"
-"Din nåværende filmsamling vil bli byttet ut.\n"
-"Du kan ikke angre denne handlingen."
+"Er du sikker på at du vil gjenopprette? Filmsamlingen din vil bli "
+"overskrevet. Du kan ikke angre denne handlingen."
 
 #: ../griffith:1016
-#, fuzzy
 msgid ""
 "Are you sure you want to merge? Your current movie collection will be merged "
 "with a backup. You can't undo this operation."
 msgstr ""
-"Er du sikker på at du vil mikse?\n"
-"Din nåværende film samling vil bli mixet med en backup.\n"
-"Du kan ikke angre denne handlingen."
 
 #: ../griffith:1112
 #, python-format
@@ -101,9 +95,8 @@ msgid "Programmers"
 msgstr "Programører"
 
 #: ../lib/about.py:52
-#, fuzzy
 msgid "Contributors"
-msgstr "Bidragsytere:"
+msgstr "Bidragsytere"
 
 #: ../lib/about.py:56
 msgid "Logo, icon and general artwork "
@@ -111,13 +104,15 @@ msgstr "Logo, ikon og generell artwork "
 
 #: ../lib/about.py:57
 msgid "by Peek <peekpt@gmail.com>."
-msgstr ""
+msgstr "av Peek <peekpt@gmail.com>."
 
 #: ../lib/about.py:58
 msgid ""
 "\n"
 "Please visit http://www.peekmambo.com/\n"
 msgstr ""
+"\n"
+"Besøk siden på http://www.peekmambo.com/\n"
 
 #: ../lib/about.py:82
 msgid "See TRANSLATORS file"
@@ -133,7 +128,7 @@ msgstr ""
 
 #: ../lib/about.py:92
 msgid "Please visit http://www.gnu.org/copyleft/gpl.html for details."
-msgstr ""
+msgstr "Se http://www.gnu.org/copyleft/gpl.html for detaljer"
 
 #: ../lib/add.py:56 ../glade/griffith.glade.h:27
 msgid "Add a new movie"
@@ -250,11 +245,11 @@ msgstr "Søkekriterier er lagret"
 
 #: ../lib/advfilter.py:426
 msgid "Cannot delete search conditions"
-msgstr ""
+msgstr "Kan ikke slette søkekriterier"
 
 #: ../lib/advfilter.py:430
 msgid "Search conditions deleted"
-msgstr ""
+msgstr "Søkekriterier ble slettet"
 
 #: ../lib/backup.py:58
 msgid "Save Griffith backup"
@@ -278,7 +273,7 @@ msgstr "Backup er lagret"
 
 #: ../lib/backup.py:122
 msgid "Restoring database..."
-msgstr ""
+msgstr "Gjenoppretter databasen..."
 
 #: ../lib/backup.py:203
 msgid "Restore Griffith backup"
@@ -343,7 +338,7 @@ msgstr "Sjanger"
 
 #: ../lib/dbupgrade.py:37
 msgid "Upgrading database..."
-msgstr ""
+msgstr "Oppgraderer databasen ..."
 
 #: ../lib/dbupgrade.py:90 ../lib/plugins/movie/PluginMovieE-Pipoca.py:33
 #: ../lib/plugins/movie/PluginMovieInterfilmes.py:31
@@ -499,6 +494,7 @@ msgstr ""
 #: ../lib/dbupgrade.py:321
 msgid "Old DB conversion: please install pysqlite legacy (v1.0)"
 msgstr ""
+"Gammel databasekonvertering: vennligst installer pysqlite legacy (v1.0)"
 
 #: ../lib/dbupgrade.py:348
 msgid ""
@@ -509,9 +505,8 @@ msgstr ""
 "til SQLite3"
 
 #: ../lib/delete.py:38
-#, fuzzy
 msgid "Are you sure you want to delete?"
-msgstr "Er du sikker på at du vil slette denne filmen"
+msgstr "Er du sikker på at du vil slette?"
 
 #: ../lib/delete.py:42
 msgid "You can't delete movie while it is loaned."
@@ -547,9 +542,8 @@ msgid "login failure"
 msgstr "login feil"
 
 #: ../lib/gemail.py:56
-#, fuzzy
 msgid "E-mail sent successfully"
-msgstr "E-mail sendt"
+msgstr "E-post ble sendt"
 
 #: ../lib/gemail.py:76
 msgid "Movie loan reminder"
@@ -582,7 +576,7 @@ msgstr "Bilder"
 
 #: ../lib/gutils.py:382
 msgid "backups"
-msgstr ""
+msgstr "sikkerhetskopier"
 
 #: ../lib/gutils.py:388 ../lib/plugins/imp/__init__.py:377
 msgid "All files"
@@ -621,11 +615,11 @@ msgstr "Karakter"
 
 #: ../lib/initialize.py:266 ../glade/griffith.glade.h:47
 msgid "Created"
-msgstr ""
+msgstr "Opprettet"
 
 #: ../lib/initialize.py:276 ../glade/griffith.glade.h:166
 msgid "Updated"
-msgstr ""
+msgstr "Oppdatert"
 
 #: ../lib/initialize.py:346
 msgid "Loan Date"
@@ -678,7 +672,7 @@ msgstr "Undertekst format"
 
 #: ../lib/initialize.py:598
 msgid "Enable this extension"
-msgstr ""
+msgstr "Aktiver denne utvidelsen"
 
 #: ../lib/initialize.py:689 ../glade/griffith.glade.h:97
 msgid "Name"
@@ -691,7 +685,7 @@ msgstr "E-post"
 
 #: ../lib/initialize.py:733
 msgid "Any"
-msgstr ""
+msgstr "Hvilken som helst"
 
 #: ../lib/initialize.py:745
 msgid "Last added"
@@ -775,7 +769,7 @@ msgstr "Plott"
 
 #: ../lib/initialize.py:797
 msgid "Poster"
-msgstr ""
+msgstr "Plakat"
 
 #: ../lib/initialize.py:798
 msgid "Aspect ratio"
@@ -879,7 +873,7 @@ msgstr "Sone 1 (USA og Canada)"
 
 #: ../lib/initialize.py:819
 msgid "Region 2 (Europe, Egypt, Arabia, Japan and South Africa)"
-msgstr ""
+msgstr "Region 2 (Europa, Egypt, Arabia, Japan og Sør Afrika)"
 
 #: ../lib/initialize.py:820
 msgid "Region 3 (Korea, Thailand, Vietnam, Borneo and Indonesia)"
@@ -887,7 +881,7 @@ msgstr "Sone 3 (Korea, Thailand, Vietnam, Borneo og Indonesia)"
 
 #: ../lib/initialize.py:821
 msgid "Region 4 (Australia and New Zealand, Mexico and South America)"
-msgstr ""
+msgstr "Region 4 (Australia, New Zealand, Mexico og Sør Amerika)"
 
 #: ../lib/initialize.py:822
 msgid "Region 5 (India, Africa, Russia and former USSR countries)"
@@ -914,13 +908,14 @@ msgstr "Ordbok er utilgjengelig, Stavekontroll vil bli slått av. \n"
 msgid ""
 "Please install the aspell-%s package or adjust the spellchecker preferences."
 msgstr ""
+"Vennligst installer aspell-%s pakken eller juster alternativene for "
+"stavekontrollen"
 
 #: ../lib/loan.py:44
 msgid "No person is defined yet."
 msgstr "Ingen person er definert enda."
 
 #: ../lib/loan.py:73
-#, fuzzy
 msgid "Do you want to loan the whole collection?"
 msgstr "Vil du låne ut hele samlingen?"
 
@@ -1068,8 +1063,8 @@ msgid ""
 msgstr ""
 "Her fyller du inn smtp serveren du bruker for å sende e-post. På "
 "*nixsystemer rekker det å som regel å skrive 'localhost'  Alternativt kan du "
-"skrive din internettleverandør's smtp server adresse.  (f.eks. smtp.online."
-"no)"
+"skrive din internettleverandør's smtp server adresse.  (f.eks. "
+"smtp.online.no)"
 
 #: ../lib/widgets.py:392
 msgid ""
@@ -1716,7 +1711,6 @@ msgstr "Lyd"
 
 #: ../lib/plugins/movie/PluginMovieIMDB-pt.py:90
 #: ../lib/plugins/movie/PluginMovieIMDB-pt.py:91
-#, fuzzy
 msgid " como "
 msgstr " på "
 
@@ -1766,13 +1760,12 @@ msgid "Griffith's movies list"
 msgstr "Griffiths filmliste"
 
 #: ../lib/plugins/export/PluginExportHTML.py:168
-#, fuzzy
 msgid "Width"
-msgstr "med"
+msgstr "Bredde"
 
 #: ../lib/plugins/export/PluginExportHTML.py:169
 msgid "Height"
-msgstr ""
+msgstr "Høyde"
 
 #: ../lib/plugins/export/PluginExportHTML.py:177 ../glade/griffith.glade.h:91
 msgid "Media"
@@ -1846,7 +1839,6 @@ msgid "My Movies List"
 msgstr "Min filmliste"
 
 #: ../lib/plugins/export/PluginExportiPod.py:103
-#, fuzzy
 msgid "List successfully exported to iPod."
 msgstr "Listen er exportert til iPod."
 
@@ -1909,7 +1901,7 @@ msgstr "%s fil har blitt importert. %s filmer lagt til."
 #: ../lib/plugins/imp/TheMovieLibrary.py:60
 #: ../lib/plugins/imp/WintoolzFilmdatenbank.py:59
 msgid "The format of the file is not supported."
-msgstr ""
+msgstr "Filformatet er ikke støttet"
 
 #: ../lib/plugins/imp/CSV.py:45
 msgid "Full CSV list import plugin"
@@ -2210,11 +2202,11 @@ msgstr "Rediger filmdetaljer"
 
 #: ../glade/griffith.glade.h:61
 msgid "Extensions"
-msgstr ""
+msgstr "Utvidelser"
 
 #: ../glade/griffith.glade.h:62
 msgid "Extensions toolbar"
-msgstr ""
+msgstr "Verktøylinje for utvidelser"
 
 #: ../glade/griffith.glade.h:63
 msgid "Favorite Movie Plugin"
@@ -2457,13 +2449,12 @@ msgid "Searching on the web"
 msgstr "Søker på nettet"
 
 #: ../glade/griffith.glade.h:140
-#, fuzzy
 msgid "Select all"
-msgstr "Velg bilde"
+msgstr "Velg alle"
 
 #: ../glade/griffith.glade.h:141
 msgid "Select database"
-msgstr ""
+msgstr "Velg database"
 
 #: ../glade/griffith.glade.h:142
 msgid "Select first movie"
@@ -2529,10 +2520,9 @@ msgid "Toolbar"
 msgstr "Verktøylinje"
 
 #: ../glade/griffith.glade.h:165
-#, fuzzy
 msgid ""
-"Type in the original film title, select source and choose <i>Get from web</"
-"i>. Griffith will try to fetch all the related information from the Web."
+"Type in the original film title, select source and choose <i>Get from "
+"web</i>. Griffith will try to fetch all the related information from the Web."
 msgstr ""
 "Skriv inn den originale filmtittelen, velg kilde og deretter <i>Get from "
 "web</i>. Griffith vil da forsøke å hente all relatert info fra nettet."
@@ -2554,7 +2544,6 @@ msgid "Visit movie web site"
 msgstr "Besøk filmens nettside"
 
 #: ../glade/griffith.glade.h:172
-#, fuzzy
 msgid "Visit the official web site"
 msgstr "Besøk den offisielle nettsiden"
 
@@ -2644,7 +2633,7 @@ msgstr "kun sett"
 
 #: ../glade/griffith.glade.h:196
 msgid "tags"
-msgstr ""
+msgstr "etiketter"
 
 #: ../glade/griffith.glade.h:197
 msgid "unseen only"
