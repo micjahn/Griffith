@@ -34,6 +34,7 @@ def change_filter(self):
 
 
 def change_filter_update_whereclause(self, statement):
+    from sqlalchemy import or_
     text = gutils.gescape(self.widgets['filter']['text'].get_text().decode('utf-8'))
     if text:
         (criterianame, criteria) = self.search_criteria_sorted[self.widgets['filter']['criteria'].get_active()]
