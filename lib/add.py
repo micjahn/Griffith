@@ -64,7 +64,7 @@ def edit_movie(self, details={}):
     set_details(self, details)
     self.widgets['add']['add_button'].hide()
     self.widgets['add']['add_close_button'].hide()
-    self.widgets['add']['clear_button'].hide()
+    self.widgets['add']['clear_button'].show()
     self.widgets['add']['save_button'].show()
     self.widgets['add']['window'].set_title(_('Edit movie'))
     self.widgets['add']['window'].show()
