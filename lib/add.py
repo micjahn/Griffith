@@ -98,26 +98,28 @@ def update_movie(self):
                         data = file(new_image_path, 'rb').read()
                     except Exception, e:
                         log.warning("cannot read poster data")
+                        old_poster_md5 = new_poster_md5
                     else:
                         poster = db.Poster(md5sum=new_poster_md5, data=data)
                         del details["image"]
                         details['poster_md5'] = new_poster_md5
                         session.add(poster)
-
-                        # delete old image
-                        import delete
-                        old_poster = session.query(db.Poster).filter_by(md5sum=old_poster_md5).first()
-                        if old_poster and len(old_poster.movies) == 1: # other movies are not using the same poster
-                            session.delete(old_poster)
-                            delete.delete_poster_from_cache(old_poster_md5, self.locations['posters'])
                 else:
                     details['poster_md5'] = new_poster_md5
     else:
         details['poster_md5'] = None
 
     update_movie_instance(movie, details, session)
-
     session.add(movie)
+    
+    # delete old image
+    if old_poster_md5 and old_poster_md5 != new_poster_md5:
+        import delete
+        old_poster = session.query(db.Poster).filter_by(md5sum=old_poster_md5).first()
+        if old_poster and len(old_poster.movies) == 1: # other movies are not using the same poster
+            session.delete(old_poster)
+            delete.delete_poster_from_cache(old_poster_md5, self.locations['posters'])
+
     if commit(session):
         main_treeview.setmovie(self, movie, self.selected_iter_edit[0], self.treemodel)
 
