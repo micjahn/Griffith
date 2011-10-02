@@ -83,7 +83,7 @@ def update_movie(self):
     details = get_details(self)
 
     old_poster_md5 = movie.poster_md5
-    new_poster_md5 = None
+    new_poster_md5 = old_poster_md5
     if details['image']:
         if old_poster_md5 != details['image']: # details["image"] can contain MD5 or file path
             new_image_path = details['image']
