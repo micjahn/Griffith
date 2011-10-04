@@ -494,7 +494,7 @@ def save_preferences(self):
             old['name'] != c.get('name', section='database'):
         log.info('DATABASE: connecting to new db server...')
         import sql
-        from sqlalchemy.exceptions import InvalidRequestError
+        from sqlalchemy.exc import InvalidRequestError
         from initialize import dictionaries, people_treeview
 
         # new database connection
