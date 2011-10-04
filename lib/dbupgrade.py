@@ -162,7 +162,7 @@ def upgrade_database(self, version, config):
             try:
                 self.session.bind.execute(query)
             except OperationalError, e:
-                if e.message.find(b'(OperationalError) duplicate column name:') > -1:
+                if e.message.lower().find('duplicate column name') > -1:
                     log.warn("Cannot add '%s' column because it exists already: %s", key, e)
                     continue
                 else:
@@ -265,7 +265,7 @@ def upgrade_database(self, version, config):
     if version == 5:    # fix changes between v5 and v6
         version += 1
         log.info("Upgrading database to version %d...", version)
-        
+
         # common SQL statements
         if self.session.bind.name in ['postgres', 'postgresql']:
             queries = {'created': 'ALTER TABLE movies ADD created TIMESTAMP;',
