@@ -240,6 +240,7 @@ def buildURL(search_type, searchfield, searchvalue, product_line, type, page, li
         params = dict(
             Service='AWSECommerceService',
             AWSAccessKeyId=license_key,
+            AssociateTag=associate,
             Operation=search_type,
             ResponseGroup=type,
             IdType=searchfield,
@@ -250,6 +251,7 @@ def buildURL(search_type, searchfield, searchvalue, product_line, type, page, li
         params = dict(
             Service='AWSECommerceService',
             AWSAccessKeyId=license_key,
+            AssociateTag=associate,
             Operation=search_type,
             ResponseGroup=type,
             Sort='titlerank')
