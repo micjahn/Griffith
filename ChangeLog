@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2011-12-02  Michael Jahn
+	* [#888347] FilmAffinity plugin doesn't work
+
 2011-12-01  Michael Jahn
 	* [#885914] Amazon Plugin in Griffith doesn't work
 
