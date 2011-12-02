@@ -625,7 +625,7 @@ class Griffith(object):
     def on_lang_remove_clicked(self, widget):
         session = self.db.Session()
         active = self.widgets['preferences']['lang_name'].get_active()
-        if active > 0:
+        if active >= 0:
             lang_id = self.languages_ids[active]
             lang = session.query(db.Lang).filter_by(lang_id=lang_id).first()
             if lang and len(lang.movielangs)==0:
@@ -644,22 +644,20 @@ class Griffith(object):
 
     def on_lang_rename_clicked(self, widget):
         try:
-            active = self.lang_name_active
+            lang_id = self.languages_ids[self.lang_name_active]
         except:
             return False
         session = self.db.Session()
-        lang_id = self.languages_ids[active]
-        if lang_id > 0:
-            lang = session.query(db.Lang).filter_by(lang_id=lang_id).first()
-            if lang:
-                lang.name = self.widgets['preferences']['lang_name'].get_active_text().decode('utf-8')
-                try:
-                    session.commit()
-                except Exception, e:
-                    session.rollback()
-                    log.warn("Cannot rename language: %s", e.message)
-                else:
-                    initialize.language_combos(self)
+        lang = session.query(db.Lang).filter_by(lang_id=lang_id).first()
+        if lang:
+            lang.name = self.widgets['preferences']['lang_name'].get_active_text().decode('utf-8')
+            try:
+                session.commit()
+            except Exception, e:
+                session.rollback()
+                log.warn("Cannot rename language: %s", e.message)
+            else:
+                initialize.language_combos(self)
 
     def on_lang_name_combo_changed(self, widget):
         active = self.widgets['preferences']['lang_name'].get_active()
@@ -744,7 +742,7 @@ class Griffith(object):
     def on_acodec_remove_clicked(self, widget):
         session = self.db.Session()
         active = self.widgets['preferences']['acodec_name'].get_active()
-        if active > 0:
+        if active >= 0:
             acodec_id = self.acodecs_ids[active]
             acodec = session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
             if acodec and len(acodec.movielangs) == 0:
@@ -763,11 +761,10 @@ class Griffith(object):
 
     def on_acodec_rename_clicked(self, widget):
         try:
-            active = self.acodec_name_active
+            acodec_id = self.acodecs_ids[self.acodec_name_active]
         except:
             return False
         session = self.db.Session()
-        acodec_id = self.acodecs_ids[active]
         acodec = session.query(db.ACodec).filter_by(acodec_id=acodec_id).first()
         if acodec:
             acodec.name = self.widgets['preferences']['acodec_name'].get_active_text().decode('utf-8')
@@ -802,7 +799,7 @@ class Griffith(object):
     def on_achannel_remove_clicked(self, widget):
         session = self.db.Session()
         active = self.widgets['preferences']['achannel_name'].get_active()
-        if active > 0:
+        if active >= 0:
             achannel_id = self.achannels_ids[active]
             achannel = session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
             if achannel and len(achannel.movielangs)==0:
@@ -821,11 +818,10 @@ class Griffith(object):
 
     def on_achannel_rename_clicked(self, widget):
         try:
-            active = self.achannel_name_active
+            achannel_id = self.achannels_ids[self.achannel_name_active]
         except:
             return False
         session = self.db.Session()
-        achannel_id = self.achannels_ids[active]
         achannel = session.query(db.AChannel).filter_by(achannel_id=achannel_id).first()
         if achannel is not None:
             achannel.name = self.widgets['preferences']['achannel_name'].get_active_text().decode('utf-8')
@@ -860,7 +856,7 @@ class Griffith(object):
     def on_subformat_remove_clicked(self, widget):
         session = self.db.Session()
         active = self.widgets['preferences']['subformat_name'].get_active()
-        if active > 0:
+        if active >= 0:
             subformat_id = self.subformats_ids[active]
             subformat = session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
             if subformat and len(subformat.movielangs)==0:
@@ -879,11 +875,10 @@ class Griffith(object):
 
     def on_subformat_rename_clicked(self, widget):
         try:
-            active = self.subformat_name_active
+            subformat_id = self.subformats_ids[self.subformat_name_active]
         except:
             return False
         session = self.db.Session()
-        subformat_id = self.subformats_ids[active]
         subformat = session.query(db.SubFormat).filter_by(subformat_id=subformat_id).first()
         if subformat is not None:
             subformat.name = self.widgets['preferences']['subformat_name'].get_active_text().decode('utf-8')
@@ -909,7 +904,7 @@ class Griffith(object):
     def on_medium_remove_clicked(self, widget):
         session = self.db.Session()
         active = self.widgets['preferences']['medium_name'].get_active()
-        if active > 0:
+        if active >= 0:
             medium_id = self.media_ids[active]
             medium = session.query(db.Medium).filter_by(medium_id=medium_id).first()
             if medium and len(medium.movies)==0:
@@ -928,11 +923,10 @@ class Griffith(object):
 
     def on_medium_rename_clicked(self, widget):
         try:
-            active = self.medium_name_active
+            medium_id = self.media_ids[self.medium_name_active]
         except:
             return False
         session = self.db.Session()
-        medium_id = self.media_ids[active]
         medium = session.query(db.Medium).filter_by(medium_id=medium_id).first()
         if medium:
             medium.name = self.widgets['preferences']['medium_name'].get_active_text().decode('utf-8')
@@ -977,11 +971,10 @@ class Griffith(object):
 
     def on_vcodec_rename_clicked(self, widget):
         try:
-            active = self.vcodec_name_active
+            vcodec_id = self.vcodecs_ids[self.vcodec_name_active]
         except:
             return False
         session = self.db.Session()
-        vcodec_id = self.vcodecs_ids[active]
         vcodec = session.query(db.VCodec).filter_by(vcodec_id=vcodec_id).first()
         if vcodec:
             vcodec.name = self.widgets['preferences']['vcodec_name'].get_active_text().decode('utf-8')

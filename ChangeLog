@@ -7,6 +7,7 @@ Griffith ChangeLog
 
 2011-12-02  Michael Jahn
 	* [#888347] FilmAffinity plugin doesn't work
+	* [#897774] removal of the first added subtitle format is not possible
 
 2011-12-01  Michael Jahn
 	* [#885914] Amazon Plugin in Griffith doesn't work

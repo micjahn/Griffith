@@ -1010,7 +1010,7 @@ def language_combos(self):
     self.lang['lang'].clear()
     self.widgets['preferences']['lang_name'].insert_text(0, '')
     for i, lang in enumerate(self.db.session.query(db.Lang.lang_id, db.Lang.name).all()):
-        self.languages_ids[i] = lang.lang_id
+        self.languages_ids[i + 1] = lang.lang_id
         self.widgets['preferences']['lang_name'].insert_text(i + 1, lang.name)
         # add movie languages treeview
         self.lang['lang'].append([lang.lang_id, lang.name])
@@ -1025,7 +1025,7 @@ def acodec_combos(self):
     self.lang['acodec'].clear()
     self.widgets['preferences']['acodec_name'].insert_text(0, '')
     for i, acodec in enumerate(self.db.session.query(db.ACodec.acodec_id, db.ACodec.name).all()):
-        self.acodecs_ids[i] = acodec.acodec_id
+        self.acodecs_ids[i + 1] = acodec.acodec_id
         self.widgets['preferences']['acodec_name'].insert_text(i + 1, acodec.name)
         # add movie languages treeview
         self.lang['acodec'].append([acodec.acodec_id, acodec.name])
@@ -1040,7 +1040,7 @@ def achannel_combos(self):
     self.lang['achannel'].clear()
     self.widgets['preferences']['achannel_name'].insert_text(0, '')
     for i, achannel in enumerate(self.db.session.query(db.AChannel.achannel_id, db.AChannel.name).all()):
-        self.achannels_ids[i] = achannel.achannel_id
+        self.achannels_ids[i + 1] = achannel.achannel_id
         self.widgets['preferences']['achannel_name'].insert_text(i + 1, achannel.name)
         # add movie languages treeview
         self.lang['achannel'].append([achannel.achannel_id, achannel.name])
@@ -1055,7 +1055,7 @@ def subformat_combos(self):
     self.lang['subformat'].clear()
     self.widgets['preferences']['subformat_name'].insert_text(0, '')
     for i, subformat in enumerate(self.db.session.query(db.SubFormat.subformat_id, db.SubFormat.name).all()):
-        self.subformats_ids[i] = subformat.subformat_id
+        self.subformats_ids[i + 1] = subformat.subformat_id
         self.widgets['preferences']['subformat_name'].insert_text(i + 1, subformat.name)
         # add movie languages treeview
         self.lang['subformat'].append([subformat.subformat_id, subformat.name])
