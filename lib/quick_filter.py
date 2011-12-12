@@ -42,7 +42,7 @@ def change_filter_update_whereclause(self, statement):
             statement.append_whereclause(db.tables.movies.c[criteria]==text)
         elif criteria == 'any':
             crits = [ ]
-            for crit in ( 'director', 'title', 'o_title', 'cameraman', 'cast', 'year' ):
+            for crit in ( 'director', 'title', 'o_title', 'cameraman', 'cast', 'year', 'screenplay', 'genre', 'studio', 'classification', 'country' ):
                 crits.append(db.tables.movies.c[crit].like('%'+text+'%'))
             statement.append_whereclause(or_(*crits))
         else:
