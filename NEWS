@@ -2,7 +2,7 @@ Griffith 0.13
 =============
 * New movie plugins: AllRovi, IMDB-pt, Interfilmes
 * Most movie plugins updated, 
-  - AniDB plugin requires lxml module now (new 4rd party dependency)
+  - AniDB plugin requires lxml module now (new 3rd party dependency)
 * New extensions: Database Cleanup and Maintenance
 * MacOSX integration improved
 * Many bug fixes
