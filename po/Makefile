@@ -28,7 +28,7 @@ messages.pot: $(GLADEHFILES)
 		msginit -l $*.UTF8 -o $@; \
 	fi
 
-%.mo:
+%.mo: %.po
 	for pofile in $(patsubst ../i18n/%/LC_MESSAGES/griffith.mo,%.po,$@); do \
 		${INSTALL} -m 755 -d $(subst griffith.mo,,$@);\
 		msgconv -t UTF-8 $${pofile} -o $${pofile}_utf8;\
