@@ -29,7 +29,7 @@ class ExportPlugin(XmlExportBase):
     plugin_name         = "Ant Movie Catalog Database XML Export"
     plugin_description  = _("Full Ant Movie Catalog database xml export plugin")
     plugin_author       = "Michael Jahn"
-    plugin_author_email = "griffith-private@lists.berlios.de"
+    plugin_author_email = "griffith@griffith.cc"
     plugin_version      = "1.0"
 
     def __init__(self, database, locations, parent_window, search_conditions, config):

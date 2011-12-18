@@ -33,7 +33,7 @@ log = logging.getLogger("Griffith")
 class ImportPlugin(IP):
     description  = 'Griffith XML'
     author       = 'Michael Jahn'
-    email        = 'griffith-private@lists.berlios.de'
+    email        = 'griffith@griffith.cc'
     version      = '1.0'
     file_filters = '*.[xX][mM][lL]'
     mime_types   = None

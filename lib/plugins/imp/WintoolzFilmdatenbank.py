@@ -36,7 +36,7 @@ log = logging.getLogger("Griffith")
 class ImportPlugin(IP):
     description  = 'wintoolz Filmdatenbank (v1.0.0.x)'
     author       = 'Michael Jahn'
-    email        = 'griffith-private@lists.berlios.de'
+    email        = 'griffith@griffith.cc'
     version      = '1.0'
     file_filters = '*.[dD][bB]'
     mime_types   = None

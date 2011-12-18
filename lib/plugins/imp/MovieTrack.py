@@ -33,7 +33,7 @@ log = logging.getLogger("Griffith")
 class ImportPlugin(IP):
     description  = 'MovieTrack (v3.4x)'
     author       = 'Michael Jahn'
-    email        = 'griffith-private@lists.berlios.de'
+    email        = 'griffith@griffith.cc'
     version      = '1.0'
     file_filters = '*.[dD][aA][tT]'
     mime_types   = None

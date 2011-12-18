@@ -37,7 +37,7 @@ log = logging.getLogger("Griffith")
 class ImportPlugin(IP):
     description  = 'Barrett Enterprise Software The Movie Library (v1.9.x)'
     author       = 'Michael Jahn'
-    email        = 'griffith-private@lists.berlios.de'
+    email        = 'griffith@griffith.cc'
     version      = '1.0'
     file_filters = '*.[mM][dD][bB]'
     mime_types   = None

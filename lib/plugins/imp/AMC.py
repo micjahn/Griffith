@@ -94,7 +94,7 @@ log = logging.getLogger("Griffith")
 class ImportPlugin(IP):
     description  = 'Ant Movie Catalog (v3.5)'
     author       = 'Michael Jahn'
-    email        = 'griffith-private@lists.berlios.de'
+    email        = 'griffith@griffith.cc'
     version      = '1.1'
     file_filters = '*.[aA][mM][cC]'
     mime_types   = None

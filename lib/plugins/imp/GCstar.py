@@ -34,7 +34,7 @@ log = logging.getLogger("Griffith")
 class ImportPlugin(IP):
     description  = 'GCstar (v1.4.x)'
     author       = 'Michael Jahn'
-    email        = 'griffith-private@lists.berlios.de'
+    email        = 'griffith@griffith.cc'
     version      = '1.0'
     file_filters = '*.[gG][cC][sS]'
     mime_types   = None

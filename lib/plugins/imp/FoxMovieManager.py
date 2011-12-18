@@ -37,7 +37,7 @@ log = logging.getLogger("Griffith")
 class ImportPlugin(IP):
     description  = 'Fox Movie Manager (v1.4)'
     author       = 'Michael Jahn'
-    email        = 'griffith-private@lists.berlios.de'
+    email        = 'griffith@griffith.cc'
     version      = '1.0'
     file_filters = '*.[mM][dD][bB]'
     mime_types   = None
