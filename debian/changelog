@@ -1,3 +1,10 @@
+griffith (0.13-1) unstable; urgency=low
+
+  * New upstream release
+  * VCS-* fields removed (berlios will be shutdown)
+
+ -- Piotr Ożarowski <piotr@debian.org>  Sun, 18 Dec 2011 21:15:25 +0100
+
 griffith (0.12.1-2) unstable; urgency=low
 
   * cherry-pick SQLAlchemy 0.7 compatibility from SVN repo
