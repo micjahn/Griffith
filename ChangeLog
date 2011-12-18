@@ -5,6 +5,8 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+---- 0.13 ----
+
 2011-12-18  Piotr Ożarowski
 	* Filmweb movie plugin updated (thanks to mariusz2806)
 
@@ -91,12 +93,12 @@ Griffith ChangeLog
 	* small fixes for CineMovies and HKMDB
 
 2011-04-27  Filippo Valsorda
-    * New Interfilmes plugin by Elencarlos Soares
+	* New Interfilmes plugin by Elencarlos Soares
 
 2011-04-22  Filippo Valsorda
-    * New CSFD plugin by Kamil Hanus
-    * Minor fixes in IMDB-it and MyMoviesIt plugins
-    * Fixed a typo in it.po
+	* New CSFD plugin by Kamil Hanus
+	* Minor fixes in IMDB-it and MyMoviesIt plugins
+	* Fixed a typo in it.po
 
 2011-03-20  Piotr Ożarowski
 	* "spellchekcer" typo fixed (thanks to Olivier BOURSIN)
@@ -127,9 +129,9 @@ Griffith ChangeLog
 	* Fixed about dialog on macosx
 
 2011-02-05  Ivo Nunes
-    * Fixed and re-enabled Mac OS X UI Cocoa menu integration
-    * Mac OS X UI Cocoa menu integration temporarily disabled due to being broken - using native GTK
-    * IMDB-pt plugin added
+	* Fixed and re-enabled Mac OS X UI Cocoa menu integration
+	* Mac OS X UI Cocoa menu integration temporarily disabled due to being broken - using native GTK
+	* IMDB-pt plugin added
 
 2011-02-03  Vasco Nunes
 	* MoviePTGate plugin updated
@@ -153,8 +155,8 @@ Griffith ChangeLog
 2011-01-19  Michael Jahn
 	* [#700704] Incorrect dialog size for posters
 	* [#493148] The Save button in the preferences window does not work well
-    * open of the homepage from the about dialog fixed
-    * enabling persons without email address
+	* open of the homepage from the about dialog fixed
+	* enabling persons without email address
 
 2011-01-17  Michael Jahn
 	* [#703728] FilmAffinity: incomplete list of results
@@ -235,7 +237,7 @@ Griffith ChangeLog
 	* workaround for [#574370] freeze when i select existing mysql database
 
 2010-08-29  Piotr Ożarowski
-    * Show deprecation warnings only in debug mode
+	* Show deprecation warnings only in debug mode
 
 2010-08-26  Michael Jahn
 	* small backup optimizations
@@ -2338,7 +2340,7 @@ Griffith ChangeLog
 	* hardcoded library locations fixed.
 	* added main treeview flag on loaned films.
 	* [Bug #] After droping old database and creating a new one, new movie
-	  don't get ID=1 but incremented old highest value. Fixed.    
+	  don't get ID=1 but incremented old highest value. Fixed.
 
 2005-06-20  Vasco Nunes
 	* true plugin system implemented.
