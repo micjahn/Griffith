@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Griffith
-AppVerName=Griffith 0.12.1
+AppVerName=Griffith 0.13.0
 AppPublisher=Vasco Nunes, Piotr Ożarowski
 AppPublisherURL=http://www.griffith.cc/
 AppSupportURL=http://www.griffith.cc/
@@ -14,7 +14,7 @@ AllowNoIcons=true
 LicenseFile=COPYING
 InfoAfterFile=README
 OutputDir=installer
-OutputBaseFilename=griffith-0.12.1-win32.1
+OutputBaseFilename=griffith-0.13-win32
 SetupIconFile=images\griffith.ico
 UninstallDisplayIcon={app}\griffith.exe
 Compression=lzma
@@ -23,8 +23,8 @@ WizardImageFile=images\griffith_win32_installer.bmp
 InternalCompressLevel=ultra
 AppCopyright=Vasco Nunes/Piotr Ożarowski
 DisableStartupPrompt=false
-AppVersion=0.12.1
-VersionInfoVersion=0.12.1
+AppVersion=0.13.0
+VersionInfoVersion=0.13.0
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl
@@ -66,7 +66,7 @@ Source: dist\share\*;  DestDir: {app}\share;  Flags: ignoreversion recursesubdir
 Source: dist\lib\*;    DestDir: {app}\lib;    Flags: ignoreversion
 ; use recursion, no components
 Source: dist\lib\db\*;           DestDir: {app}\lib\db;           Flags: ignoreversion recursesubdirs createallsubdirs
-Source: dist\lib\gettext\*;      DestDir: {app}\lib\gettext;      Flags: ignoreversion recursesubdirs createallsubdirs
+;Source: dist\lib\gettext\*;      DestDir: {app}\lib\gettext;      Flags: ignoreversion recursesubdirs createallsubdirs
 Source: dist\lib\glade3\*;       DestDir: {app}\lib\glade3;       Flags: ignoreversion recursesubdirs createallsubdirs
 ;Source: dist\lib\glib-2.0\*;     DestDir: {app}\lib\glib-2.0;     Flags: ignoreversion recursesubdirs createallsubdirs
 Source: dist\lib\gtk-2.0\*;      DestDir: {app}\lib\gtk-2.0;      Flags: ignoreversion recursesubdirs createallsubdirs

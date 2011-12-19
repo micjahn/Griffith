@@ -52,6 +52,8 @@ xcopy "%GTKDIR%\share\themes\MS-Windows\gtk-2.0\*.*" "%GRIFFITHDIR%\dist\" /s /e
 if not "%ERRORLEVEL%" == "0" (pause)
 xcopy "%GTKDIR%\bin\jpeg62.dll"   "%GRIFFITHDIR%\dist\" /s /e
 if not "%ERRORLEVEL%" == "0" (pause)
+xcopy "%GTKDIR%\bin\libxml2-2.dll"   "%GRIFFITHDIR%\dist\" /s /e
+if not "%ERRORLEVEL%" == "0" (pause)
 
 copy "%GRIFFITHDIR%\AUTHORS"     "%GRIFFITHDIR%\dist\"
 copy "%GRIFFITHDIR%\COPYING"     "%GRIFFITHDIR%\dist\"
