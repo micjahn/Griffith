@@ -200,7 +200,7 @@ def restore(self, merge=False):
     * SQLite3 *.db file
     """
     # let user select a backup file
-    filename = gutils.file_chooser(_("Restore Griffith backup"), \
+    filename, path = gutils.file_chooser(_("Restore Griffith backup"), \
                 action=gtk.FILE_CHOOSER_ACTION_OPEN, backup=True, \
                 buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
     if not filename:
