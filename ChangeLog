@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2011  Vasco Nunes, Piotr Ożarowski
 
 
+2012-01-02  Michael Jahn
+	* [#909513] code errors in import plugins
+
 2011-12-27  Michael Jahn
 	* better error handling for PDF export plugin
 

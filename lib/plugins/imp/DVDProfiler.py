@@ -205,11 +205,11 @@ class ImportPlugin(IP):
                                         details['screenplay'] = details['screenplay'] + lastName + ', '
                                     elif firstName:
                                         details['screenplay'] = details['screenplay'] + firstName + ', '
-                        if len(details['director']) > 2:
+                        if len(details['director']) > 1:
                             details['director'] = details['director'][:-2]
-                        if len(details['cameraman']) > 2:
+                        if len(details['cameraman']) > 1:
                             details['cameraman'] = details['cameraman'][:-2]
-                        if len(details['screenplay']) > 2:
+                        if len(details['screenplay']) > 1:
                             details['screenplay'] = details['screenplay'][:-2]
                     elif node.nodeName == 'Actors':
                         details['cast'] = ''
@@ -260,7 +260,7 @@ class ImportPlugin(IP):
                         for genreElement in genreElements:
                             if len(genreElement.childNodes) > 0:
                                 details['genre'] = details['genre'] + genreElement.childNodes[0].data.strip() + ', '
-                        if details['genre'] > 2:
+                        if len(details['genre']) > 1:
                             details['genre'] = details['genre'][:-2]
                     elif node.nodeName == 'Studios':
                         details['studio'] = ''
@@ -268,7 +268,7 @@ class ImportPlugin(IP):
                         for studioElement in studioElements:
                             if len(studioElement.childNodes) > 0:
                                 details['studio'] = details['studio'] + studioElement.childNodes[0].data.strip() + ', '
-                        if details['studio'] > 2:
+                        if len(details['studio']) > 1:
                             details['studio'] = details['studio'][:-2]
                     elif node.nodeName == 'Regions':
                         regionElements = node.getElementsByTagName('Region')
