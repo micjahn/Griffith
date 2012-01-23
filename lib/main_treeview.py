@@ -24,7 +24,6 @@ __revision__ = '$Id$'
 import logging
 import os
 import gtk
-from sqlalchemy import select, desc
 from sqlalchemy.sql.expression import Select
 import db
 import gutils
@@ -32,12 +31,13 @@ import sql
 
 log = logging.getLogger("Griffith")
 
+
 def on_tree_selection(tree_selection, self):
     counts = tree_selection.count_selected_rows()
     treeview_selection_on_event(self, self.widgets['treeview'])
     treemodel, selected = tree_selection.get_selected_rows()
     self.selected_iter = [treemodel.get_iter(path) for path in selected]
-    
+
     if counts == 1:
         # TODO: rewrite me
         self.widgets['menu']['clone'].set_sensitive(True)
@@ -62,13 +62,16 @@ def on_tree_selection(tree_selection, self):
         self.widgets['popups']['print_cover'].set_sensitive(False)
     treeview_clicked(self)
 
+
 def foreach_treeview_selected(model, path, iter, selected):
     selected.append(model.get_value(iter, 0))
 
-def treeview_selection_on_event(self, treeview, iter = False):
+
+def treeview_selection_on_event(self, treeview, iter=False):
     self.selected = []
     treeview.get_selection().selected_foreach(foreach_treeview_selected, self.selected)
     #return selected
+
 
 def treeview_clicked(self):
     if self.initialized is False:
@@ -89,7 +92,8 @@ def treeview_clicked(self):
     else:
         return False
 
-def set_details(self, item=None):#{{{
+
+def set_details(self, item=None):  # {{{
     if item is None:
         item = {}
     if 'movie_id' in item and item['movie_id']:
@@ -127,7 +131,7 @@ def set_details(self, item=None):#{{{
             w['resolution'].set_text(item['resolution'])
         elif 'height' in item and item['height'] and 'width' in item and item['width']:
             w['resolution'].set_text("%dx%d" % (item['width'], item['height']))
-        else: # fallback to 'resolution'
+        else:  # fallback to 'resolution'
             w['resolution'].set_text(item['resolution'])
     else:
         w['resolution'].set_text('')
@@ -172,10 +176,10 @@ def set_details(self, item=None):#{{{
         else:
             log.info("Wrong value in 'region' field (movie_id=%s, region=%s)" % (item['movie_id'], item['region']))
             w['region'].set_text('')
-            self.widgets['tooltips'].set_tip(w['region'], self._regions[0]) # N/A
+            self.widgets['tooltips'].set_tip(w['region'], self._regions[0])  # N/A
     else:
         w['region'].set_text('')
-        self.widgets['tooltips'].set_tip(w['region'], self._regions[0]) # N/A
+        self.widgets['tooltips'].set_tip(w['region'], self._regions[0])  # N/A
     if 'layers' in item and item['layers']:
         if str(item['layers']) in [str(i) for i in range(len(self._layers))]:
             w['layers'].set_markup("<i>%s</i>" % self._layers[item['layers']])
@@ -303,7 +307,7 @@ def set_details(self, item=None):#{{{
             self.loan_date = str(item.loan_details.date)
             w['loan_info'].set_use_markup(False)
             w['loan_info'].set_label(_("This movie has been loaned to %s on %s") % (self.person_name, self.loan_date[:10]))
-    if 'loaned' in item and not item['loaned']: # "loaned" status can be changed above, so don't use "else:" in this line
+    if 'loaned' in item and not item['loaned']:  # "loaned" status can be changed above, so don't use "else:" in this line
         self.widgets['popups']['loan'].set_sensitive(True)
         self.widgets['popups']['email'].set_sensitive(False)
         self.widgets['popups']['return'].set_sensitive(False)
@@ -358,7 +362,7 @@ def set_details(self, item=None):#{{{
         i.destroy()
     if 'languages' in item and len(item['languages']) > 0:
         for i in item['languages']:
-            if i.type == 3: # subtitles
+            if i.type == 3:  # subtitles
                 if i.subformat:
                     tmp = "%s - %s" % (i.language.name, i.subformat.name)
                 else:
@@ -390,21 +394,21 @@ def set_details(self, item=None):#{{{
         tmp = ''
         for tag in item['tags']:
             tmp += "%s, " % tag.name
-        tmp = tmp[:-2] # cut last comma
+        tmp = tmp[:-2]  # cut last comma
         w['tags'].set_text(tmp)
     #}}}
 
 
-def populate(self, movies=None, where=None, qf=True):#{{{
-    if self.initialized is False: # dont try to fill movie list if Griffith is not initialized yet
+def populate(self, movies=None, where=None, qf=True):  # {{{
+    if self.initialized is False:  # dont try to fill movie list if Griffith is not initialized yet
         return False
 
-    if qf and movies is None or isinstance(movies, Select): # if ".execute().fetchall()" not invoked on movies yet
-        if not where: # due to possible 'seen', 'loaned', 'collection_id' in where
+    if qf and movies is None or isinstance(movies, Select):  # if ".execute().fetchall()" not invoked on movies yet
+        if not where:  # due to possible 'seen', 'loaned', 'collection_id' in where
             import advfilter
 
             # saved in advfilter
-            name = self.widgets['filter']['advfilter'].get_active_text()[:-3].decode('utf-8') # :-3 due to additional '   ' in the name
+            name = self.widgets['filter']['advfilter'].get_active_text()[:-3].decode('utf-8')  # :-3 due to additional '   ' in the name
             if name:
                 cond = self.db.session.query(db.Filter).filter_by(name=name).first()
                 if not cond:
@@ -529,13 +533,15 @@ def populate(self, movies=None, where=None, qf=True):#{{{
     self.count_statusbar()
 #}}}
 
-def addmovie(self, movie): #{{{
+
+def addmovie(self, movie):  # {{{
     myiter = self.treemodel.append(None)
     setmovie(self, movie, myiter)
     return myiter
 #}}}
 
-def setmovie(self, movie, iter, treemodel = None): #{{{
+
+def setmovie(self, movie, iter, treemodel=None):  # {{{
     if not treemodel:
         treemodel = self.treemodel
 
@@ -573,7 +579,8 @@ def setmovie(self, movie, iter, treemodel = None): #{{{
     return iter
 #}}}
 
-def select(self, iter, ensurevisible = True): #{{{
+
+def select(self, iter, ensurevisible=True):  # {{{
     if iter:
         self.widgets['treeview'].get_selection().select_iter(iter)
         if ensurevisible:

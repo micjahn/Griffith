@@ -50,14 +50,11 @@ def locations(self, home_dir):
     if defaultEnc is None:
         defaultEnc = 'UTF-8'
     locations = {}
-    locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0])) # deprecated
+    locations['exec'] = os.path.abspath(os.path.dirname(sys.argv[0]))  # deprecated
     locations['lib'] = os.path.dirname(__file__)
     locations['home'] = home_dir
 
-    if os.name == 'nt' or os.name.startswith('win'): # win32, win64
-        import winshell
-        from win32com.shell import shellcon, shell
-
+    if os.name == 'nt' or os.name.startswith('win'):  # win32, win64
         locations['movie_plugins'] = "%s\\lib\\plugins\\movie" % locations['exec']
         locations['export_plugins'] = "%s\\lib\\plugins\\export" % locations['exec']
         locations['images'] = "%s\\images" % locations['exec']
@@ -165,6 +162,7 @@ def toolbar(self):
         self.widgets['extensions']['toolbar_hb'].show()
         self.widgets['menu']['ext_toolbar'].set_active(True)
 
+
 def treeview(self):
     import main_treeview
     # set up the treeview to do multiple selection
@@ -174,7 +172,7 @@ def treeview(self):
     tree.set_headers_visible(True)
     tree.get_selection().set_mode(gtk.SELECTION_MULTIPLE)
     self.widgets['treeview'].get_selection().connect("changed", main_treeview.on_tree_selection, self)
-    
+
     # number column
     renderer = gtk.CellRendererText()
     self.number_column = gtk.TreeViewColumn(_('No.'), renderer, text=0)
@@ -280,6 +278,7 @@ def treeview(self):
     self.updated_column.set_alignment(0.5)
     self.updated_column.set_reorderable(True)
     self.widgets['treeview'].append_column(self.updated_column)
+
     # reflect saved column order and column sizes
     columnorder = self.config.get('columnorder', None, section='mainlist')
     if columnorder:
@@ -319,7 +318,7 @@ def treeview(self):
     self.total = self.db.session.query(db.Movie).count()
     self.widgets['treeview'].set_search_equal_func(search_func_treeview)
     self.widgets['treeview'].show()
-    
+
     # adding some completion fields - TODO: move it to initialize
     self.completion = gtk.EntryCompletion()
     self.widgets['add']['o_title'].set_completion(self.completion)
@@ -331,14 +330,15 @@ def treeview(self):
     self.completion_t.set_model(self.treemodel)
     self.completion_t.set_text_column(4)
 
+
 def search_func_treeview(model, column, key, iter):
-    return not (str(model.get_value(iter, 0)).startswith(key) or 
-        str(model.get_value(iter, 2)).lower().startswith(key.lower()) or 
+    return not (str(model.get_value(iter, 0)).startswith(key) or
+        str(model.get_value(iter, 2)).lower().startswith(key.lower()) or
         str(model.get_value(iter, 3)).lower().startswith(key.lower()))
 
 
 def loans_treeview(self):
-    self.loans_treemodel = gtk.TreeStore(str, str, str) # move to self.widgets
+    self.loans_treemodel = gtk.TreeStore(str, str, str)  # move to self.widgets
     self.widgets['movie']['loan_history'].set_model(self.loans_treemodel)
     self.widgets['movie']['loan_history'].set_headers_visible(True)
     # loan date
@@ -540,7 +540,7 @@ def import_plugins(self):
     for i in fields_to_import:
         j = j + 1
         w['fields'][i] = gtk.CheckButton(self.field_names[i])
-        w['fields'][i].set_active(True) # TODO: get from config
+        w['fields'][i].set_active(True)  # TODO: get from config
         if j <= k:
             w['box_import_1'].add(w['fields'][i])
         elif j <= 2 * k:
@@ -583,7 +583,6 @@ def extension(self, module, enabled):
 def extension_preferences(self, module, enabled):
     # preferences window
     p_vbox = self.widgets['extensions']['preferences_vbox']
-
     configwidgets = {}
 
     label = "%s v%s <i>(%s &lt;%s&gt;)</i>" % (module.name, module.version, module.author, module.email)
@@ -665,7 +664,7 @@ def extensions(self):
     if hasattr(self, 'extensions'):
         for ext in self.extensions:
             ext.clear()
-    self.extensions = [] # deletes previous instances
+    self.extensions = []  # deletes previous instances
 
     for ext_name in plugins.extensions.by_name:
         ext_module = plugins.extensions.by_name[ext_name]
@@ -730,7 +729,7 @@ def combos(self):
     pos_to_activate = 0
     selected_criteria = self.config.get('criteria', None, section='mainlist')
     self.search_criteria_sorted = sorted((self.field_names[criteria], criteria) for criteria in self.search_criteria)
-    self.search_criteria_sorted.insert( 0, ( _('Any'), 'any' ) ) 
+    self.search_criteria_sorted.insert(0, (_('Any'), 'any'))
     for (criterianame, criteria) in self.search_criteria_sorted:
         self.widgets['filter']['criteria'].insert_text(i, criterianame)
         if selected_criteria == criterianame:
@@ -745,12 +744,12 @@ def combos(self):
             self.widgets['preferences']['sortby'].insert_text(i, _('Last added'))
         i += 1
     self.widgets['preferences']['sortby'].set_wrap_width(3)
-    self.widgets['preferences']['sortby'].set_active(0) # Number
+    self.widgets['preferences']['sortby'].set_active(0)  # Number
 
 
 def dictionaries(self):
     """initializes data filled dynamically by users"""
-    self.am_tags = {} # dictionary for tag CheckBoxes
+    self.am_tags = {}  # dictionary for tag CheckBoxes
     update_volume_combo_ids(self)
     update_collection_combo_ids(self)
     fill_volumes_combo(self)
@@ -765,7 +764,7 @@ def dictionaries(self):
     vcodec_combos(self)
     media_combos(self)
     create_tag_vbox(self, widget=self.widgets['add']['tag_vbox'], tab=self.am_tags)
-    self.sort_criteria = [ # "[]" because of index()
+    self.sort_criteria = [  # "[]" because of index()
         'number', 'o_title', 'title', 'director', 'year', 'runtime', 'country',
         'genre', 'studio', 'media_num', 'rating', 'classification', 'collection_id',
         'volume_id', 'cond', 'layers', 'region', 'movie_id']
@@ -921,7 +920,7 @@ def update_collection_combo_ids(self):
 
 def fill_volumes_combo(self, default=0):
     _tmp = self.initialized
-    self.initialized = False # don't refresh main treeview
+    self.initialized = False  # don't refresh main treeview
     self.widgets['add']['volume'].get_model().clear()
     for i in self.volume_combo_ids:
         vol_id = self.volume_combo_ids[i]
@@ -940,7 +939,7 @@ def fill_volumes_combo(self, default=0):
 
 def fill_collections_combo(self, default=0):
     _tmp = self.initialized
-    self.initialized = False # don't refresh main treeview
+    self.initialized = False  # don't refresh main treeview
     self.widgets['add']['collection'].get_model().clear()
     self.widgets['filter']['collection'].get_model().clear()
     for i in self.collection_combo_ids:
@@ -964,9 +963,9 @@ def fill_collections_combo(self, default=0):
 
 def fill_advfilter_combo(self):
     _tmp = self.initialized
-    self.initialized = False # don't refresh main treeview
+    self.initialized = False  # don't refresh main treeview
     self.widgets['filter']['advfilter'].get_model().clear()
-    self.widgets['filter']['advfilter'].insert_text(0, '') # empty one
+    self.widgets['filter']['advfilter'].insert_text(0, '')  # empty one
     for i, item in enumerate(self.db.session.query(db.Filter.name).order_by(db.Filter.name).all()):
         # add some white spaces to prevent scrollbar hides parts of the names
         self.widgets['filter']['advfilter'].insert_text(i + 1, item.name + '   ')
@@ -977,7 +976,7 @@ def fill_advfilter_combo(self):
 
 def fill_preferences_tags_combo(self):
     _tmp = self.initialized
-    self.initialized = False # don't refresh main treeview
+    self.initialized = False  # don't refresh main treeview
     self.widgets['preferences']['tag_name'].get_model().clear()
     self.tags_ids = {}
     for i, tag in enumerate(self.db.session.query(db.Tag.name, db.Tag.tag_id).all()):
@@ -990,7 +989,7 @@ def fill_preferences_tags_combo(self):
 
 def fill_resolutions_combo(self, default=0):
     _tmp = self.initialized
-    self.initialized = False # don't refresh main treeview
+    self.initialized = False  # don't refresh main treeview
     self.widgets['add']['resolution'].get_model().clear()
     #resolutions = [names[0] for names in db._movie.res_aliases.values()]
     resolutions = [names[0] for (res, names) in db._movie.res_aliases.iteritems()]
@@ -1086,7 +1085,7 @@ def media_combos(self):
     self.widgets['preferences']['media'].show_all()
     if self.config.has_key('media', section='defaults'):
         pos = gutils.findKey(self.config.get('media', section='defaults'), self.media_ids)
-        if pos  is not None:
+        if pos is not None:
             self.widgets['preferences']['media'].set_active(int(pos))
         else:
             self.widgets['preferences']['media'].set_active(0)
@@ -1138,7 +1137,7 @@ def create_tag_vbox(self, widget, tab):
 
 
 def remove_hbox(self, widget, tab):
-    number = len(widget.get_children())-1    # last box number
+    number = len(widget.get_children()) - 1  # last box number
     try:
         tab.pop()
         widget.remove(widget.get_children().pop())
