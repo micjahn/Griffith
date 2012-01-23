@@ -614,6 +614,9 @@ def extension_preferences(self, module, enabled):
             w.insert_text(value)
             # TODO: min, max
         # elif type is int: # TODO
+        elif type_ is bool:
+            w = gtk.CheckButton()
+            w.set_active(bool(value))
         elif isinstance(type_, (list, tuple, dict)):
             model = gtk.TreeStore(str, str)
             if isinstance(type_, dict):
