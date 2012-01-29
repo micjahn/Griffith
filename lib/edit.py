@@ -152,5 +152,5 @@ def delete_poster(self, movie_id = None):
 def update_tree_thumbnail(self, t_image_path):
     self.Image.set_from_file(t_image_path)
     pixbuf = self.Image.get_pixbuf()
-    if self.selected_iter[0]:
+    if len(self.selected_iter) > 0 and self.selected_iter[0]:
         self.treemodel.set_value(self.selected_iter[0], 1, pixbuf)
