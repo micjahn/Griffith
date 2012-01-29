@@ -181,14 +181,11 @@ class ImportPlugin(object):
                             tags = details.pop('tags')
                         else:
                             tags = None
+                        poster = None
                         if 'poster' in details:
                             poster = details.pop('poster')
-                        else:
-                            poster = None
-                        if 'image' in details:
+                        elif 'image' in details:
                             poster = details.pop('image')
-                        else:
-                            poster = None
                         try:
                             # optional: do mapping of lookup data
                             if not self.foreignkeymaps:

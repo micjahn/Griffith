@@ -8,6 +8,7 @@ Griffith ChangeLog
 2012-01-29  Michael Jahn
 	* [#923416] Connection failed. (Amazon plugin)
 	* [#913299] importing covers gives list index out of range
+	* [#913283] importer: 'poster' overwritten by 'image'
 
 2012-01-10  Piotr Ożarowski
 	* Filmweb movie plugin updated (thanks to mariusz2806)
