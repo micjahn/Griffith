@@ -5,6 +5,9 @@ Griffith ChangeLog
 (c) 2005-2012  Vasco Nunes, Piotr Ożarowski
 
 
+2012-04-02  Michael Jahn
+	* fixed Allocine plugin (V3 API) (thanks to CinéphOli)
+
 2012-01-29  Michael Jahn
 	* [#923416] Connection failed. (Amazon plugin)
 	* [#913299] importing covers gives list index out of range
