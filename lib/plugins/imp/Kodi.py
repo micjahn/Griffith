@@ -62,7 +62,7 @@ class ImportPlugin(IP):
         'title': 'title',
         'o_title': 'originaltitle',
         'year': 'year',
-        'runtime': 'runtime', # may need int cast
+        'runtime': 'runtime',
         'rating': 'rating',
         'plot': 'plot',
         'director': 'director',
@@ -158,6 +158,14 @@ class ImportPlugin(IP):
 
         # genre can be multiple items, join by comma
         details['genre'] = ', '.join(n.text for n in item.findall('genre'))
+
+        # build text for 'cast' field
+        cast = []
+        for actor in item.findall('actor'):
+            cast.append('%s as %s' % (actor.findtext('name'), actor.findtext('role')))
+
+        if cast:
+            details['cast'] = "\n".join(cast)
 
         # increment for next iteration
         self.itemindex = self.itemindex + 1
