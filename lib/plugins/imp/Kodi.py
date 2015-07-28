@@ -35,6 +35,11 @@ import logging
 log = logging.getLogger("Griffith")
 
 """
+Supports importing videodb.xml exported as single file from Kodi/XBMC.
+
+http://kodi.wiki/view/Import-export_library
+http://kodi.wiki/view/HOW-TO:Backup_the_video_library
+
 See lib/plugins/imp/__init__.py for workflow how importer invokes methods from importer plugins
 """
 class ImportPlugin(IP):
