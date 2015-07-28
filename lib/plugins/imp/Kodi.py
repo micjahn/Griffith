@@ -194,6 +194,12 @@ class ImportPlugin(IP):
         if notes:
             details['notes'] = "\n".join(notes)
 
+        # handle poster
+        # take first <thumb aspect="poster"> element
+        posters = item.xpath('thumb[@aspect="poster"]')
+        if posters:
+            details['image'] = posters[0].get('preview')
+
         # increment for next iteration
         self.itemindex = self.itemindex + 1
 
