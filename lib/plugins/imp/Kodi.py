@@ -24,12 +24,9 @@ __revision__ = '$Id: $'
 from plugins.imp import ImportPlugin as IP
 import os
 import gutils
-import string
-from xml.dom import minidom, Node
 from lxml import etree
-import zipfile
-from shutil import rmtree
-from tempfile import mkdtemp
+import tempfile
+from urllib2 import urlopen, URLError, HTTPError
 
 import logging
 log = logging.getLogger("Griffith")
@@ -54,6 +51,7 @@ class ImportPlugin(IP):
     xml          = None
     items        = None
     itemindex    = 0
+    poster_file  = None
 
     # used by get_movie_details method
     # griffith field => kodi field
@@ -109,6 +107,9 @@ class ImportPlugin(IP):
             self.fileversion = None
             self.items = None
             self.itemindex = 0
+            if self.poster_file:
+                os.unlink(self.poster_file)
+                self.poster_file = None
 
     def destroy(self):
         """close all resources"""
@@ -198,9 +199,34 @@ class ImportPlugin(IP):
         # take first <thumb aspect="poster"> element
         posters = item.xpath('thumb[@aspect="poster"]')
         if posters:
-            details['image'] = posters[0].get('preview')
+            self.poster_file = self.grab_url(posters[0].get('preview'), prefix = 'poster_', suffix = '.jpg')
+            details['image'] = self.poster_file
 
         # increment for next iteration
         self.itemindex = self.itemindex + 1
 
         return details
+
+    # grab url, return temp filename with remote file contents
+    # XXX could not figure out how to use griffith own downloader with ui interaction, etc
+    # XXX: grabbing urls while processing import xml blocks the ui
+    def grab_url(self, url, prefix = None, suffix=None):
+        log.debug("Downloading: %s" % url)
+        (fd, local_file) = tempfile.mkstemp(suffix=suffix, prefix=prefix)
+        try:
+            f = urlopen(url)
+            os.write(fd, f.read())
+            os.close(fd)
+
+        except HTTPError, e:
+            log.error("HTTP Error: %s: %s" % (e.code, url))
+            return None
+        except URLError, e:
+            log.error("URL Error: %s: %s" % (e.reason, url))
+            return None
+        else:
+            return local_file
+
+        # we get here with an exception, cleanup and return None
+        os.unlink(local_file)
+        return None
