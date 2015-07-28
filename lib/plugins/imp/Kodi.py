@@ -199,6 +199,10 @@ class ImportPlugin(IP):
         if notes:
             details['notes'] = "\n".join(notes)
 
+        # rating needs to be int or tellico will show it as 0 until movie is saved over
+        if details['rating']:
+            details['rating'] = int(float(details['rating']))
+
         # handle poster
         # take first <thumb aspect="poster"> element
         posters = item.xpath('thumb[@aspect="poster"]')
