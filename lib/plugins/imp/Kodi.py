@@ -27,8 +27,9 @@ import gutils
 from lxml import etree
 import tempfile
 from urllib2 import urlopen, URLError, HTTPError
-
+from movie import TempFileCleanup
 import logging
+
 log = logging.getLogger("Griffith")
 
 """
@@ -88,6 +89,8 @@ class ImportPlugin(IP):
         if not IP.initialize(self):
             return False
         self.edit = False
+        self.tempfiles = TempFileCleanup()
+
         return True
 
     def set_source(self, name):
@@ -113,6 +116,7 @@ class ImportPlugin(IP):
 
     def destroy(self):
         """close all resources"""
+        self.tempfiles = None
         IP.destroy(self)
 
     def read_fileversion(self):
@@ -211,8 +215,8 @@ class ImportPlugin(IP):
     # XXX could not figure out how to use griffith own downloader with ui interaction, etc
     # XXX: grabbing urls while processing import xml blocks the ui
     def grab_url(self, url, prefix = None, suffix=None):
-        log.debug("Downloading: %s" % url)
         (fd, local_file) = tempfile.mkstemp(suffix=suffix, prefix=prefix)
+        log.debug("Downloading: %s as %s" % (url, local_file))
         try:
             f = urlopen(url)
             os.write(fd, f.read())
@@ -225,6 +229,7 @@ class ImportPlugin(IP):
             log.error("URL Error: %s: %s" % (e.reason, url))
             return None
         else:
+            self.tempfiles._tempfiles.append(local_file)
             return local_file
 
         # we get here with an exception, cleanup and return None
