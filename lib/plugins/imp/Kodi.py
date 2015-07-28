@@ -68,10 +68,22 @@ class ImportPlugin(IP):
         'director': 'director',
         'studio': 'studio',
         'country': 'country',
+        'classification': 'mpaa',
         # while the trailer field exists, it is not useful for griffith
         # as it's something like: "plugin://plugin.video.youtube/?action=play_video&videoid=..."
         # however youtube urls can be probably fixed.
         'trailer': 'trailer',
+    }
+
+    # rest of the stuff to insert into notes field
+    notes_map = {
+        _('Id') : 'id',
+        _('Play count'): 'playcount',
+        _('Date added'): 'dateadded',
+        _('Last played'): 'lastplayed',
+        _('Collection'): 'set',
+        _('Premiered'): 'premiered',
+        _('Aired'): 'aired',
     }
 
     def initialize(self):
@@ -166,6 +178,21 @@ class ImportPlugin(IP):
 
         if cast:
             details['cast'] = "\n".join(cast)
+
+        # put rest of information into notes field
+        notes = []
+        for k,v in self.notes_map.items():
+            v = item.findtext(v)
+            if v:
+                notes.append('%s: %s' % (k, v))
+
+        # credits can have multiple values, handle separately
+        credits = ', '.join(n.text for n in item.findall('credits'))
+        if credits:
+            notes.append(_('Credits: %s') % credits)
+
+        if notes:
+            details['notes'] = "\n".join(notes)
 
         # increment for next iteration
         self.itemindex = self.itemindex + 1
