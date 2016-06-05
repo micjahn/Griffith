@@ -2,7 +2,7 @@
 
 __revision__ = '$Id: $'
 
-# Copyright (c) 2015
+# Copyright (c) 2015-2016 Elan Ruusamäe <glen@pld-linux.org>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -167,11 +167,19 @@ class ImportPlugin(IP):
 
         # fill details
         details = {}
-        for k,v in self.field_map.items():
-            details[k] = item.findtext(v)
 
         # if playcount set, means it's seen
         details['seen'] = int(item.find('playcount').text) > 0
+
+        # import only "seen" movies
+        if not details['seen']:
+            # importer will skip movie without title and original title
+            self.itemindex = self.itemindex + 1
+            # increment for next iteration
+            return details
+
+        for k,v in self.field_map.items():
+            details[k] = item.findtext(v)
 
         # genre can be multiple items, join by comma
         details['genre'] = ', '.join(n.text for n in item.findall('genre'))
