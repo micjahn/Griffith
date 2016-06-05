@@ -26,7 +26,7 @@ import os
 import gutils
 from lxml import etree
 import tempfile
-from urllib2 import urlopen, URLError, HTTPError
+import requests
 from movie import TempFileCleanup
 import logging
 
@@ -173,9 +173,9 @@ class ImportPlugin(IP):
 
         # import only "seen" movies
         if not details['seen']:
-            # importer will skip movie without title and original title
-            self.itemindex = self.itemindex + 1
             # increment for next iteration
+            self.itemindex = self.itemindex + 1
+            # importer will skip movie without title and original title
             return details
 
         for k,v in self.field_map.items():
@@ -230,17 +230,18 @@ class ImportPlugin(IP):
         (fd, local_file) = tempfile.mkstemp(suffix=suffix, prefix=prefix)
         log.debug("Downloading: %s as %s" % (url, local_file))
         try:
-            f = urlopen(url)
-            os.write(fd, f.read())
+            # http://stackoverflow.com/a/13137873/2314626
+            r = requests.get(url, stream=True, timeout=0.1)
+            if r.status_code == 200:
+                for chunk in r.iter_content(1024):
+                    os.write(fd, chunk)
             os.close(fd)
 
-        except HTTPError, e:
-            log.error("HTTP Error: %s: %s" % (e.code, url))
-            return None
-        except URLError, e:
-            log.error("URL Error: %s: %s" % (e.reason, url))
+        except requests.exceptions.RequestException as e:
+            log.error("HTTP Error: %s: %s" % (e, url))
             return None
         else:
+            log.debug("Downloaded: %s" % url)
             self.tempfiles._tempfiles.append(local_file)
             return local_file
 
