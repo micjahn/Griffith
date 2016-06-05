@@ -91,6 +91,13 @@ class ImportPlugin(IP):
         self.edit = False
         self.tempfiles = TempFileCleanup()
 
+        # try requests cache if available
+        try:
+            import requests_cache
+            requests_cache.install_cache('kodi_cache')
+        except:
+            pass
+
         return True
 
     def set_source(self, name):
