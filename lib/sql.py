@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
 
-__revision__ = '$Id$'
+__revision__ = '$Id: sql.py 1538 2011-02-13 20:04:22Z piotrek $'
 
 # Copyright © 2005-2009 Vasco Nunes, Piotr Ożarowski
 #

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: backup.py 1632 2012-12-16 21:15:57Z mikej06 $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #
@@ -85,10 +85,12 @@ def create(self):
                 file_path = os.path.join(self.locations['home'], db_file_name).encode('utf-8')
                 mzip.write(file_path, arcname=db_file_name)
             else:
+                tmp_engine = None
                 try:
                     tmp_dir = mkdtemp()
-                    tmp_config = copy.deepcopy(self.config)
-                    tmp_config._file = os.path.join(tmp_dir, 'griffith.cfg')
+                    tmp_config_file = os.path.join(tmp_dir, 'griffith.cfg')
+                    self.config.save(tmp_config_file)
+                    tmp_config = config.Config(file=tmp_config_file)
                     tmp_config.set('type', 'sqlite', section='database')
                     tmp_config.set('file', 'griffith.db', section='database')
                     tmp_config.set('name', 'griffith', section='database')
@@ -114,7 +116,8 @@ def create(self):
                     mzip.write(tmp_file, arcname='griffith.db')
                 finally:
                     # disposing the temporary db connection before rmtree and in finally block to avoid locked db file
-                    tmp_engine.dispose()
+                    if tmp_engine:
+                        tmp_engine.dispose()
                     rmtree(tmp_dir)
             gutils.info(_("Backup has been created"), self.widgets['window'])
 

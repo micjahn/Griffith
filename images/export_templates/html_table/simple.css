@@ -1,0 +1,23 @@
+.title, .otitle {
+	font-weight: bold;
+}
+
+/* Navigation bar */
+.navi, .copyright {
+	text-align: center;
+	font-size: 0.8em;
+}
+.navi p { display: inline; }
+
+.navi p:before { content: "["; }
+.navi p:after { content: "]"; }
+.navi p#prev:before, .navi p#next:before { content: ""; }
+.navi p#prev:after, .navi p#next:after { content: ""; }
+.navi p#current {
+	font-size: 1.1em;
+}
+
+.copyright {
+	font-size: 0.7em;
+	margin-top: 5px;
+}

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: gdebug.py 1326 2009-12-01 21:06:05Z mikej06 $'
 
 # Copyright (c) 2009 Vasco Nunes, Piotr Ożarowski
 #

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
-__revision__ = '$Id$'
+__revision__ = '$Id: _objects.py 1556 2011-06-13 20:46:47Z mikej06 $'
 
 # Copyright © 2009-2011 Piotr Ożarowski
 #
@@ -107,6 +107,9 @@ class Collection(DBTable):
             need to do that if flag is False).
         """
 
+        if not isinstance(flag, bool):
+            return
+
         session = object_session(self)
 
         if flag: # loaning whole collection
@@ -136,6 +139,8 @@ class Volume(DBTable):
             later!
         """
 
+        if not isinstance(flag, bool):
+            return
         session = object_session(self)
 
         self._loaned = flag

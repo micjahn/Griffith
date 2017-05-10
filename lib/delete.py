@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: delete.py 1536 2011-02-12 00:50:13Z iznogoud $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #

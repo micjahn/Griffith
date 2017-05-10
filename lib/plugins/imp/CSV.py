@@ -1,6 +1,6 @@
 ﻿# -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: CSV.py 1549 2011-05-18 12:36:46Z mikej06 $'
 
 ###########################################################################
 #    Copyright (C) 2006-2007 by Jessica Katharina Parth

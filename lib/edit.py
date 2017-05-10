@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: edit.py 1619 2012-01-29 19:11:45Z mikej06 $'
 
 # Copyright © 2005-2011 Vasco Nunes, Piotr Ożarowski
 

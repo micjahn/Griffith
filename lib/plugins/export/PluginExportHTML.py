@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
 
-__revision__ = '$Id$'
+__revision__ = '$Id: PluginExportHTML.py 1509 2011-02-01 21:56:04Z mikej06 $'
 
 # Copyright (c) 2005-2009 Piotr Ożarowski
 #

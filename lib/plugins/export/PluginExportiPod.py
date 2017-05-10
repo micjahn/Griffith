@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: PluginExportiPod.py 1533 2011-02-08 21:04:38Z iznogoud $'
 
 # Copyright (c) 2005-2011 Vasco Nunes
 #

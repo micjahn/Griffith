@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
 
-__revision__ = '$Id$'
+__revision__ = '$Id: dbupgrade.py 1596 2011-10-04 18:41:03Z piotrek $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #

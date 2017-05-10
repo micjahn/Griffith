@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: ge_mark_seen.py 1568 2011-08-10 20:08:12Z mikej06 $'
 
 # Copyright © 2009 Piotr Ożarowski
 #

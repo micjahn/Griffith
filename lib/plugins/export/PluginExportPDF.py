@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: PluginExportPDF.py 1648 2013-06-01 18:25:04Z mikej06 $'
 
-# Copyright (c) 2005-2011 Vasco Nunes
+# Copyright (c) 2005-2013 Vasco Nunes
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,14 +51,25 @@ class ExportPlugin(Base):
     description = _("PDF export plugin")
     author = "Vasco Nunes"
     email = "<vasco.m.nunes@gmail.com>"
-    version = "0.6"
+    version = "0.7"
 
-    fields_to_export = ('number', 'o_title', 'title', 'director', 'genre', 'cast', 'plot', 'runtime', 'year', 'notes', 'poster_md5')
+    fields_to_export = ('number', 'o_title', 'title', 'director', 'genre', 'cast', 'plot', 'runtime', 'year', 'notes', 'poster_md5', 'width', 'height', 'volumes.name', 'collections.name')
 
     def initialize(self):
         self.fontName = ''
         return True
 
+    def _get_resolution(self, movie):
+        if not movie.movies_width or not movie.movies_height:
+            return ''
+        from db._movie import res_aliases
+        resolution = (movie.movies_width, movie.movies_height)
+        if resolution in res_aliases:
+            return res_aliases[resolution][0]
+        else:
+            res_string = "%dx%d" % resolution
+            return res_string
+    
     def run(self):
         """exports a simple movie list to a pdf file"""
 
@@ -90,7 +101,8 @@ class ExportPlugin(Base):
                     c = SimpleDocTemplate(pdffilename.encode(defaultEnc), \
                         author = 'Griffith', \
                         title = _('List of films').encode('utf-8'), \
-                        subject = _('List of films').encode('utf-8'))
+                        subject = _('List of films').encode('utf-8'), \
+                        allowSplitting = False)
                     # data encoding
                     #if defaultEncoding == 'WinAnsiEncoding':
                     #    defaultEnc = 'cp1252'
@@ -126,20 +138,20 @@ class ExportPlugin(Base):
                     # output movies
                     first_letter = ''
                     for movie in movies:
-                        number = movie.number
-                        if movie.o_title:
-                            original_title = movie.o_title.encode(defaultEnc)
+                        number = movie.movies_number
+                        if movie.movies_o_title:
+                            original_title = movie.movies_o_title.encode(defaultEnc)
                         else:
                             original_title = ''
-                        if movie.title:
-                            title = movie.title.encode(defaultEnc)
+                        if movie.movies_title:
+                            title = movie.movies_title.encode(defaultEnc)
                         else:
                             title = ''
-                        grouping_title = movie.title
+                        grouping_title = movie.movies_title
                         if grouping_title is None:
                             grouping_title = u'None'
-                        if movie.director:
-                            director = ' - ' + movie.director.encode(defaultEnc)
+                        if movie.movies_director:
+                            director = ' - ' + movie.movies_director.encode(defaultEnc)
                         else:
                             director = ""
                         # group by first letter
@@ -163,40 +175,53 @@ class ExportPlugin(Base):
                         p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Heading3'])
                         if 'image' in pdf_elements:
                             image_filename = None
-                            if movie.poster_md5:
-                                image_filename = gutils.get_image_fname(movie.poster_md5, self.db, 'm')
+                            if movie.movies_poster_md5:
+                                image_filename = gutils.get_image_fname(movie.movies_poster_md5, self.db, 'm')
                             if image_filename:
                                 p = ParagraphAndImage(p, Image(image_filename, width = 30, height = 40), side = 'left')
                                 # wrap call needed because of a bug in reportlab flowables.py - ParagraphAndImage::split(self,availWidth, availHeight)
                                 # AttributeError: ParagraphAndImage instance has no attribute 'wI'
                                 p.wrap(30, 40)
                         Story.append(p)
-                        if 'year' in pdf_elements and movie.year:
-                            paragraph_text = '<b>' + _('Year') + ': </b>' + saxutils.escape(str(movie.year))
+                        if 'year' in pdf_elements and movie.movies_year:
+                            paragraph_text = '<b>' + _('Year') + ': </b>' + saxutils.escape(str(movie.movies_year))
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                             Story.append(p)
-                        if 'runtime' in pdf_elements and movie.runtime:
-                            paragraph_text = '<b>' + _('Runtime') + ': </b>' + saxutils.escape(str(movie.runtime))
+                        if 'runtime' in pdf_elements and movie.movies_runtime:
+                            paragraph_text = '<b>' + _('Runtime') + ': </b>' + saxutils.escape(str(movie.movies_runtime))
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                             Story.append(p)
-                        if 'genre' in pdf_elements and movie.genre:
-                            paragraph_text = '<b>' + _('Genre') + ': </b>' + saxutils.escape(movie.genre.encode(defaultEnc))
+                        if 'genre' in pdf_elements and movie.movies_genre:
+                            paragraph_text = '<b>' + _('Genre') + ': </b>' + saxutils.escape(movie.movies_genre.encode(defaultEnc))
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                             Story.append(p)
-                        if 'director' in pdf_elements and movie.director:
-                            paragraph_text = '<i><b>' + _('Director') + ': </b>' + saxutils.escape(movie.director.encode(defaultEnc)) + '</i>'
+                        if 'director' in pdf_elements and movie.movies_director:
+                            paragraph_text = '<i><b>' + _('Director') + ': </b>' + saxutils.escape(movie.movies_director.encode(defaultEnc)) + '</i>'
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                             Story.append(p)
-                        if 'cast' in pdf_elements and movie.cast:
-                            paragraph_text = '<i><b>' + _('Cast') + ': </b>' + saxutils.escape('; '.join(movie.cast.encode(defaultEnc).split("\n")[0:2])) + '</i>'
+                        if 'cast' in pdf_elements and movie.movies_cast:
+                            paragraph_text = '<i><b>' + _('Cast') + ': </b>' + saxutils.escape('; '.join(movie.movies_cast.encode(defaultEnc).split("\n")[0:2])) + '</i>'
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                             Story.append(p)
-                        if 'plot' in pdf_elements and movie.plot:
-                            paragraph_text = '<i><b>' + _('Plot') + ': </b>' + saxutils.escape(movie.plot.encode(defaultEnc)) + '</i>'
+                        if 'plot' in pdf_elements and movie.movies_plot:
+                            paragraph_text = '<i><b>' + _('Plot') + ': </b>' + saxutils.escape(movie.movies_plot.encode(defaultEnc)) + '</i>'
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                             Story.append(p)
-                        if 'notes' in pdf_elements and movie.notes:
-                            paragraph_text = '<i><b>' + _('Notes') + ': </b>' + saxutils.escape(movie.notes.encode(defaultEnc)) + '</i>'
+                        if 'notes' in pdf_elements and movie.movies_notes:
+                            paragraph_text = '<i><b>' + _('Notes') + ': </b>' + saxutils.escape(movie.movies_notes.encode(defaultEnc)) + '</i>'
+                            p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                            Story.append(p)
+                        resolution = self._get_resolution(movie)
+                        if resolution:
+                            paragraph_text = '<i><b>' + _('Resolution') + ': </b>' + saxutils.escape(resolution.encode(defaultEnc)) + '</i>'
+                            p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                            Story.append(p)
+                        if movie.volumes_name:
+                            paragraph_text = '<i><b>' + _('Volume') + ': </b>' + saxutils.escape(movie.volumes_name.encode(defaultEnc)) + '</i>'
+                            p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
+                            Story.append(p)
+                        if movie.collections_name:
+                            paragraph_text = '<i><b>' + _('Collection') + ': </b>' + saxutils.escape(movie.collections_name.encode(defaultEnc)) + '</i>'
                             p = Paragraph(paragraph_text.decode(defaultEnc), self.styles['Normal'])
                             Story.append(p)
                     c.build(Story, onFirstPage=self.page_template, onLaterPages=self.page_template)

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: preferences.py 1597 2011-10-04 18:41:24Z piotrek $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #

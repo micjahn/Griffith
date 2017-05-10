@@ -854,6 +854,10 @@ msgstr "Schwarz/Weiß"
 msgid "Mixed"
 msgstr "Gemischt"
 
+#: ../lib/initialize.py:813
+msgid "Recolored"
+msgstr "Nachkoloriert"
+
 #: ../lib/initialize.py:815
 msgid "Single Side, Single Layer"
 msgstr "Einseitig, eine Lage"

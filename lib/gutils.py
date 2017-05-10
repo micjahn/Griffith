@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: gutils.py 1582 2011-09-04 21:08:14Z piotrek $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #

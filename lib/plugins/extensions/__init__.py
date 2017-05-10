@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: __init__.py 1444 2010-08-29 17:52:31Z piotrek $'
 
 # Copyright © 2009 Piotr Ożarowski
 #

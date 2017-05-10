@@ -1,4 +1,4 @@
-# $Id$
+# $Id: Makefile 1603 2011-12-18 19:43:30Z piotrek $
 INSTALL ?= install
 
 PYFILES = ../griffith $(wildcard ../lib/*.py ../lib/db/*.py ../lib/plugins/movie/*.py ../lib/plugins/export/*.py ../lib/plugins/imp/*.py) 

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: main_treeview.py 1616 2012-01-23 21:07:53Z piotrek $'
 
 # Copyright (c) 2005-2011 Vasco Nunes, Piotr Ożarowski
 
@@ -545,7 +545,7 @@ def setmovie(self, movie, iter, treemodel=None):  # {{{
     if not treemodel:
         treemodel = self.treemodel
 
-    treemodel.set_value(iter, 0, '%004d' % int(movie.number))
+    treemodel.set_value(iter, 0, '%005d' % int(movie.number))
 
     if self.config.get('image', True, section='mainlist') == True:
         filename = None

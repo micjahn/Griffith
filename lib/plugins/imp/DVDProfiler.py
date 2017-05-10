@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: DVDProfiler.py 1612 2012-01-02 21:14:32Z mikej06 $'
 
 # Copyright (c) 2009
 

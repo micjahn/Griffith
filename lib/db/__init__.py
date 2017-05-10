@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
-__revision__ = '$Id$'
+__revision__ = '$Id: __init__.py 1449 2010-09-29 21:03:04Z mikej06 $'
 __version__ = 6 # XXX: database format version, remember to increase after changing data structures
 
 # Copyright © 2009 Piotr Ożarowski

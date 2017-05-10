@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: quick_filter.py 1601 2011-12-12 20:07:03Z mikej06 $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 

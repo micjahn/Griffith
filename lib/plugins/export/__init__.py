@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: __init__.py 1533 2011-02-08 21:04:38Z iznogoud $'
 
 # Copyright (c) 2008-2009 Piotr Ożarowski
 #

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
 
-__revision__ = '$Id$'
+__revision__ = '$Id: add.py 1659 2013-12-16 21:39:36Z mikej06 $'
 
 # Copyright (c) 2005-2011 Vasco Nunes, Piotr Ożarowski
 #
@@ -245,19 +245,23 @@ def show_websearch_results(self):
     if total > 1:
         self.widgets['results']['window'].show()
         self.widgets['results']['window'].set_keep_above(True)
+        movieslist = []
         row = None
         key = 0
-        self.treemodel_results.clear()
         for row in self.search_movie.ids:
             if (str(row) != ''):
                 if isinstance(self.search_movie.titles[key], unicode):
                     title = self.search_movie.titles[key]
                 else:
                     title = str(self.search_movie.titles[key]).decode(self.search_movie.encode)
-                myiter = self.treemodel_results.insert_before(None, None)
-                self.treemodel_results.set_value(myiter, 0, str(row))
-                self.treemodel_results.set_value(myiter, 1, title)
+                movieslist.append((row, title))
             key += 1
+        movieslist = sorted(movieslist, key=lambda titel: titel[1])
+        self.treemodel_results.clear()
+        for entry in movieslist:
+            myiter = self.treemodel_results.insert_before(None, None)
+            self.treemodel_results.set_value(myiter, 0, str(entry[0]))
+            self.treemodel_results.set_value(myiter, 1, entry[1])
         self.widgets['results']['treeview'].show()
     elif total == 1:
         self.widgets['results']['treeview'].set_cursor(total-1)
@@ -301,7 +305,7 @@ def get_from_web(self):
                 self.search_movie.title = unicode(title, 'utf-8')
         # check if internet connection is available
         try:
-            urllib2.urlopen(self.search_movie.url)
+            urllib2.urlopen("http://www.google.com")
             if self.search_movie.search_movies(self.widgets['add']['window']):
                 self.search_movie.get_searches()
             if len(self.search_movie.ids) == 1 and o_title and title:
@@ -684,26 +688,31 @@ def add_movie_db(self, close):
 
     new_poster_md5 = None
     if details['image']:
-        tmp_image_path = details['image']
+        tmp_image_path = original_image_path = details['image']
         if not os.path.isfile(tmp_image_path):
             tmp_image_path = os.path.join(self.locations['temp'], "poster_%s.jpg" % details['image'])
         if os.path.isfile(tmp_image_path):
-            new_poster_md5 = gutils.md5sum(file(tmp_image_path, 'rb'))
-
-            if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
-                try:
-                    data = file(tmp_image_path, 'rb').read()
-                except Exception, e:
-                    log.warning("cannot read poster data")
-                else:
-                    poster = db.Poster(md5sum=new_poster_md5, data=data)
-                    del details["image"]
-                    details["poster_md5"] = new_poster_md5
-                    session.add(poster)
-            else:
-                details["poster_md5"] = new_poster_md5
+            file_object = file(tmp_image_path, 'rb')
             try:
-                if not tmp_image_path == details['image']:
+                new_poster_md5 = gutils.md5sum(file_object)
+
+                if session.query(db.Poster).filter_by(md5sum=new_poster_md5).count() == 0:
+                    try:
+                        file_object.seek(0, 0);
+                        data = file_object.read()
+                    except Exception, e:
+                        log.warning("cannot read poster data")
+                    else:
+                        poster = db.Poster(md5sum=new_poster_md5, data=data)
+                        del details["image"]
+                        details["poster_md5"] = new_poster_md5
+                        session.add(poster)
+                else:
+                    details["poster_md5"] = new_poster_md5
+            finally:
+                file_object.close()
+            try:
+                if not tmp_image_path == original_image_path:
                     os.remove(tmp_image_path)
             except Exception, e:
                 log.warn("cannot remove temporary file %s", tmp_image_path)

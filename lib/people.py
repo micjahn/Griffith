@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: people.py 1388 2010-01-06 21:02:22Z piotrek $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #

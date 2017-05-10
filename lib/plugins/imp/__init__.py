@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: __init__.py 1628 2012-08-30 21:23:02Z mikej06 $'
 
 # Copyright (c) 2006-2011 Piotr Ożarowski
 #
@@ -226,6 +226,7 @@ class ImportPlugin(object):
                                         db.tables.movie_tag.insert(bind=self.db.session.bind).execute({'movie_id': movie.lastrowid, 'tag_id': tag_id})
                                     except:
                                         pass
+                            self.db.session.commit()
                             # adding poster
                             if poster:
                                 if len(poster) > 4:

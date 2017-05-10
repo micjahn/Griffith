@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: about.py 1519 2011-02-05 15:32:36Z iznogoud $'
 
 # Copyright (c) 2005-2011 Vasco Nunes, Piotr Ożarowski
 #

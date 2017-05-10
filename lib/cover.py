@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: cover.py 1154 2009-02-08 23:20:39Z piotrek $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #
@@ -36,6 +36,7 @@ from reportlab.lib import colors
 import db
 import gutils
 import version
+import textwrap
 
 exec_location = os.path.abspath(os.path.dirname(sys.argv[0]))
 
@@ -163,7 +164,7 @@ def cover_simple(self, number):
 
         c.setFont(fontName, 16)
         c.rotate(90)
-        c.drawString(60, (-pageWidth/2)-8, movie.o_title.encode('utf-8'))
+        c.drawString(60, (-pageWidth/2)-8, movie.title.encode('utf-8'))
         c.rotate(-90)
         if movie.poster_md5:
             filename = gutils.get_image_fname(movie.poster_md5, self.db)
@@ -182,6 +183,15 @@ def cover_simple(self, number):
         textObject.textLine("%s: %s %s" % (_('Running Time'), movie.runtime, _(' min')))
         textObject.textLine("%s: %s" % (_('Country'), movie.country))
         textObject.textLine("%s: %s" % (_('Genre'), movie.genre))
+        plotlines = textwrap.wrap(movie.plot, 80)
+        plotlinenr = 0
+        textObject.textLine("%s:" % (_('Plot')))
+        for plotline in plotlines:
+            textObject.textLine(plotline)
+            plotlinenr = plotlinenr + 1
+            if plotlinenr > 15:
+                textObject.textLine('...')
+                break
         textObject.textLine('')
         c.drawText(textObject)
         # draw bigger poster image

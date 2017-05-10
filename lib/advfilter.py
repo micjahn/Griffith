@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker et ts=4 sw=4
-__revision__ = '$Id$'
+__revision__ = '$Id: advfilter.py 1478 2010-11-23 20:25:16Z mikej06 $'
 
 # Copyright (c) 2008 Vasco Nunes, Piotr Ożarowski
 #
@@ -407,6 +407,7 @@ def load(gsql, widgets, field_names):
 def delete(gsql, widgets):
     """deletes the current selected filter"""
 
+    #hier muss was anderes her! nicht den text prüfen, da bei manchem anwender ein leereintrag existiert
     name = widgets['cb_name'].get_active_text().decode('utf-8')
     if not name:
         log.debug("search rule name is empty")

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: initialize.py 1622 2012-04-10 17:07:16Z iznogoud $'
 
 # Copyright © 2005-2011 Vasco Nunes, Piotr Ożarowski
 #
@@ -812,7 +812,7 @@ def dictionaries(self):
         'volume_id': _('Volume'),
         'year': _('Year')}
     self._conditions = (_('N/A'), _('Damaged'), _('Poor'), _('Fair'), _('Good'), _('Excellent'))
-    self._colors = (_('N/A'), _('Color'), _('Black and White'), _('Mixed'))
+    self._colors = (_('N/A'), _('Color'), _('Black and White'), _('Mixed'), _('Nachkoloriert'))
     self._lang_types = ('', _('lector'), _('dubbing'), _('subtitles'), _('commentary'))
     self._layers = (_('N/A'), _('Single Side, Single Layer'), _('Single Side, Dual Layer'), _('Dual Side, Single Layer'), _('Dual Side, Dual Layer'))
     self._regions = (
@@ -853,9 +853,9 @@ def spellcheck(self):
     spell_error = False
     if self.posix and spell_support:
         if self.config.get('gtkspell', False, section='spell') == True:
-            if self.config.get('notes', True, section='spell') == True and self.config.get('lang', section='spell') != '':
+            if self.config.get('notes', True, section='spell') is True and self.config.get('lang', section='spell') != '':
                 try:
-                    self.notes_spell = gtkspell.Spell(self.widgets['add']['cast'], self.config.get('lang', section='spell'))
+                    self.notes_spell = gtkspell.Spell(self.widgets['add']['notes'], self.config.get('lang', section='spell'))
                 except:
                     spell_error = True
             if self.config.get('plot', True, section='spell') is True and self.config.get('lang', section='spell') != '':

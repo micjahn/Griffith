@@ -1,9 +1,100 @@
-# $Id$ vim: ts=4
+# $Id: ChangeLog 1661 2014-03-13 21:10:10Z mikej06 $ vim: ts=4
 
 Griffith ChangeLog
 ------------------
-(c) 2005-2012  Vasco Nunes, Piotr Ożarowski
+(c) 2005-2014  Vasco Nunes, Piotr Ożarowski
 
+
+2014-03-13  Michael Jahn
+	* [#1290146] imdb searches
+	* [#1271874] "weitere Titel" werden in Originaltitel übernommen
+
+2013-12-16  Michael Jahn
+	* better handling of temporary poster files
+	
+2013-12-09  Michael Jahn
+	* IMDb plugin updated
+
+2013-12-03  Michael Jahn
+	* IMDb plugin updated
+
+2013-11-17  Michael Jahn
+	* [#1251923] poster not loaded from CSFD
+
+2013-11-12  Michael Jahn
+	* [#1250013] Allocine plugin do not populate the fields
+
+2013-10-17  Michael Jahn
+	* IMDb plugin updated
+	  [#1235747] IMDB fields not populating
+	  [#1239178] IMDB fails to populate some fields
+	  [#1236093] IMDB failure starting around 25 Sept 2013
+	  [#1240477] IMDB not Downloading All Fields in 0.13 for Linux
+
+2013-10-04  Michael Jahn
+	* FilmeAffinity movie plugin updated
+	  [#1210828] FilmAffinity
+	  [#1216572] [FilmAffinity plugin] doesn't show the list of movies
+
+2013-09-27  Michael Jahn
+	* FilmeVonAZ movie plugin updated
+
+2013-06-26  Michael Jahn
+	* [1194709] DVDEmpire plugin stopped returning results
+
+2013-06-24  Michael Jahn
+	* [1174569] FilmAffinity plugin does not work since today
+
+2013-06-01  Michael Jahn
+	* PDF export plugin updated
+	
+2013-05-24  Michael Jahn
+	* Allocine movie plugin updated
+
+2013-04-02  Michael Jahn
+	* [1039068] Return the list of films sorted; added sorting by title for result lists
+
+2013-02-21  Michael Jahn
+	* IMDb and Cinemovies movies plugin updated
+
+2013-01-30  Michael Jahn
+	* FilmeVonAZ and OFDb movie plugins updated
+
+2013-01-28  Michael Jahn
+	* Kino.de and Cineteka movie plugins updated
+
+2012-12-29  Michael Jahn
+	* remove movie plugin FilmDb (site doesn't exists anymore)
+
+2012-12-16  Michael Jahn
+	* fixed backup for databases other than sqlite
+
+2012-12-06  Michael Jahn
+	* fixed IMDb plugins for direct search results
+
+2012-11-29  Michael Jahn
+	* [1084608] IMDB does not work from November 28, 2012; fixed IMDb plugins
+
+2012-11-20  Michael Jahn
+	* fixed Allocine plugin [663709]
+	
+2012-08-30  Michael Jahn
+	* [1043263] importing GriffithXML fails: posters are not added
+
+2012-08-29  Michael Jahn
+	* [1037249] typo in tellico spelling
+	
+2012-07-03  Michael Jahn
+	* DVD Palace movie plugin updated
+	
+2012-06-09  Michael Jahn
+	* DVD Palace movie plugin updated
+
+2012-06-07  Michael Jahn
+	* [#1010073] The MoviePosterDB seems to have quit working properly.
+
+2012-04-10  Vasco Nunes
+	* [#669431] Spell checker doesn't work
 
 2012-04-02  Michael Jahn
 	* fixed Allocine plugin (V3 API) (thanks to CinéphOli)
@@ -17,7 +108,7 @@ Griffith ChangeLog
 	* Filmweb movie plugin updated (thanks to mariusz2806)
 
 2012-01-08  Piotr Ożarowski
-	* Telico import plugin added (thanks to Elan Ruusamäe)
+	* Tellico import plugin added (thanks to Elan Ruusamäe)
 
 2012-01-07  Ivo Nunes
 	* Added a plugin for the portuguese website www.dvdpt.com

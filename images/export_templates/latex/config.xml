@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE template SYSTEM "../template.dtd">
+<template>
+	<name>LaTeX</name>
+	<author>Piotr Ozarowski</author>
+	<email>ozarow@gmail.com</email>
+	<version>0.1-alpha</version>
+	<extension>tex</extension>
+	<description>Generates LaTeX source file</description>
+	<description xml:lang="pl">Generuje plik zrodlowy LaTeXa</description>
+</template>

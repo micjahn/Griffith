@@ -97,7 +97,6 @@ Source: dist\lib\plugins\movie\PluginMovieDVDPalace.py;     DestDir: {app}\lib\p
 Source: dist\lib\plugins\movie\PluginMovieE-Pipoca.py;      DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Brazilian_Portuguese\E_Pipoca
 Source: dist\lib\plugins\movie\PluginMovieFDb.py;           DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\FDb
 Source: dist\lib\plugins\movie\PluginMovieFilmAffinity.py;  DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Spanish\FilmAffinity
-Source: dist\lib\plugins\movie\PluginMovieFilmDb.py;        DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\German\FilmDb
 Source: dist\lib\plugins\movie\PluginMovieFilmeVonAZ.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\German\Filme_von_A_bis_Z
 Source: dist\lib\plugins\movie\PluginMovieFilmtipset.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Swedish\Film_tip_set
 Source: dist\lib\plugins\movie\PluginMovieFilmweb.py;       DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Filmweb
@@ -182,7 +181,6 @@ Name: Movie_Import_Plugins\French\CineMovies;        Description: CineMovies / w
 
 Name: Movie_Import_Plugins\German;                   Description: German Import Plugins; Types: full
 Name: Movie_Import_Plugins\German\DVD_Palace;        Description: DVD-Palace / www.dvd-palace.de; Types: full
-Name: Movie_Import_Plugins\German\FilmDb;            Description: FilmDb / www.filmdb.de; Types: full
 Name: Movie_Import_Plugins\German\Filme_von_A_bis_Z; Description: Filme von A-Z / www.filmevona-z.de; Types: full
 Name: Movie_Import_Plugins\German\IMDBde;            Description: IMDB.de / german.imdb.com; Types: full
 Name: Movie_Import_Plugins\German\OFDb;              Description: OFDb / www.ofdb.de; Types: full

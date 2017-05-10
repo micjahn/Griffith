@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: fdm=marker
 
-__revision__ = '$Id$'
+__revision__ = '$Id: widgets.py 1572 2011-08-23 18:47:22Z mikej06 $'
 
 # Copyright (c) 2005-2011 Vasco Nunes, Piotr Ożarowski
 #

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: winsetup.py 1623 2012-04-10 21:41:37Z mikej06 $'
 
 # Copyright © 2005-2010 Vasco Nunes, Piotr Ożarowski
 # This program is free software; you can redistribute it and/or modify
@@ -45,7 +45,7 @@ import py2exe
 
 opts = {
     "py2exe": {
-        "includes": "pygtk,cairo,pangocairo,gobject,cgi,PIL,pysqlite2,pysqlite2.*,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlalchemy,sqlalchemy.*,sqlalchemy.databases.*,sqlalchemy.engine.*,sqlalchemy.ext.*,sqlalchemy.orm.*,sqlalchemy.sql.*,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,reportlab.pdfbase.*,smtplib,win32com,platform,winshell,psycopg2,MySQLdb,chardet,gzip,commands,encodings,encodings.*,ConfigParser,gtk.glade,xmlrpclib,gio,lxml.*",
+        "includes": "pygtk,cairo,pangocairo,gobject,cgi,PIL,pysqlite2,pysqlite2.*,pango,atk,gobject,tempfile,csv,xml.dom,xml.dom.minidom,xml.sax,threading,htmlentitydefs,sqlalchemy,sqlalchemy.*,sqlalchemy.databases.*,sqlalchemy.engine.*,sqlalchemy.ext.*,sqlalchemy.orm.*,sqlalchemy.sql.*,zipfile,webbrowser,shutil,reportlab,reportlab.pdfgen,reportlab.pdfgen.canvas,reportlab.platypus,reportlab.pdfbase.ttfonts,reportlab.pdfbase.*,smtplib,win32com,platform,winshell,psycopg2,MySQLdb,chardet,gzip,commands,encodings,encodings.*,ConfigParser,gtk.glade,xmlrpclib,gio,lxml.*,simplejson",
         "optimize": 2,
         "dist_dir": "dist",
     }

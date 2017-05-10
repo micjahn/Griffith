@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: BESTheMovieLibrary.py 1605 2011-12-18 22:35:25Z piotrek $'
 
 # Copyright (c) 2009
 

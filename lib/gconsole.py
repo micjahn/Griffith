@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: gconsole.py 1588 2011-09-14 19:14:08Z mikej06 $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 

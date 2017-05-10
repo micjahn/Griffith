@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: loan.py 1522 2011-02-05 19:59:38Z iznogoud $'
 
 # Copyright (c) 2005-2009 Vasco Nunes, Piotr Ożarowski
 #

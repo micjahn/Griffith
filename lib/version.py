@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-__revision__ = '$Id$'
+__revision__ = '$Id: version.py 1606 2011-12-18 22:35:46Z piotrek $'
 
 # Copyright © 2005-2010 Vasco Nunes, Piotr Ożarowski
 #
