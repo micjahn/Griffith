@@ -53,7 +53,11 @@ class Plugin(movie.Movie):
             self.jsondata = {}
         
     def get_image(self):
-        self.image_url = gutils.trim(gutils.trim(self.page, 'class="article-poster"', '/>'), 'src="', '"')
+        self.image_url = ''
+        try:
+            self.image_url = self.jsondata['image']
+        except:
+            None
 
     def get_o_title(self):
         self.o_title = gutils.before(gutils.after(gutils.trim(self.page, 'property="og:title"', '/>'), 'content="'), '"')
