@@ -26,6 +26,7 @@ import movie
 import string
 import re
 import logging
+import json
 
 plugin_name         = "Kino.de"
 plugin_description  = "KINO.DE"
@@ -33,7 +34,7 @@ plugin_url          = "www.kino.de"
 plugin_language     = _("German")
 plugin_author       = "Michael Jahn"
 plugin_author_email = "<mikej06@hotmail.com>"
-plugin_version      = "1.20"
+plugin_version      = "1.21"
 
 log = logging.getLogger("Griffith")
 
@@ -44,7 +45,13 @@ class Plugin(movie.Movie):
         self.movie_id = id
         self.url = self.movie_id
         log.info(self.url)
-
+    
+    def initialize(self):
+        try:
+            self.jsondata = json.loads(gutils.trim(gutils.after(self.page, '<body'), '<script type="application/ld+json">', '</script>'))
+        except:
+            self.jsondata = {}
+        
     def get_image(self):
         self.image_url = gutils.trim(gutils.trim(self.page, 'class="article-poster"', '/>'), 'src="', '"')
 
@@ -56,17 +63,12 @@ class Plugin(movie.Movie):
 
     def get_director(self):
         self.director = ''
-        tmp = gutils.regextrim(gutils.trim(self.page, 'id="person-collection"', '</section>'), 'Regisseur[^<]*[<][/]h3[>]', '[<]h3')
-        tmpelements = re.split('href="', tmp)
-        delimiter = ''
-        for index in range(1, len(tmpelements), 1):
-            tmpelement = gutils.before(gutils.after(gutils.after(tmpelements[index], '"'), '>'), '<')
-            tmpelement = re.sub('<small[^>]*>[^<]*</small>', '', tmpelement)
-            tmpelement = gutils.strip_tags(tmpelement)
-            tmpelement = string.replace(tmpelement, '\n', '')
-            tmpelement = re.sub('[ \t]+', ' ', tmpelement)
-            self.director = self.director + tmpelement + delimiter
-            delimiter =', '
+        try:
+            for person in self.jsondata['director']:
+                self.director = self.director + ', ' + person['name']
+            self.director = self.director[2:]
+        except:
+            None
 
     def get_plot(self):
         self.plot = gutils.after(gutils.trim(self.page, 'class="movie-plot-synopsis"', '</section>'), '>')
@@ -91,10 +93,14 @@ class Plugin(movie.Movie):
 
     def get_runtime(self):
         self.runtime = '0'
-        tmp = gutils.trim(self.page, '<dt>Dauer</dt>', '</dd>')
+        tmp = gutils.clean(gutils.trim(self.page, '>Dauer</dt>', '</dd>'))
         if tmp:
             hours = gutils.trim(tmp, '>', 'h')
+            if not hours:
+                hours = 0
             minutes = gutils.trim(tmp, 'h', 'min')
+            if not minutes:
+                minutes = gutils.before(tmp, 'Min')
             try:
                 self.runtime = int(hours) * 60 + int(minutes)
             except:
@@ -105,19 +111,15 @@ class Plugin(movie.Movie):
 
     def get_cast(self):
         self.cast = ''
-        tmp = gutils.regextrim(gutils.trim(self.page, 'id="person-collection"', '</section>'), 'Darsteller[^<]*[<][/]h3[>]', '[<]h3')
-        tmpelements = re.split('href="', tmp)
-        delimiter = ''
-        for index in range(1, len(tmpelements), 1):
-            tmpelement = string.replace(gutils.before(gutils.after(gutils.after(tmpelements[index], '"'), '>'), '</em>'), '<em>', _(' as '))
-            tmpelement = re.sub('<small[^>]*>[^<]*</small>', '', tmpelement)
-            tmpelement = gutils.strip_tags(tmpelement)
-            tmpelement = string.replace(tmpelement, '\n', '')
-            tmpelement = re.sub('[ \t]+', ' ', tmpelement)
-            self.cast = self.cast + tmpelement + '\n'
+        try:
+            for person in self.jsondata['actor']:
+                self.cast = self.cast + '\r\n' + person['name']
+            self.cast = self.cast[2:]
+        except:
+            None
 
     def get_classification(self):
-        self.classification = gutils.after(gutils.trim(gutils.trim(self.page, 'title="Freiwillige Selbstkontrolle"', '</dd>'), '"http://www.kino.de/filme/fsk', '<'), '>')
+        self.classification = gutils.trim(self.page, '>FSK</dt>', '</dd>')
 
     def get_studio(self):
         self.studio = gutils.trim(self.page, '<dt>Vertrieb</dt>', '</dd>')
@@ -130,21 +132,22 @@ class Plugin(movie.Movie):
 
     def get_trailer(self):
         self.trailer = ''
+        try:
+            self.trailer = self.jsondata['trailer']['embedUrl']
+            if self.trailer:
+                self.trailer = 'http:' + self.trailer
+        except:
+            None
 
     def get_country(self):
-        self.country = gutils.regextrim(self.page, '<dt>Produktionsland</dt>[^<]*<dd>aus ', '</dd>')
+        self.country = gutils.regextrim(self.page, '<dt>Produktionsland</dt>[^<]*<dd>', '</dd>')
 
     def get_rating(self):
         self.rating = 0
-        tmp = gutils.trim(self.page, 'Kritikerwertung', '</div>')
-        if tmp:
-            tmp = gutils.trim(tmp, ':rating:', '</li>')
-            tmp = gutils.after(tmp, '>')
-            tmp = re.sub('[^0-9]+', '', tmp)
-            try:
-                self.rating = int(tmp) * 2
-            except:
-                None
+        try:
+            self.rating = int(self.jsondata['aggregateRating']['ratingValue']) * 2
+        except:
+            None
 
     def get_notes(self):
         self.notes = ''
