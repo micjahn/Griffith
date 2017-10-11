@@ -30,7 +30,7 @@ plugin_url          = 'www.imdb.de'
 plugin_language     = _('German')
 plugin_author       = 'Michael Jahn'
 plugin_author_email = 'mikej06@hotmail.com'
-plugin_version      = '1.9'
+plugin_version      = '1.10'
 
 class Plugin(movie.Movie):
     def __init__(self, id):
@@ -103,6 +103,14 @@ class Plugin(movie.Movie):
                 for element in elements:
                     if element <> '':
                         self.plot = self.plot + gutils.strip_tags(gutils.before(gutils.after(element, '>'), '</a>')) + '\n\n'
+        plotlist = string.split(gutils.trim(self.plot_page, 'id="plot-summaries-content">', '</ul>'), '<li')
+        plotcompilation = ''
+        for listelement in plotlist:
+            if listelement <> '':
+                plotcompilation = plotcompilation + gutils.trim(listelement, '<p>', '</p>') + '\n'
+                plotcompilation = plotcompilation + re.sub('<[^<]+?>', '', gutils.trim(listelement, '<div class="author-container">', '</div>').replace('\n','').lstrip()) + '\n\n'
+        if plotcompilation <> '':
+            self.plot = plotcompilation
 
     def get_year(self):
         self.year = gutils.trim(self.page, 'href="/year/', '/')
