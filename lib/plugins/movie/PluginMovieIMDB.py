@@ -52,12 +52,12 @@ class Plugin(movie.Movie):
             self.image_url = gutils.trim(tmp, 'src="', '"')
 
     def get_o_title(self):
-        self.o_title = gutils.regextrim(self.page, 'class="title-extra"[^>]*>', '<')
+        self.o_title = gutils.regextrim(self.page, '<h1 itemprop="name"[^>]*>', '<span.*')
         if not self.o_title:
-            self.o_title = gutils.regextrim(self.page, '<h1>', '([ ]|[&][#][0-9]+[;])<span')
+            self.o_title = gutils.trim(self.page, 'og:title\' content="', '"')
         if not self.o_title:
             self.o_title = re.sub(' [(].*', '', gutils.trim(self.page, '<title>', '</title>'))
-        self.o_title = re.sub('"', '', self.o_title)
+        self.o_title = gutils.clean(re.sub('"', '', self.o_title))
 
     def get_title(self):    # same as get_o_title()
         self.title = gutils.regextrim(self.page, '<h1>', '([ ]|[&][#][0-9]+[;])<span')
