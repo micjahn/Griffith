@@ -44,6 +44,7 @@ class Plugin(movie.Movie):
         self.comp_page = self.open_page(url=self.url + '/companycredits')
         self.tagl_page = self.open_page(url=self.url + '/taglines')
         self.cert_page = self.open_page(url=self.url + '/parentalguide')
+        self.release_page = self.open_page(url=self.url + '/releaseinfo')
 
     def get_image(self):
         self.image_url = ''
@@ -52,15 +53,51 @@ class Plugin(movie.Movie):
             self.image_url = gutils.trim(tmp, 'src="', '"')
 
     def get_o_title(self):
-        self.o_title = gutils.regextrim(self.page, '<h1 itemprop="name"[^>]*>', '<span.*')
+        self.o_title = gutils.trim(self.page, '<div class="originalTitle">', '<span')
+        if not self.o_title:
+            self.o_title = gutils.regextrim(self.page, '<h1 itemprop="name"[^>]*>', '<span.*')
         if not self.o_title:
             self.o_title = gutils.trim(self.page, 'og:title\' content="', '"')
         if not self.o_title:
             self.o_title = re.sub(' [(].*', '', gutils.trim(self.page, '<title>', '</title>'))
         self.o_title = gutils.clean(re.sub('"', '', self.o_title))
 
-    def get_title(self):    # same as get_o_title()
-        self.title = gutils.regextrim(self.page, '<h1>', '([ ]|[&][#][0-9]+[;])<span')
+    def get_title(self):    # let's try to find the right language version
+        from locale import getdefaultlocale
+        defaultLang, defaultEnc = getdefaultlocale()
+        if defaultLang[:2] == 'cs':
+            self.title = gutils.regextrim(self.release_page,'<td>Czech Republic.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'de':
+            self.title = gutils.regextrim(self.release_page,'<td>Germany.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'es':
+            self.title = gutils.regextrim(self.release_page,'<td>Spain.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'fr':
+            self.title = gutils.regextrim(self.release_page,'<td>France.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'he':
+            self.title = gutils.regextrim(self.release_page,'<td>Israel.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'hu':
+            self.title = gutils.regextrim(self.release_page,'<td>Hungary.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'it':
+            self.title = gutils.regextrim(self.release_page,'<td>Italy.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'pl':
+            self.title = gutils.regextrim(self.release_page,'<td>Poland.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'rm':
+            self.title = gutils.regextrim(self.release_page,'<td>Romania.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'ru':
+            self.title = gutils.regextrim(self.release_page,'<td>Russia.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'sl':
+            self.title = gutils.regextrim(self.release_page,'<td>Slovenia.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'sl':
+            self.title = gutils.regextrim(self.release_page,'<td>Slovakia.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'sr':
+            self.title = gutils.regextrim(self.release_page,'<td>Serbia.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'tk':
+            self.title = gutils.regextrim(self.release_page,'<td>Turkey.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'uk':
+            self.title = gutils.regextrim(self.release_page,'<td>Ukraine.*<\/td>\n.*<td>','</td>')
+
+        if not self.title:
+            self.title = gutils.regextrim(self.page, '<h1>', '([ ]|[&][#][0-9]+[;])<span')
         if not self.title:
             self.title = re.sub(' [(].*', '', gutils.trim(self.page, '<title>', '</title>'))
 
@@ -88,7 +125,7 @@ class Plugin(movie.Movie):
         plotlist = string.split(gutils.trim(self.plot_page, 'id="plot-summaries-content">', '</ul>'), '<li')
         plotcompilation = ''
         for listelement in plotlist:
-            if listelement <> '':
+            if listelement <> '' and not 'It looks like we don\'t have any Plot Summaries for this title yet.' in listelement:
                 plotcompilation = plotcompilation + gutils.trim(listelement, '<p>', '</p>') + '\n'
                 plotcompilation = plotcompilation + re.sub('<[^<]+?>', '', gutils.trim(listelement, '<div class="author-container">', '</div>').replace('\n','').lstrip()) + '\n\n'
         if plotcompilation <> '':
