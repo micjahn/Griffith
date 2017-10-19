@@ -53,16 +53,19 @@ class Plugin(movie.Movie):
             self.image_url = gutils.trim(tmp, 'src="', '"')
 
     def get_o_title(self):
+        # it seems, that films coming from the German branch can have their German title in the h1-name-tag;
+        # in this case (only?), IMDB renders an additional "originalTitle"-tag.
         self.o_title = gutils.trim(self.page, '<div class="originalTitle">', '<span')
         if not self.o_title:
-            self.o_title = gutils.regextrim(self.page, '<h1 itemprop="name"[^>]*>', '<span.*')
+            self.o_title = gutils.regextrim(self.page, '<h1 itemprop="name"[^>]*>', '&nbsp;')
         if not self.o_title:
             self.o_title = gutils.trim(self.page, 'og:title\' content="', '"')
         if not self.o_title:
             self.o_title = re.sub(' [(].*', '', gutils.trim(self.page, '<title>', '</title>'))
         self.o_title = gutils.clean(re.sub('"', '', self.o_title))
 
-    def get_title(self):    # let's try to find the right language version
+    def get_title(self):
+        # let's try to find the right language version; if not found, the original title succeeds
         from locale import getdefaultlocale
         defaultLang, defaultEnc = getdefaultlocale()
         if defaultLang[:2] == 'cs':
@@ -103,9 +106,10 @@ class Plugin(movie.Movie):
 
     def get_director(self):
         self.director = ''
-        parts = re.split('<a href=', gutils.trim(self.cast_page, '>Directed by', '</table>'))
+        parts = re.split('<a href=', gutils.trim(self.cast_page, 'Directed by', '</table>'))
         if len(parts) > 1:
             for part in parts[1:]:
+                print (part)
                 director = string.strip(string.replace(gutils.trim(part, '>', '<'), '\n', ''))
                 self.director = self.director + director + ', '
             self.director = self.director[0:len(self.director) - 2]
