@@ -251,7 +251,8 @@ class Plugin(movie.Movie):
                     continue
                 screenplay = screenplay.replace(' (written by)', '')
                 screenplay = screenplay.replace(' and<', '<')
-                self.screenplay = self.screenplay + screenplay + ', '
+                if screenplay not in self.screenplay:
+                    self.screenplay = self.screenplay + screenplay + ', '
             if len(self.screenplay) > 2:
                 self.screenplay = self.screenplay[0:len(self.screenplay) - 2]
                 self.screenplay = re.sub('[ \t]+', ' ', self.screenplay)
