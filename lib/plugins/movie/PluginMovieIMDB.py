@@ -109,7 +109,6 @@ class Plugin(movie.Movie):
         parts = re.split('<a href=', gutils.trim(self.cast_page, 'Directed by', '</table>'))
         if len(parts) > 1:
             for part in parts[1:]:
-                print (part)
                 director = string.strip(string.replace(gutils.trim(part, '>', '<'), '\n', ''))
                 self.director = self.director + director + ', '
             self.director = self.director[0:len(self.director) - 2]
@@ -166,8 +165,12 @@ class Plugin(movie.Movie):
         self.cast = re.sub(' \n ', '\n', self.cast)
 
     def get_classification(self):
-        self.classification = gutils.trim(self.cert_page, '>Certification:<', '</div>')
-        self.classification = gutils.trim(self.classification, '>USA:', '<')
+        classificationList = gutils.regextrim(self.cert_page,'id="certifications-list"','<\/ul>')
+        if classificationList:
+            self.classification = gutils.regextrim(classificationList,'>United States:','<')
+        else: # the old way
+            self.classification = gutils.trim(self.cert_page, '>Certification:<', '</div>')
+            self.classification = gutils.trim(self.classification, '>USA:', '<')
 
     def get_studio(self):
         self.studio = ''
