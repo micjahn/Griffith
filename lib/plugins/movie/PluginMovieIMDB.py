@@ -167,12 +167,14 @@ class Plugin(movie.Movie):
 
     def get_classification(self):
         # until we can find a way to locate the user, we have to use the US-classification
-        classificationList = gutils.regextrim(self.cert_page,'id="certifications-list"','<\/ul>')
-        if classificationList:
-            self.classification = gutils.regextrim(classificationList,'>United States:','<')
-        else: # the old way
-            self.classification = gutils.trim(self.cert_page, '>Certification:<', '</div>')
-            self.classification = gutils.trim(self.classification, '>USA:', '<')
+        self.classification = gutils.trim(self.page, '<meta itemprop="contentRating" content="', '"')
+        if not self.classification:
+            classificationList = gutils.regextrim(self.cert_page,'id="certifications-list"','<\/ul>')
+            if classificationList:
+                self.classification = gutils.regextrim(classificationList,'>United States:','<')
+            else: # the old way
+                self.classification = gutils.trim(self.cert_page, '>Certification:<', '</div>')
+                self.classification = gutils.trim(self.classification, '>USA:', '<')
 
     def get_studio(self):
         self.studio = ''
