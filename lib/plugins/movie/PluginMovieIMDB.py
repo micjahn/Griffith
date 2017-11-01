@@ -114,17 +114,6 @@ class Plugin(movie.Movie):
             self.director = self.director[0:len(self.director) - 2]
 
     def get_plot(self):
-        self.plot = gutils.regextrim(self.page, 'itemprop="description"', '<')
-        self.plot = gutils.after(self.plot, '>')
-        elements = string.split(self.plot_page, '<p class="plotpar">')
-        if len(elements) < 2:
-            elements = re.split('<li class="(?:odd|even)">', self.plot_page)
-        if len(elements) > 1:
-            self.plot = self.plot + '\n\n'
-            elements[0] = ''
-            for element in elements[1:]:
-                if element <> '':
-                    self.plot = self.plot + gutils.strip_tags(gutils.before(element, '</a>')) + '\n\n'
         plotlist = string.split(gutils.trim(self.plot_page, 'id="plot-summaries-content">', '</ul>'), '<li')
         plotcompilation = ''
         for listelement in plotlist:
@@ -133,6 +122,18 @@ class Plugin(movie.Movie):
                 plotcompilation = plotcompilation + re.sub('<[^<]+?>', '', gutils.trim(listelement, '<div class="author-container">', '</div>').replace('\n','').lstrip()) + '\n\n'
         if plotcompilation <> '':
             self.plot = plotcompilation
+        else:
+            self.plot = gutils.regextrim(self.page, 'itemprop="description"', '<')
+            self.plot = gutils.after(self.plot, '>')
+            elements = string.split(self.plot_page, '<p class="plotpar">')
+            if len(elements) < 2:
+                elements = re.split('<li class="(?:odd|even)">', self.plot_page)
+            if len(elements) > 1:
+                self.plot = self.plot + '\n\n'
+                elements[0] = ''
+                for element in elements[1:]:
+                    if element <> '':
+                        self.plot = self.plot + gutils.strip_tags(gutils.before(element, '</a>')) + '\n\n'
 
     def get_year(self):
         self.year = gutils.trim(self.page, '<a href="/year/', '</a>')
@@ -165,6 +166,7 @@ class Plugin(movie.Movie):
         self.cast = re.sub(' \n ', '\n', self.cast)
 
     def get_classification(self):
+        # until we can find a way to locate the user, we have to use the US-classification
         classificationList = gutils.regextrim(self.cert_page,'id="certifications-list"','<\/ul>')
         if classificationList:
             self.classification = gutils.regextrim(classificationList,'>United States:','<')
