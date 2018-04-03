@@ -30,7 +30,7 @@ plugin_url          = 'www.imdb.com'
 plugin_language     = _('English')
 plugin_author       = 'Vasco Nunes, Piotr Ożarowski'
 plugin_author_email = 'griffith@griffith.cc'
-plugin_version      = '1.15'
+plugin_version      = '1.16'
 
 class Plugin(movie.Movie):
     def __init__(self, id):
@@ -44,6 +44,7 @@ class Plugin(movie.Movie):
         self.comp_page = self.open_page(url=self.url + '/companycredits')
         self.tagl_page = self.open_page(url=self.url + '/taglines')
         self.cert_page = self.open_page(url=self.url + '/parentalguide')
+        self.release_page = self.open_page(url=self.url + '/releaseinfo')
 
     def get_image(self):
         self.image_url = ''
@@ -52,21 +53,60 @@ class Plugin(movie.Movie):
             self.image_url = gutils.trim(tmp, 'src="', '"')
 
     def get_o_title(self):
-        self.o_title = gutils.regextrim(self.page, 'class="title-extra"[^>]*>', '<')
+        # it seems, that films coming from the German branch can have their German title in the h1-name-tag;
+        # in this case (only?), IMDB renders an additional "originalTitle"-tag.
+        self.o_title = gutils.trim(self.page, '<div class="originalTitle">', '<span')
         if not self.o_title:
-            self.o_title = gutils.regextrim(self.page, '<h1>', '([ ]|[&][#][0-9]+[;])<span')
+            self.o_title = gutils.regextrim(self.page, '<h1 itemprop="name"[^>]*>', '&nbsp;')
+        if not self.o_title:
+            self.o_title = gutils.trim(self.page, 'og:title\' content="', '"')
         if not self.o_title:
             self.o_title = re.sub(' [(].*', '', gutils.trim(self.page, '<title>', '</title>'))
-        self.o_title = re.sub('"', '', self.o_title)
+        self.o_title = gutils.clean(re.sub('"', '', self.o_title))
 
-    def get_title(self):    # same as get_o_title()
-        self.title = gutils.regextrim(self.page, '<h1>', '([ ]|[&][#][0-9]+[;])<span')
+    def get_title(self):
+        # let's try to find the right language version; if not found, the original title succeeds
+        from locale import getdefaultlocale
+        defaultLang, defaultEnc = getdefaultlocale()
+        if defaultLang[:2] == 'cs':
+            self.title = gutils.regextrim(self.release_page,'<td>Czech Republic.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'de':
+            self.title = gutils.regextrim(self.release_page,'<td>Germany.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'es':
+            self.title = gutils.regextrim(self.release_page,'<td>Spain.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'fr':
+            self.title = gutils.regextrim(self.release_page,'<td>France.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'he':
+            self.title = gutils.regextrim(self.release_page,'<td>Israel.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'hu':
+            self.title = gutils.regextrim(self.release_page,'<td>Hungary.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'it':
+            self.title = gutils.regextrim(self.release_page,'<td>Italy.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'pl':
+            self.title = gutils.regextrim(self.release_page,'<td>Poland.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'rm':
+            self.title = gutils.regextrim(self.release_page,'<td>Romania.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'ru':
+            self.title = gutils.regextrim(self.release_page,'<td>Russia.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'sl':
+            self.title = gutils.regextrim(self.release_page,'<td>Slovenia.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'sl':
+            self.title = gutils.regextrim(self.release_page,'<td>Slovakia.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'sr':
+            self.title = gutils.regextrim(self.release_page,'<td>Serbia.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'tk':
+            self.title = gutils.regextrim(self.release_page,'<td>Turkey.*<\/td>\n.*<td>','</td>')
+        elif defaultLang[:2] == 'uk':
+            self.title = gutils.regextrim(self.release_page,'<td>Ukraine.*<\/td>\n.*<td>','</td>')
+
+        if not self.title:
+            self.title = gutils.regextrim(self.page, '<h1>', '([ ]|[&][#][0-9]+[;])<span')
         if not self.title:
             self.title = re.sub(' [(].*', '', gutils.trim(self.page, '<title>', '</title>'))
 
     def get_director(self):
         self.director = ''
-        parts = re.split('<a href=', gutils.trim(self.cast_page, '>Directed by', '</table>'))
+        parts = re.split('<a href=', gutils.trim(self.cast_page, 'Directed by', '</table>'))
         if len(parts) > 1:
             for part in parts[1:]:
                 director = string.strip(string.replace(gutils.trim(part, '>', '<'), '\n', ''))
@@ -74,17 +114,26 @@ class Plugin(movie.Movie):
             self.director = self.director[0:len(self.director) - 2]
 
     def get_plot(self):
-        self.plot = gutils.regextrim(self.page, 'itemprop="description"', '<')
-        self.plot = gutils.after(self.plot, '>')
-        elements = string.split(self.plot_page, '<p class="plotpar">')
-        if len(elements) < 2:
-            elements = re.split('<li class="(?:odd|even)">', self.plot_page)
-        if len(elements) > 1:
-            self.plot = self.plot + '\n\n'
-            elements[0] = ''
-            for element in elements[1:]:
-                if element <> '':
-                    self.plot = self.plot + gutils.strip_tags(gutils.before(element, '</a>')) + '\n\n'
+        plotlist = string.split(gutils.trim(self.plot_page, 'id="plot-summaries-content">', '</ul>'), '<li')
+        plotcompilation = ''
+        for listelement in plotlist:
+            if listelement <> '' and not 'It looks like we don\'t have any Plot Summaries for this title yet.' in listelement:
+                plotcompilation = plotcompilation + gutils.trim(listelement, '<p>', '</p>') + '\n'
+                plotcompilation = plotcompilation + re.sub('<[^<]+?>', '', gutils.trim(listelement, '<div class="author-container">', '</div>').replace('\n','').lstrip()) + '\n\n'
+        if plotcompilation <> '':
+            self.plot = plotcompilation
+        else:
+            self.plot = gutils.regextrim(self.page, 'itemprop="description"', '<')
+            self.plot = gutils.after(self.plot, '>')
+            elements = string.split(self.plot_page, '<p class="plotpar">')
+            if len(elements) < 2:
+                elements = re.split('<li class="(?:odd|even)">', self.plot_page)
+            if len(elements) > 1:
+                self.plot = self.plot + '\n\n'
+                elements[0] = ''
+                for element in elements[1:]:
+                    if element <> '':
+                        self.plot = self.plot + gutils.strip_tags(gutils.before(element, '</a>')) + '\n\n'
 
     def get_year(self):
         self.year = gutils.trim(self.page, '<a href="/year/', '</a>')
@@ -117,8 +166,15 @@ class Plugin(movie.Movie):
         self.cast = re.sub(' \n ', '\n', self.cast)
 
     def get_classification(self):
-        self.classification = gutils.trim(self.cert_page, '>Certification:<', '</div>')
-        self.classification = gutils.trim(self.classification, '>USA:', '<')
+        # until we can find a way to locate the user, we have to use the US-classification
+        self.classification = gutils.trim(self.page, '<meta itemprop="contentRating" content="', '"')
+        if not self.classification:
+            classificationList = gutils.regextrim(self.cert_page,'id="certifications-list"','<\/ul>')
+            if classificationList:
+                self.classification = gutils.regextrim(classificationList,'>United States:','<')
+            else: # the old way
+                self.classification = gutils.trim(self.cert_page, '>Certification:<', '</div>')
+                self.classification = gutils.trim(self.classification, '>USA:', '<')
 
     def get_studio(self):
         self.studio = ''
@@ -199,7 +255,8 @@ class Plugin(movie.Movie):
                     continue
                 screenplay = screenplay.replace(' (written by)', '')
                 screenplay = screenplay.replace(' and<', '<')
-                self.screenplay = self.screenplay + screenplay + ', '
+                if screenplay not in self.screenplay:
+                    self.screenplay = self.screenplay + screenplay + ', '
             if len(self.screenplay) > 2:
                 self.screenplay = self.screenplay[0:len(self.screenplay) - 2]
                 self.screenplay = re.sub('[ \t]+', ' ', self.screenplay)
