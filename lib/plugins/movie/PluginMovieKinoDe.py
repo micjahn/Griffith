@@ -87,11 +87,7 @@ class Plugin(movie.Movie):
     def get_year(self):
         self.year = '0'
         try:
-            tmp = gutils.trim(self.page, 'class="article-title"', '</')
-            if tmp:
-                searchyear = re.search('[>]([0-9]{4})$', tmp)
-                if searchyear:
-                    self.year = searchyear.group(1)
+            self.year = gutils.trim(self.page, '"published_date": "', '-')
         except:
             None
 
