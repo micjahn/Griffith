@@ -34,7 +34,7 @@ plugin_url          = "www.kino.de"
 plugin_language     = _("German")
 plugin_author       = "Michael Jahn"
 plugin_author_email = "<mikej06@hotmail.com>"
-plugin_version      = "1.21"
+plugin_version      = "1.22"
 
 log = logging.getLogger("Griffith")
 
@@ -193,7 +193,6 @@ class SearchPlugin(movie.SearchMovie):
     def search(self,parent_window):
         self.url = self.real_url_search # compatibility pre 0.13.1
         self.open_search(parent_window)
-        print self.url
         pagemovie = self.page
         #
         # Sub Pages
@@ -207,13 +206,13 @@ class SearchPlugin(movie.SearchMovie):
             self.url = gutils.before(pagelement, '"')
             self.open_search(parent_window)
             if self.page:
-                pagemovie = pagemovie + gutils.after(gutils.trim(self.page, 'class="search-result-list figure"', '</ol>'), '>')
+                pagemovie = pagemovie + gutils.trim(self.page, '<ul>', '</ul>')
         self.page = pagemovie
 
         return self.page
 
     def get_searches(self):
-        elements = re.split('class="teaser-name movie"', self.page)
+        elements = re.split('class="card-link', self.page)
         elements[0] = None
         for element in elements:
             if element <> None:
