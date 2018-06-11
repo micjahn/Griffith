@@ -125,8 +125,8 @@ class Plugin(movie.Movie):
 
 class SearchPlugin(movie.SearchMovie):
     def __init__(self):
-        self.original_url_search   = "http://www.zweitausendeins.de/catalogsearch/result/?cat=22&t=1&limit=30&q="
-        self.translated_url_search = "http://www.zweitausendeins.de/catalogsearch/result/?cat=22&t=1&limit=30&q="
+        self.original_url_search   = "https://www.zweitausendeins.de/catalogsearch/result/?cat=22&t=1&limit=30&q="
+        self.translated_url_search = "https://www.zweitausendeins.de/catalogsearch/result/?cat=22&t=1&limit=30&q="
         self.encode = 'utf-8'
 
     def search(self,parent_window):
@@ -208,7 +208,7 @@ A.J. Benza' + _(' as ') + 'L.C.',
             'classification'    : 'ab 12',
             'studio'            : 'Columbia Pic., MGM, Rogue Marble, Revolution Studios, Chartoff-Winkler Prod.',
             'o_site'            : False,
-            'site'              : 'http://www.zweitausendeins.de/filmlexikon/?sucheNach=titel&wert=528267',
+            'site'              : 'https://www.zweitausendeins.de/filmlexikon/?sucheNach=titel&wert=528267',
             'trailer'           : False,
             'year'              : 2006,
             'notes'             : False,
@@ -236,7 +236,7 @@ Ursula Werner' + _(' as ') + 'Frau Müller',
             'classification'    : 'ab 6',
             'studio'            : 'DEFA, Gruppe Berlin""',
             'o_site'            : False,
-            'site'              : 'http://www.zweitausendeins.de/filmlexikon/?sucheNach=titel&wert=26956',
+            'site'              : 'https://www.zweitausendeins.de/filmlexikon/?sucheNach=titel&wert=26956',
             'trailer'           : False,
             'year'              : 1981,
             'notes'             : False,
@@ -261,7 +261,7 @@ Yun Ju-sang' + _(' as ') + 'Mu-woon',
             'classification'    : 'ab 16',
             'studio'            : 'Fun and Happiness, Good Movie',
             'o_site'            : False,
-            'site'              : 'http://www.zweitausendeins.de/filmlexikon/?sucheNach=titel&wert=524017',
+            'site'              : 'https://www.zweitausendeins.de/filmlexikon/?sucheNach=titel&wert=524017',
             'trailer'           : False,
             'year'              : 2004,
             'notes'             : False,
