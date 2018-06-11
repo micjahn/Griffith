@@ -150,7 +150,6 @@ class SearchPlugin(movie.SearchMovie):
                 self.title = ''
                 self.o_title = ''
                 self.url = element
-                print self.url
                 if self.open_search(parent_window):
                     tmp_page2 = gutils.trim(self.page, 'class="category-products"', 'class="toolbar-bottom"')
                     tmp_page = tmp_page + tmp_page2

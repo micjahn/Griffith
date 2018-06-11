@@ -82,7 +82,7 @@ class Plugin(movie.Movie):
             '\n ', '\n')
 
     def get_classification(self):
-        self.classification = string.replace(gutils.trim(self.page, 'Altersfreigabe (FSK)', '</TR>'), '&nbsp;', '')
+        self.classification = string.replace(gutils.trim(gutils.trim(self.page, 'Altersfreigabe (FSK)', '</TR>'), 'alt="', '"'), 'Altersfreigabe ', '')
 
     def get_studio(self):
         self.studio = string.replace(string.replace(gutils.trim(self.page, 'Label</b>', '</td>'), '&nbsp;', ''), ':', '')
