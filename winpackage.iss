@@ -116,7 +116,6 @@ Source: dist\lib\plugins\movie\PluginMovieScope.py;         DestDir: {app}\lib\p
 Source: dist\lib\plugins\movie\PluginMovieStopklatka.py;    DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Stopklatka
 Source: dist\lib\plugins\movie\PluginMovieTanukiAnime.py;   DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Tanuki_Anime
 Source: dist\lib\plugins\movie\PluginMovieWP.py;            DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\Polish\Wirtualna_Polska
-Source: dist\lib\plugins\movie\PluginMovieZelluloid.py;     DestDir: {app}\lib\plugins\movie; Flags: ignoreversion; Components: Movie_Import_Plugins\German\Zelluloid
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -185,7 +184,6 @@ Name: Movie_Import_Plugins\German\Filme_von_A_bis_Z; Description: Filme von A-Z 
 Name: Movie_Import_Plugins\German\IMDBde;            Description: IMDB.de / german.imdb.com; Types: full
 Name: Movie_Import_Plugins\German\OFDb;              Description: OFDb / www.ofdb.de; Types: full
 Name: Movie_Import_Plugins\German\Kinode;            Description: Kino.de / www.kino.de; Types: full
-Name: Movie_Import_Plugins\German\Zelluloid;         Description: Zelluloid / www.zelluloid.de; Types: full
 
 Name: Movie_Import_Plugins\Italian;                  Description: Italian Import Plugins; Types: full
 Name: Movie_Import_Plugins\Italian\Cinematografo;    Description: Cinematografo / www.cinematografo.it; Types: full

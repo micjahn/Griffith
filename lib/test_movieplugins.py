@@ -93,7 +93,6 @@ class PluginTester:
         'PluginMovieMyMoviesIt',
         'PluginMovieOFDb',
         'PluginMovieScope',
-        'PluginMovieZelluloid',
     ]
 
     #
