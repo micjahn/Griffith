@@ -35,8 +35,8 @@ if not "%ERRORLEVEL%" == "0" (
    pause
 )
 
-if not exist "dist\images\PluginMovieIMDB.png" (
-   echo dist\images\PluginMovieIMDB.png not found.
+if not exist "images\PluginMovieIMDB.png" (
+   echo images\PluginMovieIMDB.png not found.
    echo Extra-artwork missing ?
    pause
 )
