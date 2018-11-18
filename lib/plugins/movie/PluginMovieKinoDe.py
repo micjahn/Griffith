@@ -186,7 +186,7 @@ class SearchPlugin(movie.SearchMovie):
     def __init__(self):
         self.original_url_search   = 'http://www.kino.de/'# compatibility pre 0.13.1
         self.translated_url_search = 'http://www.kino.de/'# compatibility pre 0.13.1
-        self.real_url_search = 'http://www.kino.de/se/%s/?sp_search_filter=movie'# compatibility pre 0.13.1
+        self.real_url_search = 'https://www.kino.de/se/?searchterm=%s&types=movie'# compatibility pre 0.13.1
         self.encode='utf-8'
         self.remove_accents = False
         
@@ -218,6 +218,8 @@ class SearchPlugin(movie.SearchMovie):
             if element <> None:
                 element = gutils.trim(element, 'href="', '</a>')
                 url = gutils.before(element, '"')
+                if url[0] == '/':
+                    url = "https:" + url
                 title = gutils.after(element, '>')
                 self.ids.append(url)
                 self.titles.append(title)
