@@ -8,31 +8,21 @@ https://github.com/micjahn/Griffith
 
 ## System Requirements
 
-| Name                | Minimum version | URL                                     | NOTE                                                  |
-|---------------------|-----------------|-----------------------------------------|-------------------------------------------------------|
-| Python              | 2.5 or higher   | https://www.python.org                  |                                                       |
-| GTK+                | tested on 2.8.6 | https://www.gtk.org                     |                                                       |
-| PyGTK (with glade3) | 2.6.8           | https://pygobject.readthedocs.io        |                                                       |
-| SQLAlchemy          | 0.5             | https://www.sqlalchemy.org/             |                                                       |
-| pysqlite2           | 2               | https://github.com/ghaering/pysqlite    | Python 2.5's sqlite3 module will be used if available |
-| PIL                 |                 | http://www.pythonware.com/products/pil/ |                                                       |
-| ReportLab           | 1.19            | https://www.reportlab.com/              |                                                       |
-
-## Other (optional) dependencies
-
-  PostgreSQL support:
-  * Psycopg2		2			http://initd.org/tracker/psycopg/wiki/PsycopgTwo
-  MySQL support:
-  * MySQLDb					http://sourceforge.net/projects/mysql-python
-  Upgrading from Griffith <=0.6.2 (only if pysqlite 1.0 was used before, 1.1 is not needed)
-  * pysqlite		1.0 			http://initd.org/tracker/pysqlite
-  Encoding detection of imported CSV file support:
-  * chardet					http://chardet.feedparser.org/
-  Gtkspell:
-  * python-gnome-extras
-  Covers and reports support:
-  * PDF reader
-
+| Name                                                     | Minimum version | URL                                            | NOTE                                                  |
+|----------------------------------------------------------|-----------------|------------------------------------------------|-------------------------------------------------------|
+| Python                                                   | 2.5 or higher   | https://www.python.org                         |                                                       |
+| GTK+                                                     | tested on 2.8.6 | https://www.gtk.org                            |                                                       |
+| PyGTK (with glade3)                                      | 2.6.8           | https://pygobject.readthedocs.io               |                                                       |
+| SQLAlchemy                                               | 0.5             | https://www.sqlalchemy.org/                    |                                                       |
+| pysqlite2                                                | 2               | https://github.com/ghaering/pysqlite           | Python 2.5's sqlite3 module will be used if available |
+| PIL                                                      |                 | http://www.pythonware.com/products/pil/        |                                                       |
+| ReportLab                                                | 1.19            | https://www.reportlab.com/                     |                                                       |
+| PostgreSQL support (optional): Psycopg2                  | 2               | http://initd.org/psycopg/docs/                 |                                                       |
+| MySQL support: MySQLDb                                   |                 | https://sourceforge.net/projects/mysql-python/ |                                                       |
+| Encoding detection of imported CSV file support: chardet |                 | https://github.com/chardet/chardet             |                                                       |
+| Gtkspell: python-gnome-extras                            |                 |                                                |                                                       |
+| Covers and reports support: PDF reader                   |                 |                                                |                                                       |
+|                                                          |                 |                                                |                                                       |
 ## To check dependencies
 
     $ ./griffith --check-dep
