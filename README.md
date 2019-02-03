@@ -8,15 +8,15 @@ https://github.com/micjahn/Griffith
 
 ## System Requirements
 
-  Name			Minimum version		URL						NOTE
-  ----			---------------		---						----
-  * Python		2.5 or higher		http://www.python.org/
-  * GTK+		tested on 2.8.6		http://www.gtk.org/
-  * PyGTK (with glade3)	2.6.8		http://www.pygtk.org/
-  * SQLAlchemy		0.5			http://www.sqlalchemy.org/
-  * pysqlite2		2			http://initd.org/tracker/pysqlite		Python 2.5's sqlite3 module will be used if available
-  * PIL						http://www.pythonware.com/products/pil/
-  * ReportLab		1.19			http://www.reportlab.org
+| Name                | Minimum version | URL                                     | NOTE                                                  |
+|---------------------|-----------------|-----------------------------------------|-------------------------------------------------------|
+| Python              | 2.5 or higher   | https://www.python.org                  |                                                       |
+| GTK+                | tested on 2.8.6 | https://www.gtk.org                     |                                                       |
+| PyGTK (with glade3) | 2.6.8           | https://pygobject.readthedocs.io        |                                                       |
+| SQLAlchemy          | 0.5             | https://www.sqlalchemy.org/             |                                                       |
+| pysqlite2           | 2               | https://github.com/ghaering/pysqlite    | Python 2.5's sqlite3 module will be used if available |
+| PIL                 |                 | http://www.pythonware.com/products/pil/ |                                                       |
+| ReportLab           | 1.19            | https://www.reportlab.com/              |                                                       |
 
 ## Other (optional) dependencies
 
