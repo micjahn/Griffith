@@ -1,31 +1,12 @@
-Griffith 0.13.0 README
-======================
-
-This document was last updated on Thu Jun 10 2009.
-Please see the file COPYING for licensing and warranty information.
-The latest version of this software is available at the following URL:
-http://www.griffith.cc/
-
-
-Table of Contents
-=================
-
-* Introduction
-* System Requirements
-* Installation
-* Reporting Bugs
-* TODO list
-* About the Authors
-
-
-Introduction
-============
+# Griffith
 
 Griffith is a film collection manager, released under the GNU/GPL License.
 
+Please see the file COPYING for licensing and warranty information.
+The latest version of this software is available at the following URL:
+https://github.com/micjahn/Griffith
 
-System Requirements
-===================
+## System Requirements
 
   Name			Minimum version		URL						NOTE
   ----			---------------		---						----
@@ -37,8 +18,7 @@ System Requirements
   * PIL						http://www.pythonware.com/products/pil/
   * ReportLab		1.19			http://www.reportlab.org
 
-Other (optional) dependencies:
-------------------------------
+## Other (optional) dependencies
 
   PostgreSQL support:
   * Psycopg2		2			http://initd.org/tracker/psycopg/wiki/PsycopgTwo
@@ -53,32 +33,30 @@ Other (optional) dependencies:
   Covers and reports support:
   * PDF reader
 
-To check dependencies:
-----------------------
-  $ ./griffith --check-dep
+## To check dependencies
 
-To show detected Python modules versions:
------------------------------------------
-  $ ./griffith --show-dep
+    $ ./griffith --check-dep
+
+## To show detected Python modules versions:
+
+    $ ./griffith --show-dep
 
 Windows installer includes all the needed requirements.
 A GTK+ runtime is not necessary when using this installer.
 
 
-External databases
-==================
+## External databases
 
 You need to prepare a new database and a new user by yourself
 
-PostgreSQL
-----------
+### PostgreSQL
+
 
 	CREATE USER griffith UNENCRYPTED PASSWORD 'gRiFiTh' NOCREATEDB NOCREATEUSER;
 	CREATE DATABASE griffith WITH OWNER = griffith ENCODING = 'UNICODE';
 	GRANT ALL ON DATABASE griffith TO griffith;
 
-MySQL
------
+### MySQL
 
 	CREATE DATABASE `griffith` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 	CREATE USER 'griffith'@'localhost' IDENTIFIED BY 'gRiFiTh';
@@ -86,8 +64,8 @@ MySQL
 	GRANT ALL ON `griffith` . * TO 'griffith'@'localhost';
 	GRANT ALL ON `griffith` . * TO 'griffith'@'%';
 
-Microsoft SQL Server
---------------------
+### Microsoft SQL Server
+
 	CREATE DATABASE griffith
 	EXEC sp_addlogin @loginame='griffith', @passwd='gRiFiTh', @defdb='griffith'
 	GO
@@ -95,28 +73,19 @@ Microsoft SQL Server
 	EXEC sp_changedbowner @loginame='griffith'
 
 
-Installation
-============
+## Installation
 
 See INSTALL file
 
+## Reporting Bugs
 
-Reporting Bugs                                        
-==============
-	
 If you want to help or report any bugs founded please visit:
-  http://www.griffith.cc/
-or
-  https://bugs.launchpad.net/griffith/
+  - https://github.com/micjahn/Griffith/issues/new
 
-
-TODO
-====
+## TODO
 
 See TODO file
 
-
-About the Authors
-=================
+## About the Authors
 
 See AUTHORS file
