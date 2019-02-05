@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  griffith:
+    build: .
+    # For Linux
+#    environment:
+#      DISPLAY
+    # For Docker for macOS
+#    environment:
+#      DISPLAY: "host.docker.internal:0.0"
+    volumes:
+#      - ./config:/home/griffith/.griffith
+      - ~/Dropbox/Apps/Griffith:/home/griffith/.griffith
+      - $HOME/.Xauthority:/home/griffith/.Xauthority
+
+# vim:ts=2:sw=2:et
