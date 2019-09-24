@@ -56,6 +56,8 @@ class Plugin(movie.Movie):
         self.image_url = ''
         try:
             self.image_url = self.jsondata['image']
+            if self.image_url[0] == '/':
+                self.image_url = "https:" + self.image_url
         except:
             None
 
@@ -107,7 +109,7 @@ class Plugin(movie.Movie):
                 None
 
     def get_genre(self):
-        self.genre = gutils.trim(self.page, '<dt>Genre</dt>', '</dd>')
+        self.genre = gutils.trim(self.page, '>Genre</dt>', '</dd>')
 
     def get_cast(self):
         self.cast = ''
@@ -140,12 +142,12 @@ class Plugin(movie.Movie):
             None
 
     def get_country(self):
-        self.country = gutils.regextrim(self.page, '<dt>Produktionsland</dt>[^<]*<dd>', '</dd>')
+        self.country = gutils.regextrim(self.page, '>Produktionsland</dt>', '</dd>')
 
     def get_rating(self):
         self.rating = 0
         try:
-            self.rating = int(self.jsondata['aggregateRating']['ratingValue']) * 2
+            self.rating = int(round(float(self.jsondata['aggregateRating']['ratingValue']) * 2))
         except:
             None
 
@@ -197,7 +199,7 @@ class SearchPlugin(movie.SearchMovie):
         #
         # Sub Pages
         #
-        pagesarea = gutils.trim(pagemovie, 'class="pagination-list"', '</ol>')
+        pagesarea = gutils.trim(pagemovie, 'class="pagination-prev', '</ol>')
         pagelements = re.split('href="', pagesarea)
         self.title = ''
         self.o_title = ''
@@ -212,7 +214,7 @@ class SearchPlugin(movie.SearchMovie):
         return self.page
 
     def get_searches(self):
-        elements = re.split('class="card-link', self.page)
+        elements = re.split('class="alice-teaser-link', self.page)
         elements[0] = None
         for element in elements:
             if element <> None:
