@@ -30,7 +30,7 @@ plugin_url          = 'www.imdb.com'
 plugin_language     = _('English')
 plugin_author       = 'Vasco Nunes, Piotr Ożarowski'
 plugin_author_email = 'griffith@griffith.cc'
-plugin_version      = '1.16'
+plugin_version      = '1.17'
 
 class Plugin(movie.Movie):
     def __init__(self, id):
@@ -48,9 +48,14 @@ class Plugin(movie.Movie):
 
     def get_image(self):
         self.image_url = ''
-        tmp = gutils.trim(self.page, '<div class="poster">', '</div>')
+        tmp = gutils.trim(gutils.trim(self.page, '"edges":[{"node":{"entity":{"primaryImage":', '}'), '"url":"', '"')
+        print tmp
         if tmp:
-            self.image_url = gutils.trim(tmp, 'src="', '"')
+            self.image_url = tmp
+        else:
+            tmp = gutils.trim(self.page, 'ipc-media--poster', '/>')
+            if tmp:
+                self.image_url = gutils.trim(tmp, 'src="', '"')
 
     def get_o_title(self):
         # it seems, that films coming from the German branch can have their German title in the h1-name-tag;
@@ -198,11 +203,10 @@ class Plugin(movie.Movie):
         self.trailer = "http://www.imdb.com/title/tt%s/trailers" % self.movie_id
 
     def get_country(self):
-        self.country = '<' + gutils.trim(self.page, 'Country:<', '</div>')
-        self.country = re.sub('[ ]+', ' ', re.sub('[\n]+', '', self.country))
+        self.country = gutils.after(gutils.trim(self.page, 'country_of_origin', '</a>'), '>')
 
     def get_rating(self):
-        self.rating = gutils.trim(self.page, 'Users rated this ', '/')
+        self.rating = gutils.strip_tags(gutils.trim(self.page, 'IMDb RATING', '</span>'))
         if self.rating:
             try:
                 self.rating = round(float(self.rating), 0)
