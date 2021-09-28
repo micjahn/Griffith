@@ -30,26 +30,25 @@ plugin_url          = 'www.imdb.com'
 plugin_language     = _('English')
 plugin_author       = 'Vasco Nunes, Piotr Ożarowski'
 plugin_author_email = 'griffith@griffith.cc'
-plugin_version      = '1.17'
+plugin_version      = '1.18'
 
 class Plugin(movie.Movie):
     def __init__(self, id):
         self.encode   = 'utf-8'
         self.movie_id = id
-        self.url      = "http://imdb.com/title/tt%s" % self.movie_id
+        self.url      = "https://www.imdb.com/title/tt%s/" % self.movie_id
 
     def initialize(self):
-        self.cast_page = self.open_page(url=self.url + '/fullcredits')
-        self.plot_page = self.open_page(url=self.url + '/plotsummary')
-        self.comp_page = self.open_page(url=self.url + '/companycredits')
-        self.tagl_page = self.open_page(url=self.url + '/taglines')
-        self.cert_page = self.open_page(url=self.url + '/parentalguide')
-        self.release_page = self.open_page(url=self.url + '/releaseinfo')
+        self.cast_page = self.open_page(url=self.url + 'fullcredits')
+        self.plot_page = self.open_page(url=self.url + 'plotsummary')
+        self.comp_page = self.open_page(url=self.url + 'companycredits')
+        self.tagl_page = self.open_page(url=self.url + 'taglines')
+        self.cert_page = self.open_page(url=self.url + 'parentalguide')
+        self.release_page = self.open_page(url=self.url + 'releaseinfo')
 
     def get_image(self):
         self.image_url = ''
         tmp = gutils.trim(gutils.trim(self.page, '"edges":[{"node":{"entity":{"primaryImage":', '}'), '"url":"', '"')
-        print tmp
         if tmp:
             self.image_url = tmp
         else:
@@ -197,10 +196,10 @@ class Plugin(movie.Movie):
         self.o_site = ''
 
     def get_site(self):
-        self.site = "http://www.imdb.com/title/tt%s" % self.movie_id
+        self.site = "https://www.imdb.com/title/tt%s/" % self.movie_id
 
     def get_trailer(self):
-        self.trailer = "http://www.imdb.com/title/tt%s/trailers" % self.movie_id
+        self.trailer = "https://www.imdb.com/title/tt%s/trailers" % self.movie_id
 
     def get_country(self):
         self.country = gutils.after(gutils.trim(self.page, 'country_of_origin', '</a>'), '>')
@@ -289,15 +288,15 @@ class SearchPlugin(movie.SearchMovie):
     PATTERN_DIRECT = re.compile(r"""value="/title/tt([0-9]+)""")
 
     def __init__(self):
-        # http://www.imdb.com/List?words=
+        # https://www.imdb.com/List?words=
         # finds every title sorted alphabetically, first results are with a quote at
         # the beginning (episodes from tv series), no popular results at first
-        # http://www.imdb.com/find?more=tt;q=
+        # https://www.imdb.com/find?more=tt;q=
         # finds a whole bunch of results. if you look for "Rocky" you will get 903 results.
-        # http://www.imdb.com/find?s=tt;q=
+        # https://www.imdb.com/find?s=tt;q=
         # seems to give the best results. 88 results for "Rocky", popular titles first.
-        self.original_url_search   = 'http://www.imdb.com/find?s=tt&q='
-        self.translated_url_search = 'http://www.imdb.com/find?s=tt&q='
+        self.original_url_search   = 'https://www.imdb.com/find?s=tt&q='
+        self.translated_url_search = 'https://www.imdb.com/find?s=tt&q='
         self.encode                = 'utf8'
 
     def search(self,parent_window):
@@ -413,8 +412,8 @@ John Inman' + _(' as ') + 'Character Player (uncredited)',
             'classification'    : False,
             'studio'            : 'Universal Pictures, Miramax Films, Bedford Falls Productions',
             'o_site'            : False,
-            'site'              : 'http://www.imdb.com/title/tt0138097',
-            'trailer'           : 'http://www.imdb.com/title/tt0138097/trailers',
+            'site'              : 'https://www.imdb.com/title/tt0138097/',
+            'trailer'           : 'https://www.imdb.com/title/tt0138097/trailers',
             'year'              : 1998,
             'notes'             : _('Language') + ': English\n'\
 + _('Audio') + ': Dolby Digital\n'\
