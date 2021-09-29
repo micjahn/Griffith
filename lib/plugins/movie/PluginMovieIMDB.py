@@ -30,7 +30,7 @@ plugin_url          = 'www.imdb.com'
 plugin_language     = _('English')
 plugin_author       = 'Vasco Nunes, Piotr Ożarowski'
 plugin_author_email = 'griffith@griffith.cc'
-plugin_version      = '1.18'
+plugin_version      = '1.19'
 
 class Plugin(movie.Movie):
     def __init__(self, id):
@@ -149,11 +149,16 @@ class Plugin(movie.Movie):
                 self.year = tmp.group(0)
 
     def get_runtime(self):
-        self.runtime = gutils.regextrim(self.page, 'Runtime:<[^>]+>', ' min')
+        self.runtime = gutils.strip_tags(gutils.regextrim(self.page, 'Runtime<[^>]+>', 'min<'))
+        tmp = string.split(self.runtime, 'h ')
+        if len(tmp)>1:
+            try:
+                self.runtime = int(tmp[0]) * 60 + int(tmp[1])
+            except:
+                None
 
     def get_genre(self):
-        self.genre = string.replace(gutils.regextrim(self.page, 'Genre[s]*:<[^>]+>', '</div>'), '\n', '')
-        self.genre = self.__before_more(self.genre)
+        self.genre = string.replace(gutils.regextrim(self.page, '="genres"[^>]*>', '</div>'), '</a><a', '</a>, <a')
 
     def get_cast(self):
         self.cast = ''
