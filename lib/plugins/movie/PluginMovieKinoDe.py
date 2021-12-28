@@ -34,7 +34,7 @@ plugin_url          = "www.kino.de"
 plugin_language     = _("German")
 plugin_author       = "Michael Jahn"
 plugin_author_email = "<mikej06@hotmail.com>"
-plugin_version      = "1.22"
+plugin_version      = "1.23"
 
 log = logging.getLogger("Griffith")
 
@@ -95,7 +95,7 @@ class Plugin(movie.Movie):
 
     def get_runtime(self):
         self.runtime = '0'
-        tmp = gutils.clean(gutils.trim(self.page, '>Dauer</dt>', '</dd>'))
+        tmp = gutils.clean(gutils.trim(self.page, 'Dauer: ', '</li>'))
         if tmp:
             hours = gutils.trim(tmp, '>', 'h')
             if not hours:
@@ -109,7 +109,11 @@ class Plugin(movie.Movie):
                 None
 
     def get_genre(self):
-        self.genre = gutils.trim(self.page, '>Genre</dt>', '</dd>')
+        self.genre = ''
+        try:
+            self.genre = self.jsondata['genre']
+        except:
+            None
 
     def get_cast(self):
         self.cast = ''
@@ -121,7 +125,7 @@ class Plugin(movie.Movie):
             None
 
     def get_classification(self):
-        self.classification = gutils.trim(self.page, '>FSK</dt>', '</dd>')
+        self.classification = gutils.trim(self.page, 'FSK: ', '</li>')
 
     def get_studio(self):
         self.studio = gutils.trim(self.page, '<dt>Vertrieb</dt>', '</dd>')
@@ -142,7 +146,7 @@ class Plugin(movie.Movie):
             None
 
     def get_country(self):
-        self.country = gutils.regextrim(self.page, '>Produktionsland</dt>', '</dd>')
+        self.country = gutils.regextrim(self.page, 'Produktionsland: ', '</li>')
 
     def get_rating(self):
         self.rating = 0
