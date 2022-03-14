@@ -16,13 +16,13 @@ plugin_url          = "www.ofdb.de"
 plugin_language     = _("German")
 plugin_author       = "Christian Sagmueller, Jessica Katharina Parth"
 plugin_author_email = "Jessica.K.P@women-at-work.org"
-plugin_version      = "0.12"
+plugin_version      = "0.13"
 
 class Plugin(movie.Movie):
     def __init__(self, id):
         self.encode   = 'utf-8'
         self.movie_id = id
-        self.url      = "https://ssl.ofdb.de/%s" % str(self.movie_id)
+        self.url      = "https://www.ofdb.de/%s" % str(self.movie_id)
 
     def initialize(self):
         # OFDb didn't provide the runtime, studio and classification but it provide a link to the german imdb entry
@@ -47,10 +47,10 @@ class Plugin(movie.Movie):
         self.cert_page = gutils.convert_entities(self.cert_page)
         movie_id_elements = string.split(self.movie_id, ',')
         movie_id_elements[0] = string.replace(movie_id_elements[0], "film/", "")
-        self.cast_page = self.open_page(url="https://ssl.ofdb.de/view.php?page=film_detail&fid=%s" % str(movie_id_elements[0]) )
+        self.cast_page = self.open_page(url="https://www.ofdb.de/view.php?page=film_detail&fid=%s" % str(movie_id_elements[0]) )
 
     def get_image(self):
-        self.image_url = "https://ssl.ofdb.de/images/film/" + gutils.trim(self.page, 'img src="images/film/', '"')
+        self.image_url = "https://www.ofdb.de/images/film/" + gutils.trim(self.page, 'img src="images/film/', '"')
 
     def get_o_title(self):
         self.o_title = gutils.clean(gutils.trim(self.page, 'Originaltitel:', '</tr>'))
@@ -67,7 +67,7 @@ class Plugin(movie.Movie):
         self.plot = ''
         storyid = gutils.regextrim(self.page, '<a href="plot/', '(">|[&])')
         if not storyid is None:
-            story_page = self.open_page(url="https://ssl.ofdb.de/plot/%s" % (storyid.encode('utf8')))
+            story_page = self.open_page(url="https://www.ofdb.de/plot/%s" % (storyid.encode('utf8')))
             if story_page:
                 self.plot = gutils.trim(story_page, "</b><br><br>","</")
 
@@ -151,8 +151,8 @@ class Plugin(movie.Movie):
 
 class SearchPlugin(movie.SearchMovie):
     def __init__(self):
-        self.original_url_search   = "https://ssl.ofdb.de/view.php?page=suchergebnis&Kat=OTitel&SText="
-        self.translated_url_search = "https://ssl.ofdb.de/view.php?page=suchergebnis&Kat=DTitel&SText="
+        self.original_url_search   = "https://www.ofdb.de/view.php?page=suchergebnis&Kat=OTitel&SText="
+        self.translated_url_search = "https://www.ofdb.de/view.php?page=suchergebnis&Kat=DTitel&SText="
         self.encode                = 'utf-8'
         self.remove_accents        = False
 
